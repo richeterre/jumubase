@@ -1,0 +1,8 @@
+<h2><%= gettext("New User") %></h2>
+
+<%=
+  render "form.html", Map.merge(assigns, %{
+    action: internal_user_path(@conn, :create),
+    submit_title: gettext("Create User")
+  })
+%>

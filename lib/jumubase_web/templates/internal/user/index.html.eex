@@ -1,0 +1,31 @@
+<h2><%= gettext("Users") %></h2>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Name") %></th>
+        <th><%= gettext("Email") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for user <- @users do %>
+      <tr>
+        <td><%= full_name(user) %> <%= role_tag(user.role) %></td>
+        <td><%= user.email %></td>
+        <td class="text-right">
+          <%= icon_link("pencil", internal_user_path(@conn, :edit, user),
+            class: "btn btn-default btn-xs") %>
+          <%= icon_link("trash", internal_user_path(@conn, :delete, user),
+            method: :delete,
+            data: [confirm: gettext("Do you really want to delete this user?")],
+            class: "btn btn-danger btn-xs") %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link gettext("Add User"), to: internal_user_path(@conn, :new), class: "btn btn-primary" %>

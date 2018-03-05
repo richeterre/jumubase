@@ -18,4 +18,10 @@ defmodule JumubaseWeb.Router do
 
     get("/", PageController, :home)
   end
+
+  scope "/internal", JumubaseWeb.Internal, as: :internal do
+    pipe_through(:browser)
+
+    resources("/users", UserController, except: [:show])
+  end
 end

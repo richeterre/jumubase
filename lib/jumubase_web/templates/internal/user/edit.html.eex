@@ -1,0 +1,8 @@
+<h2><%= gettext("Edit User") %></h2>
+
+<%=
+  render "form.html", Map.merge(assigns, %{
+    action: internal_user_path(@conn, :update, @user),
+    submit_title: gettext("Save Changes")
+  })
+%>

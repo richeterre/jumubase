@@ -16,7 +16,7 @@
   <body>
     <div class="container">
       <header class="header">
-        <nav role="navigation"></nav>
+        <%= render "nav.html", conn: @conn %>
       </header>
 
       <%= render "flash.html", conn: @conn %>

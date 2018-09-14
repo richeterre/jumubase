@@ -9,16 +9,11 @@ defmodule JumubaseWeb.IconHelpers do
   end
 
   @doc """
-  Generates a link consisting only of an icon.
+  Generates a link with an icon and optional text.
   """
-  def icon_link(icon, path, opts \\ []) do
-    link([to: path] ++ opts, do: icon_tag(icon))
-  end
-
-  @doc """
-  Generates a textual link with a prepended icon.
-  """
-  def icon_text_link(icon, text, path, opts \\ []) do
-    link([to: path] ++ opts, do: [icon_tag(icon), " ", text])
+  def icon_link(icon, text, path, opts \\ []) do
+    link [to: path] ++ opts do
+      if text, do: [icon_tag(icon), " ", text], else: icon_tag(icon)
+    end
   end
 end

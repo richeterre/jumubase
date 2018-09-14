@@ -15,9 +15,9 @@
         <td><%= full_name(user) %> <%= role_tag(user.role) %></td>
         <td><%= user.email %></td>
         <td class="text-right">
-          <%= icon_link("pencil", internal_user_path(@conn, :edit, user),
+          <%= icon_link("pencil", nil, internal_user_path(@conn, :edit, user),
             class: "btn btn-default btn-xs") %>
-          <%= icon_link("trash", internal_user_path(@conn, :delete, user),
+          <%= icon_link("trash", nil, internal_user_path(@conn, :delete, user),
             method: :delete,
             data: [confirm: gettext("Do you really want to delete this user?")],
             class: "btn btn-danger btn-xs") %>

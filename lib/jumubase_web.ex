@@ -23,6 +23,8 @@ defmodule JumubaseWeb do
       import Plug.Conn
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.Gettext
+      import JumubaseWeb.Breadcrumbs
+      alias JumubaseWeb.Endpoint
     end
   end
 

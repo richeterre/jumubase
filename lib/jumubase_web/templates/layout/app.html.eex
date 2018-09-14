@@ -19,6 +19,10 @@
         <%= render "nav.html", conn: @conn, current_user: @current_user %>
       </header>
 
+      <%= if assigns[:breadcrumbs] do %>
+        <%= render "breadcrumbs.html", conn: @conn, breadcrumbs: @breadcrumbs %>
+      <% end %>
+
       <%= render "flash.html", conn: @conn %>
 
       <main role="main">

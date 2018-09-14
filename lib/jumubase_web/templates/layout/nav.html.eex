@@ -20,7 +20,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%= if @current_user do %>
-          <li><%= link @current_user.first_name, to: internal_page_path(@conn, :home) %></li>
+          <li>
+            <%= link to: internal_page_path(@conn, :home) do %>
+              <%= icon_tag("home") %>
+              &thinsp;
+              <%= @current_user.first_name %>
+            <% end %>
+          </li>
           <li><%= link gettext("Logout"), to: session_path(@conn, :delete, @current_user), method: :delete %></li>
         <% else %>
           <li>

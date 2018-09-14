@@ -5,6 +5,6 @@ defmodule JumubaseWeb.Internal.PageController do
   plug :user_check
 
   def home(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
-    render(conn, "home.html", name: user.first_name)
+    render(conn, "home.html", current_user: user, contests: [])
   end
 end

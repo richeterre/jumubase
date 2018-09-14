@@ -47,7 +47,7 @@ defmodule JumubaseWeb.Authorize do
   end
 
   def role_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
-    error(conn, gettext("You need to log in to view this page"), session_path(conn, :new))
+    need_login(conn)
   end
   def role_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],

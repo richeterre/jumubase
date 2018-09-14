@@ -31,12 +31,12 @@ defmodule JumubaseWeb.ConnCase do
         |> get("/")
 
         # Add user session if role given in config
-        conn = case config[:login_as] do
-          nil -> conn
-          user_role -> login_user(conn, user_role)
+        case config[:login_as] do
+          nil ->
+            {:ok, config}
+          user_role ->
+            {:ok, Map.merge(config, login_user(conn, user_role))}
         end
-
-        {:ok, Map.put(config, :conn, conn)}
       end
 
       def add_phauxth_session(conn, user) do
@@ -57,9 +57,11 @@ defmodule JumubaseWeb.ConnCase do
 
       defp login_user(conn, role) do
         user = add_user(role: role)
-        conn
+        conn = conn
         |> add_phauxth_session(user)
         |> send_resp(:ok, "/")
+
+        %{conn: conn, user: user}
       end
     end
   end

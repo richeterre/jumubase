@@ -3,7 +3,9 @@ defmodule JumubaseWeb.AuthTestHelpers do
 
   import Ecto.Changeset
   alias Jumubase.Factory
-  alias Jumubase.{Accounts, Repo}
+  alias Jumubase.Repo
+  alias Jumubase.JumuParams
+  alias Jumubase.Accounts
 
   def add_user(attrs \\ []) do
     # Add password since Factory doesn't set one
@@ -24,4 +26,8 @@ defmodule JumubaseWeb.AuthTestHelpers do
   def gen_key(email) do
     Phauxth.Token.sign(JumubaseWeb.Endpoint, %{"email" => email})
   end
+
+  def all_roles, do: JumuParams.roles()
+
+  def non_admin_roles, do: List.delete(JumuParams.roles(), "admin")
 end

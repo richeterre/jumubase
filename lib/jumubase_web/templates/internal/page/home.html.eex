@@ -1,3 +1,24 @@
-<h1>
-  <%= gettext("Hello %{name}!", name: @name) %>
-</h1>
+<h2>
+  <%= gettext("Hallo %{name},", name: @current_user.first_name) %>
+</h2>
+
+<p><%= gettext("willkommen auf deinem persönlichen Jumu-Portal!") %></p>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= if admin?(@current_user) do %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= gettext("Admin") %></h3>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <%= icon_link("user", gettext("Users"), internal_user_path(@conn, :index)) %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>

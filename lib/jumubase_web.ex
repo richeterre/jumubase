@@ -39,6 +39,7 @@ defmodule JumubaseWeb do
       use Phoenix.HTML
 
       import JumubaseWeb.Router.Helpers
+      import JumubaseWeb.AuthHelpers
       import JumubaseWeb.ErrorHelpers
       import JumubaseWeb.IconHelpers
       import JumubaseWeb.Gettext

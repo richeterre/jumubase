@@ -11,7 +11,7 @@ defmodule JumubaseWeb.SessionControllerTest do
 
   setup %{conn: conn} do
     conn = conn |> bypass_through(JumubaseWeb.Router, [:browser]) |> get("/")
-    user = add_user(@valid_attrs[:email])
+    user = add_user(email: @valid_attrs[:email], password: @valid_attrs[:password])
     {:ok, %{conn: conn, user: user}}
   end
 

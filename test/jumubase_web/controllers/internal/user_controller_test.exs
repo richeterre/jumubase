@@ -10,7 +10,7 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   setup %{conn: conn} = config do
     conn = conn |> bypass_through(JumubaseWeb.Router, [:browser]) |> get("/")
     if email = config[:login] do
-      user = add_user(email)
+      user = add_user(email: email)
       conn = conn |> add_phauxth_session(user) |> send_resp(:ok, "/")
       {:ok, %{conn: conn}}
     else

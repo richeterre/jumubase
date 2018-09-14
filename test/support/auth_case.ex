@@ -5,14 +5,17 @@ defmodule JumubaseWeb.AuthCase do
   alias Jumubase.Factory
   alias Jumubase.{Accounts, Repo}
 
-  def add_user(email) do
-    user = Factory.params_for(:user, email: email, password: "reallyHard2gue$$")
+  def add_user(attrs \\ []) do
+    # Add password since Factory doesn't set one
+    attrs = attrs |> Keyword.put_new(:password, "reallyHard2gue$$")
+
+    user = Factory.params_for(:user, attrs)
     {:ok, user} = Accounts.create_user(user)
     user
   end
 
   def add_reset_user(email) do
-    add_user(email)
+    add_user(email: email)
     |> change(%{confirmed_at: DateTime.utc_now()})
     |> change(%{reset_sent_at: DateTime.utc_now()})
     |> Repo.update!()

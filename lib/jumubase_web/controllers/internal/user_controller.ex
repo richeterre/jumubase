@@ -5,8 +5,8 @@ defmodule JumubaseWeb.Internal.UserController do
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
 
-  plug :add_breadcrumb, icon: "home", path: internal_page_path(Endpoint, :home)
-  plug :add_breadcrumb, name: gettext("Users"), path: internal_user_path(Endpoint, :index)
+  plug :add_breadcrumb, icon: "home", path_fun: &internal_page_path/2, action: :home
+  plug :add_breadcrumb, name: gettext("Users"), path_fun: &internal_user_path/2, action: :index
 
   plug :role_check, roles: ["admin"]
 
@@ -18,7 +18,7 @@ defmodule JumubaseWeb.Internal.UserController do
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
     conn
-    |> add_breadcrumb(icon: "plus", path: internal_user_path(Endpoint, :new))
+    |> add_breadcrumb(icon: "plus", path: internal_user_path(conn, :new))
     |> render("new.html", changeset: changeset)
   end
 
@@ -37,7 +37,7 @@ defmodule JumubaseWeb.Internal.UserController do
   def edit(conn, %{"id" => id}) do
     user = Accounts.get!(id)
     changeset = Accounts.change_user(user)
-    edit_path = internal_user_path(Endpoint, :edit, user)
+    edit_path = internal_user_path(conn, :edit, user)
 
     conn
     |> add_breadcrumb(name: full_name(user), path: edit_path)

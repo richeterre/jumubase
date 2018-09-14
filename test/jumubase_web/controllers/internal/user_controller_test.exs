@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.UserControllerTest do
   use JumubaseWeb.ConnCase
-  alias Jumubase.Factory
   alias Jumubase.JumuParams
   alias Jumubase.Accounts
 
@@ -25,7 +24,7 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
     end
 
     test "redirects to user list after creating a user", %{conn: conn} do
-      valid_attrs = Factory.params_for(:user, password: "password")
+      valid_attrs = params_for(:user, password: "password")
       conn = post(conn, internal_user_path(conn, :create), user: valid_attrs)
       assert redirected_to(conn) == internal_user_path(conn, :index)
     end
@@ -36,14 +35,14 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
     end
 
     test "renders user edit form", %{conn: conn} do
-      user = Factory.insert(:user)
+      user = insert(:user)
 
       conn = get(conn, internal_user_path(conn, :edit, user))
       assert html_response(conn, 200) =~ "Edit User"
     end
 
     test "redirects to user list after editing a user", %{conn: conn} do
-      user = Factory.insert(:user)
+      user = insert(:user)
 
       conn = put(conn, internal_user_path(conn, :update, user), user: @update_attrs)
       assert redirected_to(conn) == internal_user_path(conn, :index)
@@ -53,14 +52,14 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
     end
 
     test "renders errors when user editing fails with invalid data", %{conn: conn} do
-      user = Factory.insert(:user)
+      user = insert(:user)
 
       conn = put(conn, internal_user_path(conn, :update, user), user: @invalid_attrs)
       assert html_response(conn, 200) =~ "Edit User"
     end
 
     test "deletes a user", %{conn: conn} do
-      user = Factory.insert(:user)
+      user = insert(:user)
 
       conn = delete(conn, internal_user_path(conn, :delete, user))
       assert redirected_to(conn) == internal_user_path(conn, :index)
@@ -89,7 +88,7 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   # Private helpers
 
   defp verify_all_routes(conn, assertion_fun) do
-    user = Factory.insert(:user)
+    user = insert(:user)
     Enum.each([
       get(conn, internal_user_path(conn, :index)),
       get(conn, internal_user_path(conn, :new)),

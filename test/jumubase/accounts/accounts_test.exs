@@ -1,7 +1,6 @@
 defmodule Jumubase.AccountsTest do
   use Jumubase.DataCase
 
-  alias Jumubase.Factory
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
 
@@ -9,17 +8,17 @@ defmodule Jumubase.AccountsTest do
   @invalid_attrs %{email: nil, first_name: nil, last_name: nil, role: nil}
 
   test "list_users/0 returns all users" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert Accounts.list_users() == [user]
   end
 
   test "get/1 returns the user with given id" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert Accounts.get(user.id) == user
   end
 
   test "get!/1 returns the user with given id" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert Accounts.get!(user.id) == user
   end
 
@@ -29,12 +28,12 @@ defmodule Jumubase.AccountsTest do
 
   test "get_by/1 returns a user by their email" do
     email = "abc@de.fi"
-    user = Factory.insert(:user, email: email)
+    user = insert(:user, email: email)
     assert Accounts.get_by(%{"email" => email}) == user
   end
 
   test "create_user/1 with valid data creates a user" do
-    valid_attrs = Factory.params_for(:user, password: "password")
+    valid_attrs = params_for(:user, password: "password")
     assert {:ok, %User{} = user} = Accounts.create_user(valid_attrs)
     assert user.email == valid_attrs[:email]
     assert user.first_name == valid_attrs[:first_name]
@@ -47,7 +46,7 @@ defmodule Jumubase.AccountsTest do
   end
 
   test "update_user/2 with valid data updates the user" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert {:ok, user} = Accounts.update_user(user, @update_attrs)
     assert %User{} = user
     assert user.email == @update_attrs[:email]
@@ -57,31 +56,31 @@ defmodule Jumubase.AccountsTest do
   end
 
   test "update_user/2 with invalid data returns error changeset" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
     assert user == Accounts.get(user.id)
   end
 
   test "delete_user/1 deletes the user" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert {:ok, %User{}} = Accounts.delete_user(user)
     refute Accounts.get(user.id)
   end
 
   test "change_user/1 returns a user changeset" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     assert %Ecto.Changeset{} = Accounts.change_user(user)
   end
 
   test "update_password/2 changes the stored hash" do
-    %{password_hash: stored_hash} = user = Factory.insert(:user)
+    %{password_hash: stored_hash} = user = insert(:user)
     attrs = %{password: "CN8W6kpb"}
     {:ok, %{password_hash: hash}} = Accounts.update_password(user, attrs)
     assert hash != stored_hash
   end
 
   test "update_password/2 with weak password fails" do
-    user = Factory.insert(:user)
+    user = insert(:user)
     attrs = %{password: "pass"}
     assert {:error, %Ecto.Changeset{}} = Accounts.update_password(user, attrs)
   end

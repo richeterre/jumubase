@@ -44,7 +44,7 @@ defmodule Jumubase.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:bamboo, "~> 0.8"},
       {:cowboy, "~> 1.0"},
-      {:ex_machina, "~> 2.1", only: :test}
+      {:ex_machina, "~> 2.1"}
     ]
   end
 

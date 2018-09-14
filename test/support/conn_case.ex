@@ -21,6 +21,7 @@ defmodule JumubaseWeb.ConnCase do
       use Phoenix.ConnTest
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthTestHelpers
+      import Jumubase.Factory
 
       # The default endpoint for testing
       @endpoint JumubaseWeb.Endpoint

@@ -1,8 +1,7 @@
 defmodule JumubaseWeb.AuthTestHelpers do
   use Phoenix.ConnTest
-
   import Ecto.Changeset
-  alias Jumubase.Factory
+  import Jumubase.Factory
   alias Jumubase.Repo
   alias Jumubase.JumuParams
   alias Jumubase.Accounts
@@ -11,7 +10,7 @@ defmodule JumubaseWeb.AuthTestHelpers do
     # Add password since Factory doesn't set one
     attrs = attrs |> Keyword.put_new(:password, "reallyHard2gue$$")
 
-    user = Factory.params_for(:user, attrs)
+    user = params_for(:user, attrs)
     {:ok, user} = Accounts.create_user(user)
     user
   end

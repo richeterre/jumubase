@@ -3,6 +3,7 @@
 <%=
   render "form.html", Map.merge(assigns, %{
     action: internal_user_path(@conn, :update, @user),
+    include_password: false,
     submit_title: gettext("Save Changes")
   })
 %>

@@ -9,6 +9,10 @@ config :jumubase, JumubaseWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :phauxth,
+  token_salt: String.duplicate("x", 8),
+  log_level: :error
+
 # Configure your database
 config :jumubase, Jumubase.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -17,3 +21,10 @@ config :jumubase, Jumubase.Repo,
   database: "jumubase_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Speed up tests by making hashing faster
+config :bcrypt_elixir, log_rounds: 4
+
+# Configure test mailer
+config :jumubase, Jumubase.Mailer,
+  adapter: Bamboo.TestAdapter

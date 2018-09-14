@@ -9,7 +9,7 @@ use Mix.Config
 config :jumubase,
   ecto_repos: [Jumubase.Repo]
 
-# Configures the endpoint
+# Configure the endpoint
 config :jumubase, JumubaseWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "CItDuu3F0bThL/GnGj6lG4CNhFF/JPz/LHyWFVkLRdht2gpHfuFftGiO1paelppz",
@@ -17,7 +17,16 @@ config :jumubase, JumubaseWeb.Endpoint,
   pubsub: [name: Jumubase.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-# Configures Elixir's Logger
+# Configure Phauxth authentication
+config :phauxth,
+  token_salt: System.get_env("PHAUXTH_TOKEN_SALT"),
+  endpoint: JumubaseWeb.Endpoint
+
+# Configure mailer
+config :jumubase, Jumubase.Mailer,
+  adapter: Bamboo.LocalAdapter
+
+# Configure Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

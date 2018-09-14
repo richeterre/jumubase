@@ -8,9 +8,9 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">
+      <%= link to: page_path(@conn, :home), class: "navbar-brand" do %>
         <%= img_tag "/images/jumuball.png", alt: gettext("Jumu logo") %>
-      </a>
+      <% end %>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,9 +19,14 @@
         <li><%= link gettext("Home"), to: page_path(@conn, :home) %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <%= link gettext("Internal Pages"), to: internal_user_path(@conn, :index) %>
-        </li>
+        <%= if @current_user do %>
+          <li><%= link @current_user.first_name, to: internal_page_path(@conn, :home) %></li>
+          <li><%= link gettext("Logout"), to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+        <% else %>
+          <li>
+            <%= link gettext("Internal Pages"), to: session_path(@conn, :new) %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

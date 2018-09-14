@@ -1,6 +1,6 @@
 defmodule Jumubase.Factory do
   use ExMachina.Ecto, repo: Jumubase.Repo
-  alias Jumubase.Auth.User
+  alias Jumubase.Accounts.User
 
   def user_factory do
     %User{

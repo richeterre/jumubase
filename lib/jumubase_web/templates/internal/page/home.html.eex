@@ -1,0 +1,3 @@
+<h1>
+  <%= gettext("Hello %{name}!", name: @name) %>
+</h1>

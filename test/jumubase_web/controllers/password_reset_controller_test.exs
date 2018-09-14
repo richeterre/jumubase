@@ -1,7 +1,5 @@
 defmodule JumubaseWeb.PasswordResetControllerTest do
   use JumubaseWeb.ConnCase
-
-  import JumubaseWeb.AuthCase
   alias Jumubase.Accounts
 
   @update_attrs %{email: "gladys@example.com", password: "^hEsdg*F899"}

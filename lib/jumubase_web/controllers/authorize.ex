@@ -12,7 +12,6 @@ defmodule JumubaseWeb.Authorize do
   def auth_action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
     need_login(conn)
   end
-
   def auth_action(
         %Plug.Conn{assigns: %{current_user: current_user}, params: params} = conn,
         module
@@ -25,13 +24,11 @@ defmodule JumubaseWeb.Authorize do
   def user_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
-
   def user_check(conn, _opts), do: conn
 
   # Plug to only allow unauthenticated users to access the resource.
   # See the session controller for an example.
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
-
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
     error(conn, gettext("You need to log out to view this page"), page_path(conn, :home))
   end
@@ -41,13 +38,21 @@ defmodule JumubaseWeb.Authorize do
   def id_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
-
   def id_check(
-        %Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
-        _opts
-      ) do
+    %Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
+    _opts
+  ) do
     (id == to_string(current_user.id) and conn) ||
       error(conn, gettext("You are not authorized to view this page"), page_path(conn, :home))
+  end
+
+  def role_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+    error(conn, gettext("You need to log in to view this page"), session_path(conn, :new))
+  end
+  def role_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, opts) do
+    if opts[:roles] && current_user.role in opts[:roles],
+      do: conn,
+      else: error(conn, gettext("You are not authorized to view this page"), internal_page_path(conn, :home))
   end
 
   def success(conn, message, path) do

@@ -1,8 +1,7 @@
 defmodule Jumubase.Accounts.MessageTest do
   use ExUnit.Case
   use Bamboo.Test
-
-  import JumubaseWeb.AuthCase
+  import JumubaseWeb.AuthTestHelpers
   import JumubaseWeb.Router.Helpers, only: [password_reset_url: 3]
   alias Jumubase.Accounts.Message
 

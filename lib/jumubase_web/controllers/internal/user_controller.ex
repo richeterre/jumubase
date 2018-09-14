@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.UserController do
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
 
-  plug :user_check
+  plug :role_check, roles: ["admin"]
 
   def index(conn, _params) do
     users = Accounts.list_users()

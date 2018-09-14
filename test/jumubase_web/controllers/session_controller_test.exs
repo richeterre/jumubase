@@ -1,7 +1,5 @@
 defmodule JumubaseWeb.SessionControllerTest do
   use JumubaseWeb.ConnCase
-
-  import JumubaseWeb.AuthCase
   alias Jumubase.Accounts
 
   @valid_attrs %{email: "user@example.com", password: "reallyHard2gue$$"}
@@ -44,14 +42,6 @@ defmodule JumubaseWeb.SessionControllerTest do
     conn = get(conn, internal_page_path(conn, :home))
     assert redirected_to(conn) == session_path(conn, :new)
     assert Accounts.list_sessions(user.id) == %{}
-  end
-
-  test "redirects to previously requested resource", %{conn: conn} do
-    requested_path = internal_user_path(conn, :index)
-    conn = get(conn, requested_path)
-    assert redirected_to(conn) == session_path(conn, :new)
-    conn = post(conn, session_path(conn, :create), session: @valid_attrs)
-    assert redirected_to(conn) == requested_path
   end
 
   test "remember me cookie is added / not added", %{conn: conn} do

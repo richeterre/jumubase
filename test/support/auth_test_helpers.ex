@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.AuthCase do
+defmodule JumubaseWeb.AuthTestHelpers do
   use Phoenix.ConnTest
 
   import Ecto.Changeset
@@ -19,12 +19,6 @@ defmodule JumubaseWeb.AuthCase do
     |> change(%{confirmed_at: DateTime.utc_now()})
     |> change(%{reset_sent_at: DateTime.utc_now()})
     |> Repo.update!()
-  end
-
-  def add_phauxth_session(conn, user) do
-    session_id = Phauxth.Login.gen_session_id("F")
-    Accounts.add_session(user, session_id, System.system_time(:second))
-    Phauxth.Login.add_session(conn, session_id, user.id)
   end
 
   def gen_key(email) do

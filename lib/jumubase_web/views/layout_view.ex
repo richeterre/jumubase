@@ -6,6 +6,6 @@ defmodule JumubaseWeb.LayoutView do
   Tells whether the given breadcrumb is active.
   """
   def breadcrumb_active(conn, breadcrumb) do
-    breadcrumb[:path] === conn.request_path
+    breadcrumb == List.last(conn.assigns.breadcrumbs)
   end
 end

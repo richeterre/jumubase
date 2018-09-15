@@ -4,6 +4,7 @@ defmodule Jumubase.Accounts.User do
   import JumubaseWeb.Gettext
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
+  alias Jumubase.Foundation.Host
 
   schema "users" do
     field(:first_name, :string)
@@ -15,6 +16,8 @@ defmodule Jumubase.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :reset_sent_at, :utc_datetime
     field :sessions, {:map, :integer}, default: %{}
+
+    many_to_many :hosts, Host, join_through: "hosts_users", on_replace: :delete
 
     timestamps()
   end

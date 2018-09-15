@@ -1,8 +1,10 @@
 defmodule JumubaseWeb.Internal.UserController do
   use JumubaseWeb, :controller
   import JumubaseWeb.Internal.UserView, only: [full_name: 1]
+  alias Ecto.Changeset
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
+  alias Jumubase.Foundation
 
   plug :add_breadcrumb, icon: "home", path_fun: &internal_page_path/2, action: :home
   plug :add_breadcrumb, name: gettext("Users"), path_fun: &internal_user_path/2, action: :index
@@ -10,15 +12,13 @@ defmodule JumubaseWeb.Internal.UserController do
   plug :role_check, roles: ["admin"]
 
   def index(conn, _params) do
-    users = Accounts.list_users()
+    users = Accounts.list_users |> Accounts.load_hosts
     render(conn, "index.html", users: users)
   end
 
   def new(conn, _params) do
-    changeset = Accounts.change_user(%User{})
-    conn
-    |> add_breadcrumb(icon: "plus", path: internal_user_path(conn, :new))
-    |> render("new.html", changeset: changeset)
+    changeset = Accounts.change_user(%User{hosts: []})
+    render_create_form(conn, changeset)
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -28,24 +28,19 @@ defmodule JumubaseWeb.Internal.UserController do
         |> put_flash(:info, gettext("The user %{name} was created.", name: full_name(user)))
         |> redirect(to: internal_user_path(conn, :index))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+      {:error, %Changeset{} = changeset} ->
+        render_create_form(conn, changeset)
     end
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Accounts.get!(id)
+    user = Accounts.get!(id) |> Accounts.load_hosts
     changeset = Accounts.change_user(user)
-    edit_path = internal_user_path(conn, :edit, user)
-
-    conn
-    |> add_breadcrumb(name: full_name(user), path: edit_path)
-    |> add_breadcrumb(icon: "pencil", path: edit_path)
-    |> render("edit.html", user: user, changeset: changeset)
+    render_edit_form(conn, user, changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get(id)
+    user = Accounts.get(id) |> Accounts.load_hosts
 
     case Accounts.update_user(user, user_params) do
       {:ok, user} ->
@@ -53,8 +48,8 @@ defmodule JumubaseWeb.Internal.UserController do
         |> put_flash(:info, gettext("The user %{name} was updated.", name: full_name(user)))
         |> redirect(to: internal_user_path(conn, :index))
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", user: user, changeset: changeset)
+      {:error, %Changeset{} = changeset} ->
+        render_edit_form(conn, user, changeset)
     end
   end
 
@@ -65,5 +60,30 @@ defmodule JumubaseWeb.Internal.UserController do
     conn
     |> put_flash(:info, gettext("The user %{name} was deleted.", name: full_name(user)))
     |> redirect(to: internal_user_path(conn, :index))
+  end
+
+  # Private helpers
+
+  defp render_create_form(conn, %Changeset{} = changeset) do
+    conn
+    |> add_breadcrumb(icon: "plus", path: internal_user_path(conn, :new))
+    |> prepare_for_form(changeset)
+    |> render("new.html")
+  end
+
+  defp render_edit_form(conn, %User{} = user, %Changeset{} = changeset) do
+    edit_path = internal_user_path(conn, :edit, user)
+    conn
+    |> add_breadcrumb(name: full_name(user), path: edit_path)
+    |> add_breadcrumb(icon: "pencil", path: edit_path)
+    |> prepare_for_form(changeset)
+    |> render("edit.html", user: user)
+  end
+
+  defp prepare_for_form(conn, %Changeset{} = changeset) do
+    host_options = Foundation.list_hosts |> Enum.map(&({&1.name, &1.id}))
+    conn
+    |> assign(:changeset, changeset)
+    |> assign(:host_options, host_options)
   end
 end

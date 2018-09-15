@@ -5,9 +5,17 @@ defmodule Jumubase.Accounts do
 
   import Ecto.Changeset
   alias Jumubase.{Accounts.User, Repo}
+  alias Jumubase.Foundation
 
   def list_users do
     Repo.all(User)
+  end
+
+  @doc """
+  Loads associated hosts into the given users.
+  """
+  def load_hosts(users) do
+    Repo.preload(users, :hosts)
   end
 
   def get(id), do: Repo.get(User, id)
@@ -19,8 +27,9 @@ defmodule Jumubase.Accounts do
   end
 
   def create_user(attrs) do
-    %User{}
+    %User{hosts: []}
     |> User.create_changeset(attrs)
+    |> put_hosts_assoc(attrs)
     |> change(confirmed_at: DateTime.utc_now()) # Auto-confirm
     |> Repo.insert()
   end
@@ -34,7 +43,9 @@ defmodule Jumubase.Accounts do
 
   def update_user(%User{} = user, attrs) do
     user
+    |> Repo.preload(:hosts) # needed for putting new hosts
     |> User.changeset(attrs)
+    |> put_hosts_assoc(attrs)
     |> Repo.update()
   end
 
@@ -83,5 +94,14 @@ defmodule Jumubase.Accounts do
         )
         |> Repo.update())
     )
+  end
+
+  # Private helpers
+
+  # Looks up the given host ids and associates the hosts with the user.
+  defp put_hosts_assoc(changeset, user_params) do
+    host_ids = user_params[:host_ids] || user_params["host_ids"] || []
+    hosts = Foundation.list_hosts(host_ids)
+    Ecto.Changeset.put_assoc(changeset, :hosts, hosts)
   end
 end

@@ -10,13 +10,29 @@ defmodule JumubaseWeb.Internal.UserView do
   end
 
   @doc """
+  Returns the user's associated hosts as Emoji flags.
+  """
+  def host_flags(user) do
+    user.hosts
+    |> Enum.map(fn(host) -> emoji_flag(host.country_code) end)
+  end
+
+  @doc """
+  Returns the names of the user's associated hosts.
+  """
+  def host_names(user) do
+    user.hosts
+    |> Enum.map(&(&1.name))
+    |> Enum.join(", ")
+  end
+
+  @doc """
   Returns a textual tag describing the user's role.
   """
   def role_tag(role) do
     case role do
       "rw-organizer" ->
         nil
-
       _ ->
         text = role_name(role)
         content_tag(:span, text, class: "label label-#{label_class(role)}")

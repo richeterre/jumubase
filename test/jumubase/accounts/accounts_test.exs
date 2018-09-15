@@ -1,15 +1,21 @@
 defmodule Jumubase.AccountsTest do
   use Jumubase.DataCase
-
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
-
-  @update_attrs %{email: "xyz@de.fi", first_name: "X Y", last_name: "Z", role: "lw-organizer"}
-  @invalid_attrs %{email: nil, first_name: nil, last_name: nil, role: nil}
 
   test "list_users/0 returns all users" do
     user = insert(:user)
     assert Accounts.list_users() == [user]
+  end
+
+  test "load_hosts/1 loads associated hosts into a single user or list of users" do
+    user = insert(:user)
+    refute Ecto.assoc_loaded?(user.hosts)
+
+    single_user = Accounts.load_hosts(user)
+    assert Ecto.assoc_loaded?(single_user.hosts)
+    [list_user] = Accounts.load_hosts([user])
+    assert Ecto.assoc_loaded?(list_user.hosts)
   end
 
   test "get/1 returns the user with given id" do
@@ -42,22 +48,26 @@ defmodule Jumubase.AccountsTest do
   end
 
   test "create_user/1 with invalid data returns error changeset" do
-    assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
+    assert {:error, %Ecto.Changeset{}} = Accounts.create_user(%{})
   end
 
   test "update_user/2 with valid data updates the user" do
-    user = insert(:user)
-    assert {:ok, user} = Accounts.update_user(user, @update_attrs)
+    [h1, h2, h3] = insert_list(3, :host)
+    user = insert(:user, email: "a@xyz.org", first_name: "A", last_name: "B", role: "rw-organizer", hosts: [h1, h2])
+    update_attrs = %{email: "b@xyz.org", first_name: "X", last_name: "Y", role: "lw-organizer", host_ids: [h2.id, h3.id]}
+
+    assert {:ok, user} = Accounts.update_user(user, update_attrs)
     assert %User{} = user
-    assert user.email == @update_attrs[:email]
-    assert user.first_name == @update_attrs[:first_name]
-    assert user.last_name == @update_attrs[:last_name]
-    assert user.role == @update_attrs[:role]
+    assert user.email == update_attrs[:email]
+    assert user.first_name == update_attrs[:first_name]
+    assert user.last_name == update_attrs[:last_name]
+    assert user.role == update_attrs[:role]
+    assert user.hosts == [h2, h3]
   end
 
   test "update_user/2 with invalid data returns error changeset" do
     user = insert(:user)
-    assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
+    assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, %{email: nil})
     assert user == Accounts.get(user.id)
   end
 

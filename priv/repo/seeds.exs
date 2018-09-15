@@ -32,6 +32,7 @@ Repo.transaction fn ->
     password: "password",
     role: "lw-organizer"
   })
+  |> Changeset.put_assoc(:hosts, [host2])
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
@@ -41,6 +42,7 @@ Repo.transaction fn ->
     password: "password",
     role: "rw-organizer"
   })
+  |> Changeset.put_assoc(:hosts, [host3])
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{

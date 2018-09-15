@@ -6,6 +6,7 @@
       <tr>
         <th><%= gettext("Name") %></th>
         <th><%= gettext("Email") %></th>
+        <th><%= gettext("Hosts") %></th>
         <th></th>
       </tr>
     </thead>
@@ -14,6 +15,7 @@
       <tr>
         <td><%= full_name(user) %> <%= role_tag(user.role) %></td>
         <td><%= user.email %></td>
+        <td><%= content_tag :span, host_flags(user), title: host_names(user) %></td>
         <td class="text-right">
           <%= icon_link("pencil", nil, internal_user_path(@conn, :edit, user),
             class: "btn btn-default btn-xs") %>

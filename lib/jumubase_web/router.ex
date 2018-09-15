@@ -30,6 +30,8 @@ defmodule JumubaseWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]
   end
 end

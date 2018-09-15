@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.UserController do
   use JumubaseWeb, :controller
-  import JumubaseWeb.Authorize
   import JumubaseWeb.Internal.UserView, only: [full_name: 1]
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User

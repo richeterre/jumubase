@@ -24,6 +24,7 @@ defmodule JumubaseWeb do
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.Gettext
       import JumubaseWeb.Breadcrumbs
+      import JumubaseWeb.Authorize
     end
   end
 

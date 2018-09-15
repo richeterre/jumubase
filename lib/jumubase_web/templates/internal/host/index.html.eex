@@ -1,0 +1,35 @@
+<h2><%= gettext("Hosts") %></h2>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Name") %></th>
+        <th><%= gettext("City") %></th>
+        <th><%= gettext("Country") %></th>
+        <th><%= gettext("Time Zone") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for host <- @hosts do %>
+      <tr>
+        <td><%= host.name %></td>
+        <td><%= host.city %></td>
+        <td><%= emoji_flag(host.country_code) %></td>
+        <td><%= host.time_zone %></td>
+        <td class="text-right">
+          <%# icon_link("pencil", nil, internal_host_path(@conn, :edit, host),
+            class: "btn btn-default btn-xs") %>
+          <%# icon_link("trash", nil, internal_host_path(@conn, :delete, host),
+            method: :delete,
+            data: [confirm: gettext("Do you really want to delete this host?")],
+            class: "btn btn-danger btn-xs") %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= link gettext("Add Host"), to: internal_host_path(@conn, :new), class: "btn btn-primary" %>

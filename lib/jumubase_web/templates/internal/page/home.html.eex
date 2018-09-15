@@ -17,6 +17,9 @@
           <li class="list-group-item">
             <%= icon_link("user", gettext("Users"), internal_user_path(@conn, :index)) %>
           </li>
+          <li class="list-group-item">
+            <%= icon_link("globe", gettext("Hosts"), internal_host_path(@conn, :index)) %>
+          </li>
         </ul>
       </div>
     <% end %>

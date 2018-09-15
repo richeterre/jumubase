@@ -1,9 +1,5 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p><%= gettext("Please correct the errors below and try again!") %></p>
-    </div>
-  <% end %>
+  <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
   <div class="form-group">
     <%= label f, :first_name, class: "control-label" %>

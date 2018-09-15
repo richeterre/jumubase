@@ -1,0 +1,10 @@
+<%= if @errors != [] do %>
+  <div class="alert alert-danger">
+    <p>
+      <%= gettext("Please fix the errors below and try again!") %>
+    </p>
+    <p>
+      <%= error_list_tag(Keyword.get_values(@errors, :base)) %>
+    </p>
+  </div>
+<% end %>

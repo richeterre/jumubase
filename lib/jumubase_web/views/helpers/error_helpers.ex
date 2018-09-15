@@ -14,6 +14,14 @@ defmodule JumubaseWeb.ErrorHelpers do
     end)
   end
 
+  def error_list_tag(errors) do
+    content_tag :ul do
+      for error <- errors do
+        content_tag :li, translate_error(error)
+      end
+    end
+  end
+
   @doc """
   Translates an error message using gettext.
   """

@@ -3,7 +3,7 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   alias Jumubase.JumuParams
   alias Jumubase.Accounts
 
-  @update_attrs %{email: "xyz@de.fi", first_name: "X Y", last_name: "Z", role: "lw-organizer"}
+  @update_attrs %{email: "xyz@de.fi", first_name: "X Y", last_name: "Z", role: "global-organizer"}
   @invalid_attrs %{email: nil, first_name: nil, last_name: nil, password_hash: nil, role: nil}
 
   setup config do

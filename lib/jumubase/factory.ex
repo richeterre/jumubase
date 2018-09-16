@@ -17,7 +17,7 @@ defmodule Jumubase.Factory do
       first_name: "Aaron",
       last_name: "Beerenson",
       email: sequence(:email, &"user-#{&1}@example.org"),
-      role: "rw-organizer"
+      role: "local-organizer"
     }
   end
 end

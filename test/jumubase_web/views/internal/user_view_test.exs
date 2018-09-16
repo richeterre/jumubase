@@ -10,12 +10,12 @@ defmodule JumubaseWeb.Internal.UserViewTest do
 
   describe "role_tag/1" do
     test "returns nothing for RW Organizers" do
-      user = build(:user, role: "rw-organizer")
+      user = build(:user, role: "local-organizer")
       assert UserView.role_tag(user.role) == nil
     end
 
     test "returns a tag for all other roles" do
-      for role <- JumuParams.roles() |> List.delete("rw-organizer") do
+      for role <- JumuParams.roles() |> List.delete("local-organizer") do
         user = build(:user, role: role)
         assert UserView.role_tag(user.role) != nil
       end

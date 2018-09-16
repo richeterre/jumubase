@@ -53,8 +53,8 @@ defmodule Jumubase.AccountsTest do
 
   test "update_user/2 with valid data updates the user" do
     [h1, h2, h3] = insert_list(3, :host)
-    user = insert(:user, email: "a@xyz.org", first_name: "A", last_name: "B", role: "rw-organizer", hosts: [h1, h2])
-    update_attrs = %{email: "b@xyz.org", first_name: "X", last_name: "Y", role: "lw-organizer", host_ids: [h2.id, h3.id]}
+    user = insert(:user, email: "a@xyz.org", first_name: "A", last_name: "B", role: "local-organizer", hosts: [h1, h2])
+    update_attrs = %{email: "b@xyz.org", first_name: "X", last_name: "Y", role: "global-organizer", host_ids: [h2.id, h3.id]}
 
     assert {:ok, user} = Accounts.update_user(user, update_attrs)
     assert %User{} = user

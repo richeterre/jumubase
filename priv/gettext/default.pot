@@ -11,17 +11,18 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:31
+#: lib/jumubase_web/templates/internal/user/index.html.eex:33
 msgid "Add User"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/user_view.ex:36
+#: lib/jumubase_web/templates/internal/page/home.html.eex:14
+#: lib/jumubase_web/views/internal/user_view.ex:52
 msgid "Admin"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/new.html.eex:7
+#: lib/jumubase_web/templates/internal/user/new.html.eex:8
 msgid "Create User"
 msgstr ""
 
@@ -31,7 +32,7 @@ msgid "Die Website für “Jugend musiziert” an den Deutschen Schulen der Regi
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:22
+#: lib/jumubase_web/templates/internal/user/index.html.eex:24
 msgid "Do you really want to delete this user?"
 msgstr ""
 
@@ -46,22 +47,17 @@ msgid "Email"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/page/home.html.eex:2
-msgid "Hello %{name}!"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:19
 msgid "Home"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/user_view.ex:37
+#: lib/jumubase_web/views/internal/user_view.ex:53
 msgid "Inspector"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:27
+#: lib/jumubase_web/templates/layout/nav.html.eex:33
 msgid "Internal Pages"
 msgstr ""
 
@@ -77,16 +73,13 @@ msgid "Jumu logo"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/user_view.ex:38
-msgid "LW Organizer"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:24
+#: lib/jumubase_web/templates/layout/nav.html.eex:30
 msgid "Logout"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/host/index.html.eex:7
+#: lib/jumubase_web/templates/internal/host/new.html.eex:7
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
 msgid "Name"
 msgstr ""
@@ -97,41 +90,33 @@ msgid "New User"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:37
+#: lib/jumubase_web/templates/internal/user/form.html.eex:33
 msgid "Please choose"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:4
-msgid "Please correct the errors below and try again!"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/views/internal/user_view.ex:39
-msgid "RW Organizer"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/user/edit.html.eex:7
+#: lib/jumubase_web/templates/internal/user/edit.html.eex:8
 msgid "Save Changes"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/user_controller.ex:25
+#: lib/jumubase_web/controllers/internal/user_controller.ex:28
 msgid "The user %{name} was created."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/user_controller.ex:58
+#: lib/jumubase_web/controllers/internal/user_controller.ex:61
 msgid "The user %{name} was deleted."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/user_controller.ex:45
+#: lib/jumubase_web/controllers/internal/user_controller.ex:48
 msgid "The user %{name} was updated."
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/user_controller.ex:10
+#: lib/jumubase_web/templates/internal/page/home.html.eex:18
 #: lib/jumubase_web/templates/internal/user/index.html.eex:1
 msgid "Users"
 msgstr ""
@@ -162,21 +147,184 @@ msgid "Your password has been reset."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:50
+#: lib/jumubase_web/controllers/authorize.ex:46
+#: lib/jumubase_web/controllers/authorize.ex:55
 msgid "You are not authorized to view this page"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:70
+#: lib/jumubase_web/controllers/authorize.ex:75
 msgid "You have been logged in"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:76
+#: lib/jumubase_web/controllers/authorize.ex:81
 msgid "You need to log in to view this page"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:36
+#: lib/jumubase_web/controllers/authorize.ex:33
 msgid "You need to log out to view this page"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/index.html.eex:35
+msgid "Add Host"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/new.html.eex:15
+#: lib/jumubase_web/templates/session/new.html.eex:29
+msgid "Back"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:17
+msgid "Cancel (keep old password)"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/password_reset_controller.ex:16
+msgid "Check your inbox for instructions on how to reset your password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:1
+msgid "Choose Password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/index.html.eex:8
+#: lib/jumubase_web/templates/internal/host/new.html.eex:13
+msgid "City"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/index.html.eex:9
+msgid "Country"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:19
+msgid "Country code"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:30
+msgid "Create Host"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/new.html.eex:1
+msgid "Forgot Password?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/session/new.html.eex:14
+msgid "Forgot password?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/user_view.ex:54
+msgid "Global Organizer"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/page/home.html.eex:2
+msgid "Hallo %{name},"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/host_controller.ex:8
+#: lib/jumubase_web/templates/internal/host/index.html.eex:1
+#: lib/jumubase_web/templates/internal/page/home.html.eex:21
+#: lib/jumubase_web/templates/internal/user/form.html.eex:40
+#: lib/jumubase_web/templates/internal/user/index.html.eex:9
+msgid "Hosts"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/password_reset_controller.ex:52
+msgid "Invalid input"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/user_view.ex:55
+msgid "Local Organizer"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/session/new.html.eex:1
+#: lib/jumubase_web/templates/session/new.html.eex:25
+msgid "Login"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/page/home.html.eex:35
+msgid "My Contests"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:1
+msgid "New Host"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:5
+msgid "New password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/password_reset_controller.ex:19
+msgid "Please enter an email address"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/error/form_errors.html.eex:4
+msgid "Please fix the errors below and try again!"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/new.html.eex:11
+msgid "Send reset link"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:13
+msgid "Set password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/host_controller.ex:30
+msgid "The host \"%{name}\" was created."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/user.ex:39
+msgid "The password can't be blank"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/index.html.eex:10
+msgid "Time Zone"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:25
+msgid "Time zone"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/session_controller.ex:36
+msgid "You have been logged out"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/password_reset_controller.ex:43
+msgid "Your password has been reset"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/page/home.html.eex:5
+msgid "willkommen auf deinem persönlichen Jumu-Portal!"
 msgstr ""

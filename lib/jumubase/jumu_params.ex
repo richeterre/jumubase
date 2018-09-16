@@ -8,10 +8,10 @@ defmodule Jumubase.JumuParams do
   """
   def roles do
     [
-      # A "regular" user, organizing 1st-round (RW) contests
-      "rw-organizer",
-      # A user organizing 2nd-round (LW) contests
-      "lw-organizer",
+      # A "regular" user who organizes contests (typically RW) locally
+      "local-organizer",
+      # A user organizing LW (2nd round) contests in various countries
+      "global-organizer",
       # An outside official looking for statistics
       "inspector",
       # An omnipotent being

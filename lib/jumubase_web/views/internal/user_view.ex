@@ -31,7 +31,7 @@ defmodule JumubaseWeb.Internal.UserView do
   """
   def role_tag(role) do
     case role do
-      "rw-organizer" ->
+      "local-organizer" ->
         nil
       _ ->
         text = role_name(role)
@@ -51,8 +51,8 @@ defmodule JumubaseWeb.Internal.UserView do
     case role do
       "admin" -> gettext("Admin")
       "inspector" -> gettext("Inspector")
-      "lw-organizer" -> gettext("LW Organizer")
-      "rw-organizer" -> gettext("RW Organizer")
+      "global-organizer" -> gettext("Global Organizer")
+      "local-organizer" -> gettext("Local Organizer")
     end
   end
 
@@ -61,7 +61,7 @@ defmodule JumubaseWeb.Internal.UserView do
     case role do
       "admin" -> "danger"
       "inspector" -> "info"
-      "lw-organizer" -> "warning"
+      "global-organizer" -> "warning"
       _ -> "default"
     end
   end

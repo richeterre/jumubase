@@ -28,9 +28,9 @@ Repo.transaction fn ->
   User.create_changeset(%User{}, %{
     first_name: "Lukas",
     last_name: "Landeswetter",
-    email: "lw-org@example.org",
+    email: "global-org@example.org",
     password: "password",
-    role: "lw-organizer"
+    role: "global-organizer"
   })
   |> Changeset.put_assoc(:hosts, [host2])
   |> Repo.insert!
@@ -38,9 +38,9 @@ Repo.transaction fn ->
   User.create_changeset(%User{}, %{
     first_name: "Rieke",
     last_name: "Regionalwetter",
-    email: "rw-org@example.org",
+    email: "local-org@example.org",
     password: "password",
-    role: "rw-organizer"
+    role: "local-organizer"
   })
   |> Changeset.put_assoc(:hosts, [host3])
   |> Repo.insert!

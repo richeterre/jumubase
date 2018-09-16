@@ -30,7 +30,7 @@ defmodule Jumubase.ContestTest do
     end
 
     test "with an invalid round" do
-      for round <- [-1, 0, 4] do
+      for round <- [-1, 0, 3] do
         params = params_with_assocs(:contest, round: round)
         changeset = Contest.changeset(%Contest{}, params)
         refute changeset.valid?

@@ -36,7 +36,7 @@ defmodule Jumubase.Accounts.User do
     user
     |> cast(attrs, @base_attrs ++ [:password])
     |> validate_required(@base_attrs)
-    |> validate_required(:password, message: gettext("The password can't be blank"))
+    |> validate_required(:password)
     |> validate_inclusion(:role, JumuParams.roles())
     |> unique_email
     |> validate_password(:password)
@@ -68,5 +68,5 @@ defmodule Jumubase.Accounts.User do
   defp strong_password?(password) when byte_size(password) > 7 do
     {:ok, password}
   end
-  defp strong_password?(_), do: {:error, "The password is too short"}
+  defp strong_password?(_), do: {:error, dgettext("errors", "The password is too short")}
 end

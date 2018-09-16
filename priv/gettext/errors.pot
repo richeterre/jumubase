@@ -92,3 +92,18 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/user.ex:71
+msgid "The password is too short"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/foundation/contest.ex:44
+msgid "can't be before the start date"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/foundation/contest.ex:46
+msgid "must be before the start date"
+msgstr ""

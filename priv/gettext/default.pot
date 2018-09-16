@@ -57,7 +57,7 @@ msgid "Inspector"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:33
+#: lib/jumubase_web/templates/layout/nav.html.eex:34
 msgid "Internal Pages"
 msgstr ""
 
@@ -73,7 +73,7 @@ msgid "Jumu logo"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:30
+#: lib/jumubase_web/templates/layout/nav.html.eex:31
 msgid "Logout"
 msgstr ""
 
@@ -81,6 +81,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/new.html.eex:7
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
+#: lib/jumubase_web/templates/performance/new.html.eex:7
 msgid "Name"
 msgstr ""
 
@@ -196,6 +197,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:8
 #: lib/jumubase_web/templates/internal/host/new.html.eex:13
+#: lib/jumubase_web/templates/performance/new.html.eex:13
 msgid "City"
 msgstr ""
 
@@ -206,11 +208,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:19
+#: lib/jumubase_web/templates/performance/new.html.eex:19
 msgid "Country code"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:30
+#: lib/jumubase_web/templates/performance/new.html.eex:30
 msgid "Create Host"
 msgstr ""
 
@@ -300,17 +304,13 @@ msgid "The host \"%{name}\" was created."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/user.ex:39
-msgid "The password can't be blank"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 msgid "Time Zone"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:25
+#: lib/jumubase_web/templates/performance/new.html.eex:25
 msgid "Time zone"
 msgstr ""
 
@@ -327,4 +327,20 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/page/home.html.eex:5
 msgid "willkommen auf deinem persönlichen Jumu-Portal!"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/signup.html.eex:4
+msgid "Here you can sign up for your local \"Jugend musiziert\" contest."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/layout/nav.html.eex:20
+#: lib/jumubase_web/templates/page/signup.html.eex:1
+msgid "Sign up"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/new.html.eex:1
+msgid "Test"
 msgstr ""

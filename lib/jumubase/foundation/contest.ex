@@ -41,9 +41,9 @@ defmodule Jumubase.Foundation.Contest do
       !start_date || !end_date || !signup_deadline ->
         changeset
       Timex.before?(end_date, start_date) ->
-        add_error(changeset, :end_date, gettext("can't be before the start date"))
+        add_error(changeset, :end_date, dgettext("errors", "can't be before the start date"))
       not Timex.before?(signup_deadline, start_date) ->
-        add_error(changeset, :signup_deadline, gettext("must be before the start date"))
+        add_error(changeset, :signup_deadline, dgettext("errors", "must be before the start date"))
       true ->
         changeset
     end

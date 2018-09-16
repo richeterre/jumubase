@@ -4,7 +4,7 @@ defmodule Jumubase.Factory do
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Contest, Host}
 
-  @season 55
+  @season 56
 
   def contest_factory do
     year = JumuParams.year(@season)

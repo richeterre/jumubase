@@ -1,5 +1,7 @@
+import Jumubase.Factory
 alias Ecto.Changeset
 alias Jumubase.Repo
+alias Jumubase.JumuParams
 alias Jumubase.Accounts.User
 alias Jumubase.Foundation.Host
 
@@ -10,7 +12,7 @@ Repo.transaction fn ->
 
   # Create demo hosts
 
-  _host1 = Repo.insert!(%Host{name: "DS Helsinki", city: "Helsinki", country_code: "FI", time_zone: "Europe/Helsinki"})
+  host1 = Repo.insert!(%Host{name: "DS Helsinki", city: "Helsinki", country_code: "FI", time_zone: "Europe/Helsinki"})
   host2 = Repo.insert!(%Host{name: "DS Stockholm", city: "Stockholm", country_code: "SE", time_zone: "Europe/Stockholm"})
   host3 = Repo.insert!(%Host{name: "DS Dublin", city: "Dublin", country_code: "IE", time_zone: "Europe/Dublin"})
 
@@ -54,6 +56,21 @@ Repo.transaction fn ->
   })
   |> Repo.insert!
 
-  # Confirm all users
   Repo.update_all(User, set: [confirmed_at: DateTime.utc_now()])
+
+  # Create demo contests
+
+  season = 56
+  year = JumuParams.year(season)
+
+  _contest1 = insert(:contest, host: host1)
+  _contest2 = insert(:contest, host: host2)
+  _contest3 = insert(:contest, host: host3)
+  _contest4 = insert(:contest, %{
+    host: host1,
+    round: 2,
+    start_date: %{day: 15, month: 3, year: year},
+    end_date: %{day: 17, month: 3, year: year},
+    signup_deadline: %{day: 28, month: 2, year: year}
+  })
 end

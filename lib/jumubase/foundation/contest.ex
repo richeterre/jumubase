@@ -14,6 +14,7 @@ defmodule Jumubase.Foundation.Contest do
     field :signup_deadline, Timex.Ecto.Date
 
     belongs_to :host, Host
+    has_many :contest_categories, ContestCategory
 
     timestamps()
   end

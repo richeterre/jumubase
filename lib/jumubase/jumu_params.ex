@@ -32,4 +32,25 @@ defmodule Jumubase.JumuParams do
       "admin"
     ]
   end
+
+  @doc """
+  Returns all possible age groups.
+  """
+  def age_groups do
+    ["Ia", "Ib", "II", "III", "IV", "V", "VI", "VII"]
+  end
+
+  @doc """
+  Returns all possible category genres.
+  """
+  def genres do
+    ["classical", "popular"]
+  end
+
+  @doc """
+  Returns all possible category types.
+  """
+  def category_types do
+    ["solo", "ensemble"]
+  end
 end

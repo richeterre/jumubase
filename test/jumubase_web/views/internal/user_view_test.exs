@@ -8,6 +8,20 @@ defmodule JumubaseWeb.Internal.UserViewTest do
     assert UserView.full_name(user) == "First Last"
   end
 
+  test "returns the flags of a user's associated hosts" do
+    h1 = build(:host, country_code: "FI")
+    h2 = build(:host, country_code: "SE")
+    user = build(:user, hosts: [h1, h2])
+    assert UserView.host_flags(user) == ["🇫🇮", "🇸🇪"]
+  end
+
+  test "returns the names of a user's associated hosts" do
+    h1 = build(:host, name: "DS Helsinki")
+    h2 = build(:host, name: "DS Stockholm")
+    user = build(:user, hosts: [h1, h2])
+    assert UserView.host_names(user) == "DS Helsinki, DS Stockholm"
+  end
+
   describe "role_tag/1" do
     test "returns nothing for RW Organizers" do
       user = build(:user, role: "local-organizer")

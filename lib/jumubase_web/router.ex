@@ -19,6 +19,7 @@ defmodule JumubaseWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/signup", PageController, :signup
 
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/password-resets", PasswordResetController, only: [:new, :create]

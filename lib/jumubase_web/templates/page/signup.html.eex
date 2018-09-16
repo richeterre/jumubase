@@ -1,0 +1,11 @@
+<h1><%= gettext("Sign up") %></h1>
+
+<p class="lead">
+  <%= gettext("Here you can sign up for your local \"Jugend musiziert\" contest.") %>
+</p>
+
+<ul>
+  <%= for contest <- @contests do %>
+    <li><%= contest_name(contest) %></li>
+  <% end %>
+</ul>

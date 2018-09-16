@@ -21,8 +21,8 @@ defmodule JumubaseWeb do
     quote do
       use Phoenix.Controller, namespace: JumubaseWeb
       import Plug.Conn
+      import Jumubase.Gettext
       import JumubaseWeb.Router.Helpers
-      import JumubaseWeb.Gettext
       import JumubaseWeb.Breadcrumbs
       import JumubaseWeb.Authorize
     end
@@ -40,11 +40,11 @@ defmodule JumubaseWeb do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
+      import Jumubase.Gettext
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthHelpers
       import JumubaseWeb.ErrorHelpers
       import JumubaseWeb.IconHelpers
-      import JumubaseWeb.Gettext
     end
   end
 
@@ -59,7 +59,7 @@ defmodule JumubaseWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import JumubaseWeb.Gettext
+      import Jumubase.Gettext
     end
   end
 

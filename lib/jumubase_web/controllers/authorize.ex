@@ -2,7 +2,7 @@ defmodule JumubaseWeb.Authorize do
 
   import Plug.Conn
   import Phoenix.Controller
-  import JumubaseWeb.Gettext
+  import Jumubase.Gettext
   import JumubaseWeb.Router.Helpers
 
   # This function can be used to customize the `action` function in

@@ -40,9 +40,9 @@ defmodule JumubaseWeb.ErrorHelpers do
     #     dgettext "errors", "is invalid"
     #
     if count = opts[:count] do
-      Gettext.dngettext(JumubaseWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(Jumubase.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(JumubaseWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(Jumubase.Gettext, "errors", msg, opts)
     end
   end
 end

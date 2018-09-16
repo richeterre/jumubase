@@ -1,7 +1,7 @@
 defmodule Jumubase.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  import JumubaseWeb.Gettext
+  import Jumubase.Gettext
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.Host

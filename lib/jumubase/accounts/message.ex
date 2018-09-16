@@ -4,7 +4,7 @@ defmodule Jumubase.Accounts.Message do
   """
 
   import Bamboo.Email
-  import JumubaseWeb.Gettext
+  import Jumubase.Gettext
   import JumubaseWeb.Router.Helpers, only: [password_reset_url: 3]
   alias Jumubase.Mailer
 

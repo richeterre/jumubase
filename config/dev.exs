@@ -14,6 +14,10 @@ config :jumubase, JumubaseWeb.Endpoint,
   watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
                     cd: Path.expand("../assets", __DIR__)]]
 
+# Set Phauxth token salt
+config :phauxth,
+  token_salt: System.get_env("PHAUXTH_TOKEN_SALT") || "xxxxxxxx"
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

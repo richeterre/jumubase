@@ -1,4 +1,4 @@
-<h1><%= gettext("Sign up") %></h1>
+<h2><%= gettext("Sign up") %></h2>
 
 <p class="lead">
   <%= gettext("Here you can sign up for your local \"Jugend musiziert\" contest.") %>
@@ -6,6 +6,6 @@
 
 <ul>
   <%= for contest <- @contests do %>
-    <li><%= contest_name(contest) %></li>
+    <li><%= link contest_name(contest), to: performance_path(@conn, :new, contest) %></li>
   <% end %>
 </ul>

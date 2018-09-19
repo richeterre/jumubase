@@ -20,6 +20,7 @@ defmodule JumubaseWeb.Router do
 
     get "/", PageController, :home
     get "/signup", PageController, :signup
+    resources "/contests/:contest_id/performances", PerformanceController, only: [:new, :create]
 
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/password-resets", PasswordResetController, only: [:new, :create]

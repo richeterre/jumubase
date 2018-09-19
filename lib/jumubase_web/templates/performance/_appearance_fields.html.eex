@@ -1,0 +1,66 @@
+<%= inputs_for @form, :participant, fn p -> %>
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label p, :given_name, gettext("First name") %>
+      <%= text_input p, :given_name, class: "form-control" %>
+      <%= error_tag p, :given_name %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= label p, :family_name, gettext("Last name") %>
+      <%= text_input p, :family_name, class: "form-control" %>
+      <%= error_tag p, :family_name %>
+    </div>
+
+    <div class="form-group col-md-5">
+      <%= label p, :birthdate, gettext("Birthdate") %>
+      <%= date_select p, :birthdate, builder: fn b -> %>
+      <div class="row">
+
+        <div class="col-md-3">
+          <%= b.(:day, [class: "form-control"]) %>
+        </div>
+        <div class="col-md-5">
+          <%= b.(:month, [class: "form-control"]) %>
+        </div>
+        <div class="col-md-4">
+          <%= b.(:year, [class: "form-control"]) %>
+        </div>
+      </div>
+      <% end %>
+      <%= error_tag p, :birthdate %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label @form, :participant_role, gettext("Role") %>
+      <%= select @form, :participant_role, role_options(),
+        prompt: gettext("Please choose"), class: "form-control"
+        %>
+      <%= error_tag @form, :participant_role %>
+    </div>
+
+    <div class="form-group col-md-4">
+      <%= label @form, :instrument, gettext("Instrument") %>
+      <%= select @form, :instrument, instrument_options(),
+        prompt: gettext("Please choose"), class: "form-control"
+        %>
+      <%= error_tag @form, :instrument %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-4">
+      <%= label p, :phone, gettext("Phone") %>
+      <%= text_input p, :phone, class: "form-control" %>
+      <%= error_tag p, :phone %>
+    </div>
+
+    <div class="form-group col-md-5">
+      <%= label p, :email, gettext("Email") %>
+      <%= text_input p, :email, class: "form-control" %>
+      <%= error_tag p, :email %>
+    </div>
+  </div>
+<% end %>

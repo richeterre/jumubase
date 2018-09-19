@@ -6,6 +6,10 @@ config :jumubase, JumubaseWeb.Endpoint,
   http: [port: 4001],
   server: false
 
+# Configure Phauxth authentication
+config :phauxth,
+  token_salt: System.get_env("PHAUXTH_TOKEN_SALT") || "xxxxxxxx"
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

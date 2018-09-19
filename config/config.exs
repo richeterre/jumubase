@@ -19,7 +19,6 @@ config :jumubase, JumubaseWeb.Endpoint,
 
 # Configure Phauxth authentication
 config :phauxth,
-  token_salt: System.get_env("PHAUXTH_TOKEN_SALT"),
   endpoint: JumubaseWeb.Endpoint
 
 # Configure mailer

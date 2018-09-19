@@ -26,4 +26,12 @@ defmodule Jumubase.Foundation do
 
     Repo.all(query)
   end
+
+  def get_contest!(id) do
+    Repo.get!(Contest, id) |> Repo.preload(:host)
+  end
+
+  def load_contest_categories(%Contest{} = contest) do
+    Repo.preload(contest, [contest_categories: :category])
+  end
 end

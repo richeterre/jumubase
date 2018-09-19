@@ -4,7 +4,7 @@ defmodule Jumubase.Foundation.Contest do
   import Jumubase.Gettext
   alias Ecto.Changeset
   alias Jumubase.JumuParams
-  alias Jumubase.Foundation.{Contest, Host}
+  alias Jumubase.Foundation.{Contest, ContestCategory, Host}
 
   schema "contests" do
     field :season, :integer

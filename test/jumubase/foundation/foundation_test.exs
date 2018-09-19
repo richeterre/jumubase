@@ -1,6 +1,7 @@
 defmodule Jumubase.FoundationTest do
   use Jumubase.DataCase
   alias Jumubase.Foundation
+  alias Jumubase.Foundation.{Category, Host}
 
   test "list_hosts/0 returns all hosts" do
     host = insert(:host)
@@ -26,5 +27,31 @@ defmodule Jumubase.FoundationTest do
   test "list_open_contests/0 does not return 2nd round contests" do
     insert(:contest, signup_deadline: Timex.today, round: 2)
     assert Foundation.list_open_contests == []
+  end
+
+  test "get_contest!/1 returns a contest" do
+    contest = insert(:contest)
+    assert Foundation.get_contest!(contest.id) == contest
+  end
+
+  test "get_contest!/1 preloads the contest's host" do
+    %{id: id} = insert(:contest)
+    result = Foundation.get_contest!(id)
+    assert %Host{} = result.host
+  end
+
+  test "get_contest!/1 raises an error if the contest isn't found" do
+    assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest!(123) end
+  end
+
+  test "load_contest_categories/1 preloads a contest's contest categories" do
+    contest = build(:contest,
+      contest_categories: build_list(1, :contest_category,
+        category: build(:category, name: "ABC")
+      )
+    )
+
+    %{id: id} = contest = Foundation.load_contest_categories(contest)
+    assert [%{contest_id: ^id, category: %Category{name: "ABC"}}] = contest.contest_categories
   end
 end

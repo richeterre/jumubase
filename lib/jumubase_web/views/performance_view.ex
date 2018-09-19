@@ -4,10 +4,10 @@ defmodule JumubaseWeb.PerformanceView do
   alias Jumubase.JumuParams
 
   @doc """
-  Renders JS that powers the signup form.
+  Renders JS that powers the registration form.
   """
   def render("scripts.new.html", _assigns) do
-    ~E(<script src="/js/signup.js"></script>)
+    ~E(<script src="/js/registration.js"></script>)
   end
 
   def role_options do

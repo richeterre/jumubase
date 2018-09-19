@@ -13,19 +13,19 @@ defmodule Jumubase.FoundationTest do
     assert Foundation.list_hosts([h2.id, h3.id]) == [h2, h3]
   end
 
-  test "list_open_contests/0 returns contests the user can sign up for" do
-    c1 = insert(:contest, signup_deadline: Timex.today |> Timex.shift(days: 1))
-    c2 = insert(:contest, signup_deadline: Timex.today)
+  test "list_open_contests/0 returns contests the user can register for" do
+    c1 = insert(:contest, deadline: Timex.today |> Timex.shift(days: 1))
+    c2 = insert(:contest, deadline: Timex.today)
     assert Foundation.list_open_contests == [c1, c2]
   end
 
   test "list_open_contests/0 does not return contests with a past signup deadline" do
-    insert(:contest, signup_deadline: Timex.today |> Timex.shift(days: -1))
+    insert(:contest, deadline: Timex.today |> Timex.shift(days: -1))
     assert Foundation.list_open_contests == []
   end
 
   test "list_open_contests/0 does not return 2nd round contests" do
-    insert(:contest, signup_deadline: Timex.today, round: 2)
+    insert(:contest, deadline: Timex.today, round: 2)
     assert Foundation.list_open_contests == []
   end
 

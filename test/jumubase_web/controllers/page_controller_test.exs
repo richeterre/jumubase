@@ -6,9 +6,10 @@ defmodule JumubaseWeb.PageControllerTest do
     assert html_response(conn, 200) =~ "Nord- und Osteuropa"
   end
 
-  test "lists open contests on the signup page", %{conn: conn} do
-    [c1, c2] = insert_list(2, :contest, signup_deadline: Timex.today)
-    conn = get(conn, "/signup")
+  test "lists open contests on the registration page", %{conn: conn} do
+    [c1, c2] = insert_list(2, :contest, deadline: Timex.today)
+    conn = get(conn, "/registration")
+    assert html_response(conn, 200) =~ "Registration"
     assert html_response(conn, 200) =~ JumubaseWeb.PageView.contest_name(c1)
     assert html_response(conn, 200) =~ JumubaseWeb.PageView.contest_name(c2)
   end

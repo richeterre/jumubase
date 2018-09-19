@@ -72,7 +72,7 @@ Repo.transaction fn ->
     round: 2,
     start_date: %{day: 15, month: 3, year: year},
     end_date: %{day: 17, month: 3, year: year},
-    signup_deadline: %{day: 28, month: 2, year: year}
+    deadline: %{day: 28, month: 2, year: year}
   })
 
   # Create demo categories

@@ -1,5 +1,5 @@
 <h2>
-  <%= gettext("Anmeldung") %>
+  <%= gettext("Register") %>
   <br>
   <small><%= contest_name(@contest) %></small>
 </h2>

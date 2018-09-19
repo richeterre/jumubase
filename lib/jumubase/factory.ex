@@ -35,7 +35,7 @@ defmodule Jumubase.Factory do
       host: build(:host),
       start_date: %{day: 1, month: 1, year: year},
       end_date: %{day: 2, month: 1, year: year},
-      signup_deadline: %{day: 15, month: 12, year: year - 1}
+      deadline: %{day: 15, month: 12, year: year - 1}
     }
   end
 

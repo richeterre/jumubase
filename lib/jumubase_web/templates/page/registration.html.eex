@@ -1,7 +1,7 @@
-<h2><%= gettext("Sign up") %></h2>
+<h2><%= gettext("Registration") %></h2>
 
 <p class="lead">
-  <%= gettext("Here you can sign up for your local \"Jugend musiziert\" contest.") %>
+  <%= gettext("Here you can register for your local \"Jugend musiziert\" contest.") %>
 </p>
 
 <ul>

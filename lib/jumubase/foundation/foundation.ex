@@ -16,12 +16,12 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
-  Returns a list of contests that participants can sign up for.
+  Returns a list of contests that participants can register for.
   """
   def list_open_contests do
     query = from c in Contest,
       where: c.round == 1,
-      where: c.signup_deadline >= ^Timex.today, # uses UTC
+      where: c.deadline >= ^Timex.today, # uses UTC
       preload: :host
 
     Repo.all(query)

@@ -4,11 +4,7 @@ defmodule Jumubase.PerformanceTest do
 
   describe "changeset" do
     setup %{} do
-      attrs =
-        params_with_assocs(:performance)
-        |> Map.put(:appearances, [valid_appearance_attrs()])
-
-      [valid_attrs: attrs]
+      [valid_attrs: valid_performance_attrs()]
     end
 
     test "with valid attributes", %{valid_attrs: valid_attrs} do

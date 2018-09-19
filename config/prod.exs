@@ -18,6 +18,10 @@ config :jumubase, JumubaseWeb.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+# Set Phauxth token salt
+config :phauxth,
+  token_salt: System.get_env("PHAUXTH_TOKEN_SALT")
+
 # Do not print debug messages in production
 config :logger, level: :info
 

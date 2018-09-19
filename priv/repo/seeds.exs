@@ -29,8 +29,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Lukas",
-    last_name: "Landeswetter",
+    first_name: "Gustav",
+    last_name: "Globalheimer",
     email: "global-org@example.org",
     password: "password",
     role: "global-organizer"
@@ -39,8 +39,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Rieke",
-    last_name: "Regionalwetter",
+    first_name: "Lucie",
+    last_name: "Lokalheldin",
     email: "local-org@example.org",
     password: "password",
     role: "local-organizer"
@@ -49,9 +49,9 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Ivo",
-    last_name: "Inspektor",
-    email: "inspektor@example.org",
+    first_name: "Bernd",
+    last_name: "Beobachter",
+    email: "inspector@example.org",
     password: "password",
     role: "inspector"
   })

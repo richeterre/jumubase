@@ -15,7 +15,7 @@ defmodule Jumubase.Showtime.Appearance do
     timestamps()
   end
 
-  @required_attrs [:performance_id, :participant_role, :instrument]
+  @required_attrs [:participant_role, :instrument]
 
   @doc false
   def changeset(%Appearance{} = appearance, attrs) do

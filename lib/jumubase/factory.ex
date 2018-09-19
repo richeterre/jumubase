@@ -1,10 +1,22 @@
 defmodule Jumubase.Factory do
   use ExMachina.Ecto, repo: Jumubase.Repo
+  import Jumubase.Showtime.Performance, only: [to_edit_code: 1]
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
+  alias Jumubase.Showtime.{Appearance, Participant, Performance}
 
   @season 56
+
+  def appearance_factory do
+    %Appearance{
+      performance: build(:performance),
+      participant: build(:participant),
+      participant_role: "soloist",
+      instrument: "piano",
+      points: nil
+    }
+  end
 
   def category_factory do
     %Category{
@@ -44,6 +56,24 @@ defmodule Jumubase.Factory do
       city: "Jumutown",
       country_code: "DE",
       time_zone: "Europe/Berlin"
+    }
+  end
+
+  def participant_factory do
+    %Participant{
+      given_name: "Parti",
+      family_name: sequence(:given_name, &"Cipant #{&1}"),
+      birthdate: %{day: 1, month: 1, year: JumuParams.year(@season) - 14},
+      phone: "123456789",
+      email: sequence(:email, &"participant.#{&1}@example.org")
+    }
+  end
+
+  def performance_factory do
+    %Performance{
+      contest_category: build(:contest_category),
+      edit_code: sequence(:edit_code, &to_edit_code/1),
+      age_group: nil,
     }
   end
 

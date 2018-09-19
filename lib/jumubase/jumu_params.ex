@@ -53,4 +53,11 @@ defmodule Jumubase.JumuParams do
   def category_types do
     ["solo", "ensemble"]
   end
+
+  @doc """
+  Returns all possible participant roles.
+  """
+  def participant_roles do
+    ["soloist", "accompanist", "ensemblist"]
+  end
 end

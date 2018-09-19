@@ -6,8 +6,8 @@ defmodule JumubaseWeb.PageViewTest do
     contest = build(:contest,
       season: 55,
       round: 1,
-      host: build(:host, name: "DS Helsinki")
+      host: build(:host, country_code: "FI", name: "DS Helsinki")
     )
-    assert PageView.contest_name(contest) == "DS Helsinki, RW 2018"
+    assert PageView.contest_name(contest) == "🇫🇮 DS Helsinki, RW 2018"
   end
 end

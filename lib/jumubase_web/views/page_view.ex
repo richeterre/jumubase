@@ -6,7 +6,7 @@ defmodule JumubaseWeb.PageView do
   def contest_name(%Contest{} = contest) do
     round_name = short_round_name(contest.round)
     contest_year = JumuParams.year(contest.season)
-    "#{contest.host.name}, #{round_name} #{contest_year}"
+    "#{emoji_flag(contest.host.country_code)} #{contest.host.name}, #{round_name} #{contest_year}"
   end
 
   defp short_round_name(round) do

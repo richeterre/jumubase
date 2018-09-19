@@ -56,3 +56,7 @@ config :jumubase, Jumubase.Repo,
   database: "jumubase_dev",
   hostname: "localhost",
   pool_size: 10
+
+# Configure Phauxth authentication
+config :phauxth,
+  token_salt: String.duplicate("x", 8)

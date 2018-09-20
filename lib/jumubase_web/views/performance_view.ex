@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
-  import JumubaseWeb.PageView, only: [contest_name: 1]
+  import JumubaseWeb.Internal.ContestView, only: [contest_name: 1]
   import Phoenix.HTML
   alias Jumubase.JumuParams
 

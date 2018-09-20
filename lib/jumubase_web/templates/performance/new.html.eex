@@ -5,15 +5,13 @@
 </h2>
 
 <div class="row">
-  <div id="signup-form" class="col-lg-9">
+  <div id="registration-form" class="col-lg-9">
     <%= form_for @changeset, performance_path(@conn, :create, @contest), fn f -> %>
       <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
       <div class="row">
         <div class="form-group col-md-5">
-          <label for="performance_contest_category_id">
-            <%= gettext("Category") %>
-          </label>
+          <%= label f, :contest_category_id, gettext("Category") %>
           <select
             id="performance_contest_category_id"
             name="performance[contest_category_id]"
@@ -22,7 +20,8 @@
             <option
               v-for="option in contest_category_options"
               v-bind:value="option.id"
-              v-text="option.name"></option>
+              v-text="option.name">
+            </option>
           </select>
           <%= error_tag f, :contest_category_id %>
         </div>

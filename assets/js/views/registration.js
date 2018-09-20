@@ -1,12 +1,11 @@
 import Vue from 'vue/dist/vue.js'
 
-function signupForm(data) {
+function registrationForm(data) {
   new Vue({
-    el: '#signup-form',
+    el: '#registration-form',
     data
   })
 }
 
-// Make signupForm() available to global <script> tags
-window.signupForm = signupForm
-
+// Make registrationForm() available to global <script> tags
+window.registrationForm = registrationForm

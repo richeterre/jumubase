@@ -23,7 +23,7 @@ defmodule JumubaseWeb.PerformanceView do
 
     ~E{
       <script src="/js/registration.js"></script>
-      <script>signupForm(<%= raw(json) %>)</script>
+      <script>registrationForm(<%= raw(json) %>)</script>
     }
   end
 

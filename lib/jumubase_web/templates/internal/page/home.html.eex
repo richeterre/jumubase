@@ -20,6 +20,9 @@
           <li class="list-group-item">
             <%= icon_link("globe", gettext("Hosts"), internal_host_path(@conn, :index)) %>
           </li>
+          <li class="list-group-item">
+            <%= icon_link("music", gettext("Contests"), internal_contest_path(@conn, :index)) %>
+          </li>
         </ul>
       </div>
     <% end %>

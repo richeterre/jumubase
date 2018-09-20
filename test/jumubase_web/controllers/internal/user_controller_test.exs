@@ -73,14 +73,14 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   describe "for a non-admin" do
     for role <- List.delete(JumuParams.roles(), "admin") do
       @tag login_as: role
-      test "(#{role}) redirects when trying to perform any user action", %{conn: conn} do
+      test "(#{role}) redirects when trying to perform any action", %{conn: conn} do
         verify_all_routes(conn, &assert_unauthorized_user/1)
       end
     end
   end
 
   describe "for a guest" do
-    test "redirects when trying to perform any user action", %{conn: conn} do
+    test "redirects when trying to perform any action", %{conn: conn} do
       verify_all_routes(conn, &assert_unauthorized_guest/1)
     end
   end

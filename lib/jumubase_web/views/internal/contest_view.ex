@@ -4,10 +4,33 @@ defmodule JumubaseWeb.Internal.ContestView do
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.Contest
 
+  @doc """
+  Returns a display name for the given contest.
+  """
   def contest_name(%Contest{} = contest) do
     round_name = short_round_name(contest.round)
     contest_year = JumuParams.year(contest.season)
     "#{emoji_flag(contest.host.country_code)} #{contest.host.name}, #{round_name} #{contest_year}"
+  end
+
+  @doc """
+  Returns the given contest's date(s) in a formatted way.
+  """
+  def contest_dates(%Contest{start_date: sd, end_date: ed}) do
+    cond do
+      sd == ed ->
+        format_date(sd)
+      true ->
+        "#{format_date(sd)} – #{format_date(ed)}"
+    end
+  end
+
+  @doc """
+  Formats the given date for display.
+  """
+  def format_date(%Date{} = date) do
+    format = "{D} {Mshort} {YYYY}"
+    Timex.format!(date, format)
   end
 
   # Private helpers

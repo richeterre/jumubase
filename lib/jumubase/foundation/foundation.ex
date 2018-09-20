@@ -15,6 +15,10 @@ defmodule Jumubase.Foundation do
     Repo.all(from h in Host, where: h.id in ^ids)
   end
 
+  def list_contests do
+    Repo.all(Contest) |> Repo.preload(:host)
+  end
+
   @doc """
   Returns a list of contests that participants can register for.
   """

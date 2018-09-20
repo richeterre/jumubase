@@ -66,7 +66,11 @@ Repo.transaction fn ->
 
   contest1 = insert(:contest, host: host1)
   contest2 = insert(:contest, host: host2)
-  contest3 = insert(:contest, host: host3)
+  contest3 = insert(:contest,
+    start_date: %{day: 1, month: 1, year: year},
+    end_date: %{day: 1, month: 1, year: year},
+    host: host3
+  )
   contest4 = insert(:contest, %{
     host: host1,
     round: 2,

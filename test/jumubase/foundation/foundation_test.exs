@@ -13,6 +13,17 @@ defmodule Jumubase.FoundationTest do
     assert Foundation.list_hosts([h2.id, h3.id]) == [h2, h3]
   end
 
+  test "list_contests/0 returns all contests" do
+    contests = insert_list(2, :contest)
+    assert Foundation.list_contests == contests
+  end
+
+  test "list_contests/0 preloads the contests' hosts" do
+    insert(:contest)
+    [result] = Foundation.list_contests
+    assert %Host{} = result.host
+  end
+
   test "list_open_contests/0 returns contests the user can register for" do
     c1 = insert(:contest, deadline: Timex.today |> Timex.shift(days: 1))
     c2 = insert(:contest, deadline: Timex.today)

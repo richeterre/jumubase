@@ -27,6 +27,9 @@ defmodule JumubaseWeb.PerformanceView do
     }
   end
 
+  @doc """
+  Returns a list of all participant roles in a form option format.
+  """
   def role_options do
     Enum.map(JumuParams.participant_roles, fn
       "soloist" -> {gettext("Soloist"), "soloist"}
@@ -35,10 +38,11 @@ defmodule JumubaseWeb.PerformanceView do
     end)
   end
 
+  @doc """
+  Returns a list of all instruments in a form option format.
+  """
   def instrument_options do
-    [
-      {gettext("Vocals"), "VOCALS"},
-      {gettext("Piano"), "PIANO"},
-    ]
+    Jumubase.Showtime.Instruments.all
+    |> Enum.map(fn {key, value} -> {value, key} end)
   end
 end

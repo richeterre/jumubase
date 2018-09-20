@@ -14,6 +14,14 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn = get(conn, internal_contest_performance_path(conn, :index, contest))
       assert html_response(conn, 200) =~ "Performances"
     end
+
+    test "shows a single performance", %{conn: conn} do
+      %{
+        contest_category: %{contest: contest}
+      } = performance = insert(:performance)
+      conn = get(conn, internal_contest_performance_path(conn, :show, contest, performance))
+      assert html_response(conn, 200) =~ "Performance Details"
+    end
   end
 
   describe "for a non-admin" do
@@ -36,6 +44,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   defp verify_all_routes(conn, assertion_fun) do
     Enum.each([
       get(conn, internal_contest_performance_path(conn, :index, 123)),
+      get(conn, internal_contest_performance_path(conn, :show, 123, 456)),
     ], fn conn ->
       assertion_fun.(conn)
     end)

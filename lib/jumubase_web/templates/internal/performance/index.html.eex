@@ -11,7 +11,11 @@
     <tbody>
       <%= for performance <- @performances do %>
       <tr>
-        <td><%= category_name(performance) %></td>
+        <td>
+          <%= link category_name(performance),
+            to: internal_contest_performance_path(@conn, :show, @contest, performance)
+            %>
+        </td>
         <td><code><%= performance.edit_code %></code></td>
       </tr>
       <% end %>

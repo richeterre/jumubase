@@ -19,6 +19,19 @@ defmodule Jumubase.Showtime do
     Repo.all(query)
   end
 
+  @doc """
+  Gets a single performance from the given contest.
+
+  Raises `Ecto.NoResultsError` if the performance isn't found in that contest.
+  """
+  def get_performance!(%Contest{id: contest_id}, id) do
+    Performance
+    |> join(:left, [p], cc in assoc(p, :contest_category))
+    |> where([_, cc], cc.contest_id == ^contest_id)
+    |> preload([_, cc], [contest_category: {cc, :category}])
+    |> Repo.get!(id)
+  end
+
   def create_performance(attrs \\ %{}) do
     %Performance{}
     |> Performance.changeset(attrs)

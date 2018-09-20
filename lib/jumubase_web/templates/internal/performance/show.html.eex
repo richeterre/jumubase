@@ -1,0 +1,12 @@
+<h2>
+  <%= gettext("Performance Details") %>
+  <br>
+  <small><%= category_name(@performance) %></small>
+  <br>
+</h2>
+
+<hr>
+
+<p>
+  <%= gettext("Edit code") %>: <code><%= @performance.edit_code %></code>
+</p>

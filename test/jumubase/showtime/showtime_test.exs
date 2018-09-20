@@ -27,6 +27,28 @@ defmodule Jumubase.ShowtimeTest do
       }] = Showtime.list_performances(c)
     end
 
+    test "get_performance!/2 gets a performance from the given contest by id" do
+      %{id: id, contest_category: %{contest: c}} = insert(:performance)
+
+      result = Showtime.get_performance!(c, id)
+      assert result.id == id
+    end
+
+    test "get_performance!/2 raises an error if the performance isn't found in the given contest" do
+      c = insert(:contest)
+      %{id: id} = insert(:performance)
+
+      assert_raise Ecto.NoResultsError, fn -> Showtime.get_performance!(c, id) end
+    end
+
+    test "get_performance!/2 preloads the performance's contest category + category" do
+      %{id: id, contest_category: %{contest: c}} = insert(:performance)
+
+      assert %Performance{
+        contest_category: %ContestCategory{category: %Category{}}
+      } = Showtime.get_performance!(c, id)
+    end
+
     test "create_performance/1 creates a new performance" do
       attrs = valid_performance_attrs()
 

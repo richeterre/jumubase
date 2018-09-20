@@ -12,7 +12,11 @@
     <tbody>
       <%= for contest <- @contests do %>
       <tr>
-        <td><%= name_with_flag(contest) %></td>
+        <td>
+          <%= link name_with_flag(contest),
+            to: internal_contest_path(@conn, :show, contest)
+            %>
+        </td>
         <td><%= dates(contest) %></td>
         <td><%= format_date(contest.deadline) %></td>
       </tr>

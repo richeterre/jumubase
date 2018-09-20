@@ -1,0 +1,20 @@
+<h2><%= gettext("Performances") %></h2>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Edit code") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+      <tr>
+        <td><%= category_name(performance) %></td>
+        <td><code><%= performance.edit_code %></code></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,5 @@
-defmodule JumubaseWeb.Internal.ContestControllerTest do
+defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   use JumubaseWeb.ConnCase
-  import JumubaseWeb.Internal.ContestView, only: [name: 1]
   alias Jumubase.JumuParams
 
   setup config do
@@ -10,15 +9,10 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
   describe "for an admin" do
     @describetag login_as: "admin"
 
-    test "lists all contests", %{conn: conn} do
-      conn = get(conn, internal_contest_path(conn, :index))
-      assert html_response(conn, 200) =~ "Contests"
-    end
-
-    test "shows a single contest", %{conn: conn} do
+    test "lists a contest's performances", %{conn: conn} do
       contest = insert(:contest)
-      conn = get(conn, internal_contest_path(conn, :show, contest))
-      assert html_response(conn, 200) =~ name(contest)
+      conn = get(conn, internal_contest_performance_path(conn, :index, contest))
+      assert html_response(conn, 200) =~ "Performances"
     end
   end
 
@@ -41,8 +35,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
 
   defp verify_all_routes(conn, assertion_fun) do
     Enum.each([
-      get(conn, internal_contest_path(conn, :index)),
-      get(conn, internal_contest_path(conn, :show, 123)),
+      get(conn, internal_contest_performance_path(conn, :index, 123)),
     ], fn conn ->
       assertion_fun.(conn)
     end)

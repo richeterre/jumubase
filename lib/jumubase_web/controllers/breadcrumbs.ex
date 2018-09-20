@@ -1,4 +1,8 @@
 defmodule JumubaseWeb.Breadcrumbs do
+  import Jumubase.Gettext
+  import JumubaseWeb.Router.Helpers
+  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  alias Jumubase.Foundation.Contest
 
   @doc """
   Adds a breadcrumb to the navigation hierarchy.
@@ -11,5 +15,21 @@ defmodule JumubaseWeb.Breadcrumbs do
     breadcrumb = [name: opts[:name], icon: opts[:icon], path: path]
     breadcrumbs = Map.get(conn.assigns, :breadcrumbs, []) ++ [breadcrumb]
     conn |> Plug.Conn.assign(:breadcrumbs, breadcrumbs)
+  end
+
+  @doc """
+  Adds a breadcrumb for the contest to the hierarchy.
+  """
+  def add_contest_breadcrumb(conn, %Contest{} = contest) do
+    add_breadcrumb(conn, name: name_with_flag(contest),
+      path: internal_contest_path(conn, :show, contest))
+  end
+
+  @doc """
+  Adds a breadcrumb for the contest's performance list to the hierarchy.
+  """
+  def add_performances_breadcrumb(conn, %Contest{} = contest) do
+    add_breadcrumb(conn, name: gettext("Performances"),
+      path: internal_contest_performance_path(conn, :index, contest))
   end
 end

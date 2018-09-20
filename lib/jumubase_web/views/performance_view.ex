@@ -1,7 +1,6 @@
 defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.ContestView, only: [contest_name: 1]
-  import Phoenix.HTML
   alias Jumubase.JumuParams
 
   @doc """
@@ -10,14 +9,15 @@ defmodule JumubaseWeb.PerformanceView do
   def render("scripts.new.html", assigns) do
     %{
       changeset: changeset,
-      contest_category_options: contest_category_options
+      contest_category_options: cc_options
     } = assigns
 
     json = render_html_safe_json(
       %{
         changeset: changeset,
-        contest_category_options: (for {name, id} <- contest_category_options,
-                                   do: %{id: id, name: name})
+        contest_category_options: (
+          for {name, id} <- cc_options, do: %{id: id, name: name}
+        )
       }
     )
 

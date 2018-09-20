@@ -1,5 +1,5 @@
 defmodule JumubaseWeb.JsonHelpers do
-  import Phoenix.HTML
+  import Phoenix.HTML, only: [raw: 1]
 
   @doc """
   Encodes a value as JSON and escapes it so that it can safely appear

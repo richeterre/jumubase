@@ -2,7 +2,7 @@ defmodule Jumubase.ShowtimeTest do
   use Jumubase.DataCase
   alias Jumubase.Foundation.{Category, ContestCategory}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.Performance
+  alias Jumubase.Showtime.{Appearance, Performance, Participant}
 
   describe "performances" do
     test "list_performances/1 returns the given contest's performances" do
@@ -41,11 +41,17 @@ defmodule Jumubase.ShowtimeTest do
       assert_raise Ecto.NoResultsError, fn -> Showtime.get_performance!(c, id) end
     end
 
-    test "get_performance!/2 preloads the performance's contest category + category" do
-      %{id: id, contest_category: %{contest: c}} = insert(:performance)
+    test "get_performance!/2 preloads all associated data of the performance" do
+      %{
+        id: id,
+        contest_category: %{contest: c}
+      } = insert(:performance, appearances: [
+        build(:appearance, performance: nil)
+      ])
 
       assert %Performance{
-        contest_category: %ContestCategory{category: %Category{}}
+        contest_category: %ContestCategory{category: %Category{}},
+        appearances: [%Appearance{participant: %Participant{}}]
       } = Showtime.get_performance!(c, id)
     end
 

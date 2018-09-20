@@ -4,9 +4,20 @@ defmodule Jumubase.Showtime do
   to what happens on the competition stage, e.g. performances.
   """
 
+  import Ecto.Query
   alias Ecto.Changeset
   alias Jumubase.Repo
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.Performance
+
+  def list_performances(%Contest{id: id}) do
+    query = from p in Performance,
+      join: cc in assoc(p, :contest_category),
+      where: cc.contest_id == ^id,
+      preload: [contest_category: {cc, :category}]
+
+    Repo.all(query)
+  end
 
   def create_performance(attrs \\ %{}) do
     %Performance{}

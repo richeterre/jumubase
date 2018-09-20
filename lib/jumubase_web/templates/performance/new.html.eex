@@ -4,35 +4,35 @@
   <small><%= contest_name(@contest) %></small>
 </h2>
 
-<div id="signup-form">
-  <%= form_for @changeset, performance_path(@conn, :create, @contest), fn f -> %>
-    <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+<div class="row">
+  <div id="signup-form" class="col-lg-9">
+    <%= form_for @changeset, performance_path(@conn, :create, @contest), fn f -> %>
+      <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
-    <div class="row">
-      <div class="form-group col-md-4">
-        <label for="performance_contest_category_id">
-          <%= gettext("Category") %>
-        </label>
-        <select
-          id="performance_contest_category_id"
-          name="performance[contest_category_id]"
-          class="form-control"
-          v-model="changeset.data.contest_category_id">
-          <option
-            v-for="option in contest_category_options"
-            v-bind:value="option.id"
-            v-text="option.name"></option>
-        </select>
-        <%= error_tag f, :contest_category_id %>
+      <div class="row">
+        <div class="form-group col-md-5">
+          <label for="performance_contest_category_id">
+            <%= gettext("Category") %>
+          </label>
+          <select
+            id="performance_contest_category_id"
+            name="performance[contest_category_id]"
+            class="form-control"
+            v-model="changeset.data.contest_category_id">
+            <option
+              v-for="option in contest_category_options"
+              v-bind:value="option.id"
+              v-text="option.name"></option>
+          </select>
+          <%= error_tag f, :contest_category_id %>
+        </div>
       </div>
-    </div>
 
-    <hr>
+      <hr>
 
-    <h3><%= gettext("Participants") %></h3>
+      <h3><%= gettext("Participants") %></h3>
 
-    <div class="row">
-      <div class="panel-group col-lg-9" id="participant-accordion" role="tablist">
+      <div class="panel-group" id="participant-accordion" role="tablist">
         <%= inputs_for f, :appearances, [append: [%Jumubase.Showtime.Appearance{}]], fn a -> %>
           <div class="panel panel-default %>">
             <div class="panel-heading">
@@ -48,14 +48,12 @@
           </div>
         <% end %>
       </div>
-    </div>
 
-    <a id="add-participant-btn" href="#add-participant" class="btn btn-primary">Add</a>
+      <a id="add-participant-btn" href="#add-participant" class="btn btn-primary">Add</a>
 
-    <h3><%= gettext("Pieces") %></h3>
+      <h3><%= gettext("Pieces") %></h3>
 
-    <div class="row">
-      <div class="panel-group col-lg-9" id="piece-accordion" role="tablist">
+      <div class="panel-group" id="piece-accordion" role="tablist">
         <div class="panel panel-default">
           <div class="panel-heading" id="piece-1">
             <h4 class="panel-title">
@@ -82,8 +80,8 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <%= submit gettext("Submit"), class: "btn btn-primary" %>
-  <% end %>
+      <%= submit gettext("Submit"), class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>

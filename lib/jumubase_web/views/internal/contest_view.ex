@@ -7,20 +7,24 @@ defmodule JumubaseWeb.Internal.ContestView do
   @doc """
   Returns a display name for the given contest.
   """
-  def contest_name(%Contest{} = contest) do
+  def name(%Contest{} = contest) do
     round_name = short_round_name(contest.round)
     contest_year = JumuParams.year(contest.season)
+    "#{contest.host.name}, #{round_name} #{contest_year}"
+  end
+
+  def name_with_flag(%Contest{} = contest) do
     flag_code = case contest.round do
       1 -> contest.host.country_code
       2 -> "EU"
     end
-    "#{emoji_flag(flag_code)} #{contest.host.name}, #{round_name} #{contest_year}"
+    "#{emoji_flag(flag_code)} #{name(contest)}"
   end
 
   @doc """
   Returns the given contest's date(s) in a formatted way.
   """
-  def contest_dates(%Contest{start_date: sd, end_date: ed}) do
+  def dates(%Contest{start_date: sd, end_date: ed}) do
     cond do
       sd == ed ->
         format_date(sd)

@@ -6,6 +6,6 @@
 
 <ul>
   <%= for contest <- @contests do %>
-    <li><%= link contest_name(contest), to: performance_path(@conn, :new, contest) %></li>
+    <li><%= link name_with_flag(contest), to: performance_path(@conn, :new, contest) %></li>
   <% end %>
 </ul>

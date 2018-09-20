@@ -1,7 +1,7 @@
 <h2>
   <%= gettext("Register") %>
   <br>
-  <small><%= contest_name(@contest) %></small>
+  <small><%= name_with_flag(@contest) %></small>
 </h2>
 
 <div class="row">

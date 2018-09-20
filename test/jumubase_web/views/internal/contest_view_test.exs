@@ -2,38 +2,38 @@ defmodule JumubaseWeb.ContestViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.ContestView
 
-  test "contest_name/1 returns a display name for a contest" do
+  test "name_with_flag/1 returns a display name for a contest" do
     contest = build(:contest,
       season: 55,
       round: 1,
       host: build(:host, country_code: "FI", name: "DS Helsinki")
     )
-    assert ContestView.contest_name(contest) == "🇫🇮 DS Helsinki, RW 2018"
+    assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, RW 2018"
   end
 
-  test "contest_name/1 uses an EU flag for a 2nd-round contest" do
+  test "name_with_flag/1 uses an EU flag for a 2nd-round contest" do
     contest = build(:contest,
       season: 55,
       round: 2,
       host: build(:host, country_code: "FI", name: "DS Helsinki")
     )
-    assert ContestView.contest_name(contest) == "🇪🇺 DS Helsinki, LW 2018"
+    assert ContestView.name_with_flag(contest) == "🇪🇺 DS Helsinki, LW 2018"
   end
 
-  test "contest_dates/1 returns a formatted date range for a multi-day contest" do
+  test "dates/1 returns a formatted date range for a multi-day contest" do
     contest = build(:contest,
       start_date: ~D[2019-01-01],
       end_date: ~D[2019-01-02]
     )
-    assert ContestView.contest_dates(contest) == "1 Jan 2019 – 2 Jan 2019"
+    assert ContestView.dates(contest) == "1 Jan 2019 – 2 Jan 2019"
   end
 
-  test "contest_dates/1 returns a single formatted date for a single-day contest" do
+  test "dates/1 returns a single formatted date for a single-day contest" do
     contest = build(:contest,
       start_date: ~D[2019-01-01],
       end_date: ~D[2019-01-01]
     )
-    assert ContestView.contest_dates(contest) == "1 Jan 2019"
+    assert ContestView.dates(contest) == "1 Jan 2019"
   end
 
   test "format_date/1 formats a date for display to the user" do

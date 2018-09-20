@@ -7,14 +7,13 @@
         <th><%= gettext("Name") %></th>
         <th><%= gettext("Dates") %></th>
         <th><%= gettext("Deadline") %></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
       <%= for contest <- @contests do %>
       <tr>
-        <td><%= contest_name(contest) %></td>
-        <td><%= contest_dates(contest) %></td>
+        <td><%= name_with_flag(contest) %></td>
+        <td><%= dates(contest) %></td>
         <td><%= format_date(contest.deadline) %></td>
       </tr>
       <% end %>

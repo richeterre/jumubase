@@ -20,5 +20,6 @@ defmodule Jumubase.Showtime.Participant do
     participant
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
+    |> validate_format(:email, ~r/.+\@.+\..+/)
   end
 end

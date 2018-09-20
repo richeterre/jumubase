@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.Internal.PerformanceView do
   use JumubaseWeb, :view
-  import JumubaseWeb.Internal.AppearanceView, only: [instrument_name: 1]
+  import JumubaseWeb.Internal.AppearanceView, only: [acc: 1, instrument_name: 1, non_acc: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [birthdate: 1, full_name: 1]
   alias Jumubase.Showtime.Performance
 

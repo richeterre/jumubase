@@ -13,9 +13,9 @@
 
 <h3><%= gettext("Participants") %></h3>
 
-<%= for %{participant: p, instrument: i} <- @performance.appearances do %>
-  <strong><%= full_name(p) %></strong>,
-  <%= instrument_name(i) %>
-  <span class="text-muted">(* <%= birthdate(p) %>)</span>
-  <br>
+<%= render "_appearances.html", appearances: non_acc(@performance.appearances) %>
+
+<%= if (acc_appearances = acc(@performance.appearances)) != [] do %>
+  <h5 class="text-muted"><%= gettext("accompanied by") %></h5>
+  <%= render "_appearances.html", appearances: acc_appearances %>
 <% end %>

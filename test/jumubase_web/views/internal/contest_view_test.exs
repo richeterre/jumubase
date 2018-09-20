@@ -11,6 +11,15 @@ defmodule JumubaseWeb.ContestViewTest do
     assert ContestView.contest_name(contest) == "🇫🇮 DS Helsinki, RW 2018"
   end
 
+  test "contest_name/1 uses an EU flag for a 2nd-round contest" do
+    contest = build(:contest,
+      season: 55,
+      round: 2,
+      host: build(:host, country_code: "FI", name: "DS Helsinki")
+    )
+    assert ContestView.contest_name(contest) == "🇪🇺 DS Helsinki, LW 2018"
+  end
+
   test "contest_dates/1 returns a formatted date range for a multi-day contest" do
     contest = build(:contest,
       start_date: ~D[2019-01-01],

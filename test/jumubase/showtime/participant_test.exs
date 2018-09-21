@@ -1,5 +1,6 @@
 defmodule Jumubase.ParticipantTest do
   use Jumubase.DataCase
+  alias Ecto.Changeset
   alias Jumubase.Showtime.Participant
 
   describe "changeset" do
@@ -53,6 +54,30 @@ defmodule Jumubase.ParticipantTest do
         changeset = Participant.changeset(%Participant{}, params)
         assert changeset.valid?
       end
+    end
+
+    test "removes whitespace around the given name" do
+      params = params_for(:participant, given_name: " Vera Lynn  ")
+      changeset = Participant.changeset(%Participant{}, params)
+      assert Changeset.get_change(changeset, :given_name) == "Vera Lynn"
+    end
+
+    test "removes whitespace around the family name" do
+      params = params_for(:participant, family_name: "  van Beethoven ")
+      changeset = Participant.changeset(%Participant{}, params)
+      assert Changeset.get_change(changeset, :family_name) == "van Beethoven"
+    end
+
+    test "removes whitespace around the phone number" do
+      params = params_for(:participant, phone: " 0049 30 1234567  ")
+      changeset = Participant.changeset(%Participant{}, params)
+      assert Changeset.get_change(changeset, :phone) == "0049 30 1234567"
+    end
+
+    test "removes whitespace around the email address" do
+      params = params_for(:participant, email: "  a@b.c  ")
+      changeset = Participant.changeset(%Participant{}, params)
+      assert Changeset.get_change(changeset, :email) == "a@b.c"
     end
   end
 end

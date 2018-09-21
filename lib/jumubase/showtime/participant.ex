@@ -21,5 +21,16 @@ defmodule Jumubase.Showtime.Participant do
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
     |> validate_format(:email, ~r/.+\@.+\..+/)
+    |> sanitize_text_input
+  end
+
+  # Private helpers
+
+  defp sanitize_text_input(changeset) do
+    changeset
+    |> update_change(:given_name, &String.trim/1)
+    |> update_change(:family_name, &String.trim/1)
+    |> update_change(:phone, &String.trim/1)
+    |> update_change(:email, &String.trim/1)
   end
 end

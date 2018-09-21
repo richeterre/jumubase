@@ -1,5 +1,6 @@
 defmodule Jumubase.ShowtimeTest do
   use Jumubase.DataCase
+  alias Ecto.Changeset
   alias Jumubase.Foundation.{Category, ContestCategory}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Performance, Participant}
@@ -55,16 +56,65 @@ defmodule Jumubase.ShowtimeTest do
       } = Showtime.get_performance!(c, id)
     end
 
-    test "create_performance/1 creates a new performance" do
-      attrs = valid_performance_attrs()
+    test "create_performance/2 creates a new performance with an edit code" do
+      {cc, attrs} = performance_params([
+        appearance_params("soloist", ~D[2007-01-01])
+      ])
 
-      assert {:ok, %Performance{} = performance} = Showtime.create_performance(attrs)
-      assert Regex.match?(~r/^[0-9]{6}$/, performance.edit_code)
+      assert {:ok, %Performance{edit_code: edit_code}} = Showtime.create_performance(cc.contest, attrs)
+      assert Regex.match?(~r/^[0-9]{6}$/, edit_code)
+    end
+
+    test "create_performance/2 assigns a joint age group based on non-accompanists" do
+      {cc, attrs} = performance_params([
+        appearance_params("ensemblist", ~D[2006-12-31]),
+        appearance_params("ensemblist", ~D[2007-01-01]),
+        appearance_params("accompanist", ~D[2000-01-01]) # should not affect age group
+      ])
+      {:ok, performance} = Showtime.create_performance(cc.contest, attrs)
+
+      assert performance.age_group == "III"
+    end
+
+    test "create_performance/2 sets no age group when the data is invalid" do
+      {cc, attrs} = performance_params([])
+      {:error, changeset} = Showtime.create_performance(cc.contest, attrs)
+
+      assert Changeset.get_change(changeset, :age_group) == nil
+    end
+
+    test "create_performance/2 returns an error when the passed contest and attributes don't match" do
+      {_, attrs} = performance_params([
+        appearance_params("soloist", ~D[2007-01-01])
+      ])
+      other_contest = insert(:contest)
+      {:error, changeset} = Showtime.create_performance(other_contest, attrs)
+      
+      assert changeset.errors == [{:contest_category_id, {"is not in given contest", []}}]
     end
 
     test "change_performance/1 returns a performance changeset" do
       performance = insert(:performance)
-      assert %Ecto.Changeset{} = Showtime.change_performance(performance)
+      assert %Changeset{} = Showtime.change_performance(performance)
     end
+  end
+
+  # Private helpers
+
+  defp performance_params(appearances_params) do
+    cc = insert(:contest_category)
+    attrs = %{
+      contest_category_id: cc.id,
+      appearances: appearances_params
+    }
+    {cc, attrs}
+  end
+
+  defp appearance_params(role, participant_birthdate) do
+    %{
+      participant_role: role,
+      instrument: "vocals",
+      participant: params_for(:participant, birthdate: participant_birthdate)
+    }
   end
 end

@@ -48,6 +48,7 @@ defmodule JumubaseWeb do
       use Phoenix.HTML
 
       import Jumubase.Gettext
+      import Jumubase.Utils
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthHelpers
       import JumubaseWeb.ErrorHelpers

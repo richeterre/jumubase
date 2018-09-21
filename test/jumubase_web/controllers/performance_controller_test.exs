@@ -41,11 +41,13 @@ defmodule JumubaseWeb.PerformanceControllerTest do
   end
 
   test "redirects to the registration form when user submits invalid data", %{conn: conn} do
-    %{id: id} = insert(:contest)
+    cc = insert(:contest_category)
+    %{id: id} = cc.contest
 
     params = %{
       "performance" => %{
-        "contest_category_id" => 123,
+        "contest_category_id" => cc.id,
+        "appearances" => []
       }
     }
 

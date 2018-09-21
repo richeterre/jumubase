@@ -39,7 +39,7 @@
   <div class="form-group">
     <%= label f, :host_ids, gettext("Hosts") %>
     <%= multiple_select f, :host_ids, @host_options,
-      selected: Enum.map(@changeset.data.hosts, &(&1.id)),
+      selected: get_ids(@changeset.data.hosts),
       class: "form-control" %>
     <%= error_tag f, :host_ids %>
   </div>

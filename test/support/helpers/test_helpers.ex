@@ -1,5 +1,6 @@
 defmodule Jumubase.TestHelpers do
   import ExUnit.Assertions
+  import Jumubase.Utils, only: [get_ids: 1]
 
   @doc """
   Returns whether the ids of the lists' elements match in that order.
@@ -13,12 +14,5 @@ defmodule Jumubase.TestHelpers do
   """
   def assert_ids_match_unordered(first_list, second_list) do
     assert_ids_match_ordered(Enum.sort(first_list), Enum.sort(second_list))
-  end
-
-  @doc """
-  Extracts the ids from a list of items.
-  """
-  def get_ids(list) do
-    Enum.map(list, &(&1.id))
   end
 end

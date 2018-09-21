@@ -20,7 +20,7 @@ defmodule JumubaseWeb.PerformanceController do
   end
 
   def create(conn, %{"performance" => params}, contest) do
-    case Showtime.create_performance(params) do
+    case Showtime.create_performance(contest, params) do
       {:ok, _} ->
         conn
         |> put_flash(:success, gettext("Success!"))

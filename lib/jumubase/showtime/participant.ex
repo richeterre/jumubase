@@ -32,5 +32,6 @@ defmodule Jumubase.Showtime.Participant do
     |> update_change(:family_name, &String.trim/1)
     |> update_change(:phone, &String.trim/1)
     |> update_change(:email, &String.trim/1)
+    |> update_change(:email, &String.downcase/1)
   end
 end

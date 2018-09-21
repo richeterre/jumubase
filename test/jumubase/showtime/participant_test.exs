@@ -79,5 +79,11 @@ defmodule Jumubase.ParticipantTest do
       changeset = Participant.changeset(%Participant{}, params)
       assert Changeset.get_change(changeset, :email) == "a@b.c"
     end
+
+    test "downcases the email address" do
+      params = params_for(:participant, email: "SoMEoNe.WeIRd@eXamPLe.ORG")
+      changeset = Participant.changeset(%Participant{}, params)
+      assert Changeset.get_change(changeset, :email) == "someone.weird@example.org"
+    end
   end
 end

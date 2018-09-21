@@ -1,6 +1,17 @@
 defmodule Jumubase.Foundation.AgeGroups do
   alias Jumubase.JumuParams
 
+  @min_age 4
+  @max_age 27
+
+  @doc """
+  Returns the range of allowed participant birthyears for the given season.
+  """
+  def birthyear_range(season) do
+    year = JumuParams.year(season)
+    (year - @min_age)..(year - @max_age)
+  end
+
   @doc """
   Returns all possible age groups.
   """
@@ -24,14 +35,14 @@ defmodule Jumubase.Foundation.AgeGroups do
 
   defp lookup_age_group(%Date{year: year}, season) do
     index = case JumuParams.year(season) - year do
-      n when n in 0..8 -> 0
+      n when n in @min_age..8 -> 0
       n when n in 9..10 -> 1
       n when n in 11..12 -> 2
       n when n in 13..14 -> 3
       n when n in 15..16 -> 4
       n when n in 17..18 -> 5
       n when n in 19..21 -> 6
-      n when n in 22..27 -> 7
+      n when n in 22..@max_age -> 7
     end
 
     all() |> Enum.fetch!(index)

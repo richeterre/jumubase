@@ -2,6 +2,7 @@ defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   alias Jumubase.JumuParams
+  alias Jumubase.Foundation.AgeGroups
 
   @doc """
   Renders JS that powers the registration form.
@@ -26,6 +27,8 @@ defmodule JumubaseWeb.PerformanceView do
       <script>registrationForm(<%= raw(json) %>)</script>
     }
   end
+
+  def birthyear_options(season), do: AgeGroups.birthyear_range(season)
 
   @doc """
   Returns a list of all participant roles in a form option format.

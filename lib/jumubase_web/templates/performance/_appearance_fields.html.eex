@@ -18,13 +18,17 @@
       <div class="row">
 
         <div class="col-md-3">
-          <%= b.(:day, [class: "form-control"]) %>
+          <%= b.(:day, [class: "form-control", prompt: gettext("Day")]) %>
         </div>
         <div class="col-md-5">
-          <%= b.(:month, [class: "form-control"]) %>
+          <%= b.(:month, [class: "form-control", prompt: gettext("Month")]) %>
         </div>
         <div class="col-md-4">
-          <%= b.(:year, [class: "form-control"]) %>
+          <%= b.(:year, [
+            class: "form-control",
+            options: birthyear_options(@season),
+            prompt: gettext("Year")
+            ]) %>
         </div>
       </div>
       <% end %>

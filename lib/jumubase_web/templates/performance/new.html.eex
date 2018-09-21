@@ -41,7 +41,7 @@
             </div>
             <div id="participant-<%= a.index %>" class="panel-collapse collapse">
               <div class="panel-body">
-                <%= render "_appearance_fields.html", form: a %>
+                <%= render "_appearance_fields.html", form: a, season: @contest.season %>
               </div>
             </div>
           </div>

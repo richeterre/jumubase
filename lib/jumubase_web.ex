@@ -25,6 +25,13 @@ defmodule JumubaseWeb do
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.Breadcrumbs
       import JumubaseWeb.Authorize
+      alias Jumubase.Foundation
+
+      def get_contest!(conn, module) do
+        contest = Foundation.get_contest!(conn.params["contest_id"])
+        args = [conn, conn.params, contest]
+        apply(module, action_name(conn), args)
+      end
     end
   end
 

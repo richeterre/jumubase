@@ -12,11 +12,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   plug :role_check, roles: ["admin"]
 
   # Pass contest from nested route to all actions
-  def action(conn, _) do
-    contest = Foundation.get_contest!(conn.params["contest_id"])
-    args = [conn, conn.params, contest]
-    apply(__MODULE__, action_name(conn), args)
-  end
+  def action(conn, _), do: get_contest!(conn, __MODULE__)
 
   def index(conn, _params, contest) do
     performances = Showtime.list_performances(contest)

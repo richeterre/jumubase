@@ -2,20 +2,24 @@ defmodule JumubaseWeb.PerformanceController do
   use JumubaseWeb, :controller
   alias Ecto.Changeset
   alias Jumubase.Foundation
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Performance}
 
-  def new(conn, %{"contest_id" => contest_id}) do
+  # Pass contest from nested route to all actions
+  def action(conn, _), do: get_contest!(conn, __MODULE__)
+
+  def new(conn, _params, contest) do
     changeset =
       %Performance{appearances: [%Appearance{}]}
       |> Showtime.change_performance()
 
     conn
-    |> prepare_for_form(contest_id, changeset)
+    |> prepare_for_form(contest, changeset)
     |> render("new.html")
   end
 
-  def create(conn, %{"contest_id" => contest_id, "performance" => params}) do
+  def create(conn, %{"performance" => params}, contest) do
     case Showtime.create_performance(params) do
       {:ok, _} ->
         conn
@@ -23,15 +27,13 @@ defmodule JumubaseWeb.PerformanceController do
         |> redirect(to: page_path(conn, :home))
       {:error, changeset} ->
         conn
-        |> prepare_for_form(contest_id, changeset)
+        |> prepare_for_form(contest, changeset)
         |> render("new.html")
     end
   end
 
-  defp prepare_for_form(conn, contest_id, %Changeset{} = changeset) do
-    contest = contest_id
-    |> Foundation.get_contest!
-    |> Foundation.load_contest_categories
+  defp prepare_for_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
+    contest = Foundation.load_contest_categories(contest)
 
     contest_category_options = contest.contest_categories
     |> Enum.map(&{&1.category.name, &1.id})

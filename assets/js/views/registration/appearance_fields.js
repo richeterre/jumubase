@@ -8,7 +8,8 @@ Vue.component('appearance-fields', {
     'birthdate_year_options',
     'birthdate_month_options',
     'participant_role_options',
-    'instrument_options'
+    'instrument_options',
+    'errors'
   ],
 
   data() {

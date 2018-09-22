@@ -1,6 +1,7 @@
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_fields'
+import './registration/form_field_error'
 import { flattenChangesetValues } from '../utils/changesets'
 
 const registrationForm = params => new Vue({
@@ -22,13 +23,14 @@ const registrationForm = params => new Vue({
     } = flattenChangesetValues(changeset)
 
     return {
+      errors: changeset.errors,
       contest_category_id,
       appearances,
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
       participant_role_options,
-      instrument_options
+      instrument_options,
     }
   },
 

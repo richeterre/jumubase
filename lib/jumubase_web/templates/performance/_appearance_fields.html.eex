@@ -5,6 +5,7 @@
   v-bind:birthdate_month_options="birthdate_month_options"
   v-bind:participant_role_options="participant_role_options"
   v-bind:instrument_options="instrument_options"
+  v-bind:errors="(errors.appearances && errors.appearances[index]) || {}"
   inline-template>
 
   <div class="panel-body">
@@ -20,6 +21,7 @@
           v-bind:id="fieldId('participant', 'given_name')"
           v-bind:name="fieldName('participant', 'given_name')"
           v-model="appearance.participant.given_name">
+        <form-field-error v-bind:errors="errors.participant.given_name"></form-field-error>
       </div>
 
       <div class="form-group col-md-3">
@@ -32,6 +34,7 @@
           v-bind:id="fieldId('participant', 'family_name')"
           v-bind:name="fieldName('participant', 'family_name')"
           v-model="appearance.participant.family_name">
+        <form-field-error v-bind:errors="errors.participant.family_name"></form-field-error>
       </div>
 
       <div class="form-group col-md-5">
@@ -79,6 +82,10 @@
                 v-text="year"></option>
             </select>
           </div>
+
+          <div class="col-md-12">
+            <form-field-error v-bind:errors="errors.participant.birthdate"></form-field-error>
+          </div>
         </div>
       </div>
     </div>
@@ -99,6 +106,7 @@
             v-bind:value="option.id"
             v-text="option.label"></option>
         </select>
+        <form-field-error v-bind:errors="errors.participant_role"></form-field-error>
       </div>
 
       <div class="form-group col-md-3">
@@ -116,6 +124,7 @@
             v-bind:value="option.value"
             v-text="option.label"></option>
         </select>
+        <form-field-error v-bind:errors="errors.instrument"></form-field-error>
       </div>
     </div>
 
@@ -130,6 +139,7 @@
           v-bind:id="fieldId('participant', 'phone')"
           v-bind:name="fieldName('participant', 'phone')"
           v-model="appearance.participant.phone">
+        <form-field-error v-bind:errors="errors.participant.phone"></form-field-error>
       </div>
 
       <div class="form-group col-md-4">
@@ -142,6 +152,7 @@
           v-bind:id="fieldId('participant', 'email')"
           v-bind:name="fieldName('participant', 'email')"
           v-model="appearance.participant.email">
+        <form-field-error v-bind:errors="errors.participant.email"></form-field-error>
       </div>
     </div>
 

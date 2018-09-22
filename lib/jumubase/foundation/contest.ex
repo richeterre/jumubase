@@ -9,9 +9,9 @@ defmodule Jumubase.Foundation.Contest do
   schema "contests" do
     field :season, :integer
     field :round, :integer
-    field :start_date, Timex.Ecto.Date
-    field :end_date, Timex.Ecto.Date
-    field :deadline, Timex.Ecto.Date
+    field :start_date, :date
+    field :end_date, :date
+    field :deadline, :date
 
     belongs_to :host, Host
     has_many :contest_categories, ContestCategory

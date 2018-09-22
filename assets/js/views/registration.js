@@ -36,6 +36,7 @@ const registrationForm = params => new Vue({
 
   created() {
     this.contest_category_id = this.contest_category_id || ''
+    this.errors = this.errors || {}
   },
 
   methods: {

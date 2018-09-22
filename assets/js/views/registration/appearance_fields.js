@@ -31,6 +31,9 @@ Vue.component('appearance-fields', {
     const { appearance } = this
     appearance.participant_role = appearance.participant_role || ''
     appearance.instrument = appearance.instrument || ''
+
+    this.errors = this.errors || {}
+    this.errors.participant = this.errors.participant || {}
   },
 
   computed: {

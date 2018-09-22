@@ -48,7 +48,7 @@ defmodule Jumubase.Showtime do
       |> Repo.insert()
     else
       changeset =
-        changeset
+        %{changeset | action: :insert}
         |> Changeset.add_error(:contest_category_id, gettext("is not in given contest"))
       {:error, changeset}
     end

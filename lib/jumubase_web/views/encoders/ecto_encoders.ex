@@ -9,7 +9,13 @@ defimpl Poison.Encoder, for: Ecto.Changeset do
     output = %{
       data: changeset.data,
       changes: changeset.changes,
-      errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
+      errors:
+        if changeset.action do
+          Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
+        else
+          nil
+        end,
+      valid: changeset.valid?
     }
     Poison.encode!(output, options)
   end

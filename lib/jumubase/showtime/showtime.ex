@@ -52,10 +52,11 @@ defmodule Jumubase.Showtime do
 
   # Private helpers
 
-  defp put_edit_code(%Changeset{} = changeset) do
+  defp put_edit_code(%Changeset{valid?: true} = changeset) do
     edit_code = :rand.uniform(999999) |> Performance.to_edit_code
     Changeset.put_change(changeset, :edit_code, edit_code)
   end
+  defp put_edit_code(changeset), do: changeset
 
   defp put_age_group(%Changeset{valid?: true} = changeset, season) do
     age_group =

@@ -65,6 +65,13 @@ defmodule Jumubase.ShowtimeTest do
       assert Regex.match?(~r/^[0-9]{6}$/, edit_code)
     end
 
+    test "create_performance/2 sets no edit code when the data is invalid" do
+      {cc, attrs} = performance_params([])
+      {:error, changeset} = Showtime.create_performance(cc.contest, attrs)
+
+      assert Changeset.get_change(changeset, :edit_code) == nil
+    end
+
     test "create_performance/2 assigns a joint age group based on non-accompanists" do
       {cc, attrs} = performance_params([
         appearance_params("ensemblist", ~D[2006-12-31]),

@@ -9,16 +9,21 @@ defmodule JumubaseWeb.PerformanceView do
   """
   def render("scripts.new.html", assigns) do
     %{
+      contest:  contest,
       changeset: changeset,
-      contest_category_options: cc_options
+      contest_category_options: cc_options,
     } = assigns
 
     json = render_html_safe_json(
       %{
         changeset: changeset,
         contest_category_options: (
-          for {name, id} <- cc_options, do: %{id: id, name: name}
-        )
+          for {label, value} <- cc_options, do: %{value: value, label: label}
+        ),
+        birthdate_year_options: birthdate_year_options(contest.season),
+        birthdate_month_options: birthdate_month_options(),
+        participant_role_options: participant_role_options(),
+        instrument_options: instrument_options(),
       }
     )
 
@@ -28,7 +33,37 @@ defmodule JumubaseWeb.PerformanceView do
     }
   end
 
-  def birthyear_options(season), do: AgeGroups.birthyear_range(season)
+  def birthdate_year_options(season) do
+    AgeGroups.birthyear_range(season)
+  end
+
+  def birthdate_month_options() do
+    [
+      %{value: "1", label: "January"},
+      %{value: "2", label: "February"},
+      %{value: "3", label: "March"},
+      %{value: "4", label: "April"},
+      %{value: "5", label: "May"},
+      %{value: "6", label: "June"},
+      %{value: "7", label: "July"},
+      %{value: "8", label: "August"},
+      %{value: "9", label: "September"},
+      %{value: "10", label: "October"},
+      %{value: "11", label: "November"},
+      %{value: "12", label: "December"},
+    ]
+  end
+
+  @doc """
+  Returns a list of all participant roles in a form option format.
+  """
+  def participant_role_options do
+    Enum.map(JumuParams.participant_roles, fn
+      "soloist" -> %{id: "soloist", label: gettext("Soloist")}
+      "accompanist" -> %{id: "accompanist", label: gettext("Accompanist")}
+      "ensemblist" -> %{id: "ensemblist", label: gettext("Ensemblist")}
+    end)
+  end
 
   @doc """
   Returns a list of all participant roles in a form option format.
@@ -41,11 +76,8 @@ defmodule JumubaseWeb.PerformanceView do
     end)
   end
 
-  @doc """
-  Returns a list of all instruments in a form option format.
-  """
   def instrument_options do
     Jumubase.Showtime.Instruments.all
-    |> Enum.map(fn {key, value} -> {value, key} end)
+    |> Enum.map(fn {value, label} -> %{value: value, label: label} end)
   end
 end

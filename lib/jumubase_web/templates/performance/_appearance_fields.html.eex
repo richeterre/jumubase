@@ -1,69 +1,150 @@
-<%= inputs_for @form, :participant, fn p -> %>
-  <div class="row">
-    <div class="form-group col-md-3">
-      <%= label p, :given_name, gettext("First name") %>
-      <%= text_input p, :given_name, class: "form-control" %>
-      <%= error_tag p, :given_name %>
-    </div>
+<appearance-fields
+  v-bind:index="index"
+  v-bind:appearance="appearances[index]"
+  v-bind:birthdate_year_options="birthdate_year_options"
+  v-bind:birthdate_month_options="birthdate_month_options"
+  v-bind:participant_role_options="participant_role_options"
+  v-bind:instrument_options="instrument_options"
+  inline-template>
 
-    <div class="form-group col-md-4">
-      <%= label p, :family_name, gettext("Last name") %>
-      <%= text_input p, :family_name, class: "form-control" %>
-      <%= error_tag p, :family_name %>
-    </div>
+  <div class="panel-body">
 
-    <div class="form-group col-md-5">
-      <%= label p, :birthdate, gettext("Birthdate") %>
-      <%= date_select p, :birthdate, builder: fn b -> %>
-      <div class="row">
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label v-bind:for="fieldId('participant', 'given_name')">
+          <%= gettext("First name") %>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          v-bind:id="fieldId('participant', 'given_name')"
+          v-bind:name="fieldName('participant', 'given_name')"
+          v-model="appearance.participant.given_name">
+      </div>
 
-        <div class="col-md-3">
-          <%= b.(:day, [class: "form-control"]) %>
-        </div>
-        <div class="col-md-5">
-          <%= b.(:month, [class: "form-control"]) %>
-        </div>
-        <div class="col-md-4">
-          <%= b.(:year, [
-            class: "form-control",
-            options: birthyear_options(@season)
-            ]) %>
+      <div class="form-group col-md-3">
+        <label v-bind:for="fieldId('participant', 'family_name')">
+          <%= gettext("Last name") %>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          v-bind:id="fieldId('participant', 'family_name')"
+          v-bind:name="fieldName('participant', 'family_name')"
+          v-model="appearance.participant.family_name">
+      </div>
+
+      <div class="form-group col-md-5">
+        <label v-bind:for="fieldId('participant', 'birthdate', 'day')">
+          <%= gettext("Birthdate") %>
+        </label>
+
+        <div class="row">
+          <div class="col-md-3">
+            <select
+              class="form-control"
+              v-bind:id="fieldId('participant', 'birthdate', 'day')"
+              v-bind:name="fieldName('participant', 'birthdate', 'day')"
+              v-model="birthdateDay">
+              <option value=""><%= gettext("Day") %></option>
+              <option
+                v-for="day in daysInBirthdateMonth"
+                v-bind:value="day"
+                v-text="formatDay(day)"></option>
+            </select>
+          </div>
+
+          <div class="col-md-5">
+            <select
+              class="form-control"
+              v-bind:name="fieldName('participant', 'birthdate', 'month')"
+              v-model="birthdateMonth">
+              <option value=""><%= gettext("Month") %></option>
+              <option
+                v-for="option in birthdate_month_options"
+                v-bind:value="option.value"
+                v-text="option.label"></option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <select
+              class="form-control"
+              v-bind:name="fieldName('participant', 'birthdate', 'year')"
+              v-model="birthdateYear">
+              <option value=""><%= gettext("Year") %></option>
+              <option
+                v-for="year in birthdate_year_options"
+                v-bind:value="year"
+                v-text="year"></option>
+            </select>
+          </div>
         </div>
       </div>
-      <% end %>
-      <%= error_tag p, :birthdate %>
     </div>
+
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label v-bind:for="fieldId('participant_role')">
+          <%= gettext("Role") %>
+        </label>
+        <select
+          class="form-control"
+          v-bind:id="fieldId('participant_role')"
+          v-bind:name="fieldName('participant_role')"
+          v-model="appearance.participant_role">
+          <option value=""><%= gettext("Please choose") %></option>
+          <option
+            v-for="option in participant_role_options"
+            v-bind:value="option.id"
+            v-text="option.label"></option>
+        </select>
+      </div>
+
+      <div class="form-group col-md-3">
+        <label v-bind:for="fieldId('instrument')">
+          <%= gettext("Instrument") %>
+        </label>
+        <select
+          class="form-control"
+          v-bind:id="fieldId('instrument')"
+          v-bind:name="fieldName('instrument')"
+          v-model="appearance.instrument">
+          <option value=""><%= gettext("Please choose") %></option>
+          <option
+            v-for="option in instrument_options"
+            v-bind:value="option.value"
+            v-text="option.label"></option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label v-bind:for="fieldId('participant', 'phone')">
+          <%= gettext("Phone") %>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          v-bind:id="fieldId('participant', 'phone')"
+          v-bind:name="fieldName('participant', 'phone')"
+          v-model="appearance.participant.phone">
+      </div>
+
+      <div class="form-group col-md-4">
+        <label v-bind:for="fieldId('participant', 'email')">
+          <%= gettext("E-Mail") %>
+        </label>
+        <input
+          type="email"
+          class="form-control"
+          v-bind:id="fieldId('participant', 'email')"
+          v-bind:name="fieldName('participant', 'email')"
+          v-model="appearance.participant.email">
+      </div>
+    </div>
+
   </div>
 
-  <div class="row">
-    <div class="form-group col-md-3">
-      <%= label @form, :participant_role, gettext("Role") %>
-      <%= select @form, :participant_role, role_options(),
-        prompt: gettext("Please choose"), class: "form-control"
-        %>
-      <%= error_tag @form, :participant_role %>
-    </div>
-
-    <div class="form-group col-md-4">
-      <%= label @form, :instrument, gettext("Instrument") %>
-      <%= select @form, :instrument, instrument_options(),
-        prompt: gettext("Please choose"), class: "form-control"
-        %>
-      <%= error_tag @form, :instrument %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-md-4">
-      <%= label p, :phone, gettext("Phone") %>
-      <%= text_input p, :phone, class: "form-control" %>
-      <%= error_tag p, :phone %>
-    </div>
-
-    <div class="form-group col-md-5">
-      <%= label p, :email, gettext("Email") %>
-      <%= text_input p, :email, class: "form-control" %>
-      <%= error_tag p, :email %>
-    </div>
-  </div>
-<% end %>
+</appearance-form>

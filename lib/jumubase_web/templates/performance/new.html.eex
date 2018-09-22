@@ -11,16 +11,19 @@
 
       <div class="row">
         <div class="form-group col-md-5">
-          <%= label f, :contest_category_id, gettext("Category") %>
+          <label for="performance_contest_category_id">
+            <%= gettext("Category") %>
+          </label>
           <select
             id="performance_contest_category_id"
             name="performance[contest_category_id]"
             class="form-control"
-            v-model="changeset.data.contest_category_id">
+            v-model="contest_category_id">
+            <option value=""><%= gettext("Please choose") %></option>
             <option
               v-for="option in contest_category_options"
-              v-bind:value="option.id"
-              v-text="option.name">
+              v-bind:value="option.value"
+              v-text="option.label">
             </option>
           </select>
           <%= error_tag f, :contest_category_id %>
@@ -32,23 +35,26 @@
       <h3><%= gettext("Participants") %></h3>
 
       <div class="panel-group" id="participant-accordion" role="tablist">
-        <%= inputs_for f, :appearances, [append: [%Jumubase.Showtime.Appearance{}]], fn a -> %>
-          <div class="panel panel-default %>">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#participant-accordion" href="#participant-<%= a.index %>">Participant <%= a.index + 1 %></a>
-              </h4>
-            </div>
-            <div id="participant-<%= a.index %>" class="panel-collapse collapse">
-              <div class="panel-body">
-                <%= render "_appearance_fields.html", form: a, season: @contest.season %>
-              </div>
-            </div>
+        <div class="panel panel-default" v-for="(appearance, index) in appearances">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a
+                role="button"
+                data-toggle="collapse"
+                data-parent="#participant-accordion"
+                v-bind:href="'#participant-' + index"
+                v-text='"<%= gettext("Participant") %> " + (index + 1)'>&nbsp;</a>
+            </h4>
           </div>
-        <% end %>
+          <div v-bind:id="'participant-' + index" class="panel-collapse collapse">
+            <%= render "_appearance_fields.html" %>
+          </div>
+        </div>
       </div>
 
-      <a id="add-participant-btn" href="#add-participant" class="btn btn-primary">Add</a>
+      <button type="button" class="btn btn-primary" v-on:click="addAppearance()">
+        <%= gettext("Add") %>
+      </button>
 
       <h3><%= gettext("Pieces") %></h3>
 

@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.PerformanceController do
   use JumubaseWeb, :controller
-  import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1]
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
@@ -40,7 +39,9 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   # Private helpers
 
   def add_performance_breadcrumb(conn, %Contest{} = contest, %Performance{} = performance) do
-    add_breadcrumb(conn, name: category_name(performance),
-      path: internal_contest_performance_path(conn, :show, contest, performance))
+    add_breadcrumb(conn,
+      name: performance.edit_code,
+      path: internal_contest_performance_path(conn, :show, contest, performance)
+    )
   end
 end

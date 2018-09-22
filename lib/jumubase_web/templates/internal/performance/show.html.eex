@@ -1,7 +1,7 @@
 <h2>
   <%= gettext("Performance Details") %>
   <br>
-  <small><%= category_name(@performance) %></small>
+  <small><%= category_info(@performance) %></small>
   <br>
 </h2>
 

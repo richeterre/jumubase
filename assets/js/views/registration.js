@@ -22,21 +22,19 @@ const registrationForm = params => new Vue({
       appearances
     } = flattenChangesetValues(changeset)
 
+    const errors = changeset.errors || {}
+    errors.appearances = errors.appearances || []
+
     return {
-      errors: changeset.errors,
-      contest_category_id,
+      contest_category_id: contest_category_id || '',
       appearances,
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
       participant_role_options,
       instrument_options,
+      errors
     }
-  },
-
-  created() {
-    this.contest_category_id = this.contest_category_id || ''
-    this.errors = this.errors || {}
   },
 
   methods: {

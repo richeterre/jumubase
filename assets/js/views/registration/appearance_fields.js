@@ -23,7 +23,7 @@ Vue.component('appearance-fields', {
     return {
       birthdateDay: parsedBirthdate ? String(parsedBirthdate.getDate()) : '',
       birthdateMonth: parsedBirthdate ? String(parsedBirthdate.getMonth() + 1) : '',
-      birthdateYear: parsedBirthdate ? String(parsedBirthdate.getFullYear()) : '',
+      birthdateYear: parsedBirthdate ? String(parsedBirthdate.getFullYear()) : ''
     }
   },
 
@@ -31,9 +31,6 @@ Vue.component('appearance-fields', {
     const { appearance } = this
     appearance.participant_role = appearance.participant_role || ''
     appearance.instrument = appearance.instrument || ''
-
-    this.errors = this.errors || {}
-    this.errors.participant = this.errors.participant || {}
   },
 
   computed: {

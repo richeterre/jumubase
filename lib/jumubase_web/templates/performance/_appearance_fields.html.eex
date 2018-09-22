@@ -21,7 +21,8 @@
           v-bind:id="fieldId('participant', 'given_name')"
           v-bind:name="fieldName('participant', 'given_name')"
           v-model="appearance.participant.given_name">
-        <form-field-error v-bind:errors="errors.participant.given_name"></form-field-error>
+        <form-field-error v-bind:errors="errors.participant && errors.participant.given_name">
+        </form-field-error>
       </div>
 
       <div class="form-group col-md-3">
@@ -34,7 +35,8 @@
           v-bind:id="fieldId('participant', 'family_name')"
           v-bind:name="fieldName('participant', 'family_name')"
           v-model="appearance.participant.family_name">
-        <form-field-error v-bind:errors="errors.participant.family_name"></form-field-error>
+        <form-field-error v-bind:errors="errors.participant && errors.participant.family_name">
+        </form-field-error>
       </div>
 
       <div class="form-group col-md-5">
@@ -84,7 +86,8 @@
           </div>
 
           <div class="col-md-12">
-            <form-field-error v-bind:errors="errors.participant.birthdate"></form-field-error>
+            <form-field-error v-bind:errors="errors.participant && errors.participant.birthdate">
+            </form-field-error>
           </div>
         </div>
       </div>
@@ -139,7 +142,8 @@
           v-bind:id="fieldId('participant', 'phone')"
           v-bind:name="fieldName('participant', 'phone')"
           v-model="appearance.participant.phone">
-        <form-field-error v-bind:errors="errors.participant.phone"></form-field-error>
+        <form-field-error v-bind:errors="errors.participant && errors.participant.phone">
+        </form-field-error>
       </div>
 
       <div class="form-group col-md-4">
@@ -152,7 +156,8 @@
           v-bind:id="fieldId('participant', 'email')"
           v-bind:name="fieldName('participant', 'email')"
           v-model="appearance.participant.email">
-        <form-field-error v-bind:errors="errors.participant.email"></form-field-error>
+        <form-field-error v-bind:errors="errors.participant && errors.participant.email">
+        </form-field-error>
       </div>
     </div>
 

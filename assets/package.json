@@ -6,6 +6,7 @@
     "watch": "brunch watch --stdin"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "vue": "^2.5.17"
@@ -16,6 +17,7 @@
     "brunch": "2.10.17",
     "clean-css-brunch": "2.10.0",
     "copycat-brunch": "1.1.0",
+    "eslint": "^5.6.0",
     "jquery": "3.3.1",
     "sass-brunch": "2.10.7",
     "uglify-js-brunch": "2.10.0"

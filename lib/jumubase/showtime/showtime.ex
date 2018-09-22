@@ -5,7 +5,6 @@ defmodule Jumubase.Showtime do
   """
 
   import Ecto.Query
-  import Jumubase.Gettext
   import Jumubase.Utils, only: [get_ids: 1]
   alias Ecto.Changeset
   alias Jumubase.Repo
@@ -40,18 +39,11 @@ defmodule Jumubase.Showtime do
     %{contest_categories: ccs} = Foundation.load_contest_categories(contest)
     changeset = Performance.changeset(%Performance{}, attrs)
 
-    # Check whether contest category is in given contest
-    if Changeset.get_change(changeset, :contest_category_id) in get_ids(ccs) do
-      changeset
-      |> put_edit_code
-      |> put_age_group(contest.season)
-      |> Repo.insert()
-    else
-      changeset =
-        %{changeset | action: :insert}
-        |> Changeset.add_error(:contest_category_id, gettext("is not in given contest"))
-      {:error, changeset}
-    end
+    changeset
+    |> Changeset.validate_inclusion(:contest_category_id, get_ids(ccs))
+    |> put_edit_code
+    |> put_age_group(contest.season)
+    |> Repo.insert()
   end
 
   def change_performance(%Performance{} = performance) do

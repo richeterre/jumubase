@@ -89,8 +89,8 @@ defmodule Jumubase.ShowtimeTest do
       ])
       other_contest = insert(:contest)
       {:error, changeset} = Showtime.create_performance(other_contest, attrs)
-      
-      assert changeset.errors == [{:contest_category_id, {"is not in given contest", []}}]
+
+      assert changeset.errors == [{:contest_category_id, {"is invalid", [validation: :inclusion]}}]
     end
 
     test "change_performance/1 returns a performance changeset" do

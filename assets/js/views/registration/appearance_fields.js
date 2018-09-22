@@ -1,5 +1,8 @@
-import { range, rangeRight } from 'lodash'
-import Vue from 'vue/dist/vue.js'
+import { range } from 'lodash'
+import Vue from 'vue/dist/vue'
+
+import { formFieldId, formFieldName } from '../../utils/form_fields'
+
 
 Vue.component('appearance-fields', {
   props: [
@@ -38,13 +41,21 @@ Vue.component('appearance-fields', {
 
   methods: {
     fieldId(...attributes) {
-      const suffix = attributes.join('_')
-      return `performance_appearances_${this.index}_${suffix}`
+      return formFieldId(
+        'performance',
+        'appearances',
+        this.index,
+        ...attributes
+      )
     },
 
     fieldName(...attributes) {
-      const suffix = attributes.map(a => `[${a}]`).join('')
-      return `performance[appearances][${this.index}]${suffix}`
+      return formFieldName(
+        'performance',
+        'appearances',
+        this.index,
+        ...attributes
+      )
     },
 
     formatDay(day) {

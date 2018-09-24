@@ -14,6 +14,7 @@ defmodule Jumubase.Factory do
       participant: build(:participant),
       participant_role: "soloist",
       instrument: "piano",
+      age_group: "III",
       points: nil
     }
   end

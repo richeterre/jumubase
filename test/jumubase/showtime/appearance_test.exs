@@ -38,4 +38,22 @@ defmodule Jumubase.AppearanceTest do
       refute changeset.valid?
     end
   end
+
+  test "is_soloist/1 returns whether the appearance has a soloist role" do
+    assert Appearance.is_soloist(build(:appearance, participant_role: "soloist"))
+    refute Appearance.is_soloist(build(:appearance, participant_role: "ensemblist"))
+    refute Appearance.is_soloist(build(:appearance, participant_role: "accompanist"))
+  end
+
+  test "is_ensemblist/1 returns whether the appearance has an ensemblist role" do
+    assert Appearance.is_ensemblist(build(:appearance, participant_role: "ensemblist"))
+    refute Appearance.is_ensemblist(build(:appearance, participant_role: "soloist"))
+    refute Appearance.is_ensemblist(build(:appearance, participant_role: "accompanist"))
+  end
+
+  test "is_accompanist/1 returns whether the appearance has an accompanist role" do
+    assert Appearance.is_accompanist(build(:appearance, participant_role: "accompanist"))
+    refute Appearance.is_accompanist(build(:appearance, participant_role: "soloist"))
+    refute Appearance.is_accompanist(build(:appearance, participant_role: "ensemblist"))
+  end
 end

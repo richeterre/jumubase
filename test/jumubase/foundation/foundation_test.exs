@@ -1,7 +1,7 @@
 defmodule Jumubase.FoundationTest do
   use Jumubase.DataCase
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Category, Host}
+  alias Jumubase.Foundation.{Category, ContestCategory, Host}
 
   test "list_hosts/0 returns all hosts" do
     host = insert(:host)
@@ -11,6 +11,26 @@ defmodule Jumubase.FoundationTest do
   test "list_hosts/1 returns the hosts with the given ids" do
     [_h1, h2, h3] = insert_list(3, :host)
     assert Foundation.list_hosts([h2.id, h3.id]) == [h2, h3]
+  end
+
+  test "get_contest_category!/2 returns a contest category" do
+    %{id: id, contest: c} = insert(:contest_category)
+    assert %ContestCategory{id: ^id} = Foundation.get_contest_category!(c, id)
+  end
+
+  test "get_contest_category!/2 raises an error if the contest category isn't in the given contest" do
+    c = insert(:contest)
+    %{id: id} = insert(:contest_category)
+
+    assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest_category!(c, id) end
+  end
+
+  test "get_contest_category!/2 preloads the contest category's associated category" do
+    %{id: id, contest: c} = insert(:contest_category)
+
+    assert %ContestCategory{
+      category: %Category{},
+    } = Foundation.get_contest_category!(c, id)
   end
 
   test "list_contests/0 returns all contests" do

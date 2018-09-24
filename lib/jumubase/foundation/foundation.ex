@@ -6,13 +6,25 @@ defmodule Jumubase.Foundation do
 
   import Ecto.Query
   alias Jumubase.Repo
-  alias Jumubase.Foundation.{Contest, Host}
+  alias Jumubase.Foundation.{Contest, ContestCategory, Host}
 
   def list_hosts do
     Repo.all(Host)
   end
   def list_hosts(ids) do
     Repo.all(from h in Host, where: h.id in ^ids)
+  end
+
+  @doc """
+  Gets a single contest category from the given contest.
+
+  Raises `Ecto.NoResultsError` if the contest category isn't found in that contest.
+  """
+  def get_contest_category!(%Contest{id: contest_id}, id) do
+    ContestCategory
+    |> where([cc], cc.contest_id == ^contest_id)
+    |> preload([_], :category)
+    |> Repo.get!(id)
   end
 
   def list_contests do

@@ -83,6 +83,78 @@ defmodule Jumubase.ShowtimeTest do
       assert performance.age_group == "III"
     end
 
+    test "create_performance/2 assigns the correct age groups for a classical solo performance" do
+      cc = insert(:contest_category, category: build(:category, genre: "classical"))
+      {cc, attrs} = performance_params([
+        appearance_params("soloist", ~D[2007-01-01]),
+        appearance_params("accompanist", ~D[2000-01-01]),
+        appearance_params("accompanist", ~D[2002-01-02])
+      ], cc)
+      {:ok, performance} = Showtime.create_performance(cc.contest, attrs)
+
+      sol = get_soloist(performance)
+      assert sol.age_group == "II"
+
+      [acc1, acc2] = get_accompanists(performance)
+      assert acc1.age_group == "VI"
+      assert acc2.age_group == "V"
+    end
+
+    test "create_performance/2 assigns the correct age groups for a classical ensemble performance" do
+      cc = insert(:contest_category, category: build(:category, genre: "classical"))
+      {cc, attrs} = performance_params([
+        appearance_params("ensemblist", ~D[2006-12-31]),
+        appearance_params("ensemblist", ~D[2007-01-01]),
+        appearance_params("accompanist", ~D[2000-01-01]),
+        appearance_params("accompanist", ~D[2002-01-02])
+      ], cc)
+      {:ok, performance} = Showtime.create_performance(cc.contest, attrs)
+
+      [ens1, ens2] = get_ensemblists(performance)
+      assert ens1.age_group == "III"
+      assert ens2.age_group == "III"
+
+      [acc1, acc2] = get_accompanists(performance)
+      assert acc1.age_group == "VI"
+      assert acc2.age_group == "V"
+    end
+
+    test "create_performance/2 assigns the correct age groups for a pop solo performance" do
+      cc = insert(:contest_category, category: build(:category, genre: "popular"))
+      {cc, attrs} = performance_params([
+        appearance_params("soloist", ~D[2007-01-01]),
+        appearance_params("accompanist", ~D[2000-01-01]),
+        appearance_params("accompanist", ~D[2002-01-02])
+      ], cc)
+      {:ok, performance} = Showtime.create_performance(cc.contest, attrs)
+
+      sol = get_soloist(performance)
+      assert sol.age_group == "II"
+
+      [acc1, acc2] =  get_accompanists(performance)
+      assert acc1.age_group == "V"
+      assert acc2.age_group == "V"
+    end
+
+    test "create_performance/2 assigns the correct age groups for a pop ensemble performance" do
+      cc = insert(:contest_category, category: build(:category, genre: "popular"))
+      {cc, attrs} = performance_params([
+        appearance_params("ensemblist", ~D[2006-12-31]),
+        appearance_params("ensemblist", ~D[2007-01-01]),
+        appearance_params("accompanist", ~D[2000-01-01]),
+        appearance_params("accompanist", ~D[2002-01-02])
+      ], cc)
+      {:ok, performance} = Showtime.create_performance(cc.contest, attrs)
+
+      [ens1, ens2] = get_ensemblists(performance)
+      assert ens1.age_group == "III"
+      assert ens2.age_group == "III"
+
+      [acc1, acc2] = get_accompanists(performance)
+      assert acc1.age_group == "V"
+      assert acc2.age_group == "V"
+    end
+
     test "create_performance/2 sets no age group when the data is invalid" do
       {cc, attrs} = performance_params([])
       {:error, changeset} = Showtime.create_performance(cc.contest, attrs)
@@ -90,14 +162,17 @@ defmodule Jumubase.ShowtimeTest do
       assert Changeset.get_change(changeset, :age_group) == nil
     end
 
-    test "create_performance/2 returns an error when the passed contest and attributes don't match" do
+    test "create_performance/2 returns an error when passing no contest category id" do
+      contest = insert(:contest)
+      assert {:error, _changeset} = Showtime.create_performance(contest, %{contest_category_id: nil})
+    end
+
+    test "create_performance/2 raises an error when the passed contest and attributes don't match" do
       {_, attrs} = performance_params([
         appearance_params("soloist", ~D[2007-01-01])
       ])
       other_contest = insert(:contest)
-      {:error, changeset} = Showtime.create_performance(other_contest, attrs)
-
-      assert changeset.errors == [{:contest_category_id, {"is invalid", [validation: :inclusion]}}]
+      assert_raise Ecto.NoResultsError, fn -> Showtime.create_performance(other_contest, attrs) end
     end
 
     test "change_performance/1 returns a performance changeset" do
@@ -110,11 +185,14 @@ defmodule Jumubase.ShowtimeTest do
 
   defp performance_params(appearances_params) do
     cc = insert(:contest_category)
+    performance_params(appearances_params, cc)
+  end
+  defp performance_params(appearances_params, contest_category) do
     attrs = %{
-      contest_category_id: cc.id,
+      contest_category_id: contest_category.id,
       appearances: appearances_params
     }
-    {cc, attrs}
+    {contest_category, attrs}
   end
 
   defp appearance_params(role, participant_birthdate) do
@@ -123,5 +201,17 @@ defmodule Jumubase.ShowtimeTest do
       instrument: "vocals",
       participant: params_for(:participant, birthdate: participant_birthdate)
     }
+  end
+
+  defp get_soloist(%Performance{appearances: appearances}) do
+    Enum.find(appearances, &Appearance.is_soloist/1)
+  end
+
+  defp get_ensemblists(%Performance{appearances: appearances}) do
+    Enum.filter(appearances, &Appearance.is_ensemblist/1)
+  end
+
+  defp get_accompanists(%Performance{appearances: appearances}) do
+    Enum.filter(appearances, &Appearance.is_accompanist/1)
   end
 end

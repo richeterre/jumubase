@@ -7,6 +7,7 @@ defmodule Jumubase.Showtime.Appearance do
   schema "appearances" do
     field :instrument, :string
     field :participant_role, :string
+    field :age_group, :string
     field :points, :integer
 
     belongs_to :performance, Performance
@@ -24,5 +25,17 @@ defmodule Jumubase.Showtime.Appearance do
     |> validate_required(@required_attrs)
     |> cast_assoc(:participant, required: true)
     |> validate_inclusion(:participant_role, JumuParams.participant_roles)
+  end
+
+  def is_soloist(%Appearance{} = a), do: has_role(a, "soloist")
+
+  def is_ensemblist(%Appearance{} = a), do: has_role(a, "ensemblist")
+
+  def is_accompanist(%Appearance{} = a), do: has_role(a, "accompanist")
+
+  # Private helpers
+
+  defp has_role(%Appearance{participant_role: role}, given_role) do
+    role == given_role
   end
 end

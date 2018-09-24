@@ -1,6 +1,6 @@
-<%= for %{participant: p, instrument: i} <- @appearances do %>
-  <strong><%= full_name(p) %></strong>,
-  <%= instrument_name(i) %>
-  <span class="text-muted">(* <%= birthdate(p) %>)</span>
+<%= for appearance <- @appearances do %>
+  <strong><%= full_name(appearance.participant) %></strong>,
+  <%= instrument_name(appearance.instrument) %>
+  <%= age_group_badge(appearance) %>
   <br>
 <% end %>

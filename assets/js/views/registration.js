@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash'
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_fields'
@@ -38,6 +39,13 @@ const registrationForm = params => new Vue({
   },
 
   methods: {
+    getAppearancePanelClass(index) {
+      let hasErrors = !isEmpty(this.errors.appearances[index])
+      return {
+        'panel-danger': hasErrors,
+        'panel-default': !hasErrors,
+      }
+    },
     addAppearance() {
       this.appearances.push({
         participant: {}

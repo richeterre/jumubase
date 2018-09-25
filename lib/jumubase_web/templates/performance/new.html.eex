@@ -35,7 +35,10 @@
       <h3><%= gettext("Participants") %></h3>
 
       <div class="panel-group" id="participant-accordion" role="tablist">
-        <div class="panel panel-default" v-for="(appearance, index) in appearances">
+        <div
+          class="panel"
+          v-for="(appearance, index) in appearances"
+          v-bind:class="getAppearancePanelClass(index)">
           <div class="panel-heading">
             <h4 class="panel-title">
               <a

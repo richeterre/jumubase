@@ -28,7 +28,7 @@ defmodule Jumubase.Accounts.User do
     user
     |> cast(attrs, @base_attrs)
     |> validate_required(@base_attrs)
-    |> validate_inclusion(:role, JumuParams.roles())
+    |> validate_inclusion(:role, JumuParams.user_roles())
     |> unique_email
   end
 
@@ -37,7 +37,7 @@ defmodule Jumubase.Accounts.User do
     |> cast(attrs, @base_attrs ++ [:password])
     |> validate_required(@base_attrs)
     |> validate_required(:password)
-    |> validate_inclusion(:role, JumuParams.roles())
+    |> validate_inclusion(:role, JumuParams.user_roles())
     |> unique_email
     |> validate_password(:password)
     |> put_pass_hash

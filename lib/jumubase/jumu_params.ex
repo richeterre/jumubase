@@ -20,7 +20,7 @@ defmodule Jumubase.JumuParams do
   @doc """
   Returns all possible user roles.
   """
-  def roles do
+  def user_roles do
     [
       # A "regular" user who organizes contests (typically RW) locally
       "local-organizer",

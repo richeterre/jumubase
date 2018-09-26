@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.UserViewTest do
   use JumubaseWeb.ConnCase, async: true
-  alias Jumubase.JumuParams
   alias JumubaseWeb.Internal.UserView
 
   test "returns a user's full name" do
@@ -29,7 +28,7 @@ defmodule JumubaseWeb.Internal.UserViewTest do
     end
 
     test "returns a tag for all other roles" do
-      for role <- JumuParams.roles() |> List.delete("local-organizer") do
+      for role <- List.delete(all_roles(), "local-organizer") do
         user = build(:user, role: role)
         assert UserView.role_tag(user.role) != nil
       end

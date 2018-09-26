@@ -158,24 +158,24 @@ Repo.transaction fn ->
     })
 
     rw_vocal_perf = insert(:performance, contest_category: rw_vocal, age_group: "III")
-    insert(:appearance, performance: rw_vocal_perf, participant_role: "soloist", instrument: "vocals")
-    insert(:appearance, performance: rw_vocal_perf, participant_role: "accompanist", instrument: "piano")
+    insert(:appearance, performance: rw_vocal_perf, role: "soloist", instrument: "vocals")
+    insert(:appearance, performance: rw_vocal_perf, role: "accompanist", instrument: "piano")
 
     rw_wind_ens_perf = insert(:performance, contest_category: rw_wind_ens, age_group: "III")
-    insert(:appearance, performance: rw_wind_ens_perf, participant_role: "ensemblist", instrument: "clarinet")
-    insert(:appearance, performance: rw_wind_ens_perf, participant_role: "ensemblist", instrument: "oboe")
-    insert(:appearance, performance: rw_wind_ens_perf, participant_role: "ensemblist", instrument: "bassoon")
+    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "clarinet")
+    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "oboe")
+    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "bassoon")
 
     rw_pop_drums_perf = insert(:performance, contest_category: rw_pop_drums, age_group: "III")
-    insert(:appearance, performance: rw_pop_drums_perf, participant_role: "soloist", instrument: "drumset")
-    insert(:appearance, performance: rw_pop_drums_perf, participant_role: "accompanist", instrument: "vocals")
-    insert(:appearance, performance: rw_pop_drums_perf, participant_role: "accompanist", instrument: "e-guitar")
-    insert(:appearance, performance: rw_pop_drums_perf, participant_role: "accompanist", instrument: "saxophone")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "soloist", instrument: "drumset")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "vocals")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "e-guitar")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "saxophone")
 
     rw_pop_vocal_ens_perf = insert(:performance, contest_category: rw_pop_vocal_ens, age_group: "III")
-    insert_list(2, :appearance, performance: rw_pop_vocal_ens_perf, participant_role: "ensemblist", instrument: "vocals")
-    insert(:appearance, performance: rw_pop_vocal_ens_perf, participant_role: "accompanist", instrument: "e-guitar")
-    insert(:appearance, performance: rw_pop_vocal_ens_perf, participant_role: "accompanist", instrument: "e-bass")
-    insert(:appearance, performance: rw_pop_vocal_ens_perf, participant_role: "accompanist", instrument: "drumset")
+    insert_list(2, :appearance, performance: rw_pop_vocal_ens_perf, role: "ensemblist", instrument: "vocals")
+    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "e-guitar")
+    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "e-bass")
+    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "drumset")
   end
 end

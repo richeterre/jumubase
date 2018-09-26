@@ -43,7 +43,7 @@ defmodule JumubaseWeb.Internal.UserView do
   Returns a list of possible `role` values suitable for forms.
   """
   def form_roles do
-    Enum.map(JumuParams.roles(), &{role_name(&1), &1})
+    Enum.map(JumuParams.user_roles(), &{role_name(&1), &1})
   end
 
   # Maps internal roles to user-facing role names.

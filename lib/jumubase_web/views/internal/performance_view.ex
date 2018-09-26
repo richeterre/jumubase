@@ -3,7 +3,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   import JumubaseWeb.Internal.AppearanceView, only: [
     acc: 1, age_group_badge: 1, instrument_name: 1, non_acc: 1
   ]
-  import JumubaseWeb.Internal.ParticipantView, only: [birthdate: 1, full_name: 1]
+  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   alias Jumubase.Showtime.Performance
 
   def category_name(%Performance{} = performance) do

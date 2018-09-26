@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.HostControllerTest do
   use JumubaseWeb.ConnCase
-  alias Jumubase.JumuParams
 
   setup config do
     login_if_needed(config)
@@ -32,7 +31,7 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
   end
 
   describe "for a non-admin" do
-    for role <- List.delete(JumuParams.roles(), "admin") do
+    for role <- non_admin_roles() do
       @tag login_as: role
       test "(#{role}) redirects when trying to perform any action", %{conn: conn} do
         verify_all_routes(conn, &assert_unauthorized_user/1)

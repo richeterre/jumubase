@@ -26,7 +26,7 @@ defmodule JumubaseWeb.AuthTestHelpers do
     Phauxth.Token.sign(JumubaseWeb.Endpoint, %{"email" => email})
   end
 
-  def all_roles, do: JumuParams.roles()
+  def all_roles, do: JumuParams.user_roles()
 
-  def non_admin_roles, do: List.delete(JumuParams.roles(), "admin")
+  def non_admin_roles, do: List.delete(JumuParams.user_roles(), "admin")
 end

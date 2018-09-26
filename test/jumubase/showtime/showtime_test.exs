@@ -197,7 +197,7 @@ defmodule Jumubase.ShowtimeTest do
 
   defp appearance_params(role, participant_birthdate) do
     %{
-      participant_role: role,
+      role: role,
       instrument: "vocals",
       participant: params_for(:participant, birthdate: participant_birthdate)
     }

@@ -101,7 +101,7 @@ defmodule Jumubase.Showtime do
   defp put_individual_age_group(changesets, role, season) do
     changesets
     |> Enum.map(fn
-      %{changes: %{participant_role: ^role}} = cs ->
+      %{changes: %{role: ^role}} = cs ->
         %{changes: %{participant: %{changes: %{birthdate: birthdate}}}} = cs
         age_group = AgeGroups.calculate_age_group(birthdate, season)
         Changeset.put_change(cs, :age_group, age_group)
@@ -118,7 +118,7 @@ defmodule Jumubase.Showtime do
       birthdates ->
         changesets
         |> Enum.map(fn
-          %{changes: %{participant_role: ^role}} = cs ->
+          %{changes: %{role: ^role}} = cs ->
             joint_age_group = AgeGroups.calculate_age_group(birthdates, season)
             Changeset.put_change(cs, :age_group, joint_age_group)
           other ->
@@ -139,6 +139,6 @@ defmodule Jumubase.Showtime do
 
   # Returns only appearance changesets with one of the given roles.
   defp filter_roles(changesets, roles) do
-    Enum.filter(changesets, &(&1.changes.participant_role in roles))
+    Enum.filter(changesets, &(&1.changes.role in roles))
   end
 end

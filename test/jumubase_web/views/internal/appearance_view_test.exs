@@ -19,9 +19,9 @@ defmodule JumubaseWeb.AppearanceViewTest do
   # Private helpers
 
   defp role_appearances do
-    sol = build(:appearance, participant_role: "soloist")
-    ens = build(:appearance, participant_role: "ensemblist")
-    acc = build(:appearance, participant_role: "accompanist")
+    sol = build(:appearance, role: "soloist")
+    ens = build(:appearance, role: "ensemblist")
+    acc = build(:appearance, role: "accompanist")
     [sol, ens, acc]
   end
 end

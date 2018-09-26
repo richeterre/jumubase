@@ -10,7 +10,7 @@ Vue.component('appearance-fields', {
     'index',
     'birthdate_year_options',
     'birthdate_month_options',
-    'participant_role_options',
+    'role_options',
     'instrument_options',
     'errors'
   ],
@@ -29,7 +29,7 @@ Vue.component('appearance-fields', {
 
   created() {
     const { appearance } = this
-    appearance.participant_role = appearance.participant_role || ''
+    appearance.role = appearance.role || ''
     appearance.instrument = appearance.instrument || ''
   },
 

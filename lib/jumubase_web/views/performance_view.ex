@@ -22,7 +22,7 @@ defmodule JumubaseWeb.PerformanceView do
         ),
         birthdate_year_options: birthdate_year_options(contest.season),
         birthdate_month_options: birthdate_month_options(),
-        participant_role_options: participant_role_options(),
+        role_options: role_options(),
         instrument_options: instrument_options(),
       }
     )
@@ -47,24 +47,13 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   @doc """
-  Returns a list of all participant roles in a form option format.
+  Returns a list of all participant roles in a form-friendly format.
   """
-  def participant_role_options do
+  def role_options do
     Enum.map(JumuParams.participant_roles, fn
       "soloist" -> %{id: "soloist", label: gettext("Soloist")}
       "accompanist" -> %{id: "accompanist", label: gettext("Accompanist")}
       "ensemblist" -> %{id: "ensemblist", label: gettext("Ensemblist")}
-    end)
-  end
-
-  @doc """
-  Returns a list of all participant roles in a form option format.
-  """
-  def role_options do
-    Enum.map(JumuParams.participant_roles, fn
-      "soloist" -> {gettext("Soloist"), "soloist"}
-      "accompanist" -> {gettext("Accompanist"), "accompanist"}
-      "ensemblist" -> {gettext("Ensemblist"), "ensemblist"}
     end)
   end
 

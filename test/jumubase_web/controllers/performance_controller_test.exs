@@ -18,7 +18,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
         "contest_category_id" => cc.id,
         "appearances" => [
           %{
-            "participant_role" => "soloist",
+            "role" => "soloist",
             "instrument" => "piano",
             "participant" => %{
               "given_name" => "A",

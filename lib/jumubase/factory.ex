@@ -12,7 +12,7 @@ defmodule Jumubase.Factory do
     %Appearance{
       performance: build(:performance),
       participant: build(:participant),
-      participant_role: "soloist",
+      role: "soloist",
       instrument: "piano",
       age_group: "III",
       points: nil

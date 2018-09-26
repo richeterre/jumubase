@@ -6,7 +6,7 @@ defmodule Jumubase.Showtime.Appearance do
 
   schema "appearances" do
     field :instrument, :string
-    field :participant_role, :string
+    field :role, :string
     field :age_group, :string
     field :points, :integer
 
@@ -16,7 +16,7 @@ defmodule Jumubase.Showtime.Appearance do
     timestamps()
   end
 
-  @required_attrs [:participant_role, :instrument]
+  @required_attrs [:role, :instrument]
 
   @doc false
   def changeset(%Appearance{} = appearance, attrs) do
@@ -24,7 +24,7 @@ defmodule Jumubase.Showtime.Appearance do
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
     |> cast_assoc(:participant, required: true)
-    |> validate_inclusion(:participant_role, JumuParams.participant_roles)
+    |> validate_inclusion(:role, JumuParams.participant_roles)
   end
 
   def is_soloist(%Appearance{} = a), do: has_role(a, "soloist")
@@ -35,7 +35,7 @@ defmodule Jumubase.Showtime.Appearance do
 
   # Private helpers
 
-  defp has_role(%Appearance{participant_role: role}, given_role) do
+  defp has_role(%Appearance{role: role}, given_role) do
     role == given_role
   end
 end

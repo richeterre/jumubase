@@ -14,7 +14,7 @@ const registrationForm = params => new Vue({
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
-      participant_role_options,
+      role_options,
       instrument_options
     } = params
 
@@ -32,7 +32,7 @@ const registrationForm = params => new Vue({
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
-      participant_role_options,
+      role_options,
       instrument_options,
       errors
     }

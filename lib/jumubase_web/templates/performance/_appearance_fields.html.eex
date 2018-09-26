@@ -3,7 +3,7 @@
   v-bind:appearance="appearances[index]"
   v-bind:birthdate_year_options="birthdate_year_options"
   v-bind:birthdate_month_options="birthdate_month_options"
-  v-bind:participant_role_options="participant_role_options"
+  v-bind:role_options="role_options"
   v-bind:instrument_options="instrument_options"
   v-bind:errors="(errors.appearances && errors.appearances[index]) || {}"
   inline-template>
@@ -95,21 +95,21 @@
 
     <div class="row">
       <div class="form-group col-md-3">
-        <label v-bind:for="fieldId('participant_role')">
+        <label v-bind:for="fieldId('role')">
           <%= gettext("Role") %>
         </label>
         <select
           class="form-control"
-          v-bind:id="fieldId('participant_role')"
-          v-bind:name="fieldName('participant_role')"
-          v-model="appearance.participant_role">
+          v-bind:id="fieldId('role')"
+          v-bind:name="fieldName('role')"
+          v-model="appearance.role">
           <option value=""><%= gettext("Please choose") %></option>
           <option
-            v-for="option in participant_role_options"
+            v-for="option in role_options"
             v-bind:value="option.id"
             v-text="option.label"></option>
         </select>
-        <form-field-error v-bind:errors="errors.participant_role"></form-field-error>
+        <form-field-error v-bind:errors="errors.role"></form-field-error>
       </div>
 
       <div class="form-group col-md-3">

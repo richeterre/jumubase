@@ -9,7 +9,7 @@ defmodule JumubaseWeb.PerformanceView do
   """
   def render("scripts.new.html", assigns) do
     %{
-      contest:  contest,
+      contest: contest,
       changeset: changeset,
       contest_category_options: cc_options,
     } = assigns

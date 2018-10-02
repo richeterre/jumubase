@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash'
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_fields'
+import './registration/form_error_overview'
 import './registration/form_field_error'
 import { flattenChangesetValues } from '../utils/changesets'
 
@@ -23,8 +24,7 @@ const registrationForm = params => new Vue({
       appearances
     } = flattenChangesetValues(changeset)
 
-    const errors = changeset.errors || {}
-    errors.appearances = errors.appearances || []
+    const errors = isEmpty(changeset.errors) ? {} : changeset.errors
 
     return {
       contest_category_id: contest_category_id || '',
@@ -40,7 +40,8 @@ const registrationForm = params => new Vue({
 
   methods: {
     getAppearancePanelClass(index) {
-      let hasErrors = !isEmpty(this.errors.appearances[index])
+      const appearancesErrors = this.errors.appearances
+      const hasErrors = appearancesErrors && !isEmpty(appearancesErrors[index])
       return {
         'panel-danger': hasErrors,
         'panel-default': !hasErrors,

@@ -7,7 +7,7 @@
 <div class="row">
   <div id="registration-form" class="col-lg-9">
     <%= form_for @changeset, performance_path(@conn, :create, @contest), fn f -> %>
-      <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+      <form-error-overview v-bind:errors="errors"></form-error-overview>
 
       <div class="row">
         <div class="form-group col-md-5">

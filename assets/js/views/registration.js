@@ -24,17 +24,15 @@ const registrationForm = params => new Vue({
       appearances
     } = flattenChangesetValues(changeset)
 
-    const errors = isEmpty(changeset.errors) ? {} : changeset.errors
-
     return {
       contest_category_id: contest_category_id || '',
-      appearances,
+      appearances: appearances || [],
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
       role_options,
       instrument_options,
-      errors
+      errors: isEmpty(changeset.errors) ? {} : changeset.errors
     }
   },
 
@@ -51,6 +49,11 @@ const registrationForm = params => new Vue({
       this.appearances.push({
         participant: {}
       })
+    },
+    removeAppearance(index) {
+      const { appearances, errors } = this
+      appearances.splice(index, 1)
+      errors.appearances && errors.appearances.splice(index, 1)
     }
   }
 })

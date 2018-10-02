@@ -47,6 +47,9 @@
                 data-parent="#participant-accordion"
                 v-bind:href="'#participant-' + index"
                 v-text='"<%= gettext("Participant") %> " + (index + 1)'>&nbsp;</a>
+                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeAppearance(index)">
+                  <span class="glyphicon glyphicon-trash" />
+                </button>
             </h4>
           </div>
           <div v-bind:id="'participant-' + index" class="panel-collapse collapse">

@@ -35,27 +35,7 @@
       <h3><%= gettext("Participants") %></h3>
 
       <div class="panel-group" id="participant-accordion" role="tablist">
-        <div
-          class="panel"
-          v-for="(appearance, index) in appearances"
-          v-bind:class="getAppearancePanelClass(index)">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a
-                role="button"
-                data-toggle="collapse"
-                data-parent="#participant-accordion"
-                v-bind:href="'#participant-' + index"
-                v-text='"<%= gettext("Participant") %> " + (index + 1)'>&nbsp;</a>
-                <button type="button" class="btn btn-xs btn-danger" v-on:click="removeAppearance(index)">
-                  <span class="glyphicon glyphicon-trash" />
-                </button>
-            </h4>
-          </div>
-          <div v-bind:id="'participant-' + index" class="panel-collapse collapse">
-            <%= render "_appearance_fields.html" %>
-          </div>
-        </div>
+        <%= render "_appearance_panels.html" %>
       </div>
 
       <button type="button" class="btn btn-primary" v-on:click="addAppearance()">

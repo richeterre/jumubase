@@ -1,10 +1,10 @@
-import { range } from 'lodash'
+import { isEmpty, range } from 'lodash'
 import Vue from 'vue/dist/vue'
 
 import { formFieldId, formFieldName } from '../../utils/form_fields'
 
 
-Vue.component('appearance-fields', {
+Vue.component('appearance-panels', {
   props: [
     'appearance',
     'index',
@@ -34,6 +34,17 @@ Vue.component('appearance-fields', {
   },
 
   computed: {
+    panelTitle() {
+      const { participant } = this.appearance
+      return participant.given_name || "Participant " + (this.index + 1)
+    },
+    panelClass() {
+      const hasErrors = !isEmpty(this.errors)
+      return {
+        'panel-danger': hasErrors,
+        'panel-default': !hasErrors,
+      }
+    },
     daysInBirthdateMonth() {
       return range(1, 32)
     }

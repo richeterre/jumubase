@@ -1,0 +1,187 @@
+<appearance-panels
+  v-for="(appearance, index) in appearances"
+  v-bind:index="index"
+  v-bind:appearance="appearances[index]"
+  v-bind:birthdate_year_options="birthdate_year_options"
+  v-bind:birthdate_month_options="birthdate_month_options"
+  v-bind:role_options="role_options"
+  v-bind:instrument_options="instrument_options"
+  v-bind:errors="(errors.appearances && errors.appearances[index]) || {}"
+  v-on:remove-appearance="removeAppearance"
+  inline-template>
+
+  <div class="panel" v-bind:class="panelClass">
+    <div class="panel-heading">
+      <button
+        type="button"
+        class="btn btn-xs btn-danger pull-right"
+        v-on:click="$emit('remove-appearance', index)">
+        <span class="glyphicon glyphicon-trash" />
+      </button>
+      <h4 class="panel-title">
+        <a
+          role="button"
+          data-toggle="collapse"
+          data-parent="#participant-accordion"
+          v-bind:href="'#participant-' + index">
+          {{panelTitle}}
+        </a>
+      </h4>
+    </div>
+    <div v-bind:id="'participant-' + index" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label v-bind:for="fieldId('participant', 'given_name')">
+              <%= gettext("First name") %>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              v-bind:id="fieldId('participant', 'given_name')"
+              v-bind:name="fieldName('participant', 'given_name')"
+              v-model="appearance.participant.given_name">
+            <form-field-error v-bind:errors="errors.participant && errors.participant.given_name" />
+            </form-field-error>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label v-bind:for="fieldId('participant', 'family_name')">
+              <%= gettext("Last name") %>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              v-bind:id="fieldId('participant', 'family_name')"
+              v-bind:name="fieldName('participant', 'family_name')"
+              v-model="appearance.participant.family_name">
+            <form-field-error v-bind:errors="errors.participant && errors.participant.family_name">
+            </form-field-error>
+          </div>
+
+          <div class="form-group col-md-5">
+            <label v-bind:for="fieldId('participant', 'birthdate', 'day')">
+              <%= gettext("Birthdate") %>
+            </label>
+
+            <div class="row">
+              <div class="col-md-3">
+                <select
+                  class="form-control"
+                  v-bind:id="fieldId('participant', 'birthdate', 'day')"
+                  v-bind:name="fieldName('participant', 'birthdate', 'day')"
+                  v-model="birthdateDay">
+                  <option value=""><%= gettext("Day") %></option>
+                  <option
+                    v-for="day in daysInBirthdateMonth"
+                    v-bind:value="day"
+                    v-text="formatDay(day)"></option>
+                </select>
+              </div>
+
+              <div class="col-md-5">
+                <select
+                  class="form-control"
+                  v-bind:name="fieldName('participant', 'birthdate', 'month')"
+                  v-model="birthdateMonth">
+                  <option value=""><%= gettext("Month") %></option>
+                  <option
+                    v-for="option in birthdate_month_options"
+                    v-bind:value="option.value"
+                    v-text="option.label"></option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <select
+                  class="form-control"
+                  v-bind:name="fieldName('participant', 'birthdate', 'year')"
+                  v-model="birthdateYear">
+                  <option value=""><%= gettext("Year") %></option>
+                  <option
+                    v-for="year in birthdate_year_options"
+                    v-bind:value="year"
+                    v-text="year"></option>
+                </select>
+              </div>
+
+              <div class="col-md-12">
+                <form-field-error v-bind:errors="errors.participant && errors.participant.birthdate">
+                </form-field-error>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label v-bind:for="fieldId('role')">
+              <%= gettext("Role") %>
+            </label>
+            <select
+              class="form-control"
+              v-bind:id="fieldId('role')"
+              v-bind:name="fieldName('role')"
+              v-model="appearance.role">
+              <option value=""><%= gettext("Please choose") %></option>
+              <option
+                v-for="option in role_options"
+                v-bind:value="option.id"
+                v-text="option.label"></option>
+            </select>
+            <form-field-error v-bind:errors="errors.role"></form-field-error>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label v-bind:for="fieldId('instrument')">
+              <%= gettext("Instrument") %>
+            </label>
+            <select
+              class="form-control"
+              v-bind:id="fieldId('instrument')"
+              v-bind:name="fieldName('instrument')"
+              v-model="appearance.instrument">
+              <option value=""><%= gettext("Please choose") %></option>
+              <option
+                v-for="option in instrument_options"
+                v-bind:value="option.value"
+                v-text="option.label"></option>
+            </select>
+            <form-field-error v-bind:errors="errors.instrument"></form-field-error>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label v-bind:for="fieldId('participant', 'phone')">
+              <%= gettext("Phone") %>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              v-bind:id="fieldId('participant', 'phone')"
+              v-bind:name="fieldName('participant', 'phone')"
+              v-model="appearance.participant.phone">
+            <form-field-error v-bind:errors="errors.participant && errors.participant.phone">
+            </form-field-error>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label v-bind:for="fieldId('participant', 'email')">
+              <%= gettext("E-Mail") %>
+            </label>
+            <input
+              type="email"
+              class="form-control"
+              v-bind:id="fieldId('participant', 'email')"
+              v-bind:name="fieldName('participant', 'email')"
+              v-model="appearance.participant.email">
+            <form-field-error v-bind:errors="errors.participant && errors.participant.email">
+            </form-field-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</appearance-panels>

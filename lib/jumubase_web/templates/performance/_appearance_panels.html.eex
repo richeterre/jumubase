@@ -1,4 +1,4 @@
-<appearance-panels
+<appearance-panel
   v-for="(appearance, index) in appearances"
   v-bind:index="index"
   v-bind:appearance="appearances[index]"
@@ -184,4 +184,4 @@
     </div>
   </div>
 
-</appearance-panels>
+</appearance-panel>

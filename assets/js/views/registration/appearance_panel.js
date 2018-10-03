@@ -4,7 +4,7 @@ import Vue from 'vue/dist/vue'
 import { formFieldId, formFieldName } from '../../utils/form_fields'
 
 
-Vue.component('appearance-panels', {
+Vue.component('appearance-panel', {
   props: [
     'appearance',
     'index',

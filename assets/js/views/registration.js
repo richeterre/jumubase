@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { findIndex, isEmpty } from 'lodash'
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_panel'
@@ -24,6 +24,8 @@ const registrationForm = params => new Vue({
       appearances
     } = flattenChangesetValues(changeset)
 
+    const errors = isEmpty(changeset.errors) ? {} : changeset.errors
+
     return {
       contest_category_id: contest_category_id || '',
       appearances: appearances || [],
@@ -32,7 +34,8 @@ const registrationForm = params => new Vue({
       birthdate_month_options,
       role_options,
       instrument_options,
-      errors: isEmpty(changeset.errors) ? {} : changeset.errors
+      errors,
+      expandedAppearancePanelIndex: getExpandedAppearancePanelIndex(errors)
     }
   },
 
@@ -49,6 +52,17 @@ const registrationForm = params => new Vue({
     }
   }
 })
+
+// Determines which appearance panel should initially be expanded.
+function getExpandedAppearancePanelIndex(errors) {
+  if (isEmpty(errors)) {
+    return 0
+  } else if (errors.appearances) {
+    return findIndex(errors.appearances, e => !isEmpty(e))
+  } else {
+    return null
+  }
+}
 
 // Make registrationForm() available to global <script> tags
 window.registrationForm = registrationForm

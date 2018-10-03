@@ -7,6 +7,7 @@
   v-bind:role_options="role_options"
   v-bind:instrument_options="instrument_options"
   v-bind:errors="(errors.appearances && errors.appearances[index]) || {}"
+  v-bind:begins_expanded="expandedAppearancePanelIndex === index"
   v-on:remove-appearance="removeAppearance"
   inline-template>
 
@@ -28,7 +29,10 @@
         </a>
       </h4>
     </div>
-    <div v-bind:id="'participant-' + index" class="panel-collapse collapse">
+    <div
+      v-bind:id="'participant-' + index"
+      class="panel-collapse collapse"
+      v-bind:class="{ in: beginsExpanded }">
       <div class="panel-body">
         <div class="row">
           <div class="form-group col-md-3">

@@ -12,7 +12,8 @@ Vue.component('appearance-panel', {
     'birthdate_month_options',
     'role_options',
     'instrument_options',
-    'errors'
+    'errors',
+    'begins_expanded'
   ],
 
   data() {
@@ -34,6 +35,9 @@ Vue.component('appearance-panel', {
   },
 
   computed: {
+    beginsExpanded() {
+      return this.begins_expanded
+    },
     panelTitle() {
       const { participant } = this.appearance
       return participant.given_name || "Participant " + (this.index + 1)

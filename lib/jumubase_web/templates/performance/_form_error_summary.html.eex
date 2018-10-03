@@ -1,0 +1,14 @@
+<form-error-summary
+  v-bind:errors="errors"
+  inline-template>
+
+  <div v-if="hasErrors" class="alert alert-danger">
+    <p><%= gettext("Please fix the errors below and try again!") %></p>
+    <p v-if="errors.base">
+      <ul>
+        <li v-for="error in errors.base">{{error}}</li>
+      </ul>
+    </p>
+  </div>
+
+</form-error-summary>

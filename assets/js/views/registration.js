@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash'
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_panels'
-import './registration/form_error_overview'
+import './registration/form_error_summary'
 import './registration/form_field_error'
 import { flattenChangesetValues } from '../utils/changesets'
 

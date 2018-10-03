@@ -7,7 +7,7 @@
 <div class="row">
   <div id="registration-form" class="col-lg-9">
     <%= form_for @changeset, performance_path(@conn, :create, @contest), fn f -> %>
-      <form-error-overview v-bind:errors="errors"></form-error-overview>
+      <%= render "_form_error_summary.html" %>
 
       <div class="row">
         <div class="form-group col-md-5">

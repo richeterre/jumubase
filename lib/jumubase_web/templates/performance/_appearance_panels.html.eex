@@ -59,7 +59,7 @@
             </form-field-error>
           </div>
 
-          <div class="form-group col-md-5">
+          <div class="form-group col-md-6">
             <label v-bind:for="fieldId('participant', 'birthdate', 'day')">
               <%= gettext("Birthdate") %>
             </label>
@@ -92,7 +92,7 @@
                 </select>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'year')"

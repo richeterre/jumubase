@@ -17,6 +17,13 @@ defmodule Jumubase.PerformanceTest do
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
     end
+
+    test "without an appearance" do
+      params = params_with_assocs(:performance, appearances: [])
+      changeset = Performance.changeset(%Performance{}, params)
+      refute changeset.valid?
+      assert changeset.errors[:base] == {"The performance must have at least one participant", []}
+    end
   end
 
   describe "to_edit_code/1" do

@@ -54,7 +54,9 @@ defmodule Jumubase.Showtime do
   end
 
   def change_performance(%Performance{} = performance) do
-    Performance.changeset(performance, %{})
+    performance
+    |> Repo.preload(:appearances)
+    |> Performance.changeset(%{})
   end
 
   # Private helpers

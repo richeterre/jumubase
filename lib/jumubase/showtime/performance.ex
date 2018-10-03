@@ -1,6 +1,8 @@
 defmodule Jumubase.Showtime.Performance do
   use Ecto.Schema
   import Ecto.Changeset
+  import Jumubase.Gettext
+  alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Showtime.{Appearance, Performance}
 
@@ -21,7 +23,8 @@ defmodule Jumubase.Showtime.Performance do
     performance
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> cast_assoc(:appearances, required: true)
+    |> cast_assoc(:appearances)
+    |> validate_appearance_combinations
   end
 
   @doc """
@@ -29,5 +32,18 @@ defmodule Jumubase.Showtime.Performance do
   """
   def to_edit_code(number) when is_integer(number) do
     number |> Integer.to_string |> String.pad_leading(6, "0")
+  end
+
+  # Private helpers
+
+  defp validate_appearance_combinations(%Changeset{} = changeset) do
+    appearances = get_field(changeset, :appearances)
+    cond do
+      length(appearances) == 0 ->
+        add_error(changeset, :base,
+          dgettext("errors", "The performance must have at least one participant"))
+      true ->
+        changeset
+    end
   end
 end

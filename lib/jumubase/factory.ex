@@ -4,7 +4,7 @@ defmodule Jumubase.Factory do
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
-  alias Jumubase.Showtime.{Appearance, Participant, Performance}
+  alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
   @season 56
 
@@ -75,6 +75,18 @@ defmodule Jumubase.Factory do
       contest_category: build(:contest_category),
       edit_code: sequence(:edit_code, &to_edit_code/1),
       age_group: nil,
+    }
+  end
+
+  def piece_factory do
+    %Piece{
+      title: sequence(:piece, &"Piece #{&1}"),
+      composer_name: "John Cage",
+      composer_born: "1912",
+      composer_died: "1992",
+      epoch: "f",
+      minutes: 4,
+      seconds: 33
     }
   end
 

@@ -53,4 +53,11 @@ defmodule Jumubase.JumuParams do
   def participant_roles do
     ["soloist", "accompanist", "ensemblist"]
   end
+
+  @doc """
+  Returns all possible piece epochs.
+  """
+  def epochs do
+    ~w(a b c d e f)
+  end
 end

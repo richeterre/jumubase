@@ -39,8 +39,8 @@ Vue.component('appearance-panel', {
       return this.begins_expanded
     },
     panelTitle() {
-      const { participant } = this.appearance
-      return participant.given_name || "Participant " + (this.index + 1)
+      const { appearance: { participant, role }, index } = this
+      return getPanelTitle(participant, role, index)
     },
     panelClass() {
       const hasErrors = !isEmpty(this.errors)
@@ -78,3 +78,15 @@ Vue.component('appearance-panel', {
     },
   }
 })
+
+function getPanelTitle(participant, role, index) {
+  const name = getParticipantName(participant, index)
+  return role ? `${name} (${role})` : name
+}
+
+function getParticipantName(participant, index) {
+  const givenName = participant.given_name || ''
+  const familyName = participant.family_name || ''
+  const fullName = `${givenName} ${familyName}`
+  return fullName.trim() || "Participant " + (index + 1)
+}

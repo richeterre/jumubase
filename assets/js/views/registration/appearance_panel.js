@@ -28,12 +28,6 @@ Vue.component('appearance-panel', {
     }
   },
 
-  created() {
-    const { appearance } = this
-    appearance.role = appearance.role || ''
-    appearance.instrument = appearance.instrument || ''
-  },
-
   computed: {
     beginsExpanded() {
       return this.begins_expanded
@@ -85,8 +79,6 @@ function getPanelTitle(participant, role, index) {
 }
 
 function getParticipantName(participant, index) {
-  const givenName = participant.given_name || ''
-  const familyName = participant.family_name || ''
-  const fullName = `${givenName} ${familyName}`
+  const fullName = `${participant.given_name} ${participant.family_name}`
   return fullName.trim() || "Participant " + (index + 1)
 }

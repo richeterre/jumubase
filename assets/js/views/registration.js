@@ -28,7 +28,7 @@ const registrationForm = params => new Vue({
 
     return {
       contest_category_id: contest_category_id || '',
-      appearances: appearances || [],
+      appearances: (appearances || []).map(normalizeAppearance),
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
@@ -41,9 +41,7 @@ const registrationForm = params => new Vue({
 
   methods: {
     addAppearance() {
-      this.appearances.push({
-        participant: {}
-      })
+      this.appearances.push(normalizeAppearance({}))
     },
     removeAppearance(index) {
       const { appearances, errors } = this
@@ -61,6 +59,25 @@ function getExpandedAppearancePanelIndex(errors) {
     return findIndex(errors.appearances, e => !isEmpty(e))
   } else {
     return null
+  }
+}
+
+// Initalizes the appearance's field values, if not present.
+function normalizeAppearance(appearance) {
+  return {
+    ...appearance,
+    participant: normalizeParticipant(appearance.participant || {}),
+    role: appearance.role || '',
+    instrument: appearance.instrument || ''
+  }
+}
+
+// Initalizes the participant's field values, if not present.
+function normalizeParticipant(participant) {
+  return {
+    ...participant,
+    given_name: participant.given_name || '',
+    family_name: participant.family_name || ''
   }
 }
 

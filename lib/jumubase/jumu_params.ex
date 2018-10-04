@@ -1,4 +1,6 @@
 defmodule Jumubase.JumuParams do
+  import Jumubase.Gettext
+
   @moduledoc """
   Defines various params inherent to the Jumu institution.
   """
@@ -59,5 +61,19 @@ defmodule Jumubase.JumuParams do
   """
   def epochs do
     ~w(a b c d e f)
+  end
+
+  @doc """
+  Returns a description for the given epoch.
+  """
+  def epoch_description(epoch) do
+    case epoch do
+      "a" -> gettext("Renaissance, Early Baroque")
+      "b" -> gettext("Baroque")
+      "c" -> gettext("Early Classical, Classical")
+      "d" -> gettext("Romantic, Impressionist")
+      "e" -> gettext("Modern Classical, Jazz, Pop")
+      "f" -> gettext("Neue Musik")
+    end
   end
 end

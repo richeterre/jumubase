@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.ParticipantViewTest do
+defmodule JumubaseWeb.Internal.ParticipantViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.ParticipantView
 

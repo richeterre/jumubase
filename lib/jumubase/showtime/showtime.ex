@@ -30,7 +30,7 @@ defmodule Jumubase.Showtime do
     |> join(:left, [p], cc in assoc(p, :contest_category))
     |> where([_, cc], cc.contest_id == ^contest_id)
     |> preload([_, cc], [contest_category: {cc, :category}])
-    |> preload([_, _], [appearances: :participant])
+    |> preload([_, _], [[appearances: :participant], :pieces])
     |> Repo.get!(id)
   end
 

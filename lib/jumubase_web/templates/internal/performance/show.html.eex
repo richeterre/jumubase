@@ -19,3 +19,11 @@
   <h5 class="text-muted"><%= gettext("accompanied by") %></h5>
   <%= render "_appearances.html", appearances: acc_appearances %>
 <% end %>
+
+<h3><%= gettext("Programme") %></h3>
+
+<%= render "_pieces.html", pieces: @performance.pieces %>
+
+<p>
+  <em><%= gettext("Total duration: %{d}", d: total_duration(@performance)) %></em>
+</p>

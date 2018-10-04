@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.ContestViewTest do
+defmodule JumubaseWeb.Internal.ContestViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.ContestView
 

@@ -36,11 +36,11 @@ defmodule JumubaseWeb.PerformanceView do
 
   # Private helpers
 
-  def birthdate_year_options(season) do
+  defp birthdate_year_options(season) do
     AgeGroups.birthyear_range(season)
   end
 
-  def birthdate_month_options() do
+  defp birthdate_month_options() do
     Timex.Translator.current_locale
     |> Timex.Translator.get_months
     |> Map.to_list
@@ -69,19 +69,8 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   defp epoch_options do
-    Enum.map(JumuParams.epochs, fn
-      epoch -> %{id: epoch, label: "#{epoch}) #{epoch_name(epoch)}"}
+    Enum.map(JumuParams.epochs, fn epoch ->
+      %{id: epoch, label: "#{epoch}) #{JumuParams.epoch_description(epoch)}"}
     end)
-  end
-
-  defp epoch_name(epoch) do
-    case epoch do
-      "a" -> gettext("Renaissance, Early Baroque")
-      "b" -> gettext("Baroque")
-      "c" -> gettext("Early Classical, Classical")
-      "d" -> gettext("Romantic, Impressionist")
-      "e" -> gettext("Modern Classical, Jazz, Pop")
-      "f" -> gettext("Neue Musik")
-    end
   end
 end

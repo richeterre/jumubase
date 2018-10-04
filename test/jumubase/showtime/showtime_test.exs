@@ -3,7 +3,7 @@ defmodule Jumubase.ShowtimeTest do
   alias Ecto.Changeset
   alias Jumubase.Foundation.{Category, ContestCategory}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Performance, Participant}
+  alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
   describe "performances" do
     test "list_performances/1 returns the given contest's performances" do
@@ -46,13 +46,15 @@ defmodule Jumubase.ShowtimeTest do
       %{
         id: id,
         contest_category: %{contest: c}
-      } = insert(:performance, appearances: [
-        build(:appearance, performance: nil)
-      ])
+      } = insert(:performance,
+        appearances: [build(:appearance, performance: nil)],
+        pieces: [build(:piece)]
+      )
 
       assert %Performance{
         contest_category: %ContestCategory{category: %Category{}},
-        appearances: [%Appearance{participant: %Participant{}}]
+        appearances: [%Appearance{participant: %Participant{}}],
+        pieces: [%Piece{}]
       } = Showtime.get_performance!(c, id)
     end
 

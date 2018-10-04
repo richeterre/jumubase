@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.AppearanceViewTest do
+defmodule JumubaseWeb.Internal.AppearanceViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.AppearanceView
 
@@ -10,7 +10,7 @@ defmodule JumubaseWeb.AppearanceViewTest do
     [sol, ens, _acc] = appearances = role_appearances()
     assert AppearanceView.non_acc(appearances) == [sol, ens]
   end
-  
+
   test "non_acc/1 returns only soloist + ensemblist appearances" do
     [_sol, _ens, acc] = appearances = role_appearances()
     assert AppearanceView.acc(appearances) == [acc]

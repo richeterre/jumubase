@@ -12,14 +12,8 @@
   inline-template>
 
   <div class="panel" v-bind:class="panelClass">
-    <div class="panel-heading">
-      <button
-        type="button"
-        class="btn btn-xs btn-danger pull-right"
-        v-on:click="$emit('remove-appearance', index)">
-        <span class="glyphicon glyphicon-trash" />
-      </button>
-      <h4 class="panel-title">
+    <div class="panel-heading clearfix">
+      <h4 class="panel-title pull-left">
         <a
           role="button"
           data-toggle="collapse"
@@ -28,6 +22,12 @@
           {{panelTitle}}
         </a>
       </h4>
+      <button
+        type="button"
+        class="btn btn-xs btn-danger pull-right"
+        v-on:click="$emit('remove-appearance', index)">
+        <span class="glyphicon glyphicon-trash" />
+      </button>
     </div>
     <div
       v-bind:id="'participant-' + index"

@@ -1,5 +1,6 @@
 <appearance-panel
   v-for="(appearance, index) in appearances"
+  v-bind:key="index"
   v-bind:index="index"
   v-bind:appearance="appearances[index]"
   v-bind:birthdate_year_options="birthdate_year_options"

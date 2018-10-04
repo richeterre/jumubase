@@ -10,7 +10,7 @@
 to: internal_contest_performance_path(@conn, :index, @contest),
 class: "btn btn-default" %>
 
-<h3> <%= gettext("Contest categories") %> </h3>
+<h3> <%= gettext("Categories") %> </h3>
 
 <ul>
   <%= for cc <- @contest.contest_categories do %>

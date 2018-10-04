@@ -107,3 +107,13 @@ msgstr ""
 #: lib/jumubase/foundation/contest.ex:47
 msgid "must be before the start date"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:46
+msgid "The performance must have at least one participant"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:56
+msgid "The performance must have at least one piece"
+msgstr ""

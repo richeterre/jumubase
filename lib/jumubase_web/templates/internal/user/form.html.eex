@@ -2,33 +2,33 @@
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
   <div class="form-group">
-    <%= label f, :first_name, class: "control-label" %>
+    <%= label f, :first_name, gettext("First name"), class: "control-label" %>
     <%= text_input f, :first_name, class: "form-control" %>
     <%= error_tag f, :first_name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :last_name, class: "control-label" %>
+    <%= label f, :last_name, gettext("Last name"), class: "control-label" %>
     <%= text_input f, :last_name, class: "form-control" %>
     <%= error_tag f, :last_name %>
   </div>
 
   <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
+    <%= label f, :email, gettext("Email"), class: "control-label" %>
     <%= email_input f, :email, class: "form-control" %>
     <%= error_tag f, :email %>
   </div>
 
   <%= if @include_password do %>
   <div class="form-group">
-    <%= label f, :password, class: "control-label" %>
+    <%= label f, :password, gettext("Password"), class: "control-label" %>
     <%= password_input f, :password, class: "form-control" %>
     <%= error_tag f, :password %>
   </div>
   <% end %>
 
   <div class="form-group">
-    <%= label f, :role, class: "control-label" %>
+    <%= label f, :role, gettext("Role"), class: "control-label" %>
     <%= select f, :role, form_roles(),
       prompt: gettext("Please choose"),
       class: "form-control"

@@ -1,73 +1,74 @@
-## This file is a PO Template file.
+## `msgid`s in this file come from POT (.pot) files.
 ##
-## `msgid`s here are often extracted from source code.
-## Add new translations manually only if they're dynamic
-## translations that can't be statically extracted.
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
 ##
-## Run `mix gettext.extract` to bring this file up to
-## date. Leave `msgstr`s empty as changing them here as no
-## effect: edit them in PO (`.po`) files instead.
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
 msgid ""
 msgstr ""
+"Language: de\n"
+"Plural-Forms: nplurals=2\n"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/index.html.eex:33
 msgid "Add User"
-msgstr ""
+msgstr "Neuen Benutzer hinzufügen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/page/home.html.eex:14
 #: lib/jumubase_web/views/internal/user_view.ex:52
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/new.html.eex:8
 msgid "Create User"
-msgstr ""
+msgstr "Benutzer erstellen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/index.html.eex:24
 msgid "Do you really want to delete this user?"
-msgstr ""
+msgstr "Möchtest du diesen Benutzer wirklich löschen?"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:1
 msgid "Edit User"
-msgstr ""
+msgstr "Benutzer bearbeiten"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:17
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:172
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:19
 msgid "Home"
-msgstr ""
+msgstr "Startseite"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:53
 msgid "Inspector"
-msgstr ""
+msgstr "Beobachter"
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:34
 msgid "Internal Pages"
-msgstr ""
+msgstr "Interne Seiten"
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/app.html.eex:10
 #: lib/jumubase_web/templates/page/home.html.eex:1
 msgid "Jumu Nordost"
-msgstr ""
+msgstr "Jumu Nordost"
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:12
 msgid "Jumu logo"
-msgstr ""
+msgstr "Jumu-Logo"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
@@ -75,12 +76,12 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/host/new.html.eex:7
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/new.html.eex:1
 msgid "New User"
-msgstr ""
+msgstr "Neuer Benutzer"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:33
@@ -89,137 +90,137 @@ msgstr ""
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:100
 #: lib/jumubase_web/templates/performance/new.html.eex:22
 msgid "Please choose"
-msgstr ""
+msgstr "Bitte wählen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
 msgid "Save Changes"
-msgstr ""
+msgstr "Änderungen speichern"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/user_controller.ex:28
 msgid "The user %{name} was created."
-msgstr ""
+msgstr "Der Benutzer %{name} wurde erstellt."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/user_controller.ex:61
 msgid "The user %{name} was deleted."
-msgstr ""
+msgstr "Der Benutzer %{name} wurde gelöscht."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/user_controller.ex:48
 msgid "The user %{name} was updated."
-msgstr ""
+msgstr "Der Benutzer %{name} wurde aktualisiert."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/user_controller.ex:10
 #: lib/jumubase_web/templates/internal/page/home.html.eex:18
 #: lib/jumubase_web/templates/internal/user/index.html.eex:1
 msgid "Users"
-msgstr ""
+msgstr "Benutzer"
 
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:26
 msgid "Reset your password at %{url}"
-msgstr ""
+msgstr "Setze dein Passwort hier neu: %{url}"
 
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:35
 msgid "Password reset"
-msgstr ""
+msgstr "Passwort gesetzt"
 
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:25
 msgid "Reset your password"
-msgstr ""
+msgstr "Neues Passwort setzen"
 
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:18
 msgid "You requested a password reset, but no user is associated with the email you provided."
-msgstr ""
+msgstr "Du hast begonnen, ein neues Passwort zu setzen, aber es wurde kein Benutzer unter der angegebenen E-Mail gefunden."
 
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:36
 msgid "Your password has been reset."
-msgstr ""
+msgstr "Dein Passwort wurde gesetzt."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:46
 #: lib/jumubase_web/controllers/authorize.ex:55
 msgid "You are not authorized to view this page"
-msgstr ""
+msgstr "Du bist nicht berechtigt, diese Seite zu besuchen."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:75
 msgid "You have been logged in"
-msgstr ""
+msgstr "Du bist jetzt eingeloggt"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:81
 msgid "You need to log in to view this page"
-msgstr ""
+msgstr "Du musst dich einloggen, um diese Seite zu besuchen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:33
 msgid "You need to log out to view this page"
-msgstr ""
+msgstr "Du musst dich ausloggen, um diese Seite zu besuchen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:35
 msgid "Add Host"
-msgstr ""
+msgstr "Neue Schule hinzufügen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/new.html.eex:17
 #: lib/jumubase_web/templates/session/new.html.eex:31
 msgid "Back"
-msgstr ""
+msgstr "Zurück"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:17
 msgid "Cancel (keep old password)"
-msgstr ""
+msgstr "Abbrechen (altes Passwort behalten)"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/password_reset_controller.ex:16
 msgid "Check your inbox for instructions on how to reset your password"
-msgstr ""
+msgstr "Du hast eine E-Mail mit Anweisungen bekommen, wie du ein neues Passwort setzen kannst"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:1
 msgid "Choose Password"
-msgstr ""
+msgstr "Passwort wählen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:8
 #: lib/jumubase_web/templates/internal/host/new.html.eex:13
 msgid "City"
-msgstr ""
+msgstr "Stadt"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:9
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:19
 msgid "Country code"
-msgstr ""
+msgstr "Ländercode"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:30
 msgid "Create Host"
-msgstr ""
+msgstr "Schule erstellen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/session/new.html.eex:16
 msgid "Forgot password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:54
 msgid "Global Organizer"
-msgstr ""
+msgstr "Orgteam Landesebene"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:8
@@ -228,154 +229,154 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/form.html.eex:40
 #: lib/jumubase_web/templates/internal/user/index.html.eex:9
 msgid "Hosts"
-msgstr ""
+msgstr "Schulen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/password_reset_controller.ex:52
 msgid "Invalid input"
-msgstr ""
+msgstr "Ungültige Angaben"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:55
 msgid "Local Organizer"
-msgstr ""
+msgstr "Orgteam Regionalebene"
 
 #, elixir-format
 #: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Login"
-msgstr ""
+msgstr "Einloggen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:1
 msgid "New Host"
-msgstr ""
+msgstr "Neue Schule"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:5
 msgid "New password"
-msgstr ""
+msgstr "Neues Passwort"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/password_reset_controller.ex:19
 msgid "Please enter an email address"
-msgstr ""
+msgstr "Bitte gib eine E-Mailadresse ein."
 
 #, elixir-format
 #: lib/jumubase_web/templates/error/form_errors.html.eex:4
 #: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:6
 msgid "Please fix the errors below and try again!"
-msgstr ""
+msgstr "Bitte behebe die folgenden Fehler und versuche es erneut!"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:13
 msgid "Set password"
-msgstr ""
+msgstr "Passwort setzen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:30
 msgid "The host \"%{name}\" was created."
-msgstr ""
+msgstr "Die Schule \"%{name}\" wurde erstellt."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 msgid "Time Zone"
-msgstr ""
+msgstr "Zeitzone"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:25
 msgid "Time zone"
-msgstr ""
+msgstr "Zeitzone"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/session_controller.ex:36
 msgid "You have been logged out"
-msgstr ""
+msgstr "Du bist jetzt ausgeloggt"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/password_reset_controller.ex:43
 msgid "Your password has been reset"
-msgstr ""
+msgstr "Dein neues Passwort wurde gesetzt."
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:61
 msgid "Accompanist"
-msgstr ""
+msgstr "Begleiter"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:67
 msgid "Birthdate"
-msgstr ""
+msgstr "Geburtsdatum"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:7
 #: lib/jumubase_web/templates/performance/new.html.eex:15
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:62
 msgid "Ensemblist"
-msgstr ""
+msgstr "Ensemblepartner"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:5
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:41
 msgid "First name"
-msgstr ""
+msgstr "Vorname"
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/registration.html.eex:4
 msgid "Here you can register for your local \"Jugend musiziert\" contest."
-msgstr ""
+msgstr "Hier kannst du dich für deinen \"Jugend musiziert\"-Wettbewerb anmelden."
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 msgid "Instrument"
-msgstr ""
+msgstr "Instrument"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:11
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:54
 msgid "Last name"
-msgstr ""
+msgstr "Nachname"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 #: lib/jumubase_web/templates/performance/new.html.eex:35
 msgid "Participants"
-msgstr ""
+msgstr "Teilnehmer"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:159
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/new.html.eex:45
 msgid "Pieces"
-msgstr ""
+msgstr "Vorspielprogramm"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/new.html.eex:2
 msgid "Register"
-msgstr ""
+msgstr "Anmeldeformular"
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:20
 #: lib/jumubase_web/templates/page/registration.html.eex:1
 msgid "Registration"
-msgstr ""
+msgstr "Anmeldung"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:31
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:121
 msgid "Role"
-msgstr ""
+msgstr "Rolle"
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:60
 msgid "Soloist"
-msgstr ""
+msgstr "Solist"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/performance_controller.ex:29
@@ -385,27 +386,27 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/performance/new.html.eex:42
 msgid "Add participant"
-msgstr ""
+msgstr "Teilnehmer hinzufügen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/new.html.eex:52
 msgid "Add piece"
-msgstr ""
+msgstr "Stück hinzufügen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:8
 msgid "Age group"
-msgstr ""
+msgstr "Altersgruppe"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:64
 msgid "Born"
-msgstr ""
+msgstr "Geburtsjahr"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:50
 msgid "Composer"
-msgstr ""
+msgstr "Komponist"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:6
@@ -413,146 +414,146 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
 msgid "Contests"
-msgstr ""
+msgstr "Wettbewerbe"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:8
 msgid "Dates"
-msgstr ""
+msgstr "Zeitraum"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:77
 msgid "Day"
-msgstr ""
+msgstr "Tag"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
 msgid "Deadline"
-msgstr ""
+msgstr "Anmeldeschluss"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:77
 msgid "Died"
-msgstr ""
+msgstr "Todesjahr"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:111
 msgid "Duration"
-msgstr ""
+msgstr "Dauer"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:9
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:11
 msgid "Edit code"
-msgstr ""
+msgstr "Änderungscode"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:93
 msgid "Epoch"
-msgstr ""
+msgstr "Epoche"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/page/home.html.eex:2
 msgid "Hello %{name},"
-msgstr ""
+msgstr "Hallo %{name}"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:9
 msgid "List performances"
-msgstr ""
+msgstr "Vorspiele auflisten"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:90
 msgid "Month"
-msgstr ""
+msgstr "Monat"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:2
 msgid "Performance Details"
-msgstr ""
+msgstr "Vorspieldetails"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:32
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:1
 msgid "Performances"
-msgstr ""
+msgstr "Vorspiele"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:23
 msgid "Programme"
-msgstr ""
+msgstr "Vorspielprogramm"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/new.html.eex:58
 msgid "Submit registration"
-msgstr ""
+msgstr "Anmeldung absenden"
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/home.html.eex:4
 msgid "The website for “Jugend musiziert Nord- und Osteuropa” at German schools abroad"
-msgstr ""
+msgstr "Die Website für “Jugend musiziert” an den Deutschen Schulen der Region Nord- und Osteuropa"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:38
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:28
 msgid "Total duration: %{d}"
-msgstr ""
+msgstr "Gesamtdauer: %{d}"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:103
 msgid "Year"
-msgstr ""
+msgstr "Jahr"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:19
 msgid "accompanied by"
-msgstr ""
+msgstr "begleitet von"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:124
 msgid "min"
-msgstr ""
+msgstr "Min."
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:139
 msgid "sec"
-msgstr ""
+msgstr "Sek."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/page/home.html.eex:5
 msgid "welcome to your personal Jumu portal!"
-msgstr ""
+msgstr "willkommen auf deinem persönlichen Jumu-Portal!"
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:31
 msgid "Log out"
-msgstr ""
+msgstr "Ausloggen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/new.html.eex:1
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/new.html.eex:13
 msgid "Send instructions"
-msgstr ""
+msgstr "Anweisungen schicken"
 
 #, elixir-format
 #: lib/jumubase_web/templates/session/new.html.eex:27
 msgid "Log in"
-msgstr ""
+msgstr "Einloggen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:13
 msgid "Categories"
-msgstr ""
+msgstr "Kategorien"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:24
 msgid "Password"
-msgstr ""
+msgstr "Passwort gesetzt"

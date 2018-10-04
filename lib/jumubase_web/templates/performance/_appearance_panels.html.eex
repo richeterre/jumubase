@@ -169,7 +169,7 @@
 
           <div class="form-group col-md-4">
             <label v-bind:for="fieldId('participant', 'email')">
-              <%= gettext("E-Mail") %>
+              <%= gettext("Email") %>
             </label>
             <input
               type="email"

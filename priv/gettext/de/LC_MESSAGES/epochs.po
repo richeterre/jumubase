@@ -1,0 +1,42 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: de\n"
+"Plural-Forms: nplurals=2\n"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:72
+msgid "Baroque"
+msgstr "Barock"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:73
+msgid "Early Classical, Classical"
+msgstr "Frühklassik, Klassik"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:75
+msgid "Modern Classical, Jazz, Pop"
+msgstr "Klassische Moderne, Jazz, Pop"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:76
+msgid "Neue Musik"
+msgstr "Neue Musik"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:71
+msgid "Renaissance, Early Baroque"
+msgstr "Renaissance, Frühbarock"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:74
+msgid "Romantic, Impressionist"
+msgstr "Romantik, Impressionismus"

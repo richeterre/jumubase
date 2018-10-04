@@ -68,12 +68,12 @@ defmodule Jumubase.JumuParams do
   """
   def epoch_description(epoch) do
     case epoch do
-      "a" -> gettext("Renaissance, Early Baroque")
-      "b" -> gettext("Baroque")
-      "c" -> gettext("Early Classical, Classical")
-      "d" -> gettext("Romantic, Impressionist")
-      "e" -> gettext("Modern Classical, Jazz, Pop")
-      "f" -> gettext("Neue Musik")
+      "a" -> dgettext("epochs", "Renaissance, Early Baroque")
+      "b" -> dgettext("epochs", "Baroque")
+      "c" -> dgettext("epochs", "Early Classical, Classical")
+      "d" -> dgettext("epochs", "Romantic, Impressionist")
+      "e" -> dgettext("epochs", "Modern Classical, Jazz, Pop")
+      "f" -> dgettext("epochs", "Neue Musik")
     end
   end
 end

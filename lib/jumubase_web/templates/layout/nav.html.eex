@@ -28,7 +28,7 @@
               <%= @current_user.first_name %>
             <% end %>
           </li>
-          <li><%= link gettext("Logout"), to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+          <li><%= link gettext("Log out"), to: session_path(@conn, :delete, @current_user), method: :delete %></li>
         <% else %>
           <li>
             <%= link gettext("Internal Pages"), to: session_path(@conn, :new) %>

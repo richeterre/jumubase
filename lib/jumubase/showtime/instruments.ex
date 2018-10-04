@@ -6,16 +6,16 @@ defmodule Jumubase.Showtime.Instruments do
   import Jumubase.Gettext
 
   @instruments %{
-    "bassoon" => gettext("Bassoon"),
-    "clarinet" => gettext("Clarinet"),
-    "drumset" => gettext("Drumset"),
-    "e-bass" => gettext("Electric Bass"),
-    "e-guitar" => gettext("Electric Guitar"),
-    "guitar" => gettext("Guitar"),
-    "oboe" => gettext("Oboe"),
-    "piano" => gettext("Piano"),
-    "saxophone" => gettext("Saxophone"),
-    "vocals" => gettext("Vocals"),
+    "bassoon" => dgettext("instruments", "Bassoon"),
+    "clarinet" => dgettext("instruments", "Clarinet"),
+    "drumset" => dgettext("instruments", "Drumset"),
+    "e-bass" => dgettext("instruments", "Electric Bass"),
+    "e-guitar" => dgettext("instruments", "Electric Guitar"),
+    "guitar" => dgettext("instruments", "Guitar"),
+    "oboe" => dgettext("instruments", "Oboe"),
+    "piano" => dgettext("instruments", "Piano"),
+    "saxophone" => dgettext("instruments", "Saxophone"),
+    "vocals" => dgettext("instruments", "Vocals"),
   }
 
   def all, do: @instruments

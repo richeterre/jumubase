@@ -1,8 +1,8 @@
 <h2>
-  <%= gettext("Hallo %{name},", name: @current_user.first_name) %>
+  <%= gettext("Hello %{name},", name: @current_user.first_name) %>
 </h2>
 
-<p><%= gettext("willkommen auf deinem persönlichen Jumu-Portal!") %></p>
+<p><%= gettext("welcome to your personal Jumu portal!") %></p>
 
 <hr>
 

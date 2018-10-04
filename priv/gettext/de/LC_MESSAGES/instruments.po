@@ -1,0 +1,62 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: de\n"
+"Plural-Forms: nplurals=2\n"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:9
+msgid "Bassoon"
+msgstr "Fagott"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:10
+msgid "Clarinet"
+msgstr "Klarinette"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:11
+msgid "Drumset"
+msgstr "Drumset"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:12
+msgid "Electric Bass"
+msgstr "E-Bass"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:13
+msgid "Electric Guitar"
+msgstr "E-Gitarre"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:14
+msgid "Guitar"
+msgstr "Gitarre"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:15
+msgid "Oboe"
+msgstr "Oboe"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:16
+msgid "Piano"
+msgstr "Klavier"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:17
+msgid "Saxophone"
+msgstr "Saxophon"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:18
+msgid "Vocals"
+msgstr "Gesang"

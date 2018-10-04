@@ -38,8 +38,8 @@
         <%= render "_appearance_panels.html" %>
       </div>
 
-      <button type="button" class="btn btn-primary" v-on:click="addAppearance()">
-        <%= gettext("Add") %>
+      <button type="button" class="btn btn-link" v-on:click="addAppearance()">
+        <%= icon_tag("plus") %> <%= gettext("Add participant") %>
       </button>
 
       <h3><%= gettext("Pieces") %></h3>
@@ -72,7 +72,11 @@
         </div>
       </div>
 
-      <%= submit gettext("Submit"), class: "btn btn-primary" %>
+      <hr>
+
+      <%= submit class: "btn btn-primary pull-right" do %>
+        <%= gettext("Submit registration") %> <%= icon_tag("send") %>
+      <% end %>
     <% end %>
   </div>
 </div>

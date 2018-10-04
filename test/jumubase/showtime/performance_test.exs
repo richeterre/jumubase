@@ -12,17 +12,24 @@ defmodule Jumubase.PerformanceTest do
       assert changeset.valid?
     end
 
-    test "without an associated contest category" do
-      params = params_with_assocs(:performance, contest_category: nil)
+    test "without an associated contest category", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :contest_category_id, nil)
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
     end
 
-    test "without an appearance" do
-      params = params_with_assocs(:performance, appearances: [])
+    test "without an appearance", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :appearances, [])
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
       assert changeset.errors[:base] == {"The performance must have at least one participant", []}
+    end
+
+    test "without a piece", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :pieces, [])
+      changeset = Performance.changeset(%Performance{}, params)
+      refute changeset.valid?
+      assert changeset.errors[:base] == {"The performance must have at least one piece", []}
     end
   end
 

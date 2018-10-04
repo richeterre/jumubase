@@ -17,5 +17,6 @@ defmodule Jumubase.ShowtimeTestHelpers do
   def valid_performance_attrs do
     params_with_assocs(:performance, edit_code: nil, age_group: nil)
     |> Map.put(:appearances, [valid_appearance_attrs()])
+    |> Map.put(:pieces, [params_for(:piece)])
   end
 end

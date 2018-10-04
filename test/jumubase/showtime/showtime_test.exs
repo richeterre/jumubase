@@ -190,7 +190,8 @@ defmodule Jumubase.ShowtimeTest do
   defp performance_params(appearances_params, contest_category) do
     attrs = %{
       contest_category_id: contest_category.id,
-      appearances: appearances_params
+      appearances: appearances_params,
+      pieces: [params_for(:piece)]
     }
     {contest_category, attrs}
   end

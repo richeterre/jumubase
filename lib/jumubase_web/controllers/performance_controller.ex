@@ -4,14 +4,17 @@ defmodule JumubaseWeb.PerformanceController do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Participant, Performance}
+  alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
   # Pass contest from nested route to all actions
   def action(conn, _), do: get_contest!(conn, __MODULE__)
 
   def new(conn, _params, contest) do
     changeset =
-      %Performance{appearances: [%Appearance{participant: %Participant{}}]}
+      %Performance{
+        appearances: [%Appearance{participant: %Participant{}}],
+        pieces: [%Piece{}]
+      }
       |> Showtime.change_performance()
 
     conn

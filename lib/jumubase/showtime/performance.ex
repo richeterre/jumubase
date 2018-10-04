@@ -4,7 +4,7 @@ defmodule Jumubase.Showtime.Performance do
   import Jumubase.Gettext
   alias Ecto.Changeset
   alias Jumubase.Foundation
-  alias Jumubase.Showtime.{Appearance, Performance}
+  alias Jumubase.Showtime.{Appearance, Performance, Piece}
 
   schema "performances" do
     field :age_group, :string
@@ -12,6 +12,7 @@ defmodule Jumubase.Showtime.Performance do
 
     belongs_to :contest_category, Foundation.ContestCategory
     has_many :appearances, Appearance
+    has_many :pieces, Piece
 
     timestamps()
   end
@@ -24,7 +25,9 @@ defmodule Jumubase.Showtime.Performance do
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
     |> cast_assoc(:appearances)
-    |> validate_appearance_combinations
+    |> validate_appearances
+    |> cast_assoc(:pieces)
+    |> validate_pieces
   end
 
   @doc """
@@ -36,13 +39,22 @@ defmodule Jumubase.Showtime.Performance do
 
   # Private helpers
 
-  defp validate_appearance_combinations(%Changeset{} = changeset) do
-    appearances = get_field(changeset, :appearances)
-    cond do
-      length(appearances) == 0 ->
+  defp validate_appearances(%Changeset{} = changeset) do
+    case get_field(changeset, :appearances) do
+      []->
         add_error(changeset, :base,
           dgettext("errors", "The performance must have at least one participant"))
-      true ->
+      _ ->
+        changeset
+    end
+  end
+
+  defp validate_pieces(%Changeset{} = changeset) do
+    case get_field(changeset, :pieces) do
+      [] ->
+        add_error(changeset, :base,
+          dgettext("errors", "The performance must have at least one piece"))
+      _ ->
         changeset
     end
   end

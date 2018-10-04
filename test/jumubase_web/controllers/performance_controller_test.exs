@@ -25,8 +25,18 @@ defmodule JumubaseWeb.PerformanceControllerTest do
               "family_name" => "A",
               "birthdate" => "2004-01-01",
               "email" => "ab@cd.ef",
-              "phone" => "1234567",
+              "phone" => "1234567"
             }
+          }
+        ],
+        "pieces" => [
+          %{
+            "title" => "Title",
+            "composer_name" => "Composer",
+            "composer_born" => "1900",
+            "epoch" => "e",
+            "minutes" => 1,
+            "seconds" => 23
           }
         ]
       }

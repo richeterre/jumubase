@@ -9,6 +9,10 @@ use Mix.Config
 config :jumubase,
   ecto_repos: [Jumubase.Repo]
 
+# Set default locale
+config :jumubase, Jumubase.Gettext, default_locale: "de"
+config :timex, Timex.Gettext, default_locale: "de"
+
 # Configure the endpoint
 config :jumubase, JumubaseWeb.Endpoint,
   url: [host: "localhost"],

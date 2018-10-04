@@ -4,6 +4,7 @@ import Vue from 'vue/dist/vue.js'
 import './registration/appearance_panel'
 import './registration/form_error_summary'
 import './registration/form_field_error'
+import './registration/piece_panel'
 import { flattenChangesetValues } from '../utils/changesets'
 
 const registrationForm = params => new Vue({
@@ -16,12 +17,14 @@ const registrationForm = params => new Vue({
       birthdate_year_options,
       birthdate_month_options,
       role_options,
-      instrument_options
+      instrument_options,
+      epoch_options
     } = params
 
     const {
       contest_category_id,
-      appearances
+      appearances,
+      pieces
     } = flattenChangesetValues(changeset)
 
     const errors = isEmpty(changeset.errors) ? {} : changeset.errors
@@ -29,13 +32,16 @@ const registrationForm = params => new Vue({
     return {
       contest_category_id: contest_category_id || '',
       appearances: (appearances || []).map(normalizeAppearance),
+      pieces: (pieces || []).map(normalizePiece),
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
       role_options,
       instrument_options,
+      epoch_options,
       errors,
-      expandedAppearancePanelIndex: getExpandedAppearancePanelIndex(errors)
+      expandedAppearancePanelIndex: getExpandedAppearancePanelIndex(errors),
+      expandedPiecePanelIndex: getExpandedPiecePanelIndex(errors)
     }
   },
 
@@ -47,6 +53,14 @@ const registrationForm = params => new Vue({
       const { appearances, errors } = this
       appearances.splice(index, 1)
       errors.appearances && errors.appearances.splice(index, 1)
+    },
+    addPiece() {
+      this.pieces.push(normalizePiece({}))
+    },
+    removePiece(index) {
+      const { pieces, errors } = this
+      pieces.splice(index, 1)
+      errors.pieces && errors.pieces.splice(index, 1)
     }
   }
 })
@@ -57,6 +71,17 @@ function getExpandedAppearancePanelIndex(errors) {
     return 0
   } else if (errors.appearances) {
     return findIndex(errors.appearances, e => !isEmpty(e))
+  } else {
+    return null
+  }
+}
+
+// Determines which piece panel should initially be expanded.
+function getExpandedPiecePanelIndex(errors) {
+  if (isEmpty(errors)) {
+    return 0
+  } else if (errors.pieces) {
+    return findIndex(errors.pieces, e => !isEmpty(e))
   } else {
     return null
   }
@@ -78,6 +103,16 @@ function normalizeParticipant(participant) {
     ...participant,
     given_name: participant.given_name || '',
     family_name: participant.family_name || ''
+  }
+}
+
+// Initalizes the piece's field values, if not present.
+function normalizePiece(piece) {
+  return {
+    ...piece,
+    title: piece.title || '',
+    composer_name: piece.composer_name || '',
+    epoch: piece.epoch || ''
   }
 }
 

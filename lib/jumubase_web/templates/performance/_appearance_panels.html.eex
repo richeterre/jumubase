@@ -18,8 +18,8 @@
         <a
           role="button"
           data-toggle="collapse"
-          data-parent="#participant-accordion"
-          v-bind:href="'#participant-' + index">
+          data-parent="#appearance-accordion"
+          v-bind:href="'#appearance-panel-' + index">
           {{panelTitle}}
         </a>
       </h4>
@@ -31,7 +31,7 @@
       </button>
     </div>
     <div
-      v-bind:id="'participant-' + index"
+      v-bind:id="'appearance-panel-' + index"
       class="panel-collapse collapse"
       v-bind:class="{ in: beginsExpanded }">
       <div class="panel-body">
@@ -47,7 +47,6 @@
               v-bind:name="fieldName('participant', 'given_name')"
               v-model="appearance.participant.given_name">
             <form-field-error v-bind:errors="errors.participant && errors.participant.given_name" />
-            </form-field-error>
           </div>
 
           <div class="form-group col-md-3">
@@ -60,8 +59,7 @@
               v-bind:id="fieldId('participant', 'family_name')"
               v-bind:name="fieldName('participant', 'family_name')"
               v-model="appearance.participant.family_name">
-            <form-field-error v-bind:errors="errors.participant && errors.participant.family_name">
-            </form-field-error>
+            <form-field-error v-bind:errors="errors.participant && errors.participant.family_name" />
           </div>
 
           <div class="form-group col-md-6">
@@ -111,8 +109,7 @@
               </div>
 
               <div class="col-md-12">
-                <form-field-error v-bind:errors="errors.participant && errors.participant.birthdate">
-                </form-field-error>
+                <form-field-error v-bind:errors="errors.participant && errors.participant.birthdate" />
               </div>
             </div>
           </div>
@@ -134,7 +131,7 @@
                 v-bind:value="option.id"
                 v-text="option.label"></option>
             </select>
-            <form-field-error v-bind:errors="errors.role"></form-field-error>
+            <form-field-error v-bind:errors="errors.role" />
           </div>
 
           <div class="form-group col-md-3">
@@ -152,7 +149,7 @@
                 v-bind:value="option.value"
                 v-text="option.label"></option>
             </select>
-            <form-field-error v-bind:errors="errors.instrument"></form-field-error>
+            <form-field-error v-bind:errors="errors.instrument" />
           </div>
         </div>
 
@@ -167,8 +164,7 @@
               v-bind:id="fieldId('participant', 'phone')"
               v-bind:name="fieldName('participant', 'phone')"
               v-model="appearance.participant.phone">
-            <form-field-error v-bind:errors="errors.participant && errors.participant.phone">
-            </form-field-error>
+            <form-field-error v-bind:errors="errors.participant && errors.participant.phone" />
           </div>
 
           <div class="form-group col-md-4">
@@ -181,8 +177,7 @@
               v-bind:id="fieldId('participant', 'email')"
               v-bind:name="fieldName('participant', 'email')"
               v-model="appearance.participant.email">
-            <form-field-error v-bind:errors="errors.participant && errors.participant.email">
-            </form-field-error>
+            <form-field-error v-bind:errors="errors.participant && errors.participant.email" />
           </div>
         </div>
       </div>

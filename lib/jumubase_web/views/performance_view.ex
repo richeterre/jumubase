@@ -24,6 +24,7 @@ defmodule JumubaseWeb.PerformanceView do
         birthdate_month_options: birthdate_month_options(),
         role_options: role_options(),
         instrument_options: instrument_options(),
+        epoch_options: epoch_options(),
       }
     )
 
@@ -32,6 +33,8 @@ defmodule JumubaseWeb.PerformanceView do
       <script>registrationForm(<%= raw(json) %>)</script>
     }
   end
+
+  # Private helpers
 
   def birthdate_year_options(season) do
     AgeGroups.birthyear_range(season)
@@ -46,19 +49,39 @@ defmodule JumubaseWeb.PerformanceView do
     end)
   end
 
-  @doc """
-  Returns a list of all participant roles in a form-friendly format.
-  """
-  def role_options do
+  defp role_options do
     Enum.map(JumuParams.participant_roles, fn
-      "soloist" -> %{id: "soloist", label: gettext("Soloist")}
-      "accompanist" -> %{id: "accompanist", label: gettext("Accompanist")}
-      "ensemblist" -> %{id: "ensemblist", label: gettext("Ensemblist")}
+      role -> %{id: role, label: role_name(role)}
     end)
   end
 
-  def instrument_options do
+  defp role_name(role) do
+    case role do
+      "soloist" -> gettext("Soloist")
+      "accompanist" -> gettext("Accompanist")
+      "ensemblist" -> gettext("Ensemblist")
+    end
+  end
+
+  defp instrument_options do
     Jumubase.Showtime.Instruments.all
     |> Enum.map(fn {value, label} -> %{value: value, label: label} end)
+  end
+
+  defp epoch_options do
+    Enum.map(JumuParams.epochs, fn
+      epoch -> %{id: epoch, label: "#{epoch}) #{epoch_name(epoch)}"}
+    end)
+  end
+
+  defp epoch_name(epoch) do
+    case epoch do
+      "a" -> gettext("Renaissance, Early Baroque")
+      "b" -> gettext("Baroque")
+      "c" -> gettext("Early Classical, Classical")
+      "d" -> gettext("Romantic, Impressionist")
+      "e" -> gettext("Modern Classical, Jazz, Pop")
+      "f" -> gettext("Neue Musik")
+    end
   end
 end

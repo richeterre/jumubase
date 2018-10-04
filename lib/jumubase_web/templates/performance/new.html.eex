@@ -6,7 +6,7 @@
 
 <div class="row">
   <div id="registration-form" class="col-lg-9">
-    <%= form_for @changeset, performance_path(@conn, :create, @contest), fn f -> %>
+    <%= form_for @changeset, performance_path(@conn, :create, @contest), fn _ -> %>
       <%= render "_form_error_summary.html" %>
 
       <div class="row">
@@ -26,7 +26,7 @@
               v-text="option.label">
             </option>
           </select>
-          <form-field-error v-bind:errors="errors.contest_category_id"></form-field-error>
+          <form-field-error v-bind:errors="errors.contest_category_id" />
         </div>
       </div>
 
@@ -34,7 +34,7 @@
 
       <h3><%= gettext("Participants") %></h3>
 
-      <div class="panel-group" id="participant-accordion" role="tablist">
+      <div class="panel-group" id="appearance-accordion" role="tablist">
         <%= render "_appearance_panels.html" %>
       </div>
 
@@ -45,32 +45,12 @@
       <h3><%= gettext("Pieces") %></h3>
 
       <div class="panel-group" id="piece-accordion" role="tablist">
-        <div class="panel panel-default">
-          <div class="panel-heading" id="piece-1">
-            <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#piece-accordion" href="#collapse-piece-1">Piece 1</a>
-            </h4>
-          </div>
-          <div id="collapse-piece-1" class="panel-collapse collapse">
-            <div class="panel-body">
-              <%= render "_piece_fields.html", form: f %>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a role="button" data-toggle="collapse" data-parent="#piece-accordion" href="#collapse-piece-2">Piece 2</a>
-            </h4>
-          </div>
-          <div id="collapse-piece-2" class="panel-collapse collapse">
-            <div class="panel-body">
-              <%= render "_piece_fields.html", form: f %>
-            </div>
-          </div>
-        </div>
+        <%= render "_piece_panels.html" %>
       </div>
+
+      <button type="button" class="btn btn-link" v-on:click="addPiece()">
+        <%= icon_tag("plus") %> <%= gettext("Add piece") %>
+      </button>
 
       <hr>
 

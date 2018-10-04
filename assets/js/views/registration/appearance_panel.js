@@ -37,11 +37,7 @@ Vue.component('appearance-panel', {
       return getPanelTitle(participant, role, index)
     },
     panelClass() {
-      const hasErrors = !isEmpty(this.errors)
-      return {
-        'panel-danger': hasErrors,
-        'panel-default': !hasErrors,
-      }
+      return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
     },
     daysInBirthdateMonth() {
       return range(1, 32)

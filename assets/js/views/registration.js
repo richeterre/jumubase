@@ -60,13 +60,16 @@ const registrationForm = params => new Vue({
 
         switch (cc.type) {
           case "solo":
-            this.appearances.push(normalizeAppearance({role: 'soloist'}))
-            this.appearances.push(normalizeAppearance({role: 'accompanist'}))
+            this.appearances = [
+              normalizeAppearance({role: 'soloist'}),
+              normalizeAppearance({role: 'accompanist'}),
+            ]
             break
           case "ensemble":
-            this.appearances.push(normalizeAppearance({role: 'ensemblist'}))
-            this.appearances.push(normalizeAppearance({role: 'ensemblist'}))
-            break
+            this.appearances = [
+              normalizeAppearance({role: 'ensemblist'}),
+              normalizeAppearance({role: 'ensemblist'}),
+            ]
         }
       }
     },

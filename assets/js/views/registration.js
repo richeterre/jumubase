@@ -85,8 +85,8 @@ const registrationForm = params => new Vue({
       const { pieces, errors } = this
       pieces.splice(index, 1)
       errors.pieces && errors.pieces.splice(index, 1)
-    }
-  }
+    },
+  },
 })
 
 // Determines which appearance panel should initially be expanded.
@@ -113,7 +113,7 @@ function normalizeAppearance(appearance) {
     ...appearance,
     participant: normalizeParticipant(appearance.participant || {}),
     role: appearance.role || '',
-    instrument: appearance.instrument || ''
+    instrument: appearance.instrument || '',
   }
 }
 
@@ -122,7 +122,7 @@ function normalizeParticipant(participant) {
   return {
     ...participant,
     given_name: participant.given_name || '',
-    family_name: participant.family_name || ''
+    family_name: participant.family_name || '',
   }
 }
 
@@ -132,7 +132,7 @@ function normalizePiece(piece) {
     ...piece,
     title: piece.title || '',
     composer_name: piece.composer_name || '',
-    epoch: piece.epoch || ''
+    epoch: piece.epoch || '',
   }
 }
 

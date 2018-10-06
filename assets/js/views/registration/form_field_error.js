@@ -9,5 +9,5 @@ Vue.component('form-field-error', {
         {{error}}
       </small>
     </div>
-  `
+  `,
 })

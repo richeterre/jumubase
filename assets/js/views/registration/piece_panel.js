@@ -10,7 +10,7 @@ Vue.component('piece-panel', {
     'epoch_options',
     'errors',
     'begins_expanded',
-    'piece_term'
+    'piece_term',
   ],
 
   computed: {
@@ -44,7 +44,7 @@ Vue.component('piece-panel', {
         ...attributes
       )
     },
-  }
+  },
 })
 
 function getPanelTitle(piece, pieceTerm, index) {

@@ -9,12 +9,12 @@ Vue.component('appearance-panel', {
     'appearance',
     'index',
     'birthdate_year_options',
-    'birthdate_month_options',
+    'birthdate_month_optilintons',
     'role_options',
     'instrument_options',
     'errors',
     'begins_expanded',
-    'participant_term'
+    'participant_term',
   ],
 
   data() {
@@ -25,7 +25,7 @@ Vue.component('appearance-panel', {
     return {
       birthdateDay: parsedBirthdate ? String(parsedBirthdate.getDate()) : '',
       birthdateMonth: parsedBirthdate ? String(parsedBirthdate.getMonth() + 1) : '',
-      birthdateYear: parsedBirthdate ? String(parsedBirthdate.getFullYear()) : ''
+      birthdateYear: parsedBirthdate ? String(parsedBirthdate.getFullYear()) : '',
     }
   },
 
@@ -46,7 +46,7 @@ Vue.component('appearance-panel', {
     },
     daysInBirthdateMonth() {
       return range(1, 32)
-    }
+    },
   },
 
   methods: {
@@ -71,7 +71,7 @@ Vue.component('appearance-panel', {
     formatDay(day) {
       return day < 10 ? `0${day}` : String(day)
     },
-  }
+  },
 })
 
 function getPanelTitle(participant, role, participantTerm, index) {

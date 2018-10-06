@@ -7,6 +7,6 @@ Vue.component('form-error-summary', {
   computed: {
     hasErrors: function() {
       return !isEmpty(this.errors)
-    }
-  }
+    },
+  },
 })

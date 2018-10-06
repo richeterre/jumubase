@@ -10,6 +10,7 @@
   v-bind:errors="(errors.appearances && errors.appearances[index]) || {}"
   v-bind:begins_expanded="expandedAppearancePanelIndex === index"
   v-bind:participant_term="vocabulary['participant']"
+  v-bind:role_terms="vocabulary['roles']"
   v-on:remove-appearance="removeAppearance"
   inline-template>
 

@@ -29,7 +29,12 @@ defmodule JumubaseWeb.PerformanceView do
         epoch_options: epoch_options(),
         vocabulary: %{
           participant: gettext("Participant"),
-          piece: gettext("Piece")
+          piece: gettext("Piece"),
+          roles: %{
+            soloist: gettext("Soloist"),
+            ensemblist: gettext("Ensemblist"),
+            accompanist: gettext("Accompanist")
+          }
         }
       }
     )

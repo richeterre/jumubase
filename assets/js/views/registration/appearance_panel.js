@@ -15,6 +15,7 @@ Vue.component('appearance-panel', {
     'errors',
     'begins_expanded',
     'participant_term',
+    'role_terms',
   ],
 
   data() {
@@ -38,8 +39,11 @@ Vue.component('appearance-panel', {
         appearance: { participant, role },
         index,
         participant_term,
+        role_terms,
       } = this
-      return getPanelTitle(participant, role, participant_term, index)
+
+      const name = getParticipantName(participant, participant_term, index)
+      return role ? `${name} (${role_terms[role]})` : name
     },
     panelClass() {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
@@ -73,11 +77,6 @@ Vue.component('appearance-panel', {
     },
   },
 })
-
-function getPanelTitle(participant, role, participantTerm, index) {
-  const name = getParticipantName(participant, participantTerm, index)
-  return role ? `${name} (${role})` : name
-}
 
 function getParticipantName(participant, participantTerm, index) {
   const fullName = `${participant.given_name} ${participant.family_name}`

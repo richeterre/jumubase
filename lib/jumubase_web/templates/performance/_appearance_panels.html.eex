@@ -13,15 +13,14 @@
   inline-template>
 
   <div class="panel" v-bind:class="panelClass">
-    <div class="panel-heading clearfix">
+    <div
+      class="panel-heading clearfix"
+      role="button"
+      data-toggle="collapse"
+      data-parent="#appearance-accordion"
+      v-bind:href="'#appearance-panel-' + index">
       <h4 class="panel-title pull-left">
-        <a
-          role="button"
-          data-toggle="collapse"
-          data-parent="#appearance-accordion"
-          v-bind:href="'#appearance-panel-' + index">
-          {{panelTitle}}
-        </a>
+        {{panelTitle}}
       </h4>
       <button
         type="button"

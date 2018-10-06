@@ -17,5 +17,8 @@ body {
 /* Hide empty flash messages */
 .alert:empty { display: none; }
 
+/* Use pointer cursor for collapsible panel headings */
+.panel-heading[data-toggle=collapse] { cursor: pointer; }
+
 /* Tweak height of panel titles to match right-floating buttons */
 .panel-title.pull-left { line-height: 1.4em; }

@@ -9,7 +9,7 @@ Vue.component('appearance-panel', {
     'appearance',
     'index',
     'birthdate_year_options',
-    'birthdate_month_optilintons',
+    'birthdate_month_options',
     'role_options',
     'instrument_options',
     'errors',

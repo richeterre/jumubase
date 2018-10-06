@@ -13,7 +13,8 @@ Vue.component('appearance-panel', {
     'role_options',
     'instrument_options',
     'errors',
-    'begins_expanded'
+    'begins_expanded',
+    'participant_term'
   ],
 
   data() {
@@ -33,8 +34,12 @@ Vue.component('appearance-panel', {
       return this.begins_expanded
     },
     panelTitle() {
-      const { appearance: { participant, role }, index } = this
-      return getPanelTitle(participant, role, index)
+      const {
+        appearance: { participant, role },
+        index,
+        participant_term,
+      } = this
+      return getPanelTitle(participant, role, participant_term, index)
     },
     panelClass() {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
@@ -69,12 +74,13 @@ Vue.component('appearance-panel', {
   }
 })
 
-function getPanelTitle(participant, role, index) {
-  const name = getParticipantName(participant, index)
+function getPanelTitle(participant, role, participantTerm, index) {
+  const name = getParticipantName(participant, participantTerm, index)
   return role ? `${name} (${role})` : name
 }
 
-function getParticipantName(participant, index) {
+function getParticipantName(participant, participantTerm, index) {
   const fullName = `${participant.given_name} ${participant.family_name}`
-  return fullName.trim() || "Participant " + (index + 1)
+  const fallback = `${participantTerm} ${index + 1}`
+  return fullName.trim() || fallback
 }

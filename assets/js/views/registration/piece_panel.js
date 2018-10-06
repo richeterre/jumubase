@@ -9,7 +9,8 @@ Vue.component('piece-panel', {
     'index',
     'epoch_options',
     'errors',
-    'begins_expanded'
+    'begins_expanded',
+    'piece_term'
   ],
 
   computed: {
@@ -17,8 +18,8 @@ Vue.component('piece-panel', {
       return this.begins_expanded
     },
     panelTitle() {
-      const { piece, index } = this
-      return getPanelTitle(piece, index)
+      const { piece, index, piece_term } = this
+      return getPanelTitle(piece, piece_term, index)
     },
     panelClass() {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
@@ -46,8 +47,8 @@ Vue.component('piece-panel', {
   }
 })
 
-function getPanelTitle(piece, index) {
+function getPanelTitle(piece, pieceTerm, index) {
   const { composer_name, title } = piece
-  const displayTitle = title || "Piece " + (index + 1)
+  const displayTitle = title || `${pieceTerm} ${index + 1}`
   return composer_name ? `${composer_name}: ${displayTitle}` : displayTitle
 }

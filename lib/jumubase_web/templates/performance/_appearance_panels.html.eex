@@ -9,6 +9,7 @@
   v-bind:instrument_options="instrument_options"
   v-bind:errors="(errors.appearances && errors.appearances[index]) || {}"
   v-bind:begins_expanded="expandedAppearancePanelIndex === index"
+  v-bind:participant_term="vocabulary['participant']"
   v-on:remove-appearance="removeAppearance"
   inline-template>
 

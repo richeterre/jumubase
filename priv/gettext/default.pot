@@ -87,7 +87,7 @@ msgstr ""
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:128
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:146
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:100
-#: lib/jumubase_web/templates/performance/new.html.eex:22
+#: lib/jumubase_web/templates/performance/new.html.eex:23
 msgid "Please choose"
 msgstr ""
 
@@ -297,7 +297,7 @@ msgid "Your password has been reset"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:61
+#: lib/jumubase_web/views/performance_view.ex:67
 msgid "Accompanist"
 msgstr ""
 
@@ -313,7 +313,7 @@ msgid "Category"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:62
+#: lib/jumubase_web/views/performance_view.ex:68
 msgid "Ensemblist"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/templates/performance/new.html.eex:35
+#: lib/jumubase_web/templates/performance/new.html.eex:36
 msgid "Participants"
 msgstr ""
 
@@ -351,7 +351,7 @@ msgid "Phone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/new.html.eex:45
+#: lib/jumubase_web/templates/performance/new.html.eex:46
 msgid "Pieces"
 msgstr ""
 
@@ -373,22 +373,22 @@ msgid "Role"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:60
+#: lib/jumubase_web/views/performance_view.ex:66
 msgid "Soloist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:29
+#: lib/jumubase_web/controllers/performance_controller.ex:26
 msgid "Success!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/new.html.eex:42
+#: lib/jumubase_web/templates/performance/new.html.eex:43
 msgid "Add participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/new.html.eex:52
+#: lib/jumubase_web/templates/performance/new.html.eex:53
 msgid "Add piece"
 msgstr ""
 
@@ -483,7 +483,7 @@ msgid "Programme"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/new.html.eex:58
+#: lib/jumubase_web/templates/performance/new.html.eex:59
 msgid "Submit registration"
 msgstr ""
 
@@ -555,4 +555,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:24
 msgid "Password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/performance_view.ex:31
+msgid "Participant"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/performance_view.ex:32
+msgid "Piece"
 msgstr ""

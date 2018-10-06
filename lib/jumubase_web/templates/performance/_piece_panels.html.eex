@@ -6,6 +6,7 @@
   v-bind:epoch_options="epoch_options"
   v-bind:errors="(errors.pieces && errors.pieces[index]) || {}"
   v-bind:begins_expanded="expandedPiecePanelIndex === index"
+  v-bind:piece_term="vocabulary['piece']"
   v-on:remove-piece="removePiece"
   inline-template>
 

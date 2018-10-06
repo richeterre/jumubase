@@ -18,13 +18,14 @@ const registrationForm = params => new Vue({
       birthdate_month_options,
       role_options,
       instrument_options,
-      epoch_options
+      epoch_options,
+      vocabulary,
     } = params
 
     const {
       contest_category_id,
       appearances,
-      pieces
+      pieces,
     } = flattenChangesetValues(changeset)
 
     const errors = isEmpty(changeset.errors) ? {} : changeset.errors
@@ -39,9 +40,10 @@ const registrationForm = params => new Vue({
       role_options,
       instrument_options,
       epoch_options,
+      vocabulary,
       errors,
       expandedAppearancePanelIndex: getExpandedAppearancePanelIndex(errors),
-      expandedPiecePanelIndex: getExpandedPiecePanelIndex(errors)
+      expandedPiecePanelIndex: getExpandedPiecePanelIndex(errors),
     }
   },
 

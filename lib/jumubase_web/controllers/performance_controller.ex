@@ -4,17 +4,14 @@ defmodule JumubaseWeb.PerformanceController do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
+  alias Jumubase.Showtime.{Performance, Piece}
 
   # Pass contest from nested route to all actions
   def action(conn, _), do: get_contest!(conn, __MODULE__)
 
   def new(conn, _params, contest) do
     changeset =
-      %Performance{
-        appearances: [%Appearance{participant: %Participant{}}],
-        pieces: [%Piece{}]
-      }
+      %Performance{pieces: [%Piece{}]}
       |> Showtime.change_performance()
 
     conn
@@ -39,7 +36,7 @@ defmodule JumubaseWeb.PerformanceController do
     contest = Foundation.load_contest_categories(contest)
 
     contest_category_options = contest.contest_categories
-    |> Enum.map(&{&1.category.name, &1.id})
+    |> Enum.map(&{&1.category.name, &1.id, &1.category.type})
 
     conn
     |> assign(:contest, contest)

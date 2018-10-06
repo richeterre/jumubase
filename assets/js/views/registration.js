@@ -1,4 +1,4 @@
-import { findIndex, isEmpty } from 'lodash'
+import { find, findIndex, isEmpty } from 'lodash'
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_panel'
@@ -46,6 +46,28 @@ const registrationForm = params => new Vue({
   },
 
   methods: {
+    contestCategoryChanged() {
+      const {
+        appearances,
+        contest_category_id: cc_id,
+        contest_category_options: cc_options,
+      } = this
+
+      if (isEmpty(appearances)) {
+        const cc = find(cc_options, o => o.id === cc_id)
+
+        switch (cc.type) {
+          case "solo":
+            this.appearances.push(normalizeAppearance({role: 'soloist'}))
+            this.appearances.push(normalizeAppearance({role: 'accompanist'}))
+            break
+          case "ensemble":
+            this.appearances.push(normalizeAppearance({role: 'ensemblist'}))
+            this.appearances.push(normalizeAppearance({role: 'ensemblist'}))
+            break
+        }
+      }
+    },
     addAppearance() {
       this.appearances.push(normalizeAppearance({}))
     },

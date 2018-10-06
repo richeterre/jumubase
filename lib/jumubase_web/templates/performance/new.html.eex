@@ -18,12 +18,13 @@
             id="performance_contest_category_id"
             name="performance[contest_category_id]"
             class="form-control"
-            v-model="contest_category_id">
             <option value=""><%= gettext("Please choose") %></option>
+            v-model="contest_category_id"
+            v-on:change="contestCategoryChanged">
             <option
               v-for="option in contest_category_options"
-              v-bind:value="option.value"
-              v-text="option.label">
+              v-bind:value="option.id"
+              v-text="option.name">
             </option>
           </select>
           <form-field-error v-bind:errors="errors.contest_category_id" />

@@ -18,7 +18,9 @@ defmodule JumubaseWeb.PerformanceView do
       %{
         changeset: changeset,
         contest_category_options: (
-          for {label, value} <- cc_options, do: %{value: value, label: label}
+          for {name, id, type} <- cc_options do
+            %{id: id, name: name, type: type}
+          end
         ),
         birthdate_year_options: birthdate_year_options(contest.season),
         birthdate_month_options: birthdate_month_options(),

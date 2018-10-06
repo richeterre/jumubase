@@ -5,6 +5,8 @@
     <br>
     <%= piece.title %>
     <br>
-    <span class="text-muted"><%= duration(piece) %> / <%= epoch_tag(piece) %></span>
+    <span class="text-muted"><%= duration(piece) %>
+    /
+    <%= gettext("Epoch") %> <%= epoch_tag(piece) %></span>
   </p>
 <% end %>

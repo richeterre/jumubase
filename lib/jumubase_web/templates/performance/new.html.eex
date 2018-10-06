@@ -7,6 +7,9 @@
 <div class="row">
   <div id="registration-form" class="col-lg-9">
     <%= form_for @changeset, performance_path(@conn, :create, @contest), fn _ -> %>
+      <!-- Preserve performance param even when form is submitted empty -->
+      <input type="hidden" name="performance[]" value="" />
+
       <%= render "_form_error_summary.html" %>
 
       <div class="row">
@@ -20,7 +23,7 @@
             class="form-control"
             v-model="contest_category_id"
             v-on:change="contestCategoryChanged">
-            <option value=""><%= gettext("Please choose") %></option>
+            <option disabled value=""><%= gettext("Please choose") %></option>
             <option
               v-for="option in contest_category_options"
               v-bind:value="option.id"

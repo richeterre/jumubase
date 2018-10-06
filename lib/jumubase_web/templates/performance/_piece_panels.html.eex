@@ -23,7 +23,7 @@
       <button
         type="button"
         class="btn btn-xs btn-danger pull-right"
-        v-on:click="$emit('remove-piece', index)">
+        v-on:click.stop="$emit('remove-piece', index)">
         <span class="glyphicon glyphicon-trash" />
       </button>
     </div>

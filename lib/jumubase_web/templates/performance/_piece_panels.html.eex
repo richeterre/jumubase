@@ -97,7 +97,7 @@
               v-bind:id="fieldId('epoch')"
               v-bind:name="fieldName('epoch')"
               v-model="piece.epoch">
-              <option value=""><%= gettext("Please choose") %></option>
+              <option disabled value=""><%= gettext("Please choose") %></option>
               <option
                 v-for="option in epoch_options"
                 v-bind:value="option.id"

@@ -125,7 +125,7 @@
               v-bind:id="fieldId('role')"
               v-bind:name="fieldName('role')"
               v-model="appearance.role">
-              <option value=""><%= gettext("Please choose") %></option>
+              <option disabled value=""><%= gettext("Please choose") %></option>
               <option
                 v-for="option in role_options"
                 v-bind:value="option.id"
@@ -143,7 +143,7 @@
               v-bind:id="fieldId('instrument')"
               v-bind:name="fieldName('instrument')"
               v-model="appearance.instrument">
-              <option value=""><%= gettext("Please choose") %></option>
+              <option disabled value=""><%= gettext("Please choose") %></option>
               <option
                 v-for="option in instrument_options"
                 v-bind:value="option.value"

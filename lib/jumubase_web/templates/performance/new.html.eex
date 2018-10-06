@@ -18,9 +18,9 @@
             id="performance_contest_category_id"
             name="performance[contest_category_id]"
             class="form-control"
-            <option value=""><%= gettext("Please choose") %></option>
             v-model="contest_category_id"
             v-on:change="contestCategoryChanged">
+            <option disabled value=""><%= gettext("Please choose") %></option>
             <option
               v-for="option in contest_category_options"
               v-bind:value="option.id"

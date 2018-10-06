@@ -89,9 +89,7 @@ const registrationForm = params => new Vue({
 
 // Determines which appearance panel should initially be expanded.
 function getExpandedAppearancePanelIndex(errors) {
-  if (isEmpty(errors)) {
-    return 0
-  } else if (errors.appearances) {
+  if (errors.appearances) {
     return findIndex(errors.appearances, e => !isEmpty(e))
   } else {
     return null
@@ -100,9 +98,7 @@ function getExpandedAppearancePanelIndex(errors) {
 
 // Determines which piece panel should initially be expanded.
 function getExpandedPiecePanelIndex(errors) {
-  if (isEmpty(errors)) {
-    return 0
-  } else if (errors.pieces) {
+  if (errors.pieces) {
     return findIndex(errors.pieces, e => !isEmpty(e))
   } else {
     return null

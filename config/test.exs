@@ -13,6 +13,10 @@ config :phauxth,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+# Use English locale for tests
+config :jumubase, Jumubase.Gettext, default_locale: "en"
+config :timex, Timex.Gettext, default_locale: "en"
+
 config :phauxth,
   token_salt: String.duplicate("x", 8),
   log_level: :error

@@ -34,6 +34,20 @@ defmodule Jumubase.Showtime do
     |> Repo.get!(id)
   end
 
+  @doc """
+  Looks up a performance with the given edit code.
+
+  Returns an error tuple if no performance could be found.
+  """
+  def lookup_performance(edit_code) do
+    case Repo.get_by(Performance, edit_code: edit_code) do
+      nil ->
+        {:error, :not_found}
+      performance ->
+        {:ok, Repo.preload(performance, [contest_category: :contest])}
+    end
+  end
+
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
     changeset = Performance.changeset(%Performance{}, attrs)
 

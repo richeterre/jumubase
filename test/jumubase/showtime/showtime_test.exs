@@ -1,7 +1,7 @@
 defmodule Jumubase.ShowtimeTest do
   use Jumubase.DataCase
   alias Ecto.Changeset
-  alias Jumubase.Foundation.{Category, ContestCategory}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
@@ -56,6 +56,25 @@ defmodule Jumubase.ShowtimeTest do
         appearances: [%Appearance{participant: %Participant{}}],
         pieces: [%Piece{}]
       } = Showtime.get_performance!(c, id)
+    end
+
+    test "lookup_performance/1 gets a performance by its edit code" do
+      %{id: id, edit_code: edit_code} = insert(:performance)
+
+      assert {:ok, result} = Showtime.lookup_performance(edit_code)
+      assert result.id == id
+    end
+
+    test "lookup_performance/1 preloads the performance's contest category and contest" do
+      %{edit_code: edit_code} = insert(:performance)
+
+      assert {:ok, %Performance{
+        contest_category: %ContestCategory{contest: %Contest{}},
+      }} = Showtime.lookup_performance(edit_code)
+    end
+
+    test "lookup_performance/1 returns an error for an unknown edit code" do
+      assert {:error, :not_found} = Showtime.lookup_performance("unknown")
     end
 
     test "create_performance/2 creates a new performance with an edit code" do

@@ -1,8 +1,8 @@
 <h2>
-  <%= gettext("Hallo %{name},", name: @current_user.first_name) %>
+  <%= gettext("Hello %{name},", name: @current_user.first_name) %>
 </h2>
 
-<p><%= gettext("willkommen auf deinem persönlichen Jumu-Portal!") %></p>
+<p><%= gettext("welcome to your personal Jumu portal!") %></p>
 
 <hr>
 
@@ -19,6 +19,9 @@
           </li>
           <li class="list-group-item">
             <%= icon_link("globe", gettext("Hosts"), internal_host_path(@conn, :index)) %>
+          </li>
+          <li class="list-group-item">
+            <%= icon_link("music", gettext("Contests"), internal_contest_path(@conn, :index)) %>
           </li>
         </ul>
       </div>

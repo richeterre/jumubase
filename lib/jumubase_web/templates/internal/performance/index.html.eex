@@ -1,0 +1,26 @@
+<h2><%= gettext("Performances") %></h2>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Age group") %></th>
+        <th><%= gettext("Edit code") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+      <tr>
+        <td>
+          <%= link category_name(performance),
+            to: internal_contest_performance_path(@conn, :show, @contest, performance)
+            %>
+        </td>
+        <td><%= performance.age_group %></td>
+        <td><code><%= performance.edit_code %></code></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

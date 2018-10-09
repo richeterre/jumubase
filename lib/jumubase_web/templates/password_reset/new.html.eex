@@ -1,15 +1,19 @@
-<h2><%= gettext("Forgot Password?") %></h2>
+<h2><%= gettext("Forgot your password?") %></h2>
 
-<%= form_for @conn, password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
-  <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= email_input f, :email, class: "form-control", autofocus: true %>
-    <%= error_tag f, :email %>
+<div class="row">
+  <div class="col-md-6">
+    <%= form_for @conn, password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
+      <div class="form-group">
+        <%= label f, :email, class: "control-label" %>
+        <%= email_input f, :email, class: "form-control", autofocus: true %>
+        <%= error_tag f, :email %>
+      </div>
+
+      <div class="form-group">
+        <%= submit gettext("Send instructions"), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <span><%= link gettext("Back"), to: session_path(@conn, :new) %></span>
   </div>
-
-  <div class="form-group">
-    <%= submit gettext("Send reset link"), class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<span><%= link gettext("Back"), to: session_path(@conn, :new) %></span>
+</div>

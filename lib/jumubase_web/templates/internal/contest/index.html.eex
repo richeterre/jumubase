@@ -1,0 +1,26 @@
+<h2><%= gettext("Contests") %></h2>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Name") %></th>
+        <th><%= gettext("Dates") %></th>
+        <th><%= gettext("Deadline") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for contest <- @contests do %>
+      <tr>
+        <td>
+          <%= link name_with_flag(contest),
+            to: internal_contest_path(@conn, :show, contest)
+            %>
+        </td>
+        <td><%= dates(contest) %></td>
+        <td><%= format_date(contest.deadline) %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

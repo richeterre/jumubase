@@ -56,16 +56,16 @@ defmodule Jumubase.ContestTest do
       refute changeset.valid?
     end
 
-    test "without a signup deadline" do
-      params = params_with_assocs(:contest, signup_deadline: nil)
+    test "without a deadline" do
+      params = params_with_assocs(:contest, deadline: nil)
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "with a signup deadline not before the start date" do
+    test "with a deadline not before the start date" do
       %{start_date: start_date} = params_with_assocs(:contest)
       for deadline <- [start_date, Timex.shift(start_date, days: 1)] do
-        params = params_with_assocs(:contest, signup_deadline: deadline)
+        params = params_with_assocs(:contest, deadline: deadline)
         changeset = Contest.changeset(%Contest{}, params)
         refute changeset.valid?
       end

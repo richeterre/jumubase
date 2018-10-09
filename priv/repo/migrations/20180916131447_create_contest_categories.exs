@@ -3,8 +3,8 @@ defmodule Jumubase.Repo.Migrations.CreateContestCategories do
 
   def change do
     create table(:contest_categories) do
-      add :contest_id, references(:contests, on_delete: :delete_all)
-      add :category_id, references(:categories, on_delete: :delete_all)
+      add :contest_id, references(:contests, on_delete: :delete_all), null: false
+      add :category_id, references(:categories, on_delete: :delete_all), null: false
       add :min_age_group, :string
       add :max_age_group, :string
       add :min_advancing_age_group, :string

@@ -1,0 +1,29 @@
+<h2>
+  <%= gettext("Performance Details") %>
+  <br>
+  <small><%= category_info(@performance) %></small>
+  <br>
+</h2>
+
+<hr>
+
+<p>
+  <%= gettext("Edit code") %>: <code><%= @performance.edit_code %></code>
+</p>
+
+<h3><%= gettext("Participants") %></h3>
+
+<%= render "_appearances.html", appearances: non_acc(@performance.appearances) %>
+
+<%= if (acc_appearances = acc(@performance.appearances)) != [] do %>
+  <h5 class="text-muted"><%= gettext("accompanied by") %></h5>
+  <%= render "_appearances.html", appearances: acc_appearances %>
+<% end %>
+
+<h3><%= gettext("Programme") %></h3>
+
+<%= render "_pieces.html", pieces: @performance.pieces %>
+
+<p>
+  <em><%= gettext("Total duration: %{d}", d: total_duration(@performance)) %></em>
+</p>

@@ -1,4 +1,6 @@
 defmodule Jumubase.JumuParams do
+  import Jumubase.Gettext
+
   @moduledoc """
   Defines various params inherent to the Jumu institution.
   """
@@ -20,7 +22,7 @@ defmodule Jumubase.JumuParams do
   @doc """
   Returns all possible user roles.
   """
-  def roles do
+  def user_roles do
     [
       # A "regular" user who organizes contests (typically RW) locally
       "local-organizer",
@@ -31,13 +33,6 @@ defmodule Jumubase.JumuParams do
       # An omnipotent being
       "admin"
     ]
-  end
-
-  @doc """
-  Returns all possible age groups.
-  """
-  def age_groups do
-    ["Ia", "Ib", "II", "III", "IV", "V", "VI", "VII"]
   end
 
   @doc """
@@ -52,5 +47,33 @@ defmodule Jumubase.JumuParams do
   """
   def category_types do
     ["solo", "ensemble"]
+  end
+
+  @doc """
+  Returns all possible participant roles.
+  """
+  def participant_roles do
+    ["soloist", "accompanist", "ensemblist"]
+  end
+
+  @doc """
+  Returns all possible piece epochs.
+  """
+  def epochs do
+    ~w(a b c d e f)
+  end
+
+  @doc """
+  Returns a description for the given epoch.
+  """
+  def epoch_description(epoch) do
+    case epoch do
+      "a" -> dgettext("epochs", "Renaissance, Early Baroque")
+      "b" -> dgettext("epochs", "Baroque")
+      "c" -> dgettext("epochs", "Early Classical, Classical")
+      "d" -> dgettext("epochs", "Romantic, Impressionist")
+      "e" -> dgettext("epochs", "Modern Classical, Jazz, Pop")
+      "f" -> dgettext("epochs", "Neue Musik")
+    end
   end
 end

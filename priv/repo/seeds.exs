@@ -29,8 +29,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Lukas",
-    last_name: "Landeswetter",
+    first_name: "Gustav",
+    last_name: "Globalheimer",
     email: "global-org@example.org",
     password: "password",
     role: "global-organizer"
@@ -39,8 +39,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Rieke",
-    last_name: "Regionalwetter",
+    first_name: "Lucie",
+    last_name: "Lokalheldin",
     email: "local-org@example.org",
     password: "password",
     role: "local-organizer"
@@ -49,9 +49,9 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Ivo",
-    last_name: "Inspektor",
-    email: "inspektor@example.org",
+    first_name: "Bernd",
+    last_name: "Beobachter",
+    email: "inspector@example.org",
     password: "password",
     role: "inspector"
   })
@@ -66,13 +66,17 @@ Repo.transaction fn ->
 
   contest1 = insert(:contest, host: host1)
   contest2 = insert(:contest, host: host2)
-  contest3 = insert(:contest, host: host3)
+  contest3 = insert(:contest,
+    start_date: %{day: 1, month: 1, year: year},
+    end_date: %{day: 1, month: 1, year: year},
+    host: host3
+  )
   contest4 = insert(:contest, %{
     host: host1,
     round: 2,
     start_date: %{day: 15, month: 3, year: year},
     end_date: %{day: 17, month: 3, year: year},
-    signup_deadline: %{day: 28, month: 2, year: year}
+    deadline: %{day: 28, month: 2, year: year}
   })
 
   # Create demo categories
@@ -117,8 +121,10 @@ Repo.transaction fn ->
     max_advancing_age_group: nil
   })
 
+  # Add contest categories and demo performances to contests
+
   for rw_contest <- [contest1, contest2, contest3] do
-    _rw_vocal = insert(:contest_category, %{
+    rw_vocal = insert(:contest_category, %{
       contest: rw_contest,
       category: vocal,
       min_age_group: "Ia",
@@ -126,7 +132,7 @@ Repo.transaction fn ->
       min_advancing_age_group: "II",
       max_advancing_age_group: "VII"
     })
-    _rw_wind_ens = insert(:contest_category, %{
+    rw_wind_ens = insert(:contest_category, %{
       contest: rw_contest,
       category: wind_ens,
       min_age_group: "Ia",
@@ -134,7 +140,7 @@ Repo.transaction fn ->
       min_advancing_age_group: "II",
       max_advancing_age_group: "VI"
     })
-    _rw_pop_drums = insert(:contest_category, %{
+    rw_pop_drums = insert(:contest_category, %{
       contest: rw_contest,
       category: pop_drums,
       min_age_group: "Ia",
@@ -142,7 +148,7 @@ Repo.transaction fn ->
       min_advancing_age_group: "II",
       max_advancing_age_group: "VI"
     })
-    _rw_pop_vocal_ens = insert(:contest_category, %{
+    rw_pop_vocal_ens = insert(:contest_category, %{
       contest: rw_contest,
       category: pop_vocal_ens,
       min_age_group: "Ia",
@@ -150,5 +156,26 @@ Repo.transaction fn ->
       min_advancing_age_group: "III",
       max_advancing_age_group: "VII"
     })
+
+    rw_vocal_perf = insert(:performance, contest_category: rw_vocal, age_group: "III")
+    insert(:appearance, performance: rw_vocal_perf, role: "soloist", instrument: "vocals")
+    insert(:appearance, performance: rw_vocal_perf, role: "accompanist", instrument: "piano")
+
+    rw_wind_ens_perf = insert(:performance, contest_category: rw_wind_ens, age_group: "III")
+    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "clarinet")
+    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "oboe")
+    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "bassoon")
+
+    rw_pop_drums_perf = insert(:performance, contest_category: rw_pop_drums, age_group: "III")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "soloist", instrument: "drumset")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "vocals")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "e-guitar")
+    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "saxophone")
+
+    rw_pop_vocal_ens_perf = insert(:performance, contest_category: rw_pop_vocal_ens, age_group: "III")
+    insert_list(2, :appearance, performance: rw_pop_vocal_ens_perf, role: "ensemblist", instrument: "vocals")
+    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "e-guitar")
+    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "e-bass")
+    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "drumset")
   end
 end

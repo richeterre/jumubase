@@ -6,9 +6,9 @@ defmodule JumubaseWeb.PageController do
     render(conn, "home.html")
   end
 
-  def signup(conn, _params) do
+  def registration(conn, _params) do
     conn
     |> assign(:contests, Foundation.list_open_contests)
-    |> render("signup.html")
+    |> render("registration.html")
   end
 end

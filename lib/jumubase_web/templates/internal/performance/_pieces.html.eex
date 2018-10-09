@@ -1,0 +1,12 @@
+<%= for piece <- @pieces do %>
+  <p>
+    <strong><%= piece.composer_name %></strong>
+    (<%= composer_dates(piece) %>)
+    <br>
+    <%= piece.title %>
+    <br>
+    <span class="text-muted"><%= duration(piece) %>
+    /
+    <%= gettext("Epoch") %> <%= epoch_tag(piece) %></span>
+  </p>
+<% end %>

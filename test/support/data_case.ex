@@ -21,6 +21,8 @@ defmodule Jumubase.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Jumubase.TestHelpers
+      import Jumubase.ShowtimeTestHelpers
       import Jumubase.Factory
     end
   end

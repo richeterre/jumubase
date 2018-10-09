@@ -25,6 +25,13 @@ defmodule JumubaseWeb do
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.Breadcrumbs
       import JumubaseWeb.Authorize
+      alias Jumubase.Foundation
+
+      def get_contest!(conn, module) do
+        contest = Foundation.get_contest!(conn.params["contest_id"])
+        args = [conn, conn.params, contest]
+        apply(module, action_name(conn), args)
+      end
     end
   end
 
@@ -41,10 +48,12 @@ defmodule JumubaseWeb do
       use Phoenix.HTML
 
       import Jumubase.Gettext
+      import Jumubase.Utils
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthHelpers
       import JumubaseWeb.ErrorHelpers
       import JumubaseWeb.IconHelpers
+      import JumubaseWeb.JsonHelpers
     end
   end
 

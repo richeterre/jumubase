@@ -19,7 +19,8 @@ defmodule JumubaseWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/signup", PageController, :signup
+    get "/registration", PageController, :registration
+    resources "/contests/:contest_id/performances", PerformanceController, only: [:new, :create]
 
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/password-resets", PasswordResetController, only: [:new, :create]
@@ -32,6 +33,9 @@ defmodule JumubaseWeb.Router do
 
     get "/", PageController, :home
 
+    resources "/contests", ContestController, only: [:index, :show] do
+      resources "/performances", PerformanceController, only: [:index, :show]
+    end
     resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]
   end

@@ -2,14 +2,14 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
-
+      // joinTo: "js/app.js"
+      //
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
-      // joinTo: {
-      //   "js/app.js": /^js/,
-      //   "js/vendor.js": /^(?!js)/
-      // }
+      joinTo: {
+        "js/app.js": /^(js|node_modules)/,
+        "js/registration.js": 'js/views/registration.js'
+      }
       //
       // To change the order of concatenation of files, explicitly mention here
       // order: {
@@ -64,7 +64,8 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["js/app"]
+      "js/app.js": ["js/app"],
+      "js/registration.js": ["js/views/registration"]
     }
   },
 

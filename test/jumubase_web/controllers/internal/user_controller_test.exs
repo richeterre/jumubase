@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.UserControllerTest do
   use JumubaseWeb.ConnCase
-  alias Jumubase.JumuParams
   alias Jumubase.Accounts
 
   @update_attrs %{email: "xyz@de.fi", first_name: "X Y", last_name: "Z", role: "global-organizer"}
@@ -71,16 +70,16 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   end
 
   describe "for a non-admin" do
-    for role <- List.delete(JumuParams.roles(), "admin") do
+    for role <- non_admin_roles() do
       @tag login_as: role
-      test "(#{role}) redirects when trying to perform any user action", %{conn: conn} do
+      test "(#{role}) redirects when trying to perform any action", %{conn: conn} do
         verify_all_routes(conn, &assert_unauthorized_user/1)
       end
     end
   end
 
   describe "for a guest" do
-    test "redirects when trying to perform any user action", %{conn: conn} do
+    test "redirects when trying to perform any action", %{conn: conn} do
       verify_all_routes(conn, &assert_unauthorized_guest/1)
     end
   end

@@ -88,6 +88,7 @@ msgstr ""
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:129
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:147
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:100
+#: lib/jumubase_web/templates/performance/edit.html.eex:26
 #: lib/jumubase_web/templates/performance/new.html.eex:26
 msgid "Please choose"
 msgstr ""
@@ -298,8 +299,8 @@ msgid "Your password has been reset"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:36
-#: lib/jumubase_web/views/performance_view.ex:72
+#: lib/jumubase_web/views/performance_view.ex:46
+#: lib/jumubase_web/views/performance_view.ex:80
 msgid "Accompanist"
 msgstr ""
 
@@ -310,13 +311,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:7
+#: lib/jumubase_web/templates/performance/edit.html.eex:18
 #: lib/jumubase_web/templates/performance/new.html.eex:18
 msgid "Category"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:35
-#: lib/jumubase_web/views/performance_view.ex:73
+#: lib/jumubase_web/views/performance_view.ex:45
+#: lib/jumubase_web/views/performance_view.ex:81
 msgid "Ensemblist"
 msgstr ""
 
@@ -344,6 +346,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
+#: lib/jumubase_web/templates/performance/edit.html.eex:39
 #: lib/jumubase_web/templates/performance/new.html.eex:39
 msgid "Participants"
 msgstr ""
@@ -354,6 +357,7 @@ msgid "Phone"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/performance/edit.html.eex:49
 #: lib/jumubase_web/templates/performance/new.html.eex:49
 msgid "Pieces"
 msgstr ""
@@ -376,8 +380,8 @@ msgid "Role"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:34
-#: lib/jumubase_web/views/performance_view.ex:71
+#: lib/jumubase_web/views/performance_view.ex:44
+#: lib/jumubase_web/views/performance_view.ex:79
 msgid "Soloist"
 msgstr ""
 
@@ -387,11 +391,13 @@ msgid "Success!"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/performance/edit.html.eex:46
 #: lib/jumubase_web/templates/performance/new.html.eex:46
 msgid "Add participant"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/performance/edit.html.eex:56
 #: lib/jumubase_web/templates/performance/new.html.eex:56
 msgid "Add piece"
 msgstr ""
@@ -447,6 +453,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:9
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:11
+#: lib/jumubase_web/templates/page/edit_registration.html.eex:17
 msgid "Edit code"
 msgstr ""
 
@@ -488,6 +495,7 @@ msgid "Programme"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/performance/edit.html.eex:62
 #: lib/jumubase_web/templates/performance/new.html.eex:62
 msgid "Submit registration"
 msgstr ""
@@ -563,11 +571,57 @@ msgid "Password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:31
+#: lib/jumubase_web/views/performance_view.ex:41
 msgid "Participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:32
+#: lib/jumubase_web/views/performance_view.ex:42
 msgid "Piece"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/registration.html.eex:16
+msgid "Already registered?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/edit_registration.html.eex:1
+#: lib/jumubase_web/templates/performance/edit.html.eex:2
+msgid "Edit registration"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/registration.html.eex:19
+msgid "Edit your registration"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:50
+msgid "Edited successfully"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/edit_registration.html.eex:4
+msgid "Enter your edit code to make changes to your existing registration."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/edit_registration.html.eex:10
+msgid "If you've lost your edit code, ask your local Jumu organizer to retrieve it for you."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/page_controller.ex:25
+msgid "Please enter an edit code."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/edit_registration.html.eex:20
+msgid "Search"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/page_controller.ex:45
+msgid "We could not find a registration for this edit code."
 msgstr ""

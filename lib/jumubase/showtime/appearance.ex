@@ -11,7 +11,7 @@ defmodule Jumubase.Showtime.Appearance do
     field :points, :integer
 
     belongs_to :performance, Performance
-    belongs_to :participant, Participant
+    belongs_to :participant, Participant, on_replace: :delete
 
     timestamps()
   end

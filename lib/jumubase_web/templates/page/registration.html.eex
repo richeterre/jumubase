@@ -9,3 +9,13 @@
     <li><%= link name_with_flag(contest), to: performance_path(@conn, :new, contest) %></li>
   <% end %>
 </ul>
+
+<hr>
+
+<p class="lead">
+  <%= gettext("Already registered?") %>
+</p>
+
+<%= link gettext("Edit your registration"),
+  to: page_path(@conn, :edit_registration),
+  class: "btn btn-default" %>

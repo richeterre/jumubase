@@ -36,6 +36,9 @@
       class="panel-collapse collapse"
       v-bind:class="{ in: beginsExpanded }">
       <div class="panel-body">
+        <input type="hidden" v-bind:name="fieldName('id')" v-model="appearance.id" />
+        <input type="hidden" v-bind:name="fieldName('participant', 'id')" v-model="appearance.participant.id" />
+
         <div class="row">
           <div class="form-group col-md-3">
             <label v-bind:for="fieldId('participant', 'given_name')">

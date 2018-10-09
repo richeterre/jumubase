@@ -77,6 +77,40 @@ defmodule Jumubase.ShowtimeTest do
       assert {:error, :not_found} = Showtime.lookup_performance("unknown")
     end
 
+    test "lookup_performance!/2 gets a performance from the given contest by edit code" do
+      %{
+        id: id,
+        edit_code: edit_code,
+        contest_category: %{contest: c}
+      } = insert(:performance)
+
+      result = Showtime.lookup_performance!(c, edit_code)
+      assert result.id == id
+    end
+
+    test "lookup_performance!/2 raises an error if the performance isn't found in the given contest" do
+      c = insert(:contest)
+      %{edit_code: edit_code} = insert(:performance)
+
+      assert_raise Ecto.NoResultsError, fn -> Showtime.lookup_performance!(c, edit_code) end
+    end
+
+    test "lookup_performance!/2 preloads all associated data of the performance" do
+      %{
+        edit_code: edit_code,
+        contest_category: %{contest: c}
+      } = insert(:performance,
+        appearances: [build(:appearance, performance: nil)],
+        pieces: [build(:piece)]
+      )
+
+      assert %Performance{
+        contest_category: %ContestCategory{category: %Category{}},
+        appearances: [%Appearance{participant: %Participant{}}],
+        pieces: [%Piece{}]
+      } = Showtime.lookup_performance!(c, edit_code)
+    end
+
     test "create_performance/2 creates a new performance with an edit code" do
       {cc, attrs} = performance_params([
         appearance_params("soloist", ~D[2007-01-01])

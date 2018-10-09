@@ -14,4 +14,25 @@ defmodule JumubaseWeb.PageControllerTest do
     assert html_response(conn, 200) =~ ContestView.name_with_flag(c1)
     assert html_response(conn, 200) =~ ContestView.name_with_flag(c2)
   end
+
+  test "lets users access their registration with a valid edit code", %{conn: conn} do
+    %{
+      contest_category: %{contest: c},
+      edit_code: edit_code,
+    } = p = insert(:performance, edit_code: "123456")
+    conn = post(conn, "/edit-registration", search: %{edit_code: edit_code})
+    assert redirected_to(conn) == performance_path(conn, :edit, c, p, code: edit_code)
+  end
+
+  test "shows an error when submitting an unknown edit code", %{conn: conn} do
+    conn = post(conn, "/edit-registration", search: %{edit_code: "unknown"})
+    assert get_flash(conn, :error) =~ "We could not find a registration for this edit code."
+    assert redirected_to(conn) == page_path(conn, :edit_registration)
+  end
+
+  test "shows an error when submitting an empty edit code", %{conn: conn} do
+    conn = post(conn, "/edit-registration", search: %{edit_code: " "})
+    assert get_flash(conn, :error) =~ "Please enter an edit code."
+    assert redirected_to(conn) == page_path(conn, :edit_registration)
+  end
 end

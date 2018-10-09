@@ -27,10 +27,7 @@ defmodule Jumubase.Showtime do
   """
   def get_performance!(%Contest{id: contest_id}, id) do
     Performance
-    |> join(:left, [p], cc in assoc(p, :contest_category))
-    |> where([_, cc], cc.contest_id == ^contest_id)
-    |> preload([_, cc], [contest_category: {cc, :category}])
-    |> preload([_, _], [[appearances: :participant], :pieces])
+    |> preloaded_from_contest(contest_id)
     |> Repo.get!(id)
   end
 
@@ -46,6 +43,17 @@ defmodule Jumubase.Showtime do
       performance ->
         {:ok, Repo.preload(performance, [contest_category: :contest])}
     end
+  end
+
+  @doc """
+  Looks up a performance from the contest with the given edit code.
+
+  Raises `Ecto.NoResultsError` if no performance isn't found for that contest and edit code.
+  """
+  def lookup_performance!(%Contest{id: contest_id}, edit_code) when is_binary(edit_code) do
+    Performance
+    |> preloaded_from_contest(contest_id)
+    |> Repo.get_by!(edit_code: edit_code)
   end
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
@@ -65,6 +73,14 @@ defmodule Jumubase.Showtime do
     |> put_edit_code
     |> put_age_groups(contest.season, genre)
     |> Repo.insert()
+  end
+
+  def update_performance(%Contest{} = contest, %Performance{} = performance, attrs \\ %{}) do
+    performance
+    |> Performance.changeset(attrs)
+    |> Repo.update
+
+    # TODO: Update age groups
   end
 
   def change_performance(%Performance{} = performance) do
@@ -156,5 +172,17 @@ defmodule Jumubase.Showtime do
   # Returns only appearance changesets with one of the given roles.
   defp filter_roles(changesets, roles) do
     Enum.filter(changesets, &(&1.changes.role in roles))
+  end
+
+  # Limits a performance query to the given contest id and fully preloads it
+  defp preloaded_from_contest(query, contest_id) do
+    from p in query,
+      join: cc in assoc(p, :contest_category),
+      where: cc.contest_id == ^contest_id,
+      preload: [
+        [contest_category: {cc, :category}],
+        [appearances: :participant],
+        :pieces
+      ]
   end
 end

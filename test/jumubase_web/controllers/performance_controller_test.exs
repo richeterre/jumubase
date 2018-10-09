@@ -65,4 +65,31 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     assert html_response(conn, 200) =~ "Register"
     assert Repo.all(Performance) == []
   end
+
+  test "lets the user edit their registration with a valid edit code", %{conn: conn} do
+    %{
+      id: p_id,
+      contest_category: %{contest: %{id: c_id}},
+      edit_code: edit_code
+    } = insert(:performance)
+
+    conn = get(conn, "/contests/#{c_id}/performances/#{p_id}/edit?code=#{edit_code}")
+    assert html_response(conn, 200) =~ "Edit registration"
+  end
+
+  test "returns an error when the user tries to edit a registration without an edit code", %{conn: conn} do
+    %{id: p_id, contest_category: %{contest: %{id: c_id}}} = insert(:performance)
+
+    assert_error_sent 400, fn ->
+      get(conn, "/contests/#{c_id}/performances/#{p_id}/edit")
+    end
+  end
+
+  test "returns an error when the user tries to edit a registration with an invalid edit code", %{conn: conn} do
+    %{id: p_id, contest_category: %{contest: %{id: c_id}}} = insert(:performance)
+
+    assert_error_sent 404, fn ->
+      get(conn, "/contests/#{c_id}/performances/#{p_id}/edit?code=unknown")
+    end
+  end
 end

@@ -6,6 +6,5 @@
 
 <%= render "_form.html",
   conn: @conn,
-  path: performance_path(@conn, :update, @contest, @performance),
-  changeset: @changeset,
-  edit_code: @performance.edit_code %>
+  path: performance_path(@conn, :update, @contest, @performance, edit_code: @performance.edit_code),
+  changeset: @changeset %>

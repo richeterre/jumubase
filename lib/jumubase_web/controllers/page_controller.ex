@@ -40,7 +40,7 @@ defmodule JumubaseWeb.PageController do
     case Showtime.lookup_performance(edit_code) do
       {:ok, %{contest_category: %{contest: c}} = performance} ->
         conn
-        |> redirect(to: performance_path(conn, :edit, c, performance, code: edit_code))
+        |> redirect(to: performance_path(conn, :edit, c, performance, edit_code: edit_code))
       {:error, _} ->
         show_error(conn, gettext("We could not find a registration for this edit code."))
     end

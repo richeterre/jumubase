@@ -32,7 +32,7 @@ defmodule JumubaseWeb.PerformanceController do
     end
   end
 
-  def edit(conn, %{"code" => edit_code}, contest) do
+  def edit(conn, %{"edit_code" => edit_code}, contest) do
     performance = Showtime.lookup_performance!(contest, edit_code)
 
     conn
@@ -41,12 +41,10 @@ defmodule JumubaseWeb.PerformanceController do
     |> render("edit.html")
   end
 
-  def update(conn, %{"id" => id, "performance" => params}, contest) do
+  def update(conn, %{"id" => id, "edit_code" => edit_code, "performance" => params}, contest) do
     params = normalize_params(params)
 
-    # TODO: Check edit code
-
-    performance = Showtime.get_performance!(contest, id)
+    performance = Showtime.get_performance!(contest, id, edit_code)
     case Showtime.update_performance(contest, performance, params) do
       {:ok, _} ->
         conn

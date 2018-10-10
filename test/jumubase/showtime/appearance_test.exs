@@ -3,7 +3,7 @@ defmodule Jumubase.AppearanceTest do
   alias Jumubase.Showtime.Appearance
 
   describe "changeset" do
-    setup %{} do
+    setup do
       [valid_attrs: valid_appearance_attrs()]
     end
 

@@ -21,7 +21,7 @@ defmodule JumubaseWeb.PageControllerTest do
       edit_code: edit_code,
     } = p = insert(:performance, edit_code: "123456")
     conn = post(conn, "/edit-registration", search: %{edit_code: edit_code})
-    assert redirected_to(conn) == performance_path(conn, :edit, c, p, code: edit_code)
+    assert redirected_to(conn) == performance_path(conn, :edit, c, p, edit_code: edit_code)
   end
 
   test "shows an error when submitting an unknown edit code", %{conn: conn} do

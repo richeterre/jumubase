@@ -32,6 +32,17 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Gets a single performance from the contest with the given edit code.
+
+  Raises `Ecto.NoResultsError` if no matching performance is found in that contest.
+  """
+  def get_performance!(%Contest{id: contest_id}, id, edit_code) do
+    Performance
+    |> preloaded_from_contest(contest_id)
+    |> Repo.get_by!(%{id: id, edit_code: edit_code})
+  end
+
+  @doc """
   Looks up a performance with the given edit code.
 
   Returns an error tuple if no performance could be found.

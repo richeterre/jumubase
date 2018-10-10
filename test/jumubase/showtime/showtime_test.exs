@@ -58,6 +58,47 @@ defmodule Jumubase.ShowtimeTest do
       } = Showtime.get_performance!(c, id)
     end
 
+    test "get_performance!/3 gets a performance from the given contest by id and edit code" do
+      %{id: id, contest_category: %{contest: c}, edit_code: edit_code} = insert(:performance)
+
+      result = Showtime.get_performance!(c, id, edit_code)
+      assert result.id == id
+    end
+
+    test "get_performance!/3 raises an error if the contest doesn't match" do
+      c = insert(:contest)
+      %{id: id, edit_code: edit_code} = insert(:performance)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Showtime.get_performance!(c, id, edit_code)
+      end
+    end
+
+    test "get_performance!/3 raises an error if the edit code doesn't match" do
+      %{id: id, contest_category: %{contest: c}} = insert(:performance)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Showtime.get_performance!(c, id, "unknown")
+      end
+    end
+
+    test "get_performance!/3 preloads all associated data of the performance" do
+      %{
+        id: id,
+        contest_category: %{contest: c},
+        edit_code: edit_code
+      } = insert(:performance,
+        appearances: [build(:appearance, performance: nil)],
+        pieces: [build(:piece)]
+      )
+
+      assert %Performance{
+        contest_category: %ContestCategory{category: %Category{}},
+        appearances: [%Appearance{participant: %Participant{}}],
+        pieces: [%Piece{}]
+      } = Showtime.get_performance!(c, id, edit_code)
+    end
+
     test "lookup_performance/1 gets a performance by its edit code" do
       %{id: id, edit_code: edit_code} = insert(:performance)
 

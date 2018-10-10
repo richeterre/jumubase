@@ -3,7 +3,7 @@ defmodule Jumubase.PerformanceTest do
   alias Jumubase.Showtime.Performance
 
   describe "changeset" do
-    setup %{} do
+    setup do
       [valid_attrs: valid_performance_attrs()]
     end
 

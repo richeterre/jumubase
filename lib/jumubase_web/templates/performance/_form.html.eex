@@ -4,11 +4,6 @@
       <!-- Keep performance param upon submit when form is otherwise empty -->
       <%= hidden_input f, nil %>
 
-      <!-- Send edit code alongside params, if available -->
-      <%= if assigns[:edit_code] do %>
-        <%= hidden_input f, :edit_code, value: @edit_code %>
-      <% end %>
-
       <%= render "_form_error_summary.html" %>
 
       <div class="row">

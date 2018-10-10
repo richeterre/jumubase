@@ -5,8 +5,8 @@ defmodule Jumubase.ShowtimeTest do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
-  describe "performances" do
-    test "list_performances/1 returns the given contest's performances" do
+  describe "list_performances/1" do
+    test "returns the given contest's performances" do
       contest = insert(:contest)
 
       # Performances in this contest
@@ -20,29 +20,31 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered Showtime.list_performances(contest), [p1, p2, p3]
     end
 
-    test "list_performances/1 preloads the performances' contest categories + categories" do
+    test "preloads the performances' contest categories + categories" do
       %{contest_category: %{contest: c}} = insert(:performance)
 
       assert [%Performance{
         contest_category: %ContestCategory{category: %Category{}}
       }] = Showtime.list_performances(c)
     end
+  end
 
-    test "get_performance!/2 gets a performance from the given contest by id" do
+  describe "get_performance!/2" do
+    test "gets a performance from the given contest by id" do
       %{id: id, contest_category: %{contest: c}} = insert(:performance)
 
       result = Showtime.get_performance!(c, id)
       assert result.id == id
     end
 
-    test "get_performance!/2 raises an error if the performance isn't found in the given contest" do
+    test "raises an error if the performance isn't found in the given contest" do
       c = insert(:contest)
       %{id: id} = insert(:performance)
 
       assert_raise Ecto.NoResultsError, fn -> Showtime.get_performance!(c, id) end
     end
 
-    test "get_performance!/2 preloads all associated data of the performance" do
+    test "preloads all associated data of the performance" do
       %{
         id: id,
         contest_category: %{contest: c}
@@ -57,15 +59,17 @@ defmodule Jumubase.ShowtimeTest do
         pieces: [%Piece{}]
       } = Showtime.get_performance!(c, id)
     end
+  end
 
-    test "get_performance!/3 gets a performance from the given contest by id and edit code" do
+  describe "get_performance!/3" do
+    test "gets a performance from the given contest by id and edit code" do
       %{id: id, contest_category: %{contest: c}, edit_code: edit_code} = insert(:performance)
 
       result = Showtime.get_performance!(c, id, edit_code)
       assert result.id == id
     end
 
-    test "get_performance!/3 raises an error if the contest doesn't match" do
+    test "raises an error if the contest doesn't match" do
       c = insert(:contest)
       %{id: id, edit_code: edit_code} = insert(:performance)
 
@@ -74,7 +78,7 @@ defmodule Jumubase.ShowtimeTest do
       end
     end
 
-    test "get_performance!/3 raises an error if the edit code doesn't match" do
+    test "raises an error if the edit code doesn't match" do
       %{id: id, contest_category: %{contest: c}} = insert(:performance)
 
       assert_raise Ecto.NoResultsError, fn ->
@@ -82,7 +86,7 @@ defmodule Jumubase.ShowtimeTest do
       end
     end
 
-    test "get_performance!/3 preloads all associated data of the performance" do
+    test "preloads all associated data of the performance" do
       %{
         id: id,
         contest_category: %{contest: c},
@@ -98,15 +102,17 @@ defmodule Jumubase.ShowtimeTest do
         pieces: [%Piece{}]
       } = Showtime.get_performance!(c, id, edit_code)
     end
+  end
 
-    test "lookup_performance/1 gets a performance by its edit code" do
+  describe "lookup_performance/1" do
+    test "gets a performance by its edit code" do
       %{id: id, edit_code: edit_code} = insert(:performance)
 
       assert {:ok, result} = Showtime.lookup_performance(edit_code)
       assert result.id == id
     end
 
-    test "lookup_performance/1 preloads the performance's contest category and contest" do
+    test "preloads the performance's contest category and contest" do
       %{edit_code: edit_code} = insert(:performance)
 
       assert {:ok, %Performance{
@@ -114,11 +120,13 @@ defmodule Jumubase.ShowtimeTest do
       }} = Showtime.lookup_performance(edit_code)
     end
 
-    test "lookup_performance/1 returns an error for an unknown edit code" do
+    test "returns an error for an unknown edit code" do
       assert {:error, :not_found} = Showtime.lookup_performance("unknown")
     end
+  end
 
-    test "lookup_performance!/2 gets a performance from the given contest by edit code" do
+  describe "lookup_performance!/2" do
+    test "gets a performance from the given contest by edit code" do
       %{
         id: id,
         edit_code: edit_code,
@@ -129,14 +137,14 @@ defmodule Jumubase.ShowtimeTest do
       assert result.id == id
     end
 
-    test "lookup_performance!/2 raises an error if the performance isn't found in the given contest" do
+    test "raises an error if the performance isn't found in the given contest" do
       c = insert(:contest)
       %{edit_code: edit_code} = insert(:performance)
 
       assert_raise Ecto.NoResultsError, fn -> Showtime.lookup_performance!(c, edit_code) end
     end
 
-    test "lookup_performance!/2 preloads all associated data of the performance" do
+    test "preloads all associated data of the performance" do
       %{
         edit_code: edit_code,
         contest_category: %{contest: c}
@@ -151,8 +159,10 @@ defmodule Jumubase.ShowtimeTest do
         pieces: [%Piece{}]
       } = Showtime.lookup_performance!(c, edit_code)
     end
+  end
 
-    test "create_performance/2 creates a new performance with an edit code" do
+  describe "create_performance/2" do
+    test "creates a new performance with an edit code" do
       {cc, attrs} = performance_params([
         appearance_params("soloist", ~D[2007-01-01])
       ])
@@ -161,14 +171,14 @@ defmodule Jumubase.ShowtimeTest do
       assert Regex.match?(~r/^[0-9]{6}$/, edit_code)
     end
 
-    test "create_performance/2 sets no edit code when the data is invalid" do
+    test "sets no edit code when the data is invalid" do
       {cc, attrs} = performance_params([])
       {:error, changeset} = Showtime.create_performance(cc.contest, attrs)
 
       assert Changeset.get_change(changeset, :edit_code) == nil
     end
 
-    test "create_performance/2 assigns a joint age group based on non-accompanists" do
+    test "assigns a joint age group based on non-accompanists" do
       {cc, attrs} = performance_params([
         appearance_params("ensemblist", ~D[2006-12-31]),
         appearance_params("ensemblist", ~D[2007-01-01]),
@@ -179,7 +189,7 @@ defmodule Jumubase.ShowtimeTest do
       assert performance.age_group == "III"
     end
 
-    test "create_performance/2 assigns the correct age groups for a classical solo performance" do
+    test "assigns the correct age groups for a classical solo performance" do
       cc = insert(:contest_category, category: build(:category, genre: "classical"))
       {cc, attrs} = performance_params([
         appearance_params("soloist", ~D[2007-01-01]),
@@ -196,7 +206,7 @@ defmodule Jumubase.ShowtimeTest do
       assert acc2.age_group == "V"
     end
 
-    test "create_performance/2 assigns the correct age groups for a classical ensemble performance" do
+    test "assigns the correct age groups for a classical ensemble performance" do
       cc = insert(:contest_category, category: build(:category, genre: "classical"))
       {cc, attrs} = performance_params([
         appearance_params("ensemblist", ~D[2006-12-31]),
@@ -215,7 +225,7 @@ defmodule Jumubase.ShowtimeTest do
       assert acc2.age_group == "V"
     end
 
-    test "create_performance/2 assigns the correct age groups for a pop solo performance" do
+    test "assigns the correct age groups for a pop solo performance" do
       cc = insert(:contest_category, category: build(:category, genre: "popular"))
       {cc, attrs} = performance_params([
         appearance_params("soloist", ~D[2007-01-01]),
@@ -227,12 +237,12 @@ defmodule Jumubase.ShowtimeTest do
       sol = get_soloist(performance)
       assert sol.age_group == "II"
 
-      [acc1, acc2] =  get_accompanists(performance)
+      [acc1, acc2] = get_accompanists(performance)
       assert acc1.age_group == "V"
       assert acc2.age_group == "V"
     end
 
-    test "create_performance/2 assigns the correct age groups for a pop ensemble performance" do
+    test "assigns the correct age groups for a pop ensemble performance" do
       cc = insert(:contest_category, category: build(:category, genre: "popular"))
       {cc, attrs} = performance_params([
         appearance_params("ensemblist", ~D[2006-12-31]),
@@ -251,30 +261,30 @@ defmodule Jumubase.ShowtimeTest do
       assert acc2.age_group == "V"
     end
 
-    test "create_performance/2 sets no age group when the data is invalid" do
+    test "sets no age group when the data is invalid" do
       {cc, attrs} = performance_params([])
       {:error, changeset} = Showtime.create_performance(cc.contest, attrs)
 
       assert Changeset.get_change(changeset, :age_group) == nil
     end
 
-    test "create_performance/2 returns an error when passing no contest category id" do
+    test "returns an error when passing no contest category id" do
       contest = insert(:contest)
       assert {:error, _changeset} = Showtime.create_performance(contest, %{contest_category_id: nil})
     end
 
-    test "create_performance/2 raises an error when the passed contest and attributes don't match" do
+    test "raises an error when the passed contest and attributes don't match" do
       {_, attrs} = performance_params([
         appearance_params("soloist", ~D[2007-01-01])
       ])
       other_contest = insert(:contest)
       assert_raise Ecto.NoResultsError, fn -> Showtime.create_performance(other_contest, attrs) end
     end
+  end
 
-    test "change_performance/1 returns a performance changeset" do
-      performance = insert(:performance)
-      assert %Changeset{} = Showtime.change_performance(performance)
-    end
+  test "change_performance/1 returns a performance changeset" do
+    performance = insert(:performance)
+    assert %Changeset{} = Showtime.change_performance(performance)
   end
 
   # Private helpers

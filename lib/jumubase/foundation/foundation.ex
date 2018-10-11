@@ -15,18 +15,6 @@ defmodule Jumubase.Foundation do
     Repo.all(from h in Host, where: h.id in ^ids)
   end
 
-  @doc """
-  Gets a single contest category from the given contest.
-
-  Raises `Ecto.NoResultsError` if the contest category isn't found in that contest.
-  """
-  def get_contest_category!(%Contest{id: contest_id}, id) do
-    ContestCategory
-    |> where([cc], cc.contest_id == ^contest_id)
-    |> preload([_], :category)
-    |> Repo.get!(id)
-  end
-
   def list_contests do
     Repo.all(Contest) |> Repo.preload(:host)
   end
@@ -49,5 +37,17 @@ defmodule Jumubase.Foundation do
 
   def load_contest_categories(%Contest{} = contest) do
     Repo.preload(contest, [contest_categories: :category])
+  end
+
+  @doc """
+  Gets a single contest category from the given contest.
+
+  Raises `Ecto.NoResultsError` if the contest category isn't found in that contest.
+  """
+  def get_contest_category!(%Contest{id: contest_id}, id) do
+    ContestCategory
+    |> where([cc], cc.contest_id == ^contest_id)
+    |> preload([_], :category)
+    |> Repo.get!(id)
   end
 end

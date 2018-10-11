@@ -4,7 +4,9 @@ defmodule Jumubase.PerformanceTest do
 
   describe "changeset" do
     setup do
-      [valid_attrs: valid_performance_attrs()]
+      c = insert(:contest) |> with_contest_categories
+      [cc, _] = c.contest_categories
+      [valid_attrs: valid_performance_attrs(cc)]
     end
 
     test "with valid attributes", %{valid_attrs: valid_attrs} do
@@ -37,5 +39,19 @@ defmodule Jumubase.PerformanceTest do
     test "generates a zero-padded edit code string" do
       assert Performance.to_edit_code(123) == "000123"
     end
+  end
+
+  # Private helpers
+
+  defp valid_performance_attrs(contest_category) do
+    params_for(:performance, edit_code: nil, age_group: nil)
+    |> Map.put(:contest_category_id, contest_category.id)
+    |> Map.put(:appearances, [valid_appearance_attrs()])
+    |> Map.put(:pieces, [params_for(:piece)])
+  end
+
+  defp valid_appearance_attrs do
+    params_for(:appearance)
+    |> Map.put(:participant, params_for(:participant))
   end
 end

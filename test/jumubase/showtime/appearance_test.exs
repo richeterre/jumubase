@@ -4,7 +4,11 @@ defmodule Jumubase.AppearanceTest do
 
   describe "changeset" do
     setup do
-      [valid_attrs: valid_appearance_attrs()]
+      attrs =
+        params_for(:appearance)
+        |> Map.put(:participant, params_for(:participant))
+
+      [valid_attrs: attrs]
     end
 
     test "with valid attributes", %{valid_attrs: valid_attrs} do

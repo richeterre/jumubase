@@ -13,66 +13,52 @@ defmodule Jumubase.FoundationTest do
     assert Foundation.list_hosts([h2.id, h3.id]) == [h2, h3]
   end
 
-  test "get_contest_category!/2 returns a contest category" do
-    %{id: id, contest: c} = insert(:contest_category)
-    assert %ContestCategory{id: ^id} = Foundation.get_contest_category!(c, id)
+  describe "list_contests/0" do
+    test "returns all contests" do
+      contests = insert_list(2, :contest)
+      assert Foundation.list_contests == contests
+    end
+
+    test "preloads the contests' hosts" do
+      insert(:contest)
+      [result] = Foundation.list_contests
+      assert %Host{} = result.host
+    end
   end
 
-  test "get_contest_category!/2 raises an error if the contest category isn't in the given contest" do
-    c = insert(:contest)
-    %{id: id} = insert(:contest_category)
+  describe "list_open_contests/0" do
+    test "returns contests the user can register for" do
+      c1 = insert(:contest, deadline: Timex.today |> Timex.shift(days: 1))
+      c2 = insert(:contest, deadline: Timex.today)
+      assert Foundation.list_open_contests == [c1, c2]
+    end
 
-    assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest_category!(c, id) end
+    test "does not return contests with a past signup deadline" do
+      insert(:contest, deadline: Timex.today |> Timex.shift(days: -1))
+      assert Foundation.list_open_contests == []
+    end
+
+    test "does not return 2nd round contests" do
+      insert(:contest, deadline: Timex.today, round: 2)
+      assert Foundation.list_open_contests == []
+    end
   end
 
-  test "get_contest_category!/2 preloads the contest category's associated category" do
-    %{id: id, contest: c} = insert(:contest_category)
+  describe "get_contest!/1" do
+    test "returns a contest" do
+      contest = insert(:contest)
+      assert Foundation.get_contest!(contest.id) == contest
+    end
 
-    assert %ContestCategory{
-      category: %Category{},
-    } = Foundation.get_contest_category!(c, id)
-  end
+    test "preloads the contest's host" do
+      %{id: id} = insert(:contest)
+      result = Foundation.get_contest!(id)
+      assert %Host{} = result.host
+    end
 
-  test "list_contests/0 returns all contests" do
-    contests = insert_list(2, :contest)
-    assert Foundation.list_contests == contests
-  end
-
-  test "list_contests/0 preloads the contests' hosts" do
-    insert(:contest)
-    [result] = Foundation.list_contests
-    assert %Host{} = result.host
-  end
-
-  test "list_open_contests/0 returns contests the user can register for" do
-    c1 = insert(:contest, deadline: Timex.today |> Timex.shift(days: 1))
-    c2 = insert(:contest, deadline: Timex.today)
-    assert Foundation.list_open_contests == [c1, c2]
-  end
-
-  test "list_open_contests/0 does not return contests with a past signup deadline" do
-    insert(:contest, deadline: Timex.today |> Timex.shift(days: -1))
-    assert Foundation.list_open_contests == []
-  end
-
-  test "list_open_contests/0 does not return 2nd round contests" do
-    insert(:contest, deadline: Timex.today, round: 2)
-    assert Foundation.list_open_contests == []
-  end
-
-  test "get_contest!/1 returns a contest" do
-    contest = insert(:contest)
-    assert Foundation.get_contest!(contest.id) == contest
-  end
-
-  test "get_contest!/1 preloads the contest's host" do
-    %{id: id} = insert(:contest)
-    result = Foundation.get_contest!(id)
-    assert %Host{} = result.host
-  end
-
-  test "get_contest!/1 raises an error if the contest isn't found" do
-    assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest!(123) end
+    test "raises an error if the contest isn't found" do
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest!(123) end
+    end
   end
 
   test "load_contest_categories/1 preloads a contest's contest categories" do
@@ -84,5 +70,30 @@ defmodule Jumubase.FoundationTest do
 
     %{id: id} = contest = Foundation.load_contest_categories(contest)
     assert [%{contest_id: ^id, category: %Category{name: "ABC"}}] = contest.contest_categories
+  end
+
+  describe "get_contest_category!/2" do
+    setup do
+      [contest: insert(:contest)]
+    end
+
+    test "returns a contest category", %{contest: c} do
+      %{id: id} = insert_contest_category(c)
+      assert %ContestCategory{id: ^id} = Foundation.get_contest_category!(c, id)
+    end
+
+    test "raises an error if the contest category isn't in the given contest", %{contest: c} do
+      %{id: id} = insert_contest_category(build(:contest))
+
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest_category!(c, id) end
+    end
+
+    test "preloads the contest category's associated category", %{contest: c} do
+      %{id: id} = insert_contest_category(c)
+
+      assert %ContestCategory{
+        category: %Category{},
+      } = Foundation.get_contest_category!(c, id)
+    end
   end
 end

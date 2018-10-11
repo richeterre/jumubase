@@ -8,10 +8,10 @@ defmodule Jumubase.Factory do
 
   @season 56
 
+  # Factories
+
   def appearance_factory do
     %Appearance{
-      performance: build(:performance),
-      participant: build(:participant),
       role: "soloist",
       instrument: "piano",
       age_group: "III",
@@ -42,7 +42,6 @@ defmodule Jumubase.Factory do
 
   def contest_category_factory do
     %ContestCategory{
-      contest: build(:contest),
       category: build(:category),
       min_age_group: "Ia",
       max_age_group: "VI",
@@ -72,9 +71,10 @@ defmodule Jumubase.Factory do
 
   def performance_factory do
     %Performance{
-      contest_category: build(:contest_category),
       edit_code: sequence(:edit_code, &to_edit_code/1),
-      age_group: nil,
+      appearances: build_list(1, :appearance, participant: build(:participant)),
+      pieces: build_list(1, :piece),
+      age_group: "III",
     }
   end
 
@@ -97,5 +97,30 @@ defmodule Jumubase.Factory do
       email: sequence(:email, &"user-#{&1}@example.org"),
       role: "local-organizer"
     }
+  end
+
+  # Pipeable functions
+
+  def with_contest_categories(%Contest{} = contest) do
+    ccs = insert_pair(:contest_category, contest: contest)
+    %{contest | contest_categories: ccs}
+  end
+
+  # Insertion helpers
+
+  def insert_contest_category(%Contest{} = contest) do
+    insert(:contest_category, contest: contest)
+  end
+  def insert_contest_category(%Contest{} = contest, genre) do
+    insert(:contest_category,
+      contest: contest,
+      category: build(:category, genre: genre)
+    )
+  end
+
+  def insert_performance(%Contest{} = contest) do
+    insert(:performance,
+      contest_category: build(:contest_category, contest: contest)
+    )
   end
 end

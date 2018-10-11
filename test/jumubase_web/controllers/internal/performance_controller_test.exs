@@ -8,17 +8,18 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   describe "for an admin" do
     @describetag login_as: "admin"
 
-    test "lists a contest's performances", %{conn: conn} do
-      contest = insert(:contest)
-      conn = get(conn, internal_contest_performance_path(conn, :index, contest))
+    setup do
+      [contest: insert(:contest)]
+    end
+
+    test "lists a contest's performances", %{conn: conn, contest: c} do
+      conn = get(conn, internal_contest_performance_path(conn, :index, c))
       assert html_response(conn, 200) =~ "Performances"
     end
 
-    test "shows a single performance", %{conn: conn} do
-      %{
-        contest_category: %{contest: contest}
-      } = performance = insert(:performance)
-      conn = get(conn, internal_contest_performance_path(conn, :show, contest, performance))
+    test "shows a single performance", %{conn: conn, contest: c} do
+      p = insert_performance(c)
+      conn = get(conn, internal_contest_performance_path(conn, :show, c, p))
       assert html_response(conn, 200) =~ "Performance Details"
     end
   end

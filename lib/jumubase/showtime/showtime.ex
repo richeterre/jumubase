@@ -80,9 +80,8 @@ defmodule Jumubase.Showtime do
   def update_performance(%Contest{} = contest, %Performance{} = performance, attrs \\ %{}) do
     performance
     |> Performance.changeset(attrs)
+    |> put_age_groups(contest)
     |> Repo.update
-
-    # TODO: Update age groups
   end
 
   def change_performance(%Performance{} = performance) do

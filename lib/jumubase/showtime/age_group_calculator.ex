@@ -8,6 +8,7 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
       changeset
       # Grab all non-accompanist appearances from nested changeset
       |> Changeset.get_change(:appearances)
+      |> exclude_obsolete
       |> filter_roles(["soloist", "ensemblist"])
       # Calculate joint age group for them
       |> get_birthdates
@@ -22,6 +23,7 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
 
   defp put_appearance_age_groups(changesets, season, genre) do
     changesets
+    |> exclude_obsolete
     |> put_individual_age_group("soloist", season)
     |> put_joint_age_group("ensemblist", season)
     |> put_accompanist_age_groups(season, genre)
@@ -38,13 +40,15 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
   # Assigns an individual age group to every appearance changeset with the given role.
   defp put_individual_age_group(changesets, role, season) do
     changesets
-    |> Enum.map(fn
-      %{changes: %{role: ^role}} = cs ->
-        %{changes: %{participant: %{changes: %{birthdate: birthdate}}}} = cs
-        age_group = AgeGroups.calculate_age_group(birthdate, season)
-        Changeset.put_change(cs, :age_group, age_group)
-      other ->
-        other
+    |> Enum.map(fn cs ->
+      cond do
+        Changeset.get_field(cs, :role) == role ->
+          birthdate = get_birthdate(cs)
+          age_group = AgeGroups.calculate_age_group(birthdate, season)
+          Changeset.put_change(cs, :age_group, age_group)
+        true ->
+          cs
+      end
     end)
   end
 
@@ -55,12 +59,14 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
         changesets
       birthdates ->
         changesets
-        |> Enum.map(fn
-          %{changes: %{role: ^role}} = cs ->
-            joint_age_group = AgeGroups.calculate_age_group(birthdates, season)
-            Changeset.put_change(cs, :age_group, joint_age_group)
-          other ->
-            other
+        |> Enum.map(fn cs ->
+          cond do
+            Changeset.get_field(cs, :role) == role ->
+              joint_age_group = AgeGroups.calculate_age_group(birthdates, season)
+              Changeset.put_change(cs, :age_group, joint_age_group)
+            true ->
+              cs
+          end
         end)
     end
   end
@@ -72,14 +78,23 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
 
   # Grabs all participant birthdates from the given appearance changesets.
   defp get_birthdates(changesets) do
-    Enum.map(changesets, &(&1.changes.participant.changes.birthdate))
+    Enum.map(changesets, &get_birthdate/1)
+  end
+
+  # Grabs the participant birthdate from the given appearance changeset.
+  defp get_birthdate(changeset) do
+    Changeset.get_field(changeset, :participant).birthdate
+  end
+
+  # Excludes appearances that are not being inserted or updated.
+  defp exclude_obsolete(changesets) do
+    Enum.filter(changesets, &(&1.action in [:insert, :update]))
   end
 
   # Returns only appearance changesets with one of the given roles.
   defp filter_roles(changesets, roles) do
-    Enum.filter(changesets, fn
-      %{changes: %{role: role}} -> role in roles
-      _ -> false
+    Enum.filter(changesets, fn cs ->
+      Changeset.get_field(cs, :role) in roles
     end)
   end
 end

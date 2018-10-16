@@ -147,7 +147,7 @@ defmodule Jumubase.ShowtimeTest do
     test "creates a new performance with an edit code", %{contest: c} do
       [cc, _] = c.contest_categories
       attrs = performance_params(cc, [
-        {"soloist", ~D[2007-01-01]},
+        {"soloist", birthdate: ~D[2007-01-01]},
       ])
 
       assert {:ok, %Performance{edit_code: edit_code}} = Showtime.create_performance(c, attrs)
@@ -165,9 +165,9 @@ defmodule Jumubase.ShowtimeTest do
     test "assigns a joint age group based on non-accompanists", %{contest: c} do
       [cc, _] = c.contest_categories
       attrs = performance_params(cc, [
-        {"ensemblist", ~D[2006-12-31]},
-        {"ensemblist", ~D[2007-01-01]},
-        {"accompanist", ~D[2000-01-01]} # should not affect age group
+        {"ensemblist", birthdate: ~D[2006-12-31]},
+        {"ensemblist", birthdate: ~D[2007-01-01]},
+        {"accompanist", birthdate: ~D[2000-01-01]} # should not affect age group
       ])
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
@@ -177,9 +177,9 @@ defmodule Jumubase.ShowtimeTest do
     test "assigns the correct age groups for a classical solo performance", %{contest: c} do
       cc = insert_contest_category(c, "classical")
       attrs = performance_params(cc, [
-        {"soloist", ~D[2007-01-01]},
-        {"accompanist", ~D[2000-01-01]},
-        {"accompanist", ~D[2002-01-02]},
+        {"soloist", birthdate: ~D[2007-01-01]},
+        {"accompanist", birthdate: ~D[2000-01-01]},
+        {"accompanist", birthdate: ~D[2002-01-02]},
       ])
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
@@ -193,10 +193,10 @@ defmodule Jumubase.ShowtimeTest do
     test "assigns the correct age groups for a classical ensemble performance", %{contest: c} do
       cc = insert_contest_category(c, "classical")
       attrs = performance_params(cc, [
-        {"ensemblist", ~D[2006-12-31]},
-        {"ensemblist", ~D[2007-01-01]},
-        {"accompanist", ~D[2000-01-01]},
-        {"accompanist", ~D[2002-01-02]},
+        {"ensemblist", birthdate: ~D[2006-12-31]},
+        {"ensemblist", birthdate: ~D[2007-01-01]},
+        {"accompanist", birthdate: ~D[2000-01-01]},
+        {"accompanist", birthdate: ~D[2002-01-02]},
       ])
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
@@ -212,9 +212,9 @@ defmodule Jumubase.ShowtimeTest do
     test "assigns the correct age groups for a pop solo performance", %{contest: c} do
       cc = insert_contest_category(c, "popular")
       attrs = performance_params(cc, [
-        {"soloist", ~D[2007-01-01]},
-        {"accompanist", ~D[2000-01-01]},
-        {"accompanist", ~D[2002-01-02]},
+        {"soloist", birthdate: ~D[2007-01-01]},
+        {"accompanist", birthdate: ~D[2000-01-01]},
+        {"accompanist", birthdate: ~D[2002-01-02]},
       ])
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
@@ -228,10 +228,10 @@ defmodule Jumubase.ShowtimeTest do
     test "assigns the correct age groups for a pop ensemble performance", %{contest: c} do
       cc = insert_contest_category(c, "popular")
       attrs = performance_params(cc, [
-        {"ensemblist", ~D[2006-12-31]},
-        {"ensemblist", ~D[2007-01-01]},
-        {"accompanist", ~D[2000-01-01]},
-        {"accompanist", ~D[2002-01-02]},
+        {"ensemblist", birthdate: ~D[2006-12-31]},
+        {"ensemblist", birthdate: ~D[2007-01-01]},
+        {"accompanist", birthdate: ~D[2000-01-01]},
+        {"accompanist", birthdate: ~D[2002-01-02]},
       ])
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
@@ -258,7 +258,7 @@ defmodule Jumubase.ShowtimeTest do
 
     test "raises an error when the passed contest and attributes don't match", %{contest: c} do
       [cc, _] = c.contest_categories
-      attrs = performance_params(cc, [{"soloist", ~D[2007-01-01]}])
+      attrs = performance_params(cc, [{"soloist", birthdate: ~D[2007-01-01]}])
       other_c = insert(:contest)
       assert_raise Ecto.NoResultsError, fn -> Showtime.create_performance(other_c, attrs) end
     end
@@ -270,17 +270,17 @@ defmodule Jumubase.ShowtimeTest do
 
       old_p = insert_performance(cc, [
         # These ensemblists together get AG IV
-        {"ensemblist", ~D[2007-01-01]},
-        {"ensemblist", ~D[2005-01-01]},
-        {"ensemblist", ~D[2003-01-01]},
+        {"ensemblist", birthdate: ~D[2007-01-01]},
+        {"ensemblist", birthdate: ~D[2005-01-01]},
+        {"ensemblist", birthdate: ~D[2003-01-01]},
       ])
 
       [old_ens1 | _] = get_ensemblists(old_p)
 
       attrs = performance_params(cc, [
         # Update one ensemblist, replace the second and drop the third
-        {old_ens1, "ensemblist", ~D[2007-01-02]},
-        {"ensemblist", ~D[2006-12-31]},
+        {old_ens1, "ensemblist", birthdate: ~D[2007-01-02]},
+        {"ensemblist", birthdate: ~D[2006-12-31]},
       ])
 
       {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
@@ -296,10 +296,10 @@ defmodule Jumubase.ShowtimeTest do
       old_cc = insert_contest_category(c, "classical")
 
       appearances = [
-        {"soloist", ~D[2007-01-01]}, # AG II
-        {"accompanist", ~D[2007-01-02]}, # AG II
-        {"accompanist", ~D[2005-01-01]}, # AG III
-        {"accompanist", ~D[2003-01-01]}, # AG IV
+        {"soloist", birthdate: ~D[2007-01-01]}, # AG II
+        {"accompanist", birthdate: ~D[2007-01-02]}, # AG II
+        {"accompanist", birthdate: ~D[2005-01-01]}, # AG III
+        {"accompanist", birthdate: ~D[2003-01-01]}, # AG IV
       ]
 
       old_p = insert_performance(old_cc, appearances)
@@ -331,31 +331,31 @@ defmodule Jumubase.ShowtimeTest do
     %{
       contest_category_id: cc.id,
       appearances: Enum.map(appearance_shorthands, fn
-        {role, birthdate} ->
-          appearance_params(role, birthdate)
-        {existing_appearance, role, birthdate} ->
-          appearance_params(existing_appearance, role, birthdate)
+        {role, participant_attrs} ->
+          appearance_params(role, participant_attrs)
+        {existing_appearance, role, participant_attrs} ->
+          appearance_params(existing_appearance, role, participant_attrs)
       end),
       pieces: [params_for(:piece)]
     }
   end
 
   # Returns insertion params for an appearance.
-  defp appearance_params(role, participant_birthdate) do
+  defp appearance_params(role, participant_attrs) do
     %{
       role: role,
       instrument: "vocals",
-      participant: params_for(:participant, birthdate: participant_birthdate)
+      participant: params_for(:participant, participant_attrs)
     }
   end
-  defp appearance_params(existing_appearance, role, participant_birthdate) do
+  defp appearance_params(existing_appearance, role, participant_attrs) do
     %{id: id, participant: %{id: participant_id}} = existing_appearance
     %{
       id: id,
       role: role,
       instrument: "vocals",
       participant:
-        params_for(:participant, birthdate: participant_birthdate)
+        params_for(:participant, participant_attrs)
         |> Map.put(:id, participant_id)
     }
   end
@@ -365,10 +365,10 @@ defmodule Jumubase.ShowtimeTest do
     insert(:performance,
       contest_category: contest_category,
       appearances: Enum.map(appearance_shorthands, fn
-        {role, birthdate} ->
+        {role, participant_attrs} ->
           build(:appearance,
             role: role,
-            participant: build(:participant, birthdate: birthdate)
+            participant: build(:participant, participant_attrs)
           )
       end)
     )

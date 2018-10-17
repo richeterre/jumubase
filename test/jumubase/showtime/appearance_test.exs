@@ -41,6 +41,36 @@ defmodule Jumubase.AppearanceTest do
       changeset = Appearance.changeset(%Appearance{}, attrs)
       refute changeset.valid?
     end
+
+    test "prevents name or birthdate changes when updating a nested participant" do
+      %{appearances: [a]} = insert(:contest) |> insert_performance
+
+      changeset = Appearance.changeset(a, %{participant: %{
+        id: a.participant.id,
+        given_name: "X",
+        family_name: "X",
+        birthdate: ~D[2001-02-03],
+      }})
+
+      refute changeset.valid?
+      assert changeset.changes[:participant].errors == [
+        birthdate: {"cannot be changed", []},
+        family_name: {"cannot be changed", []},
+        given_name: {"cannot be changed", []},
+      ]
+    end
+
+    test "allows non-identity changes when updating a nested participant" do
+      %{appearances: [a]} = insert(:contest) |> insert_performance
+
+      changeset = Appearance.changeset(a, %{participant: %{
+        id: a.participant.id,
+        phone: "456",
+        email: "new@example.org",
+      }})
+
+      assert changeset.valid?
+    end
   end
 
   test "is_soloist/1 returns whether the appearance has a soloist role" do

@@ -265,6 +265,47 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "update_performance/3" do
+    test "doesn't allow changes that affect a participant's identity", %{contest: c} do
+      [cc, _] = c.contest_categories
+
+      old_p = insert_performance(cc, [
+        {"soloist", [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]}
+      ])
+      old_sol = get_soloist(old_p)
+
+      attrs = performance_params(cc, [
+        {old_sol, "soloist", [given_name: "Y", family_name: "Y", birthdate: ~D[2001-01-02]]}
+      ])
+
+      {:error, changeset} = Showtime.update_performance(c, old_p, attrs)
+      assert [%Changeset{changes: %{
+        participant: %{errors: [
+          birthdate: {"cannot be changed", []},
+          family_name: {"cannot be changed", []},
+          given_name: {"cannot be changed", []},
+        ]}
+      }}] = changeset.changes[:appearances]
+    end
+
+    test "allows changes that don't affect a participant's identity", %{contest: c} do
+      [cc, _] = c.contest_categories
+
+      matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
+      old_p = insert_performance(cc, [
+        {"soloist", matching_attrs ++ [phone: "123", email: "old@example.org"]}
+      ])
+      old_sol = get_soloist(old_p)
+
+      attrs = performance_params(cc, [
+        {old_sol, "soloist", matching_attrs ++ [phone: "456", email: "new@example.org"]}
+      ])
+
+      {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
+      %{participant: pt} = get_soloist(performance)
+
+      assert pt.phone == "456"
+      assert pt.email == "new@example.org"
+    end
     test "updates the age groups after modifying participants", %{contest: c} do
       [cc, _] = c.contest_categories
 
@@ -275,11 +316,9 @@ defmodule Jumubase.ShowtimeTest do
         {"ensemblist", birthdate: ~D[2003-01-01]},
       ])
 
-      [old_ens1 | _] = get_ensemblists(old_p)
-
       attrs = performance_params(cc, [
-        # Update one ensemblist, replace the second and drop the third
-        {old_ens1, "ensemblist", birthdate: ~D[2007-01-02]},
+        # Replace two ensemblists and drop the third
+        {"ensemblist", birthdate: ~D[2007-01-02]},
         {"ensemblist", birthdate: ~D[2006-12-31]},
       ])
 

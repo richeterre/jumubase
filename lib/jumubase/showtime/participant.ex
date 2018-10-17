@@ -1,6 +1,8 @@
 defmodule Jumubase.Showtime.Participant do
   use Ecto.Schema
   import Ecto.Changeset
+  import Jumubase.Gettext
+  alias Ecto.Changeset
   alias Jumubase.Showtime.Participant
 
   schema "participants" do
@@ -13,7 +15,8 @@ defmodule Jumubase.Showtime.Participant do
     timestamps()
   end
 
-  @required_attrs [:given_name, :family_name, :birthdate, :phone, :email]
+  @identity_attrs [:given_name, :family_name, :birthdate]
+  @required_attrs @identity_attrs ++ [:phone, :email]
 
   @doc false
   def changeset(%Participant{} = participant, attrs) do
@@ -24,9 +27,23 @@ defmodule Jumubase.Showtime.Participant do
     |> sanitize_text_input
   end
 
+  @doc """
+  Invalidates the changeset if the changes affect the participant's identity.
+  """
+  def preserve_identity(%Changeset{changes: changes} = changeset) do
+    case Enum.filter(@identity_attrs, &Map.has_key?(changes, &1)) do
+      [] ->
+        changeset
+      changed_fields ->
+        Enum.reduce(changed_fields, changeset, fn field, cs ->
+          add_error(cs, field, dgettext("errors", "cannot be changed"))
+        end)
+    end
+  end
+
   # Private helpers
 
-  defp sanitize_text_input(changeset) do
+  defp sanitize_text_input(%Changeset{} = changeset) do
     changeset
     |> update_change(:given_name, &String.trim/1)
     |> update_change(:family_name, &String.trim/1)

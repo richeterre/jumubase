@@ -1,4 +1,4 @@
-import { defaults, isArray, map, mapValues } from 'lodash'
+import { chain, defaults, isArray, isObject, map, mapValues } from 'lodash'
 
 /**
  * Merges an Ecto changeset's `changes` and `data` values into a
@@ -8,8 +8,13 @@ import { defaults, isArray, map, mapValues } from 'lodash'
  *
  * @param {Object} changeset
  */
-export function flattenChangesetValues(changeset) {
-  const result = defaults({}, changeset.changes, changeset.data)
+export function flattenChangesetValues(changeset, paramsRoot) {
+  const result = defaults(
+    {},
+    changeset.changes,
+    (changeset.params && flattenParams(changeset.params[paramsRoot])) || {},
+    changeset.data
+  )
 
   return mapValues(result, value => {
     if (isChangeset(value)) {
@@ -28,4 +33,20 @@ export function flattenChangesetValues(changeset) {
 
 function isChangeset(object) {
   return !!object && !!object.data && !!object.changes
+}
+
+function flattenParams(params) {
+  if (isObject(params) && params['0']) {
+    // It's an array represented as an object
+    // with the keys '0', '1', etc.
+    return chain(params)
+      .keys()
+      .sort()
+      .map(k => flattenParams(params[k]))
+      .value()
+  } else if (isObject(params)) {
+    return mapValues(params, flattenParams)
+  } else {
+    return params
+  }
 }

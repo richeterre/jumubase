@@ -26,7 +26,7 @@ const registrationForm = params => new Vue({
       contest_category_id,
       appearances,
       pieces,
-    } = flattenChangesetValues(changeset)
+    } = flattenChangesetValues(changeset, 'performance')
 
     const errors = isEmpty(changeset.errors) ? {} : changeset.errors
 

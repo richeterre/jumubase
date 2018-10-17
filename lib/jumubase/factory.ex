@@ -12,6 +12,7 @@ defmodule Jumubase.Factory do
 
   def appearance_factory do
     %Appearance{
+      participant: build(:participant),
       role: "soloist",
       instrument: "piano",
       age_group: "III",
@@ -72,7 +73,7 @@ defmodule Jumubase.Factory do
   def performance_factory do
     %Performance{
       edit_code: sequence(:edit_code, &to_edit_code/1),
-      appearances: build_list(1, :appearance, participant: build(:participant)),
+      appearances: build_list(1, :appearance),
       pieces: build_list(1, :piece),
       age_group: "III",
     }

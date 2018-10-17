@@ -3,20 +3,23 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
   alias Jumubase.Foundation.AgeGroups
 
   def put_age_groups(%Changeset{} = changeset, season, genre) do
-    # TODO: Avoid this calculation by grabbing age group from soloist or ensemblist
-    performance_age_group =
-      changeset
-      # Grab all non-accompanist appearances from nested changeset
-      |> Changeset.get_change(:appearances)
-      |> exclude_obsolete
-      |> filter_roles(["soloist", "ensemblist"])
-      # Calculate joint age group for them
-      |> get_birthdates
-      |> AgeGroups.calculate_age_group(season)
+    case Changeset.get_change(changeset, :appearances) do
+      nil ->
+        changeset
+      appearances ->
+        # TODO: Avoid this calculation by grabbing age group from soloist or ensemblist
+        performance_age_group = appearances
+        # Grab all non-accompanist appearances from nested changeset
+        |> exclude_obsolete
+        |> filter_roles(["soloist", "ensemblist"])
+        # Calculate joint age group for them
+        |> get_birthdates
+        |> AgeGroups.calculate_age_group(season)
 
-    changeset
-    |> Changeset.put_change(:age_group, performance_age_group)
-    |> Changeset.update_change(:appearances, &(put_appearance_age_groups(&1, season, genre)))
+        changeset
+        |> Changeset.put_change(:age_group, performance_age_group)
+        |> Changeset.update_change(:appearances, &(put_appearance_age_groups(&1, season, genre)))
+    end
   end
 
   # Private helpers

@@ -317,6 +317,18 @@ defmodule Jumubase.ShowtimeTest do
         assert acc.age_group == "III"
       end
     end
+
+    test "allows updating of pieces", %{contest: c} do
+      %{pieces: [old_pc]} = old_p = insert_performance(c)
+
+      attrs = %{
+        pieces: [params_for(:piece, title: "New title") |> Map.put(:id, old_pc.id)]
+      }
+
+      {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
+      %{pieces: [pc]} = performance
+      assert pc.id == old_pc.id
+    end
   end
 
   test "change_performance/1 returns a performance changeset", %{contest: c} do

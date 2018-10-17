@@ -7,12 +7,13 @@ import './registration/form_field_error'
 import './registration/piece_panel'
 import { flattenChangesetValues } from '../utils/changesets'
 
-const registrationForm = params => new Vue({
+const registrationForm = options => new Vue({
   el: '#registration-form',
 
   data() {
     const {
       changeset,
+      params,
       contest_category_options,
       birthdate_year_options,
       birthdate_month_options,
@@ -20,13 +21,13 @@ const registrationForm = params => new Vue({
       instrument_options,
       epoch_options,
       vocabulary,
-    } = params
+    } = options
 
     const {
       contest_category_id,
       appearances,
       pieces,
-    } = flattenChangesetValues(changeset, 'performance')
+    } = flattenChangesetValues(changeset, params)
 
     const errors = isEmpty(changeset.errors) ? {} : changeset.errors
 

@@ -1,4 +1,4 @@
-import { chain, defaults, isArray, isObject, map, mapValues } from 'lodash'
+import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues } from 'lodash'
 
 /**
  * Merges an Ecto changeset's `changes` and `data` values into a
@@ -8,22 +8,28 @@ import { chain, defaults, isArray, isObject, map, mapValues } from 'lodash'
  *
  * @param {Object} changeset
  */
-export function flattenChangesetValues(changeset, paramsRoot) {
+export function flattenChangesetValues(changeset, params = undefined) {
+  const flattenedParams = flattenParams(params || {})
   const result = defaults(
     {},
     changeset.changes,
-    (changeset.params && flattenParams(changeset.params[paramsRoot])) || {},
+    flattenedParams,
     changeset.data
   )
 
-  return mapValues(result, value => {
+  return mapValues(result, (value, key) => {
     if (isChangeset(value)) {
-      return flattenChangesetValues(value)
+      const subParams = flattenedParams[key]
+      return flattenChangesetValues(value, subParams)
     }
 
     if (isArray(value)) {
-      return map(value, item => {
-        return isChangeset(item) ? flattenChangesetValues(item) : item
+      return map(value, (item, index) => {
+        const subParams = flattenedParams[key] || []
+
+        return isChangeset(item)
+          ? flattenChangesetValues(item, subParams[index])
+          : cloneDeep(item)
       })
     }
 

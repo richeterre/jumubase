@@ -19,6 +19,7 @@ defmodule JumubaseWeb.PerformanceView do
 
   defp render_registration_script(assigns) do
     %{
+      conn: conn,
       contest: contest,
       changeset: changeset,
       contest_category_options: cc_options,
@@ -27,6 +28,7 @@ defmodule JumubaseWeb.PerformanceView do
     json = render_html_safe_json(
       %{
         changeset: changeset,
+        params: conn.params["performance"],
         contest_category_options: (
           for {name, id, type} <- cc_options do
             %{id: id, name: name, type: type}

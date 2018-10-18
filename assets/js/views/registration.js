@@ -1,4 +1,4 @@
-import { find, findIndex, isEmpty } from 'lodash'
+import { find, findIndex, isEmpty, isString } from 'lodash'
 import Vue from 'vue/dist/vue.js'
 
 import './registration/appearance_panel'
@@ -6,6 +6,7 @@ import './registration/form_error_summary'
 import './registration/form_field_error'
 import './registration/piece_panel'
 import { flattenChangesetValues } from '../utils/changesets'
+import { toDateObject } from '../utils/date'
 
 const registrationForm = options => new Vue({
   el: '#registration-form',
@@ -123,10 +124,15 @@ function normalizeAppearance(appearance) {
 
 // Initalizes the participant's field values, if not present.
 function normalizeParticipant(participant) {
+  const { day, month, year } = getBirthdateObject(participant.birthdate)
+
   return {
     ...participant,
     given_name: participant.given_name || '',
     family_name: participant.family_name || '',
+    birthdate_day: day || '',
+    birthdate_month: month || '',
+    birthdate_year: year || '',
   }
 }
 
@@ -138,6 +144,10 @@ function normalizePiece(piece) {
     composer_name: piece.composer_name || '',
     epoch: piece.epoch || '',
   }
+}
+
+function getBirthdateObject(birthdate) {
+  return isString(birthdate) ? toDateObject(birthdate) : {}
 }
 
 // Make registrationForm() available to global <script> tags

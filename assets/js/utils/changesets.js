@@ -1,4 +1,6 @@
-import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues, padStart } from 'lodash'
+import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues } from 'lodash'
+
+import { isDateObject, toDateString } from './date'
 
 /**
  * Merges an Ecto changeset's `changes` and `data` values into a
@@ -41,10 +43,6 @@ function isChangeset(object) {
   return !!object && !!object.data && !!object.changes
 }
 
-function isDateObject(object) {
-  return !!object && !!object.day && !!object.month && !!object.year
-}
-
 function normalizeParams(params) {
   if (isObject(params) && params['0']) {
     // It's an array represented as an object
@@ -61,10 +59,4 @@ function normalizeParams(params) {
   } else {
     return params
   }
-}
-
-function toDateString({ year, month, day }) {
-  const paddedMonth = padStart(month, 2, '0')
-  const paddedDay = padStart(day, 2, '0')
-  return `${year}-${paddedMonth}-${paddedDay}`
 }

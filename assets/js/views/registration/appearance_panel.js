@@ -19,18 +19,6 @@ Vue.component('appearance-panel', {
   ],
 
   computed: {
-    birthdateDay() {
-      const birthdate = getBirthdate(this.appearance.participant)
-      return birthdate ? String(birthdate.getDate()) : ''
-    },
-    birthdateMonth() {
-      const birthdate = getBirthdate(this.appearance.participant)
-      return birthdate ? String(birthdate.getMonth() + 1) : ''
-    },
-    birthdateYear() {
-      const birthdate = getBirthdate(this.appearance.participant)
-      return birthdate ? String(birthdate.getFullYear()) : ''
-    },
     beginsExpanded() {
       return this.begins_expanded
     },
@@ -77,11 +65,6 @@ Vue.component('appearance-panel', {
     },
   },
 })
-
-function getBirthdate(participant) {
-  const { birthdate } = participant
-  return birthdate && new Date(birthdate)
-}
 
 function getParticipantName(participant, participantTerm, index) {
   const fullName = `${participant.given_name} ${participant.family_name}`

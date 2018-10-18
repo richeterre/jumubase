@@ -5,12 +5,13 @@ defmodule Jumubase.Showtime do
   """
 
   import Ecto.Query
+  import Ecto.Changeset
   alias Ecto.Changeset
   alias Jumubase.Repo
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.AgeGroupCalculator
-  alias Jumubase.Showtime.Performance
+  alias Jumubase.Showtime.{Participant, Performance}
 
   def list_performances(%Contest{id: id}) do
     query = from p in Performance,
@@ -73,13 +74,15 @@ defmodule Jumubase.Showtime do
 
     changeset
     |> put_edit_code
+    |> stitch_participants
     |> put_age_groups(contest)
-    |> Repo.insert()
+    |> Repo.insert
   end
 
   def update_performance(%Contest{} = contest, %Performance{} = performance, attrs \\ %{}) do
     performance
     |> Performance.changeset(attrs)
+    |> stitch_participants
     |> put_age_groups(contest)
     |> Repo.update
   end
@@ -94,17 +97,45 @@ defmodule Jumubase.Showtime do
 
   defp put_edit_code(%Changeset{valid?: true} = changeset) do
     edit_code = :rand.uniform(999999) |> Performance.to_edit_code
-    Changeset.put_change(changeset, :edit_code, edit_code)
+    put_change(changeset, :edit_code, edit_code)
   end
   defp put_edit_code(changeset), do: changeset
 
   defp put_age_groups(%Changeset{valid?: true} = changeset, contest) do
-    cc_id = Changeset.get_field(changeset, :contest_category_id)
+    cc_id = get_field(changeset, :contest_category_id)
     %{category: %{genre: genre}} = Foundation.get_contest_category!(contest, cc_id)
 
     AgeGroupCalculator.put_age_groups(changeset, contest.season, genre)
   end
   defp put_age_groups(changeset, _contest), do: changeset
+
+  # Attempts to connect nested appearances to participants that already
+  # exist in the database, based on certain "identity fields".
+  defp stitch_participants(%Changeset{
+    valid?: true, changes: %{appearances: appearances} = changes
+  } = changeset) do
+    changes = %{changes | appearances: Enum.map(appearances, &stitch_participant/1)}
+    %{changeset | changes: changes}
+  end
+  defp stitch_participants(changeset), do: changeset
+
+  # Connects a to-be-inserted appearance to an existing participant,
+  # if one is found for the "new" participant's identity fields.
+  defp stitch_participant(%Changeset{action: :insert} = appearance_cs) do
+    pt_cs = get_change(appearance_cs, :participant)
+    given_name = get_field(pt_cs, :given_name)
+    family_name = get_field(pt_cs, :family_name)
+    birthdate = get_field(pt_cs, :birthdate)
+
+    case Repo.get_by(Participant, given_name: given_name, family_name: family_name, birthdate: birthdate) do
+      nil ->
+        appearance_cs
+      existing_pt ->
+        appearance_cs
+        |> put_change(:participant, change(existing_pt, pt_cs.changes))
+    end
+  end
+  defp stitch_participant(changeset), do: changeset
 
   # Limits a performance query to the given contest id and fully preloads it
   defp preloaded_from_contest(query, contest_id) do

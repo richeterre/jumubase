@@ -162,6 +162,43 @@ defmodule Jumubase.ShowtimeTest do
       assert Changeset.get_change(changeset, :edit_code) == nil
     end
 
+    test "assigns existing participant when name and birthdate matches", %{contest: c} do
+      [cc, _] = c.contest_categories
+
+      insert(:participant, given_name: "Y", family_name: "X", birthdate: ~D[2001-01-01])
+      insert(:participant, given_name: "X", family_name: "Y", birthdate: ~D[2001-01-01])
+      insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-02])
+      pt = insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-01])
+
+      attrs = performance_params(cc, [
+        {"soloist", given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]},
+        {"accompanist", birthdate: ~D[2007-01-01]},
+      ])
+
+      {:ok, performance} = Showtime.create_performance(c, attrs)
+      sol = get_soloist(performance)
+
+      assert sol.participant.id == pt.id
+      assert Repo.aggregate(Participant, :count, :id) == 5
+    end
+
+    test "updates the existing participant during assignment", %{contest: c} do
+      [cc, _] = c.contest_categories
+
+      matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
+      old_pt = insert(:participant, matching_attrs ++ [email: "old@example.org"])
+
+      attrs = performance_params(cc, [
+        {"soloist", matching_attrs ++ [email: "new@example.org"]}
+      ])
+
+      {:ok, performance} = Showtime.create_performance(c, attrs)
+      %{participant: pt} = get_soloist(performance)
+
+      assert pt.id == old_pt.id
+      assert pt.email == "new@example.org"
+    end
+
     test "assigns a joint age group based on non-accompanists", %{contest: c} do
       [cc, _] = c.contest_categories
       attrs = performance_params(cc, [
@@ -328,6 +365,26 @@ defmodule Jumubase.ShowtimeTest do
       assert pt.phone == "456"
       assert pt.email == "new@example.org"
     end
+
+    test "assigns and updates an existing participant when adding one to match", %{contest: c} do
+      [cc, _] = c.contest_categories
+
+      matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
+      old_pt = insert(:participant, matching_attrs ++ [email: "old@example.org"])
+      old_p = insert_performance(cc, [{"soloist", birthdate: ~D[2001-01-02]}])
+
+      attrs = performance_params(cc, [
+        {"soloist", birthdate: ~D[2001-01-02]},
+        {"accompanist", matching_attrs ++ [email: "new@example.org"]}
+      ])
+
+      {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
+      [%{participant: pt}] = get_accompanists(performance)
+
+      assert pt.id == old_pt.id
+      assert pt.email == "new@example.org"
+    end
+
     test "updates the age groups after modifying participants", %{contest: c} do
       [cc, _] = c.contest_categories
 

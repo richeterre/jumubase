@@ -265,6 +265,28 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "update_performance/3" do
+    test "allows updating of participants", %{contest: c} do
+      [cc, _] = c.contest_categories
+
+      old_p = insert_performance(cc, [
+        {"ensemblist", birthdate: ~D[2001-01-01]},
+        {"ensemblist", birthdate: ~D[2002-01-01]},
+        {"ensemblist", birthdate: ~D[2003-01-01]},
+      ])
+
+      attrs = performance_params(cc, [
+        # Replace the second ensemblist and drop the third
+        {"ensemblist", birthdate: ~D[2001-01-01]},
+        {"ensemblist", birthdate: ~D[2002-01-02]},
+      ])
+
+      {:ok, %{id: id}} = Showtime.update_performance(c, old_p, attrs)
+      # Force-reload before checking associations
+      performance = Showtime.get_performance!(c, id)
+
+      assert length(performance.appearances) == 2
+    end
+
     test "doesn't allow changes that affect a participant's identity", %{contest: c} do
       [cc, _] = c.contest_categories
 
@@ -322,7 +344,9 @@ defmodule Jumubase.ShowtimeTest do
         {"ensemblist", birthdate: ~D[2006-12-31]},
       ])
 
-      {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
+      {:ok, %{id: id}} = Showtime.update_performance(c, old_p, attrs)
+      # Force-reload before checking associations
+      performance = Showtime.get_performance!(c, id)
 
       assert performance.age_group == "II"
 

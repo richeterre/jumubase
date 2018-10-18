@@ -49,6 +49,7 @@
               class="form-control"
               v-bind:id="fieldId('participant', 'given_name')"
               v-bind:name="fieldName('participant', 'given_name')"
+              v-bind:disabled="preserveParticipantIdentity"
               v-model="appearance.participant.given_name">
             <form-field-error v-bind:errors="errors.participant && errors.participant.given_name" />
           </div>
@@ -62,6 +63,7 @@
               class="form-control"
               v-bind:id="fieldId('participant', 'family_name')"
               v-bind:name="fieldName('participant', 'family_name')"
+              v-bind:disabled="preserveParticipantIdentity"
               v-model="appearance.participant.family_name">
             <form-field-error v-bind:errors="errors.participant && errors.participant.family_name" />
           </div>
@@ -77,6 +79,7 @@
                   class="form-control"
                   v-bind:id="fieldId('participant', 'birthdate', 'day')"
                   v-bind:name="fieldName('participant', 'birthdate', 'day')"
+                  v-bind:disabled="preserveParticipantIdentity"
                   v-model="appearance.participant.birthdate_day">
                   <option value=""><%= gettext("Day") %></option>
                   <option
@@ -90,6 +93,7 @@
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'month')"
+                  v-bind:disabled="preserveParticipantIdentity"
                   v-model="appearance.participant.birthdate_month">
                   <option value=""><%= gettext("Month") %></option>
                   <option
@@ -103,6 +107,7 @@
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'year')"
+                  v-bind:disabled="preserveParticipantIdentity"
                   v-model="appearance.participant.birthdate_year">
                   <option value=""><%= gettext("Year") %></option>
                   <option

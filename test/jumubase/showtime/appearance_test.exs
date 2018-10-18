@@ -54,9 +54,9 @@ defmodule Jumubase.AppearanceTest do
 
       refute changeset.valid?
       assert changeset.changes[:participant].errors == [
-        birthdate: {"cannot be changed", []},
-        family_name: {"cannot be changed", []},
-        given_name: {"cannot be changed", []},
+        birthdate: {"can't be changed", []},
+        family_name: {"can't be changed", []},
+        given_name: {"can't be changed", []},
       ]
     end
 

@@ -302,9 +302,9 @@ defmodule Jumubase.ShowtimeTest do
       {:error, changeset} = Showtime.update_performance(c, old_p, attrs)
       assert [%Changeset{changes: %{
         participant: %{errors: [
-          birthdate: {"cannot be changed", []},
-          family_name: {"cannot be changed", []},
-          given_name: {"cannot be changed", []},
+          birthdate: {"can't be changed", []},
+          family_name: {"can't be changed", []},
+          given_name: {"can't be changed", []},
         ]}
       }}] = changeset.changes[:appearances]
     end

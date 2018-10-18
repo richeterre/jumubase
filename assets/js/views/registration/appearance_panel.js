@@ -39,6 +39,10 @@ Vue.component('appearance-panel', {
     daysInBirthdateMonth() {
       return range(1, 32)
     },
+    preserveParticipantIdentity() {
+      // Prevent identity changes once appearance has been persisted
+      return !!this.appearance.id
+    },
   },
 
   methods: {

@@ -36,7 +36,7 @@ defmodule Jumubase.Showtime.Participant do
         changeset
       changed_fields ->
         Enum.reduce(changed_fields, changeset, fn field, cs ->
-          add_error(cs, field, dgettext("errors", "cannot be changed"))
+          add_error(cs, field, dgettext("errors", "can't be changed"))
         end)
     end
   end

@@ -120,3 +120,8 @@ msgstr ""
 #: lib/jumubase/showtime/performance.ex:56
 msgid "The performance must have at least one piece"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/participant.ex:39
+msgid "can't be changed"
+msgstr ""

@@ -95,7 +95,7 @@ defmodule Jumubase.ParticipantTest do
           |> Changeset.change([{field, "X"}])
           |> Participant.preserve_identity
 
-        assert changeset.errors[field] == {"cannot be changed", []}
+        assert changeset.errors[field] == {"can't be changed", []}
       end
     end
 
@@ -105,7 +105,7 @@ defmodule Jumubase.ParticipantTest do
         |> Changeset.change(birthdate: ~D[2001-02-03])
         |> Participant.preserve_identity
 
-      assert changeset.errors[:birthdate] == {"cannot be changed", []}
+      assert changeset.errors[:birthdate] == {"can't be changed", []}
     end
 
     test "adds no error if only non-identity fields are changed" do

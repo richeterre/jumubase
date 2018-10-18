@@ -77,7 +77,7 @@
                   class="form-control"
                   v-bind:id="fieldId('participant', 'birthdate', 'day')"
                   v-bind:name="fieldName('participant', 'birthdate', 'day')"
-                  v-model="birthdateDay">
+                  v-bind:value="birthdateDay">
                   <option value=""><%= gettext("Day") %></option>
                   <option
                     v-for="day in daysInBirthdateMonth"
@@ -90,7 +90,7 @@
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'month')"
-                  v-model="birthdateMonth">
+                  v-bind:value="birthdateMonth">
                   <option value=""><%= gettext("Month") %></option>
                   <option
                     v-for="option in birthdate_month_options"
@@ -103,7 +103,7 @@
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'year')"
-                  v-model="birthdateYear">
+                  v-bind:value="birthdateYear">
                   <option value=""><%= gettext("Year") %></option>
                   <option
                     v-for="year in birthdate_year_options"

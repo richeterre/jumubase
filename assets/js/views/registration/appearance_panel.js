@@ -18,19 +18,19 @@ Vue.component('appearance-panel', {
     'role_terms',
   ],
 
-  data() {
-    const { appearance: { participant } } = this
-    const birthdate = participant.birthdate
-    const parsedBirthdate = birthdate && new Date(birthdate)
-
-    return {
-      birthdateDay: parsedBirthdate ? String(parsedBirthdate.getDate()) : '',
-      birthdateMonth: parsedBirthdate ? String(parsedBirthdate.getMonth() + 1) : '',
-      birthdateYear: parsedBirthdate ? String(parsedBirthdate.getFullYear()) : '',
-    }
-  },
-
   computed: {
+    birthdateDay() {
+      const birthdate = getBirthdate(this.appearance.participant)
+      return birthdate ? String(birthdate.getDate()) : ''
+    },
+    birthdateMonth() {
+      const birthdate = getBirthdate(this.appearance.participant)
+      return birthdate ? String(birthdate.getMonth() + 1) : ''
+    },
+    birthdateYear() {
+      const birthdate = getBirthdate(this.appearance.participant)
+      return birthdate ? String(birthdate.getFullYear()) : ''
+    },
     beginsExpanded() {
       return this.begins_expanded
     },
@@ -77,6 +77,11 @@ Vue.component('appearance-panel', {
     },
   },
 })
+
+function getBirthdate(participant) {
+  const { birthdate } = participant
+  return birthdate && new Date(birthdate)
+}
 
 function getParticipantName(participant, participantTerm, index) {
   const fullName = `${participant.given_name} ${participant.family_name}`

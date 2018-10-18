@@ -1,4 +1,4 @@
-import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues } from 'lodash'
+import { chain, cloneDeep, defaultsDeep, isArray, isObject, map, mapValues } from 'lodash'
 
 import { isDateObject, toDateString } from './date'
 
@@ -12,7 +12,7 @@ import { isDateObject, toDateString } from './date'
  */
 export function flattenChangesetValues(changeset, params = undefined) {
   const normalizedParams = normalizeParams(params || {})
-  const result = defaults(
+  const result = defaultsDeep(
     {},
     changeset.changes,
     normalizedParams,

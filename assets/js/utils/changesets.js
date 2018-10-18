@@ -9,23 +9,23 @@ import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues } from 'l
  * @param {Object} changeset
  */
 export function flattenChangesetValues(changeset, params = undefined) {
-  const flattenedParams = flattenParams(params || {})
+  const normalizedParams = normalizeParams(params || {})
   const result = defaults(
     {},
     changeset.changes,
-    flattenedParams,
+    normalizedParams,
     changeset.data
   )
 
   return mapValues(result, (value, key) => {
     if (isChangeset(value)) {
-      const subParams = flattenedParams[key]
+      const subParams = normalizedParams[key]
       return flattenChangesetValues(value, subParams)
     }
 
     if (isArray(value)) {
       return map(value, (item, index) => {
-        const subParams = flattenedParams[key] || []
+        const subParams = normalizedParams[key] || []
 
         return isChangeset(item)
           ? flattenChangesetValues(item, subParams[index])
@@ -41,18 +41,30 @@ function isChangeset(object) {
   return !!object && !!object.data && !!object.changes
 }
 
-function flattenParams(params) {
+function isDateObject(object) {
+  return !!object && !!object.day && !!object.month && !!object.year
+}
+
+function normalizeParams(params) {
   if (isObject(params) && params['0']) {
     // It's an array represented as an object
     // with the keys '0', '1', etc.
     return chain(params)
       .keys()
       .sort()
-      .map(k => flattenParams(params[k]))
+      .map(k => normalizeParams(params[k]))
       .value()
+  } else if (isDateObject(params)) {
+    return toDateString(params)
   } else if (isObject(params)) {
-    return mapValues(params, flattenParams)
+    return mapValues(params, normalizeParams)
   } else {
     return params
   }
+}
+
+function toDateString({ year, month, day }) {
+  const paddedMonth = month.padStart(2, '0')
+  const paddedDay = day.padStart(2, '0')
+  return `${year}-${paddedMonth}-${paddedDay}`
 }

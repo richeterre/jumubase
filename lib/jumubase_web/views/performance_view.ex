@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
+  import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.AgeGroups
@@ -27,7 +28,7 @@ defmodule JumubaseWeb.PerformanceView do
 
     json = render_html_safe_json(
       %{
-        changeset: changeset,
+        changeset: changeset |> remove_obsolete_associations,
         params: conn.params["performance"],
         contest_category_options: (
           for {name, id, type} <- cc_options do
@@ -55,6 +56,17 @@ defmodule JumubaseWeb.PerformanceView do
       <script src="/js/registration.js"></script>
       <script>registrationForm(<%= raw(json) %>)</script>
     }
+  end
+
+  # Excludes nested association changesets bound for deletion or replacement.
+  defp remove_obsolete_associations(changeset) do
+    changeset
+    |> update_change(:appearances, &exclude_obsolete/1)
+    |> update_change(:pieces, &exclude_obsolete/1)
+  end
+
+  defp exclude_obsolete(changesets) do
+    Enum.filter(changesets, &(&1.action in [:insert, :update]))
   end
 
   defp birthdate_year_options(season) do

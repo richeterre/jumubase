@@ -27,6 +27,7 @@ defmodule Jumubase.Showtime.Appearance do
     |> validate_inclusion(:role, JumuParams.participant_roles)
     |> cast_assoc(:participant, required: true)
     |> preserve_participant_identity
+    |> unique_constraint(:participant, name: :no_multiple_appearances)
   end
 
   def is_soloist(%Appearance{role: role}), do: role == "soloist"

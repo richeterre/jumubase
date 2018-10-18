@@ -58,6 +58,18 @@ defmodule Jumubase.ShowtimeTest do
         pieces: [%Piece{}]
       } = Showtime.get_performance!(c, id)
     end
+
+    test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
+      [cc, _] = c.contest_categories
+      %{id: id} = insert(:performance,
+        contest_category: cc,
+        pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
+      )
+
+      %{pieces: [pc1, pc2]} = Showtime.get_performance!(c, id)
+      assert pc1.title == "Y"
+      assert pc2.title == "X"
+    end
   end
 
   describe "get_performance!/3" do
@@ -93,6 +105,18 @@ defmodule Jumubase.ShowtimeTest do
         appearances: [%Appearance{participant: %Participant{}}],
         pieces: [%Piece{}]
       } = Showtime.get_performance!(c, id, edit_code)
+    end
+
+    test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
+      [cc, _] = c.contest_categories
+      %{id: id, edit_code: edit_code} = insert(:performance,
+        contest_category: cc,
+        pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
+      )
+
+      %{pieces: [pc1, pc2]} = Showtime.get_performance!(c, id, edit_code)
+      assert pc1.title == "Y"
+      assert pc2.title == "X"
     end
   end
 
@@ -140,6 +164,18 @@ defmodule Jumubase.ShowtimeTest do
         appearances: [%Appearance{participant: %Participant{}}],
         pieces: [%Piece{}]
       } = Showtime.lookup_performance!(c, edit_code)
+    end
+
+    test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
+      [cc, _] = c.contest_categories
+      %{edit_code: edit_code} = insert(:performance,
+        contest_category: cc,
+        pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
+      )
+
+      %{pieces: [pc1, pc2]} = Showtime.lookup_performance!(c, edit_code)
+      assert pc1.title == "Y"
+      assert pc2.title == "X"
     end
   end
 
@@ -439,15 +475,35 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "allows updating of pieces", %{contest: c} do
-      %{pieces: [old_pc]} = old_p = insert_performance(c)
+      [cc, _] = c.contest_categories
+      # %{pieces: [old_pc]} = old_p = insert_performance(c)
 
-      attrs = %{
-        pieces: [params_for(:piece, title: "New title") |> Map.put(:id, old_pc.id)]
-      }
+      %{pieces: [old_pc1, old_pc2, old_pc3]} = old_p = insert(:performance,
+        contest_category: cc,
+        pieces: [
+          build(:piece, title: "A"),
+          build(:piece, title: "B"),
+          build(:piece, title: "C"),
+        ]
+      )
 
-      {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
-      %{pieces: [pc]} = performance
-      assert pc.id == old_pc.id
+      attrs = %{pieces: [
+        params_for(:piece, title: "A changed") |> Map.put(:id, old_pc1.id),
+        params_for(:piece, title: "B") |> Map.put(:id, old_pc2.id),
+        params_for(:piece, title: "D"),
+      ]}
+
+      {:ok, %{id: id}} = Showtime.update_performance(c, old_p, attrs)
+      # Force-reload before checking associations
+      performance = Showtime.get_performance!(c, id)
+      %{pieces: [pc1, pc2, pc3]} = performance
+
+      assert pc1.id == old_pc1.id
+      assert pc1.title == "A changed"
+      assert pc2.id == old_pc2.id
+      assert pc2.title == "B"
+      refute pc3.id == old_pc3.id
+      assert pc3.title == "D"
     end
   end
 

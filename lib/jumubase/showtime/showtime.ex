@@ -11,7 +11,7 @@ defmodule Jumubase.Showtime do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.AgeGroupCalculator
-  alias Jumubase.Showtime.{Participant, Performance}
+  alias Jumubase.Showtime.{Participant, Performance, Piece}
 
   def list_performances(%Contest{id: id}) do
     query = from p in Performance,
@@ -139,13 +139,15 @@ defmodule Jumubase.Showtime do
 
   # Limits a performance query to the given contest id and fully preloads it
   defp preloaded_from_contest(query, contest_id) do
+    pieces_query = from pc in Piece, order_by: pc.inserted_at
+
     from p in query,
       join: cc in assoc(p, :contest_category),
       where: cc.contest_id == ^contest_id,
       preload: [
         [contest_category: {cc, :category}],
         [appearances: :participant],
-        :pieces
+        [pieces: ^pieces_query],
       ]
   end
 end

@@ -1,4 +1,4 @@
-import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues } from 'lodash'
+import { chain, cloneDeep, defaults, isArray, isObject, map, mapValues, padStart } from 'lodash'
 
 /**
  * Merges an Ecto changeset's `changes` and `data` values into a
@@ -64,7 +64,7 @@ function normalizeParams(params) {
 }
 
 function toDateString({ year, month, day }) {
-  const paddedMonth = month.padStart(2, '0')
-  const paddedDay = day.padStart(2, '0')
+  const paddedMonth = padStart(month, 2, '0')
+  const paddedDay = padStart(day, 2, '0')
   return `${year}-${paddedMonth}-${paddedDay}`
 }

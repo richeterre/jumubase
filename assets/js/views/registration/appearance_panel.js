@@ -1,4 +1,4 @@
-import { isEmpty, range } from 'lodash'
+import { isEmpty, padStart, range } from 'lodash'
 import Vue from 'vue/dist/vue'
 
 import { formFieldId, formFieldName } from '../../utils/form_fields'
@@ -73,7 +73,7 @@ Vue.component('appearance-panel', {
     },
 
     formatDay(day) {
-      return day < 10 ? `0${day}` : String(day)
+      return padStart(String(day), 2, '0')
     },
   },
 })

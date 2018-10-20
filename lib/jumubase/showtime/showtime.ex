@@ -70,13 +70,11 @@ defmodule Jumubase.Showtime do
   end
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
-    changeset = Performance.changeset(%Performance{}, attrs)
-
-    changeset
-    |> put_edit_code
+    Performance.changeset(%Performance{}, attrs)
     |> stitch_participants
     |> put_age_groups(contest)
-    |> Repo.insert
+    |> put_edit_code
+    |> attempt_insert
   end
 
   def update_performance(%Contest{} = contest, %Performance{} = performance, attrs \\ %{}) do
@@ -136,6 +134,18 @@ defmodule Jumubase.Showtime do
     end
   end
   defp stitch_participant(changeset), do: changeset
+
+  # Attempts to insert a performance changeset into the database.
+  # This also handles retries in case the edit code is already taken.
+  defp attempt_insert(%Changeset{} = changeset) do
+    case Repo.insert(changeset) do
+      {:error, %Changeset{errors: [edit_code: _]}} ->
+        # Retry with new edit code if previous was invalid
+        attempt_insert(changeset |> put_edit_code)
+      other_result ->
+        other_result
+    end
+  end
 
   # Limits a performance query to the given contest id and fully preloads it
   defp preloaded_from_contest(query, contest_id) do

@@ -11,8 +11,8 @@ defmodule Jumubase.Showtime.Performance do
     field :edit_code, :string
 
     belongs_to :contest_category, Foundation.ContestCategory
-    has_many :appearances, Appearance
-    has_many :pieces, Piece
+    has_many :appearances, Appearance, on_replace: :delete
+    has_many :pieces, Piece, on_replace: :delete
 
     timestamps()
   end

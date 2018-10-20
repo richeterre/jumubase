@@ -1,4 +1,6 @@
-import { defaults, isArray, map, mapValues } from 'lodash'
+import { chain, cloneDeep, defaultsDeep, isArray, isObject, map, mapValues } from 'lodash'
+
+import { isDateObject, toDateString } from './date'
 
 /**
  * Merges an Ecto changeset's `changes` and `data` values into a
@@ -8,17 +10,28 @@ import { defaults, isArray, map, mapValues } from 'lodash'
  *
  * @param {Object} changeset
  */
-export function flattenChangesetValues(changeset) {
-  const result = defaults({}, changeset.changes, changeset.data)
+export function flattenChangesetValues(changeset, params = undefined) {
+  const normalizedParams = normalizeParams(params || {})
+  const result = defaultsDeep(
+    {},
+    changeset.changes,
+    normalizedParams,
+    changeset.data
+  )
 
-  return mapValues(result, value => {
+  return mapValues(result, (value, key) => {
     if (isChangeset(value)) {
-      return flattenChangesetValues(value)
+      const subParams = normalizedParams[key]
+      return flattenChangesetValues(value, subParams)
     }
 
     if (isArray(value)) {
-      return map(value, item => {
-        return isChangeset(item) ? flattenChangesetValues(item) : item
+      return map(value, (item, index) => {
+        const subParams = normalizedParams[key] || []
+
+        return isChangeset(item)
+          ? flattenChangesetValues(item, subParams[index])
+          : cloneDeep(item)
       })
     }
 
@@ -28,4 +41,22 @@ export function flattenChangesetValues(changeset) {
 
 function isChangeset(object) {
   return !!object && !!object.data && !!object.changes
+}
+
+function normalizeParams(params) {
+  if (isObject(params) && params['0']) {
+    // It's an array represented as an object
+    // with the keys '0', '1', etc.
+    return chain(params)
+      .keys()
+      .sort()
+      .map(k => normalizeParams(params[k]))
+      .value()
+  } else if (isDateObject(params)) {
+    return toDateString(params)
+  } else if (isObject(params)) {
+    return mapValues(params, normalizeParams)
+  } else {
+    return params
+  }
 }

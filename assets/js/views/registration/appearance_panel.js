@@ -1,4 +1,4 @@
-import { isEmpty, range } from 'lodash'
+import { isEmpty, padStart, range } from 'lodash'
 import Vue from 'vue/dist/vue'
 
 import { formFieldId, formFieldName } from '../../utils/form_fields'
@@ -17,18 +17,6 @@ Vue.component('appearance-panel', {
     'participant_term',
     'role_terms',
   ],
-
-  data() {
-    const { appearance: { participant } } = this
-    const birthdate = participant.birthdate
-    const parsedBirthdate = birthdate && new Date(birthdate)
-
-    return {
-      birthdateDay: parsedBirthdate ? String(parsedBirthdate.getDate()) : '',
-      birthdateMonth: parsedBirthdate ? String(parsedBirthdate.getMonth() + 1) : '',
-      birthdateYear: parsedBirthdate ? String(parsedBirthdate.getFullYear()) : '',
-    }
-  },
 
   computed: {
     beginsExpanded() {
@@ -50,6 +38,10 @@ Vue.component('appearance-panel', {
     },
     daysInBirthdateMonth() {
       return range(1, 32)
+    },
+    preserveParticipantIdentity() {
+      // Prevent identity changes once appearance has been persisted
+      return !!this.appearance.id
     },
   },
 
@@ -73,7 +65,7 @@ Vue.component('appearance-panel', {
     },
 
     formatDay(day) {
-      return day < 10 ? `0${day}` : String(day)
+      return padStart(String(day), 2, '0')
     },
   },
 })

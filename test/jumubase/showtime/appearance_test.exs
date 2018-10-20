@@ -3,8 +3,12 @@ defmodule Jumubase.AppearanceTest do
   alias Jumubase.Showtime.Appearance
 
   describe "changeset" do
-    setup %{} do
-      [valid_attrs: valid_appearance_attrs()]
+    setup do
+      attrs =
+        params_for(:appearance)
+        |> Map.put(:participant, params_for(:participant))
+
+      [valid_attrs: attrs]
     end
 
     test "with valid attributes", %{valid_attrs: valid_attrs} do
@@ -36,6 +40,36 @@ defmodule Jumubase.AppearanceTest do
       attrs = Map.put(valid_attrs, :instrument, "")
       changeset = Appearance.changeset(%Appearance{}, attrs)
       refute changeset.valid?
+    end
+
+    test "prevents name or birthdate changes when updating a nested participant" do
+      %{appearances: [a]} = insert(:contest) |> insert_performance
+
+      changeset = Appearance.changeset(a, %{participant: %{
+        id: a.participant.id,
+        given_name: "X",
+        family_name: "X",
+        birthdate: ~D[2001-02-03],
+      }})
+
+      refute changeset.valid?
+      assert changeset.changes[:participant].errors == [
+        birthdate: {"can't be changed", []},
+        family_name: {"can't be changed", []},
+        given_name: {"can't be changed", []},
+      ]
+    end
+
+    test "allows non-identity changes when updating a nested participant" do
+      %{appearances: [a]} = insert(:contest) |> insert_performance
+
+      changeset = Appearance.changeset(a, %{participant: %{
+        id: a.participant.id,
+        phone: "456",
+        email: "new@example.org",
+      }})
+
+      assert changeset.valid?
     end
   end
 

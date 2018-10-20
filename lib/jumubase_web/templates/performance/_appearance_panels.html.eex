@@ -36,6 +36,9 @@
       class="panel-collapse collapse"
       v-bind:class="{ in: beginsExpanded }">
       <div class="panel-body">
+        <input type="hidden" v-if="appearance.id" v-bind:name="fieldName('id')" v-model="appearance.id" />
+        <input type="hidden" v-if="appearance.participant.id" v-bind:name="fieldName('participant', 'id')" v-model="appearance.participant.id" />
+
         <div class="row">
           <div class="form-group col-md-3">
             <label v-bind:for="fieldId('participant', 'given_name')">
@@ -46,6 +49,7 @@
               class="form-control"
               v-bind:id="fieldId('participant', 'given_name')"
               v-bind:name="fieldName('participant', 'given_name')"
+              v-bind:disabled="preserveParticipantIdentity"
               v-model="appearance.participant.given_name">
             <form-field-error v-bind:errors="errors.participant && errors.participant.given_name" />
           </div>
@@ -59,6 +63,7 @@
               class="form-control"
               v-bind:id="fieldId('participant', 'family_name')"
               v-bind:name="fieldName('participant', 'family_name')"
+              v-bind:disabled="preserveParticipantIdentity"
               v-model="appearance.participant.family_name">
             <form-field-error v-bind:errors="errors.participant && errors.participant.family_name" />
           </div>
@@ -74,7 +79,8 @@
                   class="form-control"
                   v-bind:id="fieldId('participant', 'birthdate', 'day')"
                   v-bind:name="fieldName('participant', 'birthdate', 'day')"
-                  v-model="birthdateDay">
+                  v-bind:disabled="preserveParticipantIdentity"
+                  v-model="appearance.participant.birthdate_day">
                   <option value=""><%= gettext("Day") %></option>
                   <option
                     v-for="day in daysInBirthdateMonth"
@@ -87,7 +93,8 @@
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'month')"
-                  v-model="birthdateMonth">
+                  v-bind:disabled="preserveParticipantIdentity"
+                  v-model="appearance.participant.birthdate_month">
                   <option value=""><%= gettext("Month") %></option>
                   <option
                     v-for="option in birthdate_month_options"
@@ -100,7 +107,8 @@
                 <select
                   class="form-control"
                   v-bind:name="fieldName('participant', 'birthdate', 'year')"
-                  v-model="birthdateYear">
+                  v-bind:disabled="preserveParticipantIdentity"
+                  v-model="appearance.participant.birthdate_year">
                   <option value=""><%= gettext("Year") %></option>
                   <option
                     v-for="year in birthdate_year_options"

@@ -4,12 +4,14 @@ alias Jumubase.Repo
 alias Jumubase.JumuParams
 alias Jumubase.Accounts.User
 alias Jumubase.Foundation.{Category, Host}
+alias Jumubase.Showtime.{Participant}
 
 Repo.transaction fn ->
   # Clear existing data
   Repo.delete_all(Host)
   Repo.delete_all(User)
   Repo.delete_all(Category)
+  Repo.delete_all(Participant)
 
   # Create demo hosts
 
@@ -157,25 +159,30 @@ Repo.transaction fn ->
       max_advancing_age_group: "VII"
     })
 
-    rw_vocal_perf = insert(:performance, contest_category: rw_vocal, age_group: "III")
-    insert(:appearance, performance: rw_vocal_perf, role: "soloist", instrument: "vocals")
-    insert(:appearance, performance: rw_vocal_perf, role: "accompanist", instrument: "piano")
+    insert(:performance, contest_category: rw_vocal, appearances: [
+      build(:appearance, role: "soloist", instrument: "vocals"),
+      build(:appearance, role: "accompanist", instrument: "piano"),
+    ])
 
-    rw_wind_ens_perf = insert(:performance, contest_category: rw_wind_ens, age_group: "III")
-    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "clarinet")
-    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "oboe")
-    insert(:appearance, performance: rw_wind_ens_perf, role: "ensemblist", instrument: "bassoon")
+    insert(:performance, contest_category: rw_wind_ens, appearances: [
+      build(:appearance, role: "ensemblist", instrument: "clarinet"),
+      build(:appearance, role: "ensemblist", instrument: "oboe"),
+      build(:appearance, role: "ensemblist", instrument: "bassoon"),
+    ])
 
-    rw_pop_drums_perf = insert(:performance, contest_category: rw_pop_drums, age_group: "III")
-    insert(:appearance, performance: rw_pop_drums_perf, role: "soloist", instrument: "drumset")
-    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "vocals")
-    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "e-guitar")
-    insert(:appearance, performance: rw_pop_drums_perf, role: "accompanist", instrument: "saxophone")
+    insert(:performance, contest_category: rw_pop_drums, appearances: [
+      build(:appearance, role: "soloist", instrument: "drumset"),
+      build(:appearance, role: "accompanist", instrument: "vocals"),
+      build(:appearance, role: "accompanist", instrument: "e-guitar"),
+      build(:appearance, role: "accompanist", instrument: "saxophone"),
+    ])
 
-    rw_pop_vocal_ens_perf = insert(:performance, contest_category: rw_pop_vocal_ens, age_group: "III")
-    insert_list(2, :appearance, performance: rw_pop_vocal_ens_perf, role: "ensemblist", instrument: "vocals")
-    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "e-guitar")
-    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "e-bass")
-    insert(:appearance, performance: rw_pop_vocal_ens_perf, role: "accompanist", instrument: "drumset")
+    insert(:performance, contest_category: rw_pop_vocal_ens, appearances: [
+      build(:appearance, role: "ensemblist", instrument: "vocals"),
+      build(:appearance, role: "ensemblist", instrument: "vocals"),
+      build(:appearance, role: "accompanist", instrument: "e-guitar"),
+      build(:appearance, role: "accompanist", instrument: "e-bass"),
+      build(:appearance, role: "accompanist", instrument: "drumset"),
+    ])
   end
 end

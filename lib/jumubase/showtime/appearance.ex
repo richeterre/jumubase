@@ -1,6 +1,7 @@
 defmodule Jumubase.Showtime.Appearance do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Showtime.{Appearance, Participant, Performance}
 
@@ -11,7 +12,7 @@ defmodule Jumubase.Showtime.Appearance do
     field :points, :integer
 
     belongs_to :performance, Performance
-    belongs_to :participant, Participant
+    belongs_to :participant, Participant, on_replace: :delete
 
     timestamps()
   end
@@ -23,19 +24,25 @@ defmodule Jumubase.Showtime.Appearance do
     appearance
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> cast_assoc(:participant, required: true)
     |> validate_inclusion(:role, JumuParams.participant_roles)
+    |> cast_assoc(:participant, required: true)
+    |> preserve_participant_identity
+    |> unique_constraint(:participant, name: :no_multiple_appearances)
   end
 
-  def is_soloist(%Appearance{} = a), do: has_role(a, "soloist")
+  def is_soloist(%Appearance{role: role}), do: role == "soloist"
 
-  def is_ensemblist(%Appearance{} = a), do: has_role(a, "ensemblist")
+  def is_ensemblist(%Appearance{role: role}), do: role == "ensemblist"
 
-  def is_accompanist(%Appearance{} = a), do: has_role(a, "accompanist")
+  def is_accompanist(%Appearance{role: role}), do: role == "accompanist"
 
   # Private helpers
 
-  defp has_role(%Appearance{role: role}, given_role) do
-    role == given_role
+  # Preserves the participant's identity when updating a nested participant.
+  defp preserve_participant_identity(%Changeset{
+    changes: %{participant: %{action: :update} = pt_cs}
+  } = changeset) do
+    put_change(changeset, :participant, Participant.preserve_identity(pt_cs))
   end
+  defp preserve_participant_identity(%Changeset{} = changeset), do: changeset
 end

@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
+  import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.AgeGroups
@@ -8,7 +9,18 @@ defmodule JumubaseWeb.PerformanceView do
   Renders JS that powers the registration form.
   """
   def render("scripts.new.html", assigns) do
+    render_registration_script(assigns)
+  end
+
+  def render("scripts.edit.html", assigns) do
+    render_registration_script(assigns)
+  end
+
+  # Private helpers
+
+  defp render_registration_script(assigns) do
     %{
+      conn: conn,
       contest: contest,
       changeset: changeset,
       contest_category_options: cc_options,
@@ -16,7 +28,8 @@ defmodule JumubaseWeb.PerformanceView do
 
     json = render_html_safe_json(
       %{
-        changeset: changeset,
+        changeset: changeset |> remove_obsolete_associations,
+        params: conn.params["performance"],
         contest_category_options: (
           for {name, id, type} <- cc_options do
             %{id: id, name: name, type: type}
@@ -45,7 +58,16 @@ defmodule JumubaseWeb.PerformanceView do
     }
   end
 
-  # Private helpers
+  # Excludes nested association changesets bound for deletion or replacement.
+  defp remove_obsolete_associations(changeset) do
+    changeset
+    |> update_change(:appearances, &exclude_obsolete/1)
+    |> update_change(:pieces, &exclude_obsolete/1)
+  end
+
+  defp exclude_obsolete(changesets) do
+    Enum.filter(changesets, &(&1.action in [:insert, :update]))
+  end
 
   defp birthdate_year_options(season) do
     AgeGroups.birthyear_range(season)

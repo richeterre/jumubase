@@ -109,12 +109,12 @@ msgid "must be before the start date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:46
+#: lib/jumubase/showtime/performance.ex:49
 msgid "The performance must have at least one participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:56
+#: lib/jumubase/showtime/performance.ex:59
 msgid "The performance must have at least one piece"
 msgstr ""
 
@@ -126,4 +126,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase/showtime/appearance.ex:33
 msgid "can only appear once in a performance"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:32
+msgid "must be unique"
 msgstr ""

@@ -102,12 +102,12 @@ msgid "must be before the start date"
 msgstr "muss vor dem Beginn liegen"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:46
+#: lib/jumubase/showtime/performance.ex:49
 msgid "The performance must have at least one participant"
 msgstr "Das Vorspiel muss mindestens einen Teilnehmer haben"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:56
+#: lib/jumubase/showtime/performance.ex:59
 msgid "The performance must have at least one piece"
 msgstr "Das Vorspiel muss mindestens ein Stück haben"
 
@@ -120,3 +120,8 @@ msgstr "kann nicht geändert werden"
 #: lib/jumubase/showtime/appearance.ex:33
 msgid "can only appear once in a performance"
 msgstr "darf nur einen Auftritt pro Vorspiel haben"
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:32
+msgid "must be unique"
+msgstr "muss eindeutig sein"

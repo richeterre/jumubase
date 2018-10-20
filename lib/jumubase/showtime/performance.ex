@@ -28,6 +28,9 @@ defmodule Jumubase.Showtime.Performance do
     |> validate_appearances
     |> cast_assoc(:pieces)
     |> validate_pieces
+    |> unique_constraint(:edit_code,
+      message: dgettext("errors", "must be unique")
+    )
   end
 
   @doc """

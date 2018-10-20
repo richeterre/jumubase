@@ -40,7 +40,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:17
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:176
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:181
 msgid "Email"
 msgstr ""
 
@@ -85,8 +85,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:33
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:132
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:150
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:137
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:155
 #: lib/jumubase_web/templates/performance/_form.html.eex:20
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:101
 msgid "Please choose"
@@ -299,12 +299,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:49
-#: lib/jumubase_web/views/performance_view.ex:93
+#: lib/jumubase_web/views/performance_view.ex:94
 msgid "Accompanist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:71
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:73
 msgid "Birthdate"
 msgstr ""
 
@@ -316,7 +316,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:48
-#: lib/jumubase_web/views/performance_view.ex:94
+#: lib/jumubase_web/views/performance_view.ex:95
 msgid "Ensemblist"
 msgstr ""
 
@@ -332,13 +332,13 @@ msgid "Here you can register for your local \"Jugend musiziert\" contest."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:143
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:148
 msgid "Instrument"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:11
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:58
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:59
 msgid "Last name"
 msgstr ""
 
@@ -349,7 +349,7 @@ msgid "Participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:163
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:168
 msgid "Phone"
 msgstr ""
 
@@ -371,13 +371,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:31
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:125
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:130
 msgid "Role"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:47
-#: lib/jumubase_web/views/performance_view.ex:92
+#: lib/jumubase_web/views/performance_view.ex:93
 msgid "Soloist"
 msgstr ""
 
@@ -425,7 +425,7 @@ msgid "Dates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:81
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:84
 msgid "Day"
 msgstr ""
 
@@ -468,7 +468,7 @@ msgid "List performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:94
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:98
 msgid "Month"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgid "Total duration: %{d}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:107
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:112
 msgid "Year"
 msgstr ""
 

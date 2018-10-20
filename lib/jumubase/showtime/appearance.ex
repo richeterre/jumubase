@@ -1,6 +1,7 @@
 defmodule Jumubase.Showtime.Appearance do
   use Ecto.Schema
   import Ecto.Changeset
+  import Jumubase.Gettext
   alias Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Showtime.{Appearance, Participant, Performance}
@@ -27,7 +28,10 @@ defmodule Jumubase.Showtime.Appearance do
     |> validate_inclusion(:role, JumuParams.participant_roles)
     |> cast_assoc(:participant, required: true)
     |> preserve_participant_identity
-    |> unique_constraint(:participant, name: :no_multiple_appearances)
+    |> unique_constraint(:participant,
+      name: :no_multiple_appearances,
+      message: dgettext("errors", "can only appear once in a performance")
+    )
   end
 
   def is_soloist(%Appearance{role: role}), do: role == "soloist"

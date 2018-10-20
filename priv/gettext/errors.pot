@@ -122,3 +122,8 @@ msgstr ""
 #: lib/jumubase/showtime/participant.ex:39
 msgid "can't be changed"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/appearance.ex:33
+msgid "can only appear once in a performance"
+msgstr ""

@@ -67,11 +67,12 @@ const registrationForm = options => new Vue({
         appearances,
         contest_category_id: cc_id,
         contest_category_options: cc_options,
+        pieces,
       } = this
 
-      if (isEmpty(appearances)) {
-        const cc = lookupContestCategoryOption(cc_options, cc_id)
+      const cc = lookupContestCategoryOption(cc_options, cc_id)
 
+      if (isEmpty(appearances)) {
         switch (cc.type) {
           case "solo":
             this.appearances = [
@@ -84,6 +85,17 @@ const registrationForm = options => new Vue({
               normalizeAppearance({role: 'ensemblist'}),
               normalizeAppearance({role: 'ensemblist'}),
             ]
+        }
+      }
+
+      if (isEmpty(pieces)) {
+        switch (cc.genre) {
+          case "classical":
+            this.pieces = [normalizePiece({})]
+            break
+          case "popular":
+            this.pieces = [normalizePiece({epoch: "e"})]
+            break
         }
       }
     },

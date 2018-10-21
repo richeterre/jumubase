@@ -11,7 +11,7 @@ defmodule JumubaseWeb.PerformanceController do
 
   def new(conn, _params, contest) do
     changeset =
-      %Performance{pieces: [%Piece{}]}
+      %Performance{}
       |> Showtime.change_performance()
 
     conn

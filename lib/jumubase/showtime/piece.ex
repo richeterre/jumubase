@@ -45,9 +45,13 @@ defmodule Jumubase.Showtime.Piece do
     artist = get_field(changeset, :artist)
 
     cond do
-      !composer and !artist or !!composer and !!artist ->
+      !composer and !artist ->
+        changeset
+        |> add_error(:artist, dgettext("errors", "can't be blank"))
+        |> add_error(:composer, dgettext("errors", "can't be blank"))
+      !!composer and !!artist ->
         add_error(changeset, :base,
-          dgettext("errors", "must have a composer or artist")
+          dgettext("errors", "can only have either a composer or an artist")
         )
       !!composer ->
         validate_required(changeset, :composer_born)

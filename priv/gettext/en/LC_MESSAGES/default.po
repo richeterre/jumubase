@@ -88,7 +88,7 @@ msgstr ""
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:137
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:155
 #: lib/jumubase_web/templates/performance/_form.html.eex:20
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:101
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:118
 msgid "Please choose"
 msgstr ""
 
@@ -402,12 +402,12 @@ msgid "Age group"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:65
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:67
 msgid "Born"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:51
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:53
 msgid "Composer"
 msgstr ""
 
@@ -435,12 +435,12 @@ msgid "Deadline"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:78
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:80
 msgid "Died"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:112
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:129
 msgid "Duration"
 msgstr ""
 
@@ -453,7 +453,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:10
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:94
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:111
 msgid "Epoch"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgid "The website for “Jugend musiziert Nord- und Osteuropa” at German scho
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:39
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:40
 msgid "Title"
 msgstr ""
 
@@ -519,12 +519,12 @@ msgid "accompanied by"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:125
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:142
 msgid "min"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:140
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:157
 msgid "sec"
 msgstr ""
 
@@ -617,4 +617,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/page_controller.ex:45
 msgid "We could not find a registration for this edit code."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:96
+msgid "Artist"
 msgstr ""

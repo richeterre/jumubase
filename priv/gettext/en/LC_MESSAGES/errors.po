@@ -11,6 +11,7 @@ msgstr ""
 "Language: en\n"
 
 ## From Ecto.Changeset.cast/4
+#: lib/jumubase/showtime/piece.ex:50 lib/jumubase/showtime/piece.ex:51
 msgid "can't be blank"
 msgstr ""
 
@@ -134,4 +135,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:32
 msgid "must be unique"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/piece.ex:54
+msgid "can only have either a composer or an artist"
 msgstr ""

@@ -7,6 +7,7 @@
   v-bind:errors="(errors.pieces && errors.pieces[index]) || {}"
   v-bind:begins_expanded="expandedPiecePanelIndex === index"
   v-bind:piece_term="vocabulary['piece']"
+  v-bind:genre="genre"
   v-on:remove-piece="removePiece"
   inline-template>
 
@@ -46,45 +47,61 @@
               v-model="piece.title">
             <form-field-error v-bind:errors="errors && errors.title" />
           </div>
-          <div class="form-group col-md-4">
-            <label v-bind:for="fieldId('composer_name')">
-              <%= gettext("Composer") %>
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              v-bind:id="fieldId('composer_name')"
-              v-bind:name="fieldName('composer_name')"
-              v-model="piece.composer_name">
-            <form-field-error v-bind:errors="errors && errors.composer_name" />
-          </div>
-          <div class="col-md-3">
-            <div class="row">
-              <div class="form-group col-xs-6">
-                <label v-bind:for="fieldId('composer_born')">
-                  <%= gettext("Born") %>
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-bind:id="fieldId('composer_born')"
-                  v-bind:name="fieldName('composer_born')"
-                  v-model="piece.composer_born">
-                <form-field-error v-bind:errors="errors && errors.composer_born" />
-              </div>
+          <div v-if="hasComposerFields">
+            <div class="form-group col-md-4">
+              <label v-bind:for="fieldId('composer')">
+                <%= gettext("Composer") %>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                v-bind:id="fieldId('composer')"
+                v-bind:name="fieldName('composer')"
+                v-model="piece.composer">
+              <form-field-error v-bind:errors="errors && errors.composer" />
+            </div>
+            <div class="col-md-3">
+              <div class="row">
+                <div class="form-group col-xs-6">
+                  <label v-bind:for="fieldId('composer_born')">
+                    <%= gettext("Born") %>
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-bind:id="fieldId('composer_born')"
+                    v-bind:name="fieldName('composer_born')"
+                    v-model="piece.composer_born">
+                  <form-field-error v-bind:errors="errors && errors.composer_born" />
+                </div>
 
-              <div class="form-group col-xs-6">
-                <label v-bind:for="fieldId('composer_died')">
-                  (<%= gettext("Died") %>)
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-bind:id="fieldId('composer_died')"
-                  v-bind:name="fieldName('composer_died')"
-                  v-model="piece.composer_died">
-                <form-field-error v-bind:errors="errors && errors.composer_died" />
+                <div class="form-group col-xs-6">
+                  <label v-bind:for="fieldId('composer_died')">
+                    (<%= gettext("Died") %>)
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-bind:id="fieldId('composer_died')"
+                    v-bind:name="fieldName('composer_died')"
+                    v-model="piece.composer_died">
+                  <form-field-error v-bind:errors="errors && errors.composer_died" />
+                </div>
               </div>
+            </div>
+          </div>
+          <div v-if="hasArtistField">
+            <div class="form-group col-md-5">
+              <label v-bind:for="fieldId('artist')">
+                <%= gettext("Artist") %>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                v-bind:id="fieldId('artist')"
+                v-bind:name="fieldName('artist')"
+                v-model="piece.artist">
+              <form-field-error v-bind:errors="errors && errors.artist" />
             </div>
           </div>
         </div>

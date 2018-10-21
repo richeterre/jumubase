@@ -142,7 +142,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
         "pieces" => [
           %{
             "title" => "Title",
-            "composer_name" => "Composer",
+            "composer" => "Composer",
             "composer_born" => "1900",
             "epoch" => "e",
             "minutes" => 1,

@@ -15,22 +15,62 @@ defmodule Jumubase.PieceTest do
       refute changeset.valid?
     end
 
-    test "is invalid without a composer name" do
-      attrs = params_for(:piece, composer_name: nil)
+    test "is invalid without either a composer or artist" do
+      attrs = params_for(:piece, composer: nil, artist: nil)
       changeset = Piece.changeset(%Piece{}, attrs)
       refute changeset.valid?
     end
 
-    test "is invalid without the composer's year of birth" do
-      attrs = params_for(:piece, composer_born: nil)
+    test "is invalid with both a composer and artist" do
+      attrs = params_for(:piece, composer: "X", artist: "Y")
       changeset = Piece.changeset(%Piece{}, attrs)
       refute changeset.valid?
+    end
+
+    test "is valid with a composer and no artist" do
+      attrs = params_for(:piece, composer: "X", artist: nil)
+      changeset = Piece.changeset(%Piece{}, attrs)
+      assert changeset.valid?
+    end
+
+    test "is valid with an artist and no composer" do
+      attrs = params_for(:piece, composer: nil, artist: "X")
+      changeset = Piece.changeset(%Piece{}, attrs)
+      assert changeset.valid?
+    end
+
+    test "is invalid without the composer's year of birth if composer is set" do
+      attrs = params_for(:piece, composer: "X", composer_born: nil)
+      changeset = Piece.changeset(%Piece{}, attrs)
+      refute changeset.valid?
+    end
+
+    test "is valid without the composer's year of birth if artist is set" do
+      attrs = params_for(:piece, composer: nil, artist: "X", composer_born: nil)
+      changeset = Piece.changeset(%Piece{}, attrs)
+      assert changeset.valid?
     end
 
     test "is valid without the composer's year of death" do
       attrs = params_for(:piece, composer_died: nil)
       changeset = Piece.changeset(%Piece{}, attrs)
       assert changeset.valid?
+    end
+
+    test "clears all composer data when adding an artist" do
+      old_piece = %Piece{composer: "X", composer_born: "1", composer_died: "2"}
+      attrs = %{artist: "Y"}
+      changeset = Piece.changeset(old_piece, attrs)
+      assert changeset.changes == %{
+        artist: "Y", composer: nil, composer_born: nil, composer_died: nil
+      }
+    end
+
+    test "clears all artist data when adding a composer" do
+      old_piece = %Piece{artist: "X"}
+      attrs = %{composer: "Y"}
+      changeset = Piece.changeset(old_piece, attrs)
+      assert changeset.changes == %{artist: nil, composer: "Y"}
     end
 
     test "is invalid without an epoch" do

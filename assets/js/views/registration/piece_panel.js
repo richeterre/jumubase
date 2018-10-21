@@ -11,6 +11,7 @@ Vue.component('piece-panel', {
     'errors',
     'begins_expanded',
     'piece_term',
+    'genre',
   ],
 
   computed: {
@@ -23,6 +24,12 @@ Vue.component('piece-panel', {
     },
     panelClass() {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
+    },
+    hasComposerFields() {
+      return this.genre === "classical"
+    },
+    hasArtistField() {
+      return this.genre === "popular"
     },
   },
 
@@ -48,7 +55,7 @@ Vue.component('piece-panel', {
 })
 
 function getPanelTitle(piece, pieceTerm, index) {
-  const { composer_name, title } = piece
+  const { composer, title } = piece
   const displayTitle = title || `${pieceTerm} ${index + 1}`
-  return composer_name ? `${composer_name}: ${displayTitle}` : displayTitle
+  return composer ? `${composer}: ${displayTitle}` : displayTitle
 }

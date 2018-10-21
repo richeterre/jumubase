@@ -82,12 +82,22 @@ defmodule Jumubase.Factory do
   def piece_factory do
     %Piece{
       title: sequence(:piece, &"Piece #{&1}"),
-      composer_name: "John Cage",
+      composer: "John Cage",
       composer_born: "1912",
       composer_died: "1992",
       epoch: "f",
       minutes: 4,
       seconds: 33
+    }
+  end
+
+  def popular_piece_factory do
+    %Piece{
+      title: sequence(:piece, &"Song #{&1}"),
+      artist: "Johnny Cash",
+      epoch: "e",
+      minutes: 3,
+      seconds: 44
     }
   end
 

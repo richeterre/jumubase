@@ -5,7 +5,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   ]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [
-    composer_dates: 1, duration: 1, epoch_tag: 1
+    composer_dates: 1, duration: 1, epoch_tag: 1, person_name: 1
   ]
   alias Jumubase.Showtime.Performance
 

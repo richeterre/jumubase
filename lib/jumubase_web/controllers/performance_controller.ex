@@ -64,7 +64,7 @@ defmodule JumubaseWeb.PerformanceController do
     contest = Foundation.load_contest_categories(contest)
 
     contest_category_options = contest.contest_categories
-    |> Enum.map(&{&1.category.name, &1.id, &1.category.type})
+    |> Enum.map(&{&1.category.name, &1.id, &1.category.type, &1.category.genre})
 
     conn
     |> assign(:contest, contest)

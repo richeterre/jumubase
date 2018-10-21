@@ -49,6 +49,18 @@ const registrationForm = options => new Vue({
     }
   },
 
+  computed: {
+    genre() {
+      const {
+        contest_category_id: cc_id,
+        contest_category_options: cc_options,
+      } = this
+
+      const cc = lookupContestCategoryOption(cc_options, cc_id)
+      return cc && cc.genre
+    },
+  },
+
   methods: {
     contestCategoryChanged() {
       const {
@@ -58,7 +70,7 @@ const registrationForm = options => new Vue({
       } = this
 
       if (isEmpty(appearances)) {
-        const cc = find(cc_options, o => o.id === cc_id)
+        const cc = lookupContestCategoryOption(cc_options, cc_id)
 
         switch (cc.type) {
           case "solo":
@@ -141,9 +153,13 @@ function normalizePiece(piece) {
   return {
     ...piece,
     title: piece.title || '',
-    composer_name: piece.composer_name || '',
+    composer: piece.composer || '',
     epoch: piece.epoch || '',
   }
+}
+
+function lookupContestCategoryOption(cc_options, cc_id) {
+  return find(cc_options, o => o.id === cc_id)
 }
 
 function getBirthdateObject(birthdate) {

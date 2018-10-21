@@ -175,7 +175,7 @@ Repo.transaction fn ->
       build(:appearance, role: "accompanist", instrument: "vocals"),
       build(:appearance, role: "accompanist", instrument: "e-guitar"),
       build(:appearance, role: "accompanist", instrument: "saxophone"),
-    ])
+    ], pieces: build_list(1, :popular_piece))
 
     insert(:performance, contest_category: rw_pop_vocal_ens, appearances: [
       build(:appearance, role: "ensemblist", instrument: "vocals"),
@@ -183,6 +183,6 @@ Repo.transaction fn ->
       build(:appearance, role: "accompanist", instrument: "e-guitar"),
       build(:appearance, role: "accompanist", instrument: "e-bass"),
       build(:appearance, role: "accompanist", instrument: "drumset"),
-    ])
+    ], pieces: build_list(1, :popular_piece))
   end
 end

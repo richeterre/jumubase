@@ -31,8 +31,8 @@ defmodule JumubaseWeb.PerformanceView do
         changeset: changeset |> remove_obsolete_associations,
         params: conn.params["performance"],
         contest_category_options: (
-          for {name, id, type} <- cc_options do
-            %{id: id, name: name, type: type}
+          for {name, id, type, genre} <- cc_options do
+            %{id: id, name: name, type: type, genre: genre}
           end
         ),
         birthdate_year_options: birthdate_year_options(contest.season),

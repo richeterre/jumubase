@@ -19,17 +19,16 @@ Vue.component('piece-panel', {
       return this.begins_expanded
     },
     panelTitle() {
-      const { piece, index, piece_term } = this
-      return getPanelTitle(piece, piece_term, index)
+      return getPanelTitle(this)
     },
     panelClass() {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
     },
     hasComposerFields() {
-      return this.genre === "classical"
+      return isClassical(this.genre)
     },
     hasArtistField() {
-      return this.genre === "popular"
+      return isPopular(this.genre)
     },
   },
 
@@ -54,8 +53,24 @@ Vue.component('piece-panel', {
   },
 })
 
-function getPanelTitle(piece, pieceTerm, index) {
-  const { composer, title } = piece
-  const displayTitle = title || `${pieceTerm} ${index + 1}`
-  return composer ? `${composer}: ${displayTitle}` : displayTitle
+function getPanelTitle(props) {
+  const { genre, index, piece: { artist, composer, title }, piece_term } = props
+
+  const displayTitle = title || `${piece_term} ${index + 1}`
+
+  if (isClassical(genre) && composer) {
+    return `${composer}: ${displayTitle}`
+  } else if (isPopular(genre) && artist) {
+    return `${displayTitle} (${artist})`
+  } else {
+    return displayTitle
+  }
+}
+
+function isClassical(genre) {
+  return genre === "classical"
+}
+
+function isPopular(genre) {
+  return genre === "popular"
 }

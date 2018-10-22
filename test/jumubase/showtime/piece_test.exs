@@ -1,5 +1,6 @@
 defmodule Jumubase.PieceTest do
   use Jumubase.DataCase
+  import Ecto.Changeset
   alias Jumubase.Showtime.Piece
 
   describe "changeset" do
@@ -113,6 +114,36 @@ defmodule Jumubase.PieceTest do
         changeset = Piece.changeset(%Piece{}, attrs)
         refute changeset.valid?
       end
+    end
+
+    test "removes whitespace around the title" do
+      params = params_for(:piece, title: " Air  ")
+      changeset = Piece.changeset(%Piece{}, params)
+      assert get_change(changeset, :title) == "Air"
+    end
+
+    test "removes whitespace around the composer" do
+      params = params_for(:piece, composer: " Sylvius Leopold Weiss  ")
+      changeset = Piece.changeset(%Piece{}, params)
+      assert get_change(changeset, :composer) == "Sylvius Leopold Weiss"
+    end
+
+    test "removes whitespace around the composer's year of birth" do
+      params = params_for(:piece, composer_born: " 1900  ")
+      changeset = Piece.changeset(%Piece{}, params)
+      assert get_change(changeset, :composer_born) == "1900"
+    end
+
+    test "removes whitespace around the composer's year of death" do
+      params = params_for(:piece, composer_died: " 2000  ")
+      changeset = Piece.changeset(%Piece{}, params)
+      assert get_change(changeset, :composer_died) == "2000"
+    end
+
+    test "removes whitespace around the artist" do
+      params = params_for(:piece, artist: " White Stripes  ")
+      changeset = Piece.changeset(%Piece{}, params)
+      assert get_change(changeset, :artist) == "White Stripes"
     end
   end
 end

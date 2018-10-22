@@ -56,14 +56,16 @@ Vue.component('piece-panel', {
 function getPanelTitle(props) {
   const { genre, index, piece: { artist, composer, title }, piece_term } = props
 
-  const displayTitle = title || `${piece_term} ${index + 1}`
+  const titleText = title.trim() || `${piece_term} ${index + 1}`
+  const composerText = composer.trim()
+  const artistText = artist.trim()
 
-  if (isClassical(genre) && composer) {
-    return `${composer}: ${displayTitle}`
-  } else if (isPopular(genre) && artist) {
-    return `${displayTitle} (${artist})`
+  if (isClassical(genre) && composerText) {
+    return `${composerText}: ${titleText}`
+  } else if (isPopular(genre) && artistText) {
+    return `${titleText} (${artistText})`
   } else {
-    return displayTitle
+    return titleText
   }
 }
 

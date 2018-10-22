@@ -166,6 +166,7 @@ function normalizePiece(piece) {
     ...piece,
     title: piece.title || '',
     composer: piece.composer || '',
+    artist: piece.artist || '',
     epoch: piece.epoch || '',
   }
 }

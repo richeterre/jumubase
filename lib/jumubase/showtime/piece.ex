@@ -34,7 +34,7 @@ defmodule Jumubase.Showtime.Piece do
     |> validate_inclusion(:epoch, JumuParams.epochs)
     |> validate_inclusion(:minutes, 0..59)
     |> validate_inclusion(:seconds, 0..59)
-    |> clean_up_person_fields
+    |> clean_up_fields
   end
 
   # Private helpers
@@ -58,6 +58,19 @@ defmodule Jumubase.Showtime.Piece do
       true ->
         changeset
     end
+  end
+
+  defp clean_up_fields(%Changeset{} = changeset) do
+    changeset
+    |> trim_fields([:title, :composer, :composer_born, :composer_died, :artist])
+    |> clean_up_person_fields
+  end
+
+  # Removes whitespace around changes in the given fields.
+  defp trim_fields(%Changeset{} = changeset, fields) do
+    Enum.reduce(fields, changeset, fn field, cs ->
+      update_change(cs, field, &String.trim/1)
+    end)
   end
 
   # Removes composer data when setting artist, and vice versa.

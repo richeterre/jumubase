@@ -17,8 +17,6 @@ Jumubase also exposes some of its public data via a JSON API that serves mobile 
 
 ## Setup instructions
 
-## Setup instructions
-
 0. Clone this codebase
 0. Install PostgreSQL, e.g. through the provided `docker-compose.yml` file or [Postgres.app][postgres-app]
 0. Install dependencies with `mix deps.get`
@@ -30,6 +28,15 @@ Then, point your browser to [`localhost:4000`][localhost].
 
 [postgres-app]: http://postgresapp.com
 [localhost]: http://localhost:4000
+
+## Release instructions
+
+Ensure the following environment variables are made available to the app:
+
+* `DATABASE_URL` – Set automatically e.g. on Heroku when provisioning a database.
+* `POOL_SIZE` – Depends on how many database connections are allowed by the plan. Leave some room for occasional one-off `mix` tasks such as migrations.
+* `SECRET_KEY_BASE` – Can be generated using `mix phx.gen.secret`.
+* `PHAUXTH_TOKEN_SALT` – Can be generated in IEx using `Phauxth.Config.gen_token_salt`.
 
 ## Documentation
 

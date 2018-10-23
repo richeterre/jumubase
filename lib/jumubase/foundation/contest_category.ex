@@ -9,6 +9,7 @@ defmodule Jumubase.Foundation.ContestCategory do
     field :max_age_group, :string
     field :min_advancing_age_group, :string
     field :max_advancing_age_group, :string
+
     belongs_to :contest, Contest
     belongs_to :category, Category
 

@@ -1,6 +1,6 @@
 defmodule Jumubase.Factory do
   use ExMachina.Ecto, repo: Jumubase.Repo
-  import Jumubase.Showtime.Performance, only: [to_edit_code: 1]
+  import Jumubase.Showtime.Performance, only: [to_edit_code: 2]
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
@@ -72,7 +72,6 @@ defmodule Jumubase.Factory do
 
   def performance_factory do
     %Performance{
-      edit_code: sequence(:edit_code, &to_edit_code/1),
       appearances: build_list(1, :appearance),
       pieces: build_list(1, :piece),
       age_group: "III",
@@ -129,9 +128,32 @@ defmodule Jumubase.Factory do
     )
   end
 
+  @doc """
+  Inserts a performance into the given contest.
+  """
   def insert_performance(%Contest{} = contest) do
     insert(:performance,
-      contest_category: build(:contest_category, contest: contest)
+      contest_category: build(:contest_category, contest: contest),
+      edit_code: generate_edit_code(contest.round)
     )
+  end
+
+  @doc """
+  Inserts a performance into the given contest category.
+  """
+  def insert_performance(%ContestCategory{contest: c} = cc, attrs \\ []) do
+    attrs =
+      attrs
+      |> Keyword.put(:contest_category, cc)
+      |> Keyword.put_new(:edit_code, generate_edit_code(c.round))
+
+    insert(:performance, attrs)
+  end
+
+  # Private helpers
+
+  # Generates a unique edit code with the given round.
+  defp generate_edit_code(round) do
+    sequence(:edit_code, &to_edit_code(&1, round))
   end
 end

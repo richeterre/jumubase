@@ -132,25 +132,25 @@ Repo.transaction fn ->
       max_advancing_age_group: "VII"
     })
 
-    insert(:performance, contest_category: rw_vocal, appearances: [
+    insert_performance(rw_vocal, appearances: [
       build(:appearance, role: "soloist", instrument: "vocals"),
       build(:appearance, role: "accompanist", instrument: "piano"),
     ])
 
-    insert(:performance, contest_category: rw_wind_ens, appearances: [
+    insert_performance(rw_wind_ens, appearances: [
       build(:appearance, role: "ensemblist", instrument: "clarinet"),
       build(:appearance, role: "ensemblist", instrument: "oboe"),
       build(:appearance, role: "ensemblist", instrument: "bassoon"),
     ])
 
-    insert(:performance, contest_category: rw_pop_drums, appearances: [
+    insert_performance(rw_pop_drums, appearances: [
       build(:appearance, role: "soloist", instrument: "drumset"),
       build(:appearance, role: "accompanist", instrument: "vocals"),
       build(:appearance, role: "accompanist", instrument: "e-guitar"),
       build(:appearance, role: "accompanist", instrument: "saxophone"),
     ], pieces: build_list(1, :popular_piece))
 
-    insert(:performance, contest_category: rw_pop_vocal_ens, appearances: [
+    insert_performance(rw_pop_vocal_ens, appearances: [
       build(:appearance, role: "ensemblist", instrument: "vocals"),
       build(:appearance, role: "ensemblist", instrument: "vocals"),
       build(:appearance, role: "accompanist", instrument: "e-guitar"),

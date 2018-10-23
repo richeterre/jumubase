@@ -35,9 +35,17 @@ defmodule Jumubase.PerformanceTest do
     end
   end
 
-  describe "to_edit_code/1" do
-    test "generates a zero-padded edit code string" do
-      assert Performance.to_edit_code(123) == "000123"
+  describe "to_edit_code/2" do
+    test "generates an edit code string for a Kimu performance" do
+      assert Performance.to_edit_code(123, 0) == "000123"
+    end
+
+    test "generates an edit code string for an RW performance" do
+      assert Performance.to_edit_code(123, 1) == "100123"
+    end
+
+    test "generates an edit code string for an LW performance" do
+      assert Performance.to_edit_code(123, 2) == "200123"
     end
   end
 

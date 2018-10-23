@@ -73,8 +73,7 @@ defmodule Jumubase.Showtime do
     Performance.changeset(%Performance{}, attrs)
     |> stitch_participants
     |> put_age_groups(contest)
-    |> put_edit_code
-    |> attempt_insert
+    |> attempt_insert(contest.round)
   end
 
   def update_performance(%Contest{} = contest, %Performance{} = performance, attrs \\ %{}) do
@@ -93,11 +92,11 @@ defmodule Jumubase.Showtime do
 
   # Private helpers
 
-  defp put_edit_code(%Changeset{valid?: true} = changeset) do
-    edit_code = :rand.uniform(999999) |> Performance.to_edit_code
+  defp put_edit_code(%Changeset{valid?: true} = changeset, round) do
+    edit_code = :rand.uniform(99999) |> Performance.to_edit_code(round)
     put_change(changeset, :edit_code, edit_code)
   end
-  defp put_edit_code(changeset), do: changeset
+  defp put_edit_code(changeset, _round), do: changeset
 
   defp put_age_groups(%Changeset{valid?: true} = changeset, contest) do
     cc_id = get_field(changeset, :contest_category_id)
@@ -137,11 +136,13 @@ defmodule Jumubase.Showtime do
 
   # Attempts to insert a performance changeset into the database.
   # This also handles retries in case the edit code is already taken.
-  defp attempt_insert(%Changeset{} = changeset) do
+  defp attempt_insert(%Changeset{} = changeset, round) do
+    changeset = changeset |> put_edit_code(round)
+
     case Repo.insert(changeset) do
       {:error, %Changeset{errors: [edit_code: _]}} ->
-        # Retry with new edit code if previous was invalid
-        attempt_insert(changeset |> put_edit_code)
+        # Retry if edit code was invalid
+        attempt_insert(changeset, round)
       other_result ->
         other_result
     end

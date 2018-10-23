@@ -77,9 +77,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
   describe "updating a registration" do
     setup %{contest: c} do
       [cc1, _cc2] = c.contest_categories
-      performance = insert(:performance, contest_category: cc1)
-
-      [performance: performance]
+      [performance: insert_performance(cc1)]
     end
 
     test "succeeds with a valid edit code", %{conn: conn, contest: c, performance: p} do

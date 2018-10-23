@@ -19,7 +19,7 @@ defmodule JumubaseWeb.PageControllerTest do
     c = insert(:contest)
     cc = insert_contest_category(c)
     edit_code = "123456"
-    p = insert(:performance, contest_category: cc, edit_code: edit_code)
+    p = insert_performance(cc, edit_code: edit_code)
 
     conn = post(conn, "/edit-registration", search: %{edit_code: edit_code})
     assert redirected_to(conn) == performance_path(conn, :edit, c, p, edit_code: edit_code)

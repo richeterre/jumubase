@@ -36,8 +36,10 @@ defmodule Jumubase.Showtime.Performance do
   @doc """
   Generates an edit code string of suitable length from a number.
   """
-  def to_edit_code(number) when is_integer(number) do
-    number |> Integer.to_string |> String.pad_leading(6, "0")
+  def to_edit_code(number, round) do
+    round_part = round |> Integer.to_string
+    number_part = number |> Integer.to_string |> String.pad_leading(5, "0")
+    "#{round_part}#{number_part}"
   end
 
   # Private helpers

@@ -30,7 +30,7 @@ defmodule JumubaseWeb.Authorize do
   # See the session controller for an example.
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    error(conn, gettext("You need to log out to view this page"), page_path(conn, :home))
+    error(conn, dgettext("auth", "You need to log out to view this page."), page_path(conn, :home))
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.
@@ -43,7 +43,7 @@ defmodule JumubaseWeb.Authorize do
     _opts
   ) do
     (id == to_string(current_user.id) and conn) ||
-      error(conn, gettext("You are not authorized to view this page"), page_path(conn, :home))
+      unauthorized(conn, page_path(conn, :home))
   end
 
   def role_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
@@ -52,7 +52,7 @@ defmodule JumubaseWeb.Authorize do
   def role_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],
       do: conn,
-      else: error(conn, gettext("You are not authorized to view this page"), internal_page_path(conn, :home))
+      else: unauthorized(conn, internal_page_path(conn, :home))
   end
 
   def success(conn, message, path) do
@@ -72,12 +72,18 @@ defmodule JumubaseWeb.Authorize do
     path = get_session(conn, :request_path) || path
 
     delete_session(conn, :request_path)
-    |> success(gettext("You have been logged in"), get_session(conn, :request_path) || path)
+    |> success(dgettext("auth", "You are now logged in."), get_session(conn, :request_path) || path)
   end
 
   def need_login(conn) do
     conn
     |> put_session(:request_path, current_path(conn))
-    |> error(gettext("You need to log in to view this page"), session_path(conn, :new))
+    |> error(dgettext("auth", "You need to log in to view this page."), session_path(conn, :new))
+  end
+
+  # Private helpers
+
+  def unauthorized(conn, path) do
+    error(conn, dgettext("auth", "You are not authorized to view this page."), path)
   end
 end

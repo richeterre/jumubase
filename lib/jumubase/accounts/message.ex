@@ -15,15 +15,15 @@ defmodule Jumubase.Accounts.Message do
     prep_mail(address)
     |> subject("Reset your password")
     |> text_body(
-        gettext("You requested a password reset, but no user is associated with the email you provided.")
-      )
+      dgettext("auth", "You requested a password reset, but no user was found for the email you provided.")
+    )
     |> Mailer.deliver_now()
   end
   def reset_request(address, key) do
     url = password_reset_url(JumubaseWeb.Endpoint, :edit, key: key)
     prep_mail(address)
-    |> subject(gettext("Reset your password"))
-    |> text_body(gettext("Reset your password at %{url}", url: url))
+    |> subject(dgettext("auth", "Reset your password"))
+    |> text_body(dgettext("auth", "Reset your password at %{url}", url: url))
     |> Mailer.deliver_now()
   end
 
@@ -32,8 +32,8 @@ defmodule Jumubase.Accounts.Message do
   """
   def reset_success(address) do
     prep_mail(address)
-    |> subject(gettext("Password reset"))
-    |> text_body(gettext("Your password has been reset."))
+    |> subject(dgettext("auth", "Password reset"))
+    |> text_body(dgettext("auth", "Your password has been reset."))
     |> Mailer.deliver_now()
   end
 

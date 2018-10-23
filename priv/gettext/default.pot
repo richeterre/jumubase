@@ -39,6 +39,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:17
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
+#: lib/jumubase_web/templates/password_reset/new.html.eex:7
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:181
 #: lib/jumubase_web/templates/session/new.html.eex:12
 msgid "Email"
@@ -121,52 +122,6 @@ msgid "Users"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:26
-msgid "Reset your password at %{url}"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:35
-msgid "Password reset"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:25
-msgid "Reset your password"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:18
-msgid "You requested a password reset, but no user is associated with the email you provided."
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:36
-msgid "Your password has been reset."
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:46
-#: lib/jumubase_web/controllers/authorize.ex:55
-msgid "You are not authorized to view this page"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:75
-msgid "You have been logged in"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:81
-msgid "You need to log in to view this page"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:33
-msgid "You need to log out to view this page"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:35
 msgid "Add Host"
 msgstr ""
@@ -179,11 +134,6 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:17
 msgid "Cancel (keep old password)"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:16
-msgid "Check your inbox for instructions on how to reset your password"
 msgstr ""
 
 #, elixir-format
@@ -232,11 +182,6 @@ msgid "Hosts"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:52
-msgid "Invalid input"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:55
 msgid "Local Organizer"
 msgstr ""
@@ -249,11 +194,6 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:5
 msgid "New password"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:19
-msgid "Please enter an email address"
 msgstr ""
 
 #, elixir-format
@@ -280,16 +220,6 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:25
 msgid "Time zone"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/session_controller.ex:36
-msgid "You have been logged out"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:43
-msgid "Your password has been reset"
 msgstr ""
 
 #, elixir-format

@@ -1,0 +1,77 @@
+## This file is a PO Template file.
+##
+## `msgid`s here are often extracted from source code.
+## Add new translations manually only if they're dynamic
+## translations that can't be statically extracted.
+##
+## Run `mix gettext.extract` to bring this file up to
+## date. Leave `msgstr`s empty as changing them here as no
+## effect: edit them in PO (`.po`) files instead.
+msgid ""
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:25
+msgid "Reset your password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:26
+msgid "Reset your password at %{url}"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/user_messages.ex:6
+msgid "Unfortunately, the email or password was incorrect."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/authorize.ex:87
+msgid "You are not authorized to view this page."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/authorize.ex:75
+msgid "You are now logged in."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/session_controller.ex:36
+msgid "You are now logged out."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/authorize.ex:81
+msgid "You need to log in to view this page."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:18
+msgid "You requested a password reset, but no user was found for the email you provided."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:36
+#: lib/jumubase_web/controllers/password_reset_controller.ex:43
+msgid "Your password has been reset."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/authorize.ex:33
+msgid "You need to log out to view this page."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/password_reset_controller.ex:16
+msgid "Check your inbox for instructions on how to reset your password"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/password_reset_controller.ex:19
+msgid "Please enter an email address"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:35
+msgid "Password reset"
+msgstr ""

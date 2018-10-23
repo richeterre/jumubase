@@ -23,7 +23,8 @@ config :jumubase, JumubaseWeb.Endpoint,
 
 # Configure Phauxth authentication
 config :phauxth,
-  endpoint: JumubaseWeb.Endpoint
+  endpoint: JumubaseWeb.Endpoint,
+  user_messages: Jumubase.Accounts.UserMessages
 
 # Configure mailer
 config :jumubase, Jumubase.Mailer,

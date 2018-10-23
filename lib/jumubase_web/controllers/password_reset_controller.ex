@@ -13,10 +13,10 @@ defmodule JumubaseWeb.PasswordResetController do
       String.match?(email, ~r/@/) ->
         key = Accounts.create_password_reset(JumubaseWeb.Endpoint, %{"email" => email})
         Accounts.Message.reset_request(email, key)
-        message = gettext("Check your inbox for instructions on how to reset your password")
+        message = dgettext("auth", "Check your inbox for instructions on how to reset your password")
         success(conn, message, page_path(conn, :home))
       true ->
-        error(conn, gettext("Please enter an email address"), password_reset_path(conn, :new))
+        error(conn, dgettext("auth", "Please enter an email address"), password_reset_path(conn, :new))
     end
   end
 
@@ -40,7 +40,7 @@ defmodule JumubaseWeb.PasswordResetController do
 
   defp update_password({:ok, user}, conn, _params) do
     Accounts.Message.reset_success(user.email)
-    message = gettext("Your password has been reset")
+    message = dgettext("auth", "Your password has been reset.")
 
     delete_session(conn, :phauxth_session_id)
     |> success(message, session_path(conn, :new))
@@ -49,7 +49,7 @@ defmodule JumubaseWeb.PasswordResetController do
     message = with p <- changeset.errors[:password], do: elem(p, 0)
 
     conn
-    |> put_flash(:error, message || gettext("Invalid input"))
+    |> put_flash(:error, message)
     |> render("edit.html", key: params["key"])
   end
 end

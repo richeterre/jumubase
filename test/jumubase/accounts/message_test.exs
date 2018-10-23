@@ -12,7 +12,7 @@ defmodule Jumubase.Accounts.MessageTest do
 
   test "sends no user found message for password reset attempt" do
     sent_email = Message.reset_request("gladys@example.com", nil)
-    assert sent_email.text_body =~ "but no user is associated with the email you provided"
+    assert sent_email.text_body =~ "but no user was found for the email you provided"
   end
 
   test "sends reset password request email", %{email: email, key: key} do

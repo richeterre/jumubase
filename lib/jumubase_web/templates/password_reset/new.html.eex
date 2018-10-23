@@ -4,8 +4,8 @@
   <div class="col-md-6">
     <%= form_for @conn, password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
       <div class="form-group">
-        <%= label f, :email, class: "control-label" %>
-        <%= email_input f, :email, class: "form-control", autofocus: true %>
+        <%= label f, :email, gettext("Email"), class: "control-label" %>
+        <%= email_input f, :email, autofocus: true, class: "form-control" %>
         <%= error_tag f, :email %>
       </div>
 

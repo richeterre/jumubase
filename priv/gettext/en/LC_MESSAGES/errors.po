@@ -98,11 +98,6 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/user.ex:71
-msgid "The password is too short"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:45
 msgid "can't be before the start date"
 msgstr ""
@@ -113,12 +108,12 @@ msgid "must be before the start date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:49
+#: lib/jumubase/showtime/performance.ex:51
 msgid "The performance must have at least one participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:59
+#: lib/jumubase/showtime/performance.ex:61
 msgid "The performance must have at least one piece"
 msgstr ""
 
@@ -140,4 +135,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase/showtime/piece.ex:54
 msgid "can only have either a composer or an artist"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/user.ex:71
+msgid "The password is too short."
 msgstr ""

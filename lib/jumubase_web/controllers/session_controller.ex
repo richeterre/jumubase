@@ -33,7 +33,7 @@ defmodule JumubaseWeb.SessionController do
 
     delete_session(conn, :phauxth_session_id)
     |> Phauxth.Remember.delete_rem_cookie()
-    |> success(gettext("You have been logged out"), page_path(conn, :home))
+    |> success(dgettext("auth", "You are now logged out."), page_path(conn, :home))
   end
 
   # This function adds a remember_me cookie to the conn.

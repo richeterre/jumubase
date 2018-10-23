@@ -68,5 +68,5 @@ defmodule Jumubase.Accounts.User do
   defp strong_password?(password) when byte_size(password) > 7 do
     {:ok, password}
   end
-  defp strong_password?(_), do: {:error, dgettext("errors", "The password is too short")}
+  defp strong_password?(_), do: {:error, dgettext("errors", "The password is too short.")}
 end

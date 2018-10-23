@@ -85,12 +85,17 @@ const registrationForm = options => new Vue({
               normalizeAppearance({role: 'ensemblist'}),
               normalizeAppearance({role: 'ensemblist'}),
             ]
+            break
+          case "solo_or_ensemble":
+            this.appearances = [normalizeAppearance({})]
+            break
         }
       }
 
       if (isEmpty(pieces)) {
         switch (cc.genre) {
           case "classical":
+          case "kimu":
             this.pieces = [normalizePiece({})]
             break
           case "popular":

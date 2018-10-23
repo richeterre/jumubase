@@ -16,7 +16,7 @@ defmodule Jumubase.JumuParams do
   Returns the available competition rounds.
   """
   def rounds do
-    1..2
+    0..2 # Round 0 is for Kimu contests
   end
 
   @doc """
@@ -39,14 +39,14 @@ defmodule Jumubase.JumuParams do
   Returns all possible category genres.
   """
   def genres do
-    ["classical", "popular"]
+    ["classical", "popular", "kimu"]
   end
 
   @doc """
   Returns all possible category types.
   """
   def category_types do
-    ["solo", "ensemble"]
+    ["solo", "ensemble", "solo_or_ensemble"]
   end
 
   @doc """

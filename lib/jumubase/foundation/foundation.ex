@@ -24,7 +24,7 @@ defmodule Jumubase.Foundation do
   """
   def list_open_contests do
     query = from c in Contest,
-      where: c.round == 1,
+      where: c.round < 2,
       where: c.deadline >= ^Timex.today, # uses UTC
       preload: :host
 

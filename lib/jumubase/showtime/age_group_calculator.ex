@@ -32,7 +32,7 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
   end
 
   # Assigns accompanist age groups either individually or joint, depending on genre.
-  defp put_accompanist_age_groups(changesets, season, "classical") do
+  defp put_accompanist_age_groups(changesets, season, genre) when genre in ["classical", "kimu"] do
     put_individual_age_groups(changesets, "accompanist", season)
   end
   defp put_accompanist_age_groups(changesets, season, "popular") do

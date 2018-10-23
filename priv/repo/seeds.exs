@@ -66,14 +66,17 @@ Repo.transaction fn ->
   season = 56
   year = JumuParams.year(season)
 
-  contest1 = insert(:contest, host: host1)
-  contest2 = insert(:contest, host: host2)
-  contest3 = insert(:contest,
+  kimu1 = insert(:contest, round: 0, host: host1)
+  kimu2 = insert(:contest, round: 0, host: host2)
+  rw1 = insert(:contest, round: 1, host: host1)
+  rw2 = insert(:contest, round: 1, host: host2)
+  rw3 = insert(:contest,
+    round: 1,
     start_date: %{day: 1, month: 1, year: year},
     end_date: %{day: 1, month: 1, year: year},
     host: host3
   )
-  contest4 = insert(:contest, %{
+  lw = insert(:contest, %{
     host: host1,
     round: 2,
     start_date: %{day: 15, month: 3, year: year},
@@ -83,49 +86,19 @@ Repo.transaction fn ->
 
   # Create demo categories
 
+  kimu = insert(:category, name: "\"Kinder musizieren\"", short_name: "Kimu", genre: "kimu", type: "solo_or_ensemble")
   vocal = insert(:category, name: "Gesang solo", short_name: "Gesang", genre: "classical", type: "solo")
   wind_ens = insert(:category, name: "Bläser-Ensemble", short_name: "BläserEns", genre: "classical", type: "ensemble")
   pop_drums = insert(:category, name: "Drumset (Pop) solo", short_name: "PopDrums", genre: "popular", type: "solo")
   pop_vocal_ens = insert(:category, name: "Vokal-Ensemble (Pop)", short_name: "PopVokalEns", genre: "popular", type: "ensemble")
 
-  # Create demo contest categories
-
-  _lw_vocal = insert(:contest_category, %{
-    contest: contest4,
-    category: vocal,
-    min_age_group: "II",
-    max_age_group: "VII",
-    min_advancing_age_group: "III",
-    max_advancing_age_group: "VII"
-  })
-  _lw_wind_ens = insert(:contest_category, %{
-    contest: contest4,
-    category: wind_ens,
-    min_age_group: "II",
-    max_age_group: "VI",
-    min_advancing_age_group: "III",
-    max_advancing_age_group: "VI"
-  })
-  _lw_pop_drums = insert(:contest_category, %{
-    contest: contest4,
-    category: pop_drums,
-    min_age_group: "II",
-    max_age_group: "VI",
-    min_advancing_age_group: "III",
-    max_advancing_age_group: "VI"
-  })
-  _lw_pop_vocal_ens = insert(:contest_category, %{
-    contest: contest4,
-    category: pop_vocal_ens,
-    min_age_group: "III",
-    max_age_group: "VII",
-    min_advancing_age_group: nil,
-    max_advancing_age_group: nil
-  })
-
   # Add contest categories and demo performances to contests
 
-  for rw_contest <- [contest1, contest2, contest3] do
+  for kimu_contest <- [kimu1, kimu2] do
+    insert(:contest_category, contest: kimu_contest, category: kimu)
+  end
+
+  for rw_contest <- [rw1, rw2, rw3] do
     rw_vocal = insert(:contest_category, %{
       contest: rw_contest,
       category: vocal,
@@ -185,4 +158,37 @@ Repo.transaction fn ->
       build(:appearance, role: "accompanist", instrument: "drumset"),
     ], pieces: build_list(1, :popular_piece))
   end
+
+  insert(:contest_category, %{
+    contest: lw,
+    category: vocal,
+    min_age_group: "II",
+    max_age_group: "VII",
+    min_advancing_age_group: "III",
+    max_advancing_age_group: "VII"
+  })
+  insert(:contest_category, %{
+    contest: lw,
+    category: wind_ens,
+    min_age_group: "II",
+    max_age_group: "VI",
+    min_advancing_age_group: "III",
+    max_advancing_age_group: "VI"
+  })
+  insert(:contest_category, %{
+    contest: lw,
+    category: pop_drums,
+    min_age_group: "II",
+    max_age_group: "VI",
+    min_advancing_age_group: "III",
+    max_advancing_age_group: "VI"
+  })
+  insert(:contest_category, %{
+    contest: lw,
+    category: pop_vocal_ens,
+    min_age_group: "III",
+    max_age_group: "VII",
+    min_advancing_age_group: nil,
+    max_advancing_age_group: nil
+  })
 end

@@ -15,8 +15,8 @@ defmodule JumubaseWeb.Internal.ContestView do
 
   def name_with_flag(%Contest{} = contest) do
     flag_code = case contest.round do
-      1 -> contest.host.country_code
       2 -> "EU"
+      _ -> contest.host.country_code
     end
     "#{emoji_flag(flag_code)} #{name(contest)}"
   end
@@ -45,6 +45,7 @@ defmodule JumubaseWeb.Internal.ContestView do
 
   defp short_round_name(round) do
     case round do
+      0 -> "Kimu"
       1 -> "RW"
       2 -> "LW"
       3 -> "BW"

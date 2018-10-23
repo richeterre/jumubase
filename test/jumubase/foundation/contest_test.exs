@@ -3,19 +3,19 @@ defmodule Jumubase.ContestTest do
   alias Jumubase.Foundation.Contest
 
   describe "changeset" do
-    test "with valid attributes" do
+    test "is valid with valid attributes" do
       params = params_with_assocs(:contest)
       changeset = Contest.changeset(%Contest{}, params)
       assert changeset.valid?
     end
 
-    test "without a season" do
+    test "is invalid without a season" do
       params = params_with_assocs(:contest, season: nil)
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "with an invalid season" do
+    test "is invalid with an invalid season" do
       for season <- [-1, 0] do
         params = params_with_assocs(:contest, season: season)
         changeset = Contest.changeset(%Contest{}, params)
@@ -23,46 +23,54 @@ defmodule Jumubase.ContestTest do
       end
     end
 
-    test "without a round" do
+    test "is invalid without a round" do
       params = params_with_assocs(:contest, round: nil)
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "with an invalid round" do
-      for round <- [-1, 0, 3] do
+    test "is invalid with an invalid round" do
+      for round <- [-1, 3] do
         params = params_with_assocs(:contest, round: round)
         changeset = Contest.changeset(%Contest{}, params)
         refute changeset.valid?
       end
     end
 
-    test "without a start date" do
+    test "is valid with a valid round" do
+      for round <- [0, 1, 2] do
+        params = params_with_assocs(:contest, round: round)
+        changeset = Contest.changeset(%Contest{}, params)
+        assert changeset.valid?
+      end
+    end
+
+    test "is invalid without a start date" do
       params = params_with_assocs(:contest, start_date: nil)
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "without an end date" do
+    test "is invalid without an end date" do
       params = params_with_assocs(:contest, end_date: nil)
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "with an end date before the start date" do
+    test "is invalid with an end date before the start date" do
       %{start_date: start_date} = params_with_assocs(:contest)
       params = params_with_assocs(:contest, end_date: Timex.shift(start_date, days: -1))
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "without a deadline" do
+    test "is invalid without a deadline" do
       params = params_with_assocs(:contest, deadline: nil)
       changeset = Contest.changeset(%Contest{}, params)
       refute changeset.valid?
     end
 
-    test "with a deadline not before the start date" do
+    test "is invalid with a deadline not before the start date" do
       %{start_date: start_date} = params_with_assocs(:contest)
       for deadline <- [start_date, Timex.shift(start_date, days: 1)] do
         params = params_with_assocs(:contest, deadline: deadline)

@@ -2,7 +2,16 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.ContestView
 
-  test "name_with_flag/1 returns a display name for a contest" do
+  test "name_with_flag/1 returns a display name for a Kimu contest" do
+    contest = build(:contest,
+      season: 55,
+      round: 0,
+      host: build(:host, country_code: "FI", name: "DS Helsinki")
+    )
+    assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, Kimu 2018"
+  end
+
+  test "name_with_flag/1 returns a display name for an RW contest" do
     contest = build(:contest,
       season: 55,
       round: 1,
@@ -11,7 +20,7 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
     assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, RW 2018"
   end
 
-  test "name_with_flag/1 uses an EU flag for a 2nd-round contest" do
+  test "name_with_flag/1 uses an EU flag for a LW contest" do
     contest = build(:contest,
       season: 55,
       round: 2,

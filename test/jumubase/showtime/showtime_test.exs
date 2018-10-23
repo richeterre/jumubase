@@ -317,6 +317,41 @@ defmodule Jumubase.ShowtimeTest do
       end
     end
 
+    test "assigns the correct age groups for a Kimu solo performance", %{contest: c} do
+      cc = insert_contest_category(c, "kimu")
+      attrs = performance_params(cc, [
+        {"soloist", birthdate: ~D[2011-01-01]},
+        {"accompanist", birthdate: ~D[2009-01-01]},
+        {"accompanist", birthdate: ~D[2008-12-31]},
+      ])
+      {:ok, performance} = Showtime.create_performance(c, attrs)
+
+      assert get_soloist(performance).age_group == "Ia"
+
+      [acc1, acc2] = get_accompanists(performance)
+      assert acc1.age_group == "Ib"
+      assert acc2.age_group == "II"
+    end
+
+    test "assigns the correct age groups for a Kimu ensemble performance", %{contest: c} do
+      cc = insert_contest_category(c, "kimu")
+      attrs = performance_params(cc, [
+        {"ensemblist", birthdate: ~D[2011-01-01]},
+        {"ensemblist", birthdate: ~D[2010-12-31]},
+        {"accompanist", birthdate: ~D[2009-01-01]},
+        {"accompanist", birthdate: ~D[2008-12-31]},
+      ])
+      {:ok, performance} = Showtime.create_performance(c, attrs)
+
+      for ens <- get_ensemblists(performance) do
+        assert ens.age_group == "Ib"
+      end
+
+      [acc1, acc2] = get_accompanists(performance)
+      assert acc1.age_group == "Ib"
+      assert acc2.age_group == "II"
+    end
+
     test "sets no age group when the data is invalid", %{contest: c} do
       [cc, _] = c.contest_categories
       attrs = performance_params(cc, [])

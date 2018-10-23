@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash'
+import { includes, isEmpty } from 'lodash'
 import Vue from 'vue/dist/vue'
 
 import { formFieldId, formFieldName } from '../../utils/form_fields'
@@ -25,7 +25,7 @@ Vue.component('piece-panel', {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
     },
     hasComposerFields() {
-      return isClassical(this.genre)
+      return isClassicalOrKimu(this.genre)
     },
     hasArtistField() {
       return isPopular(this.genre)
@@ -60,7 +60,7 @@ function getPanelTitle(props) {
   const composerText = composer.trim()
   const artistText = artist.trim()
 
-  if (isClassical(genre) && composerText) {
+  if (isClassicalOrKimu(genre) && composerText) {
     return `${composerText}: ${titleText}`
   } else if (isPopular(genre) && artistText) {
     return `${titleText} (${artistText})`
@@ -69,8 +69,8 @@ function getPanelTitle(props) {
   }
 }
 
-function isClassical(genre) {
-  return genre === "classical"
+function isClassicalOrKimu(genre) {
+  return includes(["classical", "kimu"], genre)
 }
 
 function isPopular(genre) {

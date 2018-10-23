@@ -15,7 +15,7 @@
     <%= form_for @conn, page_path(@conn, :edit_registration), [as: :search, class: "form-inline"], fn f -> %>
       <div class="form-group">
         <%= text_input f, :edit_code, placeholder: gettext("Edit code"),
-          autofocus: true, class: "form-control" %>
+          autofocus: true, pattern: "[0-9]*", class: "form-control" %>
       </div>
       <%= submit gettext("Search"), class: "btn btn-primary" %>
     <% end %>

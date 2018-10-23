@@ -26,7 +26,9 @@ defmodule Jumubase.Foundation do
     query = from c in Contest,
       where: c.round < 2,
       where: c.deadline >= ^Timex.today, # uses UTC
-      preload: :host
+      join: h in assoc(c, :host),
+      order_by: [h.name, {:desc, c.round}],
+      preload: [host: h]
 
     Repo.all(query)
   end

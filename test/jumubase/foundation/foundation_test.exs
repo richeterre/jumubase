@@ -27,10 +27,18 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_open_contests/0" do
-    test "returns contests the user can register for" do
-      c1 = insert(:contest, deadline: Timex.today |> Timex.shift(days: 1))
-      c2 = insert(:contest, deadline: Timex.today)
-      assert Foundation.list_open_contests == [c1, c2]
+    test "returns contests the user can register for in correct order" do
+      today = Timex.today
+      tomorrow = Timex.today |> Timex.shift(days: 1)
+
+      c1 = insert(:contest, round: 0, host: build(:host, name: "B"), deadline: today)
+      c2 = insert(:contest, round: 1, host: build(:host, name: "B"), deadline: today)
+      c3 = insert(:contest, round: 1, host: build(:host, name: "A"), deadline: tomorrow)
+      c4 = insert(:contest, round: 0, host: build(:host, name: "A"), deadline: tomorrow)
+      c5 = insert(:contest, round: 0, host: build(:host, name: "C"), deadline: tomorrow)
+      c6 = insert(:contest, round: 1, host: build(:host, name: "C"), deadline: tomorrow)
+
+      assert Foundation.list_open_contests == [c3, c4, c2, c1, c6, c5]
     end
 
     test "does not return contests with a past signup deadline" do

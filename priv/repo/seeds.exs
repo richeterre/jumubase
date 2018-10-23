@@ -95,7 +95,15 @@ Repo.transaction fn ->
   # Add contest categories and demo performances to contests
 
   for kimu_contest <- [kimu1, kimu2] do
-    insert(:contest_category, contest: kimu_contest, category: kimu)
+    cc = insert(:contest_category, contest: kimu_contest, category: kimu)
+    insert_performance(cc, appearances: [
+        build(:appearance, role: "soloist", instrument: "trumpet"),
+        build(:appearance, role: "accompanist", instrument: "piano"),
+    ])
+    insert_performance(cc, appearances: [
+      build(:appearance, role: "ensemblist", instrument: "guitar"),
+      build(:appearance, role: "ensemblist", instrument: "guitar"),
+    ])
   end
 
   for rw_contest <- [rw1, rw2, rw3] do

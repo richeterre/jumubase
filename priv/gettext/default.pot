@@ -40,6 +40,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/form.html.eex:17
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:181
+#: lib/jumubase_web/templates/session/new.html.eex:12
 msgid "Email"
 msgstr ""
 
@@ -55,6 +56,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:34
+#: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Internal Pages"
 msgstr ""
 
@@ -171,7 +173,6 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/new.html.eex:17
-#: lib/jumubase_web/templates/session/new.html.eex:31
 msgid "Back"
 msgstr ""
 
@@ -212,7 +213,7 @@ msgid "Create Host"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:16
+#: lib/jumubase_web/templates/session/new.html.eex:20
 msgid "Forgot password?"
 msgstr ""
 
@@ -238,11 +239,6 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:55
 msgid "Local Organizer"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:1
-msgid "Login"
 msgstr ""
 
 #, elixir-format
@@ -548,7 +544,7 @@ msgid "Send instructions"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:27
+#: lib/jumubase_web/templates/session/new.html.eex:33
 msgid "Log in"
 msgstr ""
 
@@ -559,6 +555,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:24
+#: lib/jumubase_web/templates/session/new.html.eex:18
 msgid "Password"
 msgstr ""
 
@@ -621,4 +618,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:96
 msgid "Artist"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/session/new.html.eex:4
+msgid "Here you can log in as a Jumu organizer."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/session/new.html.eex:27
+msgid "Stay logged in"
 msgstr ""

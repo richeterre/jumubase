@@ -4,7 +4,7 @@ defmodule JumubaseWeb.PageControllerTest do
 
   test "shows the welcome page", %{conn: conn} do
     conn = get(conn, page_path(conn, :home))
-    assert html_response(conn, 200) =~ "Nord- und Osteuropa"
+    assert html_response(conn, 200) =~ "The website for “Jugend musiziert”"
   end
 
   test "lists open contests on the registration page", %{conn: conn} do

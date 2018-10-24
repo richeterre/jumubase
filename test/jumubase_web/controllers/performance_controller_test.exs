@@ -9,7 +9,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
   describe "registration form" do
     test "is shown to the user", %{conn: conn, contest: c} do
-      conn = get(conn, "/contests/#{c.id}/performances/new")
+      conn = get(conn, performance_path(conn, :new, c))
       assert html_response(conn, 200) =~ "Register"
     end
 
@@ -17,7 +17,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       [cc, _] = c.contest_categories
       params = valid_params(cc)
 
-      conn = post(conn, "/contests/#{c.id}/performances", params)
+      conn = post(conn, performance_path(conn, :create, c), params)
 
       assert redirected_to(conn) == page_path(conn, :home)
       assert performance = Repo.one(Performance) |> Repo.preload([appearances: :participant])
@@ -35,7 +35,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
         }
       }
 
-      conn = post(conn, "/contests/#{c.id}/performances", params)
+      conn = post(conn, performance_path(conn, :create, c), params)
       assert html_response(conn, 200) =~ "Register"
       assert Repo.all(Performance) == []
     end
@@ -55,7 +55,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     end
 
     test "succeeds with a valid edit code", %{conn: conn, contest: c, performance: p} do
-      conn = get(conn, "/contests/#{c.id}/performances/#{p.id}/edit?edit_code=#{p.edit_code}")
+      conn = get(conn, performance_path(conn, :edit, c, p, edit_code: p.edit_code))
       assert html_response(conn, 200) =~ "Edit registration"
     end
 
@@ -63,19 +63,19 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       other_c = insert(:contest)
 
       assert_error_sent 404, fn ->
-        get(conn, "/contests/#{other_c.id}/performances/#{p.id}/edit?edit_code=#{p.edit_code}")
+        get(conn, performance_path(conn, :edit, other_c, p, edit_code: p.edit_code))
       end
     end
 
     test "returns an error for a missing edit code", %{conn: conn, contest: c, performance: p} do
       assert_error_sent 400, fn ->
-        get(conn, "/contests/#{c.id}/performances/#{p.id}/edit")
+        get(conn, performance_path(conn, :edit, c, p))
       end
     end
 
     test "returns an error for an invalid edit code", %{conn: conn, contest: c, performance: p} do
       assert_error_sent 404, fn ->
-        get(conn, "/contests/#{c.id}/performances/#{p.id}/edit?edit_code=unknown")
+        get(conn, performance_path(conn, :edit, c, p, edit_code: "999999"))
       end
     end
   end
@@ -90,7 +90,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       [_cc1, cc2] = c.contest_categories
       params = valid_params(cc2)
 
-      conn = put(conn, "/contests/#{c.id}/performances/#{p.id}?edit_code=#{p.edit_code}", params)
+      conn = put(conn, performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
       assert get_flash(conn, :success) == "Edited successfully"
       assert redirected_to(conn) == page_path(conn, :home)
     end
@@ -101,7 +101,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       params = valid_params(cc2)
 
       assert_error_sent 404, fn ->
-        put(conn, "/contests/#{other_c.id}/performances/#{p.id}?edit_code=#{p.edit_code}", params)
+        put(conn, performance_path(conn, :update, other_c, p, edit_code: p.edit_code), params)
       end
     end
 
@@ -110,7 +110,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       params = valid_params(cc2)
 
       assert_error_sent 400, fn ->
-        put(conn, "/contests/#{c.id}/performances/#{p.id}", params)
+        put(conn, performance_path(conn, :update, c, p), params)
       end
     end
 
@@ -119,7 +119,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       params = valid_params(cc2)
 
       assert_error_sent 404, fn ->
-        put(conn, "/contests/#{c.id}/performances/#{p.id}?edit_code=unknown", params)
+        put(conn, performance_path(conn, :update, c, p, edit_code: "999999"), params)
       end
     end
   end

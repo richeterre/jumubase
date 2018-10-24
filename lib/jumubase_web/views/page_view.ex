@@ -15,6 +15,11 @@ defmodule JumubaseWeb.PageView do
     render("rules.#{locale}.html", assigns)
   end
 
+  def render("privacy.html", assigns) do
+    locale = Gettext.get_locale(Jumubase.Gettext)
+    render("privacy.#{locale}.html", assigns)
+  end
+
   def to_accordion_item(%Host{} = host) do
     %{id: host.id, title: host.name, body: render_markdown(host.address)}
   end

@@ -800,7 +800,7 @@ msgid "Show performances"
 msgid "privacy policy"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/templates/performance/_form.html.eex:57
 msgid "The data you enter will be handled as described in the"
 >>>>>>> Link to (still empty) privacy policy from registration form

@@ -39,6 +39,12 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       assert html_response(conn, 200) =~ "Register"
       assert Repo.all(Performance) == []
     end
+
+    test "handles a completely empty form submission", %{conn: conn, contest: c} do
+      params = %{}
+      conn = post(conn, performance_path(conn, :create, c), params)
+      assert html_response(conn, 200) =~ "Register"
+    end
   end
 
   describe "accessing a registration" do

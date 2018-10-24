@@ -387,7 +387,11 @@ msgid "Programme"
 msgstr ""
 
 #, elixir-format
+<<<<<<< HEAD
 #: lib/jumubase_web/templates/performance/_form.html.eex:53
+=======
+#: lib/jumubase_web/templates/performance/_form.html.eex:64
+>>>>>>> Link to (still empty) privacy policy from registration form
 msgid "Submit registration"
 msgstr ""
 
@@ -507,7 +511,11 @@ msgid "Search"
 msgstr ""
 
 #, elixir-format
+<<<<<<< HEAD
 #: lib/jumubase_web/controllers/page_controller.ex:61
+=======
+#: lib/jumubase_web/controllers/page_controller.ex:50
+>>>>>>> Link to (still empty) privacy policy from registration form
 msgid "We could not find a registration for this edit code."
 msgstr ""
 
@@ -527,6 +535,7 @@ msgid "Stay logged in"
 msgstr ""
 
 #, elixir-format
+<<<<<<< HEAD
 #: lib/jumubase_web/templates/internal/category/index.html.eex:26
 msgid "Add Category"
 msgstr ""
@@ -786,4 +795,13 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:17
 msgid "Show performances"
+=======
+#: lib/jumubase_web/templates/performance/_form.html.eex:58
+msgid "privacy policy"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/jumubase_web/templates/performance/_form.html.eex:57
+msgid "The data you enter will be handled as described in the"
+>>>>>>> Link to (still empty) privacy policy from registration form
 msgstr ""

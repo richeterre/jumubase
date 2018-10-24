@@ -787,3 +787,13 @@ msgstr "Vor der Wertung"
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:17
 msgid "Show performances"
 msgstr "Vorspiele anzeigen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:58
+msgid "privacy policy"
+msgstr "Datenschutzerklärung"
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:57
+msgid "The data you enter will be handled as described in the"
+msgstr "Wie deine Angaben verarbeitet werden, steht in der"

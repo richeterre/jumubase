@@ -786,3 +786,13 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:17
 msgid "Show performances"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:58
+msgid "privacy policy"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:57
+msgid "The data you enter will be handled as described in the"
+msgstr ""

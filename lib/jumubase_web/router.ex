@@ -19,15 +19,18 @@ defmodule JumubaseWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    get "/registration", PageController, :registration
-    get "/edit-registration", PageController, :edit_registration
-    post "/edit-registration", PageController, :lookup_registration
     get "/rules", PageController, :rules
     get "/contact", PageController, :contact
     post "/contact", ContactController, :send_message
+    get "/privacy", PageController, :privacy
 
+    # Registration
+    get "/registration", PageController, :registration
+    get "/edit-registration", PageController, :edit_registration
+    post "/edit-registration", PageController, :lookup_registration
     resources "/contests/:contest_id/performances", PerformanceController, except: [:delete]
 
+    # Auth
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/password-resets", PasswordResetController, only: [:new, :create]
     get "/password-resets/edit", PasswordResetController, :edit

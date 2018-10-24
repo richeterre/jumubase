@@ -44,6 +44,11 @@ defmodule JumubaseWeb.PageController do
     |> render("contact.html")
   end
 
+  def privacy(conn, _params) do
+    conn
+    |> render("privacy.html")
+  end
+
   # Private helpers
 
   defp show_error(conn, message) do

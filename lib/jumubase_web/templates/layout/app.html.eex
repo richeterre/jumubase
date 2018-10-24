@@ -14,21 +14,19 @@
   </head>
 
   <body>
-    <div class="container">
-      <header class="header">
-        <%= render "nav.html", conn: @conn, current_user: @current_user %>
-      </header>
+    <header class="header">
+      <%= render "nav.html", conn: @conn, current_user: @current_user %>
+    </header>
 
+    <main role="main" class="container">
       <%= if assigns[:breadcrumbs] do %>
         <%= render "breadcrumbs.html", conn: @conn, breadcrumbs: @breadcrumbs %>
       <% end %>
 
       <%= render "flash.html", conn: @conn %>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
-    </div>
+      <%= render @view_module, @view_template, assigns %>
+    </main>
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <%= render_existing @view_module, "scripts." <> @view_template, assigns %>

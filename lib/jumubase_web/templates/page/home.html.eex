@@ -1,5 +1,5 @@
-<h1><%= gettext("Jumu Nordost") %></h1>
+<h1><%= title %></h1>
 
 <p class="lead">
-  <%= gettext("The website for “Jugend musiziert Nord- und Osteuropa” at German schools abroad") %>
+  <%= gettext("The website for “Jugend musiziert” at German schools abroad") %>
 </p>

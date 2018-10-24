@@ -1,17 +1,17 @@
 Jumubase
 ========
 
-Jumubase is a tool for organizers of Germany's largest youth music competition – [Jugend musiziert][jugend-musiziert], or "Jumu" in short. The software currently powers [jumu-nordost.eu][jumu-nordost], a competition hub for various German schools in Europe.
+Jumubase is a tool for organizers of Germany's largest youth music competition – [Jugend musiziert][jugend-musiziert], or "Jumu" in short. The software will soon power [jumu-weltweit.org][jumu-weltweit], a competition hub for German schools around the world.
 
 The application serves two main audiences:
 
 * Jumu __participants__ and their families, friends and teachers; they can sign up for a contest, edit their information, and check schedules and results __without a user account.__
 * Jumu __organizers__ on both local and global level, who can manage contest data, enter results and print contest-related material. The permissions for this are granted via __personal user accounts.__
 
-Jumubase also exposes some of its public data via a JSON API that serves mobile clients for [Android][jumu-nordost-react-native] and [iOS][jumu-nordost-ios].
+Jumubase will also expose some of its public data via a JSON API that serves mobile clients for [Android][jumu-nordost-react-native] and [iOS][jumu-nordost-ios].
 
 [jugend-musiziert]: https://en.wikipedia.org/wiki/Jugend_musiziert
-[jumu-nordost]: http://www.jumu-nordost.eu
+[jumu-weltweit]: http://www.jumu-weltweit.org
 [jumu-nordost-react-native]: https://github.com/richeterre/jumu-nordost-react-native
 [jumu-nordost-ios]: https://github.com/richeterre/jumu-nordost-ios
 

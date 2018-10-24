@@ -63,12 +63,6 @@ msgid "Internal Pages"
 msgstr "Interne Seiten"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/app.html.eex:10
-#: lib/jumubase_web/templates/page/home.html.eex:1
-msgid "Jumu Nordost"
-msgstr "Jumu Nordost"
-
-#, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:12
 msgid "Jumu logo"
 msgstr "Jumu-Logo"
@@ -90,7 +84,7 @@ msgstr "Neuer Benutzer"
 #: lib/jumubase_web/templates/internal/user/form.html.eex:33
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:137
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:155
-#: lib/jumubase_web/templates/performance/_form.html.eex:20
+#: lib/jumubase_web/templates/performance/_form.html.eex:17
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:118
 msgid "Please choose"
 msgstr "Bitte wählen"
@@ -236,7 +230,7 @@ msgstr "Geburtsdatum"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:7
-#: lib/jumubase_web/templates/performance/_form.html.eex:12
+#: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr "Kategorie"
 
@@ -270,7 +264,7 @@ msgstr "Nachname"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/templates/performance/_form.html.eex:33
+#: lib/jumubase_web/templates/performance/_form.html.eex:30
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -280,7 +274,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:43
+#: lib/jumubase_web/templates/performance/_form.html.eex:40
 msgid "Pieces"
 msgstr "Vorspielprogramm"
 
@@ -308,17 +302,17 @@ msgid "Soloist"
 msgstr "Solist"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:26
+#: lib/jumubase_web/controllers/performance_controller.ex:28
 msgid "Success!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:40
+#: lib/jumubase_web/templates/performance/_form.html.eex:37
 msgid "Add participant"
 msgstr "Teilnehmer hinzufügen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:50
+#: lib/jumubase_web/templates/performance/_form.html.eex:47
 msgid "Add piece"
 msgstr "Stück hinzufügen"
 
@@ -415,14 +409,9 @@ msgid "Programme"
 msgstr "Vorspielprogramm"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:56
+#: lib/jumubase_web/templates/performance/_form.html.eex:53
 msgid "Submit registration"
 msgstr "Anmeldung absenden"
-
-#, elixir-format
-#: lib/jumubase_web/templates/page/home.html.eex:4
-msgid "The website for “Jugend musiziert Nord- und Osteuropa” at German schools abroad"
-msgstr "Die Website für “Jugend musiziert” an den Deutschen Schulen der Region Nord- und Osteuropa"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:40
@@ -517,7 +506,7 @@ msgid "Edit your registration"
 msgstr "Anmeldung bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:51
+#: lib/jumubase_web/controllers/performance_controller.ex:53
 msgid "Edited successfully"
 msgstr ""
 
@@ -560,3 +549,8 @@ msgstr "Hier können sich Jumu-Organisatoren einloggen."
 #: lib/jumubase_web/templates/session/new.html.eex:27
 msgid "Stay logged in"
 msgstr "Eingeloggt bleiben"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/home.html.eex:4
+msgid "The website for “Jugend musiziert” at German schools abroad"
+msgstr "Die Website für “Jugend musiziert” an deutschen Auslandsschulen"

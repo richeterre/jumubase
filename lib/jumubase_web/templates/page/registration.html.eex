@@ -4,11 +4,19 @@
   <%= gettext("Here you can register for your local \"Jugend musiziert\" contest.") %>
 </p>
 
-<ul>
-  <%= for contest <- @contests do %>
-    <li><%= link name_with_flag(contest), to: performance_path(@conn, :new, contest) %></li>
-  <% end %>
-</ul>
+<div class="row">
+  <div class="col-md-4">
+    <ul class="list-group">
+      <%= for contest <- @contests do %>
+        <li class="list-group-item">
+          <%= link name_with_flag(contest),
+            to: performance_path(@conn, :new, contest)
+            %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <hr>
 

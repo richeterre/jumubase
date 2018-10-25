@@ -3,3 +3,11 @@
 <p class="lead">
   <%= gettext("The website for “Jugend musiziert” at German schools abroad") %>
 </p>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= host_map_image() %>
+  </div>
+</div>

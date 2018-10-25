@@ -9,6 +9,10 @@ use Mix.Config
 config :jumubase,
   ecto_repos: [Jumubase.Repo]
 
+# API keys
+config :jumubase, JumubaseWeb.MapHelpers,
+  google_api_key: System.get_env("GOOGLE_API_KEY")
+
 # Set default locale
 config :jumubase, Jumubase.Gettext, default_locale: "de"
 config :timex, Timex.Gettext, default_locale: "de"

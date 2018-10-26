@@ -12,51 +12,171 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:9
+#: lib/jumubase/showtime/instruments.ex:10
 msgid "Bassoon"
 msgstr "Fagott"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:10
+#: lib/jumubase/showtime/instruments.ex:12
 msgid "Clarinet"
 msgstr "Klarinette"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:11
+#: lib/jumubase/showtime/instruments.ex:15
 msgid "Drumset"
 msgstr "Drumset"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:12
+#: lib/jumubase/showtime/instruments.ex:16
 msgid "Electric Bass"
 msgstr "E-Bass"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:13
+#: lib/jumubase/showtime/instruments.ex:17
 msgid "Electric Guitar"
 msgstr "E-Gitarre"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:14
+#: lib/jumubase/showtime/instruments.ex:21
 msgid "Guitar"
 msgstr "Gitarre"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:15
+#: lib/jumubase/showtime/instruments.ex:29
 msgid "Oboe"
 msgstr "Oboe"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:16
+#: lib/jumubase/showtime/instruments.ex:32
 msgid "Piano"
 msgstr "Klavier"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:17
+#: lib/jumubase/showtime/instruments.ex:34
 msgid "Saxophone"
 msgstr "Saxophon"
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:18
+#: lib/jumubase/showtime/instruments.ex:42
 msgid "Vocals"
 msgstr "Gesang"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:9
+msgid "Accordion"
+msgstr "Akkordeon"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:11
+msgid "Cittern"
+msgstr "Zither"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:13
+msgid "Cor anglais"
+msgstr "Englischhorn"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:14
+msgid "Double bass"
+msgstr "Kontrabass"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:18
+msgid "Euphonium"
+msgstr "Euphonium"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:19
+msgid "Flute"
+msgstr "Querflöte"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:20
+msgid "French horn"
+msgstr "Horn"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:22
+msgid "Harp"
+msgstr "Harfe"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:23
+msgid "Harpsichord"
+msgstr "Cembalo"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:24
+msgid "Kantele"
+msgstr "Kantele"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:25
+msgid "Keyboard"
+msgstr "Keyboard"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:26
+msgid "Mallets"
+msgstr "Mallets"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:27
+msgid "Mandola"
+msgstr "Mandola"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:28
+msgid "Mandolin"
+msgstr "Mandoline"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:30
+msgid "Organ"
+msgstr "Orgel"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:31
+msgid "Percussion"
+msgstr "Percussion"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:33
+msgid "Recorder"
+msgstr "Blockflöte"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:35
+msgid "Trombone"
+msgstr "Posaune"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:36
+msgid "Trumpet/Flugelhorn"
+msgstr "Trompete/Flügelhorn"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:37
+msgid "Tuba"
+msgstr "Tuba"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:38
+msgid "Viola"
+msgstr "Viola"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:39
+msgid "Viola da gamba"
+msgstr "Viola da gamba"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:40
+msgid "Violin"
+msgstr "Violine"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:41
+msgid "Violoncello"
+msgstr "Violoncello"

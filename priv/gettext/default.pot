@@ -489,7 +489,7 @@ msgid "Piece"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:16
+#: lib/jumubase_web/templates/page/registration.html.eex:24
 msgid "Already registered?"
 msgstr ""
 
@@ -500,7 +500,7 @@ msgid "Edit registration"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:19
+#: lib/jumubase_web/templates/page/registration.html.eex:27
 msgid "Edit your registration"
 msgstr ""
 

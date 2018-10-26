@@ -7,4 +7,9 @@ defmodule JumubaseWeb.PageView do
   def host_map_image do
     img_tag MapHelpers.host_map_url, class: "img-responsive map-image"
   end
+
+  def render("rules.html", assigns) do
+    locale = Gettext.get_locale(Jumubase.Gettext)
+    render("rules.#{locale}.html", assigns)
+  end
 end

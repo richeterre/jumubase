@@ -36,4 +36,9 @@ defmodule JumubaseWeb.PageControllerTest do
     assert get_flash(conn, :error) =~ "Please enter an edit code."
     assert redirected_to(conn) == page_path(conn, :edit_registration)
   end
+
+  test "shows the rules page", %{conn: conn} do
+    conn = get(conn, page_path(conn, :rules))
+    assert html_response(conn, 200) =~ "Rules"
+  end
 end

@@ -57,7 +57,7 @@ msgid "Inspector"
 msgstr "Beobachter"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:34
+#: lib/jumubase_web/templates/layout/nav.html.eex:35
 #: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Internal Pages"
 msgstr "Interne Seiten"
@@ -454,7 +454,7 @@ msgid "welcome to your personal Jumu portal!"
 msgstr "willkommen auf deinem persönlichen Jumu-Portal!"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:31
+#: lib/jumubase_web/templates/layout/nav.html.eex:32
 msgid "Log out"
 msgstr "Ausloggen"
 
@@ -539,7 +539,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:45
+#: lib/jumubase_web/controllers/page_controller.ex:49
 msgid "We could not find a registration for this edit code."
 msgstr "Wir konnten keine Anmeldung unter diesem Änderungscode finden."
 
@@ -652,3 +652,8 @@ msgstr "Weiterleitung"
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:21
 msgid "Participation"
 msgstr "Teilnahme"
+
+#, elixir-format
+#: lib/jumubase_web/templates/layout/nav.html.eex:21
+msgid "Rules"
+msgstr "Regeln"

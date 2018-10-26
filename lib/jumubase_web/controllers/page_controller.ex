@@ -28,6 +28,10 @@ defmodule JumubaseWeb.PageController do
     end
   end
 
+  def rules(conn, _params) do
+    render(conn, "rules.html")
+  end
+
   # Private helpers
 
   defp show_error(conn, message) do

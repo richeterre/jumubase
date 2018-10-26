@@ -3,14 +3,18 @@ defmodule Jumubase.FoundationTest do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Category, ContestCategory, Host}
 
-  test "list_hosts/0 returns all hosts" do
-    host = insert(:host)
-    assert Foundation.list_hosts() == [host]
+  describe "list_hosts/0 " do
+    test "returns all hosts" do
+      host = insert(:host)
+      assert Foundation.list_hosts() == [host]
+    end
   end
 
-  test "list_hosts/1 returns the hosts with the given ids" do
-    [_h1, h2, h3] = insert_list(3, :host)
-    assert Foundation.list_hosts([h2.id, h3.id]) == [h2, h3]
+  describe "list_hosts/1" do
+    test "returns the hosts with the given ids" do
+      [_h1, h2, h3] = insert_list(3, :host)
+      assert Foundation.list_hosts([h2.id, h3.id]) == [h2, h3]
+    end
   end
 
   describe "list_contests/0" do
@@ -78,6 +82,13 @@ defmodule Jumubase.FoundationTest do
 
     %{id: id} = contest = Foundation.load_contest_categories(contest)
     assert [%{contest_id: ^id, category: %Category{name: "ABC"}}] = contest.contest_categories
+  end
+
+  describe "list_categories/0" do
+    test "returns all categories" do
+      categories = insert_list(2, :category)
+      assert Foundation.list_categories() == categories
+    end
   end
 
   describe "get_contest_category!/2" do

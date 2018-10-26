@@ -6,7 +6,7 @@ defmodule Jumubase.Foundation do
 
   import Ecto.Query
   alias Jumubase.Repo
-  alias Jumubase.Foundation.{Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
 
   def list_hosts do
     Repo.all(Host)
@@ -35,6 +35,10 @@ defmodule Jumubase.Foundation do
 
   def get_contest!(id) do
     Repo.get!(Contest, id) |> Repo.preload(:host)
+  end
+
+  def list_categories do
+    Repo.all(Category)
   end
 
   def load_contest_categories(%Contest{} = contest) do

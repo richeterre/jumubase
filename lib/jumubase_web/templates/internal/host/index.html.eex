@@ -8,6 +8,7 @@
         <th><%= gettext("City") %></th>
         <th><%= gettext("Country") %></th>
         <th><%= gettext("Time Zone") %></th>
+        <th><%= gettext("Location") %></th>
         <th></th>
       </tr>
     </thead>
@@ -18,6 +19,7 @@
         <td><%= host.city %></td>
         <td><%= emoji_flag(host.country_code) %></td>
         <td><code><%= host.time_zone %></code></td>
+        <td><code><%= host.latitude %>, <%= host.longitude %></code></td>
         <td class="text-right">
           <%# icon_link("pencil", nil, internal_host_path(@conn, :edit, host),
             class: "btn btn-default btn-xs") %>

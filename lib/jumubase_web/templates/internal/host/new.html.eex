@@ -28,10 +28,30 @@
   </div>
 
   <div class="row">
-    <div class="form-group col-sm-5">
+    <div class="form-group col-sm-4">
       <%= label f, :time_zone, gettext("Time zone") %>
       <%= text_input f, :time_zone, class: "form-control" %>
       <%= error_tag f, :time_zone %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-3">
+      <%= label f, :latitude, gettext("Latitude") %>
+      <div class="input-group">
+        <%= text_input f, :latitude, class: "form-control" %>
+        <span class="input-group-addon">&deg;</span>
+      </div>
+      <%= error_tag f, :latitude %>
+    </div>
+
+    <div class="form-group col-sm-3">
+      <%= label f, :longitude, gettext("Longitude") %>
+      <div class="input-group">
+        <%= text_input f, :longitude, class: "form-control" %>
+        <span class="input-group-addon">&deg;</span>
+      </div>
+      <%= error_tag f, :longitude %>
     </div>
   </div>
 

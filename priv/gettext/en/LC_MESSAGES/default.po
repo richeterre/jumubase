@@ -158,7 +158,7 @@ msgid "Country code"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:40
+#: lib/jumubase_web/templates/internal/host/new.html.eex:54
 msgid "Create Host"
 msgstr ""
 
@@ -656,4 +656,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/layout/nav.html.eex:21
 msgid "Rules"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:40
+msgid "Latitude"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:46
+msgid "Longitude"
 msgstr ""

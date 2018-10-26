@@ -8,11 +8,13 @@ defmodule Jumubase.Foundation.Host do
     field :country_code, :string
     field :name, :string
     field :time_zone, :string
+    field :latitude, :float
+    field :longitude, :float
 
     timestamps()
   end
 
-  @required_attrs [:name, :city, :country_code, :time_zone]
+  @required_attrs [:name, :city, :country_code, :time_zone, :latitude, :longitude]
 
   @doc false
   def changeset(%Host{} = host, attrs) do

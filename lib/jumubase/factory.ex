@@ -56,7 +56,9 @@ defmodule Jumubase.Factory do
       name: sequence(:name, &"Host #{&1}"),
       city: "Jumutown",
       country_code: "DE",
-      time_zone: "Europe/Berlin"
+      time_zone: "Europe/Berlin",
+      latitude: 51.163375,
+      longitude: 10.447683,
     }
   end
 

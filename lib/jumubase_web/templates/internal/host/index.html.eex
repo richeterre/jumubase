@@ -17,7 +17,7 @@
         <td><%= host.name %></td>
         <td><%= host.city %></td>
         <td><%= emoji_flag(host.country_code) %></td>
-        <td><%= host.time_zone %></td>
+        <td><code><%= host.time_zone %></code></td>
         <td class="text-right">
           <%# icon_link("pencil", nil, internal_host_path(@conn, :edit, host),
             class: "btn btn-default btn-xs") %>

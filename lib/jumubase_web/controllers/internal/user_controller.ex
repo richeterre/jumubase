@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.UserController do
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
 
-  plug :add_breadcrumb, icon: "home", path_fun: &internal_page_path/2, action: :home
+  plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Users"), path_fun: &internal_user_path/2, action: :index
 
   plug :role_check, roles: ["admin"]

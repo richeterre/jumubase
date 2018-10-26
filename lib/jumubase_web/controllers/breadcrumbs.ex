@@ -18,6 +18,13 @@ defmodule JumubaseWeb.Breadcrumbs do
   end
 
   @doc """
+  Adds a breadcrumb for the internal home (root) path to the hierarchy.
+  """
+  def add_home_breadcrumb(conn, _opts) do
+    add_breadcrumb(conn, name: nil, icon: "home", path: internal_page_path(conn, :home))
+  end
+
+  @doc """
   Adds a breadcrumb for the contest to the hierarchy.
   """
   def add_contest_breadcrumb(conn, %Contest{} = contest) do

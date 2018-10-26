@@ -2,7 +2,7 @@ defmodule JumubaseWeb.Internal.PageController do
   use JumubaseWeb, :controller
   import JumubaseWeb.Authorize
 
-  plug :add_breadcrumb, icon: "home", path_fun: &internal_page_path/2, action: :home
+  plug :add_home_breadcrumb
 
   plug :user_check
 

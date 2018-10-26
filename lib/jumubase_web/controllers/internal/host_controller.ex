@@ -4,7 +4,7 @@ defmodule JumubaseWeb.Internal.HostController do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Host
 
-  plug :add_breadcrumb, icon: "home", path_fun: &internal_page_path/2, action: :home
+  plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Hosts"), path_fun: &internal_host_path/2, action: :index
 
   plug :role_check, roles: ["admin"]

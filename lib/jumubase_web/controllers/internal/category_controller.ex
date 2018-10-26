@@ -4,7 +4,7 @@ defmodule JumubaseWeb.Internal.CategoryController do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Category
 
-  plug :add_breadcrumb, icon: "home", path_fun: &internal_page_path/2, action: :home
+  plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Categories"), path_fun: &internal_category_path/2, action: :index
 
   plug :role_check, roles: ["admin"]

@@ -23,6 +23,9 @@
           <li class="list-group-item">
             <%= icon_link("music", gettext("Contests"), internal_contest_path(@conn, :index)) %>
           </li>
+          <li class="list-group-item">
+            <%= icon_link("list-alt", gettext("Categories"), internal_category_path(@conn, :index)) %>
+          </li>
         </ul>
       </div>
     <% end %>

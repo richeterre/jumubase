@@ -68,6 +68,8 @@ msgid "Jumu logo"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/category/index.html.eex:7
+#: lib/jumubase_web/templates/internal/category/new.html.eex:7
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/new.html.eex:7
@@ -469,7 +471,10 @@ msgid "Log in"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/category_controller.ex:8
+#: lib/jumubase_web/templates/internal/category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:13
+#: lib/jumubase_web/templates/internal/page/home.html.eex:27
 msgid "Categories"
 msgstr ""
 
@@ -553,4 +558,69 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/page/home.html.eex:4
 msgid "The website for “Jugend musiziert” at German schools abroad"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/index.html.eex:26
+msgid "Add Category"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/new.html.eex:12
+msgid "Create Category"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/new.html.eex:1
+msgid "New Category"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/category_controller.ex:30
+msgid "The category \"%{name}\" was created."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:18
+msgid "Classical"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/jumubase_web/views/internal/category_view.ex:28
+msgid "Ensemble"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/index.html.eex:9
+msgid "Genre"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:20
+msgid "Kimu"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:19
+msgid "Popular"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/index.html.eex:8
+msgid "Short name"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/jumubase_web/views/internal/category_view.ex:27
+msgid "Solo"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:29
+msgid "Solo/Ensemble"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/index.html.eex:10
+msgid "Type"
 msgstr ""

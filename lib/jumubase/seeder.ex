@@ -20,7 +20,7 @@ defmodule Jumubase.Seeder do
   Starts a seed for Kimu contests.
   """
   def start_kimu_seed(season) do
-    kimu_category = Repo.get_by!(Category, short_name: "Kimu")
+    kimu_category = Repo.get_by!(Category, genre: "kimu")
     %{season: season, round: 0, contest_categories: [
       Factory.build(:contest_category,
         category: kimu_category,

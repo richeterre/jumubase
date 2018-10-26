@@ -1,7 +1,7 @@
 <h1><%= title() %></h1>
 
 <p class="lead">
-  <%= gettext("The website for “Jugend musiziert” at German schools abroad") %>
+  <%= gettext("The website for “Jugend musiziert” at German schools in the region “Nord- und Osteuropa”") %>
 </p>
 
 <hr>

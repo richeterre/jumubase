@@ -121,7 +121,7 @@ msgid "Users"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/index.html.eex:35
+#: lib/jumubase_web/templates/internal/host/index.html.eex:37
 msgid "Add Host"
 msgstr ""
 
@@ -157,7 +157,7 @@ msgid "Country code"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:54
+#: lib/jumubase_web/templates/internal/host/new.html.eex:60
 msgid "Create Host"
 msgstr ""
 
@@ -558,11 +558,6 @@ msgid "Stay logged in"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/home.html.eex:4
-msgid "The website for “Jugend musiziert” at German schools abroad"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/internal/category/index.html.eex:26
 msgid "Add Category"
 msgstr ""
@@ -663,6 +658,16 @@ msgid "Latitude"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:46
+#: lib/jumubase_web/templates/internal/host/new.html.eex:49
 msgid "Longitude"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/index.html.eex:11
+msgid "Location"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/home.html.eex:4
+msgid "The website for “Jugend musiziert” at German schools in the region “Nord- und Osteuropa”"
 msgstr ""

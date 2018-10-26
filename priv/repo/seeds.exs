@@ -15,9 +15,22 @@ Repo.transaction fn ->
 
   # Create demo hosts
 
+  insert(:host, name: "DS Bratislava", city: "Bratislava", country_code: "SK", time_zone: "Europe/Bratislava", latitude: 48.1491521, longitude: 17.103554)
+  insert(:host, name: "DS Brüssel", city: "Brüssel", country_code: "BE", time_zone: "Europe/Brussels", latitude: 50.8519895, longitude: 4.4926787)
+  insert(:host, name: "DS Budapest", city: "Budapest", country_code: "HU", time_zone: "Europe/Budapest", latitude: 47.51, longitude: 18.983813)
   host3 = insert(:host, name: "DS Dublin", city: "Dublin", country_code: "IE", time_zone: "Europe/Dublin", latitude: 53.303453, longitude: -6.2293214)
+  insert(:host, name: "DS Doha", city: "Doha", country_code: "QA", time_zone: "Asia/Qatar", latitude: 25.2559086, longitude: 51.501849)
+  insert(:host, name: "DS Genf", city: "Genf", country_code: "CH", time_zone: "Europe/Zurich", latitude: 46.2181677, longitude: 6.0874632)
   host1 = insert(:host, name: "DS Helsinki", city: "Helsinki", country_code: "FI", time_zone: "Europe/Helsinki", latitude: 60.167165, longitude: 24.93205)
+  insert(:host, name: "DS Kopenhagen", city: "Kopenhagen", country_code: "DK", time_zone: "Europe/Copenhagen", latitude: 55.6800835, longitude: 12.5695033)
+  insert(:host, name: "DS London", city: "London", country_code: "GB", time_zone: "Europe/London", latitude: 51.4451339, longitude: -0.3050807)
+  insert(:host, name: "DS Moskau", city: "Moskau", country_code: "RU", time_zone: "Europe/Moscow", latitude: 55.6643808, longitude: 37.4953562)
+  insert(:host, name: "DS Oslo", city: "Oslo", country_code: "NO", time_zone: "Europe/Oslo", latitude: 59.9249933, longitude: 10.7251024)
+  insert(:host, name: "DS Paris", city: "Paris", country_code: "FR", time_zone: "Europe/Paris", latitude: 48.8423042, longitude: 2.2035179)
+  insert(:host, name: "DS Prag", city: "Prag", country_code: "CZ", time_zone: "Europe/Prague", latitude: 50.0556074, longitude: 14.3541417)
+  insert(:host, name: "DS Sofia", city: "Sofia", country_code: "BG", time_zone: "Europe/Sofia", latitude: 42.6691648, longitude: 23.3492821)
   host2 = insert(:host, name: "DS Stockholm", city: "Stockholm", country_code: "SE", time_zone: "Europe/Stockholm", latitude: 59.3422421, longitude: 18.0699085)
+  insert(:host, name: "DS Warschau", city: "Warschau", country_code: "PL", time_zone: "Europe/Warsaw", latitude: 52.1577924, longitude: 21.0691116)
 
   # Create demo users
 

@@ -1,48 +1,62 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
-  <div class="form-group">
-    <%= label f, :first_name, gettext("First name"), class: "control-label" %>
-    <%= text_input f, :first_name, class: "form-control" %>
-    <%= error_tag f, :first_name %>
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :first_name, gettext("First name"), class: "control-label" %>
+      <%= text_input f, :first_name, class: "form-control" %>
+      <%= error_tag f, :first_name %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :last_name, gettext("Last name"), class: "control-label" %>
-    <%= text_input f, :last_name, class: "form-control" %>
-    <%= error_tag f, :last_name %>
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :last_name, gettext("Last name"), class: "control-label" %>
+      <%= text_input f, :last_name, class: "form-control" %>
+      <%= error_tag f, :last_name %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :email, gettext("Email"), class: "control-label" %>
-    <%= email_input f, :email, class: "form-control" %>
-    <%= error_tag f, :email %>
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :email, gettext("Email"), class: "control-label" %>
+      <%= email_input f, :email, class: "form-control" %>
+      <%= error_tag f, :email %>
+    </div>
   </div>
 
   <%= if @include_password do %>
-  <div class="form-group">
-    <%= label f, :password, gettext("Password"), class: "control-label" %>
-    <%= password_input f, :password, class: "form-control" %>
-    <%= error_tag f, :password %>
-  </div>
+    <div class="row">
+      <div class="form-group col-sm-5">
+        <%= label f, :password, gettext("Password"), class: "control-label" %>
+        <%= password_input f, :password, class: "form-control" %>
+        <%= error_tag f, :password %>
+      </div>
+    </div>
   <% end %>
 
-  <div class="form-group">
-    <%= label f, :role, gettext("Role"), class: "control-label" %>
-    <%= select f, :role, form_roles(),
-      prompt: gettext("Please choose"),
-      class: "form-control"
-      %>
-    <%= error_tag f, :role %>
+  <div class="row">
+    <div class="form-group col-sm-4">
+      <%= label f, :role, gettext("Role"), class: "control-label" %>
+      <%= select f, :role, form_roles(),
+        prompt: gettext("Please choose"),
+        class: "form-control"
+        %>
+      <%= error_tag f, :role %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :host_ids, gettext("Hosts") %>
-    <%= multiple_select f, :host_ids, @host_options,
-      selected: get_ids(@changeset.data.hosts),
-      class: "form-control" %>
-    <%= error_tag f, :host_ids %>
+  <div class="row">
+    <div class="form-group col-sm-4">
+      <%= label f, :host_ids, gettext("Hosts") %>
+      <%= multiple_select f, :host_ids, @host_options,
+        selected: get_ids(@changeset.data.hosts),
+        class: "form-control" %>
+      <%= error_tag f, :host_ids %>
+    </div>
   </div>
+
+  <hr>
 
   <div class="form-group">
     <%= submit @submit_title, class: "btn btn-primary" %>

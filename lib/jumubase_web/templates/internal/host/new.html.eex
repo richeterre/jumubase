@@ -3,29 +3,39 @@
 <%= form_for @changeset, internal_host_path(@conn, :create), fn f -> %>
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
-  <div class="form-group">
-    <%= label f, :name, gettext("Name") %>
-    <%= text_input f, :name, class: "form-control" %>
-    <%= error_tag f, :name %>
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :name, gettext("Name") %>
+      <%= text_input f, :name, class: "form-control" %>
+      <%= error_tag f, :name %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :city, gettext("City") %>
-    <%= text_input f, :city, class: "form-control" %>
-    <%= error_tag f, :city %>
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :city, gettext("City") %>
+      <%= text_input f, :city, class: "form-control" %>
+      <%= error_tag f, :city %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :country_code, gettext("Country code") %>
-    <%= text_input f, :country_code, class: "form-control" %>
-    <%= error_tag f, :country_code %>
+  <div class="row">
+    <div class="form-group col-sm-2">
+      <%= label f, :country_code, gettext("Country code") %>
+      <%= text_input f, :country_code, class: "form-control" %>
+      <%= error_tag f, :country_code %>
+    </div>
   </div>
 
-  <div class="form-group">
-    <%= label f, :time_zone, gettext("Time zone") %>
-    <%= text_input f, :time_zone, class: "form-control" %>
-    <%= error_tag f, :time_zone %>
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :time_zone, gettext("Time zone") %>
+      <%= text_input f, :time_zone, class: "form-control" %>
+      <%= error_tag f, :time_zone %>
+    </div>
   </div>
+
+  <hr>
 
   <%= submit gettext("Create Host"), class: "btn btn-primary" %>
 <% end %>

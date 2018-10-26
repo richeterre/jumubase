@@ -24,9 +24,15 @@ defmodule JumubaseWeb.Internal.AppearanceView do
   end
 
   @doc """
+  Creates an age group badge for an appearance.
+  """
+  def age_group_badge(%Appearance{age_group: ag}), do: badge(ag)
+
+  @doc """
   Creates a badge for an age group.
   """
-  def age_group_badge(%Appearance{age_group: ag}) do
-    content_tag :span, ag, class: "badge"
+  def badge(nil), do: nil
+  def badge(age_group) do
+    content_tag :span, age_group, class: "badge"
   end
 end

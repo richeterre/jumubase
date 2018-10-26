@@ -38,7 +38,7 @@ msgid "Edit User"
 msgstr "Benutzer bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:17
+#: lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:181
@@ -69,10 +69,11 @@ msgstr "Jumu-Logo"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/index.html.eex:7
-#: lib/jumubase_web/templates/internal/category/new.html.eex:7
+#: lib/jumubase_web/templates/internal/category/new.html.eex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:25
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
-#: lib/jumubase_web/templates/internal/host/new.html.eex:7
+#: lib/jumubase_web/templates/internal/host/new.html.eex:8
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
 msgid "Name"
 msgstr "Name"
@@ -83,7 +84,9 @@ msgid "New User"
 msgstr "Neuer Benutzer"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:33
+#: lib/jumubase_web/templates/internal/category/new.html.eex:26
+#: lib/jumubase_web/templates/internal/category/new.html.eex:37
+#: lib/jumubase_web/templates/internal/user/form.html.eex:42
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:137
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:155
 #: lib/jumubase_web/templates/performance/_form.html.eex:17
@@ -140,7 +143,7 @@ msgstr "Passwort wählen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:8
-#: lib/jumubase_web/templates/internal/host/new.html.eex:13
+#: lib/jumubase_web/templates/internal/host/new.html.eex:16
 msgid "City"
 msgstr "Stadt"
 
@@ -150,12 +153,12 @@ msgid "Country"
 msgstr "Land"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:19
+#: lib/jumubase_web/templates/internal/host/new.html.eex:24
 msgid "Country code"
 msgstr "Ländercode"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:30
+#: lib/jumubase_web/templates/internal/host/new.html.eex:40
 msgid "Create Host"
 msgstr "Schule erstellen"
 
@@ -173,7 +176,7 @@ msgstr "Orgteam Landesebene"
 #: lib/jumubase_web/controllers/internal/host_controller.ex:8
 #: lib/jumubase_web/templates/internal/host/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:21
-#: lib/jumubase_web/templates/internal/user/form.html.eex:40
+#: lib/jumubase_web/templates/internal/user/form.html.eex:51
 #: lib/jumubase_web/templates/internal/user/index.html.eex:9
 msgid "Hosts"
 msgstr "Schulen"
@@ -215,7 +218,7 @@ msgid "Time Zone"
 msgstr "Zeitzone"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:25
+#: lib/jumubase_web/templates/internal/host/new.html.eex:32
 msgid "Time zone"
 msgstr "Zeitzone"
 
@@ -243,7 +246,7 @@ msgid "Ensemblist"
 msgstr "Ensemblepartner"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:5
+#: lib/jumubase_web/templates/internal/user/form.html.eex:6
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:45
 msgid "First name"
 msgstr "Vorname"
@@ -259,7 +262,7 @@ msgid "Instrument"
 msgstr "Instrument"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:11
+#: lib/jumubase_web/templates/internal/user/form.html.eex:14
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:59
 msgid "Last name"
 msgstr "Nachname"
@@ -292,7 +295,7 @@ msgid "Registration"
 msgstr "Anmeldung"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:31
+#: lib/jumubase_web/templates/internal/user/form.html.eex:40
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:130
 msgid "Role"
 msgstr "Rolle"
@@ -400,7 +403,7 @@ msgid "Performance Details"
 msgstr "Vorspieldetails"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/breadcrumbs.ex:32
+#: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:1
 msgid "Performances"
 msgstr "Vorspiele"
@@ -479,7 +482,7 @@ msgid "Categories"
 msgstr "Kategorien"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/form.html.eex:24
+#: lib/jumubase_web/templates/internal/user/form.html.eex:31
 #: lib/jumubase_web/templates/session/new.html.eex:18
 msgid "Password"
 msgstr "Passwort"
@@ -566,7 +569,7 @@ msgid "Add Category"
 msgstr "Neue Kategorie hinzufügen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/new.html.eex:12
+#: lib/jumubase_web/templates/internal/category/new.html.eex:46
 msgid "Create Category"
 msgstr "Kategorie erstellen"
 
@@ -581,46 +584,71 @@ msgid "The category \"%{name}\" was created."
 msgstr "Die Kategorie \"%{name}\" wurde erstellt."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:18
+#: lib/jumubase_web/views/internal/category_view.ex:39
 msgid "Classical"
 msgstr "Klassik"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:28
+#: lib/jumubase_web/views/internal/category_view.ex:49
 msgid "Ensemble"
 msgstr "Ensemble"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/index.html.eex:9
+#: lib/jumubase_web/templates/internal/category/new.html.eex:24
 msgid "Genre"
 msgstr "Genre"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:20
+#: lib/jumubase_web/views/internal/category_view.ex:41
 msgid "Kimu"
 msgstr "Kimu"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:19
+#: lib/jumubase_web/views/internal/category_view.ex:40
 msgid "Popular"
 msgstr "Pop"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/index.html.eex:8
+#: lib/jumubase_web/templates/internal/category/new.html.eex:16
 msgid "Short name"
 msgstr "Kürzel"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:27
+#: lib/jumubase_web/views/internal/category_view.ex:48
 msgid "Solo"
 msgstr "Solo"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:29
+#: lib/jumubase_web/views/internal/category_view.ex:50
 msgid "Solo/Ensemble"
 msgstr "Solo/Ensemble"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/index.html.eex:10
+#: lib/jumubase_web/templates/internal/category/new.html.eex:35
 msgid "Type"
 msgstr "Typ"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:27
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:29
+msgid "AG max"
+msgstr "bis AG"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:26
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:28
+msgid "AG min"
+msgstr "von AG"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:22
+msgid "Advancement"
+msgstr "Weiterleitung"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:21
+msgid "Participation"
+msgstr "Teilnahme"

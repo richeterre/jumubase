@@ -16,13 +16,14 @@ defmodule Jumubase.Foundation.ContestCategory do
     timestamps()
   end
 
-  @required_attrs [:contest_id, :category_id, :min_age_group,
-    :max_age_group, :min_advancing_age_group, :max_advancing_age_group]
+  @required_attrs [:contest_id, :category_id, :min_age_group, :max_age_group]
+
+  @optional_attrs [:min_advancing_age_group, :max_advancing_age_group]
 
   @doc false
   def changeset(struct, attrs) do
     struct
-    |> cast(attrs, @required_attrs)
+    |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
     |> validate_inclusion(:min_age_group, AgeGroups.all)
     |> validate_inclusion(:max_age_group, AgeGroups.all)

@@ -98,6 +98,7 @@ defmodule JumubaseWeb.PerformanceView do
 
   defp instrument_options do
     Jumubase.Showtime.Instruments.all
+    |> Enum.sort_by(fn {_value, label} -> label end)
     |> Enum.map(fn {value, label} -> %{value: value, label: label} end)
   end
 

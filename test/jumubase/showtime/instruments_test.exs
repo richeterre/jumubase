@@ -4,7 +4,7 @@ defmodule Jumubase.InstrumentsTest do
 
   test "all/0 returns a list of all instruments" do
     %{} = result = Instruments.all
-    assert result |> Enum.count == 10
+    assert result |> Enum.count == 34
   end
 
   test "name/1 returns an instrument's display name, if found" do

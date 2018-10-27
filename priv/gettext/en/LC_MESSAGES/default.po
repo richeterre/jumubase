@@ -494,11 +494,6 @@ msgid "Edit your registration"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:58
-msgid "Edited successfully"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/page/edit_registration.html.eex:4
 msgid "Enter your edit code to make changes to your existing registration."
 msgstr ""
@@ -676,4 +671,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/performance_controller.ex:28
 msgid "If you wish to change it later, use this edit code: %{edit_code}"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:58
+msgid "Your changes to the registration were saved."
 msgstr ""

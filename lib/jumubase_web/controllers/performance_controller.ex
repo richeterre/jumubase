@@ -55,7 +55,7 @@ defmodule JumubaseWeb.PerformanceController do
     case Showtime.update_performance(contest, performance, params) do
       {:ok, _} ->
         conn
-        |> put_flash(:success, gettext("Edited successfully"))
+        |> put_flash(:success, gettext("Your changes to the registration were saved."))
         |> redirect(to: page_path(conn, :home))
       {:error, changeset} ->
         conn

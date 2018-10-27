@@ -97,7 +97,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       params = valid_params(cc2)
 
       conn = put(conn, performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
-      assert get_flash(conn, :success) == "Edited successfully"
+      assert get_flash(conn, :success) == "Your changes to the registration were saved."
       assert redirected_to(conn) == page_path(conn, :home)
     end
 

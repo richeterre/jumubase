@@ -5,14 +5,14 @@
 </p>
 
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-8">
     <p>Bitte lies dir zunächst die aktuelle Ausschreibung durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
 
-    <p><%= icon_link "file", "Ausschreibung 2019", static_path(@conn, "/resources/Ausschreibung_2019.pdf") %></p>
+    <%= icon_link "file", "Ausschreibung 2019", static_path(@conn, "/resources/Ausschreibung_2019.pdf"), class: "btn btn-info" %>
 
     <hr>
 
-    <p>In der <strong>Region Nord- und Osteuropa</strong> bestehen zusätzlich zur Ausschreibung die folgenden Sonderregelungen:</p>
+    <p>In der <strong>Region Nord- und Osteuropa</strong> bestehen zusätzlich die folgenden Sonderregelungen:</p>
 
     <h3>Populäre Musik</h3>
 

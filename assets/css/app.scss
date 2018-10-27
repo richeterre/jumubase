@@ -15,6 +15,17 @@ body {
   }
 }
 
+h3 {
+  // Increase vertical margins for readability
+  margin-bottom: $line-height-computed;
+  margin-top: 1.5 * $line-height-computed;
+}
+
+h4 {
+  // Increase top margin for readability
+  margin-top: $line-height-computed;
+}
+
 /* Make image fit into navbar */
 .navbar-brand > img { height: $line-height-computed; }
 

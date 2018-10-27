@@ -11,13 +11,8 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:25
+#: lib/jumubase/accounts/message.ex:16 lib/jumubase/accounts/message.ex:25
 msgid "Reset your password"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:26
-msgid "Reset your password at %{url}"
 msgstr ""
 
 #, elixir-format
@@ -46,12 +41,6 @@ msgid "You need to log in to view this page."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:18
-msgid "You requested a password reset, but no user was found for the email you provided."
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:36
 #: lib/jumubase_web/controllers/password_reset_controller.ex:43
 msgid "Your password has been reset."
 msgstr ""
@@ -74,4 +63,19 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:35
 msgid "Password reset"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:26
+msgid "Open this link now to choose a new password: %{url}"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:18
+msgid "You tried to reset your password, but no user was found for the email you provided."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:36
+msgid "Your password has been reset successfully."
 msgstr ""

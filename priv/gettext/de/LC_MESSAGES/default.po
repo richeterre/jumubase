@@ -132,11 +132,6 @@ msgid "Back"
 msgstr "Zurück"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:17
-msgid "Cancel (keep old password)"
-msgstr "Abbrechen (altes Passwort behalten)"
-
-#, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:1
 msgid "Choose Password"
 msgstr "Passwort wählen"
@@ -192,20 +187,10 @@ msgid "New Host"
 msgstr "Neue Schule"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:5
-msgid "New password"
-msgstr "Neues Passwort"
-
-#, elixir-format
 #: lib/jumubase_web/templates/error/form_errors.html.eex:4
 #: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:6
 msgid "Please fix the errors below and try again!"
 msgstr "Bitte behebe die folgenden Fehler und versuche es erneut!"
-
-#, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:13
-msgid "Set password"
-msgstr "Passwort setzen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:30
@@ -672,3 +657,18 @@ msgstr "Standort"
 #: lib/jumubase_web/templates/page/home.html.eex:4
 msgid "The website for “Jugend musiziert” at German schools in the region “Nord- und Osteuropa”"
 msgstr "Die Website für “Jugend musiziert” an den Deutschen Schulen der Region Nord- und Osteuropa"
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:17
+msgid "Cancel (keep old password)"
+msgstr "Abbrechen (altes Passwort behalten)"
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:5
+msgid "New password"
+msgstr "Neues Passwort"
+
+#, elixir-format
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:13
+msgid "Set password"
+msgstr "Passwort setzen"

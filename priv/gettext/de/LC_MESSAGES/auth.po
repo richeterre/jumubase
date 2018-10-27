@@ -12,14 +12,9 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:25
+#: lib/jumubase/accounts/message.ex:16 lib/jumubase/accounts/message.ex:25
 msgid "Reset your password"
-msgstr "Neues Passwort setzen"
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:26
-msgid "Reset your password at %{url}"
-msgstr "Setze dein Passwort hier neu: %{url}"
+msgstr "Neues Passwort einrichten"
 
 #, elixir-format
 #: lib/jumubase/accounts/user_messages.ex:6
@@ -47,15 +42,9 @@ msgid "You need to log in to view this page."
 msgstr "Du musst dich einloggen, um diese Seite zu besuchen."
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:18
-msgid "You requested a password reset, but no user was found for the email you provided."
-msgstr "Du hast begonnen, ein neues Passwort zu setzen, aber es wurde kein Benutzer unter der angegebenen E-Mail gefunden."
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:36
 #: lib/jumubase_web/controllers/password_reset_controller.ex:43
 msgid "Your password has been reset."
-msgstr "Dein Passwort wurde gesetzt."
+msgstr "Dein Passwort wurde eingerichtet."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:33
@@ -65,7 +54,7 @@ msgstr "Du musst dich ausloggen, um diese Seite zu besuchen."
 #, elixir-format
 #: lib/jumubase_web/controllers/password_reset_controller.ex:16
 msgid "Check your inbox for instructions on how to reset your password"
-msgstr "Du hast eine E-Mail mit Anweisungen bekommen, wie du ein neues Passwort setzen kannst"
+msgstr "Du hast eine E-Mail mit Anweisungen zur Einrichtung eines neuen Passworts bekommen."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/password_reset_controller.ex:19
@@ -75,4 +64,19 @@ msgstr "Bitte gib eine E-Mailadresse ein."
 #, elixir-format
 #: lib/jumubase/accounts/message.ex:35
 msgid "Password reset"
-msgstr "Neues Passwort gesetzt"
+msgstr "Neues Passwort eingerichtet"
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:26
+msgid "Open this link now to choose a new password: %{url}"
+msgstr "Öffne nun diesen Link, um ein neues Passwort einzurichten: %{url}"
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:18
+msgid "You tried to reset your password, but no user was found for the email you provided."
+msgstr "Du hast versucht, ein neues Passwort einzurichten, aber es wurde kein Benutzer unter der angegebenen E-Mail gefunden."
+
+#, elixir-format
+#: lib/jumubase/accounts/message.ex:36
+msgid "Your password has been reset successfully."
+msgstr "Dein neues Passwort wurde erfolgreich eingerichtet."

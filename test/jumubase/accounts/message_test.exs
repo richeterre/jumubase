@@ -19,7 +19,7 @@ defmodule Jumubase.Accounts.MessageTest do
     sent_email = Message.reset_request(email, key)
     expected_url = password_reset_url(JumubaseWeb.Endpoint, :edit, key: key)
     assert sent_email.subject =~ "Reset your password"
-    assert sent_email.text_body =~ "password at #{expected_url}"
+    assert sent_email.text_body =~ "choose a new password: #{expected_url}"
     assert_delivered_email(Message.reset_request(email, key))
   end
 

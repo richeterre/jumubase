@@ -1,5 +1,5 @@
 <h2>
-  <%= gettext("Hello %{name},", name: @current_user.first_name) %>
+  <%= gettext("Hello %{name},", name: @current_user.given_name) %>
 </h2>
 
 <p><%= gettext("welcome to your personal Jumu portal!") %></p>

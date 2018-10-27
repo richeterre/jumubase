@@ -10,7 +10,7 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
       @tag login_as: role
       test "(#{role}) shows the welcome page with a greeting", %{conn: conn, user: user} do
         conn = get(conn, internal_page_path(conn, :home))
-        assert html_response(conn, 200) =~ "Hello #{user.first_name}"
+        assert html_response(conn, 200) =~ "Hello #{user.given_name}"
       end
     end
   end

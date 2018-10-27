@@ -35,8 +35,8 @@ Repo.transaction fn ->
   # Create demo users
 
   User.create_changeset(%User{}, %{
-    first_name: "Anna",
-    last_name: "Admin",
+    given_name: "Anna",
+    family_name: "Admin",
     email: "admin@example.org",
     password: "password",
     role: "admin"
@@ -44,8 +44,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Gustav",
-    last_name: "Globalheimer",
+    given_name: "Gustav",
+    family_name: "Globalheimer",
     email: "global-org@example.org",
     password: "password",
     role: "global-organizer"
@@ -54,8 +54,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Lucie",
-    last_name: "Lokalheldin",
+    given_name: "Lucie",
+    family_name: "Lokalheldin",
     email: "local-org@example.org",
     password: "password",
     role: "local-organizer"
@@ -64,8 +64,8 @@ Repo.transaction fn ->
   |> Repo.insert!
 
   User.create_changeset(%User{}, %{
-    first_name: "Bernd",
-    last_name: "Beobachter",
+    given_name: "Bernd",
+    family_name: "Beobachter",
     email: "inspector@example.org",
     password: "password",
     role: "inspector"

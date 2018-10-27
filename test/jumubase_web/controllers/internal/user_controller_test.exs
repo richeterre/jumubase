@@ -2,8 +2,8 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   use JumubaseWeb.ConnCase
   alias Jumubase.Accounts
 
-  @update_attrs %{email: "xyz@de.fi", first_name: "X Y", last_name: "Z", role: "global-organizer"}
-  @invalid_attrs %{email: nil, first_name: nil, last_name: nil, password_hash: nil, role: nil}
+  @update_attrs %{email: "xyz@de.fi", given_name: "X Y", family_name: "Z", role: "global-organizer"}
+  @invalid_attrs %{email: nil, given_name: nil, family_name: nil, password_hash: nil, role: nil}
 
   setup config do
     login_if_needed(config)

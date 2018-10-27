@@ -7,9 +7,9 @@ defmodule Jumubase.Accounts.User do
   alias Jumubase.Foundation.Host
 
   schema "users" do
-    field(:first_name, :string)
-    field(:last_name, :string)
-    field(:role, :string)
+    field :given_name, :string
+    field :family_name, :string
+    field :role, :string
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
@@ -22,7 +22,7 @@ defmodule Jumubase.Accounts.User do
     timestamps()
   end
 
-  @base_attrs [:first_name, :last_name, :email, :role]
+  @base_attrs [:given_name, :family_name, :email, :role]
 
   def changeset(%User{} = user, attrs) do
     user

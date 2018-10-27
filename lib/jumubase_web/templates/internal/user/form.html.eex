@@ -3,17 +3,17 @@
 
   <div class="row">
     <div class="form-group col-sm-5">
-      <%= label f, :first_name, gettext("First name"), class: "control-label" %>
-      <%= text_input f, :first_name, class: "form-control" %>
-      <%= error_tag f, :first_name %>
+      <%= label f, :fiven_name, gettext("First name"), class: "control-label" %>
+      <%= text_input f, :fiven_name, class: "form-control" %>
+      <%= error_tag f, :fiven_name %>
     </div>
   </div>
 
   <div class="row">
     <div class="form-group col-sm-5">
-      <%= label f, :last_name, gettext("Last name"), class: "control-label" %>
-      <%= text_input f, :last_name, class: "form-control" %>
-      <%= error_tag f, :last_name %>
+      <%= label f, :family_name, gettext("Last name"), class: "control-label" %>
+      <%= text_input f, :family_name, class: "form-control" %>
+      <%= error_tag f, :family_name %>
     </div>
   </div>
 

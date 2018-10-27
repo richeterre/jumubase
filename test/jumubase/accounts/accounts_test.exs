@@ -42,8 +42,8 @@ defmodule Jumubase.AccountsTest do
     valid_attrs = params_for(:user, password: "password")
     assert {:ok, %User{} = user} = Accounts.create_user(valid_attrs)
     assert user.email == valid_attrs[:email]
-    assert user.first_name == valid_attrs[:first_name]
-    assert user.last_name == valid_attrs[:last_name]
+    assert user.given_name == valid_attrs[:given_name]
+    assert user.family_name == valid_attrs[:family_name]
     assert user.role == valid_attrs[:role]
   end
 
@@ -53,14 +53,14 @@ defmodule Jumubase.AccountsTest do
 
   test "update_user/2 with valid data updates the user" do
     [h1, h2, h3] = insert_list(3, :host)
-    user = insert(:user, email: "a@xyz.org", first_name: "A", last_name: "B", role: "local-organizer", hosts: [h1, h2])
-    update_attrs = %{email: "b@xyz.org", first_name: "X", last_name: "Y", role: "global-organizer", host_ids: [h2.id, h3.id]}
+    user = insert(:user, email: "a@xyz.org", given_name: "A", family_name: "B", role: "local-organizer", hosts: [h1, h2])
+    update_attrs = %{email: "b@xyz.org", given_name: "X", family_name: "Y", role: "global-organizer", host_ids: [h2.id, h3.id]}
 
     assert {:ok, user} = Accounts.update_user(user, update_attrs)
     assert %User{} = user
     assert user.email == update_attrs[:email]
-    assert user.first_name == update_attrs[:first_name]
-    assert user.last_name == update_attrs[:last_name]
+    assert user.given_name == update_attrs[:given_name]
+    assert user.family_name == update_attrs[:family_name]
     assert user.role == update_attrs[:role]
     assert user.hosts == [h2, h3]
   end

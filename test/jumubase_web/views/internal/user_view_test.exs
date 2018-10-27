@@ -3,8 +3,8 @@ defmodule JumubaseWeb.Internal.UserViewTest do
   alias JumubaseWeb.Internal.UserView
 
   test "returns a user's full name" do
-    user = build(:user, first_name: "First", last_name: "Last")
-    assert UserView.full_name(user) == "First Last"
+    user = build(:user, given_name: "Given", family_name: "Family")
+    assert UserView.full_name(user) == "Given Family"
   end
 
   test "returns the flags of a user's associated hosts" do

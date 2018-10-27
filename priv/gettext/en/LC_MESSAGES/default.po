@@ -668,7 +668,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/templates/page/home.html.eex:4
 msgid "The website for “Jugend musiziert” at German schools in the region “Nord- und Osteuropa”"
 msgstr ""

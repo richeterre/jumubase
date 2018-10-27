@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.UserView do
   Returns the given user's full name.
   """
   def full_name(user) do
-    "#{user.first_name} #{user.last_name}"
+    "#{user.given_name} #{user.family_name}"
   end
 
   @doc """

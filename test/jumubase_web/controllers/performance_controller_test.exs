@@ -19,10 +19,16 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
       conn = post(conn, performance_path(conn, :create, c), params)
 
-      assert redirected_to(conn) == page_path(conn, :home)
+      # Check that performance was inserted correctly
       assert performance = Repo.one(Performance) |> Repo.preload([appearances: :participant])
       assert performance.contest_category_id == cc.id
       assert [%{participant: %{email: "ab@cd.ef"}}] = performance.appearances
+
+      # Check response page
+      assert redirected_to(conn) == page_path(conn, :home)
+      conn = get(recycle(conn), page_path(conn, :home)) # Follow redirection
+      assert html_response(conn, 200) =~ "We received your registration"
+      assert html_response(conn, 200) =~ performance.edit_code
     end
 
     test "re-renders form with errors when user submits invalid data", %{conn: conn, contest: c} do

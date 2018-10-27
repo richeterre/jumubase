@@ -23,9 +23,14 @@ defmodule JumubaseWeb.PerformanceController do
     performance_params = params["performance"] || %{}
 
     case Showtime.create_performance(contest, performance_params) do
-      {:ok, _} ->
+      {:ok, performance} ->
+        success_msg = gettext("We received your registration.")
+        edit_msg = gettext("If you wish to change it later, use this edit code: %{edit_code}",
+          edit_code: performance.edit_code
+        )
+
         conn
-        |> put_flash(:success, gettext("Success!"))
+        |> put_flash(:success, "#{success_msg} #{edit_msg}")
         |> redirect(to: page_path(conn, :home))
       {:error, changeset} ->
         conn

@@ -292,11 +292,6 @@ msgid "Soloist"
 msgstr "Solist"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:28
-msgid "Success!"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/performance/_form.html.eex:37
 msgid "Add participant"
 msgstr "Teilnehmer hinzufügen"
@@ -499,7 +494,7 @@ msgid "Edit your registration"
 msgstr "Anmeldung bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:53
+#: lib/jumubase_web/controllers/performance_controller.ex:58
 msgid "Edited successfully"
 msgstr ""
 
@@ -659,16 +654,26 @@ msgid "The website for “Jugend musiziert” at German schools in the region �
 msgstr "Die Website für “Jugend musiziert” an den Deutschen Schulen der Region Nord- und Osteuropa"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:17
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:19
 msgid "Cancel (keep old password)"
 msgstr "Abbrechen (altes Passwort behalten)"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:5
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:7
 msgid "New password"
 msgstr "Neues Passwort"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:13
+#: lib/jumubase_web/templates/password_reset/edit.html.eex:15
 msgid "Set password"
 msgstr "Passwort setzen"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:27
+msgid "We received your registration."
+msgstr "Wir haben deine Anmeldung erhalten."
+
+#, elixir-format,
+#: lib/jumubase_web/controllers/performance_controller.ex:28
+msgid "If you wish to change it later, use this edit code: %{edit_code}"
+msgstr "Wenn du sie später bearbeiten möchtest, verwende diesen Änderungscode: %{edit_code}"

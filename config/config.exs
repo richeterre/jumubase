@@ -32,7 +32,8 @@ config :phauxth,
 
 # Configure mailer
 config :jumubase, Jumubase.Mailer,
-  adapter: Bamboo.LocalAdapter
+  adapter: Bamboo.LocalAdapter,
+  sender: "no-reply@localhost"
 
 # Configure Elixir's Logger
 config :logger, :console,

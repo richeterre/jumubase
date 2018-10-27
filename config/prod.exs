@@ -24,6 +24,12 @@ config :jumubase, JumubaseWeb.Endpoint,
 config :phauxth,
   token_salt: System.get_env("PHAUXTH_TOKEN_SALT")
 
+# Configure mailer
+config :jumubase, Jumubase.Mailer,
+  adapter: Bamboo.SendgridAdapter,
+  api_key: System.get_env("SENDGRID_API_KEY"),
+  sender: "no-reply@jumu-nordost.eu"
+
 # Do not print debug messages in production
 config :logger, level: :info
 

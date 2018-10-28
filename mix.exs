@@ -35,6 +35,7 @@ defmodule Jumubase.Mixfile do
     [
       {:bamboo, "~> 1.1"},
       {:bcrypt_elixir, "~> 1.0"},
+      {:earmark, "~> 1.2"},
       {:ex_machina, "~> 2.1"},
       {:gettext, "~> 0.11"},
       {:phauxth, "~> 1.2"},

@@ -12,4 +12,12 @@ defmodule JumubaseWeb.PageView do
     locale = Gettext.get_locale(Jumubase.Gettext)
     render("rules.#{locale}.html", assigns)
   end
+
+  def render_markdown(nil), do: nil
+  def render_markdown(markdown) do
+    case Earmark.as_html(markdown) do
+      {:ok, result, _} -> raw(result)
+      {:error, _, _} -> nil
+    end
+  end
 end

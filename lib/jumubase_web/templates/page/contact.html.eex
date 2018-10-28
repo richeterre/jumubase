@@ -16,6 +16,7 @@
           <%= host.name %>
         </div>
         <div class="panel-body">
+          <%= render_markdown(host.address) %>
         </div>
       </div>
     <% end %>

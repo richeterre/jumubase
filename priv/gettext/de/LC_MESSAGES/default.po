@@ -680,11 +680,6 @@ msgid "and"
 msgstr "und"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:20
-msgid "Jumu registration for category \"%{name}\""
-msgstr "Jumu-Anmeldung in der Kategorie \"%{name}\""
-
-#, elixir-format
 #: lib/jumubase_web/controllers/performance_controller.ex:90
 msgid "We received your registration."
 msgstr "Wir haben deine Anmeldung erhalten."
@@ -693,3 +688,17 @@ msgstr "Wir haben deine Anmeldung erhalten."
 #: lib/jumubase_web/controllers/performance_controller.ex:91
 msgid "To make changes, use this edit code: %{edit_code}"
 msgstr "Mit diesem Änderungscode kannst du sie bearbeiten: %{edit_code}"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/email.ex:62
+msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
+msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
+msgstr[0] "Deine Jumu-Anmeldung in der Kategorie \"%{name}\""
+msgstr[1] "Eure Jumu-Anmeldung in der Kategorie \"%{name}\""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/email.ex:56
+msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
+msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
+msgstr[0] "Deine Kimu-Anmeldung"
+msgstr[1] "Eure Kimu-Anmeldung"

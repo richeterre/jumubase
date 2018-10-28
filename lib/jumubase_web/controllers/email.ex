@@ -3,6 +3,7 @@ defmodule JumubaseWeb.Email do
 
   import Jumubase.Gettext
   import JumubaseWeb.Router.Helpers
+  alias Jumubase.Foundation.Category
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Email
@@ -12,21 +13,22 @@ defmodule JumubaseWeb.Email do
   """
   def registration_success(%Performance{} = performance) do
     %{
-      contest_category: %{category: %{name: category_name}},
+      contest_category: %{category: category},
       edit_code: edit_code,
       appearances: appearances
     } = performance |> Showtime.load_contest_category
 
-    subject = gettext("Jumu registration for category \"%{name}\"", name: category_name)
+    participants = appearances |> Enum.map(&(&1.participant))
 
     email =
       base_email()
-      |> subject(subject)
-      |> assign(:category_name, category_name)
+      |> subject(get_subject(category, length(participants)))
+      |> assign(:genre, category.genre)
+      |> assign(:category_name, category.name)
       |> assign(:edit_code, edit_code)
       |> assign(:edit_url, page_url(JumubaseWeb.Endpoint, :edit_registration))
 
-    case appearances |> Enum.map(&(&1.participant)) do
+    case participants do
       [participant] ->
         email
         |> to(participant.email)
@@ -46,5 +48,21 @@ defmodule JumubaseWeb.Email do
     sender = Application.get_env(:jumubase, Email)[:default_sender]
 
     new_email() |> from(sender)
+  end
+
+  defp get_subject(%Category{genre: "kimu"}, participant_count) do
+    ngettext(
+      "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE",
+      "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY",
+      participant_count
+    )
+  end
+  defp get_subject(%Category{name: cat_name}, participant_count) do
+    ngettext(
+      "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\"",
+      "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\"",
+      participant_count,
+      name: cat_name
+    )
   end
 end

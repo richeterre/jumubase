@@ -1,11 +1,15 @@
 <p><%= greeting(@participant) %>,</p>
 
-<p>Du hast dich erfolgreich für die Teilnahme in der Kategorie <em><%= @category_name %></em> angemeldet.</p>
+<p>Du hast dich erfolgreich für die Teilnahme an
+  <%= if @genre == "kimu" do %>
+    <em>“Kinder musizieren”</em>
+  <% else %>
+    “Jugend musiziert” in der Kategorie <em><%= @category_name %></em>
+  <% end %>
+angemeldet.</p>
 
 <p>Mit dem Änderungscode <strong><%= @edit_code %></strong> kannst du deine Anmeldung unter folgendem Link ändern:</p>
 
-<p><%= link nil, to: @edit_url %></p>
+<p><%= link @edit_url, to: @edit_url %></p>
 
-<p>Viel Erfolg bei der Teilnahme wünscht dir</p>
-
-<p>Dein Jumu-Orgteam</p>
+<p>Viel Erfolg und vor allem viel Spaß beim Musizieren!</p>

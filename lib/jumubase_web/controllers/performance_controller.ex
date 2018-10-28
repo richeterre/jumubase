@@ -28,11 +28,8 @@ defmodule JumubaseWeb.PerformanceController do
       {:ok, %{edit_code: edit_code} = performance} ->
         Email.registration_success(performance) |> Mailer.deliver_later
 
-        success_msg = gettext("We received your registration.")
-        edit_msg = gettext("If you wish to change it later, use this edit code: %{edit_code}", edit_code: edit_code)
-
         conn
-        |> put_flash(:success, "#{success_msg} #{edit_msg}")
+        |> put_flash(:success, registration_success_message(edit_code))
         |> redirect(to: page_path(conn, :home))
       {:error, changeset} ->
         conn
@@ -87,5 +84,11 @@ defmodule JumubaseWeb.PerformanceController do
     params
     |> Map.put_new("appearances", [])
     |> Map.put_new("pieces", [])
+  end
+
+  defp registration_success_message(edit_code) do
+    success_msg = gettext("We received your registration.")
+    edit_msg = gettext("To make changes, use this edit code: %{edit_code}", edit_code: edit_code)
+    "#{success_msg} #{edit_msg}"
   end
 end

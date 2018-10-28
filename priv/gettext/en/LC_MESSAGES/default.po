@@ -664,16 +664,6 @@ msgid "Set password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:90
-msgid "We received your registration."
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:91
-msgid "If you wish to change it later, use this edit code: %{edit_code}"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/controllers/performance_controller.ex:57
 msgid "Your changes to the registration were saved."
 msgstr ""
@@ -689,7 +679,17 @@ msgstr ""
 msgid "and"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/controllers/email.ex:20
 msgid "Jumu registration for category \"%{name}\""
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:90
+msgid "We received your registration."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:91
+msgid "To make changes, use this edit code: %{edit_code}"
 msgstr ""

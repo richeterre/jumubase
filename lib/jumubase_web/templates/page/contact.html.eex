@@ -10,15 +10,9 @@
   <div class="col-sm-7">
     <h3><%= gettext("Member schools") %></h3>
 
-    <%= for host <- @hosts do %>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <%= host.name %>
-        </div>
-        <div class="panel-body">
-          <%= render_markdown(host.address) %>
-        </div>
-      </div>
-    <% end %>
+    <%= render "_accordion.html",
+      id: "hosts-accordion",
+      items: Enum.map(@hosts, &to_accordion_item/1)
+    %>
   </div>
 </div>

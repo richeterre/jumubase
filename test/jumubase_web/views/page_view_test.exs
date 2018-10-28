@@ -2,15 +2,15 @@ defmodule JumubaseWeb.PageViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.PageView
 
-  describe "render_markdown/1" do
-    test "renders nothing when receiving nil as input" do
-      assert PageView.render_markdown(nil) == nil
-    end
+  describe "to_accordion_item/1" do
+    test "transforms a host to an accordion item" do
+      host = build(:host, id: 123, name: "Name", address: "# Heading\nMore text")
 
-    test "renders Markdown as raw HTML" do
-      assert PageView.render_markdown(
-        "# Heading\nSome *bold*, <br>broken text"
-      ) == {:safe, "<h1>Heading</h1>\n<p>Some <em>bold</em>, <br>broken text</p>\n"}
+      assert PageView.to_accordion_item(host) == %{
+        id: 123,
+        title: "Name",
+        body: {:safe, "<h1>Heading</h1>\n<p>More text</p>\n"}
+      }
     end
   end
 end

@@ -15,6 +15,12 @@ defmodule Jumubase.HostTest do
       refute changeset.valid?
     end
 
+    test "is invalid without an address" do
+      params = params_for(:host, address: "")
+      changeset = Host.changeset(%Host{}, params)
+      refute changeset.valid?
+    end
+
     test "is invalid without a city" do
       params = params_for(:host, city: "")
       changeset = Host.changeset(%Host{}, params)

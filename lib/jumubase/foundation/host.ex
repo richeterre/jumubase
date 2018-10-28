@@ -4,9 +4,10 @@ defmodule Jumubase.Foundation.Host do
   alias Jumubase.Foundation.Host
 
   schema "hosts" do
+    field :name, :string
+    field :address, :string
     field :city, :string
     field :country_code, :string
-    field :name, :string
     field :time_zone, :string
     field :latitude, :float
     field :longitude, :float
@@ -14,7 +15,7 @@ defmodule Jumubase.Foundation.Host do
     timestamps()
   end
 
-  @required_attrs [:name, :city, :country_code, :time_zone, :latitude, :longitude]
+  @required_attrs [:name, :address, :city, :country_code, :time_zone, :latitude, :longitude]
 
   @doc false
   def changeset(%Host{} = host, attrs) do

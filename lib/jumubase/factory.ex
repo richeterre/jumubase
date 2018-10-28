@@ -54,6 +54,7 @@ defmodule Jumubase.Factory do
   def host_factory do
     %Host{
       name: sequence(:name, &"Host #{&1}"),
+      address: "c/o Jane Doe<br>Jumu Lane 1<br>Jumutown",
       city: "Jumutown",
       country_code: "DE",
       time_zone: "Europe/Berlin",

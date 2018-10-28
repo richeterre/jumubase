@@ -3,6 +3,7 @@ defmodule Jumubase.Accounts.User do
   import Ecto.Changeset
   import Jumubase.Gettext
   alias Jumubase.JumuParams
+  alias Jumubase.Utils
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.Host
 
@@ -28,6 +29,7 @@ defmodule Jumubase.Accounts.User do
     user
     |> cast(attrs, @base_attrs)
     |> validate_required(@base_attrs)
+    |> validate_format(:email, Utils.email_format)
     |> validate_inclusion(:role, JumuParams.user_roles())
     |> unique_email
   end

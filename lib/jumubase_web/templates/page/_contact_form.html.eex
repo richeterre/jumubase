@@ -1,0 +1,31 @@
+<%= form_for @conn, contact_path(@conn, :send_message), [as: :contact], fn f -> %>
+  <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <%= label f, :name, gettext("Name"), class: "control-label" %>
+      <%= text_input f, :name, required: true, class: "form-control" %>
+      <%= error_tag f, :name %>
+    </div>
+
+    <div class="form-group col-md-6">
+      <%= label f, :email, gettext("Email"), class: "control-label" %>
+      <%= email_input f, :email, required: true, class: "form-control" %>
+      <%= error_tag f, :email %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-12">
+      <%= label f, :message, gettext("Message"), class: "control-label" %>
+      <%= textarea f, :message, required: true, rows: 4, class: "form-control" %>
+      <%= error_tag f, :message %>
+    </div>
+  </div>
+
+  <div class="form-group clearfix">
+    <%= submit class: "btn btn-primary pull-right" do %>
+      <%= gettext("Send message") %> <%= icon_tag("send") %>
+    <% end %>
+  </div>
+<% end %>

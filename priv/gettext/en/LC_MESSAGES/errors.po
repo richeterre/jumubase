@@ -118,7 +118,7 @@ msgid "The performance must have at least one piece"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/participant.ex:39
+#: lib/jumubase/showtime/participant.ex:40
 msgid "can't be changed"
 msgstr ""
 
@@ -138,6 +138,6 @@ msgid "can only have either a composer or an artist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/user.ex:71
+#: lib/jumubase/accounts/user.ex:73
 msgid "The password is too short."
 msgstr ""

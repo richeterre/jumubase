@@ -36,3 +36,7 @@ config :bcrypt_elixir, log_rounds: 4
 # Configure test mailer
 config :jumubase, Jumubase.Mailer,
   adapter: Bamboo.TestAdapter
+
+# Configure test email
+config :jumubase, JumubaseWeb.Email,
+  contact_email: "test@localhost"

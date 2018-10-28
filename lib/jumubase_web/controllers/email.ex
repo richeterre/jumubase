@@ -8,6 +8,16 @@ defmodule JumubaseWeb.Email do
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Email
 
+  def contact_message(%{name: name, email: email, message: message}) do
+    recipient = Application.get_env(:jumubase, Email)[:contact_email]
+
+    new_email()
+    |> from({name, email})
+    |> to(recipient)
+    |> subject(gettext("New message via jumu-nordost.eu"))
+    |> text_body(message)
+  end
+
   @doc """
   Sends a confirmation email after registering for a contest.
   """

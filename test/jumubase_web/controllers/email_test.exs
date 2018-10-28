@@ -1,5 +1,17 @@
 defmodule JumubaseWeb.EmailTest do
   use JumubaseWeb.ConnCase
+  alias JumubaseWeb.Email
+
+  describe "contact_message/1" do
+    test "composes an email from the given contact params" do
+      email = Email.contact_message(%{name: "A", email: "a@b.c", message: "Lorem ipsum"})
+
+      assert email.from == {"A", "a@b.c"}
+      assert email.to == "test@localhost"
+      assert email.subject == "New message via jumu-nordost.eu"
+      assert email.text_body == "Lorem ipsum"
+    end
+  end
 
   describe "registration_success/1" do
     setup do
@@ -13,7 +25,7 @@ defmodule JumubaseWeb.EmailTest do
       )
       cat_name = cc.category.name
 
-      email = JumubaseWeb.Email.registration_success(performance)
+      email = Email.registration_success(performance)
 
       assert email.to == "pt@example.org"
       assert email.subject == "Your Jumu registration for category \"#{cat_name}\""
@@ -29,7 +41,7 @@ defmodule JumubaseWeb.EmailTest do
       )
       cat_name = cc.category.name
 
-      email = JumubaseWeb.Email.registration_success(performance)
+      email = Email.registration_success(performance)
 
       assert email.to == ["pt1@example.org", "pt2@example.org"]
       assert email.subject == "Your Jumu registration for category \"#{cat_name}\""
@@ -41,7 +53,7 @@ defmodule JumubaseWeb.EmailTest do
         appearances: build_appearances(["pt@example.org"])
       )
 
-      email = JumubaseWeb.Email.registration_success(performance)
+      email = Email.registration_success(performance)
 
       assert email.to == "pt@example.org"
       assert email.subject == "Your Kimu registration"

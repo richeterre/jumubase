@@ -40,6 +40,7 @@ msgstr "Benutzer bearbeiten"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:12
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:181
 #: lib/jumubase_web/templates/session/new.html.eex:12
@@ -75,6 +76,7 @@ msgstr "Jumu-Logo"
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/new.html.eex:8
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:6
 msgid "Name"
 msgstr "Name"
 
@@ -138,7 +140,7 @@ msgstr "Passwort wählen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:8
-#: lib/jumubase_web/templates/internal/host/new.html.eex:16
+#: lib/jumubase_web/templates/internal/host/new.html.eex:24
 msgid "City"
 msgstr "Stadt"
 
@@ -148,12 +150,12 @@ msgid "Country"
 msgstr "Land"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:24
+#: lib/jumubase_web/templates/internal/host/new.html.eex:32
 msgid "Country code"
 msgstr "Ländercode"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:60
+#: lib/jumubase_web/templates/internal/host/new.html.eex:68
 msgid "Create Host"
 msgstr "Schule erstellen"
 
@@ -203,7 +205,7 @@ msgid "Time Zone"
 msgstr "Zeitzone"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:32
+#: lib/jumubase_web/templates/internal/host/new.html.eex:40
 msgid "Time zone"
 msgstr "Zeitzone"
 
@@ -629,12 +631,12 @@ msgid "Rules"
 msgstr "Regeln"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:40
+#: lib/jumubase_web/templates/internal/host/new.html.eex:48
 msgid "Latitude"
 msgstr "Breitengrad"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/new.html.eex:49
+#: lib/jumubase_web/templates/internal/host/new.html.eex:57
 msgid "Longitude"
 msgstr "Längengrad"
 
@@ -690,14 +692,14 @@ msgid "To make changes, use this edit code: %{edit_code}"
 msgstr "Mit diesem Änderungscode kannst du sie bearbeiten: %{edit_code}"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:61
+#: lib/jumubase_web/controllers/email.ex:71
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
 msgstr[0] "Deine Jumu-Anmeldung in der Kategorie \"%{name}\""
 msgstr[1] "Eure Jumu-Anmeldung in der Kategorie \"%{name}\""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:54
+#: lib/jumubase_web/controllers/email.ex:64
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] "Deine Kimu-Anmeldung"
@@ -715,6 +717,51 @@ msgid "Here is how you can get in touch with us."
 msgstr "So erreichst du uns bei Fragen und Anregungen."
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:11
+#: lib/jumubase_web/templates/page/contact.html.eex:18
 msgid "Member schools"
 msgstr "Teilnehmende Schulen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/host/new.html.eex:16
+msgid "Address"
+msgstr "Anschrift"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:20
+msgid "Message"
+msgstr "Nachricht"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/email.ex:17
+msgid "New message via jumu-nordost.eu"
+msgstr "Neue Nachricht über jumu-nordost.eu"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:28
+msgid "Send message"
+msgstr "Nachricht absenden"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:13
+msgid "For questions about local contests, consider contacting your local Jumu organizer (see list below)."
+msgstr "Bei Fragen zum Regionalwettbewerb hilft dir auch deine Jumu-Kontaktperson (siehe Liste unten) weiter."
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:9
+msgid "Message us"
+msgstr "Nachricht senden"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:12
+msgid "This form is for contacting the international committee of the region \"Nord- und Osteuropa\"."
+msgstr "Mit diesem Formular erreichst du den Landesausschuss Nord-und Osteuropa."
+
+#, elixir-format
+#: lib/jumubase_web/controllers/contact_controller.ex:24
+msgid "Please fill in all fields and try again!"
+msgstr "Bitte fülle alle Felder aus und versuche es erneut!"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/contact_controller.ex:20
+msgid "Your message has been sent!"
+msgstr "Deine Nachricht wurde versendet!"

@@ -3,6 +3,7 @@ defmodule Jumubase.Showtime.Participant do
   import Ecto.Changeset
   import Jumubase.Gettext
   alias Ecto.Changeset
+  alias Jumubase.Utils
   alias Jumubase.Showtime.Participant
 
   schema "participants" do
@@ -23,7 +24,7 @@ defmodule Jumubase.Showtime.Participant do
     participant
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> validate_format(:email, ~r/.+\@.+\..+/)
+    |> validate_format(:email, Utils.email_format)
     |> sanitize_text_input
   end
 

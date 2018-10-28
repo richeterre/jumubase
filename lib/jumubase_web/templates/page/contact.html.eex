@@ -4,10 +4,17 @@
   <%= gettext("Here is how you can get in touch with us.") %>
 </p>
 
-<hr>
-
 <div class="row">
   <div class="col-sm-7">
+    <h3><%= gettext("Message us") %></h3>
+
+    <p class="text-muted">
+      <%= gettext("This form is for contacting the international committee of the region \"Nord- und Osteuropa\".") %>
+      <%= gettext("For questions about local contests, consider contacting your local Jumu organizer (see list below).") %>
+    </p>
+
+    <%= render "_contact_form.html", conn: @conn %>
+
     <h3><%= gettext("Member schools") %></h3>
 
     <%= render "_accordion.html",

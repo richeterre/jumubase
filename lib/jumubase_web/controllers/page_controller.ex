@@ -32,6 +32,12 @@ defmodule JumubaseWeb.PageController do
     render(conn, "rules.html")
   end
 
+  def contact(conn, _params) do
+    conn
+    |> assign(:hosts, Foundation.list_hosts)
+    |> render("contact.html")
+  end
+
   # Private helpers
 
   defp show_error(conn, message) do

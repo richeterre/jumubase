@@ -19,6 +19,7 @@
         <li><%= link gettext("Home"), to: page_path(@conn, :home) %></li>
         <li><%= link gettext("Registration"), to: page_path(@conn, :registration) %></li>
         <li><%= link gettext("Rules"), to: page_path(@conn, :rules) %></li>
+        <li><%= link gettext("Contact"), to: page_path(@conn, :contact) %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%= if @current_user do %>

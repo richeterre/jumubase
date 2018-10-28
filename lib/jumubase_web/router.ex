@@ -23,6 +23,7 @@ defmodule JumubaseWeb.Router do
     get "/edit-registration", PageController, :edit_registration
     post "/edit-registration", PageController, :lookup_registration
     get "/rules", PageController, :rules
+    get "/contact", PageController, :contact
 
     resources "/contests/:contest_id/performances", PerformanceController, except: [:delete]
 

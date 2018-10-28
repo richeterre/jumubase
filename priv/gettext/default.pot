@@ -56,7 +56,7 @@ msgid "Inspector"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:35
+#: lib/jumubase_web/templates/layout/nav.html.eex:36
 #: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Internal Pages"
 msgstr ""
@@ -433,7 +433,7 @@ msgid "welcome to your personal Jumu portal!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:32
+#: lib/jumubase_web/templates/layout/nav.html.eex:33
 msgid "Log out"
 msgstr ""
 
@@ -513,7 +513,7 @@ msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:49
+#: lib/jumubase_web/controllers/page_controller.ex:55
 msgid "We could not find a registration for this edit code."
 msgstr ""
 
@@ -689,15 +689,31 @@ msgid "To make changes, use this edit code: %{edit_code}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:62
+#: lib/jumubase_web/controllers/email.ex:61
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:56
+#: lib/jumubase_web/controllers/email.ex:54
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] ""
 msgstr[1] ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/layout/nav.html.eex:22
+#: lib/jumubase_web/templates/page/contact.html.eex:1
+msgid "Contact"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:4
+msgid "Here is how you can get in touch with us."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:11
+msgid "Member schools"
+msgstr ""

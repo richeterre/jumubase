@@ -1,0 +1,23 @@
+<h2><%= gettext("Contact") %></h2>
+
+<p class="lead">
+  <%= gettext("Here is how you can get in touch with us.") %>
+</p>
+
+<hr>
+
+<div class="row">
+  <div class="col-sm-7">
+    <h3><%= gettext("Member schools") %></h3>
+
+    <%= for host <- @hosts do %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= host.name %>
+        </div>
+        <div class="panel-body">
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

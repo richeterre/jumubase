@@ -57,7 +57,7 @@ msgid "Inspector"
 msgstr "Beobachter"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:35
+#: lib/jumubase_web/templates/layout/nav.html.eex:36
 #: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Internal Pages"
 msgstr "Interne Seiten"
@@ -434,7 +434,7 @@ msgid "welcome to your personal Jumu portal!"
 msgstr "willkommen auf deinem persönlichen Jumu-Portal!"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:32
+#: lib/jumubase_web/templates/layout/nav.html.eex:33
 msgid "Log out"
 msgstr "Ausloggen"
 
@@ -514,7 +514,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:49
+#: lib/jumubase_web/controllers/page_controller.ex:55
 msgid "We could not find a registration for this edit code."
 msgstr "Wir konnten keine Anmeldung unter diesem Änderungscode finden."
 
@@ -690,15 +690,31 @@ msgid "To make changes, use this edit code: %{edit_code}"
 msgstr "Mit diesem Änderungscode kannst du sie bearbeiten: %{edit_code}"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:62
+#: lib/jumubase_web/controllers/email.ex:61
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
 msgstr[0] "Deine Jumu-Anmeldung in der Kategorie \"%{name}\""
 msgstr[1] "Eure Jumu-Anmeldung in der Kategorie \"%{name}\""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:56
+#: lib/jumubase_web/controllers/email.ex:54
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] "Deine Kimu-Anmeldung"
 msgstr[1] "Eure Kimu-Anmeldung"
+
+#, elixir-format
+#: lib/jumubase_web/templates/layout/nav.html.eex:22
+#: lib/jumubase_web/templates/page/contact.html.eex:1
+msgid "Contact"
+msgstr "Kontakt"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:4
+msgid "Here is how you can get in touch with us."
+msgstr "So erreichst du uns bei Fragen und Anregungen."
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:11
+msgid "Member schools"
+msgstr "Teilnehmende Schulen"

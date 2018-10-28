@@ -44,4 +44,10 @@ defmodule JumubaseWeb.Router do
     resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]
   end
+
+  if Mix.env == :dev do
+    scope "/dev" do
+      forward "/sent_emails", Bamboo.SentEmailViewerPlug
+    end
+  end
 end

@@ -33,9 +33,8 @@ defmodule Jumubase.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bamboo, "~> 0.8"},
+      {:bamboo, "~> 1.1"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:cowboy, "~> 1.0"},
       {:ex_machina, "~> 2.1"},
       {:gettext, "~> 0.11"},
       {:phauxth, "~> 1.2"},
@@ -44,6 +43,8 @@ defmodule Jumubase.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_pubsub, "~> 1.0"},
+      {:plug, "~> 1.7"},
+      {:plug_cowboy, "~> 1.0"},
       {:postgrex, ">= 0.0.0"},
       {:timex, "~> 3.0"},
       {:timex_ecto, "~> 3.0"},

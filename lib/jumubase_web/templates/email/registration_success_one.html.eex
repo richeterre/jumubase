@@ -1,0 +1,11 @@
+<p><%= greeting(@participant) %>,</p>
+
+<p>Du hast dich erfolgreich für die Teilnahme in der Kategorie <em><%= @category_name %></em> angemeldet.</p>
+
+<p>Mit dem Änderungscode <strong><%= @edit_code %></strong> kannst du deine Anmeldung unter folgendem Link ändern:</p>
+
+<p><%= link nil, to: @edit_url %></p>
+
+<p>Viel Erfolg bei der Teilnahme wünscht dir</p>
+
+<p>Dein Jumu-Orgteam</p>

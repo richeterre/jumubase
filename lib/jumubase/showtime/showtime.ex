@@ -90,6 +90,10 @@ defmodule Jumubase.Showtime do
     |> Performance.changeset(%{})
   end
 
+  def load_contest_category(%Performance{} = performance) do
+    performance |> Repo.preload(contest_category: [:contest, :category])
+  end
+
   # Private helpers
 
   defp put_edit_code(%Changeset{valid?: true} = changeset, round) do

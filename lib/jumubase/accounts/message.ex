@@ -38,7 +38,7 @@ defmodule Jumubase.Accounts.Message do
   end
 
   defp prep_mail(address) do
-    sender = Application.get_env(:jumubase, Mailer)[:sender]
+    sender = Application.get_env(:jumubase, JumubaseWeb.Email)[:default_sender]
 
     new_email()
     |> to(address)

@@ -27,8 +27,7 @@ config :phauxth,
 # Configure mailer
 config :jumubase, Jumubase.Mailer,
   adapter: Bamboo.SendgridAdapter,
-  api_key: System.get_env("SENDGRID_API_KEY"),
-  sender: "no-reply@jumu-nordost.eu"
+  api_key: System.get_env("SENDGRID_API_KEY")
 
 # Do not print debug messages in production
 config :logger, level: :info

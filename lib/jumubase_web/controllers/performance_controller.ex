@@ -1,10 +1,12 @@
 defmodule JumubaseWeb.PerformanceController do
   use JumubaseWeb, :controller
   alias Ecto.Changeset
+  alias Jumubase.Mailer
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
+  alias JumubaseWeb.Email
 
   # Pass contest from nested route to all actions
   def action(conn, _), do: get_contest!(conn, __MODULE__)
@@ -23,11 +25,11 @@ defmodule JumubaseWeb.PerformanceController do
     performance_params = params["performance"] || %{}
 
     case Showtime.create_performance(contest, performance_params) do
-      {:ok, performance} ->
+      {:ok, %{edit_code: edit_code} = performance} ->
+        Email.registration_success(performance) |> Mailer.deliver_later
+
         success_msg = gettext("We received your registration.")
-        edit_msg = gettext("If you wish to change it later, use this edit code: %{edit_code}",
-          edit_code: performance.edit_code
-        )
+        edit_msg = gettext("If you wish to change it later, use this edit code: %{edit_code}", edit_code: edit_code)
 
         conn
         |> put_flash(:success, "#{success_msg} #{edit_msg}")

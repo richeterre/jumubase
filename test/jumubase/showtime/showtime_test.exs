@@ -545,6 +545,15 @@ defmodule Jumubase.ShowtimeTest do
     assert %Changeset{} = Showtime.change_performance(performance)
   end
 
+  test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do
+    insert_performance(c)
+    performance = Repo.one(Performance)
+
+    assert %{
+      contest_category: %{contest: %Contest{}, category: %Category{}}
+    } = performance |> Showtime.load_contest_category
+  end
+
   # Private helpers
 
   # Returns insertion params for a performance.

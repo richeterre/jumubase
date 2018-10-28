@@ -32,8 +32,11 @@ config :phauxth,
 
 # Configure mailer
 config :jumubase, Jumubase.Mailer,
-  adapter: Bamboo.LocalAdapter,
-  sender: "no-reply@localhost"
+  adapter: Bamboo.LocalAdapter
+
+# Configure email
+config :jumubase, JumubaseWeb.Email,
+  default_sender: {"Jumu Nordost", "no-reply@jumu-nordost.eu"}
 
 # Configure Elixir's Logger
 config :logger, :console,

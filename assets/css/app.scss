@@ -26,6 +26,14 @@ h4 {
   margin-top: $line-height-computed;
 }
 
+p.alert {
+  margin-top: $line-height-computed;
+
+  @media (min-width: $screen-sm-min) {
+    margin-top: 0;
+  }
+}
+
 /* Make image fit into navbar */
 .navbar-brand > img { height: $line-height-computed; }
 

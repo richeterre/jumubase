@@ -72,7 +72,7 @@ msgstr "Jumu-Logo"
 #: lib/jumubase_web/templates/internal/category/index.html.eex:7
 #: lib/jumubase_web/templates/internal/category/new.html.eex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:25
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:38
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/new.html.eex:8
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
@@ -314,10 +314,11 @@ msgid "Composer"
 msgstr "Komponist"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:6
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:9
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:8
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
+#: lib/jumubase_web/templates/internal/page/home.html.eex:37
 msgid "Contests"
 msgstr "Wettbewerbe"
 
@@ -363,11 +364,6 @@ msgstr "Epoche"
 #: lib/jumubase_web/templates/internal/page/home.html.eex:2
 msgid "Hello %{name},"
 msgstr "Hallo %{name},"
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:9
-msgid "List performances"
-msgstr "Vorspiele auflisten"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:98
@@ -453,7 +449,7 @@ msgstr "Einloggen"
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/category_controller.ex:8
 #: lib/jumubase_web/templates/internal/category/index.html.eex:1
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:13
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:26
 #: lib/jumubase_web/templates/internal/page/home.html.eex:27
 msgid "Categories"
 msgstr "Kategorien"
@@ -600,24 +596,24 @@ msgid "Type"
 msgstr "Typ"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:27
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:29
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:40
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:42
 msgid "AG max"
 msgstr "bis AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:26
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:28
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:39
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:41
 msgid "AG min"
 msgstr "von AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:22
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:35
 msgid "Advancement"
 msgstr "Weiterleitung"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:21
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:34
 msgid "Participation"
 msgstr "Teilnahme"
 
@@ -753,12 +749,12 @@ msgid "This form is for contacting the international committee of the region \"N
 msgstr "Mit diesem Formular erreichst du den Landesausschuss Nord-und Osteuropa."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:24
+#: lib/jumubase_web/controllers/contact_controller.ex:23
 msgid "Please fill in all fields and try again!"
 msgstr "Bitte fülle alle Felder aus und versuche es erneut!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:20
+#: lib/jumubase_web/controllers/contact_controller.ex:19
 msgid "Your message has been sent!"
 msgstr "Deine Nachricht wurde versendet!"
 
@@ -781,3 +777,13 @@ msgstr "Anmeldeschluss ist, falls nicht anders angegeben, der"
 #: lib/jumubase_web/templates/page/registration.html.eex:4
 msgid "Here you can register for your local contest."
 msgstr "Hier kannst du dich für deinen Wettbewerb anmelden."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:13
+msgid "Preparation"
+msgstr "Vor der Wertung"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:17
+msgid "Show performances"
+msgstr "Vorspiele anzeigen"

@@ -6,14 +6,27 @@
 
 <hr>
 
-<%= link gettext("List performances"),
-to: internal_contest_performance_path(@conn, :index, @contest),
-class: "btn btn-default" %>
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= gettext("Preparation") %></h3>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <%= icon_link "music", gettext("Show performances"),
+            internal_contest_performance_path(@conn, :index, @contest)
+            %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <h3> <%= gettext("Categories") %> </h3>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-8">
     <table class="table table-striped">
       <thead>
         <tr>

@@ -22,12 +22,12 @@ msgid "Unfortunately, the email or password was incorrect."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:87
+#: lib/jumubase_web/controllers/authorize.ex:123
 msgid "You are not authorized to view this page."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:75
+#: lib/jumubase_web/controllers/authorize.ex:100
 msgid "You are now logged in."
 msgstr ""
 
@@ -37,7 +37,7 @@ msgid "You are now logged out."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:81
+#: lib/jumubase_web/controllers/authorize.ex:119
 msgid "You need to log in to view this page."
 msgstr ""
 

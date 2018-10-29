@@ -30,7 +30,7 @@ p.text-prominent {
   margin-top: $line-height-computed;
 }
 
-p.alert {
+p.alert, ol.breadcrumb {
   margin-top: $line-height-computed;
 
   @media (min-width: $screen-sm-min) {

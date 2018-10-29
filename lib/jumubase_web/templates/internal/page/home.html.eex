@@ -34,7 +34,7 @@
   <div class="col-md-3">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= gettext("Wettbewerbe") %></h3>
+        <h3 class="panel-title"><%= gettext("Contests") %></h3>
       </div>
       <ul class="list-group">
         <%= for contest <- @contests do %>

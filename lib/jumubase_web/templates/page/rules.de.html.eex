@@ -4,7 +4,7 @@
   Hier erfährst du, wie du an “Jugend musiziert” teilnehmen kannst.
 </p>
 
-<div class="row">
+<div id="rules-container" class="row">
   <div class="col-md-8">
     <p>Bitte lies dir zunächst die aktuelle Ausschreibung durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
 

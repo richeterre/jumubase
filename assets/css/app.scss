@@ -15,15 +15,14 @@ body {
   }
 }
 
-h3 {
-  // Increase vertical margins for readability
-  margin-bottom: $line-height-computed;
-  margin-top: 1.5 * $line-height-computed;
-}
+#rules-container {
+  // Increase some margins for readability
+  h3 {
+    margin-bottom: $line-height-computed;
+    margin-top: 1.5 * $line-height-computed;
+  }
 
-h4 {
-  // Increase top margin for readability
-  margin-top: $line-height-computed;
+  h4 { margin-top: $line-height-computed; }
 }
 
 p.alert {

@@ -5,7 +5,8 @@ defmodule JumubaseWeb.Internal.ContestController do
   plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
 
-  plug :role_check, roles: ["admin"]
+  plug :role_check, [roles: ["admin"]] when action in [:index]
+  plug :contest_check when action in [:show]
 
   def index(conn, _params) do
     conn

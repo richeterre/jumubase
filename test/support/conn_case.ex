@@ -47,18 +47,6 @@ defmodule JumubaseWeb.ConnCase do
         Phauxth.Login.add_session(conn, session_id, user.id)
       end
 
-      def assert_unauthorized_user(conn) do
-        assert get_flash(conn, :error) =~ "not authorized"
-        assert redirected_to(conn) == internal_page_path(conn, :home)
-        assert conn.halted
-      end
-
-      def assert_unauthorized_guest(conn) do
-        assert get_flash(conn, :error) =~ "need to log in"
-        assert redirected_to(conn) == session_path(conn, :new)
-        assert conn.halted
-      end
-
       defp login_user(conn, role) do
         user = add_user(role: role)
         conn = conn

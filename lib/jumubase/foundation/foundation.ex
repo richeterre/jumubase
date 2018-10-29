@@ -42,6 +42,16 @@ defmodule Jumubase.Foundation do
     Repo.get!(Contest, id) |> Repo.preload(:host)
   end
 
+  @doc """
+  Returns a contest if found hosted by one of the given hosts.
+  """
+  def get_contest(id, hosts) do
+    query = from c in Contest,
+      where: c.host_id in ^Utils.get_ids(hosts)
+
+    Repo.get(query, id) |> Repo.preload(:host)
+  end
+
   def list_categories do
     Repo.all(Category)
   end

@@ -1,14 +1,12 @@
 defmodule JumubaseWeb.Authorize do
-
   import Plug.Conn
   import Phoenix.Controller
   import Jumubase.Gettext
   import JumubaseWeb.Router.Helpers
+  alias JumubaseWeb.Internal.Permit
 
-  # This function can be used to customize the `action` function in
-  # the controller so that only authenticated users can access each route.
-  # See the [Authorization wiki page](https://github.com/riverrun/phauxth/wiki/Authorization)
-  # for more information and examples.
+  # Useful for customizing the `action` function in the controller,
+  # so that only authenticated users can access each route.
   def auth_action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
     need_login(conn)
   end
@@ -52,6 +50,22 @@ defmodule JumubaseWeb.Authorize do
   end
   def role_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],
+      do: conn,
+      else: unauthorized(conn, internal_page_path(conn, :home))
+  end
+
+  # Plug to authorize access to a contest route.
+  def contest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+    need_login(conn)
+  end
+  def contest_check(
+    %Plug.Conn{
+      assigns: %{current_user: current_user},
+      params: %{"id" => id}
+    } = conn,
+    _opts
+  ) do
+    if Permit.accessible_contest?(current_user, id),
       do: conn,
       else: unauthorized(conn, internal_page_path(conn, :home))
   end

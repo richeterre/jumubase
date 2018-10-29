@@ -117,6 +117,31 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_contest/2" do
+    test "returns a contest if it's hosted by one of the given hosts" do
+      [h1, _] = hosts = insert_list(2, :host)
+      contest = insert(:contest, host: h1)
+      assert Foundation.get_contest(contest.id, hosts) == contest
+    end
+
+    test "preloads the contest's host" do
+      %{id: id, host: h} = insert(:contest)
+      result = Foundation.get_contest(id, [h])
+      assert %Host{} = result.host
+    end
+
+    test "returns nil if the id is unknown" do
+      hosts = insert_list(1, :host)
+      assert Foundation.get_contest(123, hosts) == nil
+    end
+
+    test "returns nil if the contest isn't hosted by one of the given hosts" do
+      hosts = insert_list(1, :host)
+      %{id: id} = insert(:contest)
+      assert Foundation.get_contest(id, hosts) == nil
+    end
+  end
+
   test "load_contest_categories/1 preloads a contest's contest categories" do
     contest = build(:contest,
       contest_categories: build_list(1, :contest_category,

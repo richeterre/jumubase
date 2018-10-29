@@ -7,8 +7,8 @@
 <hr>
 
 <div class="row">
-  <div class="col-md-3">
-    <%= if admin?(@current_user) do %>
+  <%= if admin?(@current_user) do %>
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title"><%= gettext("Admin") %></h3>
@@ -28,6 +28,23 @@
           </li>
         </ul>
       </div>
-    <% end %>
+    </div>
+  <% end %>
+
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= gettext("Wettbewerbe") %></h3>
+      </div>
+      <ul class="list-group">
+        <%= for contest <- @contests do %>
+          <li class="list-group-item">
+            <%= link name_with_flag(contest),
+              to: internal_contest_path(@conn, :show, contest)
+              %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 </div>

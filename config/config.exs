@@ -14,8 +14,10 @@ config :jumubase, JumubaseWeb.MapHelpers,
   google_api_key: System.get_env("GOOGLE_API_KEY")
 
 # Set default locale
-config :jumubase, Jumubase.Gettext, default_locale: "de"
-config :timex, Timex.Gettext, default_locale: "de"
+locale = "de"
+config :jumubase, Jumubase.Gettext, default_locale: locale
+config :timex, default_locale: locale # Sets Timex.Translator.default_locale
+config :timex, Timex.Gettext, default_locale: locale # Sets Timex.Translator.current_locale
 
 # Configure the endpoint
 config :jumubase, JumubaseWeb.Endpoint,

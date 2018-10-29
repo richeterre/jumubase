@@ -8,7 +8,7 @@
 
 <p>
   <%= gettext("Unless otherwise mentioned, the registration deadline is") %>
-  <strong><%= @general_deadline %>.</strong>
+  <strong><%= format_date(@general_deadline) %>.</strong>
 </p>
 
 <div class="row">

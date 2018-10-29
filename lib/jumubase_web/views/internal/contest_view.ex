@@ -30,7 +30,7 @@ defmodule JumubaseWeb.Internal.ContestView do
       ^general_deadline ->
         nil
       _ ->
-        gettext("(Deadline: %{deadline})", deadline: deadline)
+        gettext("(Deadline: %{deadline})", deadline: format_date(deadline))
     end
   end
 
@@ -50,9 +50,10 @@ defmodule JumubaseWeb.Internal.ContestView do
   Formats the given date for display.
   """
   def format_date(%Date{} = date) do
-    format = "{D} {Mshort} {YYYY}"
-    Timex.format!(date, format)
+    locale = Timex.Translator.current_locale
+    Timex.lformat!(date, date_format(locale), locale)
   end
+  def format_date(nil), do: nil
 
   # Private helpers
 
@@ -64,4 +65,8 @@ defmodule JumubaseWeb.Internal.ContestView do
       3 -> "BW"
     end
   end
+
+  # Returns a date format for the locale.
+  defp date_format("de"), do: "{D}. {Mfull} {YYYY}"
+  defp date_format("en"), do: "{D} {Mfull} {YYYY}"
 end

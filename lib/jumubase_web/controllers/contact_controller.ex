@@ -4,7 +4,6 @@ defmodule JumubaseWeb.ContactController do
   import Jumubase.Gettext
   alias Jumubase.Mailer
   alias Jumubase.Utils
-  alias Jumubase.Foundation
   alias JumubaseWeb.Email
 
   def send_message(conn, %{"contact" => params}) do

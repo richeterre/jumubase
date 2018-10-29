@@ -1,8 +1,9 @@
 defmodule JumubaseWeb.Internal.Permit do
   import Ecto.Query
-  alias Jumubase.Accounts
+  alias Jumubase.Utils
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
+  alias Jumubase.Foundation.Contest
 
   @doc """
   Limits the query to contests that the user may access.
@@ -12,11 +13,11 @@ defmodule JumubaseWeb.Internal.Permit do
   end
   def scope_contests(query, %User{}), do: query
 
-  def accessible_contest?(%User{role: "local-organizer"} = user, c_id) do
-    %{hosts: hosts} = Accounts.load_hosts(user)
-    Foundation.get_contest(c_id, hosts) != nil
+  def authorized?(%User{role: "local-organizer"} = u, %Contest{} = c) do
+    %{host: %{users: users}} = Foundation.load_host_users(c)
+    u.id in Utils.get_ids(users)
   end
-  def accessible_contest?(%User{}, _id), do: true
+  def authorized?(%User{}, %Contest{}), do: true
 
   # Private helpers
 

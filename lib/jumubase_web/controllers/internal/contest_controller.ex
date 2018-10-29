@@ -8,7 +8,7 @@ defmodule JumubaseWeb.Internal.ContestController do
   plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
 
   plug :user_check when action in [:index]
-  plug :contest_check when action in [:show]
+  plug :contest_user_check when action in [:show]
 
   def index(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
     contests =

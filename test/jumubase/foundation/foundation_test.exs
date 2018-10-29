@@ -1,5 +1,6 @@
 defmodule Jumubase.FoundationTest do
   use Jumubase.DataCase
+  alias Jumubase.Accounts.User
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
 
@@ -117,40 +118,27 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "get_contest/2" do
-    test "returns a contest if it's hosted by one of the given hosts" do
-      [h1, _] = hosts = insert_list(2, :host)
-      contest = insert(:contest, host: h1)
-      assert Foundation.get_contest(contest.id, hosts) == contest
-    end
+  describe "load_host_users/1" do
+    test "preloads a contest's host with associated users" do
+      %{id: id} = insert(:contest, host: build(:host, users: [
+        build(:user, given_name: "A"),
+        build(:user, given_name: "B"),
+      ]))
 
-    test "preloads the contest's host" do
-      %{id: id, host: h} = insert(:contest)
-      result = Foundation.get_contest(id, [h])
-      assert %Host{} = result.host
-    end
-
-    test "returns nil if the id is unknown" do
-      hosts = insert_list(1, :host)
-      assert Foundation.get_contest(123, hosts) == nil
-    end
-
-    test "returns nil if the contest isn't hosted by one of the given hosts" do
-      hosts = insert_list(1, :host)
-      %{id: id} = insert(:contest)
-      assert Foundation.get_contest(id, hosts) == nil
+      contest = Repo.get(Contest, id) |> Foundation.load_host_users
+      assert [%User{given_name: "A"}, %User{given_name: "B"}] = contest.host.users
     end
   end
 
   test "load_contest_categories/1 preloads a contest's contest categories" do
-    contest = build(:contest,
+    %{id: id} = insert(:contest,
       contest_categories: build_list(1, :contest_category,
         category: build(:category, name: "ABC")
       )
     )
 
-    %{id: id} = contest = Foundation.load_contest_categories(contest)
-    assert [%{contest_id: ^id, category: %Category{name: "ABC"}}] = contest.contest_categories
+    contest = Repo.get(Contest, id) |> Foundation.load_contest_categories
+    assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
   end
 
   describe "list_categories/0" do

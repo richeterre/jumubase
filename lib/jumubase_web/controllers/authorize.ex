@@ -3,29 +3,31 @@ defmodule JumubaseWeb.Authorize do
   import Phoenix.Controller
   import Jumubase.Gettext
   import JumubaseWeb.Router.Helpers
+  alias Plug.Conn
+  alias Jumubase.Foundation
   alias JumubaseWeb.Internal.Permit
 
   # Useful for customizing the `action` function in the controller,
   # so that only authenticated users can access each route.
-  def auth_action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
+  def auth_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
     need_login(conn)
   end
   def auth_action(
-        %Plug.Conn{assigns: %{current_user: current_user}, params: params} = conn,
+        %Conn{assigns: %{current_user: current_user}, params: params} = conn,
         module
       ) do
     apply(module, action_name(conn), [conn, params, current_user])
   end
 
   # Plug to only allow authenticated users to access the resource.
-  def user_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+  def user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
   def user_check(conn, _opts), do: conn
 
   # Plug to only allow unauthenticated users to access the resource.
-  def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
-  def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
+  def guest_check(%Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
+  def guest_check(%Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
     error(
       conn,
       dgettext("auth", "You need to log out to view this page."),
@@ -34,40 +36,48 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.
-  def id_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+  def id_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
   def id_check(
-    %Plug.Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
+    %Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
     _opts
   ) do
     (id == to_string(current_user.id) and conn) ||
       unauthorized(conn, page_path(conn, :home))
   end
 
-  def role_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+  def role_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
-  def role_check(%Plug.Conn{assigns: %{current_user: current_user}} = conn, opts) do
+  def role_check(%Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],
       do: conn,
       else: unauthorized(conn, internal_page_path(conn, :home))
   end
 
   # Plug to authorize access to a contest route.
-  def contest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
+  def contest_user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
-  def contest_check(
-    %Plug.Conn{
-      assigns: %{current_user: current_user},
-      params: %{"id" => id}
-    } = conn,
+  def contest_user_check(
+    %Conn{assigns: %{current_user: user}, params: %{"id" => id}} = conn,
     _opts
   ) do
-    if Permit.accessible_contest?(current_user, id),
-      do: conn,
-      else: unauthorized(conn, internal_page_path(conn, :home))
+    authorize_contest(conn, user, id, fn {:ok, _} -> conn end)
+  end
+
+  # Action override to authorize contest access before passing it to all actions
+  def contest_user_check_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
+    need_login(conn)
+  end
+  def contest_user_check_action(
+    %Conn{assigns: %{current_user: user}, params: %{"contest_id" => id} = params} = conn,
+    module
+  ) do
+    authorize_contest(conn, user, id, fn {:ok, contest} ->
+      apply(module, action_name(conn), [conn, params, contest])
+    end)
   end
 
   def success(conn, message, path) do
@@ -91,6 +101,17 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Private helpers
+
+  # Checks whether the user may access the contest with given id,
+  # and if yes, calls the success handler with {:ok, contest}.
+  defp authorize_contest(conn, user, id, success_fun) do
+    contest = Foundation.get_contest!(id)
+    if Permit.authorized?(user, contest) do
+      success_fun.({:ok, contest})
+    else
+      unauthorized(conn, internal_page_path(conn, :home))
+    end
+  end
 
   defp need_login(conn) do
     conn

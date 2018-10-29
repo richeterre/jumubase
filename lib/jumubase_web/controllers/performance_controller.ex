@@ -91,4 +91,10 @@ defmodule JumubaseWeb.PerformanceController do
     edit_msg = gettext("To make changes, use this edit code: %{edit_code}", edit_code: edit_code)
     "#{success_msg} #{edit_msg}"
   end
+
+  defp get_contest!(conn, module) do
+    contest = Foundation.get_contest!(conn.params["contest_id"])
+    args = [conn, conn.params, contest]
+    apply(module, action_name(conn), args)
+  end
 end

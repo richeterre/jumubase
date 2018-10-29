@@ -42,7 +42,7 @@ defmodule JumubaseWeb.Internal.PermitTest do
     end
   end
 
-  describe "accessible contest/2" do
+  describe "authorized?/2" do
     @tag role: "local-organizer"
     test "checks whether contest is by own host for local organizers", %{user: u} do
       own_host_1 = build(:host, users: [u])
@@ -52,9 +52,9 @@ defmodule JumubaseWeb.Internal.PermitTest do
       c2 = insert(:contest, host: own_host_2)
       c3 = insert(:contest)
 
-      assert Permit.accessible_contest?(u, c1.id)
-      assert Permit.accessible_contest?(u, c2.id)
-      refute Permit.accessible_contest?(u, c3.id)
+      assert Permit.authorized?(u, c1)
+      assert Permit.authorized?(u, c2)
+      refute Permit.authorized?(u, c3)
     end
 
     for role <- roles_except("local-organizer") do
@@ -67,9 +67,9 @@ defmodule JumubaseWeb.Internal.PermitTest do
         c2 = insert(:contest, host: own_host_2)
         c3 = insert(:contest)
 
-        assert Permit.accessible_contest?(u, c1.id)
-        assert Permit.accessible_contest?(u, c2.id)
-        assert Permit.accessible_contest?(u, c3.id)
+        assert Permit.authorized?(u, c1)
+        assert Permit.authorized?(u, c2)
+        assert Permit.authorized?(u, c3)
       end
     end
   end

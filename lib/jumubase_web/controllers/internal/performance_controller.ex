@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.PerformanceController do
   use JumubaseWeb, :controller
-  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -8,10 +7,8 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
 
-  plug :role_check, roles: ["admin"]
-
-  # Pass contest from nested route to all actions
-  def action(conn, _), do: get_contest!(conn, __MODULE__)
+  # Check nested contest permissions and pass to all actions
+  def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 
   def index(conn, _params, contest) do
     performances = Showtime.list_performances(contest)

@@ -1,6 +1,7 @@
 defmodule Jumubase.Foundation.Host do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Jumubase.Accounts.User
   alias Jumubase.Foundation.Host
 
   schema "hosts" do
@@ -11,6 +12,8 @@ defmodule Jumubase.Foundation.Host do
     field :time_zone, :string
     field :latitude, :float
     field :longitude, :float
+
+    many_to_many :users, User, join_through: "hosts_users"
 
     timestamps()
   end

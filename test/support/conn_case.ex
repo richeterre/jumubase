@@ -20,6 +20,7 @@ defmodule JumubaseWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import Jumubase.Factory
+      import Jumubase.TestHelpers
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthTestHelpers
 

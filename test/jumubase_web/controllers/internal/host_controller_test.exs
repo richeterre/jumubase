@@ -31,7 +31,7 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
   end
 
   describe "for a non-admin" do
-    for role <- non_admin_roles() do
+    for role <- roles_except("admin") do
       @tag login_as: role
       test "(#{role}) redirects when trying to perform any action", %{conn: conn} do
         verify_all_routes(conn, &assert_unauthorized_user/1)

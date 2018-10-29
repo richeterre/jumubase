@@ -16,7 +16,7 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
   end
 
   describe "for a non-admin" do
-    for role <- non_admin_roles() do
+    for role <- roles_except("admin") do
       @tag login_as: role
       test "(#{role}) does not show admin tools", %{conn: conn} do
         conn = get(conn, internal_page_path(conn, :home))

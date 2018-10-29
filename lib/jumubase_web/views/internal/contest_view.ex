@@ -22,6 +22,19 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
 
   @doc """
+  Returns formatted deadline info in case the contest's deadline
+  doesn't match the general deadline.
+  """
+  def deadline_info(%Contest{deadline: deadline}, general_deadline) do
+    case deadline do
+      ^general_deadline ->
+        nil
+      _ ->
+        gettext("(Deadline: %{deadline})", deadline: deadline)
+    end
+  end
+
+  @doc """
   Returns the given contest's date(s) in a formatted way.
   """
   def dates(%Contest{start_date: sd, end_date: ed}) do

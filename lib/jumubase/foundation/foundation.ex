@@ -6,6 +6,7 @@ defmodule Jumubase.Foundation do
 
   import Ecto.Query
   alias Jumubase.Repo
+  alias Jumubase.Utils
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
 
   def list_hosts do
@@ -24,11 +25,11 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
-  Returns a list of contests that participants can register for.
+  Returns all contests in a round whose deadline has't passed.
   """
-  def list_open_contests do
+  def list_open_contests(round) do
     query = from c in Contest,
-      where: c.round < 2,
+      where: c.round == ^round,
       where: c.deadline >= ^Timex.today, # uses UTC
       join: h in assoc(c, :host),
       order_by: [h.name, {:desc, c.round}],
@@ -59,5 +60,15 @@ defmodule Jumubase.Foundation do
     |> where([cc], cc.contest_id == ^contest_id)
     |> preload([_], :category)
     |> Repo.get!(id)
+  end
+
+  @doc """
+  Returns the most common deadline within the given contests.
+  """
+  def general_deadline(contests) do
+    contests
+    |> Enum.map(&(&1.deadline))
+    |> Utils.mode
+    |> List.first
   end
 end

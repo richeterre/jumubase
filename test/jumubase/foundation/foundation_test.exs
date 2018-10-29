@@ -41,29 +41,47 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "list_open_contests/0" do
-    test "returns contests the user can register for in correct order" do
+  describe "list_open_contests/1" do
+    test "returns open RW contests, ordered by host name" do
+      today = Timex.today
+      tomorrow = Timex.today |> Timex.shift(days: 1)
+
+      c1 = insert(:contest, round: 1, host: build(:host, name: "B"), deadline: today)
+      c2 = insert(:contest, round: 1, host: build(:host, name: "A"), deadline: tomorrow)
+      c3 = insert(:contest, round: 1, host: build(:host, name: "C"), deadline: tomorrow)
+
+      assert Foundation.list_open_contests(1) == [c2, c1, c3]
+    end
+
+    test "returns open Kimu contests, ordered by host name" do
       today = Timex.today
       tomorrow = Timex.today |> Timex.shift(days: 1)
 
       c1 = insert(:contest, round: 0, host: build(:host, name: "B"), deadline: today)
-      c2 = insert(:contest, round: 1, host: build(:host, name: "B"), deadline: today)
-      c3 = insert(:contest, round: 1, host: build(:host, name: "A"), deadline: tomorrow)
-      c4 = insert(:contest, round: 0, host: build(:host, name: "A"), deadline: tomorrow)
-      c5 = insert(:contest, round: 0, host: build(:host, name: "C"), deadline: tomorrow)
-      c6 = insert(:contest, round: 1, host: build(:host, name: "C"), deadline: tomorrow)
+      c2 = insert(:contest, round: 0, host: build(:host, name: "A"), deadline: tomorrow)
+      c3 = insert(:contest, round: 0, host: build(:host, name: "C"), deadline: tomorrow)
 
-      assert Foundation.list_open_contests == [c3, c4, c2, c1, c6, c5]
+      assert Foundation.list_open_contests(0) == [c2, c1, c3]
+    end
+
+    test "returns open LW contests, ordered by host name" do
+      today = Timex.today
+      tomorrow = Timex.today |> Timex.shift(days: 1)
+
+      c1 = insert(:contest, round: 2, host: build(:host, name: "B"), deadline: today)
+      c2 = insert(:contest, round: 2, host: build(:host, name: "A"), deadline: tomorrow)
+      c3 = insert(:contest, round: 2, host: build(:host, name: "C"), deadline: tomorrow)
+
+      assert Foundation.list_open_contests(2) == [c2, c1, c3]
     end
 
     test "does not return contests with a past signup deadline" do
-      insert(:contest, deadline: Timex.today |> Timex.shift(days: -1))
-      assert Foundation.list_open_contests == []
-    end
+      yesterday = Timex.today |> Timex.shift(days: -1)
+      insert(:contest, round: 0, deadline: yesterday)
+      insert(:contest, round: 1, deadline: yesterday)
 
-    test "does not return 2nd round contests" do
-      insert(:contest, deadline: Timex.today, round: 2)
-      assert Foundation.list_open_contests == []
+      assert Foundation.list_open_contests(0) == []
+      assert Foundation.list_open_contests(1) == []
     end
   end
 
@@ -124,6 +142,34 @@ defmodule Jumubase.FoundationTest do
       assert %ContestCategory{
         category: %Category{},
       } = Foundation.get_contest_category!(c, id)
+    end
+  end
+
+  describe "general_deadline/1" do
+    test "returns the deadline most common in the given contests" do
+      [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
+      contests = [
+        build(:contest, deadline: d1),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d1),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d2),
+        build(:contest, deadline: d3),
+      ]
+      assert Foundation.general_deadline(contests) == d3
+    end
+
+    test "returns the earliest deadline if several are most common" do
+      [d1, d2, d3] = [~D[2018-12-15], ~D[2018-12-01], ~D[2018-12-21]]
+      contests = [
+        build(:contest, deadline: d1),
+        build(:contest, deadline: d2),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d2),
+        build(:contest, deadline: d1),
+      ]
+      assert Foundation.general_deadline(contests) == d2
     end
   end
 end

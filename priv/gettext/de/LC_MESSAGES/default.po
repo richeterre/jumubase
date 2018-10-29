@@ -239,11 +239,6 @@ msgid "First name"
 msgstr "Vorname"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:4
-msgid "Here you can register for your local \"Jugend musiziert\" contest."
-msgstr "Hier kannst du dich für deinen \"Jugend musiziert\"-Wettbewerb anmelden."
-
-#, elixir-format
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:148
 msgid "Instrument"
 msgstr "Instrument"
@@ -480,7 +475,7 @@ msgid "Piece"
 msgstr "Stück"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:24
+#: lib/jumubase_web/templates/page/registration.html.eex:45
 msgid "Already registered?"
 msgstr "Schon angemeldet?"
 
@@ -491,7 +486,7 @@ msgid "Edit registration"
 msgstr "Anmeldung bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:27
+#: lib/jumubase_web/templates/page/registration.html.eex:48
 msgid "Edit your registration"
 msgstr "Anmeldung bearbeiten"
 
@@ -506,7 +501,7 @@ msgid "If you've lost your edit code, ask your local Jumu organizer to retrieve 
 msgstr "Wenn du den Änderungscode verloren hast, hilft dir die Jumu-Kontaktperson deiner Schule weiter."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:25
+#: lib/jumubase_web/controllers/page_controller.ex:31
 msgid "Please enter an edit code."
 msgstr "Bitte gib einen Änderungscode ein."
 
@@ -516,7 +511,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:55
+#: lib/jumubase_web/controllers/page_controller.ex:61
 msgid "We could not find a registration for this edit code."
 msgstr "Wir konnten keine Anmeldung unter diesem Änderungscode finden."
 
@@ -572,6 +567,7 @@ msgid "Genre"
 msgstr "Genre"
 
 #, elixir-format
+#: lib/jumubase_web/templates/page/registration.html.eex:29
 #: lib/jumubase_web/views/internal/category_view.ex:41
 msgid "Kimu"
 msgstr "Kimu"
@@ -717,7 +713,7 @@ msgid "Here is how you can get in touch with us."
 msgstr "So erreichst du uns bei Fragen und Anregungen."
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:18
+#: lib/jumubase_web/templates/page/contact.html.eex:20
 msgid "Member schools"
 msgstr "Teilnehmende Schulen"
 
@@ -742,17 +738,17 @@ msgid "Send message"
 msgstr "Nachricht absenden"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:13
+#: lib/jumubase_web/templates/page/contact.html.eex:15
 msgid "For questions about local contests, consider contacting your local Jumu organizer (see list below)."
 msgstr "Bei Fragen zum Regionalwettbewerb hilft dir auch deine Jumu-Kontaktperson (siehe Liste unten) weiter."
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:9
+#: lib/jumubase_web/templates/page/contact.html.eex:11
 msgid "Message us"
 msgstr "Nachricht senden"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:12
+#: lib/jumubase_web/templates/page/contact.html.eex:14
 msgid "This form is for contacting the international committee of the region \"Nord- und Osteuropa\"."
 msgstr "Mit diesem Formular erreichst du den Landesausschuss Nord-und Osteuropa."
 
@@ -765,3 +761,23 @@ msgstr "Bitte fülle alle Felder aus und versuche es erneut!"
 #: lib/jumubase_web/controllers/contact_controller.ex:20
 msgid "Your message has been sent!"
 msgstr "Deine Nachricht wurde versendet!"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_view.ex:33
+msgid "(Deadline: %{deadline})"
+msgstr "(Anmeldeschluss: %{deadline})"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/registration.html.eex:16
+msgid "Jumu"
+msgstr "Jumu"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/registration.html.eex:10
+msgid "Unless otherwise mentioned, the registration deadline is"
+msgstr "Anmeldeschluss ist, falls nicht anders angegeben, der"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/registration.html.eex:4
+msgid "Here you can register for your local contest."
+msgstr "Hier kannst du dich für deinen Wettbewerb anmelden."

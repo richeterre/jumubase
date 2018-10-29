@@ -1,13 +1,34 @@
 <h2><%= gettext("Registration") %></h2>
 
 <p class="lead">
-  <%= gettext("Here you can register for your local \"Jugend musiziert\" contest.") %>
+  <%= gettext("Here you can register for your local contest.") %>
+</p>
+
+<hr>
+
+<p>
+  <%= gettext("Unless otherwise mentioned, the registration deadline is") %>
+  <strong><%= @general_deadline %>.</strong>
 </p>
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-5">
+    <h3><%= gettext("Jumu") %></h3>
     <ul class="list-group">
-      <%= for contest <- @contests do %>
+      <%= for contest <- @rw_contests do %>
+        <li class="list-group-item">
+          <%= link name_with_flag(contest),
+            to: performance_path(@conn, :new, contest)
+            %>
+          <strong><%= deadline_info(contest, @general_deadline) %></strong>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-md-5">
+    <h3><%= gettext("Kimu") %></h3>
+    <ul class="list-group">
+      <%= for contest <- @kimu_contests do %>
         <li class="list-group-item">
           <%= link name_with_flag(contest),
             to: performance_path(@conn, :new, contest)

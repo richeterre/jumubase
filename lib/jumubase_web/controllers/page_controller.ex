@@ -9,8 +9,14 @@ defmodule JumubaseWeb.PageController do
   end
 
   def registration(conn, _params) do
+    rw_contests = Foundation.list_open_contests(1)
+    kimu_contests = Foundation.list_open_contests(0)
+    general_deadline = Foundation.general_deadline(rw_contests ++ kimu_contests)
+
     conn
-    |> assign(:contests, Foundation.list_open_contests)
+    |> assign(:rw_contests, rw_contests)
+    |> assign(:kimu_contests, kimu_contests)
+    |> assign(:general_deadline, general_deadline)
     |> render("registration.html")
   end
 

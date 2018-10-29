@@ -20,21 +20,22 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Plug to only allow authenticated users to access the resource.
-  # See the user controller for an example.
   def user_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
   def user_check(conn, _opts), do: conn
 
   # Plug to only allow unauthenticated users to access the resource.
-  # See the session controller for an example.
   def guest_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
   def guest_check(%Plug.Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    error(conn, dgettext("auth", "You need to log out to view this page."), page_path(conn, :home))
+    error(
+      conn,
+      dgettext("auth", "You need to log out to view this page."),
+      page_path(conn, :home)
+    )
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.
-  # See the user controller for an example.
   def id_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
@@ -75,13 +76,13 @@ defmodule JumubaseWeb.Authorize do
     |> success(dgettext("auth", "You are now logged in."), get_session(conn, :request_path) || path)
   end
 
-  def need_login(conn) do
+  # Private helpers
+
+  defp need_login(conn) do
     conn
     |> put_session(:request_path, current_path(conn))
     |> error(dgettext("auth", "You need to log in to view this page."), session_path(conn, :new))
   end
-
-  # Private helpers
 
   def unauthorized(conn, path) do
     error(conn, dgettext("auth", "You are not authorized to view this page."), path)

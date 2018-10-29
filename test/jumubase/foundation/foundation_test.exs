@@ -1,7 +1,7 @@
 defmodule Jumubase.FoundationTest do
   use Jumubase.DataCase
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Category, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
 
   describe "list_hosts/0 " do
     test "returns all hosts" do
@@ -37,6 +37,21 @@ defmodule Jumubase.FoundationTest do
     test "preloads the contests' hosts" do
       insert(:contest)
       [result] = Foundation.list_contests
+      assert %Host{} = result.host
+    end
+  end
+
+  describe "list_contests/1" do
+    test "returns all contests matching the query" do
+      [c1, _] = insert_list(2, :contest)
+      query = from c in Contest, limit: 1
+      assert Foundation.list_contests(query) == [c1]
+    end
+
+    test "preloads the contests' hosts" do
+      insert(:contest)
+      query = from c in Contest, limit: 1
+      [result] = Foundation.list_contests(query)
       assert %Host{} = result.host
     end
   end

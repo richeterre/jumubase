@@ -20,8 +20,8 @@ defmodule Jumubase.Foundation do
     Repo.all(from h in Host, select: {h.latitude, h.longitude})
   end
 
-  def list_contests do
-    Repo.all(Contest) |> Repo.preload(:host)
+  def list_contests(query \\ Contest) do
+    Repo.all(query) |> Repo.preload(:host)
   end
 
   @doc """

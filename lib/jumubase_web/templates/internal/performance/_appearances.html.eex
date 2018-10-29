@@ -1,5 +1,10 @@
 <%= for appearance <- @appearances do %>
-  <strong><%= full_name(appearance.participant) %></strong>,
+  <%= if @style == :detail do %>
+    <strong><%= full_name(appearance.participant) %></strong>
+  <% else %>
+    <%= full_name(appearance.participant) %>
+  <% end %>
+  ,
   <%= instrument_name(appearance.instrument) %>
   <%= age_group_badge(appearance) %>
   <br>

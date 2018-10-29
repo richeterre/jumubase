@@ -1,0 +1,18 @@
+<%= render "_appearances.html",
+  appearances: non_acc(@performance.appearances),
+  style: @style
+  %>
+
+<%= if (acc_appearances = acc(@performance.appearances)) != [] do %>
+  <%= if @style == :detail do %>
+    <h5 class="text-muted"><%= gettext("accompanied by") %></h5>
+  <% else %>
+    <small class="text-muted"><%= gettext("accompanied by") %></small>
+    <br>
+  <% end %>
+
+  <%= render "_appearances.html",
+    appearances: acc_appearances,
+    style: @style
+    %>
+<% end %>

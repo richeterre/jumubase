@@ -26,11 +26,15 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered Showtime.list_performances(c), [p1, p2, p3]
     end
 
-    test "preloads the performances' contest categories + categories", %{contest: c} do
-      insert_performance(c)
+    test "preloads the performances' contest categories, categories, appearances and participants", %{contest: c} do
+      [cc, _] = c.contest_categories
+      insert_performance(cc, appearances: build_list(1, :appearance))
 
       assert [%Performance{
-        contest_category: %ContestCategory{category: %Category{}}
+        contest_category: %ContestCategory{category: %Category{}},
+        appearances: [
+          %Appearance{participant: %Participant{}}
+        ]
       }] = Showtime.list_performances(c)
     end
   end

@@ -7,21 +7,26 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
   end
 
   describe "index/2" do
-    @tag login_as: "admin"
-    test "lists all contests to admins", %{conn: conn} do
-      [c1, c2] = insert_list(2, :contest)
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lists all contests to #{role} users", %{conn: conn, user: u} do
+        c1 = insert(:contest, host: build(:host, users: [u]))
+        c2 = insert(:contest)
+        conn = get(conn, internal_contest_path(conn, :index))
+        assert html_response(conn, 200) =~ "Contests"
+        assert html_response(conn, 200) =~ name(c1)
+        assert html_response(conn, 200) =~ name(c2)
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lists own contest to local organizers", %{conn: conn, user: u} do
+      c1 = insert(:contest, host: build(:host, users: [u]))
+      c2 = insert(:contest)
       conn = get(conn, internal_contest_path(conn, :index))
       assert html_response(conn, 200) =~ "Contests"
       assert html_response(conn, 200) =~ name(c1)
-      assert html_response(conn, 200) =~ name(c2)
-    end
-
-    for role <- roles_except("admin") do
-      @tag login_as: role
-      test "redirects #{role} users when trying to list all contests", %{conn: conn} do
-        conn = get(conn, internal_contest_path(conn, :index))
-        assert_unauthorized_user(conn)
-      end
+      refute html_response(conn, 200) =~ name(c2)
     end
 
     test "redirects guests when trying to list all contests", %{conn: conn} do

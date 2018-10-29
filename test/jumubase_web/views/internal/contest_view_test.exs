@@ -35,7 +35,7 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
     test "returns deadline info if the contest deadline differs from the general one" do
       contest = build(:contest, deadline: ~D[2018-12-14])
       assert ContestView.deadline_info(contest, ~D[2018-12-15]) ==
-        "(Deadline: 14 December 2018)"
+        "(Deadline: 14 Dec)"
     end
 
     test "returns nothing if the contest has the general deadline" do
@@ -69,6 +69,20 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
 
     test "returns nil if nil is passed for the date" do
       assert ContestView.format_date(nil) == nil
+    end
+  end
+
+  describe "format_date/2" do
+    test "formats a date in full style" do
+      assert ContestView.format_date(~D[2018-12-15], :full) == "15 December 2018"
+    end
+
+    test "formats a date in short style" do
+      assert ContestView.format_date(~D[2018-12-15], :short) == "15 Dec"
+    end
+
+    test "returns nil if nil is passed for the date" do
+      assert ContestView.format_date(nil, :full) == nil
     end
   end
 end

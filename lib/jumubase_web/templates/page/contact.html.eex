@@ -4,6 +4,8 @@
   <%= gettext("Here is how you can get in touch with us.") %>
 </p>
 
+<hr>
+
 <div class="row">
   <div class="col-sm-7">
     <h3><%= gettext("Message us") %></h3>

@@ -25,6 +25,11 @@ body {
   h4 { margin-top: $line-height-computed; }
 }
 
+p.text-prominent {
+  margin-bottom: $line-height-computed;
+  margin-top: $line-height-computed;
+}
+
 p.alert {
   margin-top: $line-height-computed;
 

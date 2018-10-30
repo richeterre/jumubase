@@ -14,6 +14,10 @@ defmodule JumubaseWeb.PageView do
     render("rules.#{get_locale()}.html", assigns)
   end
 
+  def render("faq.html", assigns) do
+    render("faq.#{get_locale()}.html", assigns)
+  end
+
   def render("privacy.html", assigns) do
     render("privacy.#{get_locale()}.html", assigns)
   end

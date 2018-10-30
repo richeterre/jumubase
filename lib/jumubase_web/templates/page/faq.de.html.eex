@@ -1,0 +1,31 @@
+<h2>FAQ</h2>
+
+<p class="lead">
+  Hier findest du Antworten auf häufig gestellte Fragen.
+</p>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-8">
+    <h3>Anmeldung</h3>
+
+    <dl>
+      <dt>Frage 1</dt>
+      <dd>Lorem ipsum</dd>
+
+      <dt>Frage 2</dt>
+      <dd>Lorem ipsum</dd>
+    </dl>
+
+    <h3>Kimu</h3>
+
+    <dl>
+      <dt>Frage 1</dt>
+      <dd>Lorem ipsum</dd>
+
+      <dt>Frage 2</dt>
+      <dd>Lorem ipsum</dd>
+    </dl>
+  </div>
+</div>

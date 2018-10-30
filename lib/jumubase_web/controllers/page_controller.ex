@@ -38,6 +38,10 @@ defmodule JumubaseWeb.PageController do
     render(conn, "rules.html")
   end
 
+  def faq(conn, _params) do
+    render(conn, "faq.html")
+  end
+
   def contact(conn, _params) do
     conn
     |> assign(:hosts, Foundation.list_hosts)

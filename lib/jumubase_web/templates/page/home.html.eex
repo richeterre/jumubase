@@ -11,24 +11,29 @@
     <%= host_map_image() %>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Beispiel eins</h3>
+        <h3 class="panel-title">Willkommen auf der neuen Website!</h3>
       </div>
       <div class="panel-body">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Diesen Herbst präsentieren wir uns im neuen Gewand. Schau dich gern um &ndash;
+        wir freuen uns über dein <%= link "Feedback", to: page_path(@conn, :contact) %>!
       </div>
     </div>
   </div>
 
-  <div class="col-md-3">
-    <div class="panel panel-default">
+  <div class="col-md-4">
+    <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title">Beispiel zwei</h3>
+        <h3 class="panel-title">Anmeldung 2019</h3>
       </div>
       <div class="panel-body">
-         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+         Ab sofort kannst du dich hier für Jumu oder Kimu 2019
+         <%= link "anmelden", to: page_path(@conn, :registration) %>.
+         <br><br>
+         Lies dir vorher die <%= link "Teilnahmeregeln", to: page_path(@conn, :rules) %> sowie unsere
+         <%= link "FAQ", to: page_path(@conn, :faq) %> gut durch!
       </div>
     </div>
   </div>

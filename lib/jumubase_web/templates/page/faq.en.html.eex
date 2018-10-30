@@ -1,0 +1,8 @@
+<h1>FAQ</h1>
+
+<p class="lead">
+  The FAQ are not available in English yet.
+  <br>
+  For now, please refer to the German version of this website or
+  <%= link "contact us", to: page_path(@conn, :contact) %>.
+</p>

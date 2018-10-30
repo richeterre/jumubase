@@ -20,6 +20,7 @@ defmodule JumubaseWeb.Router do
 
     get "/", PageController, :home
     get "/rules", PageController, :rules
+    get "/faq", PageController, :faq
     get "/contact", PageController, :contact
     post "/contact", ContactController, :send_message
     get "/privacy", PageController, :privacy

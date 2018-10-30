@@ -7,7 +7,7 @@
 <hr>
 
 <div class="row">
-  <div class="col-sm-7">
+  <div class="col-sm-9 col-md-7">
     <h3><%= gettext("Message us") %></h3>
 
     <p class="text-muted">
@@ -23,5 +23,33 @@
       id: "hosts-accordion",
       items: Enum.map(@hosts, &to_accordion_item/1)
     %>
+
+    <h3>
+      <%= gettext("State-level committee") %>
+      <small>(<%= gettext("responsible for this website") %>)</small>
+    </h3>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          Landesausschuss Nord- und Osteuropa
+        </h4>
+      </div>
+      <div class="panel-body">
+        <p>
+          c/o Robert Bär<br>
+          Deutsche Schule Helsinki<br>
+          Malminkatu 14, 00100 Helsinki<br>
+          Finnland
+        </p>
+
+        <ul>
+          <li>Robert Bär (<%= gettext("chair") %>)</li>
+          <li>Irene Rieck (<%= gettext("deputy chair") %>)</li>
+          <li>Joonas Ruppel</li>
+          <li>Martin Richter</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

@@ -798,3 +798,23 @@ msgstr ""
 #: lib/jumubase_web/templates/performance/_form.html.eex:54
 msgid "The data you enter will be handled as described in the"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:28
+msgid "State-level committee"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:47
+msgid "chair"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:48
+msgid "deputy chair"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:29
+msgid "responsible for this website"
+msgstr ""

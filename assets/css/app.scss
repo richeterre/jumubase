@@ -15,7 +15,7 @@ body {
   }
 }
 
-#rules-container {
+#rules-container > {
   // Increase some margins for readability
   h3 {
     margin-bottom: $line-height-computed;

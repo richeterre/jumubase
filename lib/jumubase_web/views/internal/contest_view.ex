@@ -49,7 +49,8 @@ defmodule JumubaseWeb.Internal.ContestView do
   @doc """
   Formats the given date for display.
   """
-  def format_date(%Date{} = date, style \\ :full) do
+  def format_date(date, style \\ :full)
+  def format_date(%Date{} = date, style) do
     locale = Timex.Translator.current_locale
     Timex.lformat!(date, date_format(locale, style), locale)
   end

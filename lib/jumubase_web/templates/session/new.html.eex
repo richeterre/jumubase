@@ -16,8 +16,9 @@
       <div class="form-group">
         <span>
           <%= label f, :password, gettext("Password"), class: "control-label" %>
-          &emsp;&emsp;
-          <%= link gettext("Forgot password?"), to: password_reset_path(@conn, :new) %>
+          <%= link gettext("Forgot password?"),
+            to: password_reset_path(@conn, :new), class: "pull-right"
+            %>
         </span>
         <%= password_input f, :password, class: "form-control" %>
       </div>

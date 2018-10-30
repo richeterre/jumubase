@@ -11,20 +11,20 @@
     <p>Bitte lies dir zunächst die aktuelle Ausschreibung durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
 
     <p class="text-prominent">
-      <%= icon_link "file", "Ausschreibung 2019", static_path(@conn, "/resources/Ausschreibung_2019.pdf"), class: "btn btn-link" %>
+      <%= icon_link "file", "Ausschreibung 2019", static_path(@conn, "/resources/Ausschreibung_2019.pdf"), class: "btn btn-info" %>
     </p>
 
     <p>In der <strong>Region Nord- und Osteuropa</strong> bestehen zusätzlich die folgenden Sonderregelungen:</p>
 
     <h3>Populäre Musik</h3>
 
-    <h4>1. Erweiterung offizieller Pop-Kategorien</h4>
+    <h4>Erweiterung offizieller Pop-Kategorien</h4>
 
     <p><strong>Grundsätzlich gilt: Ist eine Pop-Kategorie offiziell ausgeschrieben, gelten für sie die Regeln der Ausschreibung.</strong> Eine Weiterleitung ist dann je nach Altersgruppe bis zum Bundeswettbewerb möglich.</p>
 
     <p>Die Region Nord- und Osteuropa erweitert diese Kategorie(n) um die Sonderregelung, dass im Landeswettbewerb bis zu drei jugendliche Begleiter mitwirken können, deren gemeinsame Altersgruppe zwischen III und VI liegen muss. Sie müssen im Regionalwettbewerb ebenfalls 23 Punkte erreicht haben und werden gesondert als Begleitgruppe gewertet. Für den Bundeswettbewerb gilt dann nur noch die offizielle Ausschreibung.</p>
 
-    <h4>2. Sonderkategorien</h4>
+    <h4>Sonderkategorien</h4>
 
     <p>In der Region Nord- und Osteuropa werden außerdem die untenstehenden Sonderkategorien angeboten. In diesen ist die Teilnahme grundsätzlich <strong>nur in den Altersgruppen III–VI</strong> (bei Gesangskategorien: <strong>III–VII</strong>) möglich, und sie führen <strong>nur bis zum Landeswettbewerb.</strong></p>
 

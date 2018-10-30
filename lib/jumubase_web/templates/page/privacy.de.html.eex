@@ -6,44 +6,68 @@
 
 <hr>
 
-<h3>Introduction</h3>
+<div class="row">
+  <div class="col-md-8">
+    <p>Diese Datenschutzerklärung legt offen, was mit den von dieser Website erhobenen Daten geschieht. Sie richtet sich nach der <%= link "Europäischen Datenschutz-Grundverordnung (DSGVO)", to: "https://dsgvo-gesetz.de" %>.</p>
 
-<p>This privacy policy is based on the European General Data Protection Regulation (GDPR).</p>
+    <h3>1. Verantwortliche</h3>
 
-<h3>Responsible entity</h3>
+    Verantwortlich im Sinne des <%= link "Art. 4 Abs. 7", to: "https://dsgvo-gesetz.de/art-4-dsgvo/" %> der DSGVO ist der Landesausschuss “Jugend musiziert” Nord- und Osteuropa. Ein Formular zur Kontaktaufnahme findest du auf der Seite <%= link "\"Kontakt\"", to: page_path(@conn, :contact) %>.
 
-<h3>What data is collected?</h3>
+    <h3>2. Welche Daten werden erhoben?</h3>
 
-<ul>
-  <li>Personal data: Given and family name, date of birth</li>
-  <li>Contact data: Phone number, email address</li>
-  <li>Competition-related data: Category, instrument, programme, results</li>
-</ul>
+    <p>Bei der digitalen Anmeldung für das jeweilige Wettbewerbsjahr werden von den Teilnehmenden folgende Daten erhoben:</p>
 
-All of the above are collected when registering for the competition at the beginning of the season. Data of those who advance to the final competition round (Bundeswettbewerb) will be transferred to the organizing provider of said round.
+    <ul>
+      <li><em>Persönliche Daten:</em> Vor- und Familienname, Geburtsdatum</li>
+      <li><em>Kontaktdaten:</em> Telefonnummer, E-Mailadresse</li>
+      <li><em>Wettbewerbsdaten:</em> Kategorie, Instrument, Vorspielprogramm</li>
+    </ul>
 
-<h3>Purpose of storage</h3>
+    <p>Im Laufe des Wettbewerbs werden die <em>Wettbewerbsdaten</em> vom jeweiligen Organisationsteam um folgende Punkte ergänzt:</p>
 
-The information listed above is needed to organize "Jugend musiziert" contests. Hence, GDPR article 6 paragraph 1 b) and f) apply.
+    <ul>
+      <li>Auftrittszeit und -ort</li>
+      <li>Ergebnisse (Punkte und Prädikate)</li>
+    </ul>
 
-<h3>Disclosure of data to third parties</h3>
+    <h3>3. Warum werden diese Daten benötigt?</h3>
 
-The collected data is disclosed only to parties directly affiliated with the competition, such as judges or organizers of the various competition stages.
+    <p>Die obenstehenden <em>persönlichen Daten</em> sowie <em>Wettbewerbsdaten</em> sind notwendig, um die Wettbewerbe “Jugend musiziert” und “Kinder musizieren” zu planen und durchzuführen. Die <em>Kontaktdaten</em> benötigen wir, um die Teilnehmenden bezüglich Anmeldung, Auftritt oder anderen Bereichen des Wettbewerbs zu kontaktieren. Rechtsgrundlage hierfür ist <%= link "Art. 6 Abs. 1 lit. b und f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO.</p>
 
-No data is disclosed to third parties outside the "Jugend musiziert" competition.
+    <h3>4. Weitergabe von Daten an Dritte</h3>
 
+    <p>Die erhobenen Daten werden nur an solche Dritte weitergegeben, die direkt an der Durchführung des jeweiligen Wettbewerbs beteiligt sind, wie z.B. der Jury und dem Organisationsteam.</p>
 
-<h3>Deletion of data</h3>
+    <p>Bei einer Weiterleitung zum Bundeswettbewerb werden die erhobenen Daten an den dortigen Träger (Deutsche Musikrat Projektgesellschaft mbH) weitergegeben.</p>
 
-For statistical and documentation purposes, participant data is kept archived beyond the competition season.
+    <p>Die unter (2) genannten Daten werden nicht an Dritte außerhalb des Wettbewerbs “Jugend musiziert” weitergegeben.</p>
 
-<h3>Your rights</h3>
+    <h3>5. Aufbewahrung der Daten</h3>
 
-<ul>
-  <li>Introspection (what data is stored about me?)</li>
-  <li>Correction of stored data</li>
-  <li>Deletion of data no longer absolutely needed</li>
-  <li>Portability</li>
-</ul>
+    <p>Für Zwecke der Dokumentation, Statistik sowie Unterstützung bei späteren Anmeldungen werden die unter (2) genannten Daten auch über das Wettbewerbsjahr hinaus aufbewahrt. Rechtsgrundlage hierfür ist <%= link "Art. 6 Abs. 1 lit. b und f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO.</p>
 
-<p>Last updated: October 2018</p>
+    <h3>6. Inhalte von Dritten</h3>
+
+    <p>Auf dieser Website setzen wir Karten (Google Maps) sowie Schriftarten (Google Fonts) des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Hierfür besteht ein berechtigtes Interesse im Sinne des <%= link "Art. 6 Abs. 1 lit. f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO. Die Einbindung erfolgt durch einen Serveraufruf, bei dem die IP-Adresse des Besuchers an Google übertragen wird. Die Verarbeitung dieser unterliegt der <%= link "Datenschutzerklärung von Google", to: "https://www.google.com/policies/privacy/" %>.</p>
+
+    <h3>7. Deine Rechte</h3>
+
+    <p>Laut DSGVO hast du unter anderem das Recht, jederzeit und unentgeltlich</p>
+
+    <ul>
+      <li>anzufragen, ob und welche personenbezogenen Daten verarbeitet werden (<%= link "Art. 15", to: "https://dsgvo-gesetz.de/art-15-dsgvo/" %>)</li>
+      <li>unrichtige personenbezogener Daten korrigieren zu lassen (<%= link "Art. 16", to: "https://dsgvo-gesetz.de/art-16-dsgvo/" %>)</li>
+      <li>die Löschung von personenbezogenen Daten zu verlangen, sofern die Verarbeitung nicht mehr erforderlich ist (<%= link "Art. 17", to: "https://dsgvo-gesetz.de/art-17-dsgvo/" %>)</li>
+      <li>einen Auszug deiner personenbezogenen Daten zu verlangen (<%= link "Art. 20", to: "https://dsgvo-gesetz.de/art-20-dsgvo/" %>)</li>
+    </ul>
+
+    <p>Außerdem hast du das Recht auf Beschwerde bei einer <%= link "Aufsichtsbehörde", to: "https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html" %>, wenn du der Ansicht bist, dass die Verarbeitung deiner personenbezogenen Daten gegen die DSGVO verstößt.</p>
+
+    <h3>8. Änderungen</h3>
+
+    <p>Sollten wir Änderungen an dieser Datenschutzerklärung vornehmen, die eine Verarbeitung deiner Daten außerhalb obengenannter Zwecke vorsieht, so werden wir dich hierüber informieren und deine Einwilligung einholen, falls dies rechtlich erforderlich ist.</p>
+
+    <p><strong>Stand: 30. Oktober 2018</strong></p>
+  </div>
+</div>

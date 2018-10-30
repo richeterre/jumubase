@@ -11,13 +11,11 @@ defmodule JumubaseWeb.PageView do
   end
 
   def render("rules.html", assigns) do
-    locale = Gettext.get_locale(Jumubase.Gettext)
-    render("rules.#{locale}.html", assigns)
+    render("rules.#{get_locale()}.html", assigns)
   end
 
   def render("privacy.html", assigns) do
-    locale = Gettext.get_locale(Jumubase.Gettext)
-    render("privacy.#{locale}.html", assigns)
+    render("privacy.#{get_locale()}.html", assigns)
   end
 
   def to_accordion_item(%Host{} = host) do
@@ -25,6 +23,8 @@ defmodule JumubaseWeb.PageView do
   end
 
   # Private helpers
+
+  defp get_locale, do: Gettext.get_locale(Jumubase.Gettext)
 
   defp render_markdown(nil), do: nil
   defp render_markdown(markdown) do

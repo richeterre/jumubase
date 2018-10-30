@@ -25,9 +25,7 @@
         <%= if @current_user do %>
           <li>
             <%= link to: internal_page_path(@conn, :home) do %>
-              <%= icon_tag("home") %>
-              &thinsp;
-              <%= @current_user.given_name %>
+              <%= icon_tag("home") %> <%= @current_user.given_name %>
             <% end %>
           </li>
           <li><%= link gettext("Log out"), to: session_path(@conn, :delete, @current_user), method: :delete %></li>

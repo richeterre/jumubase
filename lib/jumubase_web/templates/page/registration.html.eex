@@ -6,10 +6,12 @@
 
 <hr>
 
-<p>
-  <%= gettext("Unless otherwise mentioned, the registration deadline is") %>
-  <strong><%= format_date(@general_deadline) %>.</strong>
-</p>
+<%= if @general_deadline do %>
+  <p>
+    <%= gettext("Unless otherwise mentioned, the registration deadline is") %>
+    <strong><%= format_date(@general_deadline) %>.</strong>
+  </p>
+<% end %>
 
 <div class="row">
   <div class="col-md-5">

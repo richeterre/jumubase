@@ -14,18 +14,20 @@ defmodule JumubaseWeb.PasswordResetControllerTest do
     Accounts.get_by(%{"email" => "gladys@example.com"})
   end
 
-  test "user can create a password reset request", %{conn: conn} do
-    valid_attrs = %{email: "gladys@example.com"}
-    conn = post(conn, password_reset_path(conn, :create), password_reset: valid_attrs)
-    assert conn.private.phoenix_flash["info"] =~ "your inbox for instructions"
-    assert redirected_to(conn) == page_path(conn, :home)
-  end
+  describe "create/2" do
+    test "lets the user create a password reset request", %{conn: conn} do
+      valid_attrs = %{email: "gladys@example.com"}
+      conn = post(conn, password_reset_path(conn, :create), password_reset: valid_attrs)
+      assert conn.private.phoenix_flash["info"] =~ "your inbox for instructions"
+      assert redirected_to(conn) == session_path(conn, :new)
+    end
 
-  test "create function fails for no user", %{conn: conn} do
-    invalid_attrs = %{email: "prettylady@example.com"}
-    conn = post(conn, password_reset_path(conn, :create), password_reset: invalid_attrs)
-    assert conn.private.phoenix_flash["info"] =~ "your inbox for instructions"
-    assert redirected_to(conn) == page_path(conn, :home)
+    test "succeeds even if the user wasn't found", %{conn: conn} do
+      invalid_attrs = %{email: "prettylady@example.com"}
+      conn = post(conn, password_reset_path(conn, :create), password_reset: invalid_attrs)
+      assert conn.private.phoenix_flash["info"] =~ "your inbox for instructions"
+      assert redirected_to(conn) == session_path(conn, :new)
+    end
   end
 
   test "reset password succeeds for correct key", %{conn: conn} do

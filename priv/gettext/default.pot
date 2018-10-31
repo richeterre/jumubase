@@ -97,6 +97,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
+#: lib/jumubase_web/templates/performance/edit.html.eex:11
 msgid "Save Changes"
 msgstr ""
 
@@ -387,7 +388,7 @@ msgid "Programme"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:59
+#: lib/jumubase_web/templates/performance/new.html.eex:13
 msgid "Submit registration"
 msgstr ""
 
@@ -675,16 +676,6 @@ msgid "and"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:90
-msgid "We received your registration."
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:91
-msgid "To make changes, use this edit code: %{edit_code}"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/controllers/email.ex:71
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
@@ -833,4 +824,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:58
 msgid "To find out how we process your data, please see our"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:90
+msgid "We received your registration!"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:91
+msgid "You can still change it later using the edit code %{edit_code}."
 msgstr ""

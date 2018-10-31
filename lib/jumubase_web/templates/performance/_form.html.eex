@@ -56,7 +56,7 @@
 
       <div class="form-group">
         <%= submit class: "btn btn-primary" do %>
-          <%= gettext("Submit registration") %> <%= icon_tag("send") %>
+          <%= @submit_title %>
         <% end %>
       </div>
     <% end %>

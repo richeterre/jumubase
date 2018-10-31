@@ -9,4 +9,6 @@
 <%= render "_form.html",
   conn: @conn,
   path: performance_path(@conn, :create, @contest),
-  changeset: @changeset %>
+  changeset: @changeset,
+  submit_title: [gettext("Submit registration"), " ", icon_tag("send")]
+  %>

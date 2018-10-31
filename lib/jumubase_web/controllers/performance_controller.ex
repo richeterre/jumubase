@@ -87,8 +87,8 @@ defmodule JumubaseWeb.PerformanceController do
   end
 
   defp registration_success_message(edit_code) do
-    success_msg = gettext("We received your registration.")
-    edit_msg = gettext("To make changes, use this edit code: %{edit_code}", edit_code: edit_code)
+    success_msg = gettext("We received your registration!")
+    edit_msg = gettext("You can still change it later using the edit code %{edit_code}.", edit_code: edit_code)
     "#{success_msg} #{edit_msg}"
   end
 

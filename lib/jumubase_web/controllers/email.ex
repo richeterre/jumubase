@@ -46,7 +46,7 @@ defmodule JumubaseWeb.Email do
         |> render("registration_success_one.html")
       participants ->
         email
-        |> to(participants |> Enum.map(&(&1.email)))
+        |> to(participants |> get_unique_emails)
         |> assign(:participants, participants)
         |> render("registration_success_many.html")
     end
@@ -74,5 +74,9 @@ defmodule JumubaseWeb.Email do
       participant_count,
       name: cat_name
     )
+  end
+
+  def get_unique_emails(participants) do
+    participants |> Enum.map(&(&1.email)) |> Enum.uniq
   end
 end

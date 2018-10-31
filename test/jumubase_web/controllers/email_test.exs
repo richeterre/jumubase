@@ -47,6 +47,18 @@ defmodule JumubaseWeb.EmailTest do
       assert email.subject == "Your Jumu registration for category \"#{cat_name}\""
     end
 
+    test "handles duplicate participant email addresses", %{contest: c} do
+      cc = insert_contest_category(c, "classical")
+      performance = insert_performance(cc,
+        appearances: build_appearances([
+          "pt1@example.org", "pt1@example.org", "pt2@example.org"
+        ])
+      )
+
+      email = Email.registration_success(performance)
+      assert email.to == ["pt1@example.org", "pt2@example.org"]
+    end
+
     test "adjusts the subject when confirming a Kimu registration", %{contest: c} do
       cc = insert_contest_category(c, "kimu")
       performance = insert_performance(cc,

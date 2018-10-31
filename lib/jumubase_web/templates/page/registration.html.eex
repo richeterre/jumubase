@@ -35,6 +35,7 @@
           <%= link name_with_flag(contest),
             to: performance_path(@conn, :new, contest)
             %>
+          <strong><%= deadline_info(contest, @general_deadline) %></strong>
         </li>
       <% end %>
     </ul>

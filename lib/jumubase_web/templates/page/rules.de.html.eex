@@ -11,7 +11,7 @@
     <p>Bitte lies dir zunächst die aktuelle Ausschreibung durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
 
     <p class="text-prominent">
-      <%= icon_link "file", "Ausschreibung 2019", static_path(@conn, "/resources/Ausschreibung_2019.pdf"), class: "btn btn-info" %>
+      <%= rule_booklet_link "Ausschreibung 2019", 2019, class: "btn btn-info" %>
     </p>
 
     <p>In der <strong>Region Nord- und Osteuropa</strong> bestehen zusätzlich die folgenden Sonderregelungen:</p>

@@ -4,10 +4,17 @@ defmodule JumubaseWeb.PageView do
   import JumubaseWeb.Internal.ContestView,
     only: [deadline_info: 2, format_date: 1, name_with_flag: 1]
   alias Jumubase.Foundation.Host
+  alias JumubaseWeb.Endpoint
   alias JumubaseWeb.MapHelpers
 
   def host_map_image do
     img_tag MapHelpers.host_map_url, class: "img-responsive map-image"
+  end
+
+  def rule_booklet_link(title, year, opts \\ []) do
+    icon_link "file", title,
+      static_path(Endpoint, "/resources/Ausschreibung_#{year}.pdf"),
+      opts
   end
 
   def render("rules.html", assigns) do

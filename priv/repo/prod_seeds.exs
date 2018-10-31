@@ -1,6 +1,5 @@
 import Jumubase.Factory
 alias Jumubase.Repo
-alias Jumubase.Foundation.{Category, Host}
 
 Repo.transaction fn ->
   # Create hosts
@@ -64,10 +63,6 @@ Repo.transaction fn ->
   insert(:host, id: 9, name: "DS Warschau",
     address: "c/o [Marcin Lemiszewski](mailto:m.lemiszewski@wbs.pl)<br>ul. Sw. Urszuli Ledóchowskiej 3<br>02-972 Warszawa (Wilanów)<br>Polen",
     city: "Warschau", country_code: "PL", time_zone: "Europe/Warsaw", latitude: 52.1577924, longitude: 21.0691116
-  )
-  insert(:host, name: "DS Doha",
-    address: "c/o André Reichel<br>Ibn Seena School Street No. 30, Al Maamoura<br>P. O. Box 39135<br>Doha<br>Katar",
-    city: "Doha", country_code: "QA", time_zone: "Asia/Qatar", latitude: 25.2559086, longitude: 51.501849
   )
 
   # Create categories

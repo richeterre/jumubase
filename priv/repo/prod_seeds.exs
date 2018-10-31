@@ -1,16 +1,8 @@
 import Jumubase.Factory
 alias Jumubase.Repo
-alias Jumubase.Accounts.User
 alias Jumubase.Foundation.{Category, Host}
-alias Jumubase.Showtime.{Participant}
 
 Repo.transaction fn ->
-  # Clear existing data
-  Repo.delete_all(Host)
-  Repo.delete_all(User)
-  Repo.delete_all(Category)
-  Repo.delete_all(Participant)
-
   # Create hosts
 
   insert(:host, id: 17, name: "DS Bratislava",

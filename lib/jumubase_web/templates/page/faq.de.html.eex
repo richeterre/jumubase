@@ -11,21 +11,62 @@
     <h3>Anmeldung</h3>
 
     <dl>
-      <dt>Frage 1</dt>
-      <dd>Lorem ipsum</dd>
+      <dt>Ab wann kann ich mich anmelden?</dt>
+      <dd>Die Anmeldung für ein Wettbewerbsjahr beginnt im Oktober des Vorjahres.</dd>
 
-      <dt>Frage 2</dt>
-      <dd>Lorem ipsum</dd>
+      <dt>Wann ist Anmeldeschluss?</dt>
+      <dd>
+        Das hängt von der Schule ab &ndash; das jeweilige Datum findest du auf der
+        <%= link "Anmeldeseite", to: page_path(@conn, :registration) %>.
+      </dd>
+
+      <dt>Kann ich mein Vorspielprogramm nach der Anmeldung noch ändern?</dt>
+      <dd>
+        Ja, dies ist bis zum Anmeldeschluss möglich. Gib einfach den Änderungscode,
+        den du nach der Anmeldung bzw. Weiterleitung erhalten hast,
+        <%= link "hier", to: page_path(@conn, :edit_registration) %> ein.
+      </dd>
+
+      <dt>Muss ich mich für den Landeswettbewerb erneut anmelden?</dt>
+      <dd>
+        Nein! Bei einer Weiterleitung zum LW wird deine Anmeldung automatisch übernommen.
+        Du bekommst dann eine E-Mail mit einem neuen Änderungscode, mit dem du dein Vorspielprogramm ändern kannst.
+      </dd>
+
+      <dt>Muss ich mich für den Bundeswettbewerb erneut anmelden?</dt>
+      <dd>
+        Ja, bei einer Weiterleitung zum BW musst du ein gesondertes Anmeldeformular ausdrucken und
+        unterschrieben per Post abschicken. Wie das geht, erfährst du beim LW-Organisationsteam.
+      </dd>
     </dl>
 
-    <h3>Kimu</h3>
+    <h3>Regeln</h3>
 
     <dl>
-      <dt>Frage 1</dt>
-      <dd>Lorem ipsum</dd>
+      <dt>Wie wird die Altersgruppe berechnet?</dt>
+      <dd>
+        Auf Seite 6 der <%= link "Ausschreibung", to: page_path(@conn, :rules) %> findest du eine
+        Tabelle zum Nachschlagen. Bei Solisten und einzelnen Begleitern zählt hier einfach das Geburtsjahr.
+        Bei Ensembles oder Begleitgruppen nimmt man das Durchschnittsalter auf den Tag genau und
+        schaut dann, in welchem Jahr dieser Tag liegt.
+      </dd>
 
-      <dt>Frage 2</dt>
-      <dd>Lorem ipsum</dd>
+      <dt>Darf ich mich in den Klassik-Kategorien per Playback begleiten lassen?</dt>
+      <dd>Nein, in der Klassik ist eine Begleitung per Playback nicht möglich.</dd>
+    </dl>
+
+    <h3>“Kinder musizieren” (Kimu)</h3>
+
+    <dl>
+      <dt>Wer kann an Kimu teilnehmen?</dt>
+      <dd>
+        Kimu ist für junge Teilnehmer gedacht, um vor dem "richtigen" Wettbewerb in familiärer
+        Atmosphäre erste Bühnenerfahrung zu sammeln. Hier sind vor allem die Altersgruppen
+        I und II gemeint &ndash; eine feste Altersgrenze gibt es aber nicht.
+      </dd>
+
+      <dt>Kann man bei Kimu weitergeleitet werden?</dt>
+      <dd>Nein, eine Weiterleitung gibt es bei Kimu nicht.</dd>
     </dl>
   </div>
 </div>

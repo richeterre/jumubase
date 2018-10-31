@@ -42,7 +42,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:12
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:181
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:183
 #: lib/jumubase_web/templates/session/new.html.eex:12
 msgid "Email"
 msgstr ""
@@ -58,7 +58,7 @@ msgid "Inspector"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:34
+#: lib/jumubase_web/templates/layout/nav.html.eex:35
 #: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Internal Pages"
 msgstr ""
@@ -89,10 +89,10 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/category/new.html.eex:26
 #: lib/jumubase_web/templates/internal/category/new.html.eex:37
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:137
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:155
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:157
 #: lib/jumubase_web/templates/performance/_form.html.eex:17
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:118
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:120
 msgid "Please choose"
 msgstr ""
 
@@ -216,7 +216,7 @@ msgid "Accompanist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:73
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:75
 msgid "Birthdate"
 msgstr ""
 
@@ -234,35 +234,35 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:6
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:45
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:47
 msgid "First name"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:148
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:150
 msgid "Instrument"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:14
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:59
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:61
 msgid "Last name"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:9
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/templates/performance/_form.html.eex:30
+#: lib/jumubase_web/templates/performance/_form.html.eex:28
 msgid "Participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:168
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:170
 msgid "Phone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:40
+#: lib/jumubase_web/templates/performance/_form.html.eex:38
 msgid "Pieces"
 msgstr ""
 
@@ -279,7 +279,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:40
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:130
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:132
 msgid "Role"
 msgstr ""
 
@@ -290,12 +290,12 @@ msgid "Soloist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:37
+#: lib/jumubase_web/templates/performance/_form.html.eex:35
 msgid "Add participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:47
+#: lib/jumubase_web/templates/performance/_form.html.eex:45
 msgid "Add piece"
 msgstr ""
 
@@ -305,12 +305,12 @@ msgid "Age group"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:67
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:69
 msgid "Born"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:53
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:55
 msgid "Composer"
 msgstr ""
 
@@ -329,7 +329,7 @@ msgid "Dates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:84
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:86
 msgid "Day"
 msgstr ""
 
@@ -339,12 +339,12 @@ msgid "Deadline"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:80
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:82
 msgid "Died"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:129
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:131
 msgid "Duration"
 msgstr ""
 
@@ -357,7 +357,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:10
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:111
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
 msgid "Epoch"
 msgstr ""
 
@@ -367,7 +367,7 @@ msgid "Hello %{name},"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:98
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:100
 msgid "Month"
 msgstr ""
 
@@ -388,12 +388,12 @@ msgid "Programme"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:61
+#: lib/jumubase_web/templates/performance/_form.html.eex:59
 msgid "Submit registration"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:40
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:42
 msgid "Title"
 msgstr ""
 
@@ -403,7 +403,7 @@ msgid "Total duration: %{d}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:112
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:114
 msgid "Year"
 msgstr ""
 
@@ -414,12 +414,12 @@ msgid "accompanied by"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:142
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:144
 msgid "min"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:157
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:159
 msgid "sec"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgid "welcome to your personal Jumu portal!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:31
+#: lib/jumubase_web/templates/layout/nav.html.eex:32
 msgid "Log out"
 msgstr ""
 
@@ -509,12 +509,12 @@ msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:66
+#: lib/jumubase_web/controllers/page_controller.ex:70
 msgid "We could not find a registration for this edit code."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:96
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:98
 msgid "Artist"
 msgstr ""
 
@@ -700,7 +700,7 @@ msgstr[0] "Your Kimu registration"
 msgstr[1] "Your Kimu registration"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:22
+#: lib/jumubase_web/templates/layout/nav.html.eex:23
 #: lib/jumubase_web/templates/page/contact.html.eex:1
 msgid "Contact"
 msgstr ""
@@ -791,12 +791,13 @@ msgid "Show performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:55
+#: lib/jumubase_web/templates/page/contact.html.eex:59
+#: lib/jumubase_web/templates/performance/_form.html.eex:53
 msgid "privacy policy"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:54
+#: lib/jumubase_web/templates/performance/_form.html.eex:52
 msgid "The data you enter will be handled as described in the"
 msgstr ""
 
@@ -818,4 +819,19 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:29
 msgid "responsible for this website"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/layout/nav.html.eex:22
+msgid "FAQ"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:55
+msgid "Privacy"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:58
+msgid "To find out how we process your data, please see our"
 msgstr ""

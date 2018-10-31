@@ -51,5 +51,12 @@
         </ul>
       </div>
     </div>
+
+    <h3><%= gettext("Privacy") %></h3>
+
+    <p>
+      <%= gettext("To find out how we process your data, please see our") %>
+      <%= link gettext("privacy policy"), to: page_path(@conn, :privacy) %>.
+    </p>
   </div>
 </div>

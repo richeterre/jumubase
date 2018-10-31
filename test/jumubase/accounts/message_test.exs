@@ -22,10 +22,4 @@ defmodule Jumubase.Accounts.MessageTest do
     assert sent_email.text_body =~ "choose a new password: #{expected_url}"
     assert_delivered_email(Message.reset_request(email, key))
   end
-
-  test "sends password reset email", %{email: email} do
-    sent_email = Message.reset_success(email)
-    assert sent_email.text_body =~ "password has been reset"
-    assert_delivered_email(Message.reset_success(email))
-  end
 end

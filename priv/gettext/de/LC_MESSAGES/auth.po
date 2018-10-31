@@ -42,9 +42,9 @@ msgid "You need to log in to view this page."
 msgstr "Du musst dich einloggen, um diese Seite zu besuchen."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:43
+#: lib/jumubase_web/controllers/password_reset_controller.ex:42
 msgid "Your password has been reset."
-msgstr "Dein Passwort wurde eingerichtet."
+msgstr "Dein neues Passwort wurde eingerichtet."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:33
@@ -62,11 +62,6 @@ msgid "Please enter an email address"
 msgstr "Bitte gib eine E-Mailadresse ein."
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:35
-msgid "Password reset"
-msgstr "Neues Passwort eingerichtet"
-
-#, elixir-format
 #: lib/jumubase/accounts/message.ex:26
 msgid "Open this link now to choose a new password: %{url}"
 msgstr "Öffne nun diesen Link, um ein neues Passwort einzurichten: %{url}"
@@ -75,8 +70,3 @@ msgstr "Öffne nun diesen Link, um ein neues Passwort einzurichten: %{url}"
 #: lib/jumubase/accounts/message.ex:18
 msgid "You tried to reset your password, but no user was found for the email you provided."
 msgstr "Du hast versucht, ein neues Passwort einzurichten, aber es wurde kein Benutzer unter der angegebenen E-Mail gefunden."
-
-#, elixir-format
-#: lib/jumubase/accounts/message.ex:36
-msgid "Your password has been reset successfully."
-msgstr "Dein neues Passwort wurde erfolgreich eingerichtet."

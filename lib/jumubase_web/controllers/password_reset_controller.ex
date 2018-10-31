@@ -38,8 +38,7 @@ defmodule JumubaseWeb.PasswordResetController do
     end
   end
 
-  defp update_password({:ok, user}, conn, _params) do
-    Accounts.Message.reset_success(user.email)
+  defp update_password({:ok, _user}, conn, _params) do
     message = dgettext("auth", "Your password has been reset.")
 
     delete_session(conn, :phauxth_session_id)

@@ -27,16 +27,6 @@ defmodule Jumubase.Accounts.Message do
     |> Mailer.deliver_now()
   end
 
-  @doc """
-  An email acknowledging that the password has been successfully reset.
-  """
-  def reset_success(address) do
-    prep_mail(address)
-    |> subject(dgettext("auth", "Password reset"))
-    |> text_body(dgettext("auth", "Your password has been reset successfully."))
-    |> Mailer.deliver_now()
-  end
-
   defp prep_mail(address) do
     sender = Application.get_env(:jumubase, JumubaseWeb.Email)[:default_sender]
 

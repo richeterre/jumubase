@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.HostController do
   use JumubaseWeb, :controller
-  alias Jumubase.Repo
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Host
 
@@ -20,10 +19,8 @@ defmodule JumubaseWeb.Internal.HostController do
     |> render("new.html")
   end
 
-  def create(conn, %{"host" => host_params}) do
-    changeset = Host.changeset(%Host{}, host_params)
-
-    case Repo.insert(changeset) do
+  def create(conn, %{"host" => params}) do
+    case Foundation.create_host(params) do
       {:ok, host} ->
         conn
         |> put_flash(:success,

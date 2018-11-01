@@ -19,9 +19,13 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
     end
 
     test "redirects to host list after creating a host", %{conn: conn} do
-      valid_attrs = params_for(:host)
+      valid_attrs = params_for(:host, name: "XYZ")
       conn = post(conn, internal_host_path(conn, :create), host: valid_attrs)
-      assert redirected_to(conn) == internal_host_path(conn, :index)
+      redirect_path = internal_host_path(conn, :index)
+
+      assert redirected_to(conn) == redirect_path
+      conn = get(recycle(conn), redirect_path) # Follow redirection
+      assert html_response(conn, 200) =~ "XYZ"
     end
 
     test "renders errors when host creation fails with invalid data", %{conn: conn} do

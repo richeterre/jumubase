@@ -30,6 +30,19 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "create_host/1" do
+    test "creates a host with valid data" do
+      params = params_for(:host, name: "X")
+      assert {:ok, result} = Foundation.create_host(params)
+      assert %Host{name: "X"} = result
+    end
+
+    test "returns an error changeset for invalid data" do
+      params = params_for(:host, name: nil)
+      assert {:error, %Changeset{}} = Foundation.create_host(params)
+    end
+  end
+
   describe "list_contests/0" do
     test "returns all contests" do
       contests = insert_list(2, :contest)
@@ -151,12 +164,6 @@ defmodule Jumubase.FoundationTest do
     test "returns all categories" do
       categories = insert_list(2, :category)
       assert Foundation.list_categories() == categories
-    end
-  end
-
-  describe "create_category/0" do
-    test "returns an error changeset" do
-      assert {:error, %Changeset{}} = Foundation.create_category
     end
   end
 

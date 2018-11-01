@@ -22,6 +22,10 @@ defmodule Jumubase.Foundation do
     Repo.all(from h in Host, select: {h.latitude, h.longitude})
   end
 
+  def create_host(attrs) do
+    Host.changeset(%Host{}, attrs) |> Repo.insert
+  end
+
   ## Contests
 
   def list_contests(query \\ Contest) do
@@ -62,10 +66,8 @@ defmodule Jumubase.Foundation do
     Repo.all(Category)
   end
 
-  def create_category(attrs \\ %{}) do
-    %Category{}
-    |> Category.changeset(attrs)
-    |> Repo.insert
+  def create_category(attrs) do
+    Category.changeset(%Category{}, attrs) |> Repo.insert
   end
 
   def list_contest_categories(%Contest{} = contest) do

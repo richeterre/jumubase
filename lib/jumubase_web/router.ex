@@ -40,6 +40,11 @@ defmodule JumubaseWeb.Router do
     resources "/password-resets", PasswordResetController, only: [:new, :create]
     get "/password-resets/edit", PasswordResetController, :edit
     put "/password-resets/update", PasswordResetController, :update
+
+    # Redirections for legacy paths
+    get "/vorspiel-bearbeiten", Redirector, to: "/anmeldung-bearbeiten"
+    get "/anmelden", Redirector, to: "/login"
+    get "/jmd", Redirector, to: "/internal"
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do

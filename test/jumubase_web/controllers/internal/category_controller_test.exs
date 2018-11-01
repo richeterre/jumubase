@@ -19,9 +19,13 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
     end
 
     test "redirects to category list after creating a category", %{conn: conn} do
-      valid_attrs = params_for(:category)
+      valid_attrs = params_for(:category, name: "XYZ")
       conn = post(conn, internal_category_path(conn, :create), category: valid_attrs)
-      assert redirected_to(conn) == internal_category_path(conn, :index)
+      redirect_path = internal_category_path(conn, :index)
+
+      assert redirected_to(conn) == redirect_path
+      conn = get(recycle(conn), redirect_path) # Follow redirection
+      assert html_response(conn, 200) =~ "XYZ"
     end
 
     test "renders errors when category creation fails with invalid data", %{conn: conn} do

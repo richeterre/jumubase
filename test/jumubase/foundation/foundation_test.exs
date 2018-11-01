@@ -1,5 +1,6 @@
 defmodule Jumubase.FoundationTest do
   use Jumubase.DataCase
+  alias Ecto.Changeset
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
@@ -150,6 +151,25 @@ defmodule Jumubase.FoundationTest do
     test "returns all categories" do
       categories = insert_list(2, :category)
       assert Foundation.list_categories() == categories
+    end
+  end
+
+  describe "create_category/0" do
+    test "returns an error changeset" do
+      assert {:error, %Changeset{}} = Foundation.create_category
+    end
+  end
+
+  describe "create_category/1" do
+    test "creates a category with valid data" do
+      params = params_for(:category, name: "X")
+      assert {:ok, result} = Foundation.create_category(params)
+      assert %Category{name: "X"} = result
+    end
+
+    test "returns an error changeset for invalid data" do
+      params = params_for(:category, name: nil)
+      assert {:error, %Changeset{}} = Foundation.create_category(params)
     end
   end
 

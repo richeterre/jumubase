@@ -62,6 +62,12 @@ defmodule Jumubase.Foundation do
     Repo.all(Category)
   end
 
+  def create_category(attrs \\ %{}) do
+    %Category{}
+    |> Category.changeset(attrs)
+    |> Repo.insert
+  end
+
   def list_contest_categories(%Contest{} = contest) do
     ContestCategory
     |> where(contest_id: ^contest.id)

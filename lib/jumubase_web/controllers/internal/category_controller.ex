@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.CategoryController do
   use JumubaseWeb, :controller
-  alias Jumubase.Repo
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Category
 
@@ -20,10 +19,8 @@ defmodule JumubaseWeb.Internal.CategoryController do
     |> render("new.html")
   end
 
-  def create(conn, %{"category" => category_params}) do
-    changeset = Category.changeset(%Category{}, category_params)
-
-    case Repo.insert(changeset) do
+  def create(conn, %{"category" => params}) do
+    case Foundation.create_category(params) do
       {:ok, category} ->
         conn
         |> put_flash(:success,

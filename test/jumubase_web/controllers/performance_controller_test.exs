@@ -26,8 +26,9 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       assert [%{participant: %{email: "ab@cd.ef"}}] = performance.appearances
 
       # Check response page
-      assert redirected_to(conn) == page_path(conn, :home)
-      conn = get(recycle(conn), page_path(conn, :home)) # Follow redirection
+      redirect_path = page_path(conn, :home)
+      assert redirected_to(conn) == redirect_path
+      conn = get(recycle(conn), redirect_path) # Follow redirection
       assert html_response(conn, 200) =~ "We received your registration"
       assert html_response(conn, 200) =~ performance.edit_code
     end

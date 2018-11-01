@@ -33,18 +33,18 @@ defmodule JumubaseWeb.PageControllerTest do
       edit_code = "123456"
       p = insert_performance(cc, edit_code: edit_code)
 
-      conn = post(conn, page_path(conn, :edit_registration), search: %{edit_code: edit_code})
+      conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: edit_code})
       assert redirected_to(conn) == performance_path(conn, :edit, c, p, edit_code: edit_code)
     end
 
     test "shows an error when submitting an unknown edit code", %{conn: conn} do
-      conn = post(conn, page_path(conn, :edit_registration), search: %{edit_code: "unknown"})
+      conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: "unknown"})
       assert get_flash(conn, :error) =~ "We could not find a registration for this edit code."
       assert redirected_to(conn) == page_path(conn, :edit_registration)
     end
 
     test "shows an error when submitting an empty edit code", %{conn: conn} do
-      conn = post(conn, page_path(conn, :edit_registration), search: %{edit_code: " "})
+      conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: " "})
       assert get_flash(conn, :error) =~ "Please enter an edit code."
       assert redirected_to(conn) == page_path(conn, :edit_registration)
     end

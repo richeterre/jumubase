@@ -1,0 +1,31 @@
+<h2><%= gettext("Categories") %></h2>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th></th>
+        <th colspan="2"><%= gettext("Participation") %></th>
+        <th colspan="2"><%= gettext("Advancement") %></th>
+      </tr>
+      <tr>
+        <th><%= gettext("Name") %></th>
+        <th><%= gettext("AG min") %></th>
+        <th><%= gettext("AG max") %></th>
+        <th><%= gettext("AG min") %></th>
+        <th><%= gettext("AG max") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for cc <- @contest_categories do %>
+        <tr>
+          <td><%= cc.category.name %></td>
+          <td><%= badge(cc.min_age_group) %></td>
+          <td><%= badge(cc.max_age_group) %></td>
+          <td><%= badge(cc.min_advancing_age_group) %></td>
+          <td><%= badge(cc.max_advancing_age_group) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

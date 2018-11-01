@@ -148,6 +148,22 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_contest_categories/1" do
+    test "returns all contest categories of the given contest" do
+      c = insert(:contest, contest_categories: build_list(2, :contest_category))
+      assert_ids_match_unordered(
+        Foundation.list_contest_categories(c),
+        c.contest_categories
+      )
+    end
+
+    test "preloads the contest categories' categories" do
+      c = insert(:contest, contest_categories: build_list(1, :contest_category))
+      assert [result] = Foundation.list_contest_categories(c)
+      assert %Category{} = result.category
+    end
+  end
+
   describe "get_contest_category!/2" do
     setup do
       [contest: insert(:contest)]

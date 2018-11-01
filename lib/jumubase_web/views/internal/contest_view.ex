@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Internal.ContestView do
   use JumubaseWeb, :view
-  import JumubaseWeb.Internal.AppearanceView, only: [badge: 1]
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.Contest
 

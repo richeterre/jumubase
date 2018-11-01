@@ -72,7 +72,7 @@ msgstr "Jumu-Logo"
 #: lib/jumubase_web/templates/internal/category/index.html.eex:7
 #: lib/jumubase_web/templates/internal/category/new.html.eex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:38
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:12
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/new.html.eex:8
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
@@ -316,6 +316,7 @@ msgid "Composer"
 msgstr "Komponist"
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:8
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
@@ -336,7 +337,7 @@ msgstr "Tag"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
-#: lib/jumubase_web/views/internal/contest_view.ex:34
+#: lib/jumubase_web/views/internal/contest_view.ex:33
 msgid "Deadline"
 msgstr "Anmeldeschluss"
 
@@ -451,9 +452,10 @@ msgid "Log in"
 msgstr "Einloggen"
 
 #, elixir-format
+#: lib/jumubase_web/controllers/breadcrumbs.ex:47
 #: lib/jumubase_web/controllers/internal/category_controller.ex:8
 #: lib/jumubase_web/templates/internal/category/index.html.eex:1
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:26
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:27
 msgid "Categories"
 msgstr "Kategorien"
@@ -600,24 +602,24 @@ msgid "Type"
 msgstr "Typ"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:40
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:42
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:14
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:16
 msgid "AG max"
 msgstr "bis AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:39
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:41
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:13
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:15
 msgid "AG min"
 msgstr "von AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:35
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:9
 msgid "Advancement"
 msgstr "Weiterleitung"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:34
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:8
 msgid "Participation"
 msgstr "Teilnahme"
 
@@ -837,3 +839,8 @@ msgstr "Mit dem Änderungscode %{edit_code} kannst du sie später noch bearbeite
 #: lib/jumubase_web/templates/page/_contest_list.html.eex:15
 msgid "There are currently no contests available for registration."
 msgstr "Zur Zeit stehen keine Wettbewerbe zur Anmeldung offen."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:22
+msgid "Show categories"
+msgstr "Kategorien anzeigen"

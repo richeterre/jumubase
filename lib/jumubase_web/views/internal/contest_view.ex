@@ -30,7 +30,8 @@ defmodule JumubaseWeb.Internal.ContestView do
       ^general_deadline ->
         nil
       _ ->
-        gettext("(Deadline: %{deadline})", deadline: format_date(deadline, :short))
+        deadline_tag = content_tag(:strong, format_date(deadline, :medium))
+        "(#{gettext("Deadline")}: #{safe_to_string(deadline_tag)})" |> raw
     end
   end
 
@@ -69,7 +70,7 @@ defmodule JumubaseWeb.Internal.ContestView do
 
   # Returns a date format for the locale.
   defp date_format("de", :full), do: "{D}. {Mfull} {YYYY}"
-  defp date_format("de", :short), do: "{D}.{M}."
+  defp date_format("de", :medium), do: "{D}. {Mfull}"
   defp date_format("en", :full), do: "{D} {Mfull} {YYYY}"
-  defp date_format("en", :short), do: "{D} {Mshort}"
+  defp date_format("en", :medium), do: "{D} {Mfull}"
 end

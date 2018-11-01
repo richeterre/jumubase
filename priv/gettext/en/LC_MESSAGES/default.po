@@ -336,6 +336,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
+#: lib/jumubase_web/views/internal/contest_view.ex:34
 msgid "Deadline"
 msgstr ""
 
@@ -474,7 +475,7 @@ msgid "Piece"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:48
+#: lib/jumubase_web/templates/page/registration.html.eex:40
 msgid "Already registered?"
 msgstr ""
 
@@ -485,7 +486,7 @@ msgid "Edit registration"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:51
+#: lib/jumubase_web/templates/page/registration.html.eex:43
 msgid "Edit your registration"
 msgstr ""
 
@@ -566,7 +567,7 @@ msgid "Genre"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:31
+#: lib/jumubase_web/templates/page/registration.html.eex:28
 #: lib/jumubase_web/views/internal/category_view.ex:41
 msgid "Kimu"
 msgstr ""
@@ -752,17 +753,12 @@ msgid "Your message has been sent!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:33
-msgid "(Deadline: %{deadline})"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:18
+#: lib/jumubase_web/templates/page/registration.html.eex:20
 msgid "Jumu"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/registration.html.eex:11
+#: lib/jumubase_web/templates/page/registration.html.eex:13
 msgid "Unless otherwise mentioned, the registration deadline is"
 msgstr ""
 
@@ -835,4 +831,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/performance_controller.ex:91
 msgid "You can still change it later using the edit code %{edit_code}."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/_contest_list.html.eex:15
+msgid "There are currently no contests available for registration."
 msgstr ""

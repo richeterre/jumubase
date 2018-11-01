@@ -1,0 +1,17 @@
+<%= if @contests != [] do %>
+  <ul class="list-group">
+    <%= for contest <- @contests do %>
+      <li class="list-group-item">
+        <%= link name_with_flag(contest),
+          to: performance_path(@conn, :new, contest)
+          %>
+        <br>
+        <%= deadline_info(contest, @general_deadline) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">
+    <%= gettext("There are currently no contests available for registration.") %>
+  </p>
+<% end %>

@@ -118,27 +118,32 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "load_host_users/1" do
-    test "preloads a contest's host with associated users" do
-      %{id: id} = insert(:contest, host: build(:host, users: [
-        build(:user, given_name: "A"),
-        build(:user, given_name: "B"),
-      ]))
-
-      contest = Repo.get(Contest, id) |> Foundation.load_host_users
-      assert [%User{given_name: "A"}, %User{given_name: "B"}] = contest.host.users
+  describe "general_deadline/1" do
+    test "returns the deadline most common in the given contests" do
+      [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
+      contests = [
+        build(:contest, deadline: d1),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d1),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d2),
+        build(:contest, deadline: d3),
+      ]
+      assert Foundation.general_deadline(contests) == d3
     end
-  end
 
-  test "load_contest_categories/1 preloads a contest's contest categories" do
-    %{id: id} = insert(:contest,
-      contest_categories: build_list(1, :contest_category,
-        category: build(:category, name: "ABC")
-      )
-    )
-
-    contest = Repo.get(Contest, id) |> Foundation.load_contest_categories
-    assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
+    test "returns the earliest deadline if several are most common" do
+      [d1, d2, d3] = [~D[2018-12-15], ~D[2018-12-01], ~D[2018-12-21]]
+      contests = [
+        build(:contest, deadline: d1),
+        build(:contest, deadline: d2),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d3),
+        build(:contest, deadline: d2),
+        build(:contest, deadline: d1),
+      ]
+      assert Foundation.general_deadline(contests) == d2
+    end
   end
 
   describe "list_categories/0" do
@@ -189,31 +194,26 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "general_deadline/1" do
-    test "returns the deadline most common in the given contests" do
-      [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
-      contests = [
-        build(:contest, deadline: d1),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d1),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d2),
-        build(:contest, deadline: d3),
-      ]
-      assert Foundation.general_deadline(contests) == d3
-    end
+  describe "load_host_users/1" do
+    test "preloads a contest's host with associated users" do
+      %{id: id} = insert(:contest, host: build(:host, users: [
+        build(:user, given_name: "A"),
+        build(:user, given_name: "B"),
+      ]))
 
-    test "returns the earliest deadline if several are most common" do
-      [d1, d2, d3] = [~D[2018-12-15], ~D[2018-12-01], ~D[2018-12-21]]
-      contests = [
-        build(:contest, deadline: d1),
-        build(:contest, deadline: d2),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d2),
-        build(:contest, deadline: d1),
-      ]
-      assert Foundation.general_deadline(contests) == d2
+      contest = Repo.get(Contest, id) |> Foundation.load_host_users
+      assert [%User{given_name: "A"}, %User{given_name: "B"}] = contest.host.users
     end
+  end
+
+  test "load_contest_categories/1 preloads a contest's contest categories" do
+    %{id: id} = insert(:contest,
+      contest_categories: build_list(1, :contest_category,
+        category: build(:category, name: "ABC")
+      )
+    )
+
+    contest = Repo.get(Contest, id) |> Foundation.load_contest_categories
+    assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
   end
 end

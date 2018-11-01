@@ -9,6 +9,8 @@ defmodule Jumubase.Foundation do
   alias Jumubase.Utils
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
 
+  ## Hosts
+
   def list_hosts do
     Repo.all(Host)
   end
@@ -19,6 +21,8 @@ defmodule Jumubase.Foundation do
   def list_host_locations do
     Repo.all(from h in Host, select: {h.latitude, h.longitude})
   end
+
+  ## Contests
 
   def list_contests(query \\ Contest) do
     Repo.all(query) |> Repo.preload(:host)
@@ -43,14 +47,16 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
-  Returns a contest if found hosted by one of the given hosts.
+  Returns the most common deadline within the given contests.
   """
-  def get_contest(id, hosts) do
-    query = from c in Contest,
-      where: c.host_id in ^Utils.get_ids(hosts)
-
-    Repo.get(query, id) |> Repo.preload(:host)
+  def general_deadline(contests) do
+    contests
+    |> Enum.map(&(&1.deadline))
+    |> Utils.mode
+    |> List.first
   end
+
+  ## Categories
 
   def list_categories do
     Repo.all(Category)
@@ -61,14 +67,6 @@ defmodule Jumubase.Foundation do
     |> where(contest_id: ^contest.id)
     |> preload(:category)
     |> Repo.all
-  end
-
-  def load_host_users(%Contest{} = contest) do
-    Repo.preload(contest, [host: :users])
-  end
-
-  def load_contest_categories(%Contest{} = contest) do
-    Repo.preload(contest, [contest_categories: :category])
   end
 
   @doc """
@@ -83,13 +81,13 @@ defmodule Jumubase.Foundation do
     |> Repo.get!(id)
   end
 
-  @doc """
-  Returns the most common deadline within the given contests.
-  """
-  def general_deadline(contests) do
-    contests
-    |> Enum.map(&(&1.deadline))
-    |> Utils.mode
-    |> List.first
+  ## Preloading
+
+  def load_host_users(%Contest{} = contest) do
+    Repo.preload(contest, [host: :users])
+  end
+
+  def load_contest_categories(%Contest{} = contest) do
+    Repo.preload(contest, [contest_categories: :category])
   end
 end

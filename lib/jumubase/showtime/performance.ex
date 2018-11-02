@@ -46,11 +46,16 @@ defmodule Jumubase.Showtime.Performance do
 
   defp validate_appearances(%Changeset{} = changeset) do
     case get_field(changeset, :appearances) do
-      []->
+      [] ->
         add_error(changeset, :base,
-          dgettext("errors", "The performance must have at least one participant"))
-      _ ->
-        changeset
+          dgettext("errors", "The performance must have at least one participant."))
+      appearances ->
+        if includes_roles?(appearances, ["soloist", "ensemblist"]) do
+          add_error(changeset, :base,
+            dgettext("errors", "The performance cannot have both soloists and ensemblists."))
+        else
+          changeset
+        end
     end
   end
 
@@ -58,9 +63,19 @@ defmodule Jumubase.Showtime.Performance do
     case get_field(changeset, :pieces) do
       [] ->
         add_error(changeset, :base,
-          dgettext("errors", "The performance must have at least one piece"))
+          dgettext("errors", "The performance must have at least one piece."))
       _ ->
         changeset
     end
+  end
+
+  defp includes_roles?(appearance_list, roles) do
+    roles
+    |> Enum.map(fn role -> includes_role?(appearance_list, role) end)
+    |> Enum.all?
+  end
+
+  defp includes_role?(appearance_list, role) do
+    Enum.any?(appearance_list, &(&1.role == role))
   end
 end

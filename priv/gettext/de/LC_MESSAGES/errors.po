@@ -98,16 +98,6 @@ msgid "must be before the start date"
 msgstr "muss vor dem Beginn liegen"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:51
-msgid "The performance must have at least one participant"
-msgstr "Das Vorspiel muss mindestens einen Teilnehmer haben"
-
-#, elixir-format
-#: lib/jumubase/showtime/performance.ex:61
-msgid "The performance must have at least one piece"
-msgstr "Das Vorspiel muss mindestens ein Stück haben"
-
-#, elixir-format
 #: lib/jumubase/showtime/participant.ex:40
 msgid "can't be changed"
 msgstr "kann nicht geändert werden"
@@ -131,3 +121,18 @@ msgstr "darf entweder einen Komponisten oder einen Interpreten haben"
 #: lib/jumubase/accounts/user.ex:73
 msgid "The password is too short."
 msgstr "Das Passwort ist zu kurz"
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:55
+msgid "The performance cannot have both soloists and ensemblists."
+msgstr "Das Vorspiel darf nicht sowohl Solisten als auch Ensemblepartner enthalten."
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:51
+msgid "The performance must have at least one participant."
+msgstr "Das Vorspiel muss mindestens einen Teilnehmer haben."
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:66
+msgid "The performance must have at least one piece."
+msgstr "Das Vorspiel muss mindestens ein Stück haben."

@@ -27,6 +27,16 @@ defmodule Jumubase.PerformanceTest do
       assert changeset.errors[:base] == {"The performance must have at least one participant", []}
     end
 
+    test "with both solo and ensemble appearances", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :appearances, [
+        valid_appearance_attrs("soloist"),
+        valid_appearance_attrs("ensemblist"),
+      ])
+      changeset = Performance.changeset(%Performance{}, params)
+      refute changeset.valid?
+      assert changeset.errors[:base] == {"The performance cannot have both soloists and ensemblists.", []}
+    end
+
     test "without a piece", %{valid_attrs: valid_attrs} do
       params = Map.put(valid_attrs, :pieces, [])
       changeset = Performance.changeset(%Performance{}, params)
@@ -60,6 +70,10 @@ defmodule Jumubase.PerformanceTest do
 
   defp valid_appearance_attrs do
     params_for(:appearance)
+    |> Map.put(:participant, params_for(:participant))
+  end
+  defp valid_appearance_attrs(role) do
+    params_for(:appearance, role: role)
     |> Map.put(:participant, params_for(:participant))
   end
 end

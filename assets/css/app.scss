@@ -57,3 +57,6 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 
 /* Add bottom margin to map images for responsive stacking */
 .map-image { margin-bottom: $line-height-computed }
+
+/* Enable Vue.js cloaking (hiding element before Vue is loaded) */
+[v-cloak] { display: none; }

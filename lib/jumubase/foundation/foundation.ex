@@ -40,7 +40,7 @@ defmodule Jumubase.Foundation do
       where: c.round == ^round,
       where: c.deadline >= ^Timex.today, # uses UTC
       join: h in assoc(c, :host),
-      order_by: [h.name, {:desc, c.round}],
+      order_by: h.name,
       preload: [host: h]
 
     Repo.all(query)

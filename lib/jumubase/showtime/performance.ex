@@ -50,11 +50,21 @@ defmodule Jumubase.Showtime.Performance do
         add_error(changeset, :base,
           dgettext("errors", "The performance must have at least one participant."))
       appearances ->
-        if includes_roles?(appearances, ["soloist", "ensemblist"]) do
-          add_error(changeset, :base,
-            dgettext("errors", "The performance cannot have both soloists and ensemblists."))
-        else
-          changeset
+        cond do
+          has_soloists_and_ensemblists?(appearances) ->
+            add_error(changeset, :base,
+            dgettext("errors", "The performance can't have both soloists and ensemblists."))
+          has_many_soloists?(appearances) ->
+            add_error(changeset, :base,
+              dgettext("errors", "The performance can't have more than one soloist."))
+          has_single_ensemblist?(appearances) ->
+            add_error(changeset, :base,
+            dgettext("errors", "The performance can't have only one ensemblist."))
+          has_only_accompanists?(appearances) ->
+            add_error(changeset, :base,
+              dgettext("errors", "The performance can't have only accompanists."))
+          true ->
+            changeset
         end
     end
   end
@@ -69,13 +79,25 @@ defmodule Jumubase.Showtime.Performance do
     end
   end
 
-  defp includes_roles?(appearance_list, roles) do
-    roles
-    |> Enum.map(fn role -> includes_role?(appearance_list, role) end)
-    |> Enum.all?
+  defp has_soloists_and_ensemblists?(a_list) do
+    role_count(a_list, "soloist") > 0 and role_count(a_list, "ensemblist") > 0
   end
 
-  defp includes_role?(appearance_list, role) do
-    Enum.any?(appearance_list, &(&1.role == role))
+  defp has_many_soloists?(a_list) do
+    role_count(a_list, "soloist") > 1
+  end
+
+  defp has_single_ensemblist?(a_list) do
+    role_count(a_list, "ensemblist") == 1
+  end
+
+  defp has_only_accompanists?(a_list) do
+    role_count(a_list, "accompanist") == length(a_list)
+  end
+
+  defp role_count(appearance_list, role) do
+    appearance_list
+    |> Enum.filter(fn a -> a.role == role end)
+    |> length
   end
 end

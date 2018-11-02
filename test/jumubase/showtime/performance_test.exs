@@ -24,24 +24,54 @@ defmodule Jumubase.PerformanceTest do
       params = Map.put(valid_attrs, :appearances, [])
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance must have at least one participant", []}
+      assert changeset.errors[:base] == {"The performance must have at least one participant.", []}
     end
 
-    test "with both solo and ensemble appearances", %{valid_attrs: valid_attrs} do
+    test "with both soloist and ensemblist appearances", %{valid_attrs: valid_attrs} do
       params = Map.put(valid_attrs, :appearances, [
         valid_appearance_attrs("soloist"),
         valid_appearance_attrs("ensemblist"),
       ])
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance cannot have both soloists and ensemblists.", []}
+      assert changeset.errors[:base] == {"The performance can't have both soloists and ensemblists.", []}
+    end
+
+    test "with multiple soloist appearances", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :appearances, [
+        valid_appearance_attrs("soloist"),
+        valid_appearance_attrs("soloist"),
+      ])
+      changeset = Performance.changeset(%Performance{}, params)
+      refute changeset.valid?
+      assert changeset.errors[:base] == {"The performance can't have more than one soloist.", []}
+    end
+
+    test "with a single ensemblist appearance", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :appearances, [
+        valid_appearance_attrs("ensemblist"),
+        valid_appearance_attrs("accompanist"),
+      ])
+      changeset = Performance.changeset(%Performance{}, params)
+      refute changeset.valid?
+      assert changeset.errors[:base] == {"The performance can't have only one ensemblist.", []}
+    end
+
+    test "with only accompanist appearances", %{valid_attrs: valid_attrs} do
+      params = Map.put(valid_attrs, :appearances, [
+        valid_appearance_attrs("accompanist"),
+        valid_appearance_attrs("accompanist"),
+      ])
+      changeset = Performance.changeset(%Performance{}, params)
+      refute changeset.valid?
+      assert changeset.errors[:base] == {"The performance can't have only accompanists.", []}
     end
 
     test "without a piece", %{valid_attrs: valid_attrs} do
       params = Map.put(valid_attrs, :pieces, [])
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance must have at least one piece", []}
+      assert changeset.errors[:base] == {"The performance must have at least one piece.", []}
     end
   end
 

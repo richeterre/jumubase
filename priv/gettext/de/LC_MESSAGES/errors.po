@@ -123,16 +123,31 @@ msgid "The password is too short."
 msgstr "Das Passwort ist zu kurz"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:55
-msgid "The performance cannot have both soloists and ensemblists."
-msgstr "Das Vorspiel darf nicht sowohl Solisten als auch Ensemblepartner enthalten."
-
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:51
 msgid "The performance must have at least one participant."
 msgstr "Das Vorspiel muss mindestens einen Teilnehmer haben."
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:66
+#: lib/jumubase/showtime/performance.ex:76
 msgid "The performance must have at least one piece."
 msgstr "Das Vorspiel muss mindestens ein Stück haben."
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:56
+msgid "The performance can't have both soloists and ensemblists."
+msgstr "Das Vorspiel darf nicht sowohl Solisten als auch Ensemblepartner haben."
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:59
+msgid "The performance can't have more than one soloist."
+msgstr "Das Vorspiel darf nicht mehrere Solisten haben."
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:65
+msgid "The performance can't have only accompanists."
+msgstr "Das Vorspiel darf nicht nur Begleiter haben."
+
+#, elixir-format
+#: lib/jumubase/showtime/performance.ex:62
+msgid "The performance can't have only one ensemblist."
+msgstr "Das Vorspiel darf nicht nur einen Ensemblepartner haben."

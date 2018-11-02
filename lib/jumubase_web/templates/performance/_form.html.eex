@@ -25,7 +25,7 @@
         </div>
       </div>
 
-      <h3><%= gettext("Participants") %></h3>
+      <h3><%= gettext("Who takes part?") %></h3>
 
       <div class="panel-group" id="appearance-accordion" role="tablist">
         <%= render "_appearance_panels.html" %>

@@ -170,7 +170,7 @@ msgid "Global Organizer"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/host_controller.ex:8
+#: lib/jumubase_web/controllers/internal/host_controller.ex:7
 #: lib/jumubase_web/templates/internal/host/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:21
 #: lib/jumubase_web/templates/internal/user/form.html.eex:51
@@ -195,7 +195,7 @@ msgid "Please fix the errors below and try again!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/host_controller.ex:30
+#: lib/jumubase_web/controllers/internal/host_controller.ex:27
 msgid "The host \"%{name}\" was created."
 msgstr ""
 
@@ -252,7 +252,6 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:9
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/templates/performance/_form.html.eex:28
 msgid "Participants"
 msgstr ""
 
@@ -452,7 +451,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:47
-#: lib/jumubase_web/controllers/internal/category_controller.ex:8
+#: lib/jumubase_web/controllers/internal/category_controller.ex:7
 #: lib/jumubase_web/templates/internal/category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/contest_category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:27
@@ -547,7 +546,7 @@ msgid "New Category"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/category_controller.ex:30
+#: lib/jumubase_web/controllers/internal/category_controller.ex:27
 msgid "The category \"%{name}\" was created."
 msgstr ""
 
@@ -842,4 +841,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:22
 msgid "Show categories"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:28
+msgid "Who takes part?"
 msgstr ""

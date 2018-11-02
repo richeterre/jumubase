@@ -171,7 +171,7 @@ msgid "Global Organizer"
 msgstr "Orgteam Landesebene"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/host_controller.ex:8
+#: lib/jumubase_web/controllers/internal/host_controller.ex:7
 #: lib/jumubase_web/templates/internal/host/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:21
 #: lib/jumubase_web/templates/internal/user/form.html.eex:51
@@ -196,7 +196,7 @@ msgid "Please fix the errors below and try again!"
 msgstr "Bitte behebe die folgenden Fehler und versuche es erneut!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/host_controller.ex:30
+#: lib/jumubase_web/controllers/internal/host_controller.ex:27
 msgid "The host \"%{name}\" was created."
 msgstr "Die Schule \"%{name}\" wurde erstellt."
 
@@ -253,7 +253,6 @@ msgstr "Nachname"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:9
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/templates/performance/_form.html.eex:28
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -453,7 +452,7 @@ msgstr "Einloggen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:47
-#: lib/jumubase_web/controllers/internal/category_controller.ex:8
+#: lib/jumubase_web/controllers/internal/category_controller.ex:7
 #: lib/jumubase_web/templates/internal/category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/contest_category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:27
@@ -548,7 +547,7 @@ msgid "New Category"
 msgstr "Neue Kategorie"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/category_controller.ex:30
+#: lib/jumubase_web/controllers/internal/category_controller.ex:27
 msgid "The category \"%{name}\" was created."
 msgstr "Die Kategorie \"%{name}\" wurde erstellt."
 
@@ -844,3 +843,8 @@ msgstr "Zur Zeit stehen keine Wettbewerbe zur Anmeldung offen."
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:22
 msgid "Show categories"
 msgstr "Kategorien anzeigen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:28
+msgid "Who takes part?"
+msgstr "Wer nimmt teil?"

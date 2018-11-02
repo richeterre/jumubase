@@ -30,7 +30,7 @@ defmodule JumubaseWeb.Router do
     # Registration
     get "/anmeldung", PageController, :registration
     get "/anmeldung-bearbeiten", PageController, :edit_registration
-    post "/edit-registration", PageController, :lookup_registration
+    post "/lookup-registration", PageController, :lookup_registration
     resources "/contests/:contest_id/performances", PerformanceController,
       only: [:new, :create, :edit, :update]
 

@@ -29,7 +29,12 @@ defmodule Jumubase.Foundation do
   ## Contests
 
   def list_contests(query \\ Contest) do
-    Repo.all(query) |> Repo.preload(:host)
+    query = from c in query,
+      join: h in assoc(c, :host),
+      order_by: [{:desc, c.round}, h.name],
+      preload: [host: h]
+
+    Repo.all(query)
   end
 
   @doc """

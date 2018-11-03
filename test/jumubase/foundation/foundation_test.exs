@@ -49,6 +49,18 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.list_contests == contests
     end
 
+    test "orders contests by round and host name" do
+      h1 = build(:host, name: "A")
+      h2 = build(:host, name: "B")
+      c1 = insert(:contest, round: 0, host: h2)
+      c2 = insert(:contest, round: 0, host: h1)
+      c3 = insert(:contest, round: 1, host: h2)
+      c4 = insert(:contest, round: 1, host: h1)
+      c5 = insert(:contest, round: 2, host: h2)
+      c6 = insert(:contest, round: 2, host: h1)
+      assert_ids_match_ordered Foundation.list_contests, [c6, c5, c4, c3, c2, c1]
+    end
+
     test "preloads the contests' hosts" do
       insert(:contest)
       [result] = Foundation.list_contests

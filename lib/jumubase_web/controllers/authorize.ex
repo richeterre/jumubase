@@ -47,13 +47,9 @@ defmodule JumubaseWeb.Authorize do
       unauthorized(conn, page_path(conn, :home))
   end
 
-  def role_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
-    need_login(conn)
-  end
-  def role_check(%Conn{assigns: %{current_user: current_user}} = conn, opts) do
-    if opts[:roles] && current_user.role in opts[:roles],
-      do: conn,
-      else: unauthorized(conn, internal_page_path(conn, :home))
+  # Plug to allow only admins to access the resource.
+  def admin_check(%Conn{} = conn, opts) do
+    role_check(conn, opts ++ [roles: ["admin"]])
   end
 
   # Plug to authorize access to a contest route.
@@ -101,6 +97,16 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Private helpers
+
+  # Checks whether the user has one of the roles given in opts.
+  defp role_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
+    need_login(conn)
+  end
+  defp role_check(%Conn{assigns: %{current_user: current_user}} = conn, opts) do
+    if opts[:roles] && current_user.role in opts[:roles],
+      do: conn,
+      else: unauthorized(conn, internal_page_path(conn, :home))
+  end
 
   # Checks whether the user may access the contest with given id,
   # and if yes, calls the success handler with {:ok, contest}.

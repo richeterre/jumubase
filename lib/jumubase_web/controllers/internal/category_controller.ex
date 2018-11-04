@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.CategoryController do
   plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Categories"), path_fun: &internal_category_path/2, action: :index
 
-  plug :role_check, roles: ["admin"]
+  plug :admin_check
 
   def index(conn, _params) do
     render(conn, "index.html", categories: Foundation.list_categories())

@@ -11,8 +11,7 @@ defmodule JumubaseWeb.Internal.ContestController do
 
   plug :user_check when action in [:index]
   plug :contest_user_check when action in [:show]
-  # TODO: Convert to admin_check
-  plug :role_check, [roles: ["admin"]] when action in [:edit, :update]
+  plug :admin_check when action in [:edit, :update]
 
   def index(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
     contests =

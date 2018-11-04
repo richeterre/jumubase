@@ -9,7 +9,7 @@ defmodule JumubaseWeb.Internal.UserController do
   plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Users"), path_fun: &internal_user_path/2, action: :index
 
-  plug :role_check, roles: ["admin"]
+  plug :admin_check
 
   def index(conn, _params) do
     users = Accounts.list_users |> Accounts.load_hosts

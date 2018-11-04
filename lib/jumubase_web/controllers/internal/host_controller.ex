@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.HostController do
   plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Hosts"), path_fun: &internal_host_path/2, action: :index
 
-  plug :role_check, roles: ["admin"]
+  plug :admin_check
 
   def index(conn, _params) do
     render(conn, "index.html", hosts: Foundation.list_hosts())

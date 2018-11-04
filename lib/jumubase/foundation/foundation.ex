@@ -55,6 +55,16 @@ defmodule Jumubase.Foundation do
     Repo.get!(Contest, id) |> Repo.preload(:host)
   end
 
+  def update_contest(%Contest{} = contest, attrs) do
+    contest
+    |> Contest.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def change_contest(%Contest{} = contest) do
+    Contest.changeset(contest, %{})
+  end
+
   @doc """
   Returns the most common deadline within the given contests.
   """

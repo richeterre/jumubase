@@ -56,6 +56,13 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
   def format_date(nil, _style), do: nil
 
+  @doc """
+  Returns a list of possible `round` values suitable for forms.
+  """
+  def round_options do
+    Enum.map(JumuParams.rounds, &({round_name(&1), &1}))
+  end
+
   # Private helpers
 
   defp short_round_name(round) do
@@ -64,6 +71,14 @@ defmodule JumubaseWeb.Internal.ContestView do
       1 -> "RW"
       2 -> "LW"
       3 -> "BW"
+    end
+  end
+
+  defp round_name(round) do
+    case round do
+      0 -> "“Kinder musizieren”"
+      1 -> "Regionalwettbewerb"
+      2 -> "Landeswettbewerb"
     end
   end
 

@@ -45,6 +45,7 @@ defmodule JumubaseWeb do
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthHelpers
       import JumubaseWeb.ErrorHelpers
+      import JumubaseWeb.FormHelpers
       import JumubaseWeb.IconHelpers
       import JumubaseWeb.JsonHelpers
     end

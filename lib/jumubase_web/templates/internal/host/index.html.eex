@@ -9,7 +9,6 @@
         <th><%= gettext("Country") %></th>
         <th><%= gettext("Time Zone") %></th>
         <th><%= gettext("Location") %></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -20,14 +19,6 @@
         <td><%= emoji_flag(host.country_code) %></td>
         <td><code><%= host.time_zone %></code></td>
         <td><code><%= host.latitude %>, <%= host.longitude %></code></td>
-        <td class="text-right">
-          <%# icon_link("pencil", nil, internal_host_path(@conn, :edit, host),
-            class: "btn btn-default btn-xs") %>
-          <%# icon_link("trash", nil, internal_host_path(@conn, :delete, host),
-            method: :delete,
-            data: [confirm: gettext("Do you really want to delete this host?")],
-            class: "btn btn-danger btn-xs") %>
-        </td>
       </tr>
       <% end %>
     </tbody>

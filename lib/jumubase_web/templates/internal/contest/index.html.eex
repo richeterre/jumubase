@@ -7,6 +7,7 @@
         <th><%= gettext("Name") %></th>
         <th><%= gettext("Dates") %></th>
         <th><%= gettext("Deadline") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,10 @@
         </td>
         <td><%= dates(contest) %></td>
         <td><%= format_date(contest.deadline) %></td>
+        <td>
+          <%= icon_link("pencil", nil, internal_contest_path(@conn, :edit, contest),
+            class: "btn btn-default btn-xs") %>
+        </td>
       </tr>
       <% end %>
     </tbody>

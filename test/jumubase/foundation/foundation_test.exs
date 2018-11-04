@@ -144,6 +144,26 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "update_contest/1" do
+    test "updates a contest with valid data" do
+      contest = insert(:contest, season: 56)
+      assert {:ok, result} = Foundation.update_contest(contest, %{season: 57})
+      assert result.season == 57
+    end
+
+    test "returns an error changeset for invalid data" do
+      contest = insert(:contest)
+      assert {:error, %Ecto.Changeset{}} = Foundation.update_contest(contest, %{season: nil})
+    end
+  end
+
+  describe "change_contest/1" do
+    test "returns a contest changeset" do
+      contest = insert(:contest)
+      assert %Ecto.Changeset{} = Foundation.change_contest(contest)
+    end
+  end
+
   describe "general_deadline/1" do
     test "returns the deadline most common in the given contests" do
       [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]

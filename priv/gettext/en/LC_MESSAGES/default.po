@@ -97,6 +97,7 @@ msgid "Please choose"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
 #: lib/jumubase_web/templates/performance/edit.html.eex:11
 msgid "Save Changes"
@@ -125,7 +126,7 @@ msgid "Users"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/host/index.html.eex:37
+#: lib/jumubase_web/templates/internal/host/index.html.eex:28
 msgid "Add Host"
 msgstr ""
 
@@ -316,7 +317,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:8
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
@@ -335,6 +336,7 @@ msgid "Day"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:49
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
 #: lib/jumubase_web/views/internal/contest_view.ex:33
 msgid "Deadline"
@@ -847,4 +849,39 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_form.html.eex:28
 msgid "Who takes part?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:43
+msgid "End date"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:30
+msgid "Host"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:22
+msgid "Round"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:14
+msgid "Season"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
+msgid "Start date"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:2
+msgid "Edit Contest"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:51
+msgid "The contest %{name} was updated."
 msgstr ""

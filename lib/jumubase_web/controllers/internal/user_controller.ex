@@ -40,7 +40,7 @@ defmodule JumubaseWeb.Internal.UserController do
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get(id) |> Accounts.load_hosts
+    user = Accounts.get!(id) |> Accounts.load_hosts
 
     case Accounts.update_user(user, user_params) do
       {:ok, user} ->
@@ -54,7 +54,7 @@ defmodule JumubaseWeb.Internal.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Accounts.get(id)
+    user = Accounts.get!(id)
     {:ok, _user} = Accounts.delete_user(user)
 
     conn

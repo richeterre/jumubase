@@ -21,8 +21,10 @@
         <td><%= dates(contest) %></td>
         <td><%= format_date(contest.deadline) %></td>
         <td>
-          <%= icon_link("pencil", nil, internal_contest_path(@conn, :edit, contest),
-            class: "btn btn-default btn-xs") %>
+          <%= if admin?(@current_user) do %>
+            <%= icon_link("pencil", nil, internal_contest_path(@conn, :edit, contest),
+              class: "btn btn-default btn-xs") %>
+          <% end %>
         </td>
       </tr>
       <% end %>

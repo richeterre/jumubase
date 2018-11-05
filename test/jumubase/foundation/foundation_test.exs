@@ -206,6 +206,15 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "count_contests/1" do
+    test "returns the number of contests matching the query" do
+      insert_list(2, :contest, round: 1)
+      insert(:contest, round: 2)
+      query = Contest |> where(round: 1)
+      assert Foundation.count_contests(query) == 2
+    end
+  end
+
   describe "get_contest!/1" do
     test "returns a contest" do
       contest = insert(:contest)

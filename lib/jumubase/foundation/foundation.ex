@@ -65,6 +65,13 @@ defmodule Jumubase.Foundation do
     |> list_contests
   end
 
+  @doc """
+  Returns the number of contests as returned by the query.
+  """
+  def count_contests(query) do
+    Repo.aggregate(query, :count, :id)
+  end
+
   def get_contest!(id) do
     Repo.get!(Contest, id) |> Repo.preload(:host)
   end

@@ -49,6 +49,21 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
       end
     end
 
+    @tag login_as: "global-organizer"
+    test "contains a 'Show more' link when not listing all contests", %{conn: conn, user: u} do
+      insert(:contest, round: 1, host: build(:host, users: [u]))
+      insert(:contest, round: 1)
+      conn = get(conn, internal_page_path(conn, :home))
+      assert html_response(conn, 200) =~ "Show more…"
+    end
+
+    @tag login_as: "global-organizer"
+    test "does not contain a 'Show more' link when listing all contests", %{conn: conn, user: u} do
+      insert(:contest, round: 1, host: build(:host, users: [u]))
+      conn = get(conn, internal_page_path(conn, :home))
+      refute html_response(conn, 200) =~ "Show more…"
+    end
+
     @tag login_as: "admin"
     test "shows admin tools to admins", %{conn: conn} do
       conn = get(conn, internal_page_path(conn, :home))

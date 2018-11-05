@@ -10,14 +10,14 @@ defmodule JumubaseWeb.Internal.PageController do
   plug :user_check
 
   def home(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
-    contests =
-      Contest
-      |> Permit.scope_contests(user)
-      |> Foundation.list_relevant_contests(user)
+    permitted = Permit.scope_contests(Contest, user)
+    contests = Foundation.list_relevant_contests(permitted, user)
+    count = Foundation.count_contests(permitted)
 
     conn
     |> assign(:user, user)
     |> assign(:contests, contests)
+    |> assign(:has_more, length(contests) < count)
     |> render("home.html")
   end
 end

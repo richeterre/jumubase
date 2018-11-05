@@ -44,11 +44,13 @@
               %>
           </li>
         <% end %>
-        <li class="list-group-item">
-          <%= link gettext("Show more…"),
-            to: internal_contest_path(@conn, :index)
-            %>
-        </li>
+        <%= if @has_more do %>
+          <li class="list-group-item">
+            <%= link gettext("Show more…"),
+              to: internal_contest_path(@conn, :index)
+              %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

@@ -7,6 +7,7 @@ defmodule Jumubase.Foundation do
   import Ecto.Query
   alias Jumubase.Repo
   alias Jumubase.Utils
+  alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
 
   ## Hosts
@@ -28,6 +29,9 @@ defmodule Jumubase.Foundation do
 
   ## Contests
 
+  @doc """
+  Returns all contests.
+  """
   def list_contests(query \\ Contest) do
     query = from c in query,
       join: h in assoc(c, :host),
@@ -49,6 +53,16 @@ defmodule Jumubase.Foundation do
       preload: [host: h]
 
     Repo.all(query)
+  end
+
+  @doc """
+  Returns all contests relevant to the given user,
+  i.e. own contests and, for non-local users, LW contests.
+  """
+  def list_relevant_contests(query, user) do
+    query
+    |> relevant_for_user(user)
+    |> list_contests
   end
 
   def get_contest!(id) do
@@ -112,5 +126,18 @@ defmodule Jumubase.Foundation do
 
   def load_contest_categories(%Contest{} = contest) do
     Repo.preload(contest, [contest_categories: :category])
+  end
+
+  # Private helpers
+
+  defp relevant_for_user(contest_query, %User{} = user) do
+    from c in contest_query,
+      join: h in assoc(c, :host),
+      left_join: u in assoc(h, :users),
+      where: (
+        u.id == ^user.id
+        or
+        c.round == 2 and ^user.role != "local-organizer"
+      )
   end
 end

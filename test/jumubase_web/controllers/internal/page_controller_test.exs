@@ -17,23 +17,35 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
 
     @tag login_as: "local-organizer"
     test "shows own contests to a local organizer", %{conn: conn, user: u} do
-      own_c = insert(:contest, host: build(:host, users: [u]))
-      other_c = insert(:contest)
+      own_host = build(:host, users: [u])
+      own_kimu = insert(:contest, round: 0, host: own_host)
+      own_rw = insert(:contest, round: 1, host: own_host)
+      own_lw = insert(:contest, round: 2, host: own_host)
+      other_kimu = insert(:contest, round: 0)
+      other_rw = insert(:contest, round: 1)
+      other_lw = insert(:contest, round: 2)
 
       conn = get(conn, internal_page_path(conn, :home))
-      assert html_response(conn, 200) =~ name_with_flag(own_c)
-      refute html_response(conn, 200) =~ name_with_flag(other_c)
+
+      assert_contests_listed(conn, [own_kimu, own_rw, own_lw])
+      refute_contests_listed(conn, [other_kimu, other_rw, other_lw])
     end
 
     for role <- roles_except("local-organizer") do
       @tag login_as: role
-      test "shows all contests to a #{role} user", %{conn: conn, user: u} do
-        own_c = insert(:contest, host: build(:host, users: [u]))
-        other_c = insert(:contest)
+      test "shows relevant contests to a #{role} user", %{conn: conn, user: u} do
+        own_host = build(:host, users: [u])
+        own_kimu = insert(:contest, round: 0, host: own_host)
+        own_rw = insert(:contest, round: 1, host: own_host)
+        own_lw = insert(:contest, round: 2, host: own_host)
+        other_kimu = insert(:contest, round: 0)
+        other_rw = insert(:contest, round: 1)
+        other_lw = insert(:contest, round: 2)
 
         conn = get(conn, internal_page_path(conn, :home))
-        assert html_response(conn, 200) =~ name_with_flag(own_c)
-        assert html_response(conn, 200) =~ name_with_flag(other_c)
+
+        assert_contests_listed(conn, [own_kimu, own_rw, own_lw, other_lw])
+        refute_contests_listed(conn, [other_kimu, other_rw])
       end
     end
 
@@ -55,5 +67,23 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
       conn = get(conn, internal_page_path(conn, :home))
       assert_unauthorized_guest(conn)
     end
+  end
+
+  # Private helpers
+
+  defp assert_contests_listed(conn, contests) do
+    Enum.each(contests, fn c ->
+      assert is_listed?(conn, c)
+    end)
+  end
+
+  defp refute_contests_listed(conn, contests) do
+    Enum.each(contests, fn c ->
+      refute is_listed?(conn, c)
+    end)
+  end
+
+  defp is_listed?(conn, contest) do
+    html_response(conn, 200) =~ name_with_flag(contest)
   end
 end

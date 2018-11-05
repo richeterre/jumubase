@@ -882,6 +882,11 @@ msgid "Edit Contest"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:51
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:50
 msgid "The contest %{name} was updated."
 msgstr "Der Wettbewerb %{name} wurde aktualisiert."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/page/home.html.eex:48
+msgid "Show more…"
+msgstr "Weitere anzeigen…"

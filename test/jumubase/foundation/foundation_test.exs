@@ -127,6 +127,85 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_relevant_contests/2" do
+    setup %{role: role} do
+      [user: insert(:user, role: role)]
+    end
+
+    @tag role: "local-organizer"
+    test "returns all own contests to local organizers", %{user: u} do
+      own_host = build(:host, users: [u])
+
+      own_kimu = insert(:contest, round: 0, host: own_host)
+      own_rw = insert(:contest, round: 1, host: own_host)
+      own_lw = insert(:contest, round: 2, host: own_host)
+
+
+      assert_ids_match_unordered(
+        Foundation.list_relevant_contests(Contest, u),
+        [own_kimu, own_rw, own_lw]
+      )
+    end
+
+    @tag role: "local-organizer"
+    test "does not return any foreign contests to local organizers", %{user: u} do
+      insert(:contest, round: 0)
+      insert(:contest, round: 1)
+      insert(:contest, round: 2)
+
+      assert Foundation.list_relevant_contests(Contest, u) == []
+    end
+
+    for role <- roles_except("local-organizer") do
+      @tag role: role
+      test "returns all own contests and foreign LW contests to #{role} users", %{user: u} do
+        own_host = build(:host, users: [u])
+        c1 = insert(:contest, round: 0, host: own_host)
+        c2 = insert(:contest, round: 1, host: own_host)
+        c3 = insert(:contest, round: 2, host: own_host)
+        c4 = insert(:contest, round: 2)
+
+        assert_ids_match_unordered(
+          Foundation.list_relevant_contests(Contest, u),
+          [c1, c2, c3, c4]
+        )
+      end
+
+      @tag role: role
+      test "returns no foreign Kimu or RW contests to #{role} users", %{user: u} do
+        insert(:contest, round: 0)
+        insert(:contest, round: 1)
+
+        assert Foundation.list_relevant_contests(Contest, u) == []
+      end
+    end
+
+    @tag role: "local-organizer"
+    test "orders contests by round and host name", %{user: u} do
+      h1 = insert(:host, name: "A", users: [u])
+      h2 = insert(:host, name: "B", users: [u])
+
+      c1 = insert(:contest, round: 0, host: h2)
+      c2 = insert(:contest, round: 0, host: h1)
+      c3 = insert(:contest, round: 1, host: h2)
+      c4 = insert(:contest, round: 1, host: h1)
+      c5 = insert(:contest, round: 2, host: h2)
+      c6 = insert(:contest, round: 2, host: h1)
+
+      assert_ids_match_ordered(
+        Foundation.list_relevant_contests(Contest, u),
+        [c6, c5, c4, c3, c2, c1]
+      )
+    end
+
+    @tag role: "local-organizer"
+    test "preloads the contests' hosts", %{user: u} do
+      insert(:contest, host: build(:host, users: [u]))
+      [result] = Foundation.list_relevant_contests(Contest, u)
+      assert %Host{} = result.host
+    end
+  end
+
   describe "get_contest!/1" do
     test "returns a contest" do
       contest = insert(:contest)

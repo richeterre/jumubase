@@ -13,7 +13,7 @@ defmodule JumubaseWeb.Internal.PageController do
     contests =
       Contest
       |> Permit.scope_contests(user)
-      |> Foundation.list_contests
+      |> Foundation.list_relevant_contests(user)
 
     conn
     |> assign(:user, user)

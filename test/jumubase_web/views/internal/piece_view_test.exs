@@ -37,14 +37,18 @@ defmodule JumubaseWeb.Internal.PieceViewTest do
     end
   end
 
-  test "duration/1 returns a piece's duration" do
-    piece = build(:piece, minutes: 4, seconds: 33)
-    assert PieceView.duration(piece) == "4'33"
+  describe "duration/1" do
+    test "returns a piece's duration" do
+      piece = build(:piece, minutes: 4, seconds: 3)
+      assert PieceView.duration(piece) == "4'03"
+    end
   end
 
-  test "epoch_tag/1 returns an epoch tag for a piece" do
-    piece = build(:piece, epoch: "b")
-    assert PieceView.epoch_tag(piece) |> safe_to_string ==
-      "<abbr title=\"Baroque\">b</abbr>"
+  describe "epoch_tag/1" do
+    test "returns an epoch tag for a piece" do
+      piece = build(:piece, epoch: "b")
+      assert PieceView.epoch_tag(piece) |> safe_to_string ==
+        "<abbr title=\"Baroque\">b</abbr>"
+    end
   end
 end

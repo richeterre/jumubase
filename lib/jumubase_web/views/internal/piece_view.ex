@@ -19,7 +19,7 @@ defmodule JumubaseWeb.Internal.PieceView do
   Returns the piece's formatted duration.
   """
   def duration(%Piece{minutes: min, seconds: sec}) do
-    "#{min}'#{sec}"
+    "#{min}'#{pad_seconds(sec)}"
   end
 
   @doc """
@@ -27,5 +27,11 @@ defmodule JumubaseWeb.Internal.PieceView do
   """
   def epoch_tag(%Piece{epoch: epoch}) do
     content_tag(:abbr, epoch, title: JumuParams.epoch_description(epoch))
+  end
+
+  # Private helpers
+
+  defp pad_seconds(sec) do
+    sec |> Integer.to_string |> String.pad_leading(2, "0")
   end
 end

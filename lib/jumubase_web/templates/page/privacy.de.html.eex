@@ -35,7 +35,7 @@
 
     <h3>3. Warum werden diese Daten benötigt?</h3>
 
-    <p>Die obenstehenden <em>persönlichen Daten</em> sowie <em>Wettbewerbsdaten</em> sind notwendig, um die Wettbewerbe “Jugend musiziert” und “Kinder musizieren” zu planen und durchzuführen. Die <em>Kontaktdaten</em> benötigen wir, um die Teilnehmenden bezüglich Anmeldung, Auftritt oder anderen Bereichen des Wettbewerbs zu kontaktieren. <em>Bild- und Tondaten</em> werden für die Berichterstattung und Dokumentation benötigt, um den öffentlichen und transparenten Charakters des Wettbewerbs zu wahren. Rechtsgrundlage hierfür ist <%= link "Art. 6 Abs. 1 lit. b und f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO.</p>
+    <p>Die obenstehenden <em>persönlichen Daten</em> sowie <em>Wettbewerbsdaten</em> sind notwendig, um die Wettbewerbe “Jugend musiziert” und “Kinder musizieren” zu planen und durchzuführen. Die <em>Kontaktdaten</em> benötigen wir, um die Teilnehmenden bezüglich Anmeldung, Auftritt oder anderen Bereichen des Wettbewerbs zu kontaktieren. <em>Bild- und Tondaten</em> werden für die Berichterstattung und Dokumentation benötigt, um den öffentlichen und transparenten Charakter des Wettbewerbs zu wahren. Rechtsgrundlage hierfür ist <%= link "Art. 6 Abs. 1 lit. b und f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO.</p>
 
     <h3>4. Weitergabe von Daten an Dritte</h3>
 

@@ -559,18 +559,24 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "list_participants/1" do
-    test "lists only the contest's participants", %{contest: c} do
+    test "lists only the contest's participants, ordered by name", %{contest: c} do
       [cc, _] = c.contest_categories
-      p1 = insert_performance(cc, appearances: build_list(2, :appearance))
-      p2 = insert_performance(cc, appearances: build_list(2, :appearance))
+      pt1 = insert(:participant, family_name: "C")
+      pt2 = insert(:participant, family_name: "A", given_name: "B")
+      pt3 = insert(:participant, family_name: "A", given_name: "A")
+      pt4 = insert(:participant, family_name: "B")
+      a1 = build(:appearance, role: "soloist", participant: pt1)
+      a2 = build(:appearance, role: "accompanist", participant: pt2)
+      a3 = build(:appearance, role: "accompanist", participant: pt3)
+      a4 = build(:appearance, role: "soloist", participant: pt4)
+      insert_performance(cc, appearances: [a1, a2, a3])
+      insert_performance(cc, appearances: [a4])
 
       other_c = insert(:contest) |> with_contest_categories
       [other_cc, _] = other_c.contest_categories
       insert_performance(other_cc, appearances: build_list(2, :appearance))
 
-      p1 = Repo.preload(p1, :participants)
-      p2 = Repo.preload(p2, :participants)
-      assert_ids_match_unordered Showtime.list_participants(c), p1.participants ++ p2.participants
+      assert_ids_match_ordered Showtime.list_participants(c), [pt3, pt2, pt4, pt1]
     end
 
     test "preloads the participants' performances, contest categories and categories", %{contest: c} do

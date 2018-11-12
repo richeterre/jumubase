@@ -103,6 +103,7 @@ defmodule Jumubase.Showtime do
       join: cc in assoc(p, :contest_category),
       join: c in assoc(cc, :contest),
       where: c.id == ^contest.id,
+      order_by: [pt.family_name, pt.given_name],
       preload: [performances: {p, contest_category: {cc, :category}}]
 
     Repo.all(query)

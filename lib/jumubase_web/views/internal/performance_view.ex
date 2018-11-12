@@ -3,6 +3,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   import JumubaseWeb.Internal.AppearanceView, only: [
     acc: 1, age_group_badge: 1, badge: 1, instrument_name: 1, non_acc: 1
   ]
+  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [
     composer_dates: 1, duration: 1, epoch_tag: 1, person_name: 1

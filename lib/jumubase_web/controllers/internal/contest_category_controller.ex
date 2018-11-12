@@ -12,6 +12,7 @@ defmodule JumubaseWeb.Internal.ContestCategoryController do
     contest_categories = Foundation.list_contest_categories(contest)
 
     conn
+    |> assign(:contest, contest)
     |> assign(:contest_categories, contest_categories)
     |> add_contest_breadcrumb(contest)
     |> add_contest_categories_breadcrumb(contest)

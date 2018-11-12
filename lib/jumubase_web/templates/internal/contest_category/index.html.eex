@@ -1,4 +1,10 @@
-<h2><%= gettext("Categories") %></h2>
+<h2>
+  <%= gettext("Categories") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
 
 <div class="table-responsive">
   <table class="table table-striped">

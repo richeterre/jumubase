@@ -1,7 +1,13 @@
-<h2><%= gettext("Participants") %></h2>
+<h2>
+  <%= gettext("Participants") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
 
 <div class="table-responsive">
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th><%= gettext("Last name") %></th>

@@ -12,6 +12,7 @@ defmodule Jumubase.Showtime.Performance do
 
     belongs_to :contest_category, Foundation.ContestCategory
     has_many :appearances, Appearance, on_replace: :delete
+    has_many :participants, through: [:appearances, :participant]
     has_many :pieces, Piece, on_replace: :delete
 
     timestamps()

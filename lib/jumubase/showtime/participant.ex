@@ -4,7 +4,7 @@ defmodule Jumubase.Showtime.Participant do
   import Jumubase.Gettext
   alias Ecto.Changeset
   alias Jumubase.Utils
-  alias Jumubase.Showtime.Participant
+  alias Jumubase.Showtime.{Appearance, Participant}
 
   schema "participants" do
     field :given_name, :string
@@ -12,6 +12,9 @@ defmodule Jumubase.Showtime.Participant do
     field :birthdate, :date
     field :phone, :string
     field :email, :string
+
+    has_many :appearances, Appearance
+    has_many :performances, through: [:appearances, :performance]
 
     timestamps()
   end

@@ -97,6 +97,17 @@ defmodule Jumubase.Showtime do
     performance |> Repo.preload(contest_category: [:contest, :category])
   end
 
+  def list_participants(%Contest{} = contest) do
+    query = from pt in Participant,
+      join: p in assoc(pt, :performances),
+      join: cc in assoc(p, :contest_category),
+      join: c in assoc(cc, :contest),
+      where: c.id == ^contest.id,
+      preload: [performances: {p, contest_category: {cc, :category}}]
+
+    Repo.all(query)
+  end
+
   # Private helpers
 
   defp put_edit_code(%Changeset{valid?: true} = changeset, round) do

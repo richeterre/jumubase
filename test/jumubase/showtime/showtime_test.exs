@@ -558,6 +558,34 @@ defmodule Jumubase.ShowtimeTest do
     } = performance |> Showtime.load_contest_category
   end
 
+  describe "list_participants/1" do
+    test "lists only the contest's participants", %{contest: c} do
+      [cc, _] = c.contest_categories
+      p1 = insert_performance(cc, appearances: build_list(2, :appearance))
+      p2 = insert_performance(cc, appearances: build_list(2, :appearance))
+
+      other_c = insert(:contest) |> with_contest_categories
+      [other_cc, _] = other_c.contest_categories
+      insert_performance(other_cc, appearances: build_list(2, :appearance))
+
+      p1 = Repo.preload(p1, :participants)
+      p2 = Repo.preload(p2, :participants)
+      assert_ids_match_unordered Showtime.list_participants(c), p1.participants ++ p2.participants
+    end
+
+    test "preloads the participants' performances, contest categories and categories", %{contest: c} do
+      [cc, _] = c.contest_categories
+      insert_performance(cc, appearances: build_list(1, :appearance))
+      assert [%Participant{
+        performances: [%Performance{
+          contest_category: %ContestCategory{
+            category: %Category{}
+          }
+        }]
+      }] = Showtime.list_participants(c)
+    end
+  end
+
   # Private helpers
 
   # Returns insertion params for a performance.

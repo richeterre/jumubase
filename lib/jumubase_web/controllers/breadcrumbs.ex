@@ -33,6 +33,14 @@ defmodule JumubaseWeb.Breadcrumbs do
   end
 
   @doc """
+  Adds a breadcrumb for the contest's participant list to the hierarchy.
+  """
+  def add_participants_breadcrumb(conn, %Contest{} = contest) do
+    add_breadcrumb(conn, name: gettext("Participants"),
+      path: internal_contest_participant_path(conn, :index, contest))
+  end
+
+  @doc """
   Adds a breadcrumb for the contest's performance list to the hierarchy.
   """
   def add_performances_breadcrumb(conn, %Contest{} = contest) do

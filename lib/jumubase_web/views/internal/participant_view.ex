@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.ParticipantView do
   use JumubaseWeb, :view
   alias Jumubase.Showtime.Participant
+  alias JumubaseWeb.Internal.PerformanceView
 
   @doc """
   Returns the participant's full name.

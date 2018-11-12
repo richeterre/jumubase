@@ -19,6 +19,11 @@
             %>
         </li>
         <li class="list-group-item">
+          <%= icon_link "user", gettext("Show participants"),
+            internal_contest_participant_path(@conn, :index, @contest)
+            %>
+        </li>
+        <li class="list-group-item">
           <%= icon_link "list-alt", gettext("Show categories"),
           internal_contest_contest_category_path(@conn, :index, @contest)
           %>

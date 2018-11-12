@@ -44,6 +44,7 @@ defmodule JumubaseWeb do
       import Jumubase.Utils
       import JumubaseWeb.Router.Helpers
       import JumubaseWeb.AuthHelpers
+      import JumubaseWeb.DateHelpers
       import JumubaseWeb.ErrorHelpers
       import JumubaseWeb.FormHelpers
       import JumubaseWeb.IconHelpers

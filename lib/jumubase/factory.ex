@@ -153,6 +153,19 @@ defmodule Jumubase.Factory do
     insert(:performance, attrs)
   end
 
+  @doc """
+  Inserts a participant into the given contest.
+  """
+  def insert_participant(%Contest{} = c, attrs \\ []) do
+    %{appearances: [a]} = insert(:performance,
+      contest_category: build(:contest_category, contest: c),
+      appearances: [
+        build(:appearance, participant: build(:participant, attrs))
+      ]
+    )
+    a.participant
+  end
+
   # Private helpers
 
   # Generates a unique edit code with the given round.

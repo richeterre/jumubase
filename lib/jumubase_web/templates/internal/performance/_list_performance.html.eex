@@ -1,0 +1,11 @@
+<%= render "_list_appearances.html",
+  appearances: non_acc(@performance.appearances)
+  %>
+
+<%= if (acc_appearances = acc(@performance.appearances)) != [] do %>
+  <small class="text-muted">
+    <%= gettext("accompanied by") %>
+  </small>
+  <br>
+  <%= render "_list_appearances.html", appearances: acc_appearances %>
+<% end %>

@@ -1,0 +1,4 @@
+<strong>
+  <%= link full_name(@appearance.participant), to: @participant_path %>
+</strong>,
+<%= instrument_name(@appearance.instrument) %> <%= age_group_badge(@appearance) %>

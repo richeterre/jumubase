@@ -13,7 +13,11 @@
 
 <h3><%= gettext("Participants") %></h3>
 
-<%= render "_performance.html", performance: @performance, style: :detail %>
+<%= render "_detail_performance.html",
+  conn: @conn,
+  contest: @contest,
+  performance: @performance
+  %>
 
 <h3><%= gettext("Programme") %></h3>
 

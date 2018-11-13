@@ -595,6 +595,22 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "get_participant!/2" do
+    test "gets a participant from the given contest by id", %{contest: c} do
+      %{id: id} = insert_participant(c)
+
+      result = Showtime.get_participant!(c, id)
+      assert result.id == id
+    end
+
+    test "raises an error if the participant isn't found in the given contest", %{contest: c} do
+      %{id: id} = insert_participant(c)
+      other_c = insert(:contest)
+
+      assert_raise Ecto.NoResultsError, fn -> Showtime.get_participant!(other_c, id) end
+    end
+  end
+
   # Private helpers
 
   # Returns insertion params for a performance.

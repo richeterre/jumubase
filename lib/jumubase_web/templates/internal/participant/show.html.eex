@@ -1,0 +1,20 @@
+<h2>
+  <%= full_name(@participant) %>
+</h2>
+
+<hr>
+
+<p>
+  <strong><%= gettext("Birthdate") %>:</strong>
+  <%= format_date(@participant.birthdate) %>
+</p>
+
+<p>
+  <strong><%= gettext("Phone") %>:</strong>
+  <%= link @participant.phone, to: "tel:#{@participant.phone}" %>
+</p>
+
+<p>
+  <strong><%= gettext("Email") %>:</strong>
+  <%= link @participant.email, to: "mailto:#{@participant.email}" %>
+</p>

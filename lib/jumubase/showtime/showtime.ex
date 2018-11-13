@@ -104,6 +104,12 @@ defmodule Jumubase.Showtime do
     |> Repo.all
   end
 
+  def get_participant!(%Contest{id: contest_id}, id) do
+    Participant
+    |> from_contest(contest_id)
+    |> Repo.get!(id)
+  end
+
   # Private helpers
 
   defp put_edit_code(%Changeset{valid?: true} = changeset, round) do
@@ -162,8 +168,14 @@ defmodule Jumubase.Showtime do
     end
   end
 
-  # Limits a performance query to the given contest id and fully preloads it
-  defp preloaded_from_contest(query, contest_id) do
+  # Limits the query to the given contest id
+  defp from_contest(Participant = query, contest_id) do
+    from pt in query,
+      join: p in assoc(pt, :performances),
+      join: cc in assoc(p, :contest_category),
+      where: cc.contest_id == ^contest_id
+  end
+
   # Limits the query to the given contest id and fully preloads it
   defp preloaded_from_contest(Performance = query, contest_id) do
     pieces_query = from pc in Piece, order_by: pc.inserted_at

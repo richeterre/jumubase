@@ -19,8 +19,16 @@
     <tbody>
       <%= for participant <- @participants do %>
       <tr>
-        <td><%= participant.family_name %></td>
-        <td><%= participant.given_name %></td>
+        <td>
+          <%= link participant.family_name,
+            to: internal_contest_participant_path(@conn, :show, @contest, participant)
+            %>
+        </td>
+        <td>
+          <%= link participant.given_name,
+            to: internal_contest_participant_path(@conn, :show, @contest, participant)
+            %>
+        </td>
         <td><%= format_date(participant.birthdate, :full) %></td>
         <td>
           <%= for p <- participant.performances do %>

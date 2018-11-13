@@ -29,9 +29,8 @@ defmodule JumubaseWeb.PageControllerTest do
   describe "registration edit page" do
     test "lets users access their registration with a valid edit code", %{conn: conn} do
       c = insert(:contest)
-      cc = insert_contest_category(c)
       edit_code = "123456"
-      p = insert_performance(cc, edit_code: edit_code)
+      p = insert_performance(c, edit_code: edit_code)
 
       conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: edit_code})
       assert redirected_to(conn) == performance_path(conn, :edit, c, p, edit_code: edit_code)

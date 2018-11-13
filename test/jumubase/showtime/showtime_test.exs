@@ -27,8 +27,7 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "preloads the performances' contest categories, categories, appearances and participants", %{contest: c} do
-      [cc, _] = c.contest_categories
-      insert_performance(cc, appearances: build_list(1, :appearance))
+      insert_performance(c, appearances: build_list(1, :appearance))
 
       assert [%Performance{
         contest_category: %ContestCategory{category: %Category{}},
@@ -65,8 +64,7 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
-      [cc, _] = c.contest_categories
-      %{id: id} = insert_performance(cc,
+      %{id: id} = insert_performance(c,
         pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
       )
 
@@ -112,8 +110,7 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
-      [cc, _] = c.contest_categories
-      %{id: id, edit_code: edit_code} = insert_performance(cc,
+      %{id: id, edit_code: edit_code} = insert_performance(c,
         pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
       )
 
@@ -170,8 +167,7 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
-      [cc, _] = c.contest_categories
-      %{edit_code: edit_code} = insert_performance(cc,
+      %{edit_code: edit_code} = insert_performance(c,
         pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
       )
 
@@ -514,11 +510,9 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "allows updating of pieces", %{contest: c} do
-      [cc, _] = c.contest_categories
-
       %{
         pieces: [old_pc1, old_pc2, old_pc3]
-      } = old_p = insert_performance(cc, pieces: [
+      } = old_p = insert_performance(c, pieces: [
         build(:piece, title: "A"),
         build(:piece, title: "B"),
         build(:piece, title: "C"),
@@ -560,7 +554,6 @@ defmodule Jumubase.ShowtimeTest do
 
   describe "list_participants/1" do
     test "lists only the contest's participants, ordered by name", %{contest: c} do
-      [cc, _] = c.contest_categories
       pt1 = insert(:participant, family_name: "C")
       pt2 = insert(:participant, family_name: "A", given_name: "B")
       pt3 = insert(:participant, family_name: "A", given_name: "A")
@@ -569,12 +562,11 @@ defmodule Jumubase.ShowtimeTest do
       a2 = build(:appearance, role: "accompanist", participant: pt2)
       a3 = build(:appearance, role: "accompanist", participant: pt3)
       a4 = build(:appearance, role: "soloist", participant: pt4)
-      insert_performance(cc, appearances: [a1, a2, a3])
-      insert_performance(cc, appearances: [a4])
+      insert_performance(c, appearances: [a1, a2, a3])
+      insert_performance(c, appearances: [a4])
 
-      other_c = insert(:contest) |> with_contest_categories
-      [other_cc, _] = other_c.contest_categories
-      insert_performance(other_cc, appearances: build_list(2, :appearance))
+      other_c = insert(:contest)
+      insert_performance(other_c, appearances: build_list(2, :appearance))
 
       assert_ids_match_ordered Showtime.list_participants(c), [pt3, pt2, pt4, pt1]
     end
@@ -582,9 +574,8 @@ defmodule Jumubase.ShowtimeTest do
     test "preloads the participants' performances + categories, but only within the contest", %{contest: c} do
       pt = insert_participant(c)
 
-      other_c = insert(:contest) |> with_contest_categories
-      [other_cc, _] = other_c.contest_categories
-      insert_performance(other_cc, appearances: [build(:appearance, participant: pt)])
+      other_c = insert(:contest)
+      insert_performance(other_c, appearances: [build(:appearance, participant: pt)])
 
       assert [%Participant{performances: [performance]}] = Showtime.list_participants(c)
       assert %Performance{
@@ -604,9 +595,8 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "gets a participant that has multiple appearances", %{contest: c} do
-      [cc, _] = c.contest_categories
       %{id: id} = pt = insert_participant(c)
-      insert_performance(cc, appearances: [build(:appearance, participant: pt)])
+      insert_performance(c, appearances: [build(:appearance, participant: pt)])
 
       assert %Participant{id: id} = Showtime.get_participant!(c, id)
     end

@@ -132,19 +132,18 @@ defmodule Jumubase.Factory do
   end
 
   @doc """
-  Inserts a performance into the given contest.
+  Inserts a performance into the given entity.
   """
-  def insert_performance(%Contest{} = contest) do
-    insert(:performance,
-      contest_category: build(:contest_category, contest: contest),
-      edit_code: generate_edit_code(contest.round)
-    )
-  end
+  def insert_performance(_entity, attrs \\ [])
+  def insert_performance(%Contest{} = contest, attrs) do
+    attrs =
+      attrs
+      |> Keyword.put_new(:contest_category, build(:contest_category, contest: contest))
+      |> Keyword.put_new(:edit_code, generate_edit_code(contest.round))
 
-  @doc """
-  Inserts a performance into the given contest category.
-  """
-  def insert_performance(%ContestCategory{contest: c} = cc, attrs \\ []) do
+    insert(:performance, attrs)
+  end
+  def insert_performance(%ContestCategory{contest: c} = cc, attrs) do
     attrs =
       attrs
       |> Keyword.put(:contest_category, cc)
@@ -157,12 +156,9 @@ defmodule Jumubase.Factory do
   Inserts a participant into the given contest.
   """
   def insert_participant(%Contest{} = c, attrs \\ []) do
-    %{appearances: [a]} = insert(:performance,
-      contest_category: build(:contest_category, contest: c),
-      appearances: [
-        build(:appearance, participant: build(:participant, attrs))
-      ]
-    )
+    %{appearances: [a]} = insert_performance(c, appearances: [
+      build(:appearance, participant: build(:participant, attrs))
+    ])
     a.participant
   end
 

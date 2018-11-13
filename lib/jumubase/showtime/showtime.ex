@@ -173,7 +173,8 @@ defmodule Jumubase.Showtime do
     from pt in query,
       join: p in assoc(pt, :performances),
       join: cc in assoc(p, :contest_category),
-      where: cc.contest_id == ^contest_id
+      where: cc.contest_id == ^contest_id,
+      distinct: true
   end
 
   # Limits the query to the given contest id and fully preloads it
@@ -195,6 +196,7 @@ defmodule Jumubase.Showtime do
       join: cc in assoc(p, :contest_category),
       join: cat in assoc(cc, :category),
       where: cc.contest_id == ^contest_id,
+      distinct: true,
       preload: [performances: {p, contest_category: {cc, category: cat}}]
   end
 end

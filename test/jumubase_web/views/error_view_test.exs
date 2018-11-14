@@ -4,18 +4,27 @@ defmodule JumubaseWeb.ErrorViewTest do
   # Bring render/3 and render_to_string/3 for testing custom views
   import Phoenix.View
 
-  test "renders 404.html" do
-    assert render_to_string(JumubaseWeb.ErrorView, "404.html", []) ==
-           "Page not found"
+  setup %{conn: conn} do
+    conn =
+      conn
+      |> bypass_through(JumubaseWeb.Router, [:browser])
+      |> get("/")
+
+    {:ok, conn: conn}
   end
 
-  test "render 500.html" do
-    assert render_to_string(JumubaseWeb.ErrorView, "500.html", []) ==
-           "Internal server error"
+  test "renders 404.html", %{conn: conn} do
+    assert render_to_string(JumubaseWeb.ErrorView, "404.html", conn: conn) =~
+      "The page was not found."
   end
 
-  test "render any other" do
-    assert render_to_string(JumubaseWeb.ErrorView, "505.html", []) ==
-           "Internal server error"
+  test "render 500.html", %{conn: conn} do
+    assert render_to_string(JumubaseWeb.ErrorView, "500.html", conn: conn) =~
+      "Something went wrong"
+  end
+
+  test "render any other", %{conn: conn} do
+    assert render_to_string(JumubaseWeb.ErrorView, "505.html", conn: conn) =~
+      "Something went wrong."
   end
 end

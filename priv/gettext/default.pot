@@ -37,6 +37,7 @@ msgid "Edit User"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/participant/show.html.eex:18
 #: lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:12
@@ -71,7 +72,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/category/index.html.eex:7
 #: lib/jumubase_web/templates/internal/category/new.html.eex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:12
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:18
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
 #: lib/jumubase_web/templates/internal/host/new.html.eex:8
 #: lib/jumubase_web/templates/internal/user/index.html.eex:7
@@ -217,13 +218,14 @@ msgid "Accompanist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:9
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:15
+#: lib/jumubase_web/templates/internal/participant/show.html.eex:8
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:75
 msgid "Birthdate"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:7
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:13
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr ""
@@ -235,7 +237,7 @@ msgid "Ensemblist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:8
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:14
 #: lib/jumubase_web/templates/internal/user/form.html.eex:6
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:47
 msgid "First name"
@@ -247,7 +249,7 @@ msgid "Instrument"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:7
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:13
 #: lib/jumubase_web/templates/internal/user/form.html.eex:14
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:61
 msgid "Last name"
@@ -255,13 +257,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:1
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:9
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:2
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:15
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/participant/show.html.eex:13
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:170
 msgid "Phone"
 msgstr ""
@@ -305,7 +308,7 @@ msgid "Add piece"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:8
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:14
 msgid "Age group"
 msgstr ""
 
@@ -322,7 +325,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:8
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:9
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
@@ -358,7 +361,7 @@ msgid "Duration"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:10
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:16
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:11
 #: lib/jumubase_web/templates/page/edit_registration.html.eex:17
 msgid "Edit code"
@@ -387,12 +390,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:47
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:1
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:2
 msgid "Performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/show.html.eex:18
+#: lib/jumubase_web/templates/internal/performance/show.html.eex:22
 msgid "Programme"
 msgstr ""
 
@@ -407,7 +410,7 @@ msgid "Title"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/show.html.eex:23
+#: lib/jumubase_web/templates/internal/performance/show.html.eex:27
 msgid "Total duration: %{d}"
 msgstr ""
 
@@ -417,8 +420,9 @@ msgid "Year"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_performance.html.eex:8
-#: lib/jumubase_web/templates/internal/performance/_performance.html.eex:10
+#:
+#: lib/jumubase_web/templates/internal/performance/_detail_performance.html.eex:10
+#: lib/jumubase_web/templates/internal/performance/_list_performance.html.eex:7
 msgid "accompanied by"
 msgstr ""
 
@@ -461,7 +465,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/breadcrumbs.ex:55
 #: lib/jumubase_web/controllers/internal/category_controller.ex:7
 #: lib/jumubase_web/templates/internal/category/index.html.eex:1
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:1
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:2
 #: lib/jumubase_web/templates/internal/page/home.html.eex:27
 msgid "Categories"
 msgstr ""
@@ -608,24 +612,24 @@ msgid "Type"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:14
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:16
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:20
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:22
 msgid "AG max"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:13
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:15
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:19
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:21
 msgid "AG min"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:9
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:15
 msgid "Advancement"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:8
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:14
 msgid "Participation"
 msgstr ""
 
@@ -897,7 +901,7 @@ msgid "Show more…"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:10
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:16
 msgid "Appearances"
 msgstr ""
 

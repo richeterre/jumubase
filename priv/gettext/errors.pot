@@ -158,3 +158,23 @@ msgstr ""
 #: lib/jumubase/showtime/performance.ex:63
 msgid "The performance can't have only one ensemblist."
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:16
+msgid "Something went wrong on the server. We’re on it!"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:8
+msgid "Maybe try one of the links above?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:7
+msgid "The page was not found."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:15
+msgid "Oh no…"
+msgstr ""

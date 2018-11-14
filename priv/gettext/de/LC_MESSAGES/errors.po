@@ -151,3 +151,23 @@ msgstr "Das Vorspiel darf nicht nur Begleiter haben."
 #: lib/jumubase/showtime/performance.ex:63
 msgid "The performance can't have only one ensemblist."
 msgstr "Das Vorspiel darf nicht nur einen Ensemblepartner haben."
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:16
+msgid "Something went wrong on the server. We’re on it!"
+msgstr "Ein Serverfehler ist aufgetreten. Wir kümmern uns darum!"
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:8
+msgid "Maybe try one of the links above?"
+msgstr "Vielleicht helfen dir die obigen Links weiter?"
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:7
+msgid "The page was not found."
+msgstr "Die Seite wurde nicht gefunden."
+
+#, elixir-format
+#: lib/jumubase_web/views/error_view.ex:15
+msgid "Oh no…"
+msgstr "Oh je…"

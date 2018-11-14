@@ -28,11 +28,9 @@ defmodule JumubaseWeb.Authorize do
   # Plug to only allow unauthenticated users to access the resource.
   def guest_check(%Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
   def guest_check(%Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    error(
-      conn,
-      dgettext("auth", "You need to log out to view this page."),
-      page_path(conn, :home)
-    )
+    conn
+    |> redirect(to: page_path(conn, :home))
+    |> halt
   end
 
   # Plug to only allow authenticated users with the correct id to access the resource.

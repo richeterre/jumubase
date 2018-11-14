@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :jumubase
+  use Sentry.Phoenix.Endpoint
 
   socket "/socket", JumubaseWeb.UserSocket
 

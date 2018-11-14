@@ -1,5 +1,7 @@
 defmodule JumubaseWeb.Router do
   use JumubaseWeb, :router
+  use Plug.ErrorHandler
+  use Sentry.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]

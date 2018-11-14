@@ -38,6 +38,7 @@ defmodule Jumubase.Mixfile do
       {:earmark, "~> 1.2"},
       {:ex_machina, "~> 2.1"},
       {:gettext, "~> 0.11"},
+      {:jason, "~> 1.1"},
       {:phauxth, "~> 1.2"},
       {:phoenix, "~> 1.3.0"},
       {:phoenix_ecto, "~> 3.2"},
@@ -47,6 +48,7 @@ defmodule Jumubase.Mixfile do
       {:plug, "~> 1.7"},
       {:plug_cowboy, "~> 1.0"},
       {:postgrex, ">= 0.0.0"},
+      {:sentry, "~> 7.0"},
       {:timex, "~> 3.0"},
       {:timex_ecto, "~> 3.0"},
     ]

@@ -3,7 +3,13 @@
   inline-template>
 
   <div v-if="hasErrors" class="alert alert-danger">
-    <p><%= gettext("Please fix the errors below and try again!") %></p>
+    <p v-if="errors.base">
+      <%= gettext("Please fix these errors and try again:") %>
+    </p>
+    <p v-else>
+      <%= gettext("Please fix the errors below and try again!") %>
+    </p>
+
     <p v-if="errors.base">
       <ul>
         <li v-for="error in errors.base">{{error}}</li>

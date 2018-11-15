@@ -192,7 +192,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/error/form_errors.html.eex:4
-#: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:6
+#: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:10
 msgid "Please fix the errors below and try again!"
 msgstr ""
 
@@ -916,6 +916,11 @@ msgid "Non-competing accompanists don’t need to register."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:153
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:152
 msgid "choose “Vocals” for singers"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:7
+msgid "Please fix these errors and try again:"
 msgstr ""

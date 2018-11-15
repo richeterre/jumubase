@@ -193,9 +193,9 @@ msgstr "Neue Schule"
 
 #, elixir-format
 #: lib/jumubase_web/templates/error/form_errors.html.eex:4
-#: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:6
+#: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:10
 msgid "Please fix the errors below and try again!"
-msgstr "Bitte behebe die folgenden Fehler und versuche es erneut!"
+msgstr "Bitte behebe die untenstehenden Fehler und versuche es erneut!"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:27
@@ -917,6 +917,11 @@ msgid "Non-competing accompanists don’t need to register."
 msgstr "Begleiter ohne Wertung müssen nicht angemeldet werden."
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:153
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:152
 msgid "choose “Vocals” for singers"
 msgstr "bei Sängern “Gesang” auswählen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:7
+msgid "Please fix these errors and try again:"
+msgstr "Bitte behebe die folgenden Fehler und versuche es erneut:"

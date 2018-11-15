@@ -50,7 +50,6 @@ defmodule Jumubase.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 7.0"},
       {:timex, "~> 3.0"},
-      {:timex_ecto, "~> 3.0"},
     ]
   end
 

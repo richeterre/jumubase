@@ -37,8 +37,12 @@ p.alert, ol.breadcrumb {
   }
 }
 
-/* Add horizontal spacing to icons */
-span.glyphicon { margin: 0 0.2em; }
+/* Tweak icon styling to look better next to text */
+span.glyphicon {
+  line-height: $line-height-computed;
+  margin: 0 0.2em;
+  vertical-align: top;
+}
 
 /* Style mini-instructions inside form labels */
 form label > small { font-weight: normal; }

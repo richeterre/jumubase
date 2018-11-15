@@ -27,6 +27,11 @@
 
       <h3><%= gettext("Who takes part?") %></h3>
 
+      <p class="text-muted">
+        <%= icon_tag "info-sign" %>
+        <%= gettext("Non-competing accompanists don’t need to register.") %>
+      </p>
+
       <div class="panel-group" id="appearance-accordion" role="tablist">
         <%= render "_appearance_panels.html" %>
       </div>

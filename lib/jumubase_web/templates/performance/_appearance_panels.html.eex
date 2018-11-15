@@ -127,7 +127,7 @@
         </div>
 
         <div class="row">
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-4">
             <label v-bind:for="fieldId('role')">
               <%= gettext("Role") %>
             </label>
@@ -145,9 +145,12 @@
             <form-field-error v-bind:errors="errors.role" />
           </div>
 
-          <div class="form-group col-md-3">
+          <div class="form-group col-md-5">
             <label v-bind:for="fieldId('instrument')">
               <%= gettext("Instrument") %>
+              <small class="text-muted">
+                (<%= gettext("choose “Vocals” for singers") %>)
+              </small>
             </label>
             <select
               class="form-control"

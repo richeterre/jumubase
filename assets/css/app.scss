@@ -40,6 +40,9 @@ p.alert, ol.breadcrumb {
 /* Add horizontal spacing to icons */
 span.glyphicon { margin: 0 0.2em; }
 
+/* Style mini-instructions inside form labels */
+form label > small { font-weight: normal; }
+
 /* Add vertical spacing between definition list terms */
 dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 

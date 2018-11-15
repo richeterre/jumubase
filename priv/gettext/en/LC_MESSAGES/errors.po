@@ -177,7 +177,7 @@ msgstr ""
 msgid "The page was not found."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:15
 msgid "Oh no…"
 msgstr ""

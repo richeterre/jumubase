@@ -66,7 +66,6 @@ const registrationForm = options => new Vue({
           case "solo":
             this.appearances = [
               normalizeAppearance({role: 'soloist'}),
-              normalizeAppearance({role: 'accompanist'}),
             ]
             break
           case "ensemble":

@@ -43,7 +43,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:12
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:183
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:186
 #: lib/jumubase_web/templates/session/new.html.eex:12
 msgid "Email"
 msgstr ""
@@ -91,7 +91,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/category/new.html.eex:37
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:157
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
 #: lib/jumubase_web/templates/performance/_form.html.eex:17
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:120
 msgid "Please choose"
@@ -266,12 +266,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/show.html.eex:13
-#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:170
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:173
 msgid "Phone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:38
+#: lib/jumubase_web/templates/performance/_form.html.eex:43
 msgid "Pieces"
 msgstr ""
 
@@ -299,12 +299,12 @@ msgid "Soloist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:35
+#: lib/jumubase_web/templates/performance/_form.html.eex:40
 msgid "Add participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:45
+#: lib/jumubase_web/templates/performance/_form.html.eex:50
 msgid "Add piece"
 msgstr ""
 
@@ -792,12 +792,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:59
-#: lib/jumubase_web/templates/performance/_form.html.eex:53
+#: lib/jumubase_web/templates/performance/_form.html.eex:58
 msgid "privacy policy"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:52
+#: lib/jumubase_web/templates/performance/_form.html.eex:57
 msgid "The data you enter will be handled as described in the"
 msgstr ""
 
@@ -909,4 +909,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:22
 msgid "Show participants"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_form.html.eex:32
+msgid "Non-competing accompanists don’t need to register."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:153
+msgid "choose “Vocals” for singers"
 msgstr ""

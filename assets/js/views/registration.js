@@ -51,26 +51,15 @@ const registrationForm = options => new Vue({
 
   computed: {
     genre() {
-      const {
-        contest_category_id: cc_id,
-        contest_category_options: cc_options,
-      } = this
-
-      const cc = lookupContestCategoryOption(cc_options, cc_id)
+      const cc = getSelectedContestCategory(this)
       return cc && cc.genre
     },
   },
 
   methods: {
     contestCategoryChanged() {
-      const {
-        appearances,
-        contest_category_id: cc_id,
-        contest_category_options: cc_options,
-        pieces,
-      } = this
-
-      const cc = lookupContestCategoryOption(cc_options, cc_id)
+      const { appearances, pieces } = this
+      const cc = getSelectedContestCategory(this)
 
       if (isEmpty(appearances)) {
         switch (cc.type) {
@@ -176,7 +165,12 @@ function normalizePiece(piece) {
   }
 }
 
-function lookupContestCategoryOption(cc_options, cc_id) {
+function getSelectedContestCategory(props) {
+  const {
+    contest_category_id: cc_id,
+    contest_category_options: cc_options,
+  } = props
+
   return find(cc_options, o => o.id === cc_id)
 }
 

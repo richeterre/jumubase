@@ -25,6 +25,6 @@ defmodule JumubaseWeb.ErrorViewTest do
 
   test "render any other", %{conn: conn} do
     assert render_to_string(JumubaseWeb.ErrorView, "505.html", conn: conn) =~
-      "Something went wrong."
+      "Something went wrong"
   end
 end

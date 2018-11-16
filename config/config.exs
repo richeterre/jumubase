@@ -27,6 +27,10 @@ config :jumubase, JumubaseWeb.Endpoint,
   pubsub: [name: Jumubase.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Keep microsecond precision in timestamps
+config :jumubase, Jumubase.Repo,
+  migration_timestamps: [type: :naive_datetime_usec]
+
 # Configure Phauxth authentication
 config :phauxth,
   endpoint: JumubaseWeb.Endpoint,

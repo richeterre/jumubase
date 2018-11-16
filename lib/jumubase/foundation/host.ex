@@ -1,5 +1,5 @@
 defmodule Jumubase.Foundation.Host do
-  use Ecto.Schema
+  use Jumubase.Schema
   import Ecto.Changeset
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.Host

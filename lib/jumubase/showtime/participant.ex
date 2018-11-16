@@ -1,5 +1,5 @@
 defmodule Jumubase.Showtime.Participant do
-  use Ecto.Schema
+  use Jumubase.Schema
   import Ecto.Changeset
   import Jumubase.Gettext
   alias Ecto.Changeset

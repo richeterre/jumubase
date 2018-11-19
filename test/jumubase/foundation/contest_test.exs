@@ -78,5 +78,19 @@ defmodule Jumubase.ContestTest do
         refute changeset.valid?
       end
     end
+
+    test "is valid without a certificate date" do
+      params = params_with_assocs(:contest, certificate_date: nil)
+      changeset = Contest.changeset(%Contest{}, params)
+      assert changeset.valid?
+    end
+
+    test "is invalid with a certificate date before the end date" do
+      %{end_date: end_date} = params_with_assocs(:contest)
+      certificate_date = Timex.shift(end_date, days: -1)
+      params = params_with_assocs(:contest, certificate_date: certificate_date)
+      changeset = Contest.changeset(%Contest{}, params)
+      refute changeset.valid?
+    end
   end
 end

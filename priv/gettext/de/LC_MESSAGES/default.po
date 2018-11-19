@@ -98,7 +98,7 @@ msgid "Please choose"
 msgstr "Bitte wählen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:67
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
 #: lib/jumubase_web/templates/performance/edit.html.eex:11
 msgid "Save Changes"
@@ -340,12 +340,13 @@ msgid "Dates"
 msgstr "Zeitraum"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:59
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:86
 msgid "Day"
 msgstr "Tag"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:49
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
 #: lib/jumubase_web/views/internal/contest_view.ex:33
 msgid "Deadline"
@@ -380,6 +381,7 @@ msgid "Hello %{name},"
 msgstr "Hallo %{name},"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:58
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:100
 msgid "Month"
 msgstr "Monat"
@@ -416,6 +418,7 @@ msgid "Total duration: %{d}"
 msgstr "Gesamtdauer: %{d}"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:114
 msgid "Year"
 msgstr "Jahr"
@@ -862,7 +865,7 @@ msgid "Who takes part?"
 msgstr "Wer nimmt teil?"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:43
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:49
 msgid "End date"
 msgstr "Ende"
 
@@ -882,7 +885,7 @@ msgid "Season"
 msgstr "Saison"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:43
 msgid "Start date"
 msgstr "Beginn"
 
@@ -925,3 +928,8 @@ msgstr "bei Sängern “Gesang” auswählen"
 #: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:7
 msgid "Please fix these errors and try again:"
 msgstr "Bitte behebe die folgenden Fehler und versuche es erneut:"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:55
+msgid "Certificate date"
+msgstr "Urkundendatum"

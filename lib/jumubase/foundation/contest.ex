@@ -9,9 +9,10 @@ defmodule Jumubase.Foundation.Contest do
   schema "contests" do
     field :season, :integer
     field :round, :integer
+    field :deadline, :date
     field :start_date, :date
     field :end_date, :date
-    field :deadline, :date
+    field :certificate_date, :date
 
     belongs_to :host, Host
     has_many :contest_categories, ContestCategory
@@ -19,12 +20,13 @@ defmodule Jumubase.Foundation.Contest do
     timestamps()
   end
 
-  @required_attrs [:season, :round, :start_date, :end_date, :deadline]
+  @required_attrs [:season, :round, :deadline, :start_date, :end_date]
+  @optional_attrs [:certificate_date]
 
   @doc false
   def changeset(%Contest{} = contest, attrs) do
     contest
-    |> cast(attrs, @required_attrs)
+    |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
     |> validate_number(:season, greater_than: 0)
     |> validate_inclusion(:round, JumuParams.rounds)
@@ -34,9 +36,10 @@ defmodule Jumubase.Foundation.Contest do
   # Private helpers
 
   defp validate_dates(%Changeset{} = changeset) do
+    deadline = get_field(changeset, :deadline)
     start_date = get_field(changeset, :start_date)
     end_date = get_field(changeset, :end_date)
-    deadline = get_field(changeset, :deadline)
+    certificate_date = get_field(changeset, :certificate_date)
 
     cond do
       !start_date || !end_date || !deadline ->
@@ -45,6 +48,8 @@ defmodule Jumubase.Foundation.Contest do
         add_error(changeset, :end_date, dgettext("errors", "can't be before the start date"))
       not Timex.before?(deadline, start_date) ->
         add_error(changeset, :deadline, dgettext("errors", "must be before the start date"))
+      !!certificate_date and Timex.before?(certificate_date, end_date) ->
+        add_error(changeset, :certificate_date, dgettext("errors", "can't be before the end date"))
       true ->
         changeset
     end

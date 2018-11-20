@@ -5,13 +5,16 @@ use Mix.Config
 #
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
-# with brunch.io to recompile .js and .css sources.
+# with Webpack to recompile .js and .css sources.
 config :jumubase, JumubaseWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
+  watchers: [node: ["node_modules/webpack-cli/bin/cli.js",
+                    "--mode", "development",
+                    "--watch",
+                    "--stdin",
                     cd: Path.expand("../assets", __DIR__)]]
 
 # Set Phauxth token salt

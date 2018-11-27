@@ -27,6 +27,9 @@ config :jumubase, JumubaseWeb.Endpoint,
   pubsub: [name: Jumubase.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+# Use Jason for JSON parsing
+config :phoenix, :json_library, Jason
+
 # Keep microsecond precision in timestamps
 config :jumubase, Jumubase.Repo,
   migration_timestamps: [type: :naive_datetime_usec]

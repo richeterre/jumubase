@@ -7,7 +7,7 @@ defmodule JumubaseWeb.JsonHelpers do
   """
   def render_html_safe_json(value) do
     value
-    |> Poison.encode!()
+    |> Jason.encode!()
     |> String.replace("<", "\\u003c")
     |> String.replace(">", "\\u003e")
     |> raw()

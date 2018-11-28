@@ -216,7 +216,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
   end
 
   defp assert_deadline_error(conn) do
-    assert get_flash(conn, :error) == "The deadline for this contest has passed. Please contact us if you need assistance."
+    assert get_flash(conn, :error) == "The registration deadline for this contest has passed. Please contact us if you need assistance."
     assert redirected_to(conn) == page_path(conn, :registration)
   end
 end

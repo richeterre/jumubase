@@ -516,7 +516,7 @@ msgid "If you've lost your edit code, ask your local Jumu organizer to retrieve 
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:33
+#: lib/jumubase_web/controllers/page_controller.ex:32
 msgid "Please enter an edit code."
 msgstr ""
 
@@ -526,7 +526,7 @@ msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:74
+#: lib/jumubase_web/controllers/page_controller.ex:73
 msgid "We could not find a registration for this edit code."
 msgstr ""
 
@@ -934,6 +934,11 @@ msgid "Certificate date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:113
-msgid "The deadline for this contest has passed. Please contact us if you need assistance."
+#: lib/jumubase_web/controllers/page_controller.ex:75
+msgid "The edit deadline for this contest has passed. Please contact us if you need assistance."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/authorize.ex:128
+msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
 msgstr ""

@@ -36,7 +36,7 @@ msgid "You are now logged out."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:151
+#: lib/jumubase_web/controllers/authorize.ex:148
 msgid "You need to log in to view this page."
 msgstr ""
 

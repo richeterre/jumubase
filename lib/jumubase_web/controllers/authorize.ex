@@ -109,10 +109,6 @@ defmodule JumubaseWeb.Authorize do
     error(conn, dgettext("auth", "You are not authorized to view this page."), path)
   end
 
-  def deadline_passed(conn, path) do
-    error(conn, gettext("The deadline for this contest has passed. Please contact us if you need assistance."), path)
-  end
-
   # Private helpers
 
   # Checks whether the user has one of the roles given in opts.
@@ -128,7 +124,8 @@ defmodule JumubaseWeb.Authorize do
   defp check_contest_deadline(conn, id, success_fun) do
     contest = Foundation.get_contest!(id)
     if deadline_passed?(contest, Timex.today) do
-      deadline_passed(conn, page_path(conn, :registration))
+      path = page_path(conn, :registration)
+      error(conn, gettext("The registration deadline for this contest has passed. Please contact us if you need assistance."), path)
     else
       success_fun.({:ok, contest})
     end

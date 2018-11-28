@@ -2,7 +2,6 @@ defmodule JumubaseWeb.PageController do
   use JumubaseWeb, :controller
   import Jumubase.Gettext
   import Jumubase.Foundation.Contest, only: [deadline_passed?: 2]
-  import JumubaseWeb.Authorize, only: [deadline_passed: 2]
   alias Jumubase.Foundation
   alias Jumubase.Showtime
 
@@ -73,7 +72,7 @@ defmodule JumubaseWeb.PageController do
       {:error, _} ->
         show_error(conn, gettext("We could not find a registration for this edit code."))
       true ->
-        deadline_passed(conn, page_path(conn, :edit_registration))
+        show_error(conn, gettext("The edit deadline for this contest has passed. Please contact us if you need assistance."))
     end
   end
 end

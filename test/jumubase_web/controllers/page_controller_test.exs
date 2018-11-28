@@ -46,7 +46,7 @@ defmodule JumubaseWeb.PageControllerTest do
     @tag deadline: @yesterday
     test "shows an error when the contest's deadline has passed", %{conn: conn, performance: p} do
       conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: p.edit_code})
-      assert get_flash(conn, :error) =~ "The deadline for this contest has passed."
+      assert get_flash(conn, :error) == "The edit deadline for this contest has passed. Please contact us if you need assistance."
       assert redirected_to(conn) == page_path(conn, :edit_registration)
     end
 

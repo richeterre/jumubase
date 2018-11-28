@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:33
+#: lib/jumubase_web/templates/internal/user/index.html.eex:32
 msgid "Add User"
 msgstr ""
 
@@ -28,7 +28,7 @@ msgid "Create User"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:24
+#: lib/jumubase_web/templates/internal/user/index.html.eex:23
 msgid "Do you really want to delete this user?"
 msgstr ""
 
@@ -934,12 +934,22 @@ msgstr ""
 msgid "Certificate date"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/controllers/page_controller.ex:75
 msgid "The edit deadline for this contest has passed. Please contact us if you need assistance."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:128
 msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:36
+msgid "Do you really want to delete this performance?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:43
+msgid "The performance with edit code %{edit_code} was deleted."
 msgstr ""

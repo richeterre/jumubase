@@ -93,6 +93,10 @@ defmodule Jumubase.Showtime do
     |> Performance.changeset(%{})
   end
 
+  def delete_performance!(%Performance{} = performance) do
+    Repo.delete!(performance)
+  end
+
   def load_contest_category(%Performance{} = performance) do
     performance |> Repo.preload(contest_category: [:contest, :category])
   end

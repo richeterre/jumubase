@@ -33,6 +33,18 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> render("show.html")
   end
 
+  def delete(conn, %{"id" => id}, contest) do
+    %{edit_code: ec} =
+      Showtime.get_performance!(contest, id)
+      |> Showtime.delete_performance!
+
+    conn
+    |> put_flash(:success,
+      gettext("The performance with edit code %{edit_code} was deleted.", edit_code: ec)
+    )
+    |> redirect(to: internal_contest_performance_path(conn, :index, contest))
+  end
+
   # Private helpers
 
   def add_performance_breadcrumb(conn, %Contest{} = contest, %Performance{} = performance) do

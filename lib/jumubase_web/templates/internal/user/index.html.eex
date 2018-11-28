@@ -17,12 +17,11 @@
         <td><%= user.email %></td>
         <td><%= content_tag :span, host_flags(user), title: host_names(user) %></td>
         <td class="text-right">
-          <%= icon_link("pencil", nil, internal_user_path(@conn, :edit, user),
-            class: "btn btn-default btn-xs") %>
-          <%= icon_link("trash", nil, internal_user_path(@conn, :delete, user),
-            method: :delete,
-            data: [confirm: gettext("Do you really want to delete this user?")],
-            class: "btn btn-danger btn-xs") %>
+          <%= edit_icon_link(internal_user_path(@conn, :edit, user)) %>
+          <%= delete_icon_link(
+            internal_user_path(@conn, :delete, user),
+            gettext("Do you really want to delete this user?")
+            ) %>
         </td>
       </tr>
       <% end %>

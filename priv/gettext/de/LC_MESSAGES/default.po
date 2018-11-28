@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:33
+#: lib/jumubase_web/templates/internal/user/index.html.eex:32
 msgid "Add User"
 msgstr "Neuen Benutzer hinzufügen"
 
@@ -28,7 +28,7 @@ msgid "Create User"
 msgstr "Benutzer erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:24
+#: lib/jumubase_web/templates/internal/user/index.html.eex:23
 msgid "Do you really want to delete this user?"
 msgstr "Möchtest du diesen Benutzer wirklich löschen?"
 
@@ -943,3 +943,13 @@ msgstr "Der Änderungsschluss für diesen Wettbewerb ist bereits vorbei. Bitte k
 #: lib/jumubase_web/controllers/authorize.ex:128
 msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:36
+msgid "Do you really want to delete this performance?"
+msgstr "Möchtest du dieses Vorspiel wirklich löschen?"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:43
+msgid "The performance with edit code %{edit_code} was deleted."
+msgstr "Das Vorspiel mit dem Änderungscode %{edit_code} wurde gelöscht."

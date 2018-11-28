@@ -18,6 +18,22 @@ defmodule JumubaseWeb.IconHelpers do
   end
 
   @doc """
+  Generates a link for editing list items.
+  """
+  def edit_icon_link(path) do
+    icon_link("pencil", nil, path, class: "btn btn-default btn-xs")
+  end
+
+  @doc """
+  Generates a link for deleting list items.
+  """
+  def delete_icon_link(path, confirm_text) do
+    icon_link "trash", nil, path,
+      method: :delete, data: [confirm: confirm_text],
+      class: "btn btn-danger btn-xs"
+  end
+
+  @doc """
   Returns an Emoji flag character for the given country code.
   """
   def emoji_flag(country_code) do

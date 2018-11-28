@@ -10,6 +10,11 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   ]
   alias Jumubase.Showtime.Performance
 
+  def render("scripts.edit.html", assigns) do
+    # Load same script as in public registration form
+    JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
+  end
+
   def category_name(%Performance{} = performance) do
     performance.contest_category.category.name
   end

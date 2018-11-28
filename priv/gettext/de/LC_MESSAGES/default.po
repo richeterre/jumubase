@@ -99,8 +99,9 @@ msgstr "Bitte wählen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:67
+#: lib/jumubase_web/templates/internal/performance/edit.html.eex:13
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
-#: lib/jumubase_web/templates/performance/edit.html.eex:11
+#: lib/jumubase_web/templates/performance/edit.html.eex:13
 msgid "Save Changes"
 msgstr "Änderungen speichern"
 
@@ -214,7 +215,7 @@ msgstr "Zeitzone"
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:49
-#: lib/jumubase_web/views/performance_view.ex:94
+#: lib/jumubase_web/views/performance_view.ex:100
 msgid "Accompanist"
 msgstr "Begleiter"
 
@@ -233,7 +234,7 @@ msgstr "Kategorie"
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:48
-#: lib/jumubase_web/views/performance_view.ex:95
+#: lib/jumubase_web/views/performance_view.ex:101
 msgid "Ensemblist"
 msgstr "Ensemblepartner"
 
@@ -294,7 +295,7 @@ msgstr "Rolle"
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:47
-#: lib/jumubase_web/views/performance_view.ex:93
+#: lib/jumubase_web/views/performance_view.ex:99
 msgid "Soloist"
 msgstr "Solist"
 
@@ -327,7 +328,7 @@ msgstr "Komponist"
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:8
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:10
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
 #: lib/jumubase_web/templates/internal/page/home.html.eex:37
@@ -678,7 +679,7 @@ msgid "Set password"
 msgstr "Passwort setzen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:57
+#: lib/jumubase_web/controllers/performance_controller.ex:56
 msgid "Your changes to the registration were saved."
 msgstr "Deine Änderungen an der Anmeldung wurden gespeichert."
 
@@ -840,12 +841,12 @@ msgid "To find out how we process your data, please see our"
 msgstr "Wie wir deine Daten verarbeiten, steht in unserer"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:90
+#: lib/jumubase_web/controllers/performance_controller.ex:86
 msgid "We received your registration!"
 msgstr "Wir haben deine Anmeldung erhalten!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:91
+#: lib/jumubase_web/controllers/performance_controller.ex:87
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr "Mit dem Änderungscode %{edit_code} kannst du sie später noch bearbeiten."
 
@@ -945,11 +946,21 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:36
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:39
 msgid "Do you really want to delete this performance?"
 msgstr "Möchtest du dieses Vorspiel wirklich löschen?"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:43
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:68
 msgid "The performance with edit code %{edit_code} was deleted."
 msgstr "Das Vorspiel mit dem Änderungscode %{edit_code} wurde gelöscht."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/edit.html.eex:2
+msgid "Edit performance"
+msgstr "Vorspiel bearbeiten"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:51
+msgid "The performance with edit code %{edit_code} was updated."
+msgstr "Das Vorspiel mit dem Änderungscode %{edit_code} wurde aktualisiert."

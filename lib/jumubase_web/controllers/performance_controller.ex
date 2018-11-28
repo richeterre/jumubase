@@ -63,20 +63,23 @@ defmodule JumubaseWeb.PerformanceController do
     end
   end
 
+  @doc """
+  Fills in empty performance associations if missing. This prevents such changes
+  from being ignored and enforces correct error handling of missing associations,
+  such as when removing all appearances while editing a performance.
+  """
+  def normalize_params(params) do
+    params
+    |> Map.put_new("appearances", [])
+    |> Map.put_new("pieces", [])
+  end
+
   # Private helpers
 
   defp prepare_for_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
     conn
     |> assign(:contest, contest)
     |> assign(:changeset, changeset)
-  end
-
-  # Fills in empty associations if missing. This prevents such changes from
-  # being ignored and enforces correct error handling of missing associations.
-  defp normalize_params(params) do
-    params
-    |> Map.put_new("appearances", [])
-    |> Map.put_new("pieces", [])
   end
 
   defp registration_success_message(edit_code) do

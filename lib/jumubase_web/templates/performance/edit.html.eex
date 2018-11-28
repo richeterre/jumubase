@@ -4,6 +4,8 @@
   <small><%= name_with_flag(@contest) %></small>
 </h2>
 
+<hr>
+
 <%= render "_form.html",
   conn: @conn,
   path: performance_path(@conn, :update, @contest, @performance, edit_code: @performance.edit_code),

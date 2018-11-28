@@ -31,6 +31,9 @@
         </td>
         <td><code><%= performance.edit_code %></code></td>
         <td class="text-right">
+          <%= edit_icon_link(
+            internal_contest_performance_path(@conn, :edit, @contest, performance)
+            ) %>
           <%= delete_icon_link(
             internal_contest_performance_path(@conn, :delete, @contest, performance),
             gettext("Do you really want to delete this performance?")

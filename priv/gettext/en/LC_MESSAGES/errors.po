@@ -98,12 +98,12 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:48
+#: lib/jumubase/foundation/contest.ex:55
 msgid "can't be before the start date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:50
+#: lib/jumubase/foundation/contest.ex:57
 msgid "must be before the start date"
 msgstr ""
 
@@ -183,6 +183,6 @@ msgid "Oh no…"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:52
+#: lib/jumubase/foundation/contest.ex:59
 msgid "can't be before the end date"
 msgstr ""

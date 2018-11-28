@@ -33,6 +33,13 @@ defmodule Jumubase.Foundation.Contest do
     |> validate_dates
   end
 
+  @doc """
+  Returns whether the contest's deadline has passed on the given date.
+  """
+  def deadline_passed?(%Contest{deadline: deadline}, %Date{} = date) do
+    Timex.before?(deadline, date)
+  end
+
   # Private helpers
 
   defp validate_dates(%Changeset{} = changeset) do

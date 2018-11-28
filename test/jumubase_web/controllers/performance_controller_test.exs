@@ -4,16 +4,29 @@ defmodule JumubaseWeb.PerformanceControllerTest do
   alias Jumubase.Repo
   alias Jumubase.Showtime.Performance
 
-  setup do
-    [contest: insert(:contest) |> with_contest_categories]
+  @today Timex.today
+  @yesterday Timex.shift(@today, days: -1)
+
+  setup context do
+    deadline = Map.get(context, :deadline, @today)
+    contest = insert(:contest, deadline: deadline)
+    [contest: contest |> with_contest_categories]
   end
 
-  describe "registration form" do
-    test "is shown to the user", %{conn: conn, contest: c} do
+  describe "new/3" do
+    test "shows a registration form", %{conn: conn, contest: c} do
       conn = get(conn, performance_path(conn, :new, c))
       assert html_response(conn, 200) =~ "Register"
     end
 
+    @tag deadline: @yesterday
+    test "shows an error if the contest deadline has passed", %{conn: conn, contest: c} do
+      conn = get(conn, performance_path(conn, :new, c))
+      assert_deadline_error(conn)
+    end
+  end
+
+  describe "create/3" do
     test "lets the user register for a contest", %{conn: conn, contest: c} do
       [cc, _] = c.contest_categories
       params = valid_params(cc)
@@ -63,16 +76,24 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       conn = post(conn, performance_path(conn, :create, c), params)
       assert html_response(conn, 200) =~ "Register"
     end
+
+    @tag deadline: @yesterday
+    test "shows an error if the contest deadline has passed", %{conn: conn, contest: c} do
+      [cc, _] = c.contest_categories
+      params = valid_params(cc)
+
+      conn = post(conn, performance_path(conn, :create, c), params)
+      assert_deadline_error(conn)
+    end
   end
 
-  describe "accessing a registration" do
-    setup do
-      contest = insert(:contest)
-      performance = insert_performance(contest)
-      [contest: contest, performance: performance]
+  describe "edit/3" do
+    setup %{contest: c} do
+      performance = insert_performance(c)
+      [performance: performance]
     end
 
-    test "succeeds with a valid edit code", %{conn: conn, contest: c, performance: p} do
+    test "shows the edit form for a valid edit code", %{conn: conn, contest: c, performance: p} do
       conn = get(conn, performance_path(conn, :edit, c, p, edit_code: p.edit_code))
       assert html_response(conn, 200) =~ "Edit registration"
     end
@@ -96,15 +117,21 @@ defmodule JumubaseWeb.PerformanceControllerTest do
         get(conn, performance_path(conn, :edit, c, p, edit_code: "999999"))
       end
     end
+
+    @tag deadline: @yesterday
+    test "shows an error when the contest deadline has passed", %{conn: conn, contest: c, performance: p} do
+      conn = get(conn, performance_path(conn, :edit, c, p, edit_code: p.edit_code))
+      assert_deadline_error(conn)
+    end
   end
 
-  describe "updating a registration" do
+  describe "update/3" do
     setup %{contest: c} do
       [cc1, _cc2] = c.contest_categories
       [performance: insert_performance(cc1)]
     end
 
-    test "succeeds with a valid edit code", %{conn: conn, contest: c, performance: p} do
+    test "updates a registration with a valid edit code", %{conn: conn, contest: c, performance: p} do
       [_cc1, cc2] = c.contest_categories
       params = valid_params(cc2)
 
@@ -139,6 +166,15 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       assert_error_sent 404, fn ->
         put(conn, performance_path(conn, :update, c, p, edit_code: "999999"), params)
       end
+    end
+
+    @tag deadline: @yesterday
+    test "shows an error if the contest deadline has passed", %{conn: conn, contest: c, performance: p} do
+      [_cc1, cc2] = c.contest_categories
+      params = valid_params(cc2)
+
+      conn = put(conn, performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
+      assert_deadline_error(conn)
     end
   end
 
@@ -177,5 +213,10 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
   defp get_inserted_performance do
     Repo.one(Performance) |> Repo.preload([appearances: :participant])
+  end
+
+  defp assert_deadline_error(conn) do
+    assert get_flash(conn, :error) == "The deadline for this contest has passed. Please contact us if you need assistance."
+    assert redirected_to(conn) == page_path(conn, :registration)
   end
 end

@@ -8,8 +8,8 @@ defmodule JumubaseWeb.PerformanceController do
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Email
 
-  # Pass contest from nested route to all actions
-  def action(conn, _), do: get_contest!(conn, __MODULE__)
+  # Check deadline of nested contest and pass it to all actions
+  def action(conn, _), do: contest_deadline_check_action(conn, __MODULE__)
 
   def new(conn, _params, contest) do
     changeset =
@@ -90,11 +90,5 @@ defmodule JumubaseWeb.PerformanceController do
     success_msg = gettext("We received your registration!")
     edit_msg = gettext("You can still change it later using the edit code %{edit_code}.", edit_code: edit_code)
     "#{success_msg} #{edit_msg}"
-  end
-
-  defp get_contest!(conn, module) do
-    contest = Foundation.get_contest!(conn.params["contest_id"])
-    args = [conn, conn.params, contest]
-    apply(module, action_name(conn), args)
   end
 end

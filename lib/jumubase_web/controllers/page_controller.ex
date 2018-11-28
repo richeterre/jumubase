@@ -1,6 +1,8 @@
 defmodule JumubaseWeb.PageController do
   use JumubaseWeb, :controller
   import Jumubase.Gettext
+  import Jumubase.Foundation.Contest, only: [deadline_passed?: 2]
+  import JumubaseWeb.Authorize, only: [deadline_passed: 2]
   alias Jumubase.Foundation
   alias Jumubase.Showtime
 
@@ -62,12 +64,16 @@ defmodule JumubaseWeb.PageController do
   end
 
   defp perform_lookup(conn, edit_code) do
-    case Showtime.lookup_performance(edit_code) do
-      {:ok, %{contest_category: %{contest: c}} = performance} ->
-        conn
-        |> redirect(to: performance_path(conn, :edit, c, performance, edit_code: edit_code))
+    with \
+      {:ok, %{contest_category: %{contest: c}} = p} <- Showtime.lookup_performance(edit_code),
+      false <- deadline_passed?(c, Timex.today)
+    do
+      redirect(conn, to: performance_path(conn, :edit, c, p, edit_code: edit_code))
+    else
       {:error, _} ->
         show_error(conn, gettext("We could not find a registration for this edit code."))
+      true ->
+        deadline_passed(conn, page_path(conn, :edit_registration))
     end
   end
 end

@@ -93,4 +93,15 @@ defmodule Jumubase.ContestTest do
       refute changeset.valid?
     end
   end
+
+  describe "deadline_passed?/2" do
+    test "returns whether the contest deadline has passed on the given date" do
+      deadline = Timex.today
+      c = build(:contest, deadline: deadline)
+
+      refute Contest.deadline_passed?(c, deadline |> Timex.shift(days: -1))
+      refute Contest.deadline_passed?(c, deadline)
+      assert Contest.deadline_passed?(c, deadline |> Timex.shift(days: 1))
+    end
+  end
 end

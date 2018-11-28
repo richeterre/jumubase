@@ -2,12 +2,14 @@ defmodule JumubaseWeb.PageControllerTest do
   use JumubaseWeb.ConnCase
   alias JumubaseWeb.Internal.ContestView
 
-  test "shows the welcome page", %{conn: conn} do
-    conn = get(conn, page_path(conn, :home))
-    assert html_response(conn, 200) =~ "The website for “Jugend musiziert”"
+  describe "home/2" do
+    test "shows the welcome page", %{conn: conn} do
+      conn = get(conn, page_path(conn, :home))
+      assert html_response(conn, 200) =~ "The website for “Jugend musiziert”"
+    end
   end
 
-  describe "registration page" do
+  describe "registration/2" do
     test "lists open RW and Kimu contests", %{conn: conn} do
       kimu = insert(:contest, round: 0, deadline: Timex.today)
       rw = insert(:contest, round: 1, deadline: Timex.today)
@@ -26,14 +28,26 @@ defmodule JumubaseWeb.PageControllerTest do
     end
   end
 
-  describe "registration edit page" do
-    test "lets users access their registration with a valid edit code", %{conn: conn} do
-      c = insert(:contest)
-      edit_code = "123456"
-      p = insert_performance(c, edit_code: edit_code)
+  describe "edit_registration/2" do
+    @today Timex.today
+    @yesterday Timex.shift(@today, days: -1)
 
-      conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: edit_code})
-      assert redirected_to(conn) == performance_path(conn, :edit, c, p, edit_code: edit_code)
+    setup context do
+      deadline = Map.get(context, :deadline, @today)
+      c = insert(:contest, deadline: deadline)
+      [contest: c, performance: insert_performance(c)]
+    end
+
+    test "lets users access a registration with a valid edit code within the deadline", %{conn: conn, contest: c, performance: p} do
+      conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: p.edit_code})
+      assert redirected_to(conn) == performance_path(conn, :edit, c, p, edit_code: p.edit_code)
+    end
+
+    @tag deadline: @yesterday
+    test "shows an error when the contest's deadline has passed", %{conn: conn, performance: p} do
+      conn = post(conn, page_path(conn, :lookup_registration), search: %{edit_code: p.edit_code})
+      assert get_flash(conn, :error) =~ "The deadline for this contest has passed."
+      assert redirected_to(conn) == page_path(conn, :edit_registration)
     end
 
     test "shows an error when submitting an unknown edit code", %{conn: conn} do
@@ -49,8 +63,10 @@ defmodule JumubaseWeb.PageControllerTest do
     end
   end
 
-  test "shows the rules page", %{conn: conn} do
-    conn = get(conn, page_path(conn, :rules))
-    assert html_response(conn, 200) =~ "Rules"
+  describe "rules/2" do
+    test "shows the rules page", %{conn: conn} do
+      conn = get(conn, page_path(conn, :rules))
+      assert html_response(conn, 200) =~ "Rules"
+    end
   end
 end

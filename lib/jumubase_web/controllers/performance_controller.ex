@@ -2,7 +2,6 @@ defmodule JumubaseWeb.PerformanceController do
   use JumubaseWeb, :controller
   alias Ecto.Changeset
   alias Jumubase.Mailer
-  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -67,14 +66,8 @@ defmodule JumubaseWeb.PerformanceController do
   # Private helpers
 
   defp prepare_for_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
-    contest = Foundation.load_contest_categories(contest)
-
-    contest_category_options = contest.contest_categories
-    |> Enum.map(&{&1.category.name, &1.id, &1.category.type, &1.category.genre})
-
     conn
     |> assign(:contest, contest)
-    |> assign(:contest_category_options, contest_category_options)
     |> assign(:changeset, changeset)
   end
 

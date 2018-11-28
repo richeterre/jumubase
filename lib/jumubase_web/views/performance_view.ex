@@ -3,7 +3,8 @@ defmodule JumubaseWeb.PerformanceView do
   import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   alias Jumubase.JumuParams
-  alias Jumubase.Foundation.AgeGroups
+  alias Jumubase.Foundation
+  alias Jumubase.Foundation.{AgeGroups, Contest}
 
   @doc """
   Renders JS that powers the registration form.
@@ -23,7 +24,6 @@ defmodule JumubaseWeb.PerformanceView do
       conn: conn,
       contest: contest,
       changeset: changeset,
-      contest_category_options: cc_options,
     } = assigns
 
     json = render_html_safe_json(
@@ -31,7 +31,7 @@ defmodule JumubaseWeb.PerformanceView do
         changeset: changeset |> remove_obsolete_associations,
         params: conn.params["performance"],
         contest_category_options: (
-          for {name, id, type, genre} <- cc_options do
+          for {name, id, type, genre} <- cc_options(contest) do
             %{id: id, name: name, type: type, genre: genre}
           end
         ),
@@ -67,6 +67,12 @@ defmodule JumubaseWeb.PerformanceView do
 
   defp exclude_obsolete(changesets) do
     Enum.filter(changesets, &(&1.action in [:insert, :update]))
+  end
+
+  defp cc_options(%Contest{} = contest) do
+    Foundation.load_contest_categories(contest)
+    |> Map.get(:contest_categories)
+    |> Enum.map(&{&1.category.name, &1.id, &1.category.type, &1.category.genre})
   end
 
   defp birthdate_year_options(season) do

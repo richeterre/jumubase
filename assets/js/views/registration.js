@@ -170,7 +170,8 @@ function getSelectedContestCategory(props) {
     contest_category_options: cc_options,
   } = props
 
-  return find(cc_options, o => o.id === cc_id)
+  // Using == will match both string and integer IDs here
+  return find(cc_options, o => o.id == cc_id)
 }
 
 function getBirthdateObject(birthdate) {

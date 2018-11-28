@@ -16,8 +16,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     conn
     |> assign(:contest, contest)
     |> assign(:performances, performances)
-    |> add_contest_breadcrumb(contest)
-    |> add_performances_breadcrumb(contest)
+    |> add_breadcrumbs(contest)
     |> render("index.html")
   end
 
@@ -27,9 +26,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     conn
     |> assign(:contest, contest)
     |> assign(:performance, performance)
-    |> add_contest_breadcrumb(contest)
-    |> add_performances_breadcrumb(contest)
-    |> add_performance_breadcrumb(contest, performance)
+    |> add_breadcrumbs(contest, performance)
     |> render("show.html")
   end
 
@@ -47,10 +44,17 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   # Private helpers
 
-  def add_performance_breadcrumb(conn, %Contest{} = contest, %Performance{} = performance) do
-    add_breadcrumb(conn,
-      name: performance.edit_code,
-      path: internal_contest_performance_path(conn, :show, contest, performance)
-    )
+  defp add_breadcrumbs(conn, %Contest{} = c) do
+    conn
+    |> add_contest_breadcrumb(c)
+    |> add_performances_breadcrumb(c)
+  end
+
+  defp add_breadcrumbs(conn, %Contest{} = c, %Performance{} = p) do
+    performance_path = internal_contest_performance_path(conn, :show, c, p)
+
+    conn
+    |> add_breadcrumbs(c)
+    |> add_breadcrumb(name: p.edit_code, path: performance_path)
   end
 end

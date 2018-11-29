@@ -1,4 +1,4 @@
-import { chain, cloneDeep, defaultsDeep, isArray, isObject, map, mapValues } from 'lodash'
+import _, { chain, cloneDeep, isArray, isObject, map, mapValues, mergeWith, toArray } from 'lodash'
 
 import { isDateObject, toDateString } from './date'
 
@@ -37,6 +37,18 @@ export function flattenChangesetValues(changeset, params = undefined) {
 
     return value
   })
+}
+
+// Similar to Lodash's defaultsDeep, but preserves arrays
+// (which is crucial for removing nested associations)
+function defaultsDeep() {
+  let output = {}
+  toArray(arguments).reverse().forEach(item => {
+      mergeWith(output, item, (objectValue, sourceValue) => {
+          return isArray(sourceValue) ? sourceValue : undefined
+      })
+  })
+  return output
 }
 
 function isChangeset(object) {

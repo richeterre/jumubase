@@ -71,7 +71,11 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
   @media (min-width: $screen-sm-min) {
     margin: 1.5 * $line-height-computed 0;
 
-    .form-group:not(:first-of-type) { margin-left: 1em; }
+    .form-section {
+      display: inline-block;
+
+      &:not(:first-of-type) { margin-left: 1em; }
+    }
   }
 }
 

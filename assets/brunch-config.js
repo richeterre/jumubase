@@ -8,7 +8,8 @@ exports.config = {
       // http://brunch.io/docs/config#-files-
       joinTo: {
         "js/app.js": /^(js|node_modules)/,
-        "js/registration.js": 'js/views/registration.js'
+        "js/registration.js": 'js/views/registration.js',
+        "js/performanceFilter.js": 'js/views/performanceFilter.js'
       }
       //
       // To change the order of concatenation of files, explicitly mention here
@@ -65,7 +66,8 @@ exports.config = {
   modules: {
     autoRequire: {
       "js/app.js": ["js/app"],
-      "js/registration.js": ["js/views/registration"]
+      "js/registration.js": ["js/views/registration"],
+      "js/performanceFilter.js": ["js/views/performanceFilter"]
     }
   },
 

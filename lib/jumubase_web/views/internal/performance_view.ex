@@ -13,6 +13,10 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Foundation.{AgeGroups, Contest}
   alias Jumubase.Showtime.Performance
 
+  def render("scripts.index.html", _assigns) do
+    ~E(<script src="/js/performanceFilter.js"></script>)
+  end
+
   def render("scripts.edit.html", assigns) do
     # Load same script as in public registration form
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
@@ -61,12 +65,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   Returns age groups suitable for a filter form.
   """
   def ag_filter_options, do: AgeGroups.all
-
-  @doc """
-  Returns a button class based on whether the filter is active.
-  """
-  def filter_button_class(true), do: "btn btn-warning"
-  def filter_button_class(false), do: "btn btn-default"
 
   def filter_status(count, true) do
     [counter_tag(count), " ", active_filter_label()]

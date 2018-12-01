@@ -5,9 +5,6 @@
     <%= select f, :age_group, @ag_options, prompt: gettext("All AGs"), class: "form-control" %>
   </div>
 
-    <%= submit class: filter_button_class(@filter_active) do %>
-      <%= gettext("Filter") %>
-    <% end %>
   <div class="form-section">
     <%= link gettext("Show all"), to: @path, class: "btn btn-default" %>
   </div>

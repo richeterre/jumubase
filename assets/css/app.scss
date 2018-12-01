@@ -74,7 +74,7 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
     .form-section {
       display: inline-block;
 
-      &:not(:first-of-type) { margin-left: 1em; }
+      &:not(:first-of-type) { margin-left: 1.5em; }
     }
   }
 }

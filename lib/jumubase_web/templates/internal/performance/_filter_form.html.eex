@@ -6,10 +6,11 @@
   </div>
 
   <div class="form-section">
-    <%= link gettext("Show all"), to: @path, class: "btn btn-default" %>
+    <%= filter_status(@count, @filter_active) %>
+
+    <%= if @filter_active do %>
+      <%= link gettext("Show all"), to: @path, class: "btn btn-link" %>
+    <% end %>
   </div>
 
-  <div class="form-section">
-    <%= filter_status(@count, @filter_active) %>
-  </div>
 <% end %>

@@ -63,7 +63,17 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 .panel-title.pull-left { line-height: 1.4em; }
 
 /* Add bottom margin to map images for responsive stacking */
-.map-image { margin-bottom: $line-height-computed }
+.map-image { margin-bottom: $line-height-computed; }
+
+.filter-form {
+  margin: $line-height-computed 0;
+
+  @media (min-width: $screen-sm-min) {
+    margin: 1.5 * $line-height-computed 0;
+
+    .form-group:not(:first-of-type) { margin-left: 1em; }
+  }
+}
 
 /* Enable Vue.js cloaking (hiding element before Vue is loaded) */
 [v-cloak] { display: none; }

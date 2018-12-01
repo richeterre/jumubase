@@ -12,17 +12,22 @@ defmodule Jumubase.Showtime do
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.AgeGroupCalculator
   alias Jumubase.Showtime.{Participant, Performance, Piece}
+  alias Jumubase.Showtime.PerformanceFilter
 
+  @doc """
+  Returns all performances from the contest.
+  """
   def list_performances(%Contest{id: id}) do
-    query = from p in Performance,
-      join: cc in assoc(p, :contest_category),
-      where: cc.contest_id == ^id,
-      preload: [
-        contest_category: {cc, :category},
-        appearances: :participant
-      ]
+    performances_query(id) |> Repo.all
+  end
 
-    Repo.all(query)
+  @doc """
+  Returns all performances from the contest matching the given filter.
+  """
+  def list_performances(%Contest{id: id}, %PerformanceFilter{} = filter) do
+    performances_query(id)
+    |> apply_filter(filter)
+    |> Repo.all
   end
 
   @doc """
@@ -116,6 +121,31 @@ defmodule Jumubase.Showtime do
 
   # Private helpers
 
+  defp performances_query(contest_id) do
+    from p in Performance,
+      join: cc in assoc(p, :contest_category),
+      where: cc.contest_id == ^contest_id,
+      preload: [
+        contest_category: {cc, :category},
+        appearances: :participant
+      ]
+  end
+
+  def apply_filter(query, %PerformanceFilter{} = filter) do
+    filter_map = PerformanceFilter.to_filter_map(filter)
+
+    Enum.reduce(filter_map, query, fn
+      {:genre, genre}, query ->
+        with_genre(query, genre)
+      {:contest_category_id, cc_id}, query ->
+        in_contest_category(query, cc_id)
+      {:age_group, ag}, query ->
+        with_age_group(query, ag)
+      _, query ->
+        query
+    end)
+  end
+
   defp put_edit_code(%Changeset{valid?: true} = changeset, round) do
     edit_code = :rand.uniform(99999) |> Performance.to_edit_code(round)
     put_change(changeset, :edit_code, edit_code)
@@ -170,6 +200,23 @@ defmodule Jumubase.Showtime do
       other_result ->
         other_result
     end
+  end
+
+  defp with_genre(query, genre) do
+    from p in query,
+      join: cc in assoc(p, :contest_category),
+      join: c in assoc(cc, :category),
+      where: c.genre == ^genre
+  end
+
+  defp in_contest_category(query, cc_id) do
+    from p in query,
+      join: cc in assoc(p, :contest_category),
+      where: cc.id == ^cc_id
+  end
+
+  defp with_age_group(query, age_group) do
+    from p in query, where: p.age_group == ^age_group
   end
 
   # Limits the query to the given contest id

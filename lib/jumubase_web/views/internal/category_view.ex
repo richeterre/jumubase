@@ -31,16 +31,18 @@ defmodule JumubaseWeb.Internal.CategoryView do
     Enum.map(JumuParams.category_types(), &{type_name(&1), &1})
   end
 
-  # Private helpers
-
-  # Maps internal genres to user-facing genre names.
-  defp genre_name(genre) do
+  @doc """
+  Maps internal genres to user-facing genre names.
+  """
+  def genre_name(genre) do
     case genre do
       "classical" -> gettext("Classical")
       "popular" -> gettext("Popular")
       "kimu" -> gettext("Kimu")
     end
   end
+
+  # Private helpers
 
   # Maps internal category types to user-facing category type names.
   defp type_name(type) do

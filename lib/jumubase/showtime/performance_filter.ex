@@ -40,5 +40,6 @@ defmodule Jumubase.Showtime.PerformanceFilter do
     filter
     |> Map.from_struct
     |> Enum.reject(fn {_, value} -> is_nil(value) end)
+    |> Map.new
   end
 end

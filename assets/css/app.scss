@@ -68,13 +68,17 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 .filter-form {
   margin: $line-height-computed 0;
 
+  .form-section:last-of-type {
+    margin-top: 0.5 * $line-height-computed;
+  }
+
   @media (min-width: $screen-sm-min) {
-    margin: 1.5 * $line-height-computed 0;
+    margin: $line-height-computed 0;
 
     .form-section {
       display: inline-block;
 
-      &:not(:first-of-type) { margin-left: 1.5em; }
+      &:last-of-type { margin: 0 0 0 1.5em; }
     }
   }
 }

@@ -69,7 +69,10 @@ defmodule Jumubase.Showtime.Piece do
   # Removes whitespace around changes in the given fields.
   defp trim_fields(%Changeset{} = changeset, fields) do
     Enum.reduce(fields, changeset, fn field, cs ->
-      update_change(cs, field, &String.trim/1)
+      update_change(cs, field, fn
+        val when is_binary(val) -> String.trim(val)
+        val -> val
+      end)
     end)
   end
 

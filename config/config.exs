@@ -39,7 +39,8 @@ config :jumubase, Jumubase.Mailer,
 # Configure email
 config :jumubase, JumubaseWeb.Email,
   default_sender: {"Jumu Nordost", "no-reply@jumu-nordost.eu"},
-  contact_email: System.get_env("JUMU_CONTACT_EMAIL")
+  contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
+  admin_email: System.get_env("JUMU_ADMIN_EMAIL")
 
 # Configure Elixir's Logger
 config :logger, :console,

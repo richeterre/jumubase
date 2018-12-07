@@ -9,13 +9,18 @@ defmodule JumubaseWeb.Email do
   alias JumubaseWeb.Email
 
   def contact_message(%{name: name, email: email, message: message}) do
-    recipient = Application.get_env(:jumubase, Email)[:contact_email]
+    contact_email = Application.get_env(:jumubase, Email)[:contact_email]
+    admin_email = Application.get_env(:jumubase, Email)[:admin_email]
 
-    new_email()
-    |> from({name, email})
-    |> to(recipient)
-    |> subject(gettext("New message via jumu-nordost.eu"))
-    |> text_body(message)
+    email =
+      new_email()
+      |> from({name, email})
+      |> to(contact_email)
+      |> subject(gettext("New message via jumu-nordost.eu"))
+      |> text_body(message)
+
+    # Include admin as BCC if different from contact email
+    if admin_email != contact_email, do: bcc(email, admin_email), else: email
   end
 
   @doc """

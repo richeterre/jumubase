@@ -6,6 +6,7 @@ defmodule JumubaseWeb.ContactControllerTest do
     @valid_params %{
       "name" => "A",
       "email" => "a@b.c",
+      "email_repeat" => "",
       "message" => "Lorem ipsum"
     }
 
@@ -17,6 +18,15 @@ defmodule JumubaseWeb.ContactControllerTest do
       assert_delivered_email JumubaseWeb.Email.contact_message(
         %{name: "A", email: "a@b.c", message: "Lorem ipsum"}
       )
+    end
+
+    test "shows an error if the hidden field is filled (indicating a spambot)", %{conn: conn} do
+      params = %{@valid_params | "email_repeat" => "a@b.c"}
+      conn = post(conn, contact_path(conn, :send_message), %{"contact" => params})
+
+      assert get_flash(conn, :error) =~ "Please fill in only fields that are visible in the form."
+      assert redirected_to(conn) == page_path(conn, :contact)
+      assert_no_emails_delivered()
     end
 
     test "shows an error if the name is left empty", %{conn: conn} do

@@ -42,6 +42,7 @@ msgstr "Benutzer bearbeiten"
 #: lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:12
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:19
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:186
 #: lib/jumubase_web/templates/session/new.html.eex:12
@@ -695,14 +696,14 @@ msgid "and"
 msgstr "und"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:71
+#: lib/jumubase_web/controllers/email.ex:73
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
 msgstr[0] "Deine Jumu-Anmeldung in der Kategorie \"%{name}\""
 msgstr[1] "Eure Jumu-Anmeldung in der Kategorie \"%{name}\""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:64
+#: lib/jumubase_web/controllers/email.ex:66
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] "Deine Kimu-Anmeldung"
@@ -730,17 +731,17 @@ msgid "Address"
 msgstr "Anschrift"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:20
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:26
 msgid "Message"
 msgstr "Nachricht"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:17
+#: lib/jumubase_web/controllers/email.ex:19
 msgid "New message via jumu-nordost.eu"
 msgstr "Neue Nachricht über jumu-nordost.eu"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:28
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:34
 msgid "Send message"
 msgstr "Nachricht absenden"
 
@@ -760,12 +761,12 @@ msgid "This form is for contacting the international committee of the region \"N
 msgstr "Mit diesem Formular erreichst du den Landesausschuss Nord-und Osteuropa."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:23
+#: lib/jumubase_web/controllers/contact_controller.ex:15
 msgid "Please fill in all fields and try again!"
 msgstr "Bitte fülle alle Felder aus und versuche es erneut!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:19
+#: lib/jumubase_web/controllers/contact_controller.ex:28
 msgid "Your message has been sent!"
 msgstr "Deine Nachricht wurde versendet!"
 
@@ -964,3 +965,8 @@ msgstr "Vorspiel bearbeiten"
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:51
 msgid "The performance with edit code %{edit_code} was updated."
 msgstr "Das Vorspiel mit dem Änderungscode %{edit_code} wurde aktualisiert."
+
+#, elixir-format
+#: lib/jumubase_web/controllers/contact_controller.ex:20
+msgid "Please fill in only fields that are visible in the form."
+msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."

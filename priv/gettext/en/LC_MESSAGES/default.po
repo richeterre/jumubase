@@ -42,6 +42,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:12
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:19
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:186
 #: lib/jumubase_web/templates/session/new.html.eex:12
@@ -695,14 +696,14 @@ msgid "and"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:71
+#: lib/jumubase_web/controllers/email.ex:73
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
 msgstr[0] "Your Jumu registration for category \"%{name}\""
 msgstr[1] "Your Jumu registration for category \"%{name}\""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:64
+#: lib/jumubase_web/controllers/email.ex:66
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] "Your Kimu registration"
@@ -730,17 +731,17 @@ msgid "Address"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:20
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:26
 msgid "Message"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:17
+#: lib/jumubase_web/controllers/email.ex:19
 msgid "New message via jumu-nordost.eu"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:28
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:34
 msgid "Send message"
 msgstr ""
 
@@ -760,12 +761,12 @@ msgid "This form is for contacting the international committee of the region \"N
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:23
+#: lib/jumubase_web/controllers/contact_controller.ex:15
 msgid "Please fill in all fields and try again!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:19
+#: lib/jumubase_web/controllers/contact_controller.ex:28
 msgid "Your message has been sent!"
 msgstr ""
 
@@ -955,12 +956,17 @@ msgstr ""
 msgid "The performance with edit code %{edit_code} was deleted."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit.html.eex:2
 msgid "Edit performance"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:51
 msgid "The performance with edit code %{edit_code} was updated."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/contact_controller.ex:20
+msgid "Please fill in only fields that are visible in the form."
 msgstr ""

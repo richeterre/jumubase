@@ -13,6 +13,12 @@
       <%= email_input f, :email, required: true, class: "form-control" %>
       <%= error_tag f, :email %>
     </div>
+
+    <!-- Just a trap for evil machines -->
+    <div class="form-group col-md-6" id="trap">
+      <%= label f, :email_repeat, gettext("Email"), class: "control-label" %>
+      <%= email_input f, :email_repeat, class: "form-control" %>
+    </div>
   </div>
 
   <div class="row">

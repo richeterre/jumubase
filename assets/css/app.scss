@@ -44,6 +44,9 @@ span.glyphicon {
   vertical-align: top;
 }
 
+/* Tweak vertical alignment of badges */
+span.badge { vertical-align: baseline; }
+
 /* Style mini-instructions inside form labels */
 form label > small { font-weight: normal; }
 

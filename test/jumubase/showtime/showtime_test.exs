@@ -4,6 +4,7 @@ defmodule Jumubase.ShowtimeTest do
   alias Jumubase.Foundation.{Category, Contest, ContestCategory}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
+  alias Jumubase.Showtime.PerformanceFilter
 
   @season 56 # important for age group matching in tests
 
@@ -35,6 +36,27 @@ defmodule Jumubase.ShowtimeTest do
           %Appearance{participant: %Participant{}}
         ]
       }] = Showtime.list_performances(c)
+    end
+  end
+
+  describe "list_performances/2" do
+    test "returns all matching performances from the given contest", %{contest: c} do
+      [cc1, cc2] = c.contest_categories
+
+      filter = %PerformanceFilter{
+        contest_category_id: cc1.id,
+        age_group: "III"
+      }
+
+      # Matching performance
+      p = insert_performance(cc1, age_group: "III")
+
+      # Non-matching performances
+      insert_performance(cc1, age_group: "IV")
+      insert_performance(cc2, age_group: "III")
+      insert_performance(cc2, age_group: "IV")
+
+      assert_ids_match_unordered Showtime.list_performances(c, filter), [p]
     end
   end
 

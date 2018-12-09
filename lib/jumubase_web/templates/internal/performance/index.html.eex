@@ -6,6 +6,17 @@
 
 <hr>
 
+<%= render "_filter_form.html",
+  conn: @conn,
+  changeset: @filter_changeset,
+  path: internal_contest_performance_path(@conn, :index, @contest),
+  genre_options: genre_filter_options(@contest),
+  cc_options: cc_filter_options(@contest),
+  ag_options: ag_filter_options(),
+  count: length(@performances),
+  filter_active: @filter_active
+  %>
+
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>

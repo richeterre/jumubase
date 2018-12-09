@@ -5,6 +5,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
+  alias Jumubase.Showtime.PerformanceFilter
 
   plug :add_home_breadcrumb
   plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
@@ -12,12 +13,15 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 
-  def index(conn, _params, contest) do
-    performances = Showtime.list_performances(contest)
+  def index(conn, params, contest) do
+    filter_params = params["performance_filter"] || %{}
+    filter = PerformanceFilter.from_params(filter_params)
+    filter_cs = PerformanceFilter.changeset(filter_params)
 
     conn
     |> assign(:contest, contest)
-    |> assign(:performances, performances)
+    |> assign(:filter_changeset, filter_cs)
+    |> handle_filter(filter, contest)
     |> add_breadcrumbs(contest)
     |> render("index.html")
   end
@@ -71,6 +75,18 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   # Private helpers
+
+  defp handle_filter(conn, filter, contest) do
+    if PerformanceFilter.active?(filter) do
+      conn
+      |> assign(:filter_active, true)
+      |> assign(:performances, Showtime.list_performances(contest, filter))
+    else
+      conn
+      |> assign(:filter_active, false)
+      |> assign(:performances, Showtime.list_performances(contest))
+    end
+  end
 
   defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p, %Changeset{} = cs) do
     edit_path = internal_contest_performance_path(conn, :edit, c, p)

@@ -1,0 +1,16 @@
+<%= form_for @changeset, @path, [method: :get, class: "form-inline filter-form"], fn f -> %>
+  <div class="form-section">
+    <%= select f, :genre, @genre_options, prompt: gettext("All genres"), class: "form-control" %>
+    <%= select f, :contest_category_id, @cc_options, prompt: gettext("All categories"), class: "form-control" %>
+    <%= select f, :age_group, @ag_options, prompt: gettext("All AGs"), class: "form-control" %>
+  </div>
+
+  <div class="form-section">
+    <%= filter_status(@count, @filter_active) %>
+
+    <%= if @filter_active do %>
+      <%= link gettext("Show all"), to: @path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+
+<% end %>

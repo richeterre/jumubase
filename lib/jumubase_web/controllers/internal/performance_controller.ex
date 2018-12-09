@@ -36,7 +36,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     conn
     |> prepare_filtered_list(params, contest)
     |> add_breadcrumbs(contest)
-    |> render("index.html")
+    |> render(:index)
   end
 
   def show(conn, %{"id" => id}, contest) do

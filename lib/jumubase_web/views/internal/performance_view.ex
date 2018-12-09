@@ -23,6 +23,11 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.PDFGenerator
+  alias JumubaseWeb.XMLEncoder
+
+  def render("index.xml", %{performances: performances}) do
+    XMLEncoder.encode(performances)
+  end
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
 

@@ -20,6 +20,10 @@ defmodule JumubaseWeb.Router do
     plug :accepts, ["html"]
   end
 
+  pipeline :html_and_xml do
+    plug :accepts, ["html", "xml"]
+  end
+
   pipeline :json_only do
     plug :accepts, ["json"]
   end
@@ -134,7 +138,7 @@ defmodule JumubaseWeb.Router do
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
-      resources "/performances", PerformanceController
+      resources "/performances", PerformanceController, except: [:index]
 
       resources "/stages", StageController, only: [:index] do
         get "/schedule", StageController, :schedule, as: :schedule
@@ -144,6 +148,14 @@ defmodule JumubaseWeb.Router do
 
     resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]
+  end
+
+  scope "/internal", JumubaseWeb.Internal, as: :internal do
+    pipe_through [:browser, :html_and_xml]
+
+    resources "/contests", ContestController, only: [] do
+      resources "/performances", PerformanceController, only: [:index]
+    end
   end
 
   if Mix.env() == :dev do

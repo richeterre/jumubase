@@ -51,7 +51,8 @@ defmodule Jumubase.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 7.0"},
       {:sneeze, "~> 1.1"},
-      {:timex, "~> 3.0"}
+      {:timex, "~> 3.0"},
+      {:xml_builder, "~> 2.0.0"}
     ]
   end
 

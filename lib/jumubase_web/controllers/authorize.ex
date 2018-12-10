@@ -3,9 +3,9 @@ defmodule JumubaseWeb.Authorize do
   import Phoenix.Controller
   import Jumubase.Gettext
   import Jumubase.Foundation.Contest, only: [deadline_passed?: 2]
-  import JumubaseWeb.Router.Helpers
   alias Plug.Conn
   alias Jumubase.Foundation
+  alias JumubaseWeb.Router.Helpers, as: Routes
   alias JumubaseWeb.Internal.Permit
 
   # Useful for customizing the `action` function in the controller,
@@ -30,7 +30,7 @@ defmodule JumubaseWeb.Authorize do
   def guest_check(%Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
   def guest_check(%Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
     conn
-    |> redirect(to: page_path(conn, :home))
+    |> redirect(to: Routes.page_path(conn, :home))
     |> halt
   end
 
@@ -43,7 +43,7 @@ defmodule JumubaseWeb.Authorize do
     _opts
   ) do
     (id == to_string(current_user.id) and conn) ||
-      unauthorized(conn, page_path(conn, :home))
+      unauthorized(conn, Routes.page_path(conn, :home))
   end
 
   # Plug to allow only admins to access the resource.
@@ -118,13 +118,13 @@ defmodule JumubaseWeb.Authorize do
   defp role_check(%Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],
       do: conn,
-      else: unauthorized(conn, internal_page_path(conn, :home))
+      else: unauthorized(conn, Routes.internal_page_path(conn, :home))
   end
 
   defp check_contest_deadline(conn, id, success_fun) do
     contest = Foundation.get_contest!(id)
     if deadline_passed?(contest, Timex.today) do
-      path = page_path(conn, :registration)
+      path = Routes.page_path(conn, :registration)
       error(conn, gettext("The registration deadline for this contest has passed. Please contact us if you need assistance."), path)
     else
       success_fun.({:ok, contest})
@@ -138,13 +138,13 @@ defmodule JumubaseWeb.Authorize do
     if Permit.authorized?(user, contest) do
       success_fun.({:ok, contest})
     else
-      unauthorized(conn, internal_page_path(conn, :home))
+      unauthorized(conn, Routes.internal_page_path(conn, :home))
     end
   end
 
   defp need_login(conn) do
     conn
     |> put_session(:request_path, current_path(conn))
-    |> error(dgettext("auth", "You need to log in to view this page."), session_path(conn, :new))
+    |> error(dgettext("auth", "You need to log in to view this page."), Routes.session_path(conn, :new))
   end
 end

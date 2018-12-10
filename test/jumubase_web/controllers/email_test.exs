@@ -34,7 +34,7 @@ defmodule JumubaseWeb.EmailTest do
       assert email.subject == "Your Jumu registration for category \"#{cat_name}\""
       assert email.html_body =~ cat_name
       assert email.html_body =~ performance.edit_code
-      assert email.html_body =~ page_url(JumubaseWeb.Endpoint, :edit_registration)
+      assert email.html_body =~ Routes.page_url(JumubaseWeb.Endpoint, :edit_registration)
     end
 
     test "addresses the email to all participants in a Jumu registration", %{contest: c} do
@@ -73,7 +73,7 @@ defmodule JumubaseWeb.EmailTest do
       assert email.to == "pt@example.org"
       assert email.subject == "Your Kimu registration"
       assert email.html_body =~ performance.edit_code
-      assert email.html_body =~ page_url(JumubaseWeb.Endpoint, :edit_registration)
+      assert email.html_body =~ Routes.page_url(JumubaseWeb.Endpoint, :edit_registration)
     end
   end
 

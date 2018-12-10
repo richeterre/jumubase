@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <%= form_for @conn, password_reset_path(@conn, :update), [as: :password_reset, method: :put], fn f -> %>
+    <%= form_for @conn, Routes.password_reset_path(@conn, :update), [as: :password_reset, method: :put], fn f -> %>
       <div class="form-group">
         <%= label f, :password, gettext("New password"), class: "control-label" %>
         <%= password_input f, :password, class: "form-control", autofocus: true %>
@@ -16,6 +16,6 @@
       </div>
     <% end %>
 
-    <span><%= link gettext("Cancel (keep old password)"), to: page_path(@conn, :home) %></span>
+    <%= link gettext("Cancel (keep old password)"), to: Routes.page_path(@conn, :home) %>
   </div>
 </div>

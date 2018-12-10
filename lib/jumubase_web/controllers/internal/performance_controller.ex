@@ -8,7 +8,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Showtime.PerformanceFilter
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
+  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &Routes.internal_contest_path/2, action: :index
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -54,7 +54,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
         |> put_flash(:success,
           gettext("The performance with edit code %{edit_code} was updated.", edit_code: ec)
         )
-        |> redirect(to: internal_contest_performance_path(conn, :index, contest))
+        |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, performance, changeset)
@@ -71,7 +71,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> put_flash(:success,
       gettext("The performance with edit code %{edit_code} was deleted.", edit_code: ec)
     )
-    |> redirect(to: internal_contest_performance_path(conn, :index, contest))
+    |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
   end
 
   # Private helpers
@@ -89,7 +89,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p, %Changeset{} = cs) do
-    edit_path = internal_contest_performance_path(conn, :edit, c, p)
+    edit_path = Routes.internal_contest_performance_path(conn, :edit, c, p)
 
     conn
     |> assign(:contest, c)
@@ -106,7 +106,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   defp add_breadcrumbs(conn, %Contest{} = c, %Performance{} = p) do
-    performance_path = internal_contest_performance_path(conn, :show, c, p)
+    performance_path = Routes.internal_contest_performance_path(conn, :show, c, p)
 
     conn
     |> add_breadcrumbs(c)

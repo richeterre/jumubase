@@ -21,19 +21,19 @@
       <tr>
         <td>
           <%= link participant.family_name,
-            to: internal_contest_participant_path(@conn, :show, @contest, participant)
+            to: Routes.internal_contest_participant_path(@conn, :show, @contest, participant)
             %>
         </td>
         <td>
           <%= link participant.given_name,
-            to: internal_contest_participant_path(@conn, :show, @contest, participant)
+            to: Routes.internal_contest_participant_path(@conn, :show, @contest, participant)
             %>
         </td>
         <td><%= format_date(participant.birthdate, :full) %></td>
         <td>
           <%= for p <- participant.performances do %>
             <%= link PerformanceView.category_name(p),
-              to: internal_contest_performance_path(@conn, :show, @contest, p)
+              to: Routes.internal_contest_performance_path(@conn, :show, @contest, p)
               %>
             <br>
           <% end %>

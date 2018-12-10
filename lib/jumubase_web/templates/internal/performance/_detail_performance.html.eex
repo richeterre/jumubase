@@ -1,7 +1,7 @@
 <%= for appearance <- non_acc(@performance.appearances) do %>
   <%= render "_detail_appearance.html",
     appearance: appearance,
-    participant_path: internal_contest_participant_path(@conn, :show, @contest, appearance.participant)
+    participant_path: Routes.internal_contest_participant_path(@conn, :show, @contest, appearance.participant)
     %>
   <br>
 <% end %>
@@ -12,7 +12,7 @@
   <%= for appearance <- acc_appearances do %>
     <%= render "_detail_appearance.html",
       appearance: appearance,
-      participant_path: internal_contest_participant_path(@conn, :show, @contest, appearance.participant)
+      participant_path: Routes.internal_contest_participant_path(@conn, :show, @contest, appearance.participant)
       %>
     <br>
   <% end %>

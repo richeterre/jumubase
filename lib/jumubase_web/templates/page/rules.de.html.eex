@@ -104,6 +104,6 @@
       </ul>
     </p>
 
-    <p>Die Anmeldung findet, genau wie für den "großen" Jumu-Wettbewerb, über diese Website statt. Dazu einfach auf der <%= link "Anmeldeseite", to: page_path(@conn, :registration) %> den Kimu-Wettbewerb der jeweiligen Schule auswählen!</p>
+    <p>Die Anmeldung findet, genau wie für den "großen" Jumu-Wettbewerb, über diese Website statt. Dazu einfach auf der <%= link "Anmeldeseite", to: Routes.page_path(@conn, :registration) %> den Kimu-Wettbewerb der jeweiligen Schule auswählen!</p>
   </div>
 </div>

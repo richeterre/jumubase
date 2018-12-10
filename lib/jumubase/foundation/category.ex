@@ -1,5 +1,5 @@
 defmodule Jumubase.Foundation.Category do
-  use Ecto.Schema
+  use Jumubase.Schema
   import Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.Category

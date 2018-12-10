@@ -2,8 +2,8 @@ defmodule Jumubase.Accounts.MessageTest do
   use ExUnit.Case
   use Bamboo.Test
   import JumubaseWeb.AuthTestHelpers
-  import JumubaseWeb.Router.Helpers, only: [password_reset_url: 3]
   alias Jumubase.Accounts.Message
+  alias JumubaseWeb.Router.Helpers, as: Routes
 
   setup do
     email = "deirdre@example.com"
@@ -17,7 +17,7 @@ defmodule Jumubase.Accounts.MessageTest do
 
   test "sends reset password request email", %{email: email, key: key} do
     sent_email = Message.reset_request(email, key)
-    expected_url = password_reset_url(JumubaseWeb.Endpoint, :edit, key: key)
+    expected_url = Routes.password_reset_url(JumubaseWeb.Endpoint, :edit, key: key)
     assert sent_email.subject =~ "Reset your password"
     assert sent_email.text_body =~ "choose a new password: #{expected_url}"
     assert_delivered_email(Message.reset_request(email, key))

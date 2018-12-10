@@ -15,16 +15,16 @@
         </div>
         <ul class="list-group">
           <li class="list-group-item">
-            <%= icon_link("user", gettext("Users"), internal_user_path(@conn, :index)) %>
+            <%= icon_link("user", gettext("Users"), Routes.internal_user_path(@conn, :index)) %>
           </li>
           <li class="list-group-item">
-            <%= icon_link("globe", gettext("Hosts"), internal_host_path(@conn, :index)) %>
+            <%= icon_link("globe", gettext("Hosts"), Routes.internal_host_path(@conn, :index)) %>
           </li>
           <li class="list-group-item">
-            <%= icon_link("music", gettext("Contests"), internal_contest_path(@conn, :index)) %>
+            <%= icon_link("music", gettext("Contests"), Routes.internal_contest_path(@conn, :index)) %>
           </li>
           <li class="list-group-item">
-            <%= icon_link("list-alt", gettext("Categories"), internal_category_path(@conn, :index)) %>
+            <%= icon_link("list-alt", gettext("Categories"), Routes.internal_category_path(@conn, :index)) %>
           </li>
         </ul>
       </div>
@@ -40,14 +40,14 @@
         <%= for contest <- @contests do %>
           <li class="list-group-item">
             <%= link name_with_flag(contest),
-              to: internal_contest_path(@conn, :show, contest)
+              to: Routes.internal_contest_path(@conn, :show, contest)
               %>
           </li>
         <% end %>
         <%= if @has_more do %>
           <li class="list-group-item">
             <%= link gettext("Show more…"),
-              to: internal_contest_path(@conn, :index)
+              to: Routes.internal_contest_path(@conn, :index)
               %>
           </li>
         <% end %>

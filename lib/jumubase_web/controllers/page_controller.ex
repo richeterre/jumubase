@@ -59,7 +59,7 @@ defmodule JumubaseWeb.PageController do
   defp show_error(conn, message) do
     conn
     |> put_flash(:error, message)
-    |> redirect(to: page_path(conn, :edit_registration))
+    |> redirect(to: Routes.page_path(conn, :edit_registration))
   end
 
   defp perform_lookup(conn, edit_code) do
@@ -67,7 +67,7 @@ defmodule JumubaseWeb.PageController do
       {:ok, %{contest_category: %{contest: c}} = p} <- Showtime.lookup_performance(edit_code),
       false <- deadline_passed?(c, Timex.today)
     do
-      redirect(conn, to: performance_path(conn, :edit, c, p, edit_code: edit_code))
+      redirect(conn, to: Routes.performance_path(conn, :edit, c, p, edit_code: edit_code))
     else
       {:error, _} ->
         show_error(conn, gettext("We could not find a registration for this edit code."))

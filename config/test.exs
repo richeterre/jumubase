@@ -23,7 +23,6 @@ config :phauxth,
 
 # Configure your database
 config :jumubase, Jumubase.Repo,
-  adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
   database: "jumubase_test",

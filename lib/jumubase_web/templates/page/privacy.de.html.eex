@@ -12,7 +12,7 @@
 
     <h3>1. Verantwortliche</h3>
 
-    Verantwortlich im Sinne des <%= link "Art. 4 Abs. 7", to: "https://dsgvo-gesetz.de/art-4-dsgvo/" %> der DSGVO ist der Landesausschuss “Jugend musiziert” Nord- und Osteuropa. Ein Formular zur Kontaktaufnahme findest du auf der Seite <%= link "\"Kontakt\"", to: page_path(@conn, :contact) %>.
+    Verantwortlich im Sinne des <%= link "Art. 4 Abs. 7", to: "https://dsgvo-gesetz.de/art-4-dsgvo/" %> der DSGVO ist der Landesausschuss “Jugend musiziert” Nord- und Osteuropa. Ein Formular zur Kontaktaufnahme findest du auf der Seite <%= link "\"Kontakt\"", to: Routes.page_path(@conn, :contact) %>.
 
     <h3>2. Welche Daten werden erhoben?</h3>
 

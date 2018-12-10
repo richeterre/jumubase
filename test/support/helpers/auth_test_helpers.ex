@@ -3,9 +3,9 @@ defmodule JumubaseWeb.AuthTestHelpers do
   import ExUnit.Assertions
   import Ecto.Changeset
   import Jumubase.Factory
-  import JumubaseWeb.Router.Helpers
   alias Jumubase.Repo
   alias Jumubase.Accounts
+  alias JumubaseWeb.Router.Helpers, as: Routes
 
   def add_user(attrs \\ []) do
     # Add password since Factory doesn't set one
@@ -29,13 +29,13 @@ defmodule JumubaseWeb.AuthTestHelpers do
 
   def assert_unauthorized_user(conn) do
     assert get_flash(conn, :error) =~ "not authorized"
-    assert redirected_to(conn) == internal_page_path(conn, :home)
+    assert redirected_to(conn) == Routes.internal_page_path(conn, :home)
     assert conn.halted
   end
 
   def assert_unauthorized_guest(conn) do
     assert get_flash(conn, :error) =~ "need to log in"
-    assert redirected_to(conn) == session_path(conn, :new)
+    assert redirected_to(conn) == Routes.session_path(conn, :new)
     assert conn.halted
   end
 end

@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link to: page_path(@conn, :home), class: "navbar-brand" do %>
+      <%= link to: Routes.page_path(@conn, :home), class: "navbar-brand" do %>
         <%= img_tag "/images/jumuball.png", alt: gettext("Jumu logo") %>
       <% end %>
     </div>
@@ -16,23 +16,23 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><%= link gettext("Home"), to: page_path(@conn, :home) %></li>
-        <li><%= link gettext("Registration"), to: page_path(@conn, :registration) %></li>
-        <li><%= link gettext("Rules"), to: page_path(@conn, :rules) %></li>
-        <li><%= link gettext("FAQ"), to: page_path(@conn, :faq) %></li>
-        <li><%= link gettext("Contact"), to: page_path(@conn, :contact) %></li>
+        <li><%= link gettext("Home"), to: Routes.page_path(@conn, :home) %></li>
+        <li><%= link gettext("Registration"), to: Routes.page_path(@conn, :registration) %></li>
+        <li><%= link gettext("Rules"), to: Routes.page_path(@conn, :rules) %></li>
+        <li><%= link gettext("FAQ"), to: Routes.page_path(@conn, :faq) %></li>
+        <li><%= link gettext("Contact"), to: Routes.page_path(@conn, :contact) %></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <%= if @current_user do %>
           <li>
-            <%= link to: internal_page_path(@conn, :home) do %>
+            <%= link to: Routes.internal_page_path(@conn, :home) do %>
               <%= icon_tag("home") %> <%= @current_user.given_name %>
             <% end %>
           </li>
-          <li><%= link gettext("Log out"), to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+          <li><%= link gettext("Log out"), to: Routes.session_path(@conn, :delete, @current_user), method: :delete %></li>
         <% else %>
           <li>
-            <%= link gettext("Internal Pages"), to: session_path(@conn, :new) %>
+            <%= link gettext("Internal Pages"), to: Routes.session_path(@conn, :new) %>
           </li>
         <% end %>
       </ul>

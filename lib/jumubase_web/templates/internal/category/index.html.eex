@@ -23,4 +23,4 @@
   </table>
 </div>
 
-<%= link gettext("Add Category"), to: internal_category_path(@conn, :new), class: "btn btn-primary" %>
+<%= link gettext("Add Category"), to: Routes.internal_category_path(@conn, :new), class: "btn btn-primary" %>

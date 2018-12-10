@@ -1,5 +1,7 @@
 defmodule Jumubase.Repo do
-  use Ecto.Repo, otp_app: :jumubase
+  use Ecto.Repo,
+    otp_app: :jumubase,
+    adapter: Ecto.Adapters.Postgres
 
   @doc """
   Dynamically loads the repository url from the

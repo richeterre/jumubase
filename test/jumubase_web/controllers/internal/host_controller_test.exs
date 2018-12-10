@@ -9,19 +9,19 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
     @describetag login_as: "admin"
 
     test "lists all hosts", %{conn: conn} do
-      conn = get(conn, internal_host_path(conn, :index))
+      conn = get(conn, Routes.internal_host_path(conn, :index))
       assert html_response(conn, 200) =~ "Hosts"
     end
 
     test "renders new host form", %{conn: conn} do
-      conn = get(conn, internal_host_path(conn, :new))
+      conn = get(conn, Routes.internal_host_path(conn, :new))
       assert html_response(conn, 200) =~ "New Host"
     end
 
     test "redirects to host list after creating a host", %{conn: conn} do
       valid_attrs = params_for(:host, name: "XYZ")
-      conn = post(conn, internal_host_path(conn, :create), host: valid_attrs)
-      redirect_path = internal_host_path(conn, :index)
+      conn = post(conn, Routes.internal_host_path(conn, :create), host: valid_attrs)
+      redirect_path = Routes.internal_host_path(conn, :index)
 
       assert redirected_to(conn) == redirect_path
       conn = get(recycle(conn), redirect_path) # Follow redirection
@@ -29,7 +29,7 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
     end
 
     test "renders errors when host creation fails with invalid data", %{conn: conn} do
-      conn = post(conn, internal_host_path(conn, :create), host: %{})
+      conn = post(conn, Routes.internal_host_path(conn, :create), host: %{})
       assert html_response(conn, 200) =~ "New Host"
     end
   end
@@ -53,9 +53,9 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
 
   defp verify_all_routes(conn, assertion_fun) do
     Enum.each([
-      get(conn, internal_host_path(conn, :index)),
-      get(conn, internal_host_path(conn, :new)),
-      post(conn, internal_host_path(conn, :create), %{host: %{}}),
+      get(conn, Routes.internal_host_path(conn, :index)),
+      get(conn, Routes.internal_host_path(conn, :new)),
+      post(conn, Routes.internal_host_path(conn, :create), %{host: %{}}),
     ], fn conn ->
       assertion_fun.(conn)
     end)

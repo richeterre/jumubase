@@ -60,7 +60,7 @@
       <div class="form-group text-muted">
         <small>
           <%= gettext("The data you enter will be handled as described in the") %>
-          <%= link gettext("privacy policy"), to: page_path(@conn, :privacy) %>.
+          <%= link gettext("privacy policy"), to: Routes.page_path(@conn, :privacy) %>.
         </small>
       </div>
 

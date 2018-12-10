@@ -3,7 +3,7 @@
     <%= for contest <- @contests do %>
       <li class="list-group-item">
         <%= link name_with_flag(contest),
-          to: performance_path(@conn, :new, contest)
+          to: Routes.performance_path(@conn, :new, contest)
           %>
         <br>
         <%= deadline_info(contest, @general_deadline) %>

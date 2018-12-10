@@ -12,7 +12,7 @@
 
     <hr>
 
-    <%= form_for @conn, page_path(@conn, :lookup_registration), [as: :search, class: "form-inline"], fn f -> %>
+    <%= form_for @conn, Routes.page_path(@conn, :lookup_registration), [as: :search, class: "form-inline"], fn f -> %>
       <div class="form-group">
         <%= text_input f, :edit_code, placeholder: gettext("Edit code"),
           autofocus: true, pattern: "[0-9]*", class: "form-control" %>

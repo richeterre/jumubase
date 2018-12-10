@@ -25,4 +25,4 @@
   </table>
 </div>
 
-<%= link gettext("Add Host"), to: internal_host_path(@conn, :new), class: "btn btn-primary" %>
+<%= link gettext("Add Host"), to: Routes.internal_host_path(@conn, :new), class: "btn btn-primary" %>

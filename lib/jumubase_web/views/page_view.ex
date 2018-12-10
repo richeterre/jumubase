@@ -12,7 +12,7 @@ defmodule JumubaseWeb.PageView do
 
   def rule_booklet_link(title, year, opts \\ []) do
     icon_link "file", title,
-      static_path(Endpoint, "/resources/Ausschreibung_#{year}.pdf"),
+      Routes.static_path(Endpoint, "/resources/Ausschreibung_#{year}.pdf"),
       opts
   end
 

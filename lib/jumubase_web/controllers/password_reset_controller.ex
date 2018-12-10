@@ -14,9 +14,9 @@ defmodule JumubaseWeb.PasswordResetController do
         key = Accounts.create_password_reset(JumubaseWeb.Endpoint, %{"email" => email})
         Accounts.Message.reset_request(email, key)
         message = dgettext("auth", "Check your inbox for instructions on how to reset your password")
-        success(conn, message, session_path(conn, :new))
+        success(conn, message, Routes.session_path(conn, :new))
       true ->
-        error(conn, dgettext("auth", "Please enter an email address"), password_reset_path(conn, :new))
+        error(conn, dgettext("auth", "Please enter an email address"), Routes.password_reset_path(conn, :new))
     end
   end
 
@@ -42,7 +42,7 @@ defmodule JumubaseWeb.PasswordResetController do
     message = dgettext("auth", "Your password has been reset.")
 
     delete_session(conn, :phauxth_session_id)
-    |> success(message, session_path(conn, :new))
+    |> success(message, Routes.session_path(conn, :new))
   end
   defp update_password({:error, %Ecto.Changeset{} = changeset}, conn, params) do
     message = with p <- changeset.errors[:password], do: elem(p, 0)

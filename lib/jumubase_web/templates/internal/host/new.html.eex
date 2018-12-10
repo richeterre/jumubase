@@ -1,6 +1,6 @@
 <h2><%= gettext("New Host") %></h2>
 
-<%= form_for @changeset, internal_host_path(@conn, :create), fn f -> %>
+<%= form_for @changeset, Routes.internal_host_path(@conn, :create), fn f -> %>
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
   <div class="row">

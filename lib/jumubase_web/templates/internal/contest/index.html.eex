@@ -15,14 +15,14 @@
       <tr>
         <td>
           <%= link name_with_flag(contest),
-            to: internal_contest_path(@conn, :show, contest)
+            to: Routes.internal_contest_path(@conn, :show, contest)
             %>
         </td>
         <td><%= dates(contest) %></td>
         <td><%= format_date(contest.deadline) %></td>
         <td>
           <%= if admin?(@current_user) do %>
-            <%= icon_link("pencil", nil, internal_contest_path(@conn, :edit, contest),
+            <%= icon_link("pencil", nil, Routes.internal_contest_path(@conn, :edit, contest),
               class: "btn btn-default btn-xs") %>
           <% end %>
         </td>

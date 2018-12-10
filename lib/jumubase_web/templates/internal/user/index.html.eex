@@ -17,9 +17,9 @@
         <td><%= user.email %></td>
         <td><%= content_tag :span, host_flags(user), title: host_names(user) %></td>
         <td class="text-right">
-          <%= edit_icon_link(internal_user_path(@conn, :edit, user)) %>
+          <%= edit_icon_link(Routes.internal_user_path(@conn, :edit, user)) %>
           <%= delete_icon_link(
-            internal_user_path(@conn, :delete, user),
+            Routes.internal_user_path(@conn, :delete, user),
             gettext("Do you really want to delete this user?")
             ) %>
         </td>
@@ -29,4 +29,4 @@
   </table>
 </div>
 
-<%= link gettext("Add User"), to: internal_user_path(@conn, :new), class: "btn btn-primary" %>
+<%= link gettext("Add User"), to: Routes.internal_user_path(@conn, :new), class: "btn btn-primary" %>

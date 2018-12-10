@@ -17,14 +17,14 @@
       <dt>Wann ist Anmeldeschluss?</dt>
       <dd>
         Das hängt von der Schule ab &ndash; das jeweilige Datum findest du auf der
-        <%= link "Anmeldeseite", to: page_path(@conn, :registration) %>.
+        <%= link "Anmeldeseite", to: Routes.page_path(@conn, :registration) %>.
       </dd>
 
       <dt>Kann ich mein Vorspielprogramm nach der Anmeldung noch ändern?</dt>
       <dd>
         Ja, dies ist bis zum Anmeldeschluss möglich. Gib einfach den Änderungscode,
         den du nach der Anmeldung bzw. Weiterleitung erhalten hast,
-        <%= link "hier", to: page_path(@conn, :edit_registration) %> ein.
+        <%= link "hier", to: Routes.page_path(@conn, :edit_registration) %> ein.
       </dd>
 
       <dt>Muss ich mich für den Landeswettbewerb erneut anmelden?</dt>

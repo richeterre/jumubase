@@ -56,7 +56,7 @@
 
     <p>
       <%= gettext("To find out how we process your data, please see our") %>
-      <%= link gettext("privacy policy"), to: page_path(@conn, :privacy) %>.
+      <%= link gettext("privacy policy"), to: Routes.page_path(@conn, :privacy) %>.
     </p>
   </div>
 </div>

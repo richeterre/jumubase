@@ -1,5 +1,5 @@
 defmodule Jumubase.Foundation.ContestCategory do
-  use Ecto.Schema
+  use Jumubase.Schema
   import Ecto.Changeset
   alias Jumubase.Foundation.AgeGroups
   alias Jumubase.Foundation.{Category, Contest}

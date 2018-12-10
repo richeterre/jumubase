@@ -20,10 +20,10 @@ defmodule JumubaseWeb.SessionController do
 
         Login.add_session(conn, session_id, user.id)
         |> add_remember_me(user.id, params)
-        |> login_success(internal_page_path(conn, :home))
+        |> login_success(Routes.internal_page_path(conn, :home))
 
       {:error, message} ->
-        error(conn, message, session_path(conn, :new))
+        error(conn, message, Routes.session_path(conn, :new))
     end
   end
 
@@ -33,7 +33,7 @@ defmodule JumubaseWeb.SessionController do
 
     delete_session(conn, :phauxth_session_id)
     |> Phauxth.Remember.delete_rem_cookie()
-    |> success(dgettext("auth", "You are now logged out."), page_path(conn, :home))
+    |> success(dgettext("auth", "You are now logged out."), Routes.page_path(conn, :home))
   end
 
   # This function adds a remember_me cookie to the conn.

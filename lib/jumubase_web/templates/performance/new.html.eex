@@ -8,7 +8,7 @@
 
 <%= render "_form.html",
   conn: @conn,
-  path: performance_path(@conn, :create, @contest),
+  path: Routes.performance_path(@conn, :create, @contest),
   kimu_path: registration_path(@conn, @kimu_contest),
   changeset: @changeset,
   submit_title: [gettext("Submit registration"), " ", icon_tag("send")]

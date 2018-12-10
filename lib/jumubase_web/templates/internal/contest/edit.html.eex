@@ -6,7 +6,7 @@
 
 <hr>
 
-<%= form_for @changeset, internal_contest_path(@conn, :update, @contest), fn f -> %>
+<%= form_for @changeset, Routes.internal_contest_path(@conn, :update, @contest), fn f -> %>
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
   <div class="row">

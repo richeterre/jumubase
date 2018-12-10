@@ -2,7 +2,8 @@ defmodule JumubaseWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :jumubase
   use Sentry.Phoenix.Endpoint
 
-  socket "/socket", JumubaseWeb.UserSocket
+  socket "/socket", JumubaseWeb.UserSocket,
+    websocket: [timeout: 45_000] # timeout before Heroku does
 
   # Serve at "/" the static files from "priv/static" directory.
   #

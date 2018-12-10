@@ -13,12 +13,12 @@ defmodule JumubaseWeb.ContactController do
       not changeset.valid? ->
         conn
         |> put_flash(:error, gettext("Please fill in all fields and try again!"))
-        |> redirect(to: page_path(conn, :contact))
+        |> redirect(to: Routes.page_path(conn, :contact))
       # Detect spambots via "trap" field invisible to humans
       params["email_repeat"] != "" ->
         conn
         |> put_flash(:error, gettext("Please fill in only fields that are visible in the form."))
-        |> redirect(to: page_path(conn, :contact))
+        |> redirect(to: Routes.page_path(conn, :contact))
       true ->
         changeset.changes
         |> Email.contact_message
@@ -26,7 +26,7 @@ defmodule JumubaseWeb.ContactController do
 
         conn
         |> put_flash(:success, gettext("Your message has been sent!"))
-        |> redirect(to: page_path(conn, :contact))
+        |> redirect(to: Routes.page_path(conn, :contact))
     end
   end
 

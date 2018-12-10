@@ -18,7 +18,7 @@
       </div>
       <div class="panel-body">
         Diesen Herbst präsentieren wir uns im neuen Gewand. Schau dich gern um &ndash;
-        wir freuen uns über dein <%= link "Feedback", to: page_path(@conn, :contact) %>!
+        wir freuen uns über dein <%= link "Feedback", to: Routes.page_path(@conn, :contact) %>!
       </div>
     </div>
   </div>
@@ -30,10 +30,10 @@
       </div>
       <div class="panel-body">
          Ab sofort kannst du dich hier für Jumu oder Kimu 2019
-         <%= link "anmelden", to: page_path(@conn, :registration) %>.
+         <%= link "anmelden", to: Routes.page_path(@conn, :registration) %>.
          <br><br>
-         Lies dir vorher die <%= link "Teilnahmeregeln", to: page_path(@conn, :rules) %> sowie unsere
-         <%= link "FAQ", to: page_path(@conn, :faq) %> gut durch!
+         Lies dir vorher die <%= link "Teilnahmeregeln", to: Routes.page_path(@conn, :rules) %> sowie unsere
+         <%= link "FAQ", to: Routes.page_path(@conn, :faq) %> gut durch!
       </div>
     </div>
   </div>

@@ -15,17 +15,17 @@
       <ul class="list-group">
         <li class="list-group-item">
           <%= icon_link "music", gettext("Show performances"),
-            internal_contest_performance_path(@conn, :index, @contest)
+            Routes.internal_contest_performance_path(@conn, :index, @contest)
             %>
         </li>
         <li class="list-group-item">
           <%= icon_link "user", gettext("Show participants"),
-            internal_contest_participant_path(@conn, :index, @contest)
+            Routes.internal_contest_participant_path(@conn, :index, @contest)
             %>
         </li>
         <li class="list-group-item">
           <%= icon_link "list-alt", gettext("Show categories"),
-          internal_contest_contest_category_path(@conn, :index, @contest)
+          Routes.internal_contest_contest_category_path(@conn, :index, @contest)
           %>
         </li>
       </ul>

@@ -10,7 +10,7 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
     for role <- all_roles() do
       @tag login_as: role
       test "greets #{role} users on the welcome page", %{conn: conn, user: user} do
-        conn = get(conn, internal_page_path(conn, :home))
+        conn = get(conn, Routes.internal_page_path(conn, :home))
         assert html_response(conn, 200) =~ "Hello #{user.given_name}"
       end
     end
@@ -25,7 +25,7 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
       other_rw = insert(:contest, round: 1)
       other_lw = insert(:contest, round: 2)
 
-      conn = get(conn, internal_page_path(conn, :home))
+      conn = get(conn, Routes.internal_page_path(conn, :home))
 
       assert_contests_listed(conn, [own_kimu, own_rw, own_lw])
       refute_contests_listed(conn, [other_kimu, other_rw, other_lw])
@@ -42,7 +42,7 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
         other_rw = insert(:contest, round: 1)
         other_lw = insert(:contest, round: 2)
 
-        conn = get(conn, internal_page_path(conn, :home))
+        conn = get(conn, Routes.internal_page_path(conn, :home))
 
         assert_contests_listed(conn, [own_kimu, own_rw, own_lw, other_lw])
         refute_contests_listed(conn, [other_kimu, other_rw])
@@ -53,33 +53,33 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
     test "contains a 'Show more' link when not listing all contests", %{conn: conn, user: u} do
       insert(:contest, round: 1, host: build(:host, users: [u]))
       insert(:contest, round: 1)
-      conn = get(conn, internal_page_path(conn, :home))
+      conn = get(conn, Routes.internal_page_path(conn, :home))
       assert html_response(conn, 200) =~ "Show more…"
     end
 
     @tag login_as: "global-organizer"
     test "does not contain a 'Show more' link when listing all contests", %{conn: conn, user: u} do
       insert(:contest, round: 1, host: build(:host, users: [u]))
-      conn = get(conn, internal_page_path(conn, :home))
+      conn = get(conn, Routes.internal_page_path(conn, :home))
       refute html_response(conn, 200) =~ "Show more…"
     end
 
     @tag login_as: "admin"
     test "shows admin tools to admins", %{conn: conn} do
-      conn = get(conn, internal_page_path(conn, :home))
+      conn = get(conn, Routes.internal_page_path(conn, :home))
       assert html_response(conn, 200) =~ "Admin"
     end
 
     for role <- roles_except("admin") do
       @tag login_as: role
       test "shows no admin tools to #{role} users", %{conn: conn} do
-        conn = get(conn, internal_page_path(conn, :home))
+        conn = get(conn, Routes.internal_page_path(conn, :home))
         refute html_response(conn, 200) =~ "Admin"
       end
     end
 
     test "redirects guests to the login page", %{conn: conn} do
-      conn = get(conn, internal_page_path(conn, :home))
+      conn = get(conn, Routes.internal_page_path(conn, :home))
       assert_unauthorized_guest(conn)
     end
   end

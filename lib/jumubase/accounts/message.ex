@@ -5,7 +5,7 @@ defmodule Jumubase.Accounts.Message do
 
   import Bamboo.Email
   import Jumubase.Gettext
-  import JumubaseWeb.Router.Helpers, only: [password_reset_url: 3]
+  alias JumubaseWeb.Router.Helpers, as: Routes
   alias Jumubase.Mailer
 
   @doc """
@@ -20,7 +20,7 @@ defmodule Jumubase.Accounts.Message do
     |> Mailer.deliver_now()
   end
   def reset_request(address, key) do
-    url = password_reset_url(JumubaseWeb.Endpoint, :edit, key: key)
+    url = Routes.password_reset_url(JumubaseWeb.Endpoint, :edit, key: key)
     prep_mail(address)
     |> subject(dgettext("auth", "Reset your password"))
     |> text_body(dgettext("auth", "Open this link now to choose a new password: %{url}", url: url))

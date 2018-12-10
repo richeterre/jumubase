@@ -12,7 +12,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     for role <- roles_except("local-organizer") do
       @tag login_as: role
       test "lists a contest's performances to #{role} users", %{conn: conn, contest: c} do
-        conn = get(conn, internal_contest_performance_path(conn, :index, c))
+        conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
         assert html_response(conn, 200) =~ "Performances"
       end
     end
@@ -20,18 +20,18 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     @tag login_as: "local-organizer"
     test "lists an own contest's performances to local organizers", %{conn: conn, user: u} do
       own_c = insert_own_contest(u)
-      conn = get(conn, internal_contest_performance_path(conn, :index, own_c))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :index, own_c))
       assert html_response(conn, 200) =~ "Performances"
     end
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to list a foreign contest's performances", %{conn: conn, contest: c} do
-      conn = get(conn, internal_contest_performance_path(conn, :index, c))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
       assert_unauthorized_user(conn)
     end
 
     test "redirects guests when trying to list a contest's performances", %{conn: conn, contest: c} do
-      conn = get(conn, internal_contest_performance_path(conn, :index, c))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
       assert_unauthorized_guest(conn)
     end
   end
@@ -41,7 +41,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       @tag login_as: role
       test "shows a single performance to #{role} users", %{conn: conn, contest: c} do
         p = insert_performance(c)
-        conn = get(conn, internal_contest_performance_path(conn, :show, c, p))
+        conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
         assert html_response(conn, 200) =~ p.edit_code
       end
     end
@@ -50,20 +50,20 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     test "shows a performance from an own contest to local organizers", %{conn: conn, user: u} do
       own_c = insert_own_contest(u)
       p = insert_performance(own_c)
-      conn = get(conn, internal_contest_performance_path(conn, :show, own_c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :show, own_c, p))
       assert html_response(conn, 200) =~ p.edit_code
     end
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to view a performance from a foreign contest", %{conn: conn, contest: c} do
       p = insert_performance(c)
-      conn = get(conn, internal_contest_performance_path(conn, :show, c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
       assert_unauthorized_user(conn)
     end
 
     test "redirects guests when trying to view a performance", %{conn: conn, contest: c} do
       p = insert_performance(c)
-      conn = get(conn, internal_contest_performance_path(conn, :show, c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
       assert_unauthorized_guest(conn)
     end
   end
@@ -76,7 +76,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     for role <- roles_except("local-organizer") do
       @tag login_as: role
       test "lets #{role} users edit a performance", %{conn: conn, contest: c, performance: p} do
-        conn = get(conn, internal_contest_performance_path(conn, :edit, c, p))
+        conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
         assert html_response(conn, 200) =~ "Edit performance"
       end
     end
@@ -85,18 +85,18 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     test "lets local organizers edit a performance from an own contest", %{conn: conn, user: u} do
       own_c = insert_own_contest(u)
       p = insert_performance(own_c)
-      conn = get(conn, internal_contest_performance_path(conn, :edit, own_c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, own_c, p))
       assert html_response(conn, 200) =~ "Edit performance"
     end
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to edit a performance from a foreign contest", %{conn: conn, contest: c, performance: p} do
-      conn = get(conn, internal_contest_performance_path(conn, :edit, c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
       assert_unauthorized_user(conn)
     end
 
     test "redirects guests when trying to edit a performance", %{conn: conn, contest: c, performance: p} do
-      conn = get(conn, internal_contest_performance_path(conn, :edit, c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
       assert_unauthorized_guest(conn)
     end
   end
@@ -114,7 +114,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
         [_cc1, cc2] = c.contest_categories
         params = valid_performance_params(cc2)
 
-        conn = put(conn, internal_contest_performance_path(conn, :update, c, p), params)
+        conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
         assert_update_success(conn, c, p)
       end
     end
@@ -126,7 +126,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       p = insert_performance(cc1)
       params = valid_performance_params(cc2)
 
-      conn = put(conn, internal_contest_performance_path(conn, :update, own_c, p), params)
+      conn = put(conn, Routes.internal_contest_performance_path(conn, :update, own_c, p), params)
       assert_update_success(conn, own_c, p)
     end
 
@@ -135,7 +135,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       [_cc1, cc2] = c.contest_categories
       params = valid_performance_params(cc2)
 
-      conn = put(conn, internal_contest_performance_path(conn, :update, c, p), params)
+      conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
       assert_unauthorized_user(conn)
     end
 
@@ -143,7 +143,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       [_cc1, cc2] = c.contest_categories
       params = valid_performance_params(cc2)
 
-      conn = put(conn, internal_contest_performance_path(conn, :update, c, p), params)
+      conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
       assert_unauthorized_guest(conn)
     end
   end
@@ -153,7 +153,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       @tag login_as: role
       test "lets #{role} users delete a performance", %{conn: conn, contest: c} do
         p = insert_performance(c)
-        conn = delete(conn, internal_contest_performance_path(conn, :delete, c, p))
+        conn = delete(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
         assert_deletion_success(conn, c, p)
       end
     end
@@ -162,20 +162,20 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     test "lets local organizers delete a performance from an own contest", %{conn: conn, user: u} do
       own_c = insert_own_contest(u)
       p = insert_performance(own_c)
-      conn = delete(conn, internal_contest_performance_path(conn, :delete, own_c, p))
+      conn = delete(conn, Routes.internal_contest_performance_path(conn, :delete, own_c, p))
       assert_deletion_success(conn, own_c, p)
     end
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to delete a performance from a foreign contest", %{conn: conn, contest: c} do
       p = insert_performance(c)
-      conn = get(conn, internal_contest_performance_path(conn, :delete, c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
       assert_unauthorized_user(conn)
     end
 
     test "redirects guests when trying to delete a performance", %{conn: conn, contest: c} do
       p = insert_performance(c)
-      conn = get(conn, internal_contest_performance_path(conn, :delete, c, p))
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
       assert_unauthorized_guest(conn)
     end
   end
@@ -195,7 +195,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   defp assert_success(conn, contest, message) do
-    redirect_path = internal_contest_performance_path(conn, :index, contest)
+    redirect_path = Routes.internal_contest_performance_path(conn, :index, contest)
 
     assert redirected_to(conn) == redirect_path
     conn = get(recycle(conn), redirect_path) # Follow redirection

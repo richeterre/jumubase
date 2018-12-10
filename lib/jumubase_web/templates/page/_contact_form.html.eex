@@ -1,4 +1,4 @@
-<%= form_for @conn, contact_path(@conn, :send_message), [as: :contact], fn f -> %>
+<%= form_for @conn, Routes.contact_path(@conn, :send_message), [as: :contact], fn f -> %>
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
   <div class="row">

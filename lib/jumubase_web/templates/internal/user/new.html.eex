@@ -2,7 +2,7 @@
 
 <%=
   render "form.html", Map.merge(assigns, %{
-    action: internal_user_path(@conn, :create),
+    action: Routes.internal_user_path(@conn, :create),
     include_password: true,
     host_options: @host_options,
     submit_title: gettext("Create User")

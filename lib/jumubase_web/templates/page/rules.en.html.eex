@@ -4,5 +4,5 @@
   The competition rules are not available in English yet.
   <br>
   For now, please refer to the German version of this website or
-  <%= link "contact us", to: page_path(@conn, :contact) %>.
+  <%= link "contact us", to: Routes.page_path(@conn, :contact) %>.
 </p>

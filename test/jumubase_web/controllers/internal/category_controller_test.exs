@@ -9,19 +9,19 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
     @describetag login_as: "admin"
 
     test "lists all categories", %{conn: conn} do
-      conn = get(conn, internal_category_path(conn, :index))
+      conn = get(conn, Routes.internal_category_path(conn, :index))
       assert html_response(conn, 200) =~ "Categories"
     end
 
     test "renders new category form", %{conn: conn} do
-      conn = get(conn, internal_category_path(conn, :new))
+      conn = get(conn, Routes.internal_category_path(conn, :new))
       assert html_response(conn, 200) =~ "New Category"
     end
 
     test "redirects to category list after creating a category", %{conn: conn} do
       valid_attrs = params_for(:category, name: "XYZ")
-      conn = post(conn, internal_category_path(conn, :create), category: valid_attrs)
-      redirect_path = internal_category_path(conn, :index)
+      conn = post(conn, Routes.internal_category_path(conn, :create), category: valid_attrs)
+      redirect_path = Routes.internal_category_path(conn, :index)
 
       assert redirected_to(conn) == redirect_path
       conn = get(recycle(conn), redirect_path) # Follow redirection
@@ -29,7 +29,7 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
     end
 
     test "renders errors when category creation fails with invalid data", %{conn: conn} do
-      conn = post(conn, internal_category_path(conn, :create), category: %{})
+      conn = post(conn, Routes.internal_category_path(conn, :create), category: %{})
       assert html_response(conn, 200) =~ "New Category"
     end
   end
@@ -53,9 +53,9 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
 
   defp verify_all_routes(conn, assertion_fun) do
     Enum.each([
-      get(conn, internal_category_path(conn, :index)),
-      get(conn, internal_category_path(conn, :new)),
-      post(conn, internal_category_path(conn, :create), %{category: %{}}),
+      get(conn, Routes.internal_category_path(conn, :index)),
+      get(conn, Routes.internal_category_path(conn, :new)),
+      post(conn, Routes.internal_category_path(conn, :create), %{category: %{}}),
     ], fn conn ->
       assertion_fun.(conn)
     end)

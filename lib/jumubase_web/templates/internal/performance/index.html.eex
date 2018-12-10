@@ -9,7 +9,7 @@
 <%= render "_filter_form.html",
   conn: @conn,
   changeset: @filter_changeset,
-  path: internal_contest_performance_path(@conn, :index, @contest),
+  path: Routes.internal_contest_performance_path(@conn, :index, @contest),
   genre_options: genre_filter_options(@contest),
   cc_options: cc_filter_options(@contest),
   ag_options: ag_filter_options(),
@@ -31,7 +31,7 @@
       <tr>
         <td>
           <%= link category_name(performance),
-            to: internal_contest_performance_path(@conn, :show, @contest, performance)
+            to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
             %>
         </td>
         <td>
@@ -39,10 +39,10 @@
         </td>
         <td class="text-right">
           <%= edit_icon_link(
-            internal_contest_performance_path(@conn, :edit, @contest, performance)
+            Routes.internal_contest_performance_path(@conn, :edit, @contest, performance)
             ) %>
           <%= delete_icon_link(
-            internal_contest_performance_path(@conn, :delete, @contest, performance),
+            Routes.internal_contest_performance_path(@conn, :delete, @contest, performance),
             gettext("Do you really want to delete this performance?")
             ) %>
         </td>

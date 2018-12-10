@@ -31,7 +31,7 @@ defmodule JumubaseWeb.PerformanceController do
 
         conn
         |> put_flash(:success, registration_success_message(edit_code))
-        |> redirect(to: page_path(conn, :home))
+        |> redirect(to: Routes.page_path(conn, :home))
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, changeset)
@@ -57,7 +57,7 @@ defmodule JumubaseWeb.PerformanceController do
       {:ok, _} ->
         conn
         |> put_flash(:success, gettext("Your changes to the registration were saved."))
-        |> redirect(to: page_path(conn, :home))
+        |> redirect(to: Routes.page_path(conn, :home))
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, changeset)

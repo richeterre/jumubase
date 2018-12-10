@@ -7,7 +7,7 @@ defmodule JumubaseWeb.Internal.ContestController do
   alias JumubaseWeb.Internal.Permit
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
+  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &Routes.internal_contest_path/2, action: :index
 
   plug :user_check when action in [:index]
   plug :contest_user_check when action in [:show]
@@ -48,7 +48,7 @@ defmodule JumubaseWeb.Internal.ContestController do
       {:ok, contest} ->
         conn
         |> put_flash(:info, gettext("The contest %{name} was updated.", name: name(contest)))
-        |> redirect(to: internal_contest_path(conn, :index))
+        |> redirect(to: Routes.internal_contest_path(conn, :index))
 
       {:error, %Changeset{} = changeset} ->
         render_edit_form(conn, contest, changeset)
@@ -58,8 +58,8 @@ defmodule JumubaseWeb.Internal.ContestController do
   # Private helpers
 
   defp render_edit_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
-    contest_path = internal_contest_path(conn, :show, contest)
-    edit_path = internal_contest_path(conn, :edit, contest)
+    contest_path = Routes.internal_contest_path(conn, :show, contest)
+    edit_path = Routes.internal_contest_path(conn, :edit, contest)
     conn
     |> add_breadcrumb(name: name_with_flag(contest), path: contest_path)
     |> add_breadcrumb(icon: "pencil", path: edit_path)

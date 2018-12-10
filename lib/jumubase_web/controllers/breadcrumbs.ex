@@ -1,7 +1,7 @@
 defmodule JumubaseWeb.Breadcrumbs do
   import Jumubase.Gettext
-  import JumubaseWeb.Router.Helpers
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  alias JumubaseWeb.Router.Helpers, as: Routes
   alias Jumubase.Foundation.Contest
 
   @doc """
@@ -21,7 +21,7 @@ defmodule JumubaseWeb.Breadcrumbs do
   Adds a breadcrumb for the internal home (root) path to the hierarchy.
   """
   def add_home_breadcrumb(conn, _opts) do
-    add_breadcrumb(conn, name: nil, icon: "home", path: internal_page_path(conn, :home))
+    add_breadcrumb(conn, name: nil, icon: "home", path: Routes.internal_page_path(conn, :home))
   end
 
   @doc """
@@ -29,7 +29,7 @@ defmodule JumubaseWeb.Breadcrumbs do
   """
   def add_contest_breadcrumb(conn, %Contest{} = contest) do
     add_breadcrumb(conn, name: name_with_flag(contest),
-      path: internal_contest_path(conn, :show, contest))
+      path: Routes.internal_contest_path(conn, :show, contest))
   end
 
   @doc """
@@ -37,7 +37,7 @@ defmodule JumubaseWeb.Breadcrumbs do
   """
   def add_participants_breadcrumb(conn, %Contest{} = contest) do
     add_breadcrumb(conn, name: gettext("Participants"),
-      path: internal_contest_participant_path(conn, :index, contest))
+      path: Routes.internal_contest_participant_path(conn, :index, contest))
   end
 
   @doc """
@@ -45,7 +45,7 @@ defmodule JumubaseWeb.Breadcrumbs do
   """
   def add_performances_breadcrumb(conn, %Contest{} = contest) do
     add_breadcrumb(conn, name: gettext("Performances"),
-      path: internal_contest_performance_path(conn, :index, contest))
+      path: Routes.internal_contest_performance_path(conn, :index, contest))
   end
 
   @doc """
@@ -53,6 +53,6 @@ defmodule JumubaseWeb.Breadcrumbs do
   """
   def add_contest_categories_breadcrumb(conn, %Contest{} = contest) do
     add_breadcrumb(conn, name: gettext("Categories"),
-      path: internal_contest_contest_category_path(conn, :index, contest))
+      path: Routes.internal_contest_contest_category_path(conn, :index, contest))
   end
 end

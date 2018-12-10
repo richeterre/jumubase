@@ -7,7 +7,7 @@ defmodule JumubaseWeb.Internal.UserController do
   alias Jumubase.Foundation
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Users"), path_fun: &internal_user_path/2, action: :index
+  plug :add_breadcrumb, name: gettext("Users"), path_fun: &Routes.internal_user_path/2, action: :index
 
   plug :admin_check
 
@@ -26,7 +26,7 @@ defmodule JumubaseWeb.Internal.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, gettext("The user %{name} was created.", name: full_name(user)))
-        |> redirect(to: internal_user_path(conn, :index))
+        |> redirect(to: Routes.internal_user_path(conn, :index))
 
       {:error, %Changeset{} = changeset} ->
         render_create_form(conn, changeset)
@@ -46,7 +46,7 @@ defmodule JumubaseWeb.Internal.UserController do
       {:ok, user} ->
         conn
         |> put_flash(:info, gettext("The user %{name} was updated.", name: full_name(user)))
-        |> redirect(to: internal_user_path(conn, :index))
+        |> redirect(to: Routes.internal_user_path(conn, :index))
 
       {:error, %Changeset{} = changeset} ->
         render_edit_form(conn, user, changeset)
@@ -59,20 +59,20 @@ defmodule JumubaseWeb.Internal.UserController do
 
     conn
     |> put_flash(:info, gettext("The user %{name} was deleted.", name: full_name(user)))
-    |> redirect(to: internal_user_path(conn, :index))
+    |> redirect(to: Routes.internal_user_path(conn, :index))
   end
 
   # Private helpers
 
   defp render_create_form(conn, %Changeset{} = changeset) do
     conn
-    |> add_breadcrumb(icon: "plus", path: internal_user_path(conn, :new))
+    |> add_breadcrumb(icon: "plus", path: Routes.internal_user_path(conn, :new))
     |> prepare_for_form(changeset)
     |> render("new.html")
   end
 
   defp render_edit_form(conn, %User{} = user, %Changeset{} = changeset) do
-    edit_path = internal_user_path(conn, :edit, user)
+    edit_path = Routes.internal_user_path(conn, :edit, user)
     conn
     |> add_breadcrumb(name: full_name(user), path: edit_path)
     |> add_breadcrumb(icon: "pencil", path: edit_path)

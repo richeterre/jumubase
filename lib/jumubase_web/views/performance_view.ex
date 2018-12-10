@@ -21,7 +21,7 @@ defmodule JumubaseWeb.PerformanceView do
   Returns the path to the contest's registration form, or nil if no contest is given.
   """
   def registration_path(conn, %Contest{} = c) do
-    performance_path(conn, :new, c)
+    Routes.performance_path(conn, :new, c)
   end
   def registration_path(_conn, nil), do: nil
 

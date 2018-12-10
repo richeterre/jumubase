@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col-sm-5 col-md-4">
-    <%= form_for @conn, session_path(@conn, :create), [as: :session], fn f -> %>
+    <%= form_for @conn, Routes.session_path(@conn, :create), [as: :session], fn f -> %>
 
       <div class="form-group">
         <%= label f, :email, gettext("Email"), class: "control-label" %>
@@ -17,7 +17,7 @@
         <span>
           <%= label f, :password, gettext("Password"), class: "control-label" %>
           <%= link gettext("Forgot password?"),
-            to: password_reset_path(@conn, :new), class: "pull-right"
+            to: Routes.password_reset_path(@conn, :new), class: "pull-right"
             %>
         </span>
         <%= password_input f, :password, class: "form-control" %>

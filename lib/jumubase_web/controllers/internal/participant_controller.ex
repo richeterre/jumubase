@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   alias Jumubase.Showtime.Participant
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &internal_contest_path/2, action: :index
+  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &Routes.internal_contest_path/2, action: :index
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -39,7 +39,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   def add_participant_breadcrumb(conn, %Contest{} = contest, %Participant{} = participant) do
     add_breadcrumb(conn,
       name: full_name(participant),
-      path: internal_contest_participant_path(conn, :show, contest, participant)
+      path: Routes.internal_contest_participant_path(conn, :show, contest, participant)
     )
   end
 end

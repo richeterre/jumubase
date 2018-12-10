@@ -41,7 +41,7 @@
     </p>
 
     <%= link gettext("Edit your registration"),
-      to: page_path(@conn, :edit_registration),
+      to: Routes.page_path(@conn, :edit_registration),
       class: "btn btn-default"
       %>
   </div>

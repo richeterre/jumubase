@@ -2,11 +2,11 @@ defmodule JumubaseWeb.Email do
   use Bamboo.Phoenix, view: JumubaseWeb.EmailView
 
   import Jumubase.Gettext
-  import JumubaseWeb.Router.Helpers
   alias Jumubase.Foundation.Category
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Email
+  alias JumubaseWeb.Router.Helpers, as: Routes
 
   def contact_message(%{name: name, email: email, message: message}) do
     contact_email = Application.get_env(:jumubase, Email)[:contact_email]
@@ -41,7 +41,7 @@ defmodule JumubaseWeb.Email do
       |> assign(:genre, category.genre)
       |> assign(:category_name, category.name)
       |> assign(:edit_code, edit_code)
-      |> assign(:edit_url, page_url(JumubaseWeb.Endpoint, :edit_registration))
+      |> assign(:edit_url, Routes.page_url(JumubaseWeb.Endpoint, :edit_registration))
 
     case participants do
       [participant] ->

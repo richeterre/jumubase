@@ -41,7 +41,7 @@
         <%= render "_appearance_panels.html" %>
       </div>
 
-      <button type="button" class="btn btn-link" v-on:click="addAppearance()">
+      <button type="button" class="btn btn-default" v-on:click="addAppearance()">
         <%= icon_tag("plus") %> <%= gettext("Add participant") %>
       </button>
 
@@ -51,7 +51,7 @@
         <%= render "_piece_panels.html" %>
       </div>
 
-      <button type="button" class="btn btn-link" v-on:click="addPiece()">
+      <button type="button" class="btn btn-default" v-on:click="addPiece()">
         <%= icon_tag("plus") %> <%= gettext("Add piece") %>
       </button>
 

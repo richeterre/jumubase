@@ -8,7 +8,7 @@
   <% end %>
 angemeldet.</p>
 
-<p>Mit dem Änderungscode <strong><%= @edit_code %></strong> könnt ihr eure Anmeldung unter folgendem Link ändern:</p>
+<p>Mit dem Änderungscode <strong><%= @edit_code %></strong> könnt ihr eure Anmeldung noch bis zum Anmeldeschluss hier ändern:</p>
 
 <p><%= link @edit_url, to: @edit_url %></p>
 

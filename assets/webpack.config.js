@@ -5,6 +5,7 @@ const webpack = require('webpack')
 module.exports = {
   entry: {
     app: ['./js/app.js', './css/app.scss'],
+    performanceFilter: './js/views/performanceFilter.js',
     registration: './js/views/registration.js',
   },
 

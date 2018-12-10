@@ -44,6 +44,9 @@ span.glyphicon {
   vertical-align: top;
 }
 
+/* Tweak vertical alignment of badges */
+span.badge { vertical-align: baseline; }
+
 /* Style mini-instructions inside form labels */
 form label > small { font-weight: normal; }
 
@@ -63,7 +66,28 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 .panel-title.pull-left { line-height: 1.4em; }
 
 /* Add bottom margin to map images for responsive stacking */
-.map-image { margin-bottom: $line-height-computed }
+.map-image { margin-bottom: $line-height-computed; }
+
+.filter-form {
+  margin-bottom: $line-height-computed;
+
+  .form-section{
+    span.filter-count { vertical-align: middle; }
+
+    &:last-of-type { margin-top: 0.5 * $line-height-computed; }
+  }
+
+  @media (min-width: $screen-sm-min) {
+    .form-section {
+      display: inline-block;
+
+      &:last-of-type { margin: 0 0 0 1.5em; }
+    }
+  }
+}
 
 /* Enable Vue.js cloaking (hiding element before Vue is loaded) */
 [v-cloak] { display: none; }
+
+/* Hide certain form fields to fool and detect spambots */
+#trap { display: none; }

@@ -76,6 +76,17 @@ defmodule Jumubase.Foundation do
     Repo.get!(Contest, id) |> Repo.preload(:host)
   end
 
+  @doc """
+  Returns the Kimu contest whose season and host matches the given RW contest,
+  or nil if no such Kimu contest exists or the given contest is not a RW.
+  """
+  def get_matching_kimu_contest(%Contest{round: 1} = c) do
+    Contest
+    |> where(host_id: ^c.host_id, season: ^c.season, round: 0)
+    |> Repo.one
+  end
+  def get_matching_kimu_contest(%Contest{}), do: nil
+
   def update_contest(%Contest{} = contest, attrs) do
     contest
     |> Contest.changeset(attrs)

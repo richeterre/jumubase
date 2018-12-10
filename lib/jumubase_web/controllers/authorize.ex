@@ -2,6 +2,7 @@ defmodule JumubaseWeb.Authorize do
   import Plug.Conn
   import Phoenix.Controller
   import Jumubase.Gettext
+  import Jumubase.Foundation.Contest, only: [deadline_passed?: 2]
   import JumubaseWeb.Router.Helpers
   alias Plug.Conn
   alias Jumubase.Foundation
@@ -61,6 +62,16 @@ defmodule JumubaseWeb.Authorize do
     authorize_contest(conn, user, id, fn {:ok, _} -> conn end)
   end
 
+  # Action override to check contest deadline before passing it to all actions
+  def contest_deadline_check_action(
+    %Conn{params: %{"contest_id" => id} = params} = conn,
+    module
+  ) do
+    check_contest_deadline(conn, id, fn {:ok, contest} ->
+      apply(module, action_name(conn), [conn, params, contest])
+    end)
+  end
+
   # Action override to authorize contest access before passing it to all actions
   def contest_user_check_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
     need_login(conn)
@@ -94,6 +105,10 @@ defmodule JumubaseWeb.Authorize do
     |> success(dgettext("auth", "You are now logged in."), get_session(conn, :request_path) || path)
   end
 
+  def unauthorized(conn, path) do
+    error(conn, dgettext("auth", "You are not authorized to view this page."), path)
+  end
+
   # Private helpers
 
   # Checks whether the user has one of the roles given in opts.
@@ -104,6 +119,16 @@ defmodule JumubaseWeb.Authorize do
     if opts[:roles] && current_user.role in opts[:roles],
       do: conn,
       else: unauthorized(conn, internal_page_path(conn, :home))
+  end
+
+  defp check_contest_deadline(conn, id, success_fun) do
+    contest = Foundation.get_contest!(id)
+    if deadline_passed?(contest, Timex.today) do
+      path = page_path(conn, :registration)
+      error(conn, gettext("The registration deadline for this contest has passed. Please contact us if you need assistance."), path)
+    else
+      success_fun.({:ok, contest})
+    end
   end
 
   # Checks whether the user may access the contest with given id,
@@ -121,9 +146,5 @@ defmodule JumubaseWeb.Authorize do
     conn
     |> put_session(:request_path, current_path(conn))
     |> error(dgettext("auth", "You need to log in to view this page."), session_path(conn, :new))
-  end
-
-  def unauthorized(conn, path) do
-    error(conn, dgettext("auth", "You are not authorized to view this page."), path)
   end
 end

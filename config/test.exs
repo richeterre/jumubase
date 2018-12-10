@@ -38,4 +38,5 @@ config :jumubase, Jumubase.Mailer,
 
 # Configure test email
 config :jumubase, JumubaseWeb.Email,
-  contact_email: "test@localhost"
+  contact_email: "contact@localhost",
+  admin_email: "admin@localhost"

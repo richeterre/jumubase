@@ -3,7 +3,8 @@ defmodule JumubaseWeb.PerformanceView do
   import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   alias Jumubase.JumuParams
-  alias Jumubase.Foundation.AgeGroups
+  alias Jumubase.Foundation
+  alias Jumubase.Foundation.{AgeGroups, Contest}
 
   @doc """
   Renders JS that powers the registration form.
@@ -16,6 +17,24 @@ defmodule JumubaseWeb.PerformanceView do
     render_registration_script(assigns)
   end
 
+  @doc """
+  Returns the path to the contest's registration form, or nil if no contest is given.
+  """
+  def registration_path(conn, %Contest{} = c) do
+    performance_path(conn, :new, c)
+  end
+  def registration_path(_conn, nil), do: nil
+
+  @doc """
+  Returns text that guides the user to a Kimu registration form with the given path.
+  """
+  def kimu_link(path) do
+    gettext("for Kimu, there’s a %{form_link}",
+      form_link: safe_to_string(link gettext("separate form"), to: path)
+    )
+    |> raw
+  end
+
   # Private helpers
 
   defp render_registration_script(assigns) do
@@ -23,7 +42,6 @@ defmodule JumubaseWeb.PerformanceView do
       conn: conn,
       contest: contest,
       changeset: changeset,
-      contest_category_options: cc_options,
     } = assigns
 
     json = render_html_safe_json(
@@ -31,7 +49,7 @@ defmodule JumubaseWeb.PerformanceView do
         changeset: changeset |> remove_obsolete_associations,
         params: conn.params["performance"],
         contest_category_options: (
-          for {name, id, type, genre} <- cc_options do
+          for {name, id, type, genre} <- cc_options(contest) do
             %{id: id, name: name, type: type, genre: genre}
           end
         ),
@@ -67,6 +85,12 @@ defmodule JumubaseWeb.PerformanceView do
 
   defp exclude_obsolete(changesets) do
     Enum.filter(changesets, &(&1.action in [:insert, :update]))
+  end
+
+  defp cc_options(%Contest{} = contest) do
+    Foundation.load_contest_categories(contest)
+    |> Map.get(:contest_categories)
+    |> Enum.map(&{&1.category.name, &1.id, &1.category.type, &1.category.genre})
   end
 
   defp birthdate_year_options(season) do

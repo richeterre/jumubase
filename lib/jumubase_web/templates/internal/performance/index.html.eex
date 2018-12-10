@@ -6,14 +6,24 @@
 
 <hr>
 
+<%= render "_filter_form.html",
+  conn: @conn,
+  changeset: @filter_changeset,
+  path: internal_contest_performance_path(@conn, :index, @contest),
+  genre_options: genre_filter_options(@contest),
+  cc_options: cc_filter_options(@contest),
+  ag_options: ag_filter_options(),
+  count: length(@performances),
+  filter_active: @filter_active
+  %>
+
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
       <tr>
         <th><%= gettext("Category") %></th>
-        <th><%= gettext("Age group") %></th>
         <th><%= gettext("Participants") %></th>
-        <th><%= gettext("Edit code") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -24,11 +34,18 @@
             to: internal_contest_performance_path(@conn, :show, @contest, performance)
             %>
         </td>
-        <td><%= badge(performance.age_group) %></td>
         <td>
           <%= render "_list_performance.html", performance: performance %>
         </td>
-        <td><code><%= performance.edit_code %></code></td>
+        <td class="text-right">
+          <%= edit_icon_link(
+            internal_contest_performance_path(@conn, :edit, @contest, performance)
+            ) %>
+          <%= delete_icon_link(
+            internal_contest_performance_path(@conn, :delete, @contest, performance),
+            gettext("Do you really want to delete this performance?")
+            ) %>
+        </td>
       </tr>
       <% end %>
     </tbody>

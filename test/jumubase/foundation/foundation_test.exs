@@ -232,6 +232,36 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_matching_kimu_contest/1" do
+    setup do
+      [host: insert(:host), season: 56]
+    end
+
+    test "returns a Kimu contest with the same season and host as a given RW contest", %{host: h, season: s} do
+      kimu = insert(:contest, host: h, season: s, round: 0)
+      rw = insert(:contest, host: h, season: s, round: 1)
+
+      result = Foundation.get_matching_kimu_contest(rw)
+      assert result.id == kimu.id
+    end
+
+    test "returns nil if the given contest is not an RW contest", %{host: h, season: s} do
+      insert(:contest, host: h, season: s, round: 0)
+      lw = insert(:contest, host: h, season: s, round: 2)
+
+      assert Foundation.get_matching_kimu_contest(lw) == nil
+    end
+
+    test "returns nil if no matching Kimu contest exists", %{host: h, season: s} do
+      insert(:contest, host: build(:host), season: s, round: 0) # Wrong host
+      insert(:contest, host: h, season: s + 1, round: 0) # Wrong season
+      insert(:contest, host: h, season: s, round: 2) # Wrong round
+      rw = insert(:contest, host: h, season: s, round: 1)
+
+      assert Foundation.get_matching_kimu_contest(rw) == nil
+    end
+  end
+
   describe "update_contest/1" do
     test "updates a contest with valid data" do
       contest = insert(:contest, season: 56)

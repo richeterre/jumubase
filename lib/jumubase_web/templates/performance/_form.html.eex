@@ -7,6 +7,11 @@
         <div class="form-group col-md-5">
           <label for="performance_contest_category_id">
             <%= gettext("Category") %>
+            <%= if kimu_path = assigns[:kimu_path] do %>
+              <small class="text-muted">
+                (<%= kimu_link(kimu_path) %>)
+              </small>
+            <% end %>
           </label>
           <select
             id="performance_contest_category_id"
@@ -36,7 +41,7 @@
         <%= render "_appearance_panels.html" %>
       </div>
 
-      <button type="button" class="btn btn-link" v-on:click="addAppearance()">
+      <button type="button" class="btn btn-default" v-on:click="addAppearance()">
         <%= icon_tag("plus") %> <%= gettext("Add participant") %>
       </button>
 
@@ -46,7 +51,7 @@
         <%= render "_piece_panels.html" %>
       </div>
 
-      <button type="button" class="btn btn-link" v-on:click="addPiece()">
+      <button type="button" class="btn btn-default" v-on:click="addPiece()">
         <%= icon_tag("plus") %> <%= gettext("Add piece") %>
       </button>
 

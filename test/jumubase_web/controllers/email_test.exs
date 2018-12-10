@@ -6,8 +6,11 @@ defmodule JumubaseWeb.EmailTest do
     test "composes an email from the given contact params" do
       email = Email.contact_message(%{name: "A", email: "a@b.c", message: "Lorem ipsum"})
 
+      config = Application.get_env(:jumubase, Email)
+
       assert email.from == {"A", "a@b.c"}
-      assert email.to == "test@localhost"
+      assert email.to == config[:contact_email]
+      assert email.bcc == config[:admin_email]
       assert email.subject == "New message via jumu-nordost.eu"
       assert email.text_body == "Lorem ipsum"
     end

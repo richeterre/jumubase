@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:33
+#: lib/jumubase_web/templates/internal/user/index.html.eex:32
 msgid "Add User"
 msgstr ""
 
@@ -28,7 +28,7 @@ msgid "Create User"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/user/index.html.eex:24
+#: lib/jumubase_web/templates/internal/user/index.html.eex:23
 msgid "Do you really want to delete this user?"
 msgstr ""
 
@@ -42,6 +42,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:8
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:12
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:19
 #: lib/jumubase_web/templates/password_reset/new.html.eex:7
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:186
 #: lib/jumubase_web/templates/session/new.html.eex:12
@@ -92,15 +93,16 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
-#: lib/jumubase_web/templates/performance/_form.html.eex:17
+#: lib/jumubase_web/templates/performance/_form.html.eex:22
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:120
 msgid "Please choose"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:67
+#: lib/jumubase_web/templates/internal/performance/edit.html.eex:13
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
-#: lib/jumubase_web/templates/performance/edit.html.eex:11
+#: lib/jumubase_web/templates/performance/edit.html.eex:13
 msgid "Save Changes"
 msgstr ""
 
@@ -213,8 +215,8 @@ msgid "Time zone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:49
-#: lib/jumubase_web/views/performance_view.ex:94
+#: lib/jumubase_web/views/performance_view.ex:67
+#: lib/jumubase_web/views/performance_view.ex:118
 msgid "Accompanist"
 msgstr ""
 
@@ -226,14 +228,14 @@ msgid "Birthdate"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:13
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:48
-#: lib/jumubase_web/views/performance_view.ex:95
+#: lib/jumubase_web/views/performance_view.ex:66
+#: lib/jumubase_web/views/performance_view.ex:119
 msgid "Ensemblist"
 msgstr ""
 
@@ -259,7 +261,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:15
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:25
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr ""
@@ -271,7 +273,7 @@ msgid "Phone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:43
+#: lib/jumubase_web/templates/performance/_form.html.eex:48
 msgid "Pieces"
 msgstr ""
 
@@ -293,24 +295,19 @@ msgid "Role"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:47
-#: lib/jumubase_web/views/performance_view.ex:93
+#: lib/jumubase_web/views/performance_view.ex:65
+#: lib/jumubase_web/views/performance_view.ex:117
 msgid "Soloist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:40
+#: lib/jumubase_web/templates/performance/_form.html.eex:45
 msgid "Add participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:50
+#: lib/jumubase_web/templates/performance/_form.html.eex:55
 msgid "Add piece"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:14
-msgid "Age group"
 msgstr ""
 
 #, elixir-format
@@ -327,7 +324,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:8
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:11
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
 #: lib/jumubase_web/templates/internal/page/home.html.eex:37
@@ -340,12 +337,13 @@ msgid "Dates"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:59
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:86
 msgid "Day"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:49
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
 #: lib/jumubase_web/views/internal/contest_view.ex:33
 msgid "Deadline"
@@ -362,7 +360,6 @@ msgid "Duration"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:16
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:11
 #: lib/jumubase_web/templates/page/edit_registration.html.eex:17
 msgid "Edit code"
@@ -380,6 +377,7 @@ msgid "Hello %{name},"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:58
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:100
 msgid "Month"
 msgstr ""
@@ -401,7 +399,7 @@ msgid "Programme"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/new.html.eex:13
+#: lib/jumubase_web/templates/performance/new.html.eex:14
 msgid "Submit registration"
 msgstr ""
 
@@ -416,6 +414,7 @@ msgid "Total duration: %{d}"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:114
 msgid "Year"
 msgstr ""
@@ -478,12 +477,12 @@ msgid "Password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:44
+#: lib/jumubase_web/views/performance_view.ex:62
 msgid "Participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:45
+#: lib/jumubase_web/views/performance_view.ex:63
 msgid "Piece"
 msgstr ""
 
@@ -514,7 +513,7 @@ msgid "If you've lost your edit code, ask your local Jumu organizer to retrieve 
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:31
+#: lib/jumubase_web/controllers/page_controller.ex:32
 msgid "Please enter an edit code."
 msgstr ""
 
@@ -524,7 +523,7 @@ msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:70
+#: lib/jumubase_web/controllers/page_controller.ex:73
 msgid "We could not find a registration for this edit code."
 msgstr ""
 
@@ -569,7 +568,7 @@ msgid "Classical"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:49
+#: lib/jumubase_web/views/internal/category_view.ex:51
 msgid "Ensemble"
 msgstr ""
 
@@ -597,12 +596,12 @@ msgid "Short name"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:48
+#: lib/jumubase_web/views/internal/category_view.ex:50
 msgid "Solo"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:50
+#: lib/jumubase_web/views/internal/category_view.ex:52
 msgid "Solo/Ensemble"
 msgstr ""
 
@@ -675,7 +674,7 @@ msgid "Set password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:57
+#: lib/jumubase_web/controllers/performance_controller.ex:59
 msgid "Your changes to the registration were saved."
 msgstr ""
 
@@ -691,14 +690,14 @@ msgid "and"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:71
+#: lib/jumubase_web/controllers/email.ex:76
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\""
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\""
 msgstr[0] "Your Jumu registration for category \"%{name}\""
 msgstr[1] "Your Jumu registration for category \"%{name}\""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:64
+#: lib/jumubase_web/controllers/email.ex:69
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] "Your Kimu registration"
@@ -726,17 +725,17 @@ msgid "Address"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:20
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:26
 msgid "Message"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:17
+#: lib/jumubase_web/controllers/email.ex:19
 msgid "New message via jumu-nordost.eu"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:28
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:34
 msgid "Send message"
 msgstr ""
 
@@ -756,12 +755,12 @@ msgid "This form is for contacting the international committee of the region \"N
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:23
+#: lib/jumubase_web/controllers/contact_controller.ex:15
 msgid "Please fill in all fields and try again!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/contact_controller.ex:19
+#: lib/jumubase_web/controllers/contact_controller.ex:28
 msgid "Your message has been sent!"
 msgstr ""
 
@@ -792,12 +791,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:59
-#: lib/jumubase_web/templates/performance/_form.html.eex:58
+#: lib/jumubase_web/templates/performance/_form.html.eex:63
 msgid "privacy policy"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:57
+#: lib/jumubase_web/templates/performance/_form.html.eex:62
 msgid "The data you enter will be handled as described in the"
 msgstr ""
 
@@ -837,12 +836,12 @@ msgid "To find out how we process your data, please see our"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:90
+#: lib/jumubase_web/controllers/performance_controller.ex:94
 msgid "We received your registration!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:91
+#: lib/jumubase_web/controllers/performance_controller.ex:95
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr ""
 
@@ -857,12 +856,12 @@ msgid "Show categories"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:28
+#: lib/jumubase_web/templates/performance/_form.html.eex:33
 msgid "Who takes part?"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:43
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:49
 msgid "End date"
 msgstr ""
 
@@ -882,7 +881,7 @@ msgid "Season"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:43
 msgid "Start date"
 msgstr ""
 
@@ -912,7 +911,7 @@ msgid "Show participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:32
+#: lib/jumubase_web/templates/performance/_form.html.eex:37
 msgid "Non-competing accompanists don’t need to register."
 msgstr ""
 
@@ -924,4 +923,86 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_form_error_summary.html.eex:7
 msgid "Please fix these errors and try again:"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:55
+msgid "Certificate date"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/page_controller.ex:75
+msgid "The edit deadline for this contest has passed. Please contact us if you need assistance."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/authorize.ex:128
+msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:46
+msgid "Do you really want to delete this performance?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:72
+msgid "The performance with edit code %{edit_code} was deleted."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/edit.html.eex:2
+msgid "Edit performance"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:55
+msgid "The performance with edit code %{edit_code} was updated."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/contact_controller.ex:20
+msgid "Please fill in only fields that are visible in the form."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:87
+msgid "%{count} performance"
+msgid_plural "%{count} performances"
+msgstr[0] ""
+msgstr[1] ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:92
+msgid "Filter active"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:12
+msgid "Show all"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:5
+msgid "All AGs"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:4
+msgid "All categories"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:3
+msgid "All genres"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/performance_view.ex:33
+msgid "separate form"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/performance_view.ex:32
+msgid "for Kimu, there’s a %{form_link}"
 msgstr ""

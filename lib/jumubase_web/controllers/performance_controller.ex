@@ -2,6 +2,7 @@ defmodule JumubaseWeb.PerformanceController do
   use JumubaseWeb, :controller
   alias Ecto.Changeset
   alias Jumubase.Mailer
+  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -17,6 +18,7 @@ defmodule JumubaseWeb.PerformanceController do
 
     conn
     |> prepare_for_form(contest, changeset)
+    |> assign_matching_kimu_contest(contest)
     |> render("new.html")
   end
 
@@ -33,6 +35,7 @@ defmodule JumubaseWeb.PerformanceController do
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, changeset)
+        |> assign_matching_kimu_contest(contest)
         |> render("new.html")
     end
   end
@@ -80,6 +83,11 @@ defmodule JumubaseWeb.PerformanceController do
     conn
     |> assign(:contest, contest)
     |> assign(:changeset, changeset)
+  end
+
+  defp assign_matching_kimu_contest(conn, %Contest{} = c) do
+    conn
+    |> assign(:kimu_contest, Foundation.get_matching_kimu_contest(c))
   end
 
   defp registration_success_message(edit_code) do

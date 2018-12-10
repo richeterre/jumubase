@@ -93,7 +93,7 @@ msgstr "Neuer Benutzer"
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
-#: lib/jumubase_web/templates/performance/_form.html.eex:17
+#: lib/jumubase_web/templates/performance/_form.html.eex:22
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:120
 msgid "Please choose"
 msgstr "Bitte wählen"
@@ -215,8 +215,8 @@ msgid "Time zone"
 msgstr "Zeitzone"
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:49
-#: lib/jumubase_web/views/performance_view.ex:100
+#: lib/jumubase_web/views/performance_view.ex:67
+#: lib/jumubase_web/views/performance_view.ex:118
 msgid "Accompanist"
 msgstr "Begleiter"
 
@@ -234,8 +234,8 @@ msgid "Category"
 msgstr "Kategorie"
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:48
-#: lib/jumubase_web/views/performance_view.ex:101
+#: lib/jumubase_web/views/performance_view.ex:66
+#: lib/jumubase_web/views/performance_view.ex:119
 msgid "Ensemblist"
 msgstr "Ensemblepartner"
 
@@ -261,7 +261,7 @@ msgstr "Nachname"
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:25
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr "Teilnehmer"
@@ -273,7 +273,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:43
+#: lib/jumubase_web/templates/performance/_form.html.eex:48
 msgid "Pieces"
 msgstr "Vorspielprogramm"
 
@@ -295,25 +295,20 @@ msgid "Role"
 msgstr "Rolle"
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:47
-#: lib/jumubase_web/views/performance_view.ex:99
+#: lib/jumubase_web/views/performance_view.ex:65
+#: lib/jumubase_web/views/performance_view.ex:117
 msgid "Soloist"
 msgstr "Solist"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:40
+#: lib/jumubase_web/templates/performance/_form.html.eex:45
 msgid "Add participant"
 msgstr "Teilnehmer hinzufügen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:50
+#: lib/jumubase_web/templates/performance/_form.html.eex:55
 msgid "Add piece"
 msgstr "Stück hinzufügen"
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:25
-msgid "Age group"
-msgstr "Altersgruppe"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:69
@@ -365,7 +360,6 @@ msgid "Duration"
 msgstr "Dauer"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:27
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:11
 #: lib/jumubase_web/templates/page/edit_registration.html.eex:17
 msgid "Edit code"
@@ -405,7 +399,7 @@ msgid "Programme"
 msgstr "Vorspielprogramm"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/new.html.eex:13
+#: lib/jumubase_web/templates/performance/new.html.eex:14
 msgid "Submit registration"
 msgstr "Anmeldung absenden"
 
@@ -483,12 +477,12 @@ msgid "Password"
 msgstr "Passwort"
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:44
+#: lib/jumubase_web/views/performance_view.ex:62
 msgid "Participant"
 msgstr "Teilnehmer"
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:45
+#: lib/jumubase_web/views/performance_view.ex:63
 msgid "Piece"
 msgstr "Stück"
 
@@ -680,7 +674,7 @@ msgid "Set password"
 msgstr "Passwort setzen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:56
+#: lib/jumubase_web/controllers/performance_controller.ex:59
 msgid "Your changes to the registration were saved."
 msgstr "Deine Änderungen an der Anmeldung wurden gespeichert."
 
@@ -797,12 +791,12 @@ msgstr "Vorspiele anzeigen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:59
-#: lib/jumubase_web/templates/performance/_form.html.eex:58
+#: lib/jumubase_web/templates/performance/_form.html.eex:63
 msgid "privacy policy"
 msgstr "Datenschutzerklärung"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:57
+#: lib/jumubase_web/templates/performance/_form.html.eex:62
 msgid "The data you enter will be handled as described in the"
 msgstr "Wie wir deine Angaben verarbeiten, steht in der"
 
@@ -842,12 +836,12 @@ msgid "To find out how we process your data, please see our"
 msgstr "Wie wir deine Daten verarbeiten, steht in unserer"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:86
+#: lib/jumubase_web/controllers/performance_controller.ex:94
 msgid "We received your registration!"
 msgstr "Wir haben deine Anmeldung erhalten!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:87
+#: lib/jumubase_web/controllers/performance_controller.ex:95
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr "Mit dem Änderungscode %{edit_code} kannst du sie später noch bearbeiten."
 
@@ -862,7 +856,7 @@ msgid "Show categories"
 msgstr "Kategorien anzeigen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:28
+#: lib/jumubase_web/templates/performance/_form.html.eex:33
 msgid "Who takes part?"
 msgstr "Wer nimmt teil?"
 
@@ -917,7 +911,7 @@ msgid "Show participants"
 msgstr "Teilnehmer anzeigen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/_form.html.eex:32
+#: lib/jumubase_web/templates/performance/_form.html.eex:37
 msgid "Non-competing accompanists don’t need to register."
 msgstr "Begleiter ohne Wertung müssen nicht angemeldet werden."
 
@@ -947,7 +941,7 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:50
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:46
 msgid "Do you really want to delete this performance?"
 msgstr "Möchtest du dieses Vorspiel wirklich löschen?"
 
@@ -1002,3 +996,13 @@ msgstr "Alle Kategorien"
 #: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:3
 msgid "All genres"
 msgstr "Alle Genres"
+
+#, elixir-format
+#: lib/jumubase_web/views/performance_view.ex:33
+msgid "separate form"
+msgstr "eigenes Formular"
+
+#, elixir-format
+#: lib/jumubase_web/views/performance_view.ex:32
+msgid "for Kimu, there’s a %{form_link}"
+msgstr "für Kimu gibt es ein %{form_link}"

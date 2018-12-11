@@ -1,6 +1,6 @@
 <div class="row">
   <div id="registration-form" v-cloak class="col-lg-9">
-    <%= form_for @changeset, @path, fn _ -> %>
+    <%= form_for @changeset, @path, [novalidate: true], fn _ -> %>
       <%= render "_form_error_summary.html" %>
 
       <div class="row">

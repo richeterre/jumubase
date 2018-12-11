@@ -25,7 +25,7 @@ msgid "must be accepted"
 msgstr ""
 
 msgid "has invalid format"
-msgstr ""
+msgstr "hat nicht das richtige Format"
 
 msgid "has an invalid entry"
 msgstr ""

@@ -1,0 +1,7 @@
+<h2>
+  <%= gettext("Schedule performances") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>

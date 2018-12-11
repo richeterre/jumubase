@@ -836,12 +836,12 @@ msgid "To find out how we process your data, please see our"
 msgstr "Wie wir deine Daten verarbeiten, steht in unserer"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:94
+#: lib/jumubase_web/controllers/performance_controller.ex:111
 msgid "We received your registration!"
 msgstr "Wir haben deine Anmeldung erhalten!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:95
+#: lib/jumubase_web/controllers/performance_controller.ex:112
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr "Mit dem Änderungscode %{edit_code} kannst du sie später noch bearbeiten."
 
@@ -966,14 +966,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:87
+#: lib/jumubase_web/views/internal/performance_view.ex:91
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:92
+#: lib/jumubase_web/views/internal/performance_view.ex:96
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1006,3 +1006,8 @@ msgstr "eigenes Formular"
 #: lib/jumubase_web/views/performance_view.ex:32
 msgid "for Kimu, there’s a %{form_link}"
 msgstr "für Kimu gibt es ein %{form_link}"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:32
+msgid "Schedule performances"
+msgstr "Vorspiele planen"

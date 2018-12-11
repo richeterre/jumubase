@@ -835,12 +835,12 @@ msgid "To find out how we process your data, please see our"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:94
+#: lib/jumubase_web/controllers/performance_controller.ex:111
 msgid "We received your registration!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:95
+#: lib/jumubase_web/controllers/performance_controller.ex:112
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr ""
 
@@ -965,14 +965,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:87
+#: lib/jumubase_web/views/internal/performance_view.ex:91
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:92
+#: lib/jumubase_web/views/internal/performance_view.ex:96
 msgid "Filter active"
 msgstr ""
 
@@ -1004,4 +1004,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:32
 msgid "for Kimu, there’s a %{form_link}"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:32
+msgid "Schedule performances"
 msgstr ""

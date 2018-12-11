@@ -7,6 +7,7 @@ module.exports = {
     app: ['./js/app.js', './css/app.scss'],
     performanceFilter: './js/views/performanceFilter.js',
     registration: './js/views/registration.js',
+    scheduler: './js/views/scheduler.js',
   },
 
   output: {

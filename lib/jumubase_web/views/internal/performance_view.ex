@@ -22,6 +22,10 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
   end
 
+  def render("scripts.schedule.html", _assigns) do
+    ~E(<script src="/js/scheduler.js"></script>)
+  end
+
   def category_name(%Performance{} = performance) do
     performance.contest_category.category.name
   end

@@ -3,6 +3,7 @@ $font-family-sans-serif: Lato, sans-serif;
 $icon-font-path: "/fonts/"; // use fonts from priv/static/fonts
 
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "_scheduler.scss";
 
 body {
   // Add vertical space around body

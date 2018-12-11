@@ -1,0 +1,30 @@
+.sortable {
+  border: 1px solid #eee;
+  cursor: pointer;
+  list-style-type: none;
+  min-height: 50px;
+  padding: 5px 0 0 0;
+
+  li {
+    background-color: #eee;
+    font-size: 1.2em;
+    height: 40px;
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+  }
+}
+
+.resizable {
+  position: relative;
+
+  .bottom-handle {
+    background-color: #ddd;
+    bottom: 0px;
+    cursor: s-resize;
+    height: 7px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    width: 100%;
+  }
+}

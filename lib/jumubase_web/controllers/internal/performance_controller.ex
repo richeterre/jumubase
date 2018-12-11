@@ -80,7 +80,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     conn
     |> assign(:contest, contest)
     |> add_contest_breadcrumb(contest)
-    |> add_breadcrumb(icon: "time", path: schedule_path)
+    |> add_breadcrumb(name: gettext("Schedule performances"), path: schedule_path)
     |> render("schedule.html")
   end
 

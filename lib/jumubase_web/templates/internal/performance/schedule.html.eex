@@ -10,29 +10,32 @@
   <div class="col-md-3">
     <h4><%= gettext("Unscheduled") %></h4>
 
-    <ul class="sortable">
-      <li>Item 1</li>
-      <li>Item 2</li>
-      <li class="resizable">
-        Pause
-        <div class="ui-resizable-s ui-resizable-handle bottom-handle" />
-      </li>
-      <li>Item 3</li>
-      <li>Item 4</li>
-    </ul>
+    <div class="schedule-column">
+      <div class="schedule-item">Item 1</div>
+      <div class="schedule-item">Item 2</div>
+      <div class="schedule-item">Item 3</div>
+      <div class="schedule-item">Item 4</div>
+    </div>
 
   </div>
 
   <%= for date <- Date.range(@contest.start_date, @contest.end_date) do %>
   <div class="col-md-3">
-    <h4><%= date %></h4>
+    <h4>
+      <%= date %>
+      <button
+        class="btn btn-default btn-xs pull-right add-spacer-button"
+        data-target="schedule-column-<%= date %>">
+        <%= gettext("Insert break") %>
+      </button>
+    </h4>
 
-    <ul class="sortable">
-      <li>Item 1</li>
-      <li>Item 2</li>
-      <li>Item 3</li>
-      <li>Item 4</li>
-    </ul>
+    <div id="schedule-column-<%= date %>" class="schedule-column">
+      <div class="schedule-item">Item 1</div>
+      <div class="schedule-item">Item 2</div>
+      <div class="schedule-item">Item 3</div>
+      <div class="schedule-item">Item 4</div>
+    </div>
   </div>
   <% end %>
 </div>

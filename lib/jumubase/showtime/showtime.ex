@@ -137,6 +137,8 @@ defmodule Jumubase.Showtime do
     Enum.reduce(filter_map, query, fn
       {:stage_date, date}, query ->
         on_date(query, date)
+      {:stage_id, s_id}, query ->
+        on_stage(query, s_id)
       {:genre, genre}, query ->
         with_genre(query, genre)
       {:contest_category_id, cc_id}, query ->
@@ -206,6 +208,10 @@ defmodule Jumubase.Showtime do
 
   defp on_date(query, date) do
     from p in query, where: fragment("?::date", p.stage_time) == ^date
+  end
+
+  defp on_stage(query, stage_id) do
+    from p in query, where: p.stage_id == ^stage_id
   end
 
   defp with_genre(query, genre) do

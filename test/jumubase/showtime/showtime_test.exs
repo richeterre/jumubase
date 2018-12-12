@@ -45,21 +45,25 @@ defmodule Jumubase.ShowtimeTest do
       today = ~N[2019-01-01T23:59:59Z]
       tomorrow = ~N[2019-01-02T00:00:00Z]
 
+      [s1, s2] = insert_list(2, :stage, host: c.host)
+
       filter = %PerformanceFilter{
         stage_date: ~D[2019-01-01],
+        stage_id: s1.id,
         contest_category_id: cc1.id,
         age_group: "III"
       }
 
       # Matching performance
-      p = insert_performance(cc1, age_group: "III", stage_time: today)
+      p = insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today)
 
       # Non-matching performances
-      insert_performance(cc1, age_group: "III", stage_time: nil)
-      insert_performance(cc1, age_group: "III", stage_time: tomorrow)
-      insert_performance(cc1, age_group: "IV", stage_time: today)
-      insert_performance(cc2, age_group: "III", stage_time: today)
-      insert_performance(cc2, age_group: "IV", stage_time: today)
+      insert_performance(cc1, age_group: "III", stage_id: s2.id, stage_time: today)
+      insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: nil)
+      insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: tomorrow)
+      insert_performance(cc1, age_group: "IV", stage_id: s1.id, stage_time: today)
+      insert_performance(cc2, age_group: "III", stage_id: s1.id, stage_time: today)
+      insert_performance(cc2, age_group: "IV", stage_id: s1.id, stage_time: today)
 
       assert_ids_match_unordered Showtime.list_performances(c, filter), [p]
     end

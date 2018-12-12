@@ -77,14 +77,6 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 
     &:last-of-type { margin-top: 0.5 * $line-height-computed; }
   }
-
-  @media (min-width: $screen-sm-min) {
-    .form-section {
-      display: inline-block;
-
-      &:last-of-type { margin: 0 0 0 1.5em; }
-    }
-  }
 }
 
 /* Enable Vue.js cloaking (hiding element before Vue is loaded) */

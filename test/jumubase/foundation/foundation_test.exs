@@ -358,7 +358,6 @@ defmodule Jumubase.FoundationTest do
 
     test "raises an error if the contest category isn't in the given contest", %{contest: c} do
       %{id: id} = insert_contest_category(build(:contest))
-
       assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest_category!(c, id) end
     end
 
@@ -368,6 +367,22 @@ defmodule Jumubase.FoundationTest do
       assert %ContestCategory{
         category: %Category{},
       } = Foundation.get_contest_category!(c, id)
+    end
+  end
+
+  describe "get_stage!/1" do
+    setup do
+      [contest: insert(:contest)]
+    end
+
+    test "returns a contest stage", %{contest: c} do
+      %{id: id} = insert(:stage, host: c.host)
+      assert %Stage{id: ^id} = Foundation.get_stage!(c, id)
+    end
+
+    test "raises an error if the stage isn't owned by the given contest's host", %{contest: c} do
+      %{id: id} = insert(:stage, host: build(:host))
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_stage!(c, id) end
     end
   end
 

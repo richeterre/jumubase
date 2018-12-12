@@ -1,5 +1,5 @@
 <h2>
-  <%= gettext("Schedule performances") %>
+  <%= gettext("Schedule performances") %>: <%= @stage.name %>
   <br>
   <small><%= name_with_flag(@contest) %></small>
 </h2>
@@ -24,7 +24,7 @@
     <h4>
       <%= date %>
       <button
-        class="btn btn-default btn-xs pull-right add-spacer-button"
+        class="btn btn-link btn-xs pull-right add-spacer-button"
         data-target="schedule-column-<%= date %>">
         <%= gettext("Insert break") %>
       </button>

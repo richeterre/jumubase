@@ -8,7 +8,7 @@ defmodule Jumubase.Foundation do
   alias Jumubase.Repo
   alias Jumubase.Utils
   alias Jumubase.Accounts.User
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
 
   ## Hosts
 
@@ -134,6 +134,17 @@ defmodule Jumubase.Foundation do
     |> where([cc], cc.contest_id == ^contest_id)
     |> preload([_], :category)
     |> Repo.get!(id)
+  end
+
+  ## Stages
+
+  def get_stage!(%Contest{id: contest_id}, id) do
+    query = from s in Stage,
+      join: h in assoc(s, :host),
+      join: c in assoc(h, :contests),
+      where: c.id == ^contest_id
+
+    Repo.get!(query, id)
   end
 
   ## Preloading

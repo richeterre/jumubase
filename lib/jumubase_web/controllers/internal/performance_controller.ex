@@ -74,16 +74,6 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
   end
 
-  def schedule(conn, _params, contest) do
-    schedule_path = Routes.internal_contest_performance_path(conn, :schedule, contest)
-
-    conn
-    |> assign(:contest, contest)
-    |> add_contest_breadcrumb(contest)
-    |> add_breadcrumb(name: gettext("Schedule performances"), path: schedule_path)
-    |> render("schedule.html")
-  end
-
   # Private helpers
 
   defp handle_filter(conn, filter, contest) do

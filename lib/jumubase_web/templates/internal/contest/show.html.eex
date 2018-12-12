@@ -30,7 +30,7 @@
         </li>
         <li class="list-group-item">
           <%= icon_link "time", gettext("Schedule performances"),
-            Routes.internal_contest_performance_path(@conn, :schedule, @contest)
+            Routes.internal_contest_stage_path(@conn, :index, @contest)
             %>
         </li>
       </ul>

@@ -58,8 +58,10 @@ defmodule JumubaseWeb.Router do
     resources "/contests", ContestController, only: [:index, :show, :edit, :update] do
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
-      get "/performances/schedule", PerformanceController, :schedule
       resources "/performances", PerformanceController, except: [:new, :create]
+      resources "/stages", StageController, only: [:index] do
+        get "/schedule", StageController, :schedule, as: :schedule
+      end
     end
     resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]

@@ -324,6 +324,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:11
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:7
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
 #: lib/jumubase_web/templates/internal/page/home.html.eex:37
@@ -890,7 +891,7 @@ msgid "Edit Contest"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:50
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:51
 msgid "The contest %{name} was updated."
 msgstr ""
 
@@ -965,14 +966,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:91
+#: lib/jumubase_web/views/internal/performance_view.ex:87
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:96
+#: lib/jumubase_web/views/internal/performance_view.ex:92
 msgid "Filter active"
 msgstr ""
 
@@ -1007,6 +1008,24 @@ msgid "for Kimu, there’s a %{form_link}"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:39
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:32
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:2
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:2
 msgid "Schedule performances"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:29
+msgid "Insert break"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:9
+msgid "Please choose a stage"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:11
+msgid "Unscheduled"
 msgstr ""

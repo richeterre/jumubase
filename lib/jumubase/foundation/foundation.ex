@@ -98,6 +98,13 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
+  Returns the date range on which the contest takes place.
+  """
+  def date_range(%Contest{start_date: start_date, end_date: end_date}) do
+    Date.range(start_date, end_date)
+  end
+
+  @doc """
   Returns the most common deadline within the given contests.
   """
   def general_deadline(contests) do

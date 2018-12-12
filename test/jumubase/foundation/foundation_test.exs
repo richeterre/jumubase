@@ -282,6 +282,15 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "date_range/1" do
+    test "returns the date range on which the contest takes place" do
+      start_date = ~D[2019-01-01]
+      end_date = ~D[2019-01-03]
+      contest = insert(:contest, start_date: start_date, end_date: end_date)
+      assert %Date.Range{first: ^start_date, last: ^end_date} = Foundation.date_range(contest)
+    end
+  end
+
   describe "general_deadline/1" do
     test "returns the deadline most common in the given contests" do
       [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]

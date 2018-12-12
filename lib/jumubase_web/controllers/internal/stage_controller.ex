@@ -24,7 +24,7 @@ defmodule JumubaseWeb.Internal.StageController do
 
   def schedule(conn, %{"stage_id" => stage_id}, contest) do
     stage = Foundation.get_stage!(contest, stage_id)
-    date_range = Date.range(contest.start_date, contest.end_date)
+    date_range = Foundation.date_range(contest)
 
     # Group performances by stage date
     performances = Enum.reduce(

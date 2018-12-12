@@ -31,6 +31,15 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Returns all performances without a stage time from the contest.
+  """
+  def unscheduled_performances(%Contest{id: id}) do
+    performances_query(id)
+    |> where([p], is_nil(p.stage_time))
+    |> Repo.all
+  end
+
+  @doc """
   Gets a single performance from the given contest.
 
   Raises `Ecto.NoResultsError` if the performance isn't found in that contest.

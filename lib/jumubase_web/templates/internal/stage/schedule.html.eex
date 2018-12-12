@@ -15,15 +15,16 @@
     </select>
 
     <div class="schedule-column">
-      <div class="schedule-item">Item 1</div>
-      <div class="schedule-item">Item 2</div>
-      <div class="schedule-item">Item 3</div>
-      <div class="schedule-item">Item 4</div>
+      <%=
+        for p <- @performances[:unscheduled] do
+          render("_schedule_performance.html", performance: p)
+        end
+      %>
     </div>
 
   </div>
 
-  <%= for date <- Date.range(@contest.start_date, @contest.end_date) do %>
+  <%= for date <- @date_range do %>
   <div class="col-md-3">
     <h4><%= format_date(date) %></h4>
 
@@ -35,10 +36,11 @@
     </button>
 
     <div id="schedule-column-<%= date %>" class="schedule-column">
-      <div class="schedule-item">Item 1</div>
-      <div class="schedule-item">Item 2</div>
-      <div class="schedule-item">Item 3</div>
-      <div class="schedule-item">Item 4</div>
+      <%=
+        for p <- @performances[date] do
+          render("_schedule_performance.html", performance: p)
+        end
+      %>
     </div>
   </div>
   <% end %>

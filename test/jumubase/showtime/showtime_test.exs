@@ -69,6 +69,33 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "unscheduled_performances/1" do
+    test "returns all performances without a stage time from the contest", %{contest: c} do
+      # Matching performances
+      [cc1, cc2] = c.contest_categories
+      p1 = insert_performance(cc1, stage_time: nil)
+      p2 = insert_performance(cc2, stage_time: nil)
+
+      # Non-matching performances
+      insert_performance(cc1, stage_time: Timex.now)
+      other_c = insert(:contest)
+      insert_performance(other_c, stage_time: nil)
+
+      assert_ids_match_unordered Showtime.unscheduled_performances(c), [p1, p2]
+    end
+
+    test "preloads the performances' contest categories, categories, appearances and participants", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance))
+
+      assert [%Performance{
+        contest_category: %ContestCategory{category: %Category{}},
+        appearances: [
+          %Appearance{participant: %Participant{}}
+        ]
+      }] = Showtime.unscheduled_performances(c)
+    end
+  end
+
   describe "get_performance!/2" do
     test "gets a performance from the given contest by id", %{contest: c} do
       %{id: id} = insert_performance(c)

@@ -1,0 +1,3 @@
+<div class="schedule-item">
+  <%= @performance.edit_code %>
+</div>

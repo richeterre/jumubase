@@ -10,14 +10,17 @@
   <div class="col-md-3">
     <h4><%= gettext("Unscheduled") %></h4>
 
-    <select class="form-control input-sm">
+    <select id="cc-select" class="form-control input-sm">
       <option value=""><%= gettext("All categories") %></option>
+      <%= for {name, id} <- cc_filter_options(@contest) do %>
+      <option value="<%= id %>"><%= name %></option>
+      <% end %>
     </select>
 
-    <div class="schedule-column">
+    <div id="schedule-column-unscheduled" class="schedule-column">
       <%=
         for p <- @performances[:unscheduled] do
-          render("_schedule_performance.html", performance: p)
+          render("_performance_item.html", performance: p)
         end
       %>
     </div>
@@ -38,7 +41,7 @@
     <div id="schedule-column-<%= date %>" class="schedule-column">
       <%=
         for p <- @performances[date] do
-          render("_schedule_performance.html", performance: p)
+          render("_performance_item.html", performance: p)
         end
       %>
     </div>

@@ -146,6 +146,10 @@ defmodule Jumubase.Foundation do
     Repo.preload(contest, [contest_categories: :category])
   end
 
+  def load_stages(%Contest{} = contest) do
+    Repo.preload(contest, [host: :stages])
+  end
+
   # Private helpers
 
   defp relevant_for_user(contest_query, %User{} = user) do

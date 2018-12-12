@@ -28,6 +28,7 @@ defmodule JumubaseWeb.Internal.ContestController do
     contest =
       Foundation.get_contest!(id)
       |> Foundation.load_contest_categories
+      |> Foundation.load_stages
 
     conn
     |> assign(:contest, contest)

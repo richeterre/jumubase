@@ -3,7 +3,7 @@ defmodule Jumubase.FoundationTest do
   alias Ecto.Changeset
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
 
   describe "list_hosts/0 " do
     test "returns all hosts" do
@@ -392,5 +392,14 @@ defmodule Jumubase.FoundationTest do
 
     contest = Repo.get(Contest, id) |> Foundation.load_contest_categories
     assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
+  end
+
+  test "load_stages/1 preloads a contest's stages" do
+    %{id: id} = insert(:contest,
+      host: build(:host, stages: build_list(1, :stage, name: "X"))
+    )
+
+    contest = Repo.get(Contest, id) |> Foundation.load_stages
+    assert [%Stage{name: "X"}] = contest.host.stages
   end
 end

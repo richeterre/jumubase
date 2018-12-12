@@ -11,6 +11,7 @@ defmodule JumubaseWeb.Internal.StageController do
 
   def index(conn, _params, contest) do
     %{host: %{stages: stages}} = Foundation.load_stages(contest)
+    stages = stages |> Enum.sort_by(&(&1.name))
 
     conn
     |> assign(:contest, contest)

@@ -10,6 +10,10 @@
   <div class="col-md-3">
     <h4><%= gettext("Unscheduled") %></h4>
 
+    <select class="form-control input-sm">
+      <option value=""><%= gettext("All categories") %></option>
+    </select>
+
     <div class="schedule-column">
       <div class="schedule-item">Item 1</div>
       <div class="schedule-item">Item 2</div>
@@ -21,14 +25,14 @@
 
   <%= for date <- Date.range(@contest.start_date, @contest.end_date) do %>
   <div class="col-md-3">
-    <h4>
-      <%= date %>
-      <button
-        class="btn btn-link btn-xs pull-right add-spacer-button"
-        data-target="schedule-column-<%= date %>">
-        <%= gettext("Insert break") %>
-      </button>
-    </h4>
+    <h4><%= format_date(date) %></h4>
+
+    <button
+      class="btn btn-default btn-sm add-spacer-button"
+      data-target="schedule-column-<%= date %>"
+      >
+      <%= gettext("Insert break") %>
+    </button>
 
     <div id="schedule-column-<%= date %>" class="schedule-column">
       <div class="schedule-item">Item 1</div>

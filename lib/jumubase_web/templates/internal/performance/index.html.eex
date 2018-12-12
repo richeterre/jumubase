@@ -10,6 +10,7 @@
   conn: @conn,
   changeset: @filter_changeset,
   path: Routes.internal_contest_performance_path(@conn, :index, @contest),
+  stage_date_options: stage_date_options(@contest),
   genre_options: genre_filter_options(@contest),
   cc_options: cc_filter_options(@contest),
   ag_options: ag_filter_options(),

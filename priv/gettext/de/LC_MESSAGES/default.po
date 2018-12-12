@@ -228,7 +228,7 @@ msgid "Birthdate"
 msgstr "Geburtsdatum"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:24
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:25
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr "Kategorie"
@@ -261,7 +261,7 @@ msgstr "Nachname"
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:25
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:26
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr "Teilnehmer"
@@ -325,7 +325,7 @@ msgstr "Komponist"
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:11
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:7
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:9
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
 #: lib/jumubase_web/templates/internal/page/home.html.eex:37
@@ -942,7 +942,7 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:46
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:47
 msgid "Do you really want to delete this performance?"
 msgstr "Möchtest du dieses Vorspiel wirklich löschen?"
 
@@ -967,34 +967,35 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:87
+#: lib/jumubase_web/views/internal/performance_view.ex:95
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:92
+#: lib/jumubase_web/views/internal/performance_view.ex:100
 msgid "Filter active"
 msgstr "Filter aktiv"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:12
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:13
 msgid "Show all"
 msgstr "Alle anzeigen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:5
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:6
 msgid "All AGs"
 msgstr "Alle AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:4
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:5
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:14
 msgid "All categories"
 msgstr "Alle Kategorien"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:3
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:4
 msgid "All genres"
 msgstr "Alle Genres"
 
@@ -1009,7 +1010,7 @@ msgid "for Kimu, there’s a %{form_link}"
 msgstr "für Kimu gibt es ein %{form_link}"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:39
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:52
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:32
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:2
@@ -1017,7 +1018,7 @@ msgid "Schedule performances"
 msgstr "Vorspiele planen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:29
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:35
 msgid "Insert break"
 msgstr "Pause einfügen"
 
@@ -1030,3 +1031,8 @@ msgstr "Bitte wähle eine Bühne"
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:11
 msgid "Unscheduled"
 msgstr "Ohne Zeit"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:3
+msgid "All dates"
+msgstr "Alle Tage"

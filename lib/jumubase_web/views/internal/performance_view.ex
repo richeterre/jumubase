@@ -41,6 +41,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   @doc """
+  Returns the contest's dates, suitable for a filter form.
+  """
+  def stage_date_options(%Contest{start_date: start_date, end_date: end_date}) do
+    Date.range(start_date, end_date)
+    |> Enum.map(&{format_date(&1), Date.to_iso8601(&1)})
+  end
+
+  @doc """
   Returns genres relevant to the contest, suitable for a filter form.
   """
   def genre_filter_options(%Contest{round: round}) do

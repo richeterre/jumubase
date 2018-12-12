@@ -131,10 +131,12 @@ defmodule Jumubase.Showtime do
       ]
   end
 
-  def apply_filter(query, %PerformanceFilter{} = filter) do
+  defp apply_filter(query, %PerformanceFilter{} = filter) do
     filter_map = PerformanceFilter.to_filter_map(filter)
 
     Enum.reduce(filter_map, query, fn
+      {:stage_date, date}, query ->
+        on_date(query, date)
       {:genre, genre}, query ->
         with_genre(query, genre)
       {:contest_category_id, cc_id}, query ->
@@ -200,6 +202,10 @@ defmodule Jumubase.Showtime do
       other_result ->
         other_result
     end
+  end
+
+  defp on_date(query, date) do
+    from p in query, where: fragment("?::date", p.stage_time) == ^date
   end
 
   defp with_genre(query, genre) do

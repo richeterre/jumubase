@@ -20,13 +20,16 @@ defmodule Jumubase.Showtime.Performance do
     timestamps()
   end
 
-  @required_attrs [:contest_category_id]
+  @registration_attrs [:contest_category_id]
+  @stage_attrs [:stage_id, :stage_time]
 
-  @doc false
+  @doc """
+  Allows registering (and updating) a performance.
+  """
   def changeset(%Performance{} = performance, attrs) do
     performance
-    |> cast(attrs, @required_attrs)
-    |> validate_required(@required_attrs)
+    |> cast(attrs, @registration_attrs)
+    |> validate_required(@registration_attrs)
     |> cast_assoc(:appearances)
     |> validate_appearances
     |> cast_assoc(:pieces)
@@ -34,6 +37,15 @@ defmodule Jumubase.Showtime.Performance do
     |> unique_constraint(:edit_code,
       message: dgettext("errors", "must be unique")
     )
+  end
+
+  @doc """
+  Allows setting a performance's stage and stage time.
+  """
+  def stage_changeset(%Performance{} = performance, attrs) do
+    performance
+    |> cast(attrs, @stage_attrs)
+    |> validate_stage_fields
   end
 
   @doc """
@@ -78,6 +90,19 @@ defmodule Jumubase.Showtime.Performance do
         add_error(changeset, :base,
           dgettext("errors", "The performance must have at least one piece."))
       _ ->
+        changeset
+    end
+  end
+
+  defp validate_stage_fields(%Changeset{} = changeset) do
+    stage_id = get_change(changeset, :stage_id)
+    stage_time = get_change(changeset, :stage_time)
+
+    cond do
+      :erlang.xor(!!stage_id, !!stage_time) ->
+        add_error(changeset, :base,
+        dgettext("errors", "The performance can either have both stage and stage time, or neither."))
+      true ->
         changeset
     end
   end

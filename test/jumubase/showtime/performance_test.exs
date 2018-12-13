@@ -89,6 +89,32 @@ defmodule Jumubase.PerformanceTest do
     end
   end
 
+  describe "stage_changeset/2" do
+    test "is valid with valid attributes" do
+      valid_attrs = %{"stage_id" => 1, "stage_time" => Timex.now}
+      changeset = Performance.stage_changeset(%Performance{}, valid_attrs)
+      assert changeset.valid?
+    end
+
+    test "is valid when neither stage nor stage time is set" do
+      attrs = %{}
+      changeset = Performance.stage_changeset(%Performance{}, attrs)
+      assert changeset.valid?
+    end
+
+    test "is invalid without a stage time when the stage changes" do
+      attrs = %{"stage_id" => 1}
+      changeset = Performance.stage_changeset(%Performance{}, attrs)
+      refute changeset.valid?
+    end
+
+    test "is invalid without a stage when the stage time changes" do
+      attrs = %{"stage_time" => Timex.now}
+      changeset = Performance.stage_changeset(%Performance{}, attrs)
+      refute changeset.valid?
+    end
+  end
+
   # Private helpers
 
   defp valid_performance_attrs(contest_category) do

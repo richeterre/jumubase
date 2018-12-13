@@ -228,7 +228,7 @@ msgid "Birthdate"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:27
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr ""
@@ -261,7 +261,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:27
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:28
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr ""
@@ -324,7 +324,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:11
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:12
 #: lib/jumubase_web/controllers/internal/stage_controller.ex:9
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
@@ -942,12 +942,12 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:48
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:54
 msgid "Do you really want to delete this performance?"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:72
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:73
 msgid "The performance with edit code %{edit_code} was deleted."
 msgstr ""
 
@@ -957,7 +957,7 @@ msgid "Edit performance"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:55
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:56
 msgid "The performance with edit code %{edit_code} was updated."
 msgstr ""
 
@@ -1010,7 +1010,7 @@ msgid "for Kimu, there’s a %{form_link}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:52
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:54
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:32
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:2
@@ -1018,7 +1018,7 @@ msgid "Schedule performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:35
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:38
 msgid "Insert break"
 msgstr ""
 
@@ -1037,7 +1037,12 @@ msgstr ""
 msgid "All dates"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:4
 msgid "All stages"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:26
+msgid "Stage time"
 msgstr ""

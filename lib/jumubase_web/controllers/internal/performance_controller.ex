@@ -74,6 +74,19 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
   end
 
+  def reschedule(conn, %{"performances" => params}, contest) do
+    items = Enum.map(params, fn {key, value} ->
+      %{id: key, stage_id: value["stageId"], stage_time: value["stageTime"]}
+    end)
+
+    case Showtime.reschedule_performances(contest, items) do
+      :ok ->
+        conn |> put_status(200) |> text("Success")
+      :error ->
+        conn |> put_status(422) |> text("Error")
+    end
+  end
+
   # Private helpers
 
   defp handle_filter(conn, filter, contest) do

@@ -4,7 +4,6 @@ defmodule JumubaseWeb.Router do
   use Sentry.Plug
 
   pipeline :browser do
-    plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -13,12 +12,16 @@ defmodule JumubaseWeb.Router do
     plug Phauxth.Remember
   end
 
-  pipeline :api do
+  pipeline :html_only do
+    plug :accepts, ["html"]
+  end
+
+  pipeline :json_only do
     plug :accepts, ["json"]
   end
 
   scope "/", JumubaseWeb do
-    pipe_through :browser
+    pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
     get "/regeln", PageController, :rules
@@ -50,7 +53,14 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
-    pipe_through :browser
+    pipe_through [:browser, :json_only]
+
+    patch "/contests/:contest_id/performances/reschedule",
+      PerformanceController, :reschedule, as: :contest_performance
+  end
+
+  scope "/internal", JumubaseWeb.Internal, as: :internal do
+    pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
 

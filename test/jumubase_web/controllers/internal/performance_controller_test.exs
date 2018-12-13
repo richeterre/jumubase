@@ -180,10 +180,72 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "reschedule/2" do
+    setup %{contest: c} do
+      [contest: c]
+    end
+
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users reschedule performances", %{conn: conn, contest: c} do
+        params = get_reschedule_params(c)
+        conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, c), params)
+        assert text_response(conn, 200) == "Success"
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers reschedule performances from an own contest", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      params = get_reschedule_params(own_c)
+      conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, own_c), params)
+      assert text_response(conn, 200) == "Success"
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to reschedule performances from a foreign contest", %{conn: conn, contest: c} do
+      params = get_reschedule_params(c)
+      conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, c), params)
+      assert_unauthorized_user(conn)
+    end
+
+    test "redirects guests when trying to reschedule performances", %{conn: conn, contest: c} do
+      params = get_reschedule_params(c)
+      conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, c), params)
+      assert_unauthorized_guest(conn)
+    end
+
+    @tag login_as: "admin"
+    test "returns an error for invalid reschedule params", %{conn: conn, contest: c} do
+      p = insert_performance(c)
+      params = %{"performances" => %{
+        p.id => %{"stageId" => nil, "stageTime" => "2019-01-01T07:00:00Z"}}
+      }
+      conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, c), params)
+      assert text_response(conn, 422) == "Error"
+    end
+  end
+
   # Private helpers
 
   defp insert_own_contest(user) do
     insert(:contest, host: insert(:host, users: [user]))
+  end
+
+  defp get_reschedule_params(contest) do
+    stage_time_1 = "2019-01-01T07:00:00Z"
+    stage_time_2 = "2019-01-02T07:00:00Z"
+
+    [s1, s2] = insert_list(2, :stage)
+    p1 = insert_performance(contest, stage: nil, stage_time: nil)
+    p2 = insert_performance(contest, stage: s1, stage_time: stage_time_1)
+    p3 = insert_performance(contest, stage: s2, stage_time: stage_time_2)
+
+    %{"performances" => %{
+      p1.id => %{"stageId" => s1.id, "stageTime" => stage_time_1},
+      p2.id => %{"stageId" => s2.id, "stageTime" => stage_time_2},
+      p3.id => %{"stageId" => nil, "stageTime" => nil},
+    }}
   end
 
   defp assert_update_success(conn, contest, %Performance{edit_code: ec}) do

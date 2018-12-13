@@ -33,7 +33,7 @@
       <%= for performance <- @performances do %>
       <tr>
         <td>
-          <%= for {stage_name, stage_time} <- [stage_info(performance, :medium)] do %>
+          <%= for {stage_time, stage_name} <- [stage_info(performance, :medium)] do %>
           <%= stage_time %>
           <br>
           <%= stage_name %>

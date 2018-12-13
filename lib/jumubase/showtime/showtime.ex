@@ -6,7 +6,7 @@ defmodule Jumubase.Showtime do
 
   import Ecto.Query
   import Ecto.Changeset
-  alias Ecto.Changeset
+  alias Ecto.{Changeset, Multi}
   alias Jumubase.Repo
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
@@ -109,6 +109,25 @@ defmodule Jumubase.Showtime do
 
   def delete_performance!(%Performance{} = performance) do
     Repo.delete!(performance)
+  end
+
+  @doc """
+  Reschedules performances in the contest based on the given data
+  (a list of maps linking performance ids, stage ids and stage times).
+  """
+  def reschedule_performances(%Contest{} = contest, items) do
+    multi = Enum.reduce(items, Multi.new, fn item, acc ->
+      %{id: id, stage_id: s_id, stage_time: time} = item
+      changeset =
+        get_performance!(contest, id)
+        |> Performance.stage_changeset(%{stage_id: s_id, stage_time: time})
+      Multi.update(acc, id, changeset)
+    end)
+
+    case Repo.transaction(multi) do
+      {:ok, _} -> :ok
+      _ -> :error
+    end
   end
 
   def load_contest_category(%Performance{} = performance) do

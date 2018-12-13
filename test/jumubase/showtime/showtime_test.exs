@@ -621,6 +621,51 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "reschedule_performances/2" do
+    test "updates performances according to the given data", %{contest: c} do
+      stage_time_1 = "2019-01-01T07:00:00Z"
+      stage_time_2 = "2019-01-02T07:00:00Z"
+
+      [%{id: s1_id} = s1, %{id: s2_id} = s2] = insert_list(2, :stage)
+      p1 = insert_performance(c, stage: nil, stage_time: nil)
+      p2 = insert_performance(c, stage: s1, stage_time: stage_time_1)
+      p3 = insert_performance(c, stage: s2, stage_time: stage_time_2)
+
+      items = [
+        %{id: p1.id, stage_id: s1.id, stage_time: stage_time_1},
+        %{id: p2.id, stage_id: s2.id, stage_time: stage_time_2},
+        %{id: p3.id, stage_id: nil, stage_time: nil},
+      ]
+
+      {:ok, stage_time_1_dt, _} = DateTime.from_iso8601(stage_time_1)
+      {:ok, stage_time_2_dt, _} = DateTime.from_iso8601(stage_time_2)
+
+      assert :ok = Showtime.reschedule_performances(c, items)
+      assert %{stage_id: ^s1_id, stage_time: ^stage_time_1_dt} = Repo.get(Performance, p1.id)
+      assert %{stage_id: ^s2_id, stage_time: ^stage_time_2_dt} = Repo.get(Performance, p2.id)
+      assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p3.id)
+    end
+
+    test "cancels the transaction with an error if any item has invalid data", %{contest: c} do
+      stage_time = "2019-01-01T07:00:00Z"
+
+      %{id: s_id} = s = insert(:stage)
+      p1 = insert_performance(c, stage: nil, stage_time: nil)
+      p2 = insert_performance(c, stage: s, stage_time: stage_time)
+
+      items = [
+        %{id: p1.id, stage_id: s.id, stage_time: nil},
+        %{id: p2.id, stage_id: nil, stage_time: nil},
+      ]
+
+      {:ok, stage_time_dt, _} = DateTime.from_iso8601(stage_time)
+
+      assert :error = Showtime.reschedule_performances(c, items)
+      assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p1.id)
+      assert %{stage_id: ^s_id, stage_time: ^stage_time_dt} = Repo.get(Performance, p2.id)
+    end
+  end
+
   test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do
     insert_performance(c)
     performance = Repo.one(Performance)

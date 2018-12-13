@@ -95,8 +95,8 @@ defmodule Jumubase.Showtime.Performance do
   end
 
   defp validate_stage_fields(%Changeset{} = changeset) do
-    stage_id = get_change(changeset, :stage_id)
-    stage_time = get_change(changeset, :stage_time)
+    stage_id = get_field(changeset, :stage_id)
+    stage_time = get_field(changeset, :stage_time)
 
     cond do
       :erlang.xor(!!stage_id, !!stage_time) ->

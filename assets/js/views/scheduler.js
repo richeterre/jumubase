@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import 'jquery-ui/ui/widgets/sortable'
 import 'jquery-ui/ui/widgets/resizable'
+import { isEmpty } from 'lodash'
 
 const scheduler = options => {
   const resizeConfig = {
@@ -9,11 +10,19 @@ const scheduler = options => {
     handles: "s",
   }
 
-  // Make schedule columns sortable
-  $(".schedule-column").sortable({
+  // Set up unscheduled column
+  $('.schedule-column[data-date=""]').sortable({
+    connectWith: ".schedule-column",
+    receive: function() {
+      applyContestCategoryFilter()
+      submitColumn(getColumnData($(this)))
+    },
+  })
+
+  // Set up columns that have dates
+  $('.schedule-column[data-date!=""]').sortable({
     connectWith: ".schedule-column",
     update: function() {
-      applyContestCategoryFilter()
       submitColumn(getColumnData($(this)))
     },
   })

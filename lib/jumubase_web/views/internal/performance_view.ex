@@ -10,7 +10,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     composer_dates: 1, duration: 1, epoch_tag: 1, person_name: 1
   ]
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{AgeGroups, Contest}
+  alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime.Performance
 
   def render("scripts.index.html", _assigns) do
@@ -21,6 +21,12 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     # Load same script as in public registration form
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
   end
+
+  def stage_info(performance, style \\ :full)
+  def stage_info(%Performance{stage: %Stage{name: name}, stage_time: stage_time}, style) do
+    {format_datetime(stage_time, style), name}
+  end
+  def stage_info(%Performance{stage: nil, stage_time: nil}, _style), do: nil
 
   def category_name(%Performance{} = performance) do
     performance.contest_category.category.name

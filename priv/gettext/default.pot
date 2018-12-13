@@ -941,7 +941,7 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:54
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:56
 msgid "Do you really want to delete this performance?"
 msgstr ""
 
@@ -966,14 +966,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:106
+#: lib/jumubase_web/views/internal/performance_view.ex:112
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:111
+#: lib/jumubase_web/views/internal/performance_view.ex:117
 msgid "Filter active"
 msgstr ""
 

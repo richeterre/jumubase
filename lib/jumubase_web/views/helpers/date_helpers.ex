@@ -9,6 +9,11 @@ defmodule JumubaseWeb.DateHelpers do
   end
   def format_date(nil, _style), do: nil
 
+  def format_datetime(%DateTime{} = datetime, style \\ :full) do
+    locale = Timex.Translator.current_locale
+    Timex.lformat!(datetime, datetime_format(locale, style), locale)
+  end
+
   # Private helpers
 
   # Returns a date format for the locale.
@@ -16,4 +21,8 @@ defmodule JumubaseWeb.DateHelpers do
   defp date_format("de", :medium), do: "{D}. {Mfull}"
   defp date_format("en", :full), do: "{D} {Mfull} {YYYY}"
   defp date_format("en", :medium), do: "{D} {Mfull}"
+
+  defp datetime_format(locale, style) do
+    date_format(locale, style) <> ", {h24}:{m}"
+  end
 end

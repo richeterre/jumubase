@@ -135,8 +135,9 @@ defmodule Jumubase.Showtime do
       join: cc in assoc(p, :contest_category),
       where: cc.contest_id == ^contest_id,
       preload: [
-        contest_category: {cc, :category},
-        appearances: :participant
+        [contest_category: {cc, :category}],
+        [appearances: :participant],
+        :stage
       ]
   end
 

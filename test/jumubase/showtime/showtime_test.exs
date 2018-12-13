@@ -1,7 +1,7 @@
 defmodule Jumubase.ShowtimeTest do
   use Jumubase.DataCase
   alias Ecto.Changeset
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
@@ -27,14 +27,15 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered Showtime.list_performances(c), [p1, p2, p3]
     end
 
-    test "preloads the performances' contest categories, categories, appearances and participants", %{contest: c} do
-      insert_performance(c, appearances: build_list(1, :appearance))
+    test "preloads the performances' contest categories, categories, appearances, participants and stages", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
       assert [%Performance{
         contest_category: %ContestCategory{category: %Category{}},
         appearances: [
           %Appearance{participant: %Participant{}}
-        ]
+        ],
+        stage: %Stage{}
       }] = Showtime.list_performances(c)
     end
   end
@@ -84,14 +85,15 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered Showtime.unscheduled_performances(c), [p1, p2]
     end
 
-    test "preloads the performances' contest categories, categories, appearances and participants", %{contest: c} do
-      insert_performance(c, appearances: build_list(1, :appearance))
+    test "preloads the performances' contest categories, categories, appearances, participants and stages", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
       assert [%Performance{
         contest_category: %ContestCategory{category: %Category{}},
         appearances: [
           %Appearance{participant: %Participant{}}
-        ]
+        ],
+        stage: %Stage{}
       }] = Showtime.unscheduled_performances(c)
     end
   end

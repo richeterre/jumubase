@@ -23,7 +23,8 @@ const scheduler = options => {
   $('.schedule-column[data-date!=""]').sortable({
     connectWith: ".schedule-column",
     update: function() {
-      submitColumn(getColumnData($(this)))
+      const data = getColumnData($(this))
+      !isEmpty(data) && submitColumn(data)
     },
   })
 

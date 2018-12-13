@@ -48,9 +48,9 @@ const scheduler = options => {
   }
 
   function submitColumn(data) {
-    const { contestId, csrfToken } = options
+    const { csrfToken, submitPath } = options
 
-    $.ajax(`/internal/contests/${contestId}/performances/reschedule`, {
+    $.ajax(submitPath, {
       method: "PATCH",
       beforeSend: function(xhr) {
         xhr.setRequestHeader("X-CSRF-Token", csrfToken)

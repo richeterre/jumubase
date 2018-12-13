@@ -1,6 +1,7 @@
 <div
   class="schedule-item"
   data-cc-id="<%= @performance.contest_category.id %>"
+  data-id="<%= @performance.id %>"
   >
   <%= @performance.edit_code %>
 </div>

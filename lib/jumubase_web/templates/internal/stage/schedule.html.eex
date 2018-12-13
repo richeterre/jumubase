@@ -17,14 +17,13 @@
       <% end %>
     </select>
 
-    <div id="schedule-column-unscheduled" class="schedule-column">
+    <div class="schedule-column" data-date="">
       <%=
         for p <- @performances[:unscheduled] do
           render("_performance_item.html", performance: p)
         end
       %>
     </div>
-
   </div>
 
   <%= for date <- @date_range do %>
@@ -33,12 +32,12 @@
 
     <button
       class="btn btn-default btn-sm add-spacer-button"
-      data-target="schedule-column-<%= date %>"
+      data-target-date="<%= date %>"
       >
       <%= gettext("Insert break") %>
     </button>
 
-    <div id="schedule-column-<%= date %>" class="schedule-column">
+    <div class="schedule-column" data-date="<%= date %>">
       <%=
         for p <- @performances[date] do
           render("_performance_item.html", performance: p)

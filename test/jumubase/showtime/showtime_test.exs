@@ -13,18 +13,22 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "list_performances/1" do
-    test "returns the given contest's performances", %{contest: c} do
+    test "returns the given contest's performances in stage order", %{contest: c} do
+      now = Timex.now
+      later = Timex.shift(now, seconds: 1)
+
       # Performances in this contest
       [cc1, cc2] = c.contest_categories
       p1 = insert_performance(cc1)
-      p2 = insert_performance(cc1)
+      p2 = insert_performance(cc1, stage_time: later)
       p3 = insert_performance(cc2)
+      p4 = insert_performance(cc2, stage_time: now)
 
       # Performance in other contest
       other_c = insert(:contest)
       insert_performance(other_c)
 
-      assert_ids_match_unordered Showtime.list_performances(c), [p1, p2, p3]
+      assert_ids_match_unordered Showtime.list_performances(c), [p4, p2, p1, p3]
     end
 
     test "preloads the performances' contest categories, categories, appearances, participants and stages", %{contest: c} do

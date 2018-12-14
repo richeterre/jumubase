@@ -30,7 +30,7 @@ defmodule JumubaseWeb.XMLEncoder do
     [
       {:vorname, nil, p.given_name},
       {:nachname, nil, p.family_name},
-      {:geburtstag, nil, p.birthdate},
+      {:geburtstag, nil, format_date(p.birthdate)},
       {:tel, nil, p.phone},
       {:email, nil, p.email},
       {:instrument, nil, Instruments.name(a.instrument)},
@@ -39,4 +39,6 @@ defmodule JumubaseWeb.XMLEncoder do
 
   defp map_type("solo"), do: "solo"
   defp map_type("ensemble"), do: "gruppe"
+
+  defp format_date(date), do: Timex.format!(date, "{D}.{M}.{YYYY}")
 end

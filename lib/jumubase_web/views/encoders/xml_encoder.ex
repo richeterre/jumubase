@@ -17,13 +17,13 @@ defmodule JumubaseWeb.XMLEncoder do
 
   defp to_xml(%Performance{contest_category: cc} = performance) do
     [a1 | rest] = performance.appearances
-    {:teilnehmer, nil, [
+    {:teilnehmer, %{id: a1.participant.id}, [
       to_xml(a1),
       {:wertung, nil, [
         {:type, nil, map_type(cc.category.type)},
         {:instrument_stimmlage, nil, a1.instrument},
       ]},
-      {:spielpartner, nil, Enum.map(rest, &{:partner, nil, to_xml(&1)})}
+      {:spielpartner, nil, Enum.map(rest, &{:partner, %{id: &1.participant.id}, to_xml(&1)})}
     ]}
   end
   defp to_xml(%Appearance{participant: p} = a) do

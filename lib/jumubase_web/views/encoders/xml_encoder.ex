@@ -21,7 +21,7 @@ defmodule JumubaseWeb.XMLEncoder do
       to_xml(a1),
       {:wertung, nil, [
         {:type, nil, map_type(cc.category.type)},
-        {:instrument_stimmlage, nil, a1.instrument},
+        {:instrument_stimmlage, nil, Instruments.name(a1.instrument)},
       ]},
       {:spielpartner, nil, Enum.map(rest, &{:partner, %{id: &1.participant.id}, to_xml(&1)})}
     ]}

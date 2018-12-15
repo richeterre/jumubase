@@ -15,17 +15,19 @@ defmodule JumubaseWeb.XMLEncoder do
 
   # Private helpers
 
-  defp to_xml(%Performance{contest_category: cc} = performance) do
-    [a1 | rest] = performance.appearances
-    {:teilnehmer, %{id: a1.participant.id}, [
-      to_xml(a1),
-      {:wertung, nil, [
-        {:type, nil, map_role(a1.role)},
-        {:instrument_stimmlage, nil, Instruments.name(a1.instrument)},
-        {:kategorie, nil, map_category(cc.category)},
-      ]},
-      {:spielpartner, nil, Enum.map(rest, &{:partner, %{id: &1.participant.id}, to_xml(&1)})}
-    ]}
+  defp to_xml(%Performance{appearances: appearances, contest_category: cc} = p) do
+    for a <- appearances do
+      other_appearances = appearances |> List.delete(a)
+      {:teilnehmer, %{id: a.participant.id}, [
+        to_xml(a),
+        {:wertung, %{id: p.id}, [
+          {:type, nil, map_role(a.role)},
+          {:instrument_stimmlage, nil, Instruments.name(a.instrument)},
+          {:kategorie, nil, map_category(cc.category)},
+        ]},
+        {:spielpartner, nil, Enum.map(other_appearances, &{:partner, %{id: &1.participant.id}, to_xml(&1)})}
+      ]}
+    end
   end
   defp to_xml(%Appearance{participant: p} = a) do
     [

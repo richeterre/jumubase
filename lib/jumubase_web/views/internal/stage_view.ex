@@ -1,8 +1,9 @@
 defmodule JumubaseWeb.Internal.StageView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PerformanceView, only: [
-    category_name: 1, cc_filter_options: 1, formatted_duration: 1
+    cc_filter_options: 1, formatted_duration: 1
   ]
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -21,6 +22,15 @@ defmodule JumubaseWeb.Internal.StageView do
       <script src="/js/scheduler.js"></script>
       <script>scheduler(<%= raw(options) %>)</script>
     }
+  end
+
+  @doc """
+  Returns the full names of the performance's participants, separated by commas.
+  """
+  def participant_names(%Performance{appearances: appearances}) do
+    appearances
+    |> Enum.map(fn %{participant: pt} -> full_name(pt) end)
+    |> Enum.join(", ")
   end
 
   @doc """

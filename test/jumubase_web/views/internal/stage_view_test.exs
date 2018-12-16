@@ -2,6 +2,17 @@ defmodule JumubaseWeb.Internal.StageViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.StageView
 
+  describe "participant_names/1" do
+    test "returns the full names of the performance's participants, separated by commas" do
+      p = build(:performance, appearances: [
+        build(:appearance, participant: build(:participant, given_name: "A", family_name: "B")),
+        build(:appearance, participant: build(:participant, given_name: "C", family_name: "D")),
+        build(:appearance, participant: build(:participant, given_name: "E", family_name: "F")),
+      ])
+      assert StageView.participant_names(p) == "A B, C D, E F"
+    end
+  end
+
   describe "schedule_minutes/1" do
     test "rounds the performance's duration to the nearest 5-minute multiple" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 0)])

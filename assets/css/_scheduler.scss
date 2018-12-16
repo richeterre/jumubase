@@ -1,6 +1,5 @@
 .schedule-column {
   border: 1px solid #eee;
-  cursor: pointer;
   list-style-type: none;
   margin: 1em 0 0 0;
   min-height: 40px;
@@ -8,26 +7,45 @@
 
   .schedule-item {
     background-color: #eee;
-    font-size: 1.2em;
-    height: 40px;
+    cursor: pointer;
+    font-size: 0.8em;
     margin: 0 5px 5px 5px;
-    padding: 5px;
+    position: relative;
+
+    .playtime-bar {
+      background-color: #ccc;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 5px;
+    }
+
+    .content {
+      left: 0;
+      padding: 0 5px;
+      position: absolute;
+      right: 5px;
+      top: 0;
+    }
   }
 
   .spacer {
+    padding: 0 5px;
     position: relative;
+
+    &.ui-resizable-resizing { cursor: ns-resize; }
 
     .ui-resizable-handle {
       background-color: #ddd;
+      border-radius: 5px;
+      bottom: 4px;
       cursor: ns-resize;
-      height: 10px;
-      position: absolute;
-    }
-
-    .ui-resizable-s {
-      bottom: 0;
+      height: 5px;
       left: 0;
+      margin: 0 auto;
+      position: absolute;
       right: 0;
+      width: 15%;
     }
   }
 }

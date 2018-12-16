@@ -4,10 +4,15 @@ import 'jquery-ui/ui/widgets/resizable'
 import { isEmpty } from 'lodash'
 
 const scheduler = options => {
+  const gridHeight = pixelsFromMinutes(5)
+
   const resizeConfig = {
-    grid: [0, 10],
-    minHeight: 40,
+    grid: [0, gridHeight],
+    minHeight: gridHeight,
     handles: "s",
+    resize: function(e, ui) {
+      $(this).setMinutesFromHeight(ui.size.height)
+    },
   }
 
   // Set up unscheduled column
@@ -15,7 +20,7 @@ const scheduler = options => {
     connectWith: ".schedule-column",
     receive: function() {
       applyContestCategoryFilter()
-      submitColumn(getColumnData($(this)))
+      submitColumn($(this).getColumnData())
     },
   })
 
@@ -23,7 +28,7 @@ const scheduler = options => {
   $('.schedule-column[data-date!=""]').sortable({
     connectWith: ".schedule-column",
     update: function() {
-      const data = getColumnData($(this))
+      const data = $(this).getColumnData()
       !isEmpty(data) && submitColumn(data)
     },
   })
@@ -35,8 +40,7 @@ const scheduler = options => {
   $(".add-spacer-button").click(function(e) {
     e.preventDefault();
     const targetDate = $(e.target).attr("data-target-date")
-    const spacer = $(`<div class="schedule-item spacer">Pause</div>`)
-    $(`[data-date=${targetDate}]`).append(spacer.resizable(resizeConfig))
+    createSpacer().appendTo(`[data-date=${targetDate}]`)
   })
 
   // Let users filter unscheduled list by contest category
@@ -73,27 +77,51 @@ const scheduler = options => {
     })
   }
 
-  function getColumnData(column) {
-    const date = $(column).attr("data-date")
-    return $.makeArray(
-      $(column).children(".schedule-item").map(function(index, item) {
-        const id = $(item).attr("data-id")
-        const time = timeFromIndex(index)
-        return id && {
-          id,
-          stageId: date ? options.stageId : null,
-          stageTime: date ? `${date}T${time}` : null,
-        }
-      })
-    ).reduce((acc, item) => {
-      acc[item.id] = item
-      return acc
-    }, {})
-  }
-
   function timeFromIndex(index) {
     return `0${index}:00:00Z`
   }
+
+  function pixelsFromMinutes(minutes) {
+    return minutes * options.pixelsPerMinute
+  }
+
+  function minutesFromPixels(pixels) {
+    return pixels / options.pixelsPerMinute
+  }
+
+  function createSpacer() {
+    const spacerHeight = resizeConfig.minHeight
+    return $(`<div class="schedule-item spacer"><span class="text-muted"></span></div>`)
+      .css("height", spacerHeight)
+      .setMinutesFromHeight(spacerHeight)
+      .resizable(resizeConfig)
+  }
+
+  $.fn.extend({
+    setMinutesFromHeight: function(height) {
+      const minutes = minutesFromPixels(height)
+      return $(this)
+      .children("span").html(`Pause (${minutes} min)`).parent()
+      .attr("data-minutes", minutes)
+    },
+    getColumnData: function() {
+      const date = $(this).attr("data-date")
+      return $.makeArray(
+        $(this).children(".schedule-item").map(function(index, item) {
+          const id = $(item).attr("data-id")
+          const time = timeFromIndex(index)
+          return id && {
+            id,
+            stageId: date ? options.stageId : null,
+            stageTime: date ? `${date}T${time}` : null,
+          }
+        })
+      ).reduce((acc, item) => {
+        acc[item.id] = item
+        return acc
+      }, {})
+    },
+  })
 }
 
 // Make scheduler() available to global <script> tags

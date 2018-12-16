@@ -670,6 +670,23 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "total_duration/1" do
+    test "returns the total duration of a performance" do
+      p = build(:performance, pieces: [
+        build(:piece, minutes: 1, seconds: 59),
+        build(:piece, minutes: 2, seconds: 34)
+      ])
+      assert Showtime.total_duration(p) == Timex.Duration.from_clock({0, 4, 33, 0})
+    end
+  end
+
+  test "load_pieces/1 preloads a performance's pieces", %{contest: c} do
+    insert_performance(c, pieces: build_list(1, :piece))
+    performance = Repo.one(Performance)
+
+    assert %{pieces: [%Piece{}]} = performance |> Showtime.load_pieces
+  end
+
   test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do
     insert_performance(c)
     performance = Repo.one(Performance)

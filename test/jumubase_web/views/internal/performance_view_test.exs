@@ -44,11 +44,11 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     assert PerformanceView.category_info(p) == "ABC, AG IV"
   end
 
-  test "total_duration/1 returns the total duration of a performance" do
+  test "formatted_duration/1 returns the formatted duration of a performance" do
     p = build(:performance, pieces: [
       build(:piece, minutes: 1, seconds: 59),
       build(:piece, minutes: 2, seconds: 34)
     ])
-    assert PerformanceView.total_duration(p) == "4'33"
+    assert PerformanceView.formatted_duration(p) == "4'33"
   end
 end

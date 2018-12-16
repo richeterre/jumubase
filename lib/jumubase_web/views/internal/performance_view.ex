@@ -11,6 +11,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   ]
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
+  alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
 
   def render("scripts.index.html", _assigns) do
@@ -39,9 +40,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   @doc """
   Returns the performance's formatted duration.
   """
-  def total_duration(%Performance{pieces: pieces}) do
-    pieces
-    |> calculate_total_duration
+  def formatted_duration(%Performance{} = performance) do
+    Showtime.total_duration(performance)
     |> Timex.Duration.to_time!
     |> Timex.Format.DateTime.Formatter.format!("%-M'%S", :strftime)
   end
@@ -98,14 +98,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   # Private helpers
 
-  defp calculate_total_duration(pieces) do
-    pieces
-    |> Enum.reduce(Timex.Duration.zero, fn piece, total ->
-      total
-      |> Timex.Duration.add(Timex.Duration.from_minutes(piece.minutes))
-      |> Timex.Duration.add(Timex.Duration.from_seconds(piece.seconds))
-    end)
-  end
 
   defp count_tag(count) do
     content_tag :span,

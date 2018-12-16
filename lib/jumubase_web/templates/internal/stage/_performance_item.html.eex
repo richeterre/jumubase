@@ -2,6 +2,18 @@
   class="schedule-item"
   data-cc-id="<%= @performance.contest_category.id %>"
   data-id="<%= @performance.id %>"
+  data-minutes="<%= schedule_minutes(@performance) %>"
+  style="height: <%= item_height(@performance) %>"
   >
-  <%= @performance.edit_code %>
+  <div
+    class="playtime-bar"
+    style="height: <%= playtime_percentage(@performance) %>"
+    >
+  </div>
+  <div class="content">
+    <%= @performance.edit_code %>
+    <span class="text-muted pull-right">
+      <%= formatted_duration(@performance) %>
+    </span>
+  </div>
 </div>

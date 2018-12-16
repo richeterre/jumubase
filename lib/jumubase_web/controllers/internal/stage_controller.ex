@@ -26,13 +26,16 @@ defmodule JumubaseWeb.Internal.StageController do
     stage = Foundation.get_stage!(contest, stage_id)
     date_range = Foundation.date_range(contest)
 
+    unscheduled_performances = Showtime.unscheduled_performances(contest) |> Showtime.load_pieces
+
     # Group performances by stage date
     performances = Enum.reduce(
       date_range,
-      %{unscheduled: Showtime.unscheduled_performances(contest)},
+      %{unscheduled: unscheduled_performances},
       fn date, acc ->
         filter = %PerformanceFilter{stage_date: date, stage_id: stage_id}
-        Map.put(acc, date, Showtime.list_performances(contest, filter))
+        performances = Showtime.list_performances(contest, filter) |> Showtime.load_pieces
+        Map.put(acc, date, performances)
       end
     )
 

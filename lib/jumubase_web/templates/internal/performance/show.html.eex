@@ -24,5 +24,5 @@
 <%= render "_pieces.html", pieces: @performance.pieces %>
 
 <p>
-  <em><%= gettext("Total duration: %{d}", d: total_duration(@performance)) %></em>
+  <em><%= gettext("Total duration: %{d}", d: formatted_duration(@performance)) %></em>
 </p>

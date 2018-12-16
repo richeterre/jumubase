@@ -130,6 +130,22 @@ defmodule Jumubase.Showtime do
     end
   end
 
+  @doc """
+  Returns the performance's total duration as a Timex.Duration.
+  """
+  def total_duration(%Performance{pieces: pieces}) do
+    pieces
+    |> Enum.reduce(Timex.Duration.zero, fn piece, total ->
+      total
+      |> Timex.Duration.add(Timex.Duration.from_minutes(piece.minutes))
+      |> Timex.Duration.add(Timex.Duration.from_seconds(piece.seconds))
+    end)
+  end
+
+  def load_pieces(performances) do
+    performances |> Repo.preload(:pieces)
+  end
+
   def load_contest_category(%Performance{} = performance) do
     performance |> Repo.preload(contest_category: [:contest, :category])
   end

@@ -14,5 +14,4 @@
       <%= link gettext("Show all"), to: @path, class: "btn btn-link" %>
     <% end %>
   </div>
-
 <% end %>

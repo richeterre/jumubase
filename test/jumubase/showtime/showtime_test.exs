@@ -241,6 +241,40 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "build_performance/1" do
+    test "builds a pre-populated performance for Kimu contests with one category" do
+      c = insert(:contest, round: 0)
+      %{id: cc_id} = insert_contest_category(c)
+
+      assert %Performance{
+        contest_category_id: ^cc_id,
+        appearances: [%Appearance{}],
+        pieces: [%Piece{}],
+      } = Showtime.build_performance(c)
+    end
+
+    test "builds a bare performance for Kimu contests with multiple categories" do
+      c = insert(:contest, round: 0)
+      insert_list(2, :contest_category, contest: c)
+
+      assert %Performance{
+        contest_category_id: nil,
+        appearances: %Ecto.Association.NotLoaded{},
+        pieces: %Ecto.Association.NotLoaded{},
+      } = Showtime.build_performance(c)
+    end
+
+    test "builds a bare performance for RW contests" do
+      c = insert(:contest, round: 1)
+
+      assert %Performance{
+        contest_category_id: nil,
+        appearances: %Ecto.Association.NotLoaded{},
+        pieces: %Ecto.Association.NotLoaded{},
+      } = Showtime.build_performance(c)
+    end
+  end
+
   describe "create_performance/2" do
     test "creates a new performance with an edit code", %{contest: c} do
       [cc, _] = c.contest_categories

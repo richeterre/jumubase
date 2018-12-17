@@ -18,6 +18,11 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     ~E(<script src="/js/performanceFilter.js"></script>)
   end
 
+  def render("scripts.new.html", assigns) do
+    # Load same script as in public registration form
+    JumubaseWeb.PerformanceView.render("scripts.new.html", assigns)
+  end
+
   def render("scripts.edit.html", assigns) do
     # Load same script as in public registration form
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)

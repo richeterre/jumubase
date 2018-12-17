@@ -61,3 +61,8 @@
     </tbody>
   </table>
 </div>
+
+<%= link gettext("Add Performance"),
+  to: Routes.internal_contest_performance_path(@conn, :new, @contest),
+  class: "btn btn-default"
+  %>

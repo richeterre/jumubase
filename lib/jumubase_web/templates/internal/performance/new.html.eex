@@ -1,0 +1,14 @@
+<h2>
+  <%= gettext("New Performance") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<%= render JumubaseWeb.PerformanceView, "_form.html",
+  conn: @conn,
+  path: Routes.internal_contest_performance_path(@conn, :create, @contest),
+  changeset: @changeset,
+  submit_title: gettext("Create Performance")
+  %>

@@ -9,9 +9,9 @@ defmodule Jumubase.Showtime do
   alias Ecto.{Changeset, Multi}
   alias Jumubase.Repo
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.Contest
+  alias Jumubase.Foundation.{Contest, ContestCategory}
   alias Jumubase.Showtime.AgeGroupCalculator
-  alias Jumubase.Showtime.{Participant, Performance, Piece}
+  alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
 
   @doc """
@@ -85,6 +85,25 @@ defmodule Jumubase.Showtime do
     |> preloaded_from_contest(contest_id)
     |> Repo.get_by!(edit_code: edit_code)
   end
+
+  @doc """
+  Returns a performance struct as a starting point for registration.
+  Kimu contests typically have only one category, so we can pre-populate it.
+  """
+  def build_performance(%Contest{round: 0} = contest) do
+    contest = Foundation.load_contest_categories(contest)
+    case contest do
+      %Contest{contest_categories: [%ContestCategory{id: cc_id}]} ->
+        %Performance{
+          contest_category_id: cc_id,
+          appearances: [%Appearance{}],
+          pieces: [%Piece{}]
+        }
+      _ ->
+        %Performance{}
+    end
+  end
+  def build_performance(%Contest{round: 1}), do: %Performance{}
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
     Performance.changeset(%Performance{}, attrs)

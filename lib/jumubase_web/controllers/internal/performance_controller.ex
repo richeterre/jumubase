@@ -36,6 +36,31 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> render("show.html")
   end
 
+  def new(conn, _params, contest) do
+    changeset =
+      Showtime.build_performance(contest)
+      |> Showtime.change_performance
+
+    conn
+    |> prepare_for_form(contest, changeset)
+    |> render("new.html")
+  end
+
+  def create(conn, params, contest) do
+    performance_params = params["performance"] || %{}
+
+    case Showtime.create_performance(contest, performance_params) do
+      {:ok, performance} ->
+        conn
+        |> put_flash(:success, gettext("The performance was created."))
+        |> redirect(to: Routes.internal_contest_performance_path(conn, :show, contest, performance))
+      {:error, changeset} ->
+        conn
+        |> prepare_for_form(contest, changeset)
+        |> render("new.html")
+    end
+  end
+
   def edit(conn, %{"id" => id}, contest) do
     performance = Showtime.get_performance!(contest, id)
 
@@ -49,12 +74,10 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
     performance = Showtime.get_performance!(contest, id)
     case Showtime.update_performance(contest, performance, params) do
-      {:ok, %{edit_code: ec}} ->
+      {:ok, performance} ->
         conn
-        |> put_flash(:success,
-          gettext("The performance with edit code %{edit_code} was updated.", edit_code: ec)
-        )
-        |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
+        |> put_flash(:success, gettext("The performance was updated."))
+        |> redirect(to: Routes.internal_contest_performance_path(conn, :show, contest, performance))
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, performance, changeset)
@@ -63,14 +86,10 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def delete(conn, %{"id" => id}, contest) do
-    %{edit_code: ec} =
-      Showtime.get_performance!(contest, id)
-      |> Showtime.delete_performance!
+    Showtime.get_performance!(contest, id) |> Showtime.delete_performance!
 
     conn
-    |> put_flash(:success,
-      gettext("The performance with edit code %{edit_code} was deleted.", edit_code: ec)
-    )
+    |> put_flash(:success, gettext("The performance was deleted."))
     |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
   end
 
@@ -101,15 +120,20 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     end
   end
 
+  defp prepare_for_form(conn, %Contest{} = c, %Changeset{} = cs) do
+    conn
+    |> assign(:contest, c)
+    |> assign(:changeset, cs)
+    |> add_breadcrumbs(c)
+    |> add_breadcrumb(icon: "plus", path: current_path(conn))
+  end
   defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p, %Changeset{} = cs) do
-    edit_path = Routes.internal_contest_performance_path(conn, :edit, c, p)
-
     conn
     |> assign(:contest, c)
     |> assign(:performance, p)
     |> assign(:changeset, cs)
     |> add_breadcrumbs(c, p)
-    |> add_breadcrumb(icon: "pencil", path: edit_path)
+    |> add_breadcrumb(icon: "pencil", path: current_path(conn))
   end
 
   defp add_breadcrumbs(conn, %Contest{} = c) do

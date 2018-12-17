@@ -3,9 +3,8 @@ defmodule JumubaseWeb.PerformanceController do
   alias Ecto.Changeset
   alias Jumubase.Mailer
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Contest, ContestCategory}
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Performance, Piece}
   alias JumubaseWeb.Email
 
   # Check deadline of nested contest and pass it to all actions
@@ -13,7 +12,7 @@ defmodule JumubaseWeb.PerformanceController do
 
   def new(conn, _params, contest) do
     changeset =
-      build_new_performance(contest)
+      Showtime.build_performance(contest)
       |> Showtime.change_performance
 
     conn
@@ -78,23 +77,6 @@ defmodule JumubaseWeb.PerformanceController do
   end
 
   # Private helpers
-
-  # Returns a performance struct for the contest's registration form.
-  # Kimu contests typically have only one category, so we can pre-populate it.
-  defp build_new_performance(%Contest{round: 0} = contest) do
-    contest = Foundation.load_contest_categories(contest)
-    case contest do
-      %Contest{contest_categories: [%ContestCategory{id: cc_id}]} ->
-        %Performance{
-          contest_category_id: cc_id,
-          appearances: [%Appearance{}],
-          pieces: [%Piece{}]
-        }
-      _ ->
-        %Performance{}
-    end
-  end
-  defp build_new_performance(%Contest{}), do: %Performance{}
 
   defp prepare_for_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
     conn

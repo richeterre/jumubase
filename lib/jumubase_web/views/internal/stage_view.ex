@@ -54,6 +54,7 @@ defmodule JumubaseWeb.Internal.StageView do
   @doc """
   Returns a map specifying how many minutes of space lie before the performances.
   """
+  def spacer_map(_date, []), do: %{}
   def spacer_map(%Date{} = date, performances) do
     start = start_datetime(date)
     chunks = Enum.chunk_every([start | performances], 2, 1)
@@ -67,7 +68,6 @@ defmodule JumubaseWeb.Internal.StageView do
         acc
     end)
   end
-  def spacer_map([]), do: %{}
 
   @doc """
   Returns the percentage taken up by playtime in the performance's schedule minutes.

@@ -3,7 +3,7 @@
   title="<%= participant_names(@performance) %>"
   data-cc-id="<%= @performance.contest_category.id %>"
   data-id="<%= @performance.id %>"
-  data-minutes="<%= schedule_minutes(@performance) %>"
+  data-minutes="<%= scheduled_minutes(@performance) %>"
   style="height: <%= item_height(@performance) %>"
   >
   <div

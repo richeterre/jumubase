@@ -81,8 +81,8 @@ const scheduler = options => {
   }
 
   function calculateStageTime(date, minutes) {
-    return DateTime.fromISO(date, { zone: "UTC" })
-      .plus({hours: 9, minutes: minutes})
+    return DateTime.fromISO(date + "T" + options.startTime, { zone: "UTC" })
+      .plus({minutes: minutes})
       .toISO()
   }
 

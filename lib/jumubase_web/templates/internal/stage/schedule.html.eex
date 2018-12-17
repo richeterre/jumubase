@@ -38,11 +38,16 @@
     </button>
 
     <div class="schedule-column" data-date="<%= date %>">
-      <%=
-        for p <- @performances[date] do
-          render("_performance_item.html", performance: p)
-        end
+      <%
+        performances = @performances[date]
+        spacer_map = spacer_map(date, performances)
       %>
+      <%= for p <- performances do %>
+        <%= if (minutes = spacer_map[p.id]) > 0 do %>
+          <%= render("_spacer_item.html", minutes: minutes) %>
+        <% end %>
+        <%= render("_performance_item.html", performance: p) %>
+      <% end %>
     </div>
   </div>
   <% end %>

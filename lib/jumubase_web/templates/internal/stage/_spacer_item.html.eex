@@ -1,0 +1,7 @@
+<div
+  class="schedule-item spacer"
+  data-minutes="<%= @minutes %>"
+  style="height: <%= item_height(@minutes) %>"
+  >
+  <span class="text-muted">Pause (<%= @minutes %> min)</span>
+</div>

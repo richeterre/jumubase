@@ -673,7 +673,7 @@ msgid "Set password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:59
+#: lib/jumubase_web/controllers/performance_controller.ex:58
 msgid "Your changes to the registration were saved."
 msgstr ""
 
@@ -784,11 +784,6 @@ msgid "Preparation"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/show.html.eex:17
-msgid "Show performances"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:59
 #: lib/jumubase_web/templates/performance/_form.html.eex:63
 msgid "privacy policy"
@@ -835,12 +830,12 @@ msgid "To find out how we process your data, please see our"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:94
+#: lib/jumubase_web/controllers/performance_controller.ex:93
 msgid "We received your registration!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:95
+#: lib/jumubase_web/controllers/performance_controller.ex:94
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr ""
 
@@ -945,18 +940,8 @@ msgid "Do you really want to delete this performance?"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:72
-msgid "The performance with edit code %{edit_code} was deleted."
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit.html.eex:2
 msgid "Edit performance"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:55
-msgid "The performance with edit code %{edit_code} was updated."
 msgstr ""
 
 #, elixir-format
@@ -965,14 +950,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:87
+#: lib/jumubase_web/views/internal/performance_view.ex:92
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:92
+#: lib/jumubase_web/views/internal/performance_view.ex:97
 msgid "Filter active"
 msgstr ""
 
@@ -1004,4 +989,39 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:32
 msgid "for Kimu, there’s a %{form_link}"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:17
+msgid "Manage performances"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:55
+msgid "The performance was created."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:79
+msgid "The performance was updated."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:92
+msgid "The performance was deleted."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/new.html.eex:13
+msgid "Create Performance"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/new.html.eex:2
+msgid "New Performance"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:55
+msgid "Add Performance"
 msgstr ""

@@ -14,7 +14,7 @@
       </div>
       <ul class="list-group">
         <li class="list-group-item">
-          <%= icon_link "music", gettext("Show performances"),
+          <%= icon_link "music", gettext("Manage performances"),
             Routes.internal_contest_performance_path(@conn, :index, @contest)
             %>
         </li>

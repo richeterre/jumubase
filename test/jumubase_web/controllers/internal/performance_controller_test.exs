@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   use JumubaseWeb.ConnCase
+  alias Jumubase.Repo
   alias Jumubase.Showtime.Performance
 
   setup config do
@@ -65,6 +66,66 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       p = insert_performance(c)
       conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
       assert_unauthorized_guest(conn)
+    end
+  end
+
+  describe "new/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users fill in a new performance", %{conn: conn, contest: c} do
+        conn = conn |> attempt_new(c)
+        assert html_response(conn, 200) =~ "New Performance"
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers fill in a new performance for an own contest", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn = conn |> attempt_new(own_c)
+      assert html_response(conn, 200) =~ "New Performance"
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to fill in a new performance for a foreign contest", %{conn: conn, contest: c} do
+      conn = conn |> attempt_new(c)
+      assert_unauthorized_user(conn)
+    end
+
+    test "redirects guests when trying to fill in a new performance", %{conn: conn, contest: c} do
+      conn = conn |> attempt_new(c)
+      assert_unauthorized_guest(conn)
+    end
+  end
+
+  describe "create/2" do
+    setup %{contest: c} do
+      [contest: c |> with_contest_categories]
+    end
+
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users create a performance", %{conn: conn, contest: c} do
+        conn
+        |> attempt_create(c)
+        |> assert_create_success(c, Repo.one(Performance))
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers create a performance from an own contest", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u) |> with_contest_categories
+      conn
+      |> attempt_create(own_c)
+      |> assert_create_success(own_c, Repo.one(Performance))
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to create a performance from a foreign contest", %{conn: conn, contest: c} do
+      conn |> attempt_create(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to create a performance", %{conn: conn, contest: c} do
+      conn |> attempt_create(c) |> assert_unauthorized_guest
     end
   end
 
@@ -154,7 +215,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       test "lets #{role} users delete a performance", %{conn: conn, contest: c} do
         p = insert_performance(c)
         conn = delete(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
-        assert_deletion_success(conn, c, p)
+        assert_deletion_success(conn, c)
       end
     end
 
@@ -163,7 +224,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       own_c = insert_own_contest(u)
       p = insert_performance(own_c)
       conn = delete(conn, Routes.internal_contest_performance_path(conn, :delete, own_c, p))
-      assert_deletion_success(conn, own_c, p)
+      assert_deletion_success(conn, own_c)
     end
 
     @tag login_as: "local-organizer"
@@ -186,17 +247,38 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     insert(:contest, host: insert(:host, users: [user]))
   end
 
-  defp assert_update_success(conn, contest, %Performance{edit_code: ec}) do
-    assert_success(conn, contest, "The performance with edit code #{ec} was updated.")
+  defp attempt_new(conn, contest) do
+    get(conn, Routes.internal_contest_performance_path(conn, :new, contest))
   end
 
-  defp assert_deletion_success(conn, contest, %Performance{edit_code: ec}) do
-    assert_success(conn, contest, "The performance with edit code #{ec} was deleted.")
+  defp attempt_create(conn, contest) do
+    [cc, _] = contest.contest_categories
+    params = valid_performance_params(cc)
+    post(conn, Routes.internal_contest_performance_path(conn, :create, contest), params)
   end
 
-  defp assert_success(conn, contest, message) do
-    redirect_path = Routes.internal_contest_performance_path(conn, :index, contest)
+  defp assert_create_success(conn, contest, performance) do
+    assert_success(conn,
+      Routes.internal_contest_performance_path(conn, :show, contest, performance),
+      "The performance was created."
+    )
+  end
 
+  defp assert_update_success(conn, contest, performance) do
+    assert_success(conn,
+      Routes.internal_contest_performance_path(conn, :show, contest, performance),
+      "The performance was updated."
+    )
+  end
+
+  defp assert_deletion_success(conn, contest) do
+    assert_success(conn,
+      Routes.internal_contest_performance_path(conn, :index, contest),
+      "The performance was deleted."
+    )
+  end
+
+  defp assert_success(conn, redirect_path, message) do
     assert redirected_to(conn) == redirect_path
     conn = get(recycle(conn), redirect_path) # Follow redirection
     assert html_response(conn, 200) =~ message

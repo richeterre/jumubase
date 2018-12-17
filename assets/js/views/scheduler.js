@@ -98,25 +98,29 @@ const scheduler = options => {
   }
 
   $.fn.extend({
+    // Updates a spacer's minutes with the given height.
     setMinutesFromHeight: function(height) {
       const minutes = minutesFromPixels(height)
       return $(this)
       .children("span").html(`Pause (${minutes} min)`).parent()
       .attr("data-minutes", minutes)
     },
+    // Exports a column to a data structure suitable for submission.
     getColumnData: function() {
       const date = $(this).attr("data-date")
-      return $.makeArray(
-        $(this).children(".schedule-item").map(function(index, item) {
-          const id = $(item).attr("data-id")
-          const time = timeFromIndex(index)
-          return id && {
-            id,
-            stageId: date ? options.stageId : null,
-            stageTime: date ? `${date}T${time}` : null,
-          }
-        })
-      ).reduce((acc, item) => {
+      return $(this).children(".schedule-item").map(function(index, item) {
+        const id = $(item).attr("data-id")
+        const time = timeFromIndex(index)
+        return id && {
+          id,
+          stageId: date ? options.stageId : null,
+          stageTime: date ? `${date}T${time}` : null,
+        }
+      }).toSchedulerMap()
+    },
+    // Creates a map connecting performance ids to stage times.
+    toSchedulerMap: function() {
+      return $.makeArray($(this)).reduce((acc, item) => {
         acc[item.id] = item
         return acc
       }, {})

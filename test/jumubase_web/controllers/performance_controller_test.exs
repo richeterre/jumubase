@@ -99,7 +99,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     end
 
     test "returns an error when the contest doesn't match", %{conn: conn, performance: p} do
-      other_c = insert(:contest)
+      other_c = insert(:contest, deadline: @today)
 
       assert_error_sent 404, fn ->
         get(conn, Routes.performance_path(conn, :edit, other_c, p, edit_code: p.edit_code))
@@ -142,7 +142,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
     test "returns an error when the contest doesn't match", %{conn: conn, contest: c, performance: p} do
       [_cc1, cc2] = c.contest_categories
-      other_c = insert(:contest)
+      other_c = insert(:contest, deadline: @today)
       params = valid_performance_params(cc2)
 
       assert_error_sent 404, fn ->

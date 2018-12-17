@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { DateTime } from 'luxon'
 import 'jquery-ui/ui/widgets/sortable'
 import 'jquery-ui/ui/widgets/resizable'
 import { isEmpty } from 'lodash'
@@ -12,6 +13,7 @@ const scheduler = options => {
     handles: "s",
     resize: function(e, ui) {
       $(this).setMinutesFromHeight(ui.size.height)
+      submitColumn($(this).parent(".schedule-column").getColumnData())
     },
   }
 
@@ -28,8 +30,7 @@ const scheduler = options => {
   $('.schedule-column[data-date!=""]').sortable({
     connectWith: ".schedule-column",
     update: function() {
-      const data = $(this).getColumnData()
-      !isEmpty(data) && submitColumn(data)
+      submitColumn($(this).getColumnData())
     },
   })
 
@@ -62,6 +63,8 @@ const scheduler = options => {
   }
 
   function submitColumn(data) {
+    if (isEmpty(data)) return
+
     const { csrfToken, submitPath } = options
 
     $.ajax(submitPath, {
@@ -73,12 +76,14 @@ const scheduler = options => {
         performances: data,
       },
     }).fail(function() {
-      alert("Something went wrong") // TODO
+      // TODO
     })
   }
 
-  function timeFromIndex(index) {
-    return `0${index}:00:00Z`
+  function calculateStageTime(date, minutes) {
+    return DateTime.fromISO(date, { zone: "UTC" })
+      .plus({hours: 9, minutes: minutes})
+      .toISO()
   }
 
   function pixelsFromMinutes(minutes) {
@@ -108,15 +113,23 @@ const scheduler = options => {
     // Exports a column to a data structure suitable for submission.
     getColumnData: function() {
       const date = $(this).attr("data-date")
-      return $(this).children(".schedule-item").map(function(index, item) {
+      const items = $.makeArray($(this).children(".schedule-item"))
+      const { data } = items.reduce((acc, item) => {
+        // Add performance to data object
         const id = $(item).attr("data-id")
-        const time = timeFromIndex(index)
-        return id && {
-          id,
-          stageId: date ? options.stageId : null,
-          stageTime: date ? `${date}T${time}` : null,
+        if (id) {
+          acc["data"][id] = {
+            stageId: date ? options.stageId : null,
+            stageTime: date ? calculateStageTime(date, acc.minutes) : null,
+          }
         }
-      }).toSchedulerMap()
+
+        // Update accumulated minutes for next performance
+        const itemMinutes = $(item).attr("data-minutes")
+        acc.minutes = acc.minutes + parseInt(itemMinutes)
+        return acc
+      }, { minutes: 0, data: {} })
+      return data
     },
     // Creates a map connecting performance ids to stage times.
     toSchedulerMap: function() {

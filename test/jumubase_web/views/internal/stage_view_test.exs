@@ -13,21 +13,26 @@ defmodule JumubaseWeb.Internal.StageViewTest do
     end
   end
 
-  describe "schedule_minutes/1" do
+  describe "scheduled_minutes/1" do
     test "rounds the performance's duration to the nearest 5-minute multiple" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 0)])
       p2 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 1)])
-      assert StageView.schedule_minutes(p1) == 10
-      assert StageView.schedule_minutes(p2) == 15
+      assert StageView.scheduled_minutes(p1) == 10
+      assert StageView.scheduled_minutes(p2) == 15
     end
   end
 
   describe "item_height/1" do
-    test "converts the performance's duration to the right pixel amount" do
+    test "converts a performance's duration to pixels" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 0)])
       p2 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 1)])
       assert StageView.item_height(p1) == "40px"
       assert StageView.item_height(p2) == "60px"
+    end
+
+    test "converts minutes to pixels" do
+      assert StageView.item_height(10) == "40px"
+      assert StageView.item_height(15) == "60px"
     end
   end
 

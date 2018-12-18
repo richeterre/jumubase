@@ -36,6 +36,37 @@ defmodule JumubaseWeb.Internal.StageViewTest do
     end
   end
 
+  describe "spacer_map/1" do
+    setup do
+      [contest: insert(:contest), date: ~D[2019-01-01]]
+    end
+
+    test "returns a spacer minute map for a single-item performance list", %{contest: c, date: date} do
+      stage_time = to_utc_datetime(date, ~T[09:30:00])
+      p = insert_performance(c, stage_time: stage_time)
+      assert StageView.spacer_map(date, [p]) == %{p.id => 30}
+    end
+
+    test "returns a spacer minute map for many performances", %{contest: c, date: date} do
+      reference_time = to_utc_datetime(date, ~T[09:00:00])
+
+      p1 = insert_performance(c,
+        stage_time: Timex.shift(reference_time, minutes: 10),
+        pieces: [build(:piece, minutes: 12, seconds: 0)] # taking up 15 minutes
+      )
+      p2 = insert_performance(c, stage_time: Timex.shift(reference_time, minutes: 30))
+
+      assert StageView.spacer_map(date, [p1, p2]) == %{
+        p1.id => 10,
+        p2.id => 5
+      }
+    end
+
+    test "returns an empty map for an empty performance list", %{date: date} do
+      assert StageView.spacer_map(date, []) == %{}
+    end
+  end
+
   describe "playtime_percentage/1" do
     test "returns what percentage of the performance's schedule minutes is taken up by playtime" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 12, seconds: 0)])

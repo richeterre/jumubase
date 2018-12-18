@@ -61,4 +61,21 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
       assert ContestView.dates(contest) == "1 January 2019"
     end
   end
+
+  describe "schedule_link_path/2" do
+    test "returns a direct link to the stage scheduler if the contest has only one stage" do
+      s = insert(:stage)
+      c = insert(:contest, host: build(:host, stages: [s]))
+      conn = build_conn()
+      assert ContestView.schedule_link_path(conn, c)
+        == Routes.internal_contest_stage_schedule_path(conn, :schedule, c, s)
+    end
+
+    test "returns a link to the stage selection if the contest has many stages" do
+      c = insert(:contest, host: build(:host, stages: build_list(2, :stage)))
+      conn = build_conn()
+      assert ContestView.schedule_link_path(conn, c)
+        == Routes.internal_contest_stage_path(conn, :index, c)
+    end
+  end
 end

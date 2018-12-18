@@ -1,0 +1,16 @@
+<h2>
+  <%= gettext("Schedule performances") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<p class="lead"><%= gettext("Please choose a stage") %>:</p>
+
+<%= for stage <- @stages do %>
+  <%= link stage.name,
+    to: Routes.internal_contest_stage_schedule_path(@conn, :schedule, @contest, stage),
+    class: "btn btn-default"
+    %>
+<% end %>

@@ -22,6 +22,7 @@ defmodule JumubaseWeb.ConnCase do
       import Jumubase.Factory
       import Jumubase.TestHelpers
       import JumubaseWeb.AuthTestHelpers
+      import JumubaseWeb.DateHelpers
       alias JumubaseWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing

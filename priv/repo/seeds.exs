@@ -32,6 +32,12 @@ Repo.transaction fn ->
   host2 = insert(:host, name: "DS Stockholm", city: "Stockholm", country_code: "SE", time_zone: "Europe/Stockholm", latitude: 59.3422421, longitude: 18.0699085)
   insert(:host, name: "DS Warschau", city: "Warschau", country_code: "PL", time_zone: "Europe/Warsaw", latitude: 52.1577924, longitude: 21.0691116)
 
+  # Create demo stages
+  insert(:stage, host: host1, name: "Aula")
+  insert(:stage, host: host1, name: "Musikraum")
+  insert(:stage, host: host2, name: "Aula")
+  insert(:stage, host: host3, name: "Lynn Hall")
+
   # Create demo users
 
   User.create_changeset(%User{}, %{

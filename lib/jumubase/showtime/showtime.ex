@@ -6,7 +6,7 @@ defmodule Jumubase.Showtime do
 
   import Ecto.Query
   import Ecto.Changeset
-  alias Ecto.Changeset
+  alias Ecto.{Changeset, Multi}
   alias Jumubase.Repo
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Contest, ContestCategory}
@@ -27,6 +27,15 @@ defmodule Jumubase.Showtime do
   def list_performances(%Contest{id: id}, %PerformanceFilter{} = filter) do
     performances_query(id)
     |> apply_filter(filter)
+    |> Repo.all
+  end
+
+  @doc """
+  Returns all performances without a stage time from the contest.
+  """
+  def unscheduled_performances(%Contest{id: id}) do
+    performances_query(id)
+    |> where([p], is_nil(p.stage_time))
     |> Repo.all
   end
 
@@ -121,6 +130,45 @@ defmodule Jumubase.Showtime do
     Repo.delete!(performance)
   end
 
+  @doc """
+  Reschedules performances in the contest based on the given data
+  (a list of maps linking performance ids, stage ids and stage times).
+  """
+  def reschedule_performances(%Contest{} = contest, items) do
+    multi = Enum.reduce(items, Multi.new, fn item, acc ->
+      %{id: id, stage_id: s_id, stage_time: time} = item
+      changeset =
+        get_performance!(contest, id)
+        |> Performance.stage_changeset(%{stage_id: s_id, stage_time: time})
+      Multi.update(acc, id, changeset)
+    end)
+
+    case Repo.transaction(multi) do
+      {:ok, result} ->
+        {:ok, Enum.map(result, fn
+          {id, %Performance{stage_time: stage_time}} -> {id, stage_time}
+        end)}
+      {:error, failed_p_id, failed_cs, _} ->
+        {:error, failed_p_id, failed_cs}
+    end
+  end
+
+  @doc """
+  Returns the performance's total duration as a Timex.Duration.
+  """
+  def total_duration(%Performance{pieces: pieces}) do
+    pieces
+    |> Enum.reduce(Timex.Duration.zero, fn piece, total ->
+      total
+      |> Timex.Duration.add(Timex.Duration.from_minutes(piece.minutes))
+      |> Timex.Duration.add(Timex.Duration.from_seconds(piece.seconds))
+    end)
+  end
+
+  def load_pieces(performances) do
+    performances |> Repo.preload(:pieces)
+  end
+
   def load_contest_category(%Performance{} = performance) do
     performance |> Repo.preload(contest_category: [:contest, :category])
   end
@@ -144,16 +192,22 @@ defmodule Jumubase.Showtime do
     from p in Performance,
       join: cc in assoc(p, :contest_category),
       where: cc.contest_id == ^contest_id,
+      order_by: [p.stage_time, cc.inserted_at, p.age_group, p.inserted_at],
       preload: [
-        contest_category: {cc, :category},
-        appearances: :participant
+        [contest_category: {cc, :category}],
+        [appearances: :participant],
+        :stage
       ]
   end
 
-  def apply_filter(query, %PerformanceFilter{} = filter) do
+  defp apply_filter(query, %PerformanceFilter{} = filter) do
     filter_map = PerformanceFilter.to_filter_map(filter)
 
     Enum.reduce(filter_map, query, fn
+      {:stage_date, date}, query ->
+        on_date(query, date)
+      {:stage_id, s_id}, query ->
+        on_stage(query, s_id)
       {:genre, genre}, query ->
         with_genre(query, genre)
       {:contest_category_id, cc_id}, query ->
@@ -219,6 +273,14 @@ defmodule Jumubase.Showtime do
       other_result ->
         other_result
     end
+  end
+
+  defp on_date(query, date) do
+    from p in query, where: fragment("?::date", p.stage_time) == ^date
+  end
+
+  defp on_stage(query, stage_id) do
+    from p in query, where: p.stage_id == ^stage_id
   end
 
   defp with_genre(query, genre) do

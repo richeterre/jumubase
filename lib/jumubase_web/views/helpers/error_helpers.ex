@@ -4,6 +4,7 @@ defmodule JumubaseWeb.ErrorHelpers do
   """
 
   use Phoenix.HTML
+  alias Ecto.Changeset
 
   @doc """
   Generates tag for inlined form input errors.
@@ -23,9 +24,16 @@ defmodule JumubaseWeb.ErrorHelpers do
   end
 
   @doc """
-  Translates an error message using gettext.
+  Traverses the changeset's errors and translates them.
   """
-  def translate_error({msg, opts}) do
+  def get_translated_errors(%Changeset{} = cs) do
+    Changeset.traverse_errors(cs, &translate_error/1)
+  end
+
+  # Private helpers
+
+  # Translates an error message using gettext.
+  defp translate_error({msg, opts}) do
     # Because error messages were defined within Ecto, we must
     # call the Gettext module passing our Gettext backend. We
     # also use the "errors" domain as translations are placed

@@ -10,7 +10,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     composer_dates: 1, duration: 1, epoch_tag: 1, person_name: 1
   ]
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{AgeGroups, Contest}
+  alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
+  alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
 
   def render("scripts.index.html", _assigns) do
@@ -27,6 +28,25 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
   end
 
+  def render("reschedule_success.json", %{stage_times: stage_times}) do
+    stage_times
+    |> Enum.map(fn {id, st} -> {id, %{stageTime: st}} end)
+    |> Enum.into(%{})
+  end
+
+  def render("reschedule_failure.json", %{performance_id: p_id, errors: errors}) do
+    %{error: %{
+      performanceId: p_id,
+      errors: errors
+    }}
+  end
+
+  def stage_info(performance, style \\ :full)
+  def stage_info(%Performance{stage: %Stage{name: name}, stage_time: stage_time}, style) do
+    {format_datetime(stage_time, style), name}
+  end
+  def stage_info(%Performance{stage: nil, stage_time: nil}, _style), do: nil
+
   def category_name(%Performance{} = performance) do
     performance.contest_category.category.name
   end
@@ -38,11 +58,29 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   @doc """
   Returns the performance's formatted duration.
   """
-  def total_duration(%Performance{pieces: pieces}) do
-    pieces
-    |> calculate_total_duration
+  def formatted_duration(%Performance{} = performance) do
+    Showtime.total_duration(performance)
     |> Timex.Duration.to_time!
     |> Timex.Format.DateTime.Formatter.format!("%-M'%S", :strftime)
+  end
+
+  @doc """
+  Returns the contest's dates, suitable for a filter form.
+  """
+  def stage_date_filter_options(%Contest{} = contest) do
+    Foundation.date_range(contest)
+    |> Enum.map(&{format_date(&1), Date.to_iso8601(&1)})
+  end
+
+  @doc """
+  Returns the contest's dates, suitable for a filter form.
+  """
+  def stage_filter_options(%Contest{} = contest) do
+    contest
+    |> Foundation.load_stages
+    |> Map.get(:host)
+    |> Map.get(:stages)
+    |> Enum.map(&{&1.name, &1.id})
   end
 
   @doc """
@@ -78,14 +116,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   # Private helpers
 
-  defp calculate_total_duration(pieces) do
-    pieces
-    |> Enum.reduce(Timex.Duration.zero, fn piece, total ->
-      total
-      |> Timex.Duration.add(Timex.Duration.from_minutes(piece.minutes))
-      |> Timex.Duration.add(Timex.Duration.from_seconds(piece.seconds))
-    end)
-  end
 
   defp count_tag(count) do
     content_tag :span,

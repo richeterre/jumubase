@@ -89,6 +89,48 @@ defmodule Jumubase.PerformanceTest do
     end
   end
 
+  describe "stage_changeset/2" do
+    @stage_id 1
+    @stage_time "2019-01-01T07:00:00Z"
+
+    test "is valid when both stage and stage time change" do
+      valid_attrs = %{"stage_id" => @stage_id, "stage_time" => @stage_time}
+      changeset = Performance.stage_changeset(%Performance{}, valid_attrs)
+      assert changeset.valid?
+    end
+
+    test "is valid when stage time is already set and stage changes" do
+      attrs = %{"stage_id" => @stage_id}
+      changeset = Performance.stage_changeset(%Performance{stage_time: @stage_time}, attrs)
+      assert changeset.valid?
+    end
+
+    test "is valid when stage is already set and stage time changes" do
+      attrs = %{"stage_time" => @stage_time}
+      stage = insert(:stage)
+      changeset = Performance.stage_changeset(%Performance{stage_id: stage.id}, attrs)
+      assert changeset.valid?
+    end
+
+    test "is valid when neither stage nor stage time is set" do
+      attrs = %{}
+      changeset = Performance.stage_changeset(%Performance{}, attrs)
+      assert changeset.valid?
+    end
+
+    test "is invalid without a stage time when the stage changes" do
+      attrs = %{"stage_id" => @stage_id}
+      changeset = Performance.stage_changeset(%Performance{}, attrs)
+      refute changeset.valid?
+    end
+
+    test "is invalid without a stage when the stage time changes" do
+      attrs = %{"stage_time" => @stage_time}
+      changeset = Performance.stage_changeset(%Performance{}, attrs)
+      refute changeset.valid?
+    end
+  end
+
   # Private helpers
 
   defp valid_performance_attrs(contest_category) do

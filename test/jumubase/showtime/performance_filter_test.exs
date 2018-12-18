@@ -3,8 +3,10 @@ defmodule Jumubase.PerformanceFilterTest do
   alias Jumubase.Showtime.PerformanceFilter
 
   @valid_params %{
+    stage_date: ~D[2019-01-01],
+    stage_id: 1,
     genre: "kimu",
-    contest_category_id: 1,
+    contest_category_id: 2,
     age_group: "Ia",
   }
 
@@ -23,17 +25,35 @@ defmodule Jumubase.PerformanceFilterTest do
   describe "from_params/1" do
     test "creates a filter struct from valid params" do
       assert PerformanceFilter.from_params(@valid_params) ==
-        %PerformanceFilter{genre: "kimu", contest_category_id: 1, age_group: "Ia"}
+        %PerformanceFilter{
+          stage_date: ~D[2019-01-01],
+          stage_id: 1,
+          genre: "kimu",
+          contest_category_id: 2,
+          age_group: "Ia"
+        }
     end
 
     test "sets nil values for missing params" do
       assert PerformanceFilter.from_params(%{}) ==
-        %PerformanceFilter{genre: nil, contest_category_id: nil, age_group: nil}
+        %PerformanceFilter{
+          stage_date: nil,
+          stage_id: nil,
+          genre: nil,
+          contest_category_id: nil,
+          age_group: nil
+        }
     end
 
     test "ignores irrelevant params" do
       assert PerformanceFilter.from_params(%{age_group: "Ia", foo: "bar"}) ==
-        %PerformanceFilter{genre: nil, contest_category_id: nil, age_group: "Ia"}
+        %PerformanceFilter{
+          stage_date: nil,
+          stage_id: nil,
+          genre: nil,
+          contest_category_id: nil,
+          age_group: "Ia"
+        }
     end
   end
 

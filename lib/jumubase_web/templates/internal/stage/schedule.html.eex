@@ -1,0 +1,62 @@
+<h2>
+  <%= gettext("Schedule performances") %>: <%= @stage.name %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<%= if @other_stages != [] do %>
+<span class="text-muted">
+  <%= gettext("Switch to stage") %>:
+  <%= stage_links(@conn, @contest, @other_stages, " · ") %>
+</span>
+<% end %>
+
+
+<hr>
+
+<div class="row">
+  <div class="col-md-3">
+    <h4><%= gettext("Unscheduled") %></h4>
+
+    <select id="cc-select" class="form-control input-sm">
+      <option value=""><%= gettext("All categories") %></option>
+      <%= for {name, id} <- cc_filter_options(@contest) do %>
+      <option value="<%= id %>"><%= name %></option>
+      <% end %>
+    </select>
+
+    <div class="schedule-column" data-date="">
+      <%=
+        for p <- @performances[:unscheduled] do
+          render("_performance_item.html", performance: p)
+        end
+      %>
+    </div>
+  </div>
+
+  <%= for date <- @date_range do %>
+  <div class="col-md-3">
+    <h4><%= format_date(date) %></h4>
+
+    <div class="schedule-column" data-date="<%= date %>">
+      <%
+        performances = @performances[date]
+        spacer_map = spacer_map(date, performances)
+      %>
+      <%= for p <- performances do %>
+        <%= if (minutes = spacer_map[p.id]) > 0 do %>
+          <%= render("_spacer_item.html", minutes: minutes) %>
+        <% end %>
+        <%= render("_performance_item.html", performance: p) %>
+      <% end %>
+    </div>
+
+    <button
+      class="add-spacer-button btn btn-link btn-sm"
+      data-target-date="<%= date %>"
+      >
+      <%= gettext("Insert break") %>
+    </button>
+  </div>
+  <% end %>
+</div>

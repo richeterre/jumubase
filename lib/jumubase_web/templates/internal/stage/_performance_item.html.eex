@@ -1,0 +1,23 @@
+<div
+  class="schedule-item"
+  title="<%= participant_names(@performance) %>"
+  data-cc-id="<%= @performance.contest_category.id %>"
+  data-id="<%= @performance.id %>"
+  data-minutes="<%= scheduled_minutes(@performance) %>"
+  style="height: <%= item_height(@performance) %>"
+  >
+  <div
+    class="playtime-bar"
+    style="height: <%= playtime_percentage(@performance) %>"
+    >
+  </div>
+  <div class="content">
+    <span id="stage-time">
+      <%= format_datetime(@performance.stage_time, :time) %>
+    </span>
+    <%= short_category_info(@performance) %>
+    <span class="text-muted pull-right">
+      <%= formatted_duration(@performance) %>
+    </span>
+  </div>
+</div>

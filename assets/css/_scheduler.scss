@@ -1,0 +1,64 @@
+#cc-select { margin-bottom: 0.5 * $line-height-computed; }
+
+$column-border-width: 1px;
+$item-spacing: 4px;
+$pixels-per-minute: 4px;
+
+.schedule-column {
+  border: $column-border-width solid #eee;
+  list-style-type: none;
+  min-height: 10 * $pixels-per-minute + 2 * $item-spacing + 2 * $column-border-width;
+  padding: $item-spacing 0 0 0;
+
+  .schedule-item {
+    background-color: #eee;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin: $item-spacing;
+    margin-top: 0;
+    position: relative;
+
+    .playtime-bar {
+      background-color: #ccc;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 4px;
+    }
+
+    .content {
+      left: 0;
+      padding: 1px 5px;
+      position: absolute;
+      right: 5px;
+      top: 0;
+    }
+
+    #stage-time {
+      display: inline-block;
+      width: 3em;
+    }
+  }
+
+  .spacer {
+    padding: 0 5px;
+    position: relative;
+
+    &.ui-resizable-resizing { cursor: ns-resize; }
+
+    .remove-spacer-button { font-size: 18px; }
+
+    .ui-resizable-handle {
+      background-color: #ddd;
+      border-radius: 5px;
+      bottom: 4px;
+      cursor: ns-resize;
+      height: 5px;
+      left: 0;
+      margin: 0 auto;
+      position: absolute;
+      right: 0;
+      width: 12.5%;
+    }
+  }
+}

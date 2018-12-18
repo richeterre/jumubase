@@ -6,6 +6,8 @@ defmodule Jumubase.Showtime.PerformanceFilter do
   @primary_key false
 
   embedded_schema do
+    field :stage_date, :date, default: nil
+    field :stage_id, :id, default: nil
     field :genre, :string, default: nil
     field :contest_category_id, :id, default: nil
     field :age_group, :string, default: nil
@@ -16,7 +18,7 @@ defmodule Jumubase.Showtime.PerformanceFilter do
   """
   def changeset(params) do
     %PerformanceFilter{}
-    |> cast(params, [:genre, :contest_category_id, :age_group])
+    |> cast(params, [:stage_date, :stage_id, :genre, :contest_category_id, :age_group])
   end
 
   @doc """

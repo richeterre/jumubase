@@ -8,7 +8,7 @@ defmodule Jumubase.Foundation do
   alias Jumubase.Repo
   alias Jumubase.Utils
   alias Jumubase.Accounts.User
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
 
   ## Hosts
 
@@ -98,6 +98,13 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
+  Returns the date range on which the contest takes place.
+  """
+  def date_range(%Contest{start_date: start_date, end_date: end_date}) do
+    Date.range(start_date, end_date)
+  end
+
+  @doc """
   Returns the most common deadline within the given contests.
   """
   def general_deadline(contests) do
@@ -136,6 +143,17 @@ defmodule Jumubase.Foundation do
     |> Repo.get!(id)
   end
 
+  ## Stages
+
+  def get_stage!(%Contest{id: contest_id}, id) do
+    query = from s in Stage,
+      join: h in assoc(s, :host),
+      join: c in assoc(h, :contests),
+      where: c.id == ^contest_id
+
+    Repo.get!(query, id)
+  end
+
   ## Preloading
 
   def load_host_users(%Contest{} = contest) do
@@ -144,6 +162,10 @@ defmodule Jumubase.Foundation do
 
   def load_contest_categories(%Contest{} = contest) do
     Repo.preload(contest, [contest_categories: :category])
+  end
+
+  def load_stages(%Contest{} = contest) do
+    Repo.preload(contest, [host: :stages])
   end
 
   # Private helpers

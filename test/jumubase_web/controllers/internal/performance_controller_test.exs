@@ -241,6 +241,47 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "reschedule/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users reschedule performances", %{conn: conn, contest: c} do
+        test_reschedule_success(conn, c)
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers reschedule performances from an own contest", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      test_reschedule_success(conn, own_c)
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to reschedule performances from a foreign contest", %{conn: conn, contest: c} do
+      conn |> attempt_reschedule(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to reschedule performances", %{conn: conn, contest: c} do
+      conn |> attempt_reschedule(c) |> assert_unauthorized_guest
+    end
+
+    @tag login_as: "admin"
+    test "returns an error for invalid reschedule params", %{conn: conn, contest: c} do
+      p = insert_performance(c)
+      params = %{"performances" => %{
+        p.id => %{"stageId" => nil, "stageTime" => "2019-01-01T07:00:00"}}
+      }
+      conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, c), params)
+      assert json_response(conn, 422) == %{
+        "error" => %{
+          "performanceId" => to_string(p.id),
+          "errors" => %{
+            "base" => ["The performance can either have both stage and stage time, or neither."]
+          }
+        }
+      }
+    end
+  end
+
   # Private helpers
 
   defp insert_own_contest(user) do
@@ -257,28 +298,58 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     post(conn, Routes.internal_contest_performance_path(conn, :create, contest), params)
   end
 
+  defp attempt_reschedule(conn, contest) do
+    p = insert_performance(contest, stage: build(:stage), stage_time: Timex.now)
+    params = %{"peformances" => %{p.id => %{"stageId" => nil, "stageTime" => nil}}}
+    conn |> patch(Routes.internal_contest_performance_path(conn, :reschedule, contest), params)
+  end
+
   defp assert_create_success(conn, contest, performance) do
-    assert_success(conn,
+    assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :show, contest, performance),
       "The performance was created."
     )
   end
 
   defp assert_update_success(conn, contest, performance) do
-    assert_success(conn,
+    assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :show, contest, performance),
       "The performance was updated."
     )
   end
 
   defp assert_deletion_success(conn, contest) do
-    assert_success(conn,
+    assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :index, contest),
       "The performance was deleted."
     )
   end
 
-  defp assert_success(conn, redirect_path, message) do
+  defp test_reschedule_success(conn, contest) do
+    [s1, s2] = insert_list(2, :stage)
+    st1 = ~N[2019-01-01T07:00:00]
+    st2 = ~N[2019-01-02T07:00:00]
+    p1 = insert_performance(contest, stage: nil, stage_time: nil)
+    p2 = insert_performance(contest, stage: s1, stage_time: st1)
+    p3 = insert_performance(contest, stage: s2, stage_time: st2)
+
+    params = %{"performances" => %{
+      p1.id => %{"stageId" => s1.id, "stageTime" => st1},
+      p2.id => %{"stageId" => s2.id, "stageTime" => st2},
+      p3.id => %{"stageId" => nil, "stageTime" => nil},
+    }}
+
+    conn = conn
+    |> patch(Routes.internal_contest_performance_path(conn, :reschedule, contest), params)
+
+    assert json_response(conn, 200) == %{
+      "#{p1.id}" => %{"stageTime" => "2019-01-01T07:00:00"},
+      "#{p2.id}" => %{"stageTime" => "2019-01-02T07:00:00"},
+      "#{p3.id}" => %{"stageTime" => nil}
+    }
+  end
+
+  defp assert_flash_redirect(conn, redirect_path, message) do
     assert redirected_to(conn) == redirect_path
     conn = get(recycle(conn), redirect_path) # Follow redirection
     assert html_response(conn, 200) =~ message

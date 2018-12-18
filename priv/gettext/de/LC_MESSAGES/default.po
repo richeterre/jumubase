@@ -228,7 +228,7 @@ msgid "Birthdate"
 msgstr "Geburtsdatum"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:24
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:27
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr "Kategorie"
@@ -261,7 +261,7 @@ msgstr "Nachname"
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:25
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:28
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr "Teilnehmer"
@@ -324,7 +324,8 @@ msgstr "Komponist"
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:11
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:12
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:9
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
 #: lib/jumubase_web/templates/internal/page/home.html.eex:37
@@ -886,7 +887,7 @@ msgid "Edit Contest"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:50
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:51
 msgid "The contest %{name} was updated."
 msgstr "Der Wettbewerb %{name} wurde aktualisiert."
 
@@ -936,7 +937,7 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:46
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:56
 msgid "Do you really want to delete this performance?"
 msgstr "Möchtest du dieses Vorspiel wirklich löschen?"
 
@@ -951,34 +952,35 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:92
+#: lib/jumubase_web/views/internal/performance_view.ex:122
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:97
+#: lib/jumubase_web/views/internal/performance_view.ex:127
 msgid "Filter active"
 msgstr "Filter aktiv"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:12
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:14
 msgid "Show all"
 msgstr "Alle anzeigen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:5
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:7
 msgid "All AGs"
 msgstr "Alle AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:4
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:6
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:22
 msgid "All categories"
 msgstr "Alle Kategorien"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:3
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:5
 msgid "All genres"
 msgstr "Alle Genres"
 
@@ -998,17 +1000,17 @@ msgid "Manage performances"
 msgstr "Vorspiele verwalten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:55
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:56
 msgid "The performance was created."
 msgstr "Das Vorspiel wurde erstellt."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:79
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:80
 msgid "The performance was updated."
 msgstr "Das Vorspiel wurde aktualisiert."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:92
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:93
 msgid "The performance was deleted."
 msgstr "Das Vorspiel wurde gelöscht."
 
@@ -1023,6 +1025,55 @@ msgid "New Performance"
 msgstr "Neues Vorspiel"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:55
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:65
 msgid "Add Performance"
 msgstr "Neues Vorspiel hinzufügen"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:59
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:32
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:2
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:2
+msgid "Schedule performances"
+msgstr "Vorspiele planen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:58
+msgid "Insert break"
+msgstr "Pause einfügen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:9
+msgid "Please choose a stage"
+msgstr "Bitte wähle eine Bühne"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:19
+msgid "Unscheduled"
+msgstr "Ohne Zeit"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:3
+msgid "All dates"
+msgstr "Alle Tage"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:4
+msgid "All stages"
+msgstr "Alle Bühnen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:26
+msgid "Stage time"
+msgstr "Vorspielzeit"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:9
+msgid "Switch to stage"
+msgstr "Zu Bühne wechseln"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
+#: lib/jumubase_web/views/internal/stage_view.ex:18
+msgid "Intermission"
+msgstr "Pause"

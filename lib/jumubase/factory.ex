@@ -3,7 +3,7 @@ defmodule Jumubase.Factory do
   import Jumubase.Showtime.Performance, only: [to_edit_code: 2]
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
   @season 56
@@ -100,6 +100,12 @@ defmodule Jumubase.Factory do
       epoch: "e",
       minutes: 3,
       seconds: 44
+    }
+  end
+
+  def stage_factory do
+    %Stage{
+      name: sequence(:name, &"Stage #{&1}")
     }
   end
 

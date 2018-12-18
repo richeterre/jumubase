@@ -50,6 +50,9 @@ A user of the software, [identified](#authentication) by their email and passwor
 __Host__<br />
 An institution, typically a school, that can host contests.
 
+__Stage__<br />
+A location where performances take place. Every host has at least one, but often several stages.
+
 __Contest__<br />
 A single or multi-day event that forms the basic entity of Jugend musiziert. Besides its associated host, it includes a _season_ (= competition year) and a _round_.
 

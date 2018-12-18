@@ -1,7 +1,7 @@
 defmodule Jumubase.ShowtimeTest do
   use Jumubase.DataCase
   alias Ecto.Changeset
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
@@ -13,28 +13,36 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "list_performances/1" do
-    test "returns the given contest's performances", %{contest: c} do
+    test "returns the given contest's performances in the right order", %{contest: c} do
+      now = Timex.now
+      later = Timex.shift(now, seconds: 1)
+
       # Performances in this contest
       [cc1, cc2] = c.contest_categories
-      p1 = insert_performance(cc1)
-      p2 = insert_performance(cc1)
-      p3 = insert_performance(cc2)
+      p1 = insert_performance(cc2)
+      p2 = insert_performance(cc2)
+      p3 = insert_performance(cc1, stage_time: later)
+      p4 = insert_performance(cc1, age_group: "III")
+      p5 = insert_performance(cc1, age_group: "II")
+      p6 = insert_performance(cc2, stage_time: now)
 
       # Performance in other contest
       other_c = insert(:contest)
       insert_performance(other_c)
 
-      assert_ids_match_unordered Showtime.list_performances(c), [p1, p2, p3]
+      # Check that performances are ordered by stage time, CC insertion, age group and insertion date
+      assert_ids_match_unordered Showtime.list_performances(c), [p6, p3, p5, p4, p1, p2]
     end
 
-    test "preloads the performances' contest categories, categories, appearances and participants", %{contest: c} do
-      insert_performance(c, appearances: build_list(1, :appearance))
+    test "preloads the performances' contest categories, categories, appearances, participants and stages", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
       assert [%Performance{
         contest_category: %ContestCategory{category: %Category{}},
         appearances: [
           %Appearance{participant: %Participant{}}
-        ]
+        ],
+        stage: %Stage{}
       }] = Showtime.list_performances(c)
     end
   end
@@ -42,21 +50,58 @@ defmodule Jumubase.ShowtimeTest do
   describe "list_performances/2" do
     test "returns all matching performances from the given contest", %{contest: c} do
       [cc1, cc2] = c.contest_categories
+      today = ~N[2019-01-01T23:59:59]
+      tomorrow = ~N[2019-01-02T00:00:00]
+
+      [s1, s2] = insert_list(2, :stage, host: c.host)
 
       filter = %PerformanceFilter{
+        stage_date: ~D[2019-01-01],
+        stage_id: s1.id,
         contest_category_id: cc1.id,
         age_group: "III"
       }
 
       # Matching performance
-      p = insert_performance(cc1, age_group: "III")
+      p = insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today)
 
       # Non-matching performances
-      insert_performance(cc1, age_group: "IV")
-      insert_performance(cc2, age_group: "III")
-      insert_performance(cc2, age_group: "IV")
+      insert_performance(cc1, age_group: "III", stage_id: s2.id, stage_time: today)
+      insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: nil)
+      insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: tomorrow)
+      insert_performance(cc1, age_group: "IV", stage_id: s1.id, stage_time: today)
+      insert_performance(cc2, age_group: "III", stage_id: s1.id, stage_time: today)
+      insert_performance(cc2, age_group: "IV", stage_id: s1.id, stage_time: today)
 
       assert_ids_match_unordered Showtime.list_performances(c, filter), [p]
+    end
+  end
+
+  describe "unscheduled_performances/1" do
+    test "returns all performances without a stage time from the contest", %{contest: c} do
+      # Matching performances
+      [cc1, cc2] = c.contest_categories
+      p1 = insert_performance(cc1, stage_time: nil)
+      p2 = insert_performance(cc2, stage_time: nil)
+
+      # Non-matching performances
+      insert_performance(cc1, stage_time: Timex.now)
+      other_c = insert(:contest)
+      insert_performance(other_c, stage_time: nil)
+
+      assert_ids_match_unordered Showtime.unscheduled_performances(c), [p1, p2]
+    end
+
+    test "preloads the performances' contest categories, categories, appearances, participants and stages", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
+
+      assert [%Performance{
+        contest_category: %ContestCategory{category: %Category{}},
+        appearances: [
+          %Appearance{participant: %Participant{}}
+        ],
+        stage: %Stage{}
+      }] = Showtime.unscheduled_performances(c)
     end
   end
 
@@ -615,6 +660,69 @@ defmodule Jumubase.ShowtimeTest do
         Showtime.delete_performance!(performance)
       end
     end
+  end
+
+  describe "reschedule_performances/2" do
+    test "updates performances according to the given data", %{contest: c} do
+      st1 = ~N[2019-01-01T07:00:00]
+      st2 = ~N[2019-01-02T07:00:00]
+
+      [%{id: s1_id} = s1, %{id: s2_id} = s2] = insert_list(2, :stage)
+      p1 = insert_performance(c, stage: nil, stage_time: nil)
+      p2 = insert_performance(c, stage: s1, stage_time: st1)
+      p3 = insert_performance(c, stage: s2, stage_time: st2)
+
+      items = [
+        %{id: p1.id, stage_id: s1.id, stage_time: st1},
+        %{id: p2.id, stage_id: s2.id, stage_time: st2},
+        %{id: p3.id, stage_id: nil, stage_time: nil},
+      ]
+
+      assert {:ok, stage_times} = Showtime.reschedule_performances(c, items)
+      assert stage_times == [
+        {p1.id, st1},
+        {p2.id, st2},
+        {p3.id, nil}
+      ]
+      assert %{stage_id: ^s1_id, stage_time: ^st1} = Repo.get(Performance, p1.id)
+      assert %{stage_id: ^s2_id, stage_time: ^st2} = Repo.get(Performance, p2.id)
+      assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p3.id)
+    end
+
+    test "cancels the transaction with an error if any item has invalid data", %{contest: c} do
+      stage_time = ~N[2019-01-01T07:00:00]
+
+      %{id: s_id} = s = insert(:stage)
+      %{id: p1_id} = p1 = insert_performance(c, stage: nil, stage_time: nil)
+      p2 = insert_performance(c, stage: s, stage_time: stage_time)
+
+      items = [
+        %{id: p1.id, stage_id: s.id, stage_time: nil},
+        %{id: p2.id, stage_id: nil, stage_time: nil},
+      ]
+
+      assert {:error, ^p1_id, %Changeset{} = cs} = Showtime.reschedule_performances(c, items)
+      assert length(cs.errors) == 1
+      assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p1.id)
+      assert %{stage_id: ^s_id, stage_time: ^stage_time} = Repo.get(Performance, p2.id)
+    end
+  end
+
+  describe "total_duration/1" do
+    test "returns the total duration of a performance" do
+      p = build(:performance, pieces: [
+        build(:piece, minutes: 1, seconds: 59),
+        build(:piece, minutes: 2, seconds: 34)
+      ])
+      assert Showtime.total_duration(p) == Timex.Duration.from_clock({0, 4, 33, 0})
+    end
+  end
+
+  test "load_pieces/1 preloads a performance's pieces", %{contest: c} do
+    insert_performance(c, pieces: build_list(1, :piece))
+    performance = Repo.one(Performance)
+
+    assert %{pieces: [%Piece{}]} = performance |> Showtime.load_pieces
   end
 
   test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do

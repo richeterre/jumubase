@@ -3,6 +3,7 @@ $font-family-sans-serif: Lato, sans-serif;
 $icon-font-path: "/fonts/"; // use fonts from priv/static/fonts
 
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "_scheduler.scss";
 
 body {
   // Add vertical space around body
@@ -75,14 +76,6 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
     span.filter-count { vertical-align: middle; }
 
     &:last-of-type { margin-top: 0.5 * $line-height-computed; }
-  }
-
-  @media (min-width: $screen-sm-min) {
-    .form-section {
-      display: inline-block;
-
-      &:last-of-type { margin: 0 0 0 1.5em; }
-    }
   }
 }
 

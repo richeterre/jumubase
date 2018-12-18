@@ -3,7 +3,7 @@ defmodule Jumubase.FoundationTest do
   alias Ecto.Changeset
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
 
   describe "list_hosts/0 " do
     test "returns all hosts" do
@@ -282,6 +282,15 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "date_range/1" do
+    test "returns the date range on which the contest takes place" do
+      start_date = ~D[2019-01-01]
+      end_date = ~D[2019-01-03]
+      contest = insert(:contest, start_date: start_date, end_date: end_date)
+      assert %Date.Range{first: ^start_date, last: ^end_date} = Foundation.date_range(contest)
+    end
+  end
+
   describe "general_deadline/1" do
     test "returns the deadline most common in the given contests" do
       [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
@@ -358,7 +367,6 @@ defmodule Jumubase.FoundationTest do
 
     test "raises an error if the contest category isn't in the given contest", %{contest: c} do
       %{id: id} = insert_contest_category(build(:contest))
-
       assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest_category!(c, id) end
     end
 
@@ -368,6 +376,22 @@ defmodule Jumubase.FoundationTest do
       assert %ContestCategory{
         category: %Category{},
       } = Foundation.get_contest_category!(c, id)
+    end
+  end
+
+  describe "get_stage!/1" do
+    setup do
+      [contest: insert(:contest)]
+    end
+
+    test "returns a contest stage", %{contest: c} do
+      %{id: id} = insert(:stage, host: c.host)
+      assert %Stage{id: ^id} = Foundation.get_stage!(c, id)
+    end
+
+    test "raises an error if the stage isn't owned by the given contest's host", %{contest: c} do
+      %{id: id} = insert(:stage, host: build(:host))
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_stage!(c, id) end
     end
   end
 
@@ -392,5 +416,14 @@ defmodule Jumubase.FoundationTest do
 
     contest = Repo.get(Contest, id) |> Foundation.load_contest_categories
     assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
+  end
+
+  test "load_stages/1 preloads a contest's stages" do
+    %{id: id} = insert(:contest,
+      host: build(:host, stages: build_list(1, :stage, name: "X"))
+    )
+
+    contest = Repo.get(Contest, id) |> Foundation.load_stages
+    assert [%Stage{name: "X"}] = contest.host.stages
   end
 end

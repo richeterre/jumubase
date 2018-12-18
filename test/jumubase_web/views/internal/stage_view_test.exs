@@ -28,9 +28,16 @@ defmodule JumubaseWeb.Internal.StageViewTest do
   end
 
   describe "scheduled_minutes/1" do
-    test "rounds the performance's duration to the nearest 5-minute multiple" do
+    test "rounds up a performance's duration to the nearest 5-minute grid step" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 0)])
-      p2 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 1)])
+      p2 = build(:performance, pieces: [build(:piece, minutes: 11, seconds: 0)])
+      assert StageView.scheduled_minutes(p1) == 10
+      assert StageView.scheduled_minutes(p2) == 15
+    end
+
+    test "rounds down a performance's duration if it's very close to the next-lowest grid step" do
+      p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 30)])
+      p2 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 31)])
       assert StageView.scheduled_minutes(p1) == 10
       assert StageView.scheduled_minutes(p2) == 15
     end
@@ -39,7 +46,7 @@ defmodule JumubaseWeb.Internal.StageViewTest do
   describe "item_height/1" do
     test "converts a performance's duration to pixels" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 0)])
-      p2 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 1)])
+      p2 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 31)])
       assert StageView.item_height(p1) == "40px"
       assert StageView.item_height(p2) == "60px"
     end

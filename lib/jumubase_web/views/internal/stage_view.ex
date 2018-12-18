@@ -58,7 +58,7 @@ defmodule JumubaseWeb.Internal.StageView do
   This does not necessarily equal the actual duration (due to overtime, rounding…)
   """
   def scheduled_minutes(%Performance{} = performance) do
-    performance |> total_minutes |> round_up
+    performance |> total_minutes |> round_to_grid
   end
 
   @doc """
@@ -101,8 +101,14 @@ defmodule JumubaseWeb.Internal.StageView do
     Showtime.total_duration(performance) |> Timex.Duration.to_minutes
   end
 
-  defp round_up(minutes) do
-    Float.ceil(minutes / 5) * 5 |> trunc
+  # Rounds the minutes up to the next grid step, or down if within tolerance margin.
+  defp round_to_grid(minutes) do
+    # Configure tolerance and grid size in minutes
+    tolerance = 0.5
+    grid_step = 5
+
+    Float.ceil((minutes - tolerance) / grid_step) * grid_step + tolerance/grid_step
+    |> trunc # Return number as integer
   end
 
   defp to_pixels(minutes), do: "#{minutes * @pixels_per_minute}px"

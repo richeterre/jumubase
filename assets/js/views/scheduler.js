@@ -85,7 +85,7 @@ const scheduler = options => {
   }
 
   function createSpacer() {
-    const spacerHeight = resizeConfig.minHeight
+    const spacerHeight = pixelsFromMinutes(15)
     return $(`<div class="schedule-item spacer"><span class="text-muted"></span></div>`)
       .css("height", spacerHeight)
       .setMinutesFromHeight(spacerHeight)

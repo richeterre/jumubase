@@ -76,23 +76,12 @@ const scheduler = options => {
       data: {
         performances: data,
       },
-    }).fail(function() {
-      // TODO
+    }).done(function(result) {
+      $.each(result, function(id, { stageTime }) {
+        const timeString = stageTime ? toTimeString(stageTime) : null
+        $(column).children(`[data-id=${id}]`).find("span#stage-time").html(timeString)
+      })
     })
-  }
-
-  function calculateStageTime(date, minutes) {
-    return DateTime.fromISO(date + "T" + options.startTime, { zone: "UTC" })
-      .plus({minutes: minutes})
-      .toISO()
-  }
-
-  function pixelsFromMinutes(minutes) {
-    return minutes * options.pixelsPerMinute
-  }
-
-  function minutesFromPixels(pixels) {
-    return pixels / options.pixelsPerMinute
   }
 
   function createSpacer() {
@@ -140,6 +129,24 @@ const scheduler = options => {
       }, {})
     },
   })
+
+  function calculateStageTime(date, minutes) {
+    return DateTime.fromISO(date + "T" + options.startTime, { zone: "UTC" })
+      .plus({minutes: minutes})
+      .toISO()
+  }
+
+  function pixelsFromMinutes(minutes) {
+    return minutes * options.pixelsPerMinute
+  }
+
+  function minutesFromPixels(pixels) {
+    return pixels / options.pixelsPerMinute
+  }
+
+  function toTimeString(isoDate) {
+    return DateTime.fromISO(isoDate, { zone: "UTC" }).toFormat("HH:mm")
+  }
 }
 
 // Make scheduler() available to global <script> tags

@@ -28,6 +28,19 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
   end
 
+  def render("reschedule_success.json", %{stage_times: stage_times}) do
+    stage_times
+    |> Enum.map(fn {id, st} -> {id, %{stageTime: st}} end)
+    |> Enum.into(%{})
+  end
+
+  def render("reschedule_failure.json", %{performance_id: p_id, errors: errors}) do
+    %{error: %{
+      performanceId: p_id,
+      errors: errors
+    }}
+  end
+
   def stage_info(performance, style \\ :full)
   def stage_info(%Performance{stage: %Stage{name: name}, stage_time: stage_time}, style) do
     {format_datetime(stage_time, style), name}

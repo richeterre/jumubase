@@ -3,7 +3,7 @@
 # constructs (such as keyword lists).
 
 defimpl Poison.Encoder, for: Ecto.Changeset do
-  import JumubaseWeb.ErrorHelpers, only: [translate_error: 1]
+  import JumubaseWeb.ErrorHelpers, only: [get_translated_errors: 1]
 
   def encode(changeset, options) do
     output = %{
@@ -18,7 +18,7 @@ defimpl Poison.Encoder, for: Ecto.Changeset do
   # Omit errors if changeset has no action (typically before first submission)
   defp get_errors(%Ecto.Changeset{action: nil}), do: []
   defp get_errors(%Ecto.Changeset{action: _} = changeset) do
-    Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
+    get_translated_errors(changeset)
   end
 end
 

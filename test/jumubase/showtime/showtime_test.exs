@@ -678,7 +678,12 @@ defmodule Jumubase.ShowtimeTest do
       {:ok, stage_time_1_dt, _} = DateTime.from_iso8601(stage_time_1)
       {:ok, stage_time_2_dt, _} = DateTime.from_iso8601(stage_time_2)
 
-      assert :ok = Showtime.reschedule_performances(c, items)
+      assert {:ok, stage_times} = Showtime.reschedule_performances(c, items)
+      assert stage_times == [
+        {p1.id, stage_time_1_dt},
+        {p2.id, stage_time_2_dt},
+        {p3.id, nil}
+      ]
       assert %{stage_id: ^s1_id, stage_time: ^stage_time_1_dt} = Repo.get(Performance, p1.id)
       assert %{stage_id: ^s2_id, stage_time: ^stage_time_2_dt} = Repo.get(Performance, p2.id)
       assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p3.id)
@@ -688,7 +693,7 @@ defmodule Jumubase.ShowtimeTest do
       stage_time = "2019-01-01T07:00:00Z"
 
       %{id: s_id} = s = insert(:stage)
-      p1 = insert_performance(c, stage: nil, stage_time: nil)
+      %{id: p1_id} = p1 = insert_performance(c, stage: nil, stage_time: nil)
       p2 = insert_performance(c, stage: s, stage_time: stage_time)
 
       items = [
@@ -698,7 +703,8 @@ defmodule Jumubase.ShowtimeTest do
 
       {:ok, stage_time_dt, _} = DateTime.from_iso8601(stage_time)
 
-      assert :error = Showtime.reschedule_performances(c, items)
+      assert {:error, ^p1_id, %Changeset{} = cs} = Showtime.reschedule_performances(c, items)
+      assert length(cs.errors) == 1
       assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p1.id)
       assert %{stage_id: ^s_id, stage_time: ^stage_time_dt} = Repo.get(Performance, p2.id)
     end

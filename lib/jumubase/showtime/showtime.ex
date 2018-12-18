@@ -144,8 +144,12 @@ defmodule Jumubase.Showtime do
     end)
 
     case Repo.transaction(multi) do
-      {:ok, _} -> :ok
-      _ -> :error
+      {:ok, result} ->
+        {:ok, Enum.map(result, fn
+          {id, %Performance{stage_time: stage_time}} -> {id, stage_time}
+        end)}
+      {:error, failed_p_id, failed_cs, _} ->
+        {:error, failed_p_id, failed_cs}
     end
   end
 

@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.PerformanceController do
   use JumubaseWeb, :controller
   import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
+  import JumubaseWeb.ErrorHelpers, only: [get_translated_errors: 1]
   alias Ecto.Changeset
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
@@ -99,10 +100,16 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     end)
 
     case Showtime.reschedule_performances(contest, items) do
-      :ok ->
-        conn |> put_status(200) |> text("Success")
-      :error ->
-        conn |> put_status(422) |> text("Error")
+      {:ok, stage_times} ->
+        conn
+        |> assign(:stage_times, stage_times)
+        |> render("reschedule_success.json")
+      {:error, p_id, changeset} ->
+        conn
+        |> assign(:performance_id, p_id)
+        |> assign(:errors, changeset |> get_translated_errors)
+        |> put_status(422)
+        |> render("reschedule_failure.json")
     end
   end
 

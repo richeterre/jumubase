@@ -1,5 +1,13 @@
 defmodule JumubaseWeb.DateHelpers do
   @doc """
+  Constructs a UTC datetime using the given date and time.
+  """
+  def to_utc_datetime(%Date{} = date, %Time{} = time) do
+    {:ok, naive} = NaiveDateTime.new(date, time)
+    DateTime.from_naive!(naive, "Etc/UTC")
+  end
+
+  @doc """
   Formats the given date for display.
   """
   def format_date(date, style \\ :full)

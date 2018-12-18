@@ -56,7 +56,7 @@ defmodule JumubaseWeb.Internal.StageView do
   """
   def spacer_map(_date, []), do: %{}
   def spacer_map(%Date{} = date, performances) do
-    start = start_datetime(date)
+    start = to_utc_datetime(date, @start_time)
     chunks = Enum.chunk_every([start | performances], 2, 1)
 
     Enum.reduce(chunks, %{}, fn
@@ -98,10 +98,5 @@ defmodule JumubaseWeb.Internal.StageView do
 
   defp scheduled_end_time(%Performance{} = p) do
     Timex.shift(p.stage_time, minutes: scheduled_minutes(p))
-  end
-
-  defp start_datetime(date) do
-    {:ok, start, _} = DateTime.from_iso8601("#{date}T#{@start_time}Z")
-    start
   end
 end

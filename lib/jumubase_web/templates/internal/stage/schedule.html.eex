@@ -30,13 +30,6 @@
   <div class="col-md-3">
     <h4><%= format_date(date) %></h4>
 
-    <button
-      class="btn btn-default btn-sm add-spacer-button"
-      data-target-date="<%= date %>"
-      >
-      <%= gettext("Insert break") %>
-    </button>
-
     <div class="schedule-column" data-date="<%= date %>">
       <%
         performances = @performances[date]
@@ -49,6 +42,13 @@
         <%= render("_performance_item.html", performance: p) %>
       <% end %>
     </div>
+
+    <button
+      class="add-spacer-button btn btn-link btn-sm"
+      data-target-date="<%= date %>"
+      >
+      <%= gettext("Insert break") %>
+    </button>
   </div>
   <% end %>
 </div>

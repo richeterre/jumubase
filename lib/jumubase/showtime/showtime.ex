@@ -192,7 +192,7 @@ defmodule Jumubase.Showtime do
     from p in Performance,
       join: cc in assoc(p, :contest_category),
       where: cc.contest_id == ^contest_id,
-      order_by: [p.stage_time, p.inserted_at],
+      order_by: [p.stage_time, cc.inserted_at, p.age_group, p.inserted_at],
       preload: [
         [contest_category: {cc, :category}],
         [appearances: :participant],

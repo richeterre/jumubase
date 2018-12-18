@@ -44,6 +44,14 @@ const scheduler = options => {
     createSpacer().appendTo(`[data-date=${targetDate}]`)
   })
 
+  // Let users remove spacers, even those that don't exist yet
+  $(document).on("click", ".remove-spacer-button", function() {
+    const item = $(this).parent()
+    const column = $(item).parent(".schedule-column")
+    item.remove()
+    submitColumn(column)
+  })
+
   // Let users filter unscheduled list by contest category
   $("#cc-select").change(function() {
     applyContestCategoryFilter()
@@ -86,7 +94,7 @@ const scheduler = options => {
 
   function createSpacer() {
     const spacerHeight = pixelsFromMinutes(15)
-    return $(`<div class="schedule-item spacer"><span class="text-muted"></span></div>`)
+    return $(`<div class="schedule-item spacer"><span class="text-muted"></span><button type="button" class="remove-spacer-button close"><span>&times;</span></button></div>`)
       .css("height", spacerHeight)
       .setMinutesFromHeight(spacerHeight)
       .resizable(resizeConfig)

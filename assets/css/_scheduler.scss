@@ -46,6 +46,8 @@ $pixels-per-minute: 4px;
 
     &.ui-resizable-resizing { cursor: ns-resize; }
 
+    .remove-spacer-button { font-size: 18px; }
+
     .ui-resizable-handle {
       background-color: #ddd;
       border-radius: 5px;

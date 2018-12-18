@@ -2,6 +2,20 @@ defmodule JumubaseWeb.Internal.StageViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.StageView
 
+  describe "short_category_info/1" do
+    test "returns the category and age group in a short style" do
+      p = build(:performance,
+        contest_category: build(:contest_category,
+          category: build(:category,
+            name: "Gesang (Pop) solo", short_name: "PopGesang"
+          )
+        ),
+        age_group: "III"
+      )
+      assert StageView.short_category_info(p) == "PopGesang III"
+    end
+  end
+
   describe "participant_names/1" do
     test "returns the full names of the performance's participants, separated by commas" do
       p = build(:performance, appearances: [

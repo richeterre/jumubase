@@ -15,6 +15,7 @@
     <span id="stage-time">
       <%= format_datetime(@performance.stage_time, :time) %>
     </span>
+    <%= short_category_info(@performance) %>
     <span class="text-muted pull-right">
       <%= formatted_duration(@performance) %>
     </span>

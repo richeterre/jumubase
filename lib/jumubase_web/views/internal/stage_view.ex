@@ -26,6 +26,10 @@ defmodule JumubaseWeb.Internal.StageView do
     }
   end
 
+  def short_category_info(%Performance{} = performance) do
+    "#{performance.contest_category.category.short_name} #{performance.age_group}"
+  end
+
   @doc """
   Returns the full names of the performance's participants, separated by commas.
   """

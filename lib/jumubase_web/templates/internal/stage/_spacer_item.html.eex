@@ -3,5 +3,5 @@
   data-minutes="<%= @minutes %>"
   style="height: <%= item_height(@minutes) %>"
   >
-  <span class="text-muted">Pause (<%= @minutes %> min)</span>
+  <span class="text-muted"><%= gettext("Intermission") %> (<%= @minutes %> min)</span>
 </div>

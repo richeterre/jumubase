@@ -97,8 +97,10 @@ const scheduler = options => {
     setMinutesFromHeight: function(height) {
       const minutes = minutesFromPixels(height)
       return $(this)
-      .children("span").html(`Pause (${minutes} min)`).parent()
       .attr("data-minutes", minutes)
+      .children("span")
+      .html(`${options.dictionary.intermission} (${minutes} min)`)
+      .parent()
     },
     // Exports a column to a data structure suitable for submission.
     getColumnData: function() {

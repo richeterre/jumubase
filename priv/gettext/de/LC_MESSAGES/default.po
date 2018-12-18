@@ -1071,3 +1071,9 @@ msgstr "Vorspielzeit"
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:9
 msgid "Switch to stage"
 msgstr "Zu Bühne wechseln"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
+#: lib/jumubase_web/views/internal/stage_view.ex:18
+msgid "Intermission"
+msgstr "Pause"

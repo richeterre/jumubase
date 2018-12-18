@@ -14,6 +14,9 @@ defmodule JumubaseWeb.Internal.StageView do
   def render("scripts.schedule.html", %{conn: conn, contest: c, stage: s}) do
     options = render_html_safe_json %{
       csrfToken: Plug.CSRFProtection.get_csrf_token(),
+      dictionary: %{
+        intermission: gettext("Intermission"),
+      },
       pixelsPerMinute: @pixels_per_minute,
       stageId: s.id,
       startTime: @start_time,

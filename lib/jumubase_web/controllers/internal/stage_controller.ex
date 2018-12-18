@@ -24,6 +24,7 @@ defmodule JumubaseWeb.Internal.StageController do
 
   def schedule(conn, %{"stage_id" => stage_id}, contest) do
     stage = Foundation.get_stage!(contest, stage_id)
+    %{host: %{stages: stages}} = Foundation.load_stages(contest)
     date_range = Foundation.date_range(contest)
 
     unscheduled_performances = Showtime.unscheduled_performances(contest) |> Showtime.load_pieces
@@ -42,6 +43,7 @@ defmodule JumubaseWeb.Internal.StageController do
     conn
     |> assign(:contest, contest)
     |> assign(:stage, stage)
+    |> assign(:other_stages, stages -- [stage])
     |> assign(:date_range, date_range)
     |> assign(:performances, performances)
     |> add_breadcrumbs(contest)

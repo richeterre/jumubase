@@ -4,6 +4,14 @@
   <small><%= name_with_flag(@contest) %></small>
 </h2>
 
+<%= if @other_stages != [] do %>
+<span class="text-muted">
+  <%= gettext("Switch to stage") %>:
+  <%= stage_links(@conn, @contest, @other_stages, " · ") %>
+</span>
+<% end %>
+
+
 <hr>
 
 <div class="row">

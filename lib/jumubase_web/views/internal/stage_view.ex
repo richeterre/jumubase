@@ -26,6 +26,17 @@ defmodule JumubaseWeb.Internal.StageView do
     }
   end
 
+  @doc """
+  Returns a list of links to the given stages, with separators in between.
+  """
+  def stage_links(conn, contest, stages, separator) do
+    stages
+    |> Enum.map(fn s ->
+      link s.name, to: Routes.internal_contest_stage_schedule_path(conn, :schedule, contest, s)
+    end)
+    |> Enum.intersperse(separator)
+  end
+
   def short_category_info(%Performance{} = performance) do
     "#{performance.contest_category.category.short_name} #{performance.age_group}"
   end

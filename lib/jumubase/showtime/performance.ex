@@ -9,7 +9,7 @@ defmodule Jumubase.Showtime.Performance do
   schema "performances" do
     field :age_group, :string
     field :edit_code, :string
-    field :stage_time, :utc_datetime
+    field :stage_time, :naive_datetime
 
     belongs_to :contest_category, ContestCategory
     belongs_to :stage, Stage

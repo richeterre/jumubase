@@ -56,13 +56,13 @@ defmodule JumubaseWeb.Internal.StageViewTest do
     end
 
     test "returns a spacer minute map for a single-item performance list", %{contest: c, date: date} do
-      stage_time = to_utc_datetime(date, ~T[09:30:00])
+      stage_time = to_naive_datetime(date, ~T[09:30:00])
       p = insert_performance(c, stage_time: stage_time)
       assert StageView.spacer_map(date, [p]) == %{p.id => 30}
     end
 
     test "returns a spacer minute map for many performances", %{contest: c, date: date} do
-      reference_time = to_utc_datetime(date, ~T[09:00:00])
+      reference_time = to_naive_datetime(date, ~T[09:00:00])
 
       p1 = insert_performance(c,
         stage_time: Timex.shift(reference_time, minutes: 10),

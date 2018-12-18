@@ -4,9 +4,8 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
 
   describe "stage_info/1" do
     setup do
-      {:ok, stage_time, _} = DateTime.from_iso8601("2019-01-01T07:30:00Z")
       p = build(:performance,
-        stage: build(:stage, name: "Aula"), stage_time: stage_time
+        stage: build(:stage, name: "Aula"), stage_time: ~N[2019-01-01T07:30:00]
       )
       [performance: p]
     end

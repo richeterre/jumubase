@@ -131,9 +131,11 @@ const scheduler = options => {
   })
 
   function calculateStageTime(date, minutes) {
-    return DateTime.fromISO(date + "T" + options.startTime, { zone: "UTC" })
+    const { startTime } = options
+    // Return naive (= no offset) datetime to denote wall time
+    return DateTime.fromISO(date + "T" + startTime, "UTC")
       .plus({minutes: minutes})
-      .toISO()
+      .toISO({ includeOffset: false, suppressMilliseconds: true })
   }
 
   function pixelsFromMinutes(minutes) {
@@ -144,8 +146,9 @@ const scheduler = options => {
     return pixels / options.pixelsPerMinute
   }
 
-  function toTimeString(isoDate) {
-    return DateTime.fromISO(isoDate, { zone: "UTC" }).toFormat("HH:mm")
+  function toTimeString(naiveDateTime) {
+    // Assume local time zone here, which should not affect result anyway
+    return DateTime.fromISO(naiveDateTime).toFormat("HH:mm")
   }
 }
 

@@ -268,7 +268,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     test "returns an error for invalid reschedule params", %{conn: conn, contest: c} do
       p = insert_performance(c)
       params = %{"performances" => %{
-        p.id => %{"stageId" => nil, "stageTime" => "2019-01-01T07:00:00Z"}}
+        p.id => %{"stageId" => nil, "stageTime" => "2019-01-01T07:00:00"}}
       }
       conn = patch(conn, Routes.internal_contest_performance_path(conn, :reschedule, c), params)
       assert json_response(conn, 422) == %{
@@ -327,8 +327,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
   defp test_reschedule_success(conn, contest) do
     [s1, s2] = insert_list(2, :stage)
-    st1 = "2019-01-01T07:00:00Z"
-    st2 = "2019-01-02T07:00:00Z"
+    st1 = ~N[2019-01-01T07:00:00]
+    st2 = ~N[2019-01-02T07:00:00]
     p1 = insert_performance(contest, stage: nil, stage_time: nil)
     p2 = insert_performance(contest, stage: s1, stage_time: st1)
     p3 = insert_performance(contest, stage: s2, stage_time: st2)
@@ -343,8 +343,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     |> patch(Routes.internal_contest_performance_path(conn, :reschedule, contest), params)
 
     assert json_response(conn, 200) == %{
-      "#{p1.id}" => %{"stageTime" => "2019-01-01T07:00:00Z"},
-      "#{p2.id}" => %{"stageTime" => "2019-01-02T07:00:00Z"},
+      "#{p1.id}" => %{"stageTime" => "2019-01-01T07:00:00"},
+      "#{p2.id}" => %{"stageTime" => "2019-01-02T07:00:00"},
       "#{p3.id}" => %{"stageTime" => nil}
     }
   end

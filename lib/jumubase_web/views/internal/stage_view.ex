@@ -60,11 +60,11 @@ defmodule JumubaseWeb.Internal.StageView do
   """
   def spacer_map(_date, []), do: %{}
   def spacer_map(%Date{} = date, performances) do
-    start = to_utc_datetime(date, @start_time)
+    start = to_naive_datetime(date, @start_time)
     chunks = Enum.chunk_every([start | performances], 2, 1)
 
     Enum.reduce(chunks, %{}, fn
-      [%DateTime{} = start, %Performance{} = p], acc ->
+      [%NaiveDateTime{} = start, %Performance{} = p], acc ->
         acc |> Map.put(p.id, minutes_between(start, p))
       [%Performance{} = p1, %Performance{} = p2], acc ->
         acc |> Map.put(p2.id, minutes_between(p1, p2))
@@ -96,7 +96,7 @@ defmodule JumubaseWeb.Internal.StageView do
   defp minutes_between(%Performance{} = p1, %Performance{} = p2) do
     p1 |> scheduled_end_time |> minutes_between(p2)
   end
-  defp minutes_between(%DateTime{} = datetime, %Performance{stage_time: stage_time}) do
+  defp minutes_between(%NaiveDateTime{} = datetime, %Performance{stage_time: stage_time}) do
     Timex.diff(stage_time, datetime, :minutes)
   end
 

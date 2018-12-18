@@ -4,7 +4,7 @@ defmodule Jumubase.Repo.Migrations.AddStageAndTimeToPerformances do
   def change do
     alter table(:performances) do
       add :stage_id, references(:stages, on_delete: :nilify_all)
-      add :stage_time, :utc_datetime
+      add :stage_time, :naive_datetime
     end
 
     create index(:performances, [:stage_id])

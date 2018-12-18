@@ -2,9 +2,8 @@ defmodule JumubaseWeb.DateHelpers do
   @doc """
   Constructs a UTC datetime using the given date and time.
   """
-  def to_utc_datetime(%Date{} = date, %Time{} = time) do
-    {:ok, naive} = NaiveDateTime.new(date, time)
-    DateTime.from_naive!(naive, "Etc/UTC")
+  def to_naive_datetime(%Date{} = date, %Time{} = time) do
+    NaiveDateTime.new(date, time) |> elem(1)
   end
 
   @doc """
@@ -17,7 +16,8 @@ defmodule JumubaseWeb.DateHelpers do
   end
   def format_date(nil, _style), do: nil
 
-  def format_datetime(%DateTime{} = datetime, style \\ :full) do
+  def format_datetime(datetime, style \\ :full)
+  def format_datetime(%NaiveDateTime{} = datetime, style) do
     locale = Timex.Translator.current_locale
     Timex.lformat!(datetime, datetime_format(locale, style), locale)
   end

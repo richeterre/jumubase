@@ -6,14 +6,14 @@ defmodule JumubaseWeb.DateHelpersTest do
     [
       date: ~D[2000-01-02],
       time: ~T[23:34:45],
-      datetime: DateTime.from_naive!(~N[2000-01-02T23:34:45], "Etc/UTC")
+      datetime: ~N[2000-01-02T23:34:45]
     ]
   end
 
-  describe "to_utc_datetime/2" do
-    test "combines a date and time to a UTC datetime", %{date: date, time: time} do
-      result = DateHelpers.to_utc_datetime(date, time)
-      assert DateTime.to_iso8601(result) == "2000-01-02T23:34:45Z"
+  describe "to_naive_datetime/2" do
+    test "combines a date and time to a timezone-less datetime", %{date: date, time: time} do
+      result = DateHelpers.to_naive_datetime(date, time)
+      assert NaiveDateTime.to_iso8601(result) == "2000-01-02T23:34:45"
     end
   end
 

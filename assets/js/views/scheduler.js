@@ -13,7 +13,7 @@ const scheduler = options => {
     handles: "s",
     resize: function(e, ui) {
       $(this).setMinutesFromHeight(ui.size.height)
-      submitColumn($(this).parent(".schedule-column").getColumnData())
+      submitColumn($(this).parent(".schedule-column"))
     },
   }
 
@@ -22,7 +22,7 @@ const scheduler = options => {
     connectWith: ".schedule-column",
     receive: function() {
       applyContestCategoryFilter()
-      submitColumn($(this).getColumnData())
+      submitColumn($(this))
     },
   })
 
@@ -30,7 +30,7 @@ const scheduler = options => {
   $('.schedule-column[data-date!=""]').sortable({
     connectWith: ".schedule-column",
     update: function() {
-      submitColumn($(this).getColumnData())
+      submitColumn($(this))
     },
   })
 
@@ -62,7 +62,8 @@ const scheduler = options => {
     }
   }
 
-  function submitColumn(data) {
+  function submitColumn(column) {
+    const data = $(column).getColumnData()
     if (isEmpty(data)) return
 
     const { csrfToken, submitPath } = options

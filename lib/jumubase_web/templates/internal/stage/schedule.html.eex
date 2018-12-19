@@ -35,19 +35,32 @@
   </div>
 
   <%= for date <- @date_range do %>
+
+  <%
+    performances = @performances[date]
+    spacer_map = spacer_map(performances)
+  %>
+
   <div class="col-md-3">
     <h4><%= format_date(date) %></h4>
 
+    <div class="form-inline">
+      <small class="text-muted"><%= gettext("Start at") %></small>
+      <select
+        class="start-time-select form-control input-sm"
+        data-target-date="<%= date %>"
+        >
+        <%= start_time_options(performances) %>
+      </select>
+      <small class="text-muted"><%= gettext("o’clock") %></small>
+    </div>
+
     <div class="schedule-column" data-date="<%= date %>">
-      <%
-        performances = @performances[date]
-        spacer_map = spacer_map(date, performances)
-      %>
       <%= for p <- performances do %>
+        <%= render("_performance_item.html", performance: p) %>
         <%= if (minutes = spacer_map[p.id]) > 0 do %>
           <%= render("_spacer_item.html", minutes: minutes) %>
         <% end %>
-        <%= render("_performance_item.html", performance: p) %>
       <% end %>
     </div>
 

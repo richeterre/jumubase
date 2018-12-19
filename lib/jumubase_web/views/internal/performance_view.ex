@@ -61,7 +61,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   def formatted_duration(%Performance{} = performance) do
     Showtime.total_duration(performance)
     |> Timex.Duration.to_time!
-    |> Timex.Format.DateTime.Formatter.format!("%-M'%S", :strftime)
+    |> Timex.format!("%-M'%S", :strftime)
   end
 
   @doc """

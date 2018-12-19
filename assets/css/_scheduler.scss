@@ -1,5 +1,3 @@
-#cc-select { margin-bottom: 0.5 * $line-height-computed; }
-
 $column-border-width: 1px;
 $item-spacing: 4px;
 $pixels-per-minute: 4px;
@@ -7,6 +5,7 @@ $pixels-per-minute: 4px;
 .schedule-column {
   border: $column-border-width solid #eee;
   list-style-type: none;
+  margin-top: 0.5 * $line-height-computed;
   min-height: 10 * $pixels-per-minute + 2 * $item-spacing + 2 * $column-border-width;
   padding: $item-spacing 0 0 0;
 

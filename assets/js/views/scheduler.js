@@ -34,6 +34,12 @@ const scheduler = options => {
     },
   })
 
+  // Let users pick a start time for a date column
+  $('.start-time-select').change(function() {
+    const date = $(this).attr("data-target-date")
+    submitColumn($(`.schedule-column[data-date=${date}]`))
+  })
+
   // Make spacers resizable
   $(".spacer").resizable(resizeConfig)
 
@@ -141,7 +147,7 @@ const scheduler = options => {
   })
 
   function calculateStageTime(date, minutes) {
-    const { startTime } = options
+    const startTime = $(`.start-time-select[data-target-date=${date}]`).val()
     // Return naive (= no offset) datetime to denote wall time
     return DateTime.fromISO(date + "T" + startTime, "UTC")
       .plus({minutes: minutes})

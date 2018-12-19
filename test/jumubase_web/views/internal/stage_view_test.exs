@@ -59,32 +59,29 @@ defmodule JumubaseWeb.Internal.StageViewTest do
 
   describe "spacer_map/1" do
     setup do
-      [contest: insert(:contest), date: ~D[2019-01-01]]
+      [contest: insert(:contest), start: ~N[2019-01-01T09:30:00]]
     end
 
-    test "returns a spacer minute map for a single-item performance list", %{contest: c, date: date} do
-      stage_time = to_naive_datetime(date, ~T[09:30:00])
-      p = insert_performance(c, stage_time: stage_time)
-      assert StageView.spacer_map(date, [p]) == %{p.id => 30}
+    test "returns a spacer minute map for a single-item performance list", %{contest: c, start: start} do
+      p = insert_performance(c, stage_time: start)
+      assert StageView.spacer_map([p]) == %{p.id => 0}
     end
 
-    test "returns a spacer minute map for many performances", %{contest: c, date: date} do
-      reference_time = to_naive_datetime(date, ~T[09:00:00])
-
+    test "returns a spacer minute map for many performances", %{contest: c, start: start} do
       p1 = insert_performance(c,
-        stage_time: Timex.shift(reference_time, minutes: 10),
+        stage_time: start,
         pieces: [build(:piece, minutes: 12, seconds: 0)] # taking up 15 minutes
       )
-      p2 = insert_performance(c, stage_time: Timex.shift(reference_time, minutes: 30))
+      p2 = insert_performance(c, stage_time: Timex.shift(start, minutes: 30))
 
-      assert StageView.spacer_map(date, [p1, p2]) == %{
-        p1.id => 10,
-        p2.id => 5
+      assert StageView.spacer_map([p1, p2]) == %{
+        p1.id => 15,
+        p2.id => 0
       }
     end
 
-    test "returns an empty map for an empty performance list", %{date: date} do
-      assert StageView.spacer_map(date, []) == %{}
+    test "returns an empty map for an empty performance list" do
+      assert StageView.spacer_map([]) == %{}
     end
   end
 

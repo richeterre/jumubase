@@ -1037,7 +1037,7 @@ msgid "Schedule performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:58
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:71
 msgid "Insert break"
 msgstr ""
 
@@ -1073,6 +1073,16 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:18
+#: lib/jumubase_web/views/internal/stage_view.ex:17
 msgid "Intermission"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:48
+msgid "Start at"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/schedule.html.eex:55
+msgid "o’clock"
 msgstr ""

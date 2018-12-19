@@ -9,7 +9,6 @@ defmodule JumubaseWeb.Internal.StageView do
   alias Jumubase.Showtime.Performance
 
   @pixels_per_minute 4 # for mapping duration to item height
-  @start_time ~T[09:00:00]
 
   def render("scripts.schedule.html", %{conn: conn, contest: c, stage: s}) do
     options = render_html_safe_json %{
@@ -19,7 +18,6 @@ defmodule JumubaseWeb.Internal.StageView do
       },
       pixelsPerMinute: @pixels_per_minute,
       stageId: s.id,
-      startTime: @start_time,
       submitPath: Routes.internal_contest_performance_path(conn, :reschedule, c),
     }
 
@@ -40,6 +38,18 @@ defmodule JumubaseWeb.Internal.StageView do
     |> Enum.intersperse(separator)
   end
 
+  @doc """
+  Returns a list of options for a scheduler column's start time.
+  If performances are passed, the first stage time will be the selected option.
+  """
+  def start_time_options([%Performance{stage_time: st} | _]) do
+    NaiveDateTime.to_time(st) |> time_options
+  end
+  def start_time_options(_), do: time_options(nil)
+
+  @doc """
+  Returns shorthand category and age group information.
+  """
   def short_category_info(%Performance{} = performance) do
     "#{performance.contest_category.category.short_name} #{performance.age_group}"
   end
@@ -70,20 +80,18 @@ defmodule JumubaseWeb.Internal.StageView do
   def item_height(minutes), do: to_pixels(minutes)
 
   @doc """
-  Returns a map specifying how many minutes of space lie before the performances.
+  Returns a map saying how much space (in minutes) lies after each performance.
   """
-  def spacer_map(_date, []), do: %{}
-  def spacer_map(%Date{} = date, performances) do
-    start = to_naive_datetime(date, @start_time)
-    chunks = Enum.chunk_every([start | performances], 2, 1)
-
-    Enum.reduce(chunks, %{}, fn
-      [%NaiveDateTime{} = start, %Performance{} = p], acc ->
-        acc |> Map.put(p.id, minutes_between(start, p))
+  def spacer_map([]), do: %{}
+  def spacer_map(performances) do
+    performances
+    |> Enum.chunk_every(2, 1) # Chunk each performance with next one
+    |> Enum.reduce(%{}, fn
       [%Performance{} = p1, %Performance{} = p2], acc ->
-        acc |> Map.put(p2.id, minutes_between(p1, p2))
-      [%Performance{}], acc ->
-        acc
+        acc |> Map.put(p1.id, minutes_between(p1, p2))
+      [%Performance{} = p], acc ->
+        # Last performance in list => no spacer after it
+        acc |> Map.put(p.id, 0)
     end)
   end
 
@@ -114,13 +122,19 @@ defmodule JumubaseWeb.Internal.StageView do
   defp to_pixels(minutes), do: "#{minutes * @pixels_per_minute}px"
 
   defp minutes_between(%Performance{} = p1, %Performance{} = p2) do
-    p1 |> scheduled_end_time |> minutes_between(p2)
-  end
-  defp minutes_between(%NaiveDateTime{} = datetime, %Performance{stage_time: stage_time}) do
-    Timex.diff(stage_time, datetime, :minutes)
+    p1_end_time = scheduled_end_time(p1)
+    Timex.diff(p2.stage_time, p1_end_time, :minutes)
   end
 
   defp scheduled_end_time(%Performance{} = p) do
     Timex.shift(p.stage_time, minutes: scheduled_minutes(p))
+  end
+
+  defp time_options(selected) do
+    for hour <- 8..17, minute <- Enum.take_every(0..59, 5) do
+      {:ok, time} = Time.new(hour, minute, 0)
+      label = Timex.format!(time, "%H:%M", :strftime)
+      content_tag :option, label, value: time, selected: time == selected
+    end
   end
 end

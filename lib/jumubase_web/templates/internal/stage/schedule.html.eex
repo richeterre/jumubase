@@ -28,7 +28,7 @@
     <div class="schedule-column" data-date="">
       <%=
         for p <- @performances[:unscheduled] do
-          render("_performance_item.html", performance: p)
+          render("_performance_item.html", performance: p, round: @contest.round)
         end
       %>
     </div>
@@ -57,7 +57,7 @@
 
     <div class="schedule-column" data-date="<%= date %>">
       <%= for p <- performances do %>
-        <%= render("_performance_item.html", performance: p) %>
+        <%= render("_performance_item.html", performance: p, round: @contest.round) %>
         <%= if (minutes = spacer_map[p.id]) > 0 do %>
           <%= render("_spacer_item.html", minutes: minutes) %>
         <% end %>

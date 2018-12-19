@@ -6,24 +6,34 @@
   data-minutes="<%= scheduled_minutes(@performance) %>"
   style="height: <%= item_height(@performance) %>"
   >
+
+  <div class="stage-time">
+    <%= format_datetime(@performance.stage_time, :time) %>
+  </div>
+
+  <div class="main-content">
+    <div class="main-content-top">
+      <div class="category-info">
+        <%= short_category_info(@performance) %>
+      </div>
+
+      <div class="text-muted">
+        <%= formatted_duration(@performance) %>
+      </div>
+    </div>
+
+    <%= if scheduled_minutes(@performance) >= 10 do %>
+    <div>
+      <span class="text-muted">
+        <%= short_participant_info(@performance) %>
+      </span>
+    </div>
+    <% end %>
+  </div>
+
   <div
     class="playtime-bar"
     style="height: <%= playtime_percentage(@performance) %>"
     >
   </div>
-  <span id="stage-time">
-    <%= format_datetime(@performance.stage_time, :time) %>
-  </span>
-  <div class="participant-info">
-    <%= short_category_info(@performance) %>
-    <%= if scheduled_minutes(@performance) >= 10 do %>
-    <br>
-    <span class="text-muted">
-      <%= short_participant_info(@performance) %>
-    </span>
-    <% end %>
-  </div>
-  <span class="text-muted pull-right">
-    <%= formatted_duration(@performance) %>
-  </span>
 </div>

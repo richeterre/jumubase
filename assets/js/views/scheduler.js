@@ -93,7 +93,7 @@ const scheduler = options => {
     }).done(function(result) {
       $.each(result, function(id, { stageTime }) {
         const timeString = stageTime ? toTimeString(stageTime) : null
-        $(column).children(`[data-id=${id}]`).find("span#stage-time").html(timeString)
+        $(column).children(`[data-id=${id}]`).find(".stage-time").html(timeString)
       })
     })
   }

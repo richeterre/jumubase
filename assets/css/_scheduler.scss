@@ -12,32 +12,37 @@ $pixels-per-minute: 4px;
   .schedule-item {
     background-color: #eee;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
     font-size: 90%;
     margin: $item-spacing;
     margin-top: 0;
-    padding: 0 5px;
-    position: relative;
 
-    .playtime-bar {
-      background-color: #ccc;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 3px;
-    }
-
-    span#stage-time {
-      display: inline-block;
+    .stage-time {
+      margin-left: 5px;
       width: 3em;
     }
 
-    div.participant-info {
-      display: inline-block;
-      vertical-align: top;
+    .main-content {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding-right: 5px;
+    }
+
+    .main-content-top { display: flex; }
+
+    .category-info { flex: 1; }
+
+    .playtime-bar {
+      background-color: #ccc;
+      width: 3px;
     }
   }
 
   .spacer {
+    align-items: flex-start;
+    justify-content: space-between;
     padding: 0 5px; // Vertical padding must be 0 for resizing to work
     position: relative;
 

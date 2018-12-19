@@ -30,9 +30,14 @@ $pixels-per-minute: 4px;
       padding-right: 5px;
     }
 
-    .main-content-top { display: flex; }
+    .main-content-top {
+      display: flex;
+      flex-shrink: 0;
+    }
 
     .category-info { flex: 1; }
+
+    .main-content-bottom { overflow: hidden; }
 
     .playtime-bar {
       background-color: #ccc;

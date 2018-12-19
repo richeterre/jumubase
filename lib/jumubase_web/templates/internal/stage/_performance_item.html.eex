@@ -23,7 +23,7 @@
     </div>
 
     <%= if scheduled_minutes(@performance) >= 10 do %>
-    <div>
+    <div class="main-content-bottom">
       <span class="text-muted">
         <%= short_participant_info(@performance) %>
       </span>

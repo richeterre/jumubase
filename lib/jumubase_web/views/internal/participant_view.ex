@@ -10,4 +10,11 @@ defmodule JumubaseWeb.Internal.ParticipantView do
   def full_name(%Participant{given_name: given_name, family_name: family_name}) do
     "#{given_name} #{family_name}"
   end
+
+  @doc """
+  Returns the participant's given name and initial of the family name.
+  """
+  def short_name(%Participant{given_name: given_name, family_name: family_name}) do
+    "#{given_name} #{String.first(family_name)}"
+  end
 end

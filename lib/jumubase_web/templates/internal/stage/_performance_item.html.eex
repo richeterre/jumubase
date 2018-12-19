@@ -16,10 +16,12 @@
   </span>
   <div class="participant-info">
     <%= short_category_info(@performance) %>
+    <%= if scheduled_minutes(@performance) >= 10 do %>
     <br>
     <span class="text-muted">
-      <%= short_participant_names(@performance) %>
+      <%= short_participant_info(@performance) %>
     </span>
+    <% end %>
   </div>
   <span class="text-muted pull-right">
     <%= formatted_duration(@performance) %>

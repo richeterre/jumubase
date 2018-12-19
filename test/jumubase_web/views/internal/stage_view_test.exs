@@ -27,6 +27,17 @@ defmodule JumubaseWeb.Internal.StageViewTest do
     end
   end
 
+  describe "short_participant_info/1" do
+    test "returns abbreviated names of the performance's non-accompanist participants" do
+      p = build(:performance, appearances: [
+        build(:appearance, role: "ensemblist", participant: build(:participant, given_name: "Jane", family_name: "Doe")),
+        build(:appearance, role: "ensemblist", participant: build(:participant, given_name: "Jim", family_name: "Beam")),
+        build(:appearance, role: "accompanist", participant: build(:participant, given_name: "Dorian", family_name: "Gray")),
+      ])
+      assert StageView.short_participant_info(p) == "Jane D, Jim B"
+    end
+  end
+
   describe "scheduled_minutes/1" do
     test "rounds up a performance's duration to the nearest 5-minute grid step" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 10, seconds: 0)])

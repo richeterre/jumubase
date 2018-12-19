@@ -7,6 +7,7 @@ defmodule JumubaseWeb.Internal.StageView do
     cc_filter_options: 1, formatted_duration: 1
   ]
   alias Jumubase.Showtime
+  alias Jumubase.Showtime.Instruments
   alias Jumubase.Showtime.Performance
 
   @pixels_per_minute 4 # for mapping duration to item height
@@ -56,12 +57,12 @@ defmodule JumubaseWeb.Internal.StageView do
   end
 
   @doc """
-  Returns the full names of the performance's participants, separated by commas.
+  Returns participant names and instruments of the performance's appearances.
   """
-  def participant_names(%Performance{appearances: appearances}) do
+  def appearances_info(%Performance{appearances: appearances}) do
     appearances
-    |> Enum.map(fn %{participant: pt} -> full_name(pt) end)
-    |> Enum.join(", ")
+    |> Enum.map(fn a -> "#{full_name(a.participant)}, #{Instruments.name(a.instrument)}" end)
+    |> Enum.join("\n")
   end
 
   @doc """

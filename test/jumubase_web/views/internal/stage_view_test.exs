@@ -16,14 +16,14 @@ defmodule JumubaseWeb.Internal.StageViewTest do
     end
   end
 
-  describe "participant_names/1" do
-    test "returns the full names of the performance's participants, separated by commas" do
+  describe "appearances_info/1" do
+    test "returns participant names and instruments of the performance's appearances" do
       p = build(:performance, appearances: [
-        build(:appearance, participant: build(:participant, given_name: "A", family_name: "B")),
-        build(:appearance, participant: build(:participant, given_name: "C", family_name: "D")),
-        build(:appearance, participant: build(:participant, given_name: "E", family_name: "F")),
+        build(:appearance, instrument: "violin", participant: build(:participant, given_name: "A", family_name: "B")),
+        build(:appearance, instrument: "violoncello", participant: build(:participant, given_name: "C", family_name: "D")),
+        build(:appearance, instrument: "piano", participant: build(:participant, given_name: "E", family_name: "F")),
       ])
-      assert StageView.participant_names(p) == "A B, C D, E F"
+      assert StageView.appearances_info(p) == "A B, Violin\nC D, Violoncello\nE F, Piano"
     end
   end
 

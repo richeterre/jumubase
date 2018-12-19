@@ -12,9 +12,10 @@ $pixels-per-minute: 4px;
   .schedule-item {
     background-color: #eee;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 90%;
     margin: $item-spacing;
     margin-top: 0;
+    padding: 0 5px;
     position: relative;
 
     .playtime-bar {
@@ -22,27 +23,25 @@ $pixels-per-minute: 4px;
       position: absolute;
       right: 0;
       top: 0;
-      width: 4px;
+      width: 3px;
     }
 
-    .content {
-      left: 0;
-      padding: 1px 5px;
-      position: absolute;
-      right: 5px;
-      top: 0;
-    }
-
-    #stage-time {
+    span#stage-time {
       display: inline-block;
       width: 3em;
+    }
+
+    div.participant-info {
+      display: inline-block;
+      vertical-align: top;
     }
   }
 
   .spacer {
-    padding: 0 5px;
+    padding: 0 5px; // Vertical padding must be 0 for resizing to work
     position: relative;
 
+    // Change cursor type while spacer is being resized
     &.ui-resizable-resizing { cursor: ns-resize; }
 
     .remove-spacer-button { font-size: 18px; }

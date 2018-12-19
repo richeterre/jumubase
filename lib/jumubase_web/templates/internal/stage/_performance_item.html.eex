@@ -11,13 +11,17 @@
     style="height: <%= playtime_percentage(@performance) %>"
     >
   </div>
-  <div class="content">
-    <span id="stage-time">
-      <%= format_datetime(@performance.stage_time, :time) %>
-    </span>
+  <span id="stage-time">
+    <%= format_datetime(@performance.stage_time, :time) %>
+  </span>
+  <div class="participant-info">
     <%= short_category_info(@performance) %>
-    <span class="text-muted pull-right">
-      <%= formatted_duration(@performance) %>
+    <br>
+    <span class="text-muted">
+      <%= short_participant_names(@performance) %>
     </span>
   </div>
+  <span class="text-muted pull-right">
+    <%= formatted_duration(@performance) %>
+  </span>
 </div>

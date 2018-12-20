@@ -11,12 +11,14 @@ $pixels-per-minute: 4px;
 
   .schedule-item {
     background-color: #eee;
-    cursor: pointer;
+    cursor: grab;
     display: flex;
     flex-direction: row;
     font-size: 90%;
     margin: $item-spacing;
     margin-top: 0;
+
+    &:active { cursor: grabbing; }
 
     .stage-time {
       margin-left: 5px;
@@ -49,7 +51,7 @@ $pixels-per-minute: 4px;
     align-items: flex-start;
     background-color: #eee;
     justify-content: space-between;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     padding: 0 5px; // Vertical padding must be 0 for resizing to work
     position: relative;
 

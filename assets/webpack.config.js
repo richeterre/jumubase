@@ -37,6 +37,15 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.woff$/,
+        use: {
+          loader: "url-loader",
+          options: {
+            limit: 50000,
+          },
+        },
+      },
     ],
   },
 

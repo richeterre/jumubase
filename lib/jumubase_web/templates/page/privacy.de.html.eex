@@ -51,7 +51,7 @@
 
     <h3>6. Inhalte von Dritten</h3>
 
-    <p>Auf dieser Website setzen wir Karten (Google Maps) sowie Schriftarten (Google Fonts) des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Hierfür besteht ein berechtigtes Interesse im Sinne des <%= link "Art. 6 Abs. 1 lit. f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO. Die Einbindung erfolgt durch einen Serveraufruf, bei dem die IP-Adresse des Besuchers an Google übertragen wird. Die Verarbeitung dieser unterliegt der <%= link "Datenschutzerklärung von Google", to: "https://www.google.com/policies/privacy/" %>.</p>
+    <p>Auf dieser Website setzen wir Karten (Google Maps) des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Hierfür besteht ein berechtigtes Interesse im Sinne des <%= link "Art. 6 Abs. 1 lit. f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO. Die Einbindung erfolgt durch einen Serveraufruf, bei dem die IP-Adresse des Besuchers an Google übertragen wird. Die Verarbeitung dieser unterliegt der <%= link "Datenschutzerklärung von Google", to: "https://www.google.com/policies/privacy/" %>.</p>
 
     <h3>7. Deine Rechte</h3>
 

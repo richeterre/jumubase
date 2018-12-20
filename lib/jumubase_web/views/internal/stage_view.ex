@@ -1,9 +1,8 @@
 defmodule JumubaseWeb.Internal.StageView do
   use JumubaseWeb, :view
-  import Jumubase.Showtime.Appearance, only: [is_accompanist: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.PageView, only: [admin_email: 0]
-  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1, short_name: 1]
+  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PerformanceView, only: [
     cc_filter_options: 1, formatted_duration: 1
   ]
@@ -64,16 +63,6 @@ defmodule JumubaseWeb.Internal.StageView do
     appearances
     |> Enum.map(fn a -> "#{full_name(a.participant)}, #{Instruments.name(a.instrument)}" end)
     |> Enum.join("\n")
-  end
-
-  @doc """
-  Returns abbreviated names of the performance's non-accompanist participants.
-  """
-  def short_participant_info(%Performance{appearances: appearances}) do
-    appearances
-    |> Enum.filter(& !is_accompanist(&1))
-    |> Enum.map(fn %{participant: pt} -> short_name(pt) end)
-    |> Enum.join(", ")
   end
 
   @doc """

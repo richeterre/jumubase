@@ -28,18 +28,11 @@ $pixels-per-minute: 4px;
     .main-content {
       display: flex;
       flex: 1;
-      flex-direction: column;
+      flex-direction: row;
       padding-right: 5px;
     }
 
-    .main-content-top {
-      display: flex;
-      flex-shrink: 0;
-    }
-
     .category-info { flex: 1; }
-
-    .main-content-bottom { overflow: hidden; }
 
     .playtime-bar {
       background-color: #ccc;

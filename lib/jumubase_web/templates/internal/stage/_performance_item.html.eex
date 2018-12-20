@@ -12,23 +12,13 @@
   </div>
 
   <div class="main-content">
-    <div class="main-content-top">
-      <div class="category-info">
-        <%= short_category_info(@performance) %>
-      </div>
-
-      <div class="text-muted">
-        <%= formatted_duration(@performance) %>
-      </div>
+    <div class="category-info">
+      <%= short_category_info(@performance) %>
     </div>
 
-    <%= if scheduled_minutes(@performance) >= 10 and @round > 0 do %>
-    <div class="main-content-bottom">
-      <small class="text-muted">
-        <%= short_participant_info(@performance) %>
-      </small>
+    <div class="text-muted">
+      <%= formatted_duration(@performance) %>
     </div>
-    <% end %>
   </div>
 
   <div

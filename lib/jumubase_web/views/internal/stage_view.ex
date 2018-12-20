@@ -2,6 +2,7 @@ defmodule JumubaseWeb.Internal.StageView do
   use JumubaseWeb, :view
   import Jumubase.Showtime.Appearance, only: [is_accompanist: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  import JumubaseWeb.Internal.PageView, only: [admin_email: 0]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1, short_name: 1]
   import JumubaseWeb.Internal.PerformanceView, only: [
     cc_filter_options: 1, formatted_duration: 1

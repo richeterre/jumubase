@@ -6,11 +6,28 @@
 
 <hr>
 
-<p class="lead"><%= gettext("Please choose a stage") %>:</p>
+<% has_stages = @stages != [] %>
 
-<%= for stage <- @stages do %>
-  <%= link stage.name,
-    to: Routes.internal_contest_stage_schedule_path(@conn, :schedule, @contest, stage),
-    class: "btn btn-default"
-    %>
+<%= if has_stages do %>
+  <p class="lead">
+    <%= gettext("Please choose a stage") %>:
+  </p>
+
+  <p>
+    <%= for stage <- @stages do %>
+      <%= link stage.name,
+        to: Routes.internal_contest_stage_schedule_path(@conn, :schedule, @contest, stage),
+        class: "btn btn-default"
+        %>
+    <% end %>
+  </p>
+<% else %>
+  <p class="lead">
+    <%= gettext("No stage found") %>
+  </p>
 <% end %>
+
+<p class='<%= if has_stages, do: "text-muted" %>'>
+  <%= gettext("To add a new stage, please contact the") %>
+  <%= link gettext("admin"), to: "mailto:#{admin_email()}?subject=#{gettext("Add stage")}" %>.
+</p>

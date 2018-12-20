@@ -1043,7 +1043,7 @@ msgid "Insert break"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/stage/index.html.eex:9
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:13
 msgid "Please choose a stage"
 msgstr ""
 
@@ -1074,7 +1074,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:17
+#: lib/jumubase_web/views/internal/stage_view.ex:20
 msgid "Intermission"
 msgstr ""
 
@@ -1086,4 +1086,24 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:55
 msgid "o’clock"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:32
+msgid "admin"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:32
+msgid "Add stage"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:26
+msgid "No stage found"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:31
+msgid "To add a new stage, please contact the"
 msgstr ""

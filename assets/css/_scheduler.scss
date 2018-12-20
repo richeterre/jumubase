@@ -47,7 +47,9 @@ $pixels-per-minute: 4px;
 
   .spacer {
     align-items: flex-start;
+    background-color: #eee;
     justify-content: space-between;
+    margin-bottom: 8px;
     padding: 0 5px; // Vertical padding must be 0 for resizing to work
     position: relative;
 
@@ -57,16 +59,15 @@ $pixels-per-minute: 4px;
     .remove-spacer-button { font-size: 18px; }
 
     .ui-resizable-handle {
-      background-color: #ddd;
-      border-radius: 5px;
-      bottom: 4px;
+      background: center / contain no-repeat url("/images/icon-resize.svg");
+      bottom: -4.4px;
       cursor: ns-resize;
-      height: 5px;
+      height: 12px;
       left: 0;
       margin: 0 auto;
       position: absolute;
       right: 0;
-      width: 12.5%;
+      width: 15%;
     }
   }
 }

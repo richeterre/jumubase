@@ -38,12 +38,8 @@ p.alert, ol.breadcrumb {
   }
 }
 
-/* Tweak icon styling to look better next to text */
-span.glyphicon {
-  line-height: $line-height-computed;
-  margin: 0 0.2em;
-  vertical-align: top;
-}
+/* Add horizontal spacing to icons */
+span.glyphicon { margin: 0 0.2em; }
 
 /* Tweak vertical alignment of badges */
 span.badge { vertical-align: baseline; }

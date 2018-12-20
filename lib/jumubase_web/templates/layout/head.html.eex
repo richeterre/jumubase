@@ -7,5 +7,5 @@
 
   <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>">
 
-  <%= render "favicons.html" %>
+  <%= render "favicons.html", conn: @conn %>
 </head>

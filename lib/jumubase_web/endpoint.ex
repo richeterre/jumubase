@@ -11,7 +11,7 @@ defmodule JumubaseWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/", from: :jumubase, gzip: false,
-    only: ~w(css fonts images js resources favicon.ico robots.txt)
+    only: ~w(css fonts images js resources favicons robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

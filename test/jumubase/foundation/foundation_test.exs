@@ -326,6 +326,17 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_category!/1" do
+    test "returns a category" do
+      %{id: id} = insert(:category)
+      assert %Category{id: ^id} = Foundation.get_category!(id)
+    end
+
+    test "raises an error if no category can be found" do
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_category!(1) end
+    end
+  end
+
   describe "create_category/1" do
     test "creates a category with valid data" do
       params = params_for(:category, name: "X")
@@ -334,8 +345,32 @@ defmodule Jumubase.FoundationTest do
     end
 
     test "returns an error changeset for invalid data" do
-      params = params_for(:category, name: nil)
+      params = params_for(:category, name: "")
       assert {:error, %Changeset{}} = Foundation.create_category(params)
+    end
+  end
+
+  describe "update_category/1" do
+    setup do
+      [category: insert(:category, name: "X")]
+    end
+
+    test "updates a category with valid data", %{category: cg} do
+      params = params_for(:category, name: "Y")
+      assert {:ok, result} = Foundation.update_category(cg, params)
+      assert %Category{name: "Y"} = result
+    end
+
+    test "returns an error changeset for invalid data", %{category: cg} do
+      params = params_for(:category, name: "")
+      assert {:error, %Changeset{}} = Foundation.update_category(cg, params)
+    end
+  end
+
+  describe "change_category/1" do
+    test "returns a category changeset" do
+      category = insert(:category)
+      assert %Ecto.Changeset{} = Foundation.change_category(category)
     end
   end
 

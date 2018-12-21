@@ -120,8 +120,22 @@ defmodule Jumubase.Foundation do
     Repo.all(Category)
   end
 
+  def get_category!(id) do
+    Repo.get!(Category, id)
+  end
+
   def create_category(attrs) do
     Category.changeset(%Category{}, attrs) |> Repo.insert
+  end
+
+  def update_category(%Category{} = category, attrs) do
+    category
+    |> Category.changeset(attrs)
+    |> Repo.update
+  end
+
+  def change_category(%Category{} = category) do
+    Category.changeset(category, %{})
   end
 
   def list_contest_categories(%Contest{} = contest) do

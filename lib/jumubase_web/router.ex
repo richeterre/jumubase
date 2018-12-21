@@ -64,7 +64,7 @@ defmodule JumubaseWeb.Router do
 
     get "/", PageController, :home
 
-    resources "/categories", CategoryController, only: [:index, :new, :create]
+    resources "/categories", CategoryController, except: [:show, :delete]
     resources "/contests", ContestController, only: [:index, :show, :edit, :update] do
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]

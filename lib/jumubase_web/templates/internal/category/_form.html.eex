@@ -1,0 +1,56 @@
+<%= form_for @changeset, @path, fn f -> %>
+  <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+
+  <div class="row">
+    <div class="form-group col-md-4">
+      <%= label f, :name, gettext("Name") %>
+      <%= text_input f, :name, class: "form-control" %>
+      <%= error_tag f, :name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-2">
+      <%= label f, :short_name, gettext("Short name") %>
+      <%= text_input f, :short_name, class: "form-control" %>
+      <%= error_tag f, :short_name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label f, :genre, gettext("Genre"), class: "control-label" %>
+      <%= select f, :genre, form_genres(),
+        prompt: gettext("Please choose"),
+        class: "form-control"
+        %>
+      <%= error_tag f, :genre %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label f, :type, gettext("Type"), class: "control-label" %>
+      <%= select f, :type, form_types(),
+        prompt: gettext("Please choose"),
+        class: "form-control"
+        %>
+      <%= error_tag f, :type %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label f, :group, gettext("Group"), class: "control-label" %>
+      <%= select f, :group, form_groups(),
+        prompt: gettext("Please choose"),
+        class: "form-control"
+        %>
+      <%= error_tag f, :group %>
+    </div>
+  </div>
+
+  <hr>
+
+  <%= submit @submit_title, class: "btn btn-primary" %>
+<% end %>

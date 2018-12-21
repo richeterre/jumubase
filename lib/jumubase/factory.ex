@@ -25,7 +25,8 @@ defmodule Jumubase.Factory do
       name: sequence(:name, &"Category #{&1}"),
       short_name: sequence(:short_name, &"Cat #{&1}"),
       genre: "classical",
-      type: "solo"
+      type: "solo",
+      group: "special_lineups"
     }
   end
 

@@ -8,6 +8,7 @@
         <th><%= gettext("Short name") %></th>
         <th><%= gettext("Genre") %></th>
         <th><%= gettext("Type") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -17,6 +18,11 @@
         <td><%= category.short_name %></td>
         <td><%= genre_tag(category) %></td>
         <td><%= type_tag(category) %></td>
+        <td class="text-right">
+          <%= edit_icon_link(
+            Routes.internal_category_path(@conn, :edit, category)
+          ) %>
+        </td>
       </tr>
       <% end %>
     </tbody>

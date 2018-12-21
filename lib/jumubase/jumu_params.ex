@@ -50,6 +50,17 @@ defmodule Jumubase.JumuParams do
   end
 
   @doc """
+  Returns all possible category groups.
+  """
+  def category_groups do
+    ~w(
+      piano strings wind plucked classical_vocals accordion harp
+      organ percussion special_lineups pop_vocals pop_instrumental
+      kimu
+    )
+  end
+
+  @doc """
   Returns all possible participant roles.
   """
   def participant_roles do

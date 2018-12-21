@@ -71,8 +71,8 @@ msgid "Jumu logo"
 msgstr "Jumu-Logo"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:6
 #: lib/jumubase_web/templates/internal/category/index.html.eex:7
-#: lib/jumubase_web/templates/internal/category/new.html.eex:8
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:7
 #: lib/jumubase_web/templates/internal/contest_category/index.html.eex:18
 #: lib/jumubase_web/templates/internal/host/index.html.eex:7
@@ -88,8 +88,9 @@ msgid "New User"
 msgstr "Neuer Benutzer"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/new.html.eex:26
-#: lib/jumubase_web/templates/internal/category/new.html.eex:37
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:24
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:35
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:46
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
@@ -99,6 +100,7 @@ msgid "Please choose"
 msgstr "Bitte wählen"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/category/edit.html.eex:9
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:67
 #: lib/jumubase_web/templates/internal/performance/edit.html.eex:13
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
@@ -464,7 +466,7 @@ msgstr "Einloggen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:55
-#: lib/jumubase_web/controllers/internal/category_controller.ex:7
+#: lib/jumubase_web/controllers/internal/category_controller.ex:8
 #: lib/jumubase_web/templates/internal/category/index.html.eex:1
 #: lib/jumubase_web/templates/internal/contest_category/index.html.eex:2
 #: lib/jumubase_web/templates/internal/page/home.html.eex:27
@@ -544,12 +546,12 @@ msgid "Stay logged in"
 msgstr "Eingeloggt bleiben"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/index.html.eex:26
+#: lib/jumubase_web/templates/internal/category/index.html.eex:32
 msgid "Add Category"
 msgstr "Neue Kategorie hinzufügen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/new.html.eex:46
+#: lib/jumubase_web/templates/internal/category/new.html.eex:9
 msgid "Create Category"
 msgstr "Kategorie erstellen"
 
@@ -559,56 +561,57 @@ msgid "New Category"
 msgstr "Neue Kategorie"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/category_controller.ex:27
+#: lib/jumubase_web/controllers/internal/category_controller.ex:28
 msgid "The category \"%{name}\" was created."
 msgstr "Die Kategorie \"%{name}\" wurde erstellt."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:39
+#: lib/jumubase_web/views/internal/category_view.ex:46
 msgid "Classical"
 msgstr "Klassik"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:51
+#: lib/jumubase_web/views/internal/category_view.ex:58
 msgid "Ensemble"
 msgstr "Ensemble"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:22
 #: lib/jumubase_web/templates/internal/category/index.html.eex:9
-#: lib/jumubase_web/templates/internal/category/new.html.eex:24
 msgid "Genre"
 msgstr "Genre"
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/registration.html.eex:28
-#: lib/jumubase_web/views/internal/category_view.ex:41
+#: lib/jumubase_web/views/internal/category_view.ex:48
+#: lib/jumubase_web/views/internal/category_view.ex:78
 msgid "Kimu"
 msgstr "Kimu"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:40
+#: lib/jumubase_web/views/internal/category_view.ex:47
 msgid "Popular"
 msgstr "Pop"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:14
 #: lib/jumubase_web/templates/internal/category/index.html.eex:8
-#: lib/jumubase_web/templates/internal/category/new.html.eex:16
 msgid "Short name"
 msgstr "Kürzel"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:50
+#: lib/jumubase_web/views/internal/category_view.ex:57
 msgid "Solo"
 msgstr "Solo"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:52
+#: lib/jumubase_web/views/internal/category_view.ex:59
 msgid "Solo/Ensemble"
 msgstr "Solo/Ensemble"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:33
 #: lib/jumubase_web/templates/internal/category/index.html.eex:10
-#: lib/jumubase_web/templates/internal/category/new.html.eex:35
 msgid "Type"
 msgstr "Typ"
 
@@ -1074,7 +1077,7 @@ msgstr "Zu Bühne wechseln"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:20
+#: lib/jumubase_web/views/internal/stage_view.ex:19
 msgid "Intermission"
 msgstr "Pause"
 
@@ -1107,3 +1110,228 @@ msgstr "Keine Bühne gefunden"
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:31
 msgid "To add a new stage, please contact the"
 msgstr "Um eine Bühne hinzuzufügen, kontaktiere bitte den"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:9
+#: lib/jumubase_web/views/internal/category_view.ex:71
+msgid "Accordion"
+msgstr "Akkordeon"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:10
+msgid "Bassoon"
+msgstr "Fagott"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:11
+msgid "Cittern"
+msgstr "Zither"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:12
+msgid "Clarinet"
+msgstr "Klarinette"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:70
+msgid "Classical Vocals"
+msgstr "Klassischer Gesang"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:13
+msgid "Cor anglais"
+msgstr "Englischhorn"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:14
+msgid "Double bass"
+msgstr "Kontrabass"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:15
+msgid "Drumset"
+msgstr "Drumset"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:16
+msgid "Electric Bass"
+msgstr "E-Bass"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:17
+msgid "Electric Guitar"
+msgstr "E-Gitarre"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:18
+msgid "Euphonium"
+msgstr "Euphonium"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:19
+msgid "Flute"
+msgstr "Querflöte"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:20
+msgid "French horn"
+msgstr "Horn"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:44
+msgid "Group"
+msgstr "Gruppe"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:21
+msgid "Guitar"
+msgstr "Gitarre"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:22
+#: lib/jumubase_web/views/internal/category_view.ex:72
+msgid "Harp"
+msgstr "Harfe"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:23
+msgid "Harpsichord"
+msgstr "Cembalo"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:24
+msgid "Kantele"
+msgstr "Kantele"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:25
+msgid "Keyboard"
+msgstr "Keyboard"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:26
+msgid "Mallets"
+msgstr "Mallets"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:27
+msgid "Mandola"
+msgstr "Mandola"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:28
+msgid "Mandolin"
+msgstr "Mandoline"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:29
+msgid "Oboe"
+msgstr "Oboe"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:30
+#: lib/jumubase_web/views/internal/category_view.ex:73
+msgid "Organ"
+msgstr "Orgel"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:31
+#: lib/jumubase_web/views/internal/category_view.ex:74
+msgid "Percussion"
+msgstr "Percussion"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:32
+#: lib/jumubase_web/views/internal/category_view.ex:66
+msgid "Piano"
+msgstr "Klavier"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:69
+msgid "Plucked Instruments"
+msgstr "Zupfinstrumente"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:77
+msgid "Pop Instrumental"
+msgstr "Pop-Instrumental"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:76
+msgid "Pop Vocals"
+msgstr "Popgesang"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:33
+msgid "Recorder"
+msgstr "Blockflöte"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:34
+msgid "Saxophone"
+msgstr "Saxophon"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:75
+msgid "Special Lineups"
+msgstr "Besondere Besetzungen"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/category_controller.ex:49
+msgid "The category %{name} was updated."
+msgstr "Die Kategorie \"%{name}\" wurde aktualisiert."
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:35
+msgid "Trombone"
+msgstr "Posaune"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:36
+msgid "Trumpet/Flugelhorn"
+msgstr "Trompete/Flügelhorn"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:37
+msgid "Tuba"
+msgstr "Tuba"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:38
+msgid "Viola"
+msgstr "Viola"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:39
+msgid "Viola da gamba"
+msgstr "Viola da gamba"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:40
+msgid "Violin"
+msgstr "Violine"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:41
+msgid "Violoncello"
+msgstr "Violoncello"
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:42
+msgid "Vocals"
+msgstr "Gesang"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:68
+msgid "Wind Instruments"
+msgstr "Bläser"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/category_view.ex:67
+msgid "String Instruments"
+msgstr "Streicher"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/edit.html.eex:1
+msgid "Edit Category"
+msgstr "Kategorie bearbeiten"

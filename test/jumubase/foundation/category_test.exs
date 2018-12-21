@@ -48,5 +48,19 @@ defmodule Jumubase.CategoryTest do
         refute changeset.valid?
       end
     end
+
+    test "without a group" do
+      params = params_for(:category, group: nil)
+      changeset = Category.changeset(%Category{}, params)
+      refute changeset.valid?
+    end
+
+    test "with an invalid group" do
+      for group <- ["", "xyz"] do
+        params = params_for(:category, group: group)
+        changeset = Category.changeset(%Category{}, params)
+        refute changeset.valid?
+      end
+    end
   end
 end

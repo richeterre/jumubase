@@ -87,13 +87,11 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to fill in a new performance for a foreign contest", %{conn: conn, contest: c} do
-      conn = conn |> attempt_new(c)
-      assert_unauthorized_user(conn)
+      conn |> attempt_new(c) |> assert_unauthorized_user
     end
 
     test "redirects guests when trying to fill in a new performance", %{conn: conn, contest: c} do
-      conn = conn |> attempt_new(c)
-      assert_unauthorized_guest(conn)
+      conn |> attempt_new(c) |> assert_unauthorized_guest
     end
   end
 

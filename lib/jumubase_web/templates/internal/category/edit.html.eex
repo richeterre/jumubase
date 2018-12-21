@@ -1,0 +1,10 @@
+<h2><%= gettext("Edit Category") %></h2>
+
+<hr>
+
+<%= render "_form.html",
+  conn: @conn,
+  path: Routes.internal_category_path(@conn, :update, @category),
+  changeset: @changeset,
+  submit_title: gettext("Save Changes")
+  %>

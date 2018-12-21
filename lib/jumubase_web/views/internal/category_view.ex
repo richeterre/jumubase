@@ -18,6 +18,13 @@ defmodule JumubaseWeb.Internal.CategoryView do
   end
 
   @doc """
+  Returns a textual tag describing the category group.
+  """
+  def group_tag(%Category{group: group}) do
+    content_tag(:span, group_name(group), class: "label label-default")
+  end
+
+  @doc """
   Returns a list of possible `genre` values suitable for forms.
   """
   def form_genres do

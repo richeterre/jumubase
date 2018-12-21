@@ -105,11 +105,11 @@ Repo.transaction fn ->
 
   # Create demo categories
 
-  kimu = insert(:category, name: "\"Kinder musizieren\"", short_name: "Kimu", genre: "kimu", type: "solo_or_ensemble")
-  vocal = insert(:category, name: "Gesang solo", short_name: "Gesang", genre: "classical", type: "solo")
-  wind_ens = insert(:category, name: "Bläser-Ensemble", short_name: "BläserEns", genre: "classical", type: "ensemble")
-  pop_drums = insert(:category, name: "Drumset (Pop) solo", short_name: "PopDrums", genre: "popular", type: "solo")
-  pop_vocal_ens = insert(:category, name: "Vokal-Ensemble (Pop)", short_name: "PopVokalEns", genre: "popular", type: "ensemble")
+  kimu = insert(:category, name: "\"Kinder musizieren\"", short_name: "Kimu", genre: "kimu", type: "solo_or_ensemble", group: "kimu")
+  vocal = insert(:category, name: "Gesang solo", short_name: "Gesang", genre: "classical", type: "solo", group: "classical_vocals")
+  wind_ens = insert(:category, name: "Bläser-Ensemble", short_name: "BläserEns", genre: "classical", type: "ensemble", group: "wind")
+  pop_drums = insert(:category, name: "Drumset (Pop) solo", short_name: "PopDrums", genre: "popular", type: "solo", group: "pop_instrumental")
+  pop_vocal_ens = insert(:category, name: "Vokal-Ensemble (Pop)", short_name: "PopVokalEns", genre: "popular", type: "ensemble", group: "pop_vocals")
 
   # Add contest categories and demo performances to contests
 

@@ -91,7 +91,7 @@ defmodule JumubaseWeb.Internal.StageView do
       "kimu" -> "#e2f8f6" # emerald
       "special_lineups" -> "#e2f8f6" # turquoise
       "accordion" -> "#e2eef8" # azure
-      "piano" -> "e2e3f8" # blue
+      "piano" -> "#e2e3f8" # blue
       g when g in ["harp", "organ"] -> "#ebe2f8" # indigo
       "classical_vocals" -> "#f6e2f8" # fuchsia
       "pop_vocals" -> "#f8e2ee" # pink

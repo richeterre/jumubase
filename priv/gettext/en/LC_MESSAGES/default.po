@@ -231,6 +231,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:27
+#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:27
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 msgid "Category"
 msgstr ""
@@ -264,6 +265,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:28
+#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:28
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 msgid "Participants"
 msgstr ""
@@ -955,14 +957,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:122
+#: lib/jumubase_web/views/internal/performance_view.ex:125
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:127
+#: lib/jumubase_web/views/internal/performance_view.ex:130
 msgid "Filter active"
 msgstr ""
 
@@ -1003,17 +1005,17 @@ msgid "Manage performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:56
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:50
 msgid "The performance was created."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:80
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:74
 msgid "The performance was updated."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:93
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:87
 msgid "The performance was deleted."
 msgstr ""
 
@@ -1029,6 +1031,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:65
+#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:55
 msgid "Add Performance"
 msgstr ""
 
@@ -1067,6 +1070,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:26
 msgid "Stage time"
 msgstr ""
 
@@ -1337,7 +1341,13 @@ msgstr ""
 msgid "Edit Category"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:13
 msgid "Registrations"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:46
+#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:2
+msgid "Create jury sheets"
 msgstr ""

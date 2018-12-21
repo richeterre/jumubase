@@ -15,14 +15,8 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 
   def index(conn, params, contest) do
-    filter_params = params["performance_filter"] || %{}
-    filter = PerformanceFilter.from_params(filter_params)
-    filter_cs = PerformanceFilter.changeset(filter_params)
-
     conn
-    |> assign(:contest, contest)
-    |> assign(:filter_changeset, filter_cs)
-    |> handle_filter(filter, contest)
+    |> prepare_filtered_list(params, contest)
     |> add_breadcrumbs(contest)
     |> render("index.html")
   end
@@ -113,7 +107,26 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     end
   end
 
+  def jury_sheets(conn, params, contest) do
+    conn
+    |> prepare_filtered_list(params, contest)
+    |> add_contest_breadcrumb(contest)
+    |> add_breadcrumb(name: gettext("Create jury sheets"), path: current_path(conn))
+    |> render("jury_sheets.html")
+  end
+
   # Private helpers
+
+  defp prepare_filtered_list(conn, params, contest) do
+    filter_params = params["performance_filter"] || %{}
+    filter = PerformanceFilter.from_params(filter_params)
+    filter_cs = PerformanceFilter.changeset(filter_params)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:filter_changeset, filter_cs)
+    |> handle_filter(filter, contest)
+  end
 
   defp handle_filter(conn, filter, contest) do
     if PerformanceFilter.active?(filter) do

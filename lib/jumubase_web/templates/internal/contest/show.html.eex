@@ -43,7 +43,9 @@
             %>
         </li>
         <li class="list-group-item">
-          <%= icon_link "sunglasses", "Jurymaterial erstellen", "#" %>
+          <%= icon_link "sunglasses", gettext("Create jury sheets"),
+            Routes.internal_contest_jury_sheets_path(@conn, :jury_sheets, @contest)
+            %>
         </li>
       </ul>
     </div>

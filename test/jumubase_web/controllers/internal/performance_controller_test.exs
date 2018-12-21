@@ -280,6 +280,30 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "jury_sheets/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users list a contest's performances to create jury sheets", %{conn: conn, contest: c} do
+        conn |> attempt_jury_sheets(c) |> assert_jury_sheets_success
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers list an own contest's performances to create jury sheets", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_jury_sheets(own_c) |> assert_jury_sheets_success
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to list a foreign contest's performances to create jury sheets", %{conn: conn, contest: c} do
+      conn |> attempt_jury_sheets(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to list a contest's performances to create jury sheets", %{conn: conn, contest: c} do
+      conn |> attempt_jury_sheets(c) |> assert_unauthorized_guest
+    end
+  end
+
   # Private helpers
 
   defp insert_own_contest(user) do
@@ -302,6 +326,10 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     conn |> patch(Routes.internal_contest_performance_path(conn, :reschedule, contest), params)
   end
 
+  defp attempt_jury_sheets(conn, contest) do
+    get(conn, Routes.internal_contest_jury_sheets_path(conn, :jury_sheets, contest))
+  end
+
   defp assert_create_success(conn, contest, performance) do
     assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :show, contest, performance),
@@ -321,6 +349,10 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       Routes.internal_contest_performance_path(conn, :index, contest),
       "The performance was deleted."
     )
+  end
+
+  defp assert_jury_sheets_success(conn) do
+    assert html_response(conn, 200) =~ "Create jury sheets"
   end
 
   defp test_reschedule_success(conn, contest) do

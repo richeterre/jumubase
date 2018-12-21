@@ -10,7 +10,6 @@ $pixels-per-minute: 4px;
   padding: $item-spacing 0 0 0;
 
   .schedule-item {
-    background-color: #eee;
     cursor: grab;
     display: flex;
     flex-direction: row;
@@ -35,7 +34,7 @@ $pixels-per-minute: 4px;
     .category-info { flex: 1; }
 
     .playtime-bar {
-      background-color: #ccc;
+      filter: brightness(85%);
       width: 3px;
     }
   }

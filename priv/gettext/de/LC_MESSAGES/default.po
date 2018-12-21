@@ -1259,7 +1259,7 @@ msgstr "Pop-Instrumental"
 #, elixir-format
 #: lib/jumubase_web/views/internal/category_view.ex:76
 msgid "Pop Vocals"
-msgstr "Popgesang"
+msgstr "Pop-Gesang"
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:33

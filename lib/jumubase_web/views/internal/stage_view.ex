@@ -52,8 +52,8 @@ defmodule JumubaseWeb.Internal.StageView do
   @doc """
   Returns shorthand category and age group information.
   """
-  def short_category_info(%Performance{} = performance) do
-    "#{performance.contest_category.category.short_name} #{performance.age_group}"
+  def short_category_info(%Performance{contest_category: cc} = p) do
+    "#{cc.category.short_name} #{p.age_group}"
   end
 
   @doc """
@@ -80,6 +80,24 @@ defmodule JumubaseWeb.Internal.StageView do
     performance |> scheduled_minutes |> to_pixels
   end
   def item_height(minutes), do: to_pixels(minutes)
+
+  def item_color(%Performance{contest_category: %{category: cg}}) do
+    case cg.group do
+      "strings" -> "#f8e2e3" # red
+      "percussion" -> "#fbeade" # orange
+      "wind" -> "#f8f6e2" # yellow
+      "pop_instrumental" -> "#eef8e2" # lime
+      "plucked" -> "#e3f8e2" # green
+      "kimu" -> "#e2f8f6" # emerald
+      "special_lineups" -> "#e2f8f6" # turquoise
+      "accordion" -> "#e2eef8" # azure
+      "piano" -> "e2e3f8" # blue
+      g when g in ["harp", "organ"] -> "#ebe2f8" # indigo
+      "classical_vocals" -> "#f6e2f8" # fuchsia
+      "pop_vocals" -> "#f8e2ee" # pink
+      _ -> "#ddd"
+    end
+  end
 
   @doc """
   Returns a map saying how much space (in minutes) lies after each performance.

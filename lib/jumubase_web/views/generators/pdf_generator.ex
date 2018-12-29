@@ -40,7 +40,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
 
     PdfGenerator.generate_binary!(html,
       page_size: "A4",
-      shell_params: ["--dpi", "300", "--orientation", orientation]
+      shell_params: ["--dpi", "300", "--orientation", orientation, "--quiet"]
     )
   end
 

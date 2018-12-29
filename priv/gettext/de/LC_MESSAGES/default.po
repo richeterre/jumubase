@@ -1369,7 +1369,7 @@ msgstr "Jurymaterial erstellen"
 #, elixir-format
 #: lib/jumubase_web/views/generators/pdf_generator.ex:119
 msgid "Result"
-msgstr "Regeln"
+msgstr "Ergebnis"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:28

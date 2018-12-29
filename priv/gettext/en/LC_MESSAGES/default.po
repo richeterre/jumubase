@@ -230,9 +230,10 @@ msgid "Birthdate"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:27
-#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:27
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:23
+#: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
+#: lib/jumubase_web/views/generators/pdf_generator.ex:111
 msgid "Category"
 msgstr ""
 
@@ -264,9 +265,10 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:28
-#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:28
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:24
+#: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
+#: lib/jumubase_web/views/generators/pdf_generator.ex:113
 msgid "Participants"
 msgstr ""
 
@@ -371,8 +373,9 @@ msgid "Edit code"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:10
+#: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
+#: lib/jumubase_web/views/generators/pdf_generator.ex:96
 msgid "Epoch"
 msgstr ""
 
@@ -428,6 +431,7 @@ msgstr ""
 #:
 #: lib/jumubase_web/templates/internal/performance/_detail_performance.html.eex:10
 #: lib/jumubase_web/templates/internal/performance/_list_performance.html.eex:7
+#: lib/jumubase_web/views/generators/pdf_generator.ex:84
 msgid "accompanied by"
 msgstr ""
 
@@ -942,7 +946,7 @@ msgid "The registration deadline for this contest has passed. Please contact us 
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:56
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:52
 msgid "Do you really want to delete this performance?"
 msgstr ""
 
@@ -957,14 +961,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:125
+#: lib/jumubase_web/views/internal/performance_view.ex:131
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:130
+#: lib/jumubase_web/views/internal/performance_view.ex:136
 msgid "Filter active"
 msgstr ""
 
@@ -1030,8 +1034,7 @@ msgid "New Performance"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:65
-#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:55
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:61
 msgid "Add Performance"
 msgstr ""
 
@@ -1069,8 +1072,8 @@ msgid "All stages"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:26
-#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:22
+#: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:42
 msgid "Stage time"
 msgstr ""
 
@@ -1347,7 +1350,28 @@ msgid "Registrations"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:20
+msgid "Print jury sheets"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator.ex:112
+msgid "Age group"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:114
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:46
-#: lib/jumubase_web/templates/internal/performance/jury_sheets.html.eex:2
-msgid "Create jury sheets"
+#: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:2
+msgid "Create jury material"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator.ex:119
+msgid "Result"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:28
+msgid "Print jury table"
 msgstr ""

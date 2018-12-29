@@ -40,6 +40,7 @@ defmodule Jumubase.Mixfile do
       {:ex_machina, "~> 2.2"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.1"},
+      {:pdf_generator, "~> 0.4"},
       {:phauxth, "~> 1.2"},
       {:phoenix, "~> 1.4.0"},
       {:phoenix_ecto, "~> 4.0"},
@@ -49,6 +50,7 @@ defmodule Jumubase.Mixfile do
       {:plug_cowboy, "~> 1.0"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 7.0"},
+      {:sneeze, "~> 1.1"},
       {:timex, "~> 3.0"},
     ]
   end

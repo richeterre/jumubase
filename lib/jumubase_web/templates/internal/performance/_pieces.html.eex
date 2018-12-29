@@ -1,7 +1,6 @@
 <%= for piece <- @pieces do %>
   <p>
-    <strong><%= person_name(piece) %></strong>
-    <%= if composer_dates(piece), do: "(#{composer_dates(piece)})" %>
+    <strong><%= person_info(piece) %></strong>
     <br>
     <%= piece.title %>
     <br>

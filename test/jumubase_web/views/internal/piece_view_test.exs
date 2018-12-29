@@ -3,37 +3,20 @@ defmodule JumubaseWeb.Internal.PieceViewTest do
   import Phoenix.HTML
   alias JumubaseWeb.Internal.PieceView
 
-  describe "person_name/1" do
-    test "returns the name of a classical piece's composer" do
-      piece = build(:piece, composer: "John Cage")
-      assert PieceView.person_name(piece) == "John Cage"
+  describe "person_info/1" do
+    test "returns the name and birthyear of a classical piece's living composer" do
+      piece = build(:piece, composer: "Keiko Abe", composer_born: "1937", composer_died: nil)
+      assert PieceView.person_info(piece) == "Keiko Abe (1937–)"
+    end
+
+    test "returns the name and lifespan of a classical piece's deceased composer" do
+      piece = build(:piece, composer: "John Cage", composer_born: "1912", composer_died: "1992")
+      assert PieceView.person_info(piece) == "John Cage (1912–1992)"
     end
 
     test "returns the name of a popular piece's artist" do
       piece = build(:popular_piece, artist: "Johnny Cash")
-      assert PieceView.person_name(piece) == "Johnny Cash"
-    end
-  end
-
-  describe "composer_dates/1" do
-    test "returns the birthyear of a piece's living composer" do
-      piece = build(:piece, composer_born: "1956", composer_died: nil)
-      assert PieceView.composer_dates(piece) == "1956–"
-    end
-
-    test "returns the lifespan of a piece's deceased composer" do
-      piece = build(:piece, composer_born: "1902", composer_died: "2001")
-      assert PieceView.composer_dates(piece) == "1902–2001"
-    end
-
-    test "returns nil if the piece has no composer" do
-      piece = build(:piece, composer: nil)
-      assert PieceView.composer_dates(piece) == nil
-    end
-
-    test "returns nil if the piece has no composer birthyear" do
-      piece = build(:piece, composer_born: nil)
-      assert PieceView.composer_dates(piece) == nil
+      assert PieceView.person_info(piece) == "Johnny Cash"
     end
   end
 

@@ -20,6 +20,10 @@ defmodule JumubaseWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :pdf_only do
+    plug :accepts, ["pdf"]
+  end
+
   scope "/", JumubaseWeb do
     pipe_through [:browser, :html_only]
 
@@ -60,13 +64,22 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
+    pipe_through [:browser, :pdf_only]
+
+    get "/contests/:contest_id/performances/print-jury-sheets",
+      PerformanceController, :print_jury_sheets, as: :contest_performance
+    get "/contests/:contest_id/performances/print-jury-table",
+      PerformanceController, :print_jury_table, as: :contest_performance
+  end
+
+  scope "/internal", JumubaseWeb.Internal, as: :internal do
     pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
 
     resources "/categories", CategoryController, except: [:show, :delete]
     resources "/contests", ContestController, only: [:index, :show, :edit, :update] do
-      get "/performances/jury_sheets", PerformanceController, :jury_sheets, as: :jury_sheets
+      get "/performances/jury-material", PerformanceController, :jury_material, as: :jury_material
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
       resources "/performances", PerformanceController

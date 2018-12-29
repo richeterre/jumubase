@@ -107,12 +107,28 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     end
   end
 
-  def jury_sheets(conn, params, contest) do
+  def jury_material(conn, params, contest) do
     conn
     |> prepare_filtered_list(params, contest)
     |> add_contest_breadcrumb(contest)
-    |> add_breadcrumb(name: gettext("Create jury sheets"), path: current_path(conn))
-    |> render("jury_sheets.html")
+    |> add_breadcrumb(name: gettext("Create jury material"), path: current_path(conn))
+    |> render("jury_material.html")
+  end
+
+  def print_jury_sheets(conn, %{"performance_ids" => p_ids}, contest) do
+    performances = Showtime.list_performances(contest, p_ids) |> Showtime.load_pieces
+
+    conn
+    |> assign(:performances, performances)
+    |> render("jury_sheets.pdf")
+  end
+
+  def print_jury_table(conn, %{"performance_ids" => p_ids}, contest) do
+    performances = Showtime.list_performances(contest, p_ids)
+
+    conn
+    |> assign(:performances, performances)
+    |> render("jury_table.pdf")
   end
 
   # Private helpers

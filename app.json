@@ -1,0 +1,53 @@
+{
+  "name": "jumubase-review",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "GOOGLE_API_KEY": {
+      "required": true
+    },
+    "JUMU_ADMIN_EMAIL": {
+      "required": true
+    },
+    "JUMU_CONTACT_EMAIL": {
+      "required": true
+    },
+    "PHAUXTH_TOKEN_SALT": {
+      "required": true
+    },
+    "POOL_SIZE": {
+      "required": true
+    },
+    "RELEASE_LEVEL": "development",
+    "SECRET_KEY_BASE": {
+      "required": true
+    },
+    "SENDGRID_API_KEY": {
+      "required": true
+    },
+    "SENTRY_DSN": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "stack": "heroku-18",
+  "buildpacks": [
+    {
+      "url": "https://github.com/dscout/wkhtmltopdf-buildpack"
+    },
+    {
+      "url": "https://buildpack-registry.s3.amazonaws.com/buildpacks/hashnuke/elixir.tgz"
+    },
+    {
+      "url": "https://github.com/gjaldon/heroku-buildpack-phoenix-static.git"
+    }
+  ]
+}

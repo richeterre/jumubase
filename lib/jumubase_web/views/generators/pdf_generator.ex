@@ -30,7 +30,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       [:head, [:meta, %{charset: "UTF-8"}]],
       [:body,
         %{style: style(%{
-          "font-family" => "Helvetica",
+          "font-family" => "DejaVu Sans",
           "font-size" => "20px",
           "line-height" => 1.4
         })},

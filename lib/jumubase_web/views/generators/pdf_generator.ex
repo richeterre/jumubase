@@ -31,16 +31,26 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       [:body,
         %{style: style(%{
           "font-family" => "DejaVu Sans",
-          "font-size" => "20px",
+          "font-size" => "16px",
           "line-height" => 1.4
         })},
         body_html
       ]
     ])
 
+    base_params = ["--disable-smart-shrinking", "--orientation", orientation, "--quiet"]
+
+    # Adjust zoom level to account for different DPI, using Mac (96 dpi) as baseline
+    shell_params = case :os.type do
+      {:unix, :linux} ->
+        base_params ++ ["--zoom", "0.78125"] # 75 dpi / 96 dpi
+      _ ->
+        base_params
+    end
+
     PdfGenerator.generate_binary!(html,
       page_size: "A4",
-      shell_params: ["--dpi", "300", "--orientation", orientation, "--quiet"]
+      shell_params: shell_params
     )
   end
 

@@ -233,7 +233,7 @@ msgstr "Geburtsdatum"
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
-#: lib/jumubase_web/views/generators/pdf_generator.ex:111
+#: lib/jumubase_web/views/generators/pdf_generator.ex:121
 msgid "Category"
 msgstr "Kategorie"
 
@@ -268,7 +268,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/views/generators/pdf_generator.ex:113
+#: lib/jumubase_web/views/generators/pdf_generator.ex:123
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -375,7 +375,7 @@ msgstr "Änderungscode"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
-#: lib/jumubase_web/views/generators/pdf_generator.ex:96
+#: lib/jumubase_web/views/generators/pdf_generator.ex:106
 msgid "Epoch"
 msgstr "Epoche"
 
@@ -431,7 +431,7 @@ msgstr "Jahr"
 #:
 #: lib/jumubase_web/templates/internal/performance/_detail_performance.html.eex:10
 #: lib/jumubase_web/templates/internal/performance/_list_performance.html.eex:7
-#: lib/jumubase_web/views/generators/pdf_generator.ex:84
+#: lib/jumubase_web/views/generators/pdf_generator.ex:94
 msgid "accompanied by"
 msgstr "begleitet von"
 
@@ -1355,11 +1355,6 @@ msgid "Print jury sheets"
 msgstr "Jurybögen ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:112
-msgid "Age group"
-msgstr "Altersgruppe"
-
-#, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:114
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:46
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:2
@@ -1367,7 +1362,7 @@ msgid "Create jury material"
 msgstr "Jurymaterial erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:119
+#: lib/jumubase_web/views/generators/pdf_generator.ex:129
 msgid "Result"
 msgstr "Ergebnis"
 
@@ -1375,3 +1370,8 @@ msgstr "Ergebnis"
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:28
 msgid "Print jury table"
 msgstr "Jurytabelle ausgeben"
+
+#, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator.ex:122
+msgid "AG"
+msgstr "AG"

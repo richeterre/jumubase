@@ -69,25 +69,26 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     end
   end
 
-  defp render_appearances(%Performance{appearances: appearances}) do
-    non_acc_div = [:div, non_acc(appearances) |> to_appearance_lines]
+  defp render_appearances(%Performance{appearances: appearances, age_group: ag}) do
+    non_acc_div = [:div, non_acc(appearances) |> to_appearance_lines(ag)]
     if (acc = acc(appearances)) != [] do
-      acc_div = [:div, acc |> to_appearance_lines]
+      acc_div = [:div, acc |> to_appearance_lines(ag)]
       [non_acc_div, acc_heading(), acc_div]
     else
       non_acc_div
     end
   end
 
-  defp render_appearance(%Appearance{participant: pt} = a) do
-    [
-      [:b, full_name(pt)],
-      [:span, ", #{instrument_name(a.instrument)}"]
-    ]
-  end
-
-  defp to_appearance_lines(appearances) do
-    appearances |> Enum.map(&render_appearance/1) |> to_lines
+  defp to_appearance_lines(appearances, performance_ag) do
+    appearances
+    |> Enum.map(fn a ->
+      ag_info = age_group_info(a, performance_ag)
+      [
+        [:b, full_name(a.participant)],
+        [:span, ", #{instrument_name(a.instrument)} #{ag_info}"]
+      ]
+    end)
+    |> to_lines
   end
 
   defp acc_heading do
@@ -119,7 +120,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       },
       [:tr,
         [:th, %{style: cell_style(%{"width" => "auto"})}, gettext("Category")],
-        [:th, %{style: cell_style(%{"width" => "1%", "white-space" => "nowrap"})}, gettext("Age group")],
+        [:th, %{style: cell_style(%{"width" => "1%", "white-space" => "nowrap"})}, gettext("AG")],
         [:th, %{style: cell_style(%{"width" => "auto"})}, gettext("Participants")],
         [:th, %{style: cell_style(%{"width" => "5%"})}, "J1"],
         [:th, %{style: cell_style(%{"width" => "5%"})}, "J2"],
@@ -147,12 +148,17 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     ]
   end
 
-  defp render_list_appearances(%Performance{appearances: a_list}) do
-    a_list |> Enum.map(&render_list_appearance/1) |> Enum.intersperse([:br])
+  defp render_list_appearances(%Performance{appearances: a_list, age_group: p_ag}) do
+    a_list
+    |> Enum.map(fn a ->
+      ag_info = age_group_info(a, p_ag)
+      [:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}"]
+    end)
+    |> to_lines
   end
 
-  defp render_list_appearance(%Appearance{participant: pt} = a) do
-    [:span, "#{full_name(pt)}, #{instrument_name(a.instrument)}"]
+  defp age_group_info(%Appearance{age_group: ag}, performance_ag) do
+    if ag != performance_ag, do: "(AG #{ag})", else: nil
   end
 
   defp cell_style(style_map \\ %{}) do

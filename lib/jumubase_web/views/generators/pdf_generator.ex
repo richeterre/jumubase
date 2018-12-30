@@ -32,7 +32,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
         %{style: style(%{
           "font-family" => "DejaVu Sans",
           "font-size" => "16px",
-          "line-height" => 1.4
+          "line-height" => 1.4,
         })},
         body_html
       ]
@@ -63,7 +63,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
             [:span, format_datetime(p.stage_time)]
           ] |> to_lines]
         ],
-        [:div, %{style: style(%{"margin-top" => "100px"})}, render_appearances(p)],
+        [:div, %{style: style(%{"margin-top" => "50px"})}, render_appearances(p)],
         [:div, %{style: style(%{"margin-top" => "200px"})}, render_pieces(p)],
       ]]
     end

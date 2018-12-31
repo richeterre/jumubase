@@ -59,7 +59,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   defp render_performance_pages(performances, round) do
     for p <- performances do
       [:div, %{style: style(%{"page-break-before" => "always"})},
-        [:div, %{style: style(%{"border-bottom" => @border_style})},
+        [:div, %{style: style(%{"border-bottom" => @border_style, "height" => "55px"})},
           [:p, [
             [:span, category_info(p)],
             [:span, format_datetime(p.stage_time)]

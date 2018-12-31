@@ -95,7 +95,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   end
 
   defp acc_heading do
-    [:div, %{style: style(%{"color" => @muted_color, "margin-top" => "20px"})},
+    [:div, %{style: style(%{"color" => @muted_color, "line-height" => 2})},
       gettext("accompanied by")
     ]
   end
@@ -176,13 +176,16 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     ]
   end
 
-  defp render_list_appearances(%Performance{appearances: a_list, age_group: p_ag}) do
-    a_list
-    |> Enum.map(fn a ->
-      ag_info = age_group_info(a, p_ag)
-      [:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}"]
-    end)
-    |> to_lines
+  defp render_list_appearances(%Performance{appearances: appearances, age_group: p_ag}) do
+    non_acc = non_acc(appearances) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
+    acc = acc(appearances) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
+
+    if acc != [], do: non_acc ++ [acc_heading()] ++ acc, else: non_acc
+  end
+
+  defp render_list_appearance(%Appearance{} = a, performance_ag) do
+    ag_info = age_group_info(a, performance_ag)
+    [:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}"]
   end
 
   defp age_group_info(%Appearance{age_group: ag}, performance_ag) do

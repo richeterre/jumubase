@@ -32,9 +32,9 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       [:head, [:meta, %{charset: "UTF-8"}]],
       [:body,
         %{style: style(%{
-          "font-family" => "DejaVu Sans",
-          "font-size" => "16px",
-          "line-height" => 1.4,
+          "font-family" => "LatoLatin",
+          "font-size" => "18px",
+          "line-height" => 1.3,
         })},
         body_html
       ]
@@ -121,7 +121,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       |> Enum.reverse
       |> Enum.split(3)
 
-    [:div, %{style: style(%{"color" => @muted_color, "font-size" => "11px"})},
+    [:div, %{style: style(%{"color" => @muted_color, "font-size" => "12px"})},
       format_point_ranges(left_side),
       format_point_ranges(right_side)
     ]

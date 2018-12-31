@@ -232,7 +232,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
-#: lib/jumubase_web/views/generators/pdf_generator.ex:121
+#: lib/jumubase_web/views/generators/pdf_generator.ex:150
 msgid "Category"
 msgstr ""
 
@@ -267,7 +267,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/views/generators/pdf_generator.ex:123
+#: lib/jumubase_web/views/generators/pdf_generator.ex:152
 msgid "Participants"
 msgstr ""
 
@@ -374,7 +374,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
-#: lib/jumubase_web/views/generators/pdf_generator.ex:106
+#: lib/jumubase_web/views/generators/pdf_generator.ex:112
 msgid "Epoch"
 msgstr ""
 
@@ -430,7 +430,7 @@ msgstr ""
 #:
 #: lib/jumubase_web/templates/internal/performance/_detail_performance.html.eex:10
 #: lib/jumubase_web/templates/internal/performance/_list_performance.html.eex:7
-#: lib/jumubase_web/views/generators/pdf_generator.ex:94
+#: lib/jumubase_web/views/generators/pdf_generator.ex:99
 msgid "accompanied by"
 msgstr ""
 
@@ -1361,7 +1361,7 @@ msgid "Create jury material"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:129
+#: lib/jumubase_web/views/generators/pdf_generator.ex:158
 msgid "Result"
 msgstr ""
 
@@ -1371,6 +1371,11 @@ msgid "Print jury table"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:122
+#: lib/jumubase_web/views/generators/pdf_generator.ex:151
 msgid "AG"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator.ex:137
+msgid "points"
 msgstr ""

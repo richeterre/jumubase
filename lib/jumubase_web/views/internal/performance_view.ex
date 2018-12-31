@@ -40,8 +40,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   def render("scripts.jury_material.html", _assigns), do: render_performance_filter()
 
-  def render("jury_sheets.pdf", %{performances: performances}) do
-    PDFGenerator.jury_sheets(performances)
+  def render("jury_sheets.pdf", %{performances: performances, round: round}) do
+    PDFGenerator.jury_sheets(performances, round)
   end
 
   def render("jury_table.pdf", %{performances: performances}) do

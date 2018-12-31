@@ -6,14 +6,16 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1, category_info: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, person_info: 1]
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
+  alias Jumubase.Showtime.Results
 
   @border_style "1px solid black"
+  @muted_color "#666"
 
   @doc """
   Returns PDF jury sheets (one per page) for the given performances.
   """
-  def jury_sheets(performances) do
-    render_performance_pages(performances) |> generate_pdf("portrait")
+  def jury_sheets(performances, round) do
+    render_performance_pages(performances, round) |> generate_pdf("portrait")
   end
 
   @doc """
@@ -54,18 +56,19 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     )
   end
 
-  defp render_performance_pages(performances) do
+  defp render_performance_pages(performances, round) do
     for p <- performances do
-      [:div, %{style: style(%{"page-break-before" => "always"})}, [
+      [:div, %{style: style(%{"page-break-before" => "always"})},
         [:div, %{style: style(%{"border-bottom" => @border_style})},
           [:p, [
             [:span, category_info(p)],
             [:span, format_datetime(p.stage_time)]
           ] |> to_lines]
         ],
-        [:div, %{style: style(%{"margin-top" => "50px"})}, render_appearances(p)],
-        [:div, %{style: style(%{"margin-top" => "200px"})}, render_pieces(p)],
-      ]]
+        [:div, %{style: style(%{"margin-top" => "50px", "height" => "300px"})}, render_appearances(p)],
+        [:div, %{style: style(%{"height" => "580px"})}, render_pieces(p)],
+        [:div, %{style: style(%{"height" => "50px"})}, render_point_ranges(round)],
+      ]
     end
   end
 
@@ -92,7 +95,9 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   end
 
   defp acc_heading do
-    [:div, %{style: style(%{"color" => "#666", "margin-top" => "20px"})}, gettext("accompanied by")]
+    [:div, %{style: style(%{"color" => @muted_color, "margin-top" => "20px"})},
+      gettext("accompanied by")
+    ]
   end
 
   defp render_pieces(%Performance{pieces: pieces}) do
@@ -100,13 +105,36 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   end
 
   defp render_piece(%Piece{} = pc) do
-    [:div, %{style: style(%{"margin-top" => "20px"})}, [
+    [:div, %{style: style(%{"margin-bottom" => "20px"})}, [
       [:b, person_info(pc)],
       [:span, pc.title],
-      [:span, %{style: style(%{"color" => "#666"})},
+      [:span, %{style: style(%{"color" => @muted_color})},
         "#{duration(pc)} / #{gettext("Epoch")} #{pc.epoch}"
       ],
     ] |> to_lines]
+  end
+
+  defp render_point_ranges(round) do
+    {left_side, right_side} =
+      Results.prizes_for_round(round)
+      |> Map.merge(Results.ratings_for_round(round))
+      |> Enum.reverse
+      |> Enum.split(3)
+
+    [:div, %{style: style(%{"color" => @muted_color, "font-size" => "11px"})},
+      format_point_ranges(left_side),
+      format_point_ranges(right_side)
+    ]
+  end
+
+  defp format_point_ranges(point_ranges) do
+    [:div, %{style: style(%{"display" => "inline-block", "vertical-align" => "top", "width" => "50%"})},
+      point_ranges |> Enum.map(&format_point_range/1) |> to_lines
+    ]
+  end
+
+  defp format_point_range({first..last, text}) do
+    [:span, "#{first}–#{last} #{gettext("points")}: #{text}"]
   end
 
   defp to_lines(items), do: Enum.intersperse(items, [:br])

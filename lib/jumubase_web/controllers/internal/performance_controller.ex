@@ -120,6 +120,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
     conn
     |> assign(:performances, performances)
+    |> assign(:round, contest.round)
     |> render("jury_sheets.pdf")
   end
 

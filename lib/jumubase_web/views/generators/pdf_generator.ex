@@ -144,6 +144,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       %{style: style(%{
         "border" => "1px solid black",
         "border-collapse" => "collapse",
+        "page-break-inside" => "auto",
         "width" => "100%"})
       },
       [:tr,
@@ -163,7 +164,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   end
 
   defp render_performance_row(%Performance{} = p) do
-    [:tr,
+    [:tr, %{style: style(%{"page-break-inside" => "avoid", "page-break-after" => "auto"})},
       [:td, %{style: cell_style()}, category_name(p)],
       [:td, %{style: cell_style()}, p.age_group],
       [:td, %{style: cell_style()}, render_list_appearances(p)],

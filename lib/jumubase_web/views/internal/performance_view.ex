@@ -6,17 +6,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  import JumubaseWeb.Internal.PieceView, only: [
-    composer_dates: 1, duration: 1, epoch_tag: 1, person_name: 1
-  ]
+  import JumubaseWeb.Internal.PieceView, only: [duration: 1, epoch_tag: 1, person_info: 1]
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
+  alias JumubaseWeb.Generators.PDFGenerator
 
-  def render("scripts.index.html", _assigns) do
-    ~E(<script src="/js/performanceFilter.js"></script>)
-  end
+  def render("scripts.index.html", _assigns), do: render_performance_filter()
 
   def render("scripts.new.html", assigns) do
     # Load same script as in public registration form
@@ -39,6 +36,16 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       performanceId: p_id,
       errors: errors
     }}
+  end
+
+  def render("scripts.jury_material.html", _assigns), do: render_performance_filter()
+
+  def render("jury_sheets.pdf", %{performances: performances, round: round}) do
+    PDFGenerator.jury_sheets(performances, round)
+  end
+
+  def render("jury_table.pdf", %{performances: performances}) do
+    PDFGenerator.jury_table(performances)
   end
 
   def stage_info(performance, style \\ :full)
@@ -65,37 +72,20 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   @doc """
-  Returns the contest's dates, suitable for a filter form.
+  Returns various field options suitable for a filter form.
   """
-  def stage_date_filter_options(%Contest{} = contest) do
-    Foundation.date_range(contest)
-    |> Enum.map(&{format_date(&1), Date.to_iso8601(&1)})
+  def filter_options(%Contest{} = contest) do
+    %{
+      stage_date_options: stage_date_filter_options(contest),
+      stage_options: stage_filter_options(contest),
+      genre_options: genre_filter_options(contest),
+      cc_options: cc_filter_options(contest),
+      ag_options: AgeGroups.all
+    }
   end
 
   @doc """
-  Returns the contest's dates, suitable for a filter form.
-  """
-  def stage_filter_options(%Contest{} = contest) do
-    contest
-    |> Foundation.load_stages
-    |> Map.get(:host)
-    |> Map.get(:stages)
-    |> Enum.map(&{&1.name, &1.id})
-  end
-
-  @doc """
-  Returns genres relevant to the contest, suitable for a filter form.
-  """
-  def genre_filter_options(%Contest{round: round}) do
-    genres = case round do
-      0 -> ["kimu"]
-      _ -> ["classical", "popular"]
-    end
-    Enum.map(genres, &{genre_name(&1), &1})
-  end
-
-  @doc """
-  Returns contest categories relevant to the contest, suitable for a filter form.
+  Returns contest category options for the contest, suitable for a filter form.
   """
   def cc_filter_options(%Contest{} = contest) do
     contest
@@ -104,11 +94,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     |> Enum.map(&({&1.category.name, &1.id}))
   end
 
-  @doc """
-  Returns age groups suitable for a filter form.
-  """
-  def ag_filter_options, do: AgeGroups.all
-
   def filter_status(count, true) do
     [count_tag(count), " ", active_filter_label()]
   end
@@ -116,6 +101,30 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   # Private helpers
 
+  defp render_performance_filter do
+    ~E(<script src="/js/performanceFilter.js"></script>)
+  end
+
+  defp stage_date_filter_options(%Contest{} = contest) do
+    Foundation.date_range(contest)
+    |> Enum.map(&{format_date(&1), Date.to_iso8601(&1)})
+  end
+
+  defp stage_filter_options(%Contest{} = contest) do
+    contest
+    |> Foundation.load_stages
+    |> Map.get(:host)
+    |> Map.get(:stages)
+    |> Enum.map(&{&1.name, &1.id})
+  end
+
+  defp genre_filter_options(%Contest{round: round}) do
+    genres = case round do
+      0 -> ["kimu"]
+      _ -> ["classical", "popular"]
+    end
+    Enum.map(genres, &{genre_name(&1), &1})
+  end
 
   defp count_tag(count) do
     content_tag :span,

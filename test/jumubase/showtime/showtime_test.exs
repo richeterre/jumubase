@@ -48,7 +48,7 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "list_performances/2" do
-    test "returns all matching performances from the given contest", %{contest: c} do
+    test "returns matching performances from the contest when passing a filter", %{contest: c} do
       [cc1, cc2] = c.contest_categories
       today = ~N[2019-01-01T23:59:59]
       tomorrow = ~N[2019-01-02T00:00:00]
@@ -74,6 +74,18 @@ defmodule Jumubase.ShowtimeTest do
       insert_performance(cc2, age_group: "IV", stage_id: s1.id, stage_time: today)
 
       assert_ids_match_unordered Showtime.list_performances(c, filter), [p]
+    end
+
+    test "returns matching performances from the contest when passing a list of ids", %{contest: c} do
+      # Matching performances
+      p1 = insert_performance(c)
+      p2 = insert_performance(c)
+
+      # Non-matching performances
+      p3 = insert_performance(insert(:contest))
+      insert_performance(c)
+
+      assert_ids_match_unordered Showtime.list_performances(c, [p3.id, p2.id, p1.id]), [p1, p2]
     end
   end
 

@@ -4,15 +4,12 @@ defmodule JumubaseWeb.Internal.PieceView do
   alias Jumubase.Showtime.Piece
 
   @doc """
-  Returns the the piece's composer or artist name.
+  Returns the piece's composer or artist info.
   """
-  def person_name(%Piece{composer: nil, artist: artist}), do: artist
-  def person_name(%Piece{composer: composer, artist: nil}), do: composer
-
-  def composer_dates(%Piece{composer: nil}), do: nil
-  def composer_dates(%Piece{composer_born: nil}), do: nil
-  def composer_dates(%Piece{composer_born: born, composer_died: died}) do
-    "#{born}–#{died}"
+  def person_info(%Piece{composer: nil, artist: artist}), do: artist
+  def person_info(%Piece{composer: composer, artist: nil} = pc) do
+    %{composer_born: born, composer_died: died} = pc
+    "#{composer} (#{born}–#{died})"
   end
 
   @doc """

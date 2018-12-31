@@ -1,5 +1,5 @@
 <h2>
-  <%= gettext("Performances") %>
+  <%= gettext("Create jury material") %>
   <br>
   <small><%= name_with_flag(@contest) %></small>
 </h2>
@@ -9,11 +9,31 @@
 <%= render "_filter_form.html",
   conn: @conn,
   changeset: @filter_changeset,
-  path: Routes.internal_contest_performance_path(@conn, :index, @contest),
+  path: Routes.internal_contest_jury_material_path(@conn, :jury_material, @contest),
   options: filter_options(@contest),
   count: length(@performances),
   filter_active: @filter_active
   %>
+
+<p class="button-row">
+  <% button_class = if @performances == [], do: "disabled", else: "" %>
+  <%= icon_link "print", gettext("Print jury sheets"),
+    Routes.internal_contest_performance_path(@conn,
+      :print_jury_sheets,
+      @contest,
+      performance_ids: get_ids(@performances)
+    ),
+    class: "btn btn-primary #{button_class}"
+    %>
+  <%= icon_link "print", gettext("Print jury table"),
+    Routes.internal_contest_performance_path(@conn,
+      :print_jury_table,
+      @contest,
+      performance_ids: get_ids(@performances)
+    ),
+    class: "btn btn-primary #{button_class}"
+    %>
+</p>
 
 <div class="table-responsive">
   <table class="table table-hover">
@@ -22,7 +42,6 @@
         <th><%= gettext("Stage time") %></th>
         <th><%= gettext("Category") %></th>
         <th><%= gettext("Participants") %></th>
-        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -43,22 +62,8 @@
         <td>
           <%= render "_list_performance.html", performance: performance %>
         </td>
-        <td class="text-right">
-          <%= edit_icon_link(
-            Routes.internal_contest_performance_path(@conn, :edit, @contest, performance)
-            ) %>
-          <%= delete_icon_link(
-            Routes.internal_contest_performance_path(@conn, :delete, @contest, performance),
-            gettext("Do you really want to delete this performance?")
-            ) %>
-        </td>
       </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-
-<%= link gettext("Add Performance"),
-  to: Routes.internal_contest_performance_path(@conn, :new, @contest),
-  class: "btn btn-default"
-  %>

@@ -10,7 +10,7 @@
   <div class="col-md-4 col-lg-3">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= gettext("Preparation") %></h3>
+        <h3 class="panel-title"><%= gettext("Registrations") %></h3>
       </div>
       <ul class="list-group">
         <li class="list-group-item">
@@ -28,9 +28,23 @@
             Routes.internal_contest_contest_category_path(@conn, :index, @contest)
             %>
         </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4 col-lg-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= gettext("Preparation") %></h3>
+      </div>
+      <ul class="list-group">
         <li class="list-group-item">
           <%= icon_link "time", gettext("Schedule performances"),
             schedule_link_path(@conn, @contest)
+            %>
+        </li>
+        <li class="list-group-item">
+          <%= icon_link "sunglasses", gettext("Create jury material"),
+            Routes.internal_contest_jury_material_path(@conn, :jury_material, @contest)
             %>
         </li>
       </ul>

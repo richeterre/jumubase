@@ -31,6 +31,15 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Returns the performances with the given ids.
+  """
+  def list_performances(%Contest{id: contest_id}, performance_ids) when is_list(performance_ids) do
+    performances_query(contest_id)
+    |> where([p], p.id in ^performance_ids)
+    |> Repo.all
+  end
+
+  @doc """
   Returns all performances without a stage time from the contest.
   """
   def unscheduled_performances(%Contest{id: id}) do

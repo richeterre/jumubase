@@ -280,6 +280,78 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "jury_material/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users list a contest's performances to create jury material", %{conn: conn, contest: c} do
+        conn |> attempt_jury_material(c) |> assert_jury_material_success
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers list an own contest's performances to create jury material", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_jury_material(own_c) |> assert_jury_material_success
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to list a foreign contest's performances to create jury material", %{conn: conn, contest: c} do
+      conn |> attempt_jury_material(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to list a contest's performances to create jury material", %{conn: conn, contest: c} do
+      conn |> attempt_jury_material(c) |> assert_unauthorized_guest
+    end
+  end
+
+  describe "print_jury_sheets/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users print jury sheets for a contest's performances", %{conn: conn, contest: c} do
+        conn |> attempt_print_jury_sheets(c) |> assert_pdf_response
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers print jury sheets for an own contest's performances", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_print_jury_sheets(own_c) |> assert_pdf_response
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to print jury sheets for a foreign contest's performances", %{conn: conn, contest: c} do
+      conn |> attempt_print_jury_sheets(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to print jury sheets for a contest's performances", %{conn: conn, contest: c} do
+      conn |> attempt_print_jury_sheets(c) |> assert_unauthorized_guest
+    end
+  end
+
+  describe "print_jury_table/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users print a jury table for a contest's performances", %{conn: conn, contest: c} do
+        conn |> attempt_print_jury_table(c) |> assert_pdf_response
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers print a jury table for an own contest's performances", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_print_jury_table(own_c) |> assert_pdf_response
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to print a jury table for a foreign contest's performances", %{conn: conn, contest: c} do
+      conn |> attempt_print_jury_table(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to print a jury table for a contest's performances", %{conn: conn, contest: c} do
+      conn |> attempt_print_jury_table(c) |> assert_unauthorized_guest
+    end
+  end
+
   # Private helpers
 
   defp insert_own_contest(user) do
@@ -302,6 +374,28 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     conn |> patch(Routes.internal_contest_performance_path(conn, :reschedule, contest), params)
   end
 
+  defp attempt_jury_material(conn, contest) do
+    get(conn, Routes.internal_contest_jury_material_path(conn, :jury_material, contest))
+  end
+
+  defp attempt_print_jury_sheets(conn, contest) do
+    p1 = insert_performance(contest)
+    p2 = insert_performance(contest)
+
+    get(conn, Routes.internal_contest_performance_path(conn,
+      :print_jury_sheets, contest, performance_ids: [p1.id, p2.id])
+    )
+  end
+
+  defp attempt_print_jury_table(conn, contest) do
+    p1 = insert_performance(contest)
+    p2 = insert_performance(contest)
+
+    get(conn, Routes.internal_contest_performance_path(conn,
+      :print_jury_table, contest, performance_ids: [p1.id, p2.id])
+    )
+  end
+
   defp assert_create_success(conn, contest, performance) do
     assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :show, contest, performance),
@@ -321,6 +415,14 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       Routes.internal_contest_performance_path(conn, :index, contest),
       "The performance was deleted."
     )
+  end
+
+  defp assert_jury_material_success(conn) do
+    assert html_response(conn, 200) =~ "Create jury material"
+  end
+
+  defp assert_pdf_response(conn) do
+    assert response_content_type(conn, :pdf) =~ "charset=utf-8"
   end
 
   defp test_reschedule_success(conn, contest) do

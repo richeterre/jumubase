@@ -13,6 +13,9 @@ config :jumubase,
 config :jumubase, JumubaseWeb.MapHelpers,
   google_api_key: System.get_env("GOOGLE_API_KEY")
 
+config :jumubase, JumubaseWeb.Api.Auth,
+  api_key: System.get_env("JUMU_API_KEY")
+
 # Set default locale
 locale = "de"
 config :jumubase, Jumubase.Gettext, default_locale: locale

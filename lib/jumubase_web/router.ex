@@ -12,6 +12,10 @@ defmodule JumubaseWeb.Router do
     plug Phauxth.Remember
   end
 
+  pipeline :api do
+    plug JumubaseWeb.Api.Auth
+  end
+
   pipeline :html_only do
     plug :accepts, ["html"]
   end
@@ -25,7 +29,7 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/api/v1", JumubaseWeb.Api do
-    pipe_through :json_only
+    pipe_through [:api, :json_only]
 
     resources "/contests", ContestController, only: [:index]
   end

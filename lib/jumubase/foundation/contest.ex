@@ -13,6 +13,7 @@ defmodule Jumubase.Foundation.Contest do
     field :start_date, :date
     field :end_date, :date
     field :certificate_date, :date
+    field :timetables_public, :boolean, read_after_writes: true
 
     belongs_to :host, Host
     has_many :contest_categories, ContestCategory
@@ -21,7 +22,7 @@ defmodule Jumubase.Foundation.Contest do
   end
 
   @required_attrs [:season, :round, :deadline, :start_date, :end_date]
-  @optional_attrs [:certificate_date]
+  @optional_attrs [:certificate_date, :timetables_public]
 
   @doc false
   def changeset(%Contest{} = contest, attrs) do

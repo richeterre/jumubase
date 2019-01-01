@@ -101,7 +101,7 @@ msgstr "Bitte wählen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/edit.html.eex:9
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:67
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:73
 #: lib/jumubase_web/templates/internal/performance/edit.html.eex:13
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:8
 #: lib/jumubase_web/templates/performance/edit.html.eex:13
@@ -233,7 +233,7 @@ msgstr "Geburtsdatum"
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
-#: lib/jumubase_web/views/generators/pdf_generator.ex:150
+#: lib/jumubase_web/views/generators/pdf_generator.ex:151
 msgid "Category"
 msgstr "Kategorie"
 
@@ -268,7 +268,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/views/generators/pdf_generator.ex:152
+#: lib/jumubase_web/views/generators/pdf_generator.ex:153
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -1362,7 +1362,7 @@ msgid "Create jury material"
 msgstr "Jurymaterial erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:158
+#: lib/jumubase_web/views/generators/pdf_generator.ex:159
 msgid "Result"
 msgstr "Ergebnis"
 
@@ -1372,7 +1372,7 @@ msgid "Print jury table"
 msgstr "Jurytabelle ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:151
+#: lib/jumubase_web/views/generators/pdf_generator.ex:152
 msgid "AG"
 msgstr "AG"
 
@@ -1380,3 +1380,8 @@ msgstr "AG"
 #: lib/jumubase_web/views/generators/pdf_generator.ex:137
 msgid "points"
 msgstr "Punkte"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:66
+msgid "Timetables public"
+msgstr "Zeitplan öffentlich"

@@ -61,6 +61,12 @@
     <%= error_tag f, :certificate_date %>
   </div>
 
+  <div class="checkbox">
+    <%= label f, :timetables_public do %>
+      <%= checkbox f, :timetables_public %> <%= gettext("Timetables public") %>
+    <% end %>
+  </div>
+
   <hr>
 
   <div class="form-group">

@@ -31,7 +31,9 @@ defmodule JumubaseWeb.Router do
   scope "/api/v1", JumubaseWeb.Api do
     pipe_through [:api, :json_only]
 
-    resources "/contests", ContestController, only: [:index]
+    resources "/contests", ContestController, only: [:index] do
+      resources "/performances", PerformanceController, only: [:index]
+    end
   end
 
   scope "/", JumubaseWeb do

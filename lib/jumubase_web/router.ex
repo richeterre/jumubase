@@ -24,6 +24,12 @@ defmodule JumubaseWeb.Router do
     plug :accepts, ["pdf"]
   end
 
+  scope "/api/v1", JumubaseWeb.Api do
+    pipe_through :json_only
+
+    resources "/contests", ContestController, only: [:index]
+  end
+
   scope "/", JumubaseWeb do
     pipe_through [:browser, :html_only]
 

@@ -56,6 +56,19 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
+  Returns all contests with public timetables.
+  """
+  def list_public_contests do
+    query = from c in Contest,
+      where: c.timetables_public,
+      join: h in assoc(c, :host),
+      order_by: [{:desc, c.round}, h.name],
+      preload: [host: {h, :stages}, contest_categories: :category]
+
+    Repo.all(query)
+  end
+
+  @doc """
   Returns all contests relevant to the given user,
   i.e. own contests and, for non-local users, LW contests.
   """

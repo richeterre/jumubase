@@ -127,6 +127,28 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_public_contests/1" do
+    test "returns all contests with public timetables" do
+      c = insert(:contest, timetables_public: true)
+      insert(:contest, timetables_public: false)
+      assert_ids_match_unordered Foundation.list_public_contests, [c]
+    end
+
+    test "preloads the contests' hosts with stages, as well as contest categories" do
+      insert(:contest,
+        host: build(:host, stages: build_list(1, :stage)),
+        contest_categories: build_list(1, :contest_category),
+        timetables_public: true
+      )
+
+      [result] = Foundation.list_public_contests
+      assert %Contest{
+        host: %Host{stages: [%Stage{}]},
+        contest_categories: [%ContestCategory{category: %Category{}}]
+      } = result
+    end
+  end
+
   describe "list_relevant_contests/2" do
     setup %{role: role} do
       [user: insert(:user, role: role)]

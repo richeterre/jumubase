@@ -254,6 +254,23 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_public_contest!/1" do
+    test "returns a contest with public timetables" do
+      %{id: id} = insert(:contest, timetables_public: true)
+      result = Foundation.get_public_contest!(id)
+      assert result.id == id
+    end
+
+    test "raises an error if the contest isn't found" do
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_public_contest!(123) end
+    end
+
+    test "raises an error if the contest doesn't have public timetables" do
+      %{id: id} = insert(:contest, timetables_public: false)
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_public_contest!(id) end
+    end
+  end
+
   describe "get_matching_kimu_contest/1" do
     setup do
       [host: insert(:host), season: 56]

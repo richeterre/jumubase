@@ -89,6 +89,12 @@ defmodule Jumubase.Foundation do
     Repo.get!(Contest, id) |> Repo.preload(:host)
   end
 
+  def get_public_contest!(id) do
+    Contest
+    |> where(timetables_public: true)
+    |> Repo.get!(id)
+  end
+
   @doc """
   Returns the Kimu contest whose season and host matches the given RW contest,
   or nil if no such Kimu contest exists or the given contest is not a RW.

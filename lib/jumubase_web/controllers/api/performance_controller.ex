@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Api.PerformanceController do
   alias Jumubase.Showtime.PerformanceFilter
 
   def index(conn, %{"contest_id" => contest_id, "venue_id" => stage_id, "date" => date}) do
-    contest = Foundation.get_contest!(contest_id)
+    contest = Foundation.get_public_contest!(contest_id)
 
     # Parse date, which some clients unfortunately send without leading zeroes (e.g. 2018-1-31)
     case Timex.parse(date, "{YYYY}-{M}-{D}") do
@@ -19,7 +19,7 @@ defmodule JumubaseWeb.Api.PerformanceController do
     end
   end
   def index(conn, %{"contest_id" => contest_id, "contest_category_id" => cc_id, "results_public" => results_public}) do
-    contest = Foundation.get_contest!(contest_id)
+    contest = Foundation.get_public_contest!(contest_id)
 
     filter = PerformanceFilter.from_params(%{contest_category_id: cc_id, results_public: results_public})
     conn |> render_performances(contest, filter)

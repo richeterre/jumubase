@@ -34,8 +34,8 @@ defmodule JumubaseWeb.Api.PerformanceView do
     %{
       title: pc.title,
       composer_name: pc.composer || pc.artist,
-      composer_born: pc.composer_born,
-      composer_died: pc.composer_died,
+      composer_born: pc.composer_born || "",
+      composer_died: pc.composer_died || "",
       duration: duration_in_seconds(pc),
       epoch: pc.epoch,
     }

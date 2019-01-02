@@ -59,11 +59,12 @@ defmodule Jumubase.ShowtimeTest do
         stage_date: ~D[2019-01-01],
         stage_id: s1.id,
         contest_category_id: cc1.id,
-        age_group: "III"
+        age_group: "III",
+        results_public: true,
       }
 
       # Matching performance
-      p = insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today)
+      p = insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today, results_public: true)
 
       # Non-matching performances
       insert_performance(cc1, age_group: "III", stage_id: s2.id, stage_time: today)
@@ -72,6 +73,7 @@ defmodule Jumubase.ShowtimeTest do
       insert_performance(cc1, age_group: "IV", stage_id: s1.id, stage_time: today)
       insert_performance(cc2, age_group: "III", stage_id: s1.id, stage_time: today)
       insert_performance(cc2, age_group: "IV", stage_id: s1.id, stage_time: today)
+      insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today, results_public: false)
 
       assert_ids_match_unordered Showtime.list_performances(c, filter), [p]
     end

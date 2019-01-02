@@ -10,6 +10,7 @@ defmodule Jumubase.Showtime.Performance do
     field :age_group, :string
     field :edit_code, :string
     field :stage_time, :naive_datetime
+    field :results_public, :boolean, read_after_writes: true
 
     belongs_to :contest_category, ContestCategory
     belongs_to :stage, Stage

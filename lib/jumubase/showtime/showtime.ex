@@ -223,6 +223,8 @@ defmodule Jumubase.Showtime do
         in_contest_category(query, cc_id)
       {:age_group, ag}, query ->
         with_age_group(query, ag)
+      {:results_public, results_public}, query ->
+        with_results_public(query, results_public)
       _, query ->
         query
     end)
@@ -307,6 +309,10 @@ defmodule Jumubase.Showtime do
 
   defp with_age_group(query, age_group) do
     from p in query, where: p.age_group == ^age_group
+  end
+
+  defp with_results_public(query, public) do
+    from p in query, where: p.results_public == ^public
   end
 
   # Limits the query to the given contest id

@@ -8,6 +8,7 @@ defmodule Jumubase.PerformanceFilterTest do
     genre: "kimu",
     contest_category_id: 2,
     age_group: "Ia",
+    results_public: true,
   }
 
   describe "changeset/1" do
@@ -30,7 +31,8 @@ defmodule Jumubase.PerformanceFilterTest do
           stage_id: 1,
           genre: "kimu",
           contest_category_id: 2,
-          age_group: "Ia"
+          age_group: "Ia",
+          results_public: true,
         }
     end
 
@@ -41,7 +43,8 @@ defmodule Jumubase.PerformanceFilterTest do
           stage_id: nil,
           genre: nil,
           contest_category_id: nil,
-          age_group: nil
+          age_group: nil,
+          results_public: nil
         }
     end
 
@@ -52,7 +55,8 @@ defmodule Jumubase.PerformanceFilterTest do
           stage_id: nil,
           genre: nil,
           contest_category_id: nil,
-          age_group: "Ia"
+          age_group: "Ia",
+          results_public: nil,
         }
     end
   end

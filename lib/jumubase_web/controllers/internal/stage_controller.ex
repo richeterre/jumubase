@@ -48,6 +48,7 @@ defmodule JumubaseWeb.Internal.StageController do
     |> assign(:performances, performances)
     |> add_breadcrumbs(contest)
     |> add_breadcrumb(name: stage.name, path: current_path(conn))
+    |> add_public_schedule_warning(contest)
     |> render("schedule.html")
   end
 
@@ -58,4 +59,11 @@ defmodule JumubaseWeb.Internal.StageController do
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(name: gettext("Schedule performances"), path: index_path)
   end
+
+  defp add_public_schedule_warning(conn, %Contest{timetables_public: true}) do
+    conn |> put_flash(:warning,
+      gettext("This schedule has already been published. Your changes will be visible to others instantly.")
+    )
+  end
+  defp add_public_schedule_warning(conn, %Contest{timetables_public: false}), do: conn
 end

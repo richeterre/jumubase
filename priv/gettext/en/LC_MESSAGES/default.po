@@ -1039,7 +1039,7 @@ msgid "Add Performance"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:59
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:60
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:41
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:2
@@ -1384,4 +1384,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:66
 msgid "Timetables public"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:65
+msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr ""

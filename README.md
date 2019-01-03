@@ -54,10 +54,10 @@ __Stage__<br />
 A location where performances take place. Every host has at least one, but often several stages.
 
 __Contest__<br />
-A single or multi-day event that forms the basic entity of Jugend musiziert. Besides its associated host, it includes a _season_ (= competition year) and a _round_.
+A single- or multi-day event during which performances take place. Besides its associated host, it includes a _season_ (= competition year) and a _round_.
 
 __Category__<br />
-A set of constraints for participating in a contest. Each categories is either for solo or ensemble performances and mandates what pieces can be performed, as well as a min/max duration that depends on the performance's age group.
+A set of constraints for participating in a contest. Each category is designed either for solo or ensemble performances and mandates what pieces can be performed, as well as a min/max duration that depends on the performance's age group.
 
 __Contest category__<br />
 A manifestation of a category when offered within a particular contest. This schema exists to hold additional constraints: Some contests might offer a category only for certain age groups, or not at all.
@@ -76,7 +76,7 @@ A piece of music presented during a performance. It holds information on the com
 
 ### Parameters
 
-Some Jumu-related data (such as rounds, roles, genres, and category types) is unlikely to change much over time and therefore hard-coded into the `JumuParams` module.
+Some Jumu-related data (such as rounds, roles, genres, and category types) is unlikely to change much over time and therefore hard-coded into the `JumuParams` module. Parameters that are likely to change, or not meant for the public eye, are stored as environment variables instead.
 
 ### Authentication
 

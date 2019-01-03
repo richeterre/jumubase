@@ -134,18 +134,22 @@ defmodule Jumubase.FoundationTest do
       assert_ids_match_unordered Foundation.list_public_contests, [c]
     end
 
-    test "preloads the contests' hosts with stages, as well as contest categories" do
-      insert(:contest,
-        host: build(:host, stages: build_list(1, :stage)),
-        contest_categories: build_list(1, :contest_category),
-        timetables_public: true
-      )
+    test "preloads the contests' hosts with used stages, as well as contest categories" do
+      [s1, s2, _] = stages = insert_list(3, :stage)
+      host = insert(:host, stages: stages)
+      c = insert(:contest, host: host, contest_categories: [], timetables_public: true)
+      cc = insert_contest_category(c)
+
+      # Keep third stage unused
+      insert_performance(cc, stage: s1)
+      insert_performance(cc, stage: s2)
 
       [result] = Foundation.list_public_contests
       assert %Contest{
-        host: %Host{stages: [%Stage{}]},
+        host: %Host{stages: result_stages},
         contest_categories: [%ContestCategory{category: %Category{}}]
       } = result
+      assert_ids_match_unordered result_stages, [s1, s2]
     end
   end
 

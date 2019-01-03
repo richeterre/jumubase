@@ -8,7 +8,7 @@ The application serves two main audiences:
 * Jumu __participants__ and their families, friends and teachers; they can sign up for a contest, edit their information, and check schedules and results __without a user account.__
 * Jumu __organizers__ on both local and global level, who can manage contest data, enter results and print contest-related material. The permissions for this are granted via __personal user accounts.__
 
-Jumubase will also expose some of its public data via a JSON API that serves mobile clients for [Android][jumu-nordost-react-native] and [iOS][jumu-nordost-ios].
+Jumubase also exposes some public data, such as timetables and results, via a JSON API that serves mobile clients for [Android][jumu-nordost-react-native] and [iOS][jumu-nordost-ios].
 
 [jugend-musiziert]: https://en.wikipedia.org/wiki/Jugend_musiziert
 [jumu-nordost]: http://www.jumu-nordost.eu

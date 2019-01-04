@@ -57,6 +57,7 @@ config :logger, :console,
 # Configure Sentry
 config :sentry,
   dsn: System.get_env("SENTRY_DSN"),
+  filter: Jumubase.SentryEventFilter,
   included_environments: ~w(staging production),
   environment_name: System.get_env("RELEASE_LEVEL") || "development"
 

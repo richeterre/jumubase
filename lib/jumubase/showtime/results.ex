@@ -45,4 +45,14 @@ defmodule Jumubase.Showtime.Results do
       17..19 => "3. Preis",
     }
   end
+
+  @doc """
+  Returns the prize resulting from the points in the given round, or nil if no prize is awarded.
+  """
+  def get_prize(points, round) do
+    prizes_for_round(round)
+    |> Enum.find_value(fn {point_range, name} ->
+      if points in point_range, do: name, else: false
+    end)
+  end
 end

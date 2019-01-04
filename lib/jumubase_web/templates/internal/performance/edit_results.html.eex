@@ -49,7 +49,7 @@
               <%= a.points %>
             </td>
             <td>
-              <%# TODO: Prize info %>
+              <%= prize(a, @contest.round) %>
             </td>
             <td class="text-right">
               <%= icon_link "edit", nil,

@@ -1,0 +1,41 @@
+<div class="modal fade" id="modalResultForm" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          <%= gettext("Enter points") %>
+          <br>
+          <small id="participant-name"></small>
+        </h4>
+      </div>
+
+      <%
+        filter = @conn.params["performance_filter"]
+        min_points..max_points = JumuParams.points
+      %>
+
+      <%= form_for @conn,
+        Routes.internal_contest_results_path(@conn, :update_results, @contest, performance_filter: filter),
+        [as: :results, method: :patch, class: "form-inline"],
+        fn f -> %>
+
+        <%= hidden_input f, :appearance_id, id: "appearance-id" %>
+
+        <div class="modal-body">
+          <%= label f, :points, gettext("Points"), class: "control-label" %>
+          <%= number_input f, :points,
+            min: min_points, max: max_points,
+            id: "points-input", class: "form-control"
+            %>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">
+            <%= gettext("Cancel") %>
+          </button>
+          <%= submit gettext("Save points"), class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

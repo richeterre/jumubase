@@ -1,12 +1,13 @@
 defmodule JumubaseWeb.Internal.PerformanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.AppearanceView, only: [
-    acc: 1, age_group_badge: 1, instrument_name: 1, non_acc: 1
+    acc: 1, age_group_badge: 1, appearance_info: 1, instrument_name: 1, non_acc: 1
   ]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, epoch_tag: 1, person_info: 1]
+  alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
@@ -46,6 +47,13 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   def render("jury_table.pdf", %{performances: performances}) do
     PDFGenerator.jury_table(performances)
+  end
+
+  def render("scripts.edit_results.html", _assigns) do
+    ~E(
+      <script src="/js/performanceFilter.js"></script>
+      <script src="/js/resultForm.js"></script>
+    )
   end
 
   def stage_info(performance, style \\ :full)

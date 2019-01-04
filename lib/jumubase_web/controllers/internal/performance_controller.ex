@@ -132,6 +132,35 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> render("jury_table.pdf")
   end
 
+  def edit_results(conn, params, contest) do
+    conn
+    |> prepare_filtered_list(params, contest)
+    |> add_contest_breadcrumb(contest)
+    |> add_breadcrumb(name: gettext("Enter points"), path: current_path(conn))
+    |> render("edit_results.html")
+  end
+
+  def update_results(conn, %{"results" => results} = params, contest) do
+    %{"appearance_id" => a_id, "points" => points} = results
+    appearance = Showtime.get_appearance!(contest, a_id)
+
+    list_path = case params["performance_filter"] do
+      filter when is_map(filter) ->
+        Routes.internal_contest_results_path(conn, :edit_results, contest, performance_filter: filter)
+      _ ->
+        Routes.internal_contest_results_path(conn, :edit_results, contest)
+    end
+
+    case Showtime.set_points(appearance, points) do
+      {:ok, _appearance} ->
+        conn |> redirect(to: list_path)
+      {:error, _changeset} ->
+        conn
+        |> put_flash(:error, gettext("The points could not be saved at this time."))
+        |> redirect(to: list_path)
+    end
+  end
+
   # Private helpers
 
   defp prepare_filtered_list(conn, params, contest) do

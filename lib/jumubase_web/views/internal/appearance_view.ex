@@ -1,12 +1,21 @@
 defmodule JumubaseWeb.Internal.AppearanceView do
   use JumubaseWeb, :view
+  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   alias Jumubase.Showtime.Appearance
+  alias Jumubase.Showtime.Instruments
+
+  @doc """
+  Returns the participant's full name and instrument name.
+  """
+  def appearance_info(%Appearance{participant: pt, instrument: i}) do
+    "#{full_name(pt)}, #{instrument_name(i)}"
+  end
 
   @doc """
   Returns a display name for the instrument.
   """
   def instrument_name(instrument) do
-    Jumubase.Showtime.Instruments.name(instrument)
+    Instruments.name(instrument)
   end
 
   @doc """

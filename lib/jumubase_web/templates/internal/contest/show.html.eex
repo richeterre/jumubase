@@ -57,7 +57,9 @@
       </div>
       <ul class="list-group">
         <li class="list-group-item">
-          <%= icon_link "edit", gettext("Enter points"), "#" %>
+          <%= icon_link "edit", gettext("Enter points"),
+            Routes.internal_contest_results_path(@conn, :edit_results, @contest)
+            %>
         </li>
       </ul>
     </div>

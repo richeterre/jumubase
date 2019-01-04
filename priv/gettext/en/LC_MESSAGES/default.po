@@ -232,6 +232,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
+#: lib/jumubase_web/templates/internal/performance/results.html.eex:22
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 #: lib/jumubase_web/views/generators/pdf_generator.ex:151
 msgid "Category"
@@ -267,6 +268,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
+#: lib/jumubase_web/templates/internal/performance/results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 #: lib/jumubase_web/views/generators/pdf_generator.ex:153
 msgid "Participants"
@@ -961,14 +963,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:131
+#: lib/jumubase_web/views/internal/performance_view.ex:139
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:136
+#: lib/jumubase_web/views/internal/performance_view.ex:144
 msgid "Filter active"
 msgstr ""
 
@@ -1084,7 +1086,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:19
+#: lib/jumubase_web/views/internal/stage_view.ex:18
 msgid "Intermission"
 msgstr ""
 
@@ -1372,6 +1374,7 @@ msgid "Print jury table"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/performance/results.html.eex:24
 #: lib/jumubase_web/views/generators/pdf_generator.ex:152
 msgid "AG"
 msgstr ""
@@ -1392,11 +1395,43 @@ msgid "This schedule has already been published. Your changes will be visible to
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:139
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:60
+#: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:6
+#: lib/jumubase_web/templates/internal/performance/results.html.eex:2
 msgid "Enter points"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:56
 msgid "Evaluation"
+msgstr ""
+
+#, elixir-format
+#:
+#: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:25
+#: lib/jumubase_web/templates/internal/performance/results.html.eex:25
+msgid "Points"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/results.html.eex:26
+msgid "Prize"
+msgstr ""
+
+#, elixir-format
+#:
+#: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:34
+msgid "Cancel"
+msgstr ""
+
+#, elixir-format
+#:
+#: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:36
+msgid "Save points"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:159
+msgid "The points could not be saved at this time."
 msgstr ""

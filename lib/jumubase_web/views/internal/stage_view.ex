@@ -1,13 +1,12 @@
 defmodule JumubaseWeb.Internal.StageView do
   use JumubaseWeb, :view
+  import JumubaseWeb.Internal.AppearanceView, only: [appearance_info: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.PageView, only: [admin_email: 0]
-  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PerformanceView, only: [
     cc_filter_options: 1, formatted_duration: 1
   ]
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.Instruments
   alias Jumubase.Showtime.Performance
 
   @pixels_per_minute 4 # for mapping duration to item height
@@ -60,9 +59,7 @@ defmodule JumubaseWeb.Internal.StageView do
   Returns participant names and instruments of the performance's appearances.
   """
   def appearances_info(%Performance{appearances: appearances}) do
-    appearances
-    |> Enum.map(fn a -> "#{full_name(a.participant)}, #{Instruments.name(a.instrument)}" end)
-    |> Enum.join("\n")
+    appearances |> Enum.map(&appearance_info/1) |> Enum.join("\n")
   end
 
   @doc """

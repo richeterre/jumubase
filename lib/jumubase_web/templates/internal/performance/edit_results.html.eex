@@ -1,0 +1,72 @@
+<h2>
+  <%= gettext("Enter points") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<%= render "_filter_form.html",
+  conn: @conn,
+  changeset: @filter_changeset,
+  path: Routes.internal_contest_results_path(@conn, :edit_results, @contest),
+  options: filter_options(@contest),
+  count: length(@performances),
+  filter_active: @filter_active
+  %>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Participants") %></th>
+        <th><%= gettext("AG") %></th>
+        <th><%= gettext("Points") %></th>
+        <th><%= gettext("Prize") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+        <% [first_a | _] = appearances = performance.appearances %>
+        <%= for a <- performance.appearances do %>
+          <tr>
+            <%= if a == first_a do %>
+              <td rowspan="<%= length(appearances) %>">
+                <%= link category_name(performance),
+                  to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                  %>
+              </td>
+            <% end %>
+            <td>
+              <%= appearance_info(a) %>
+            </td>
+            <td>
+              <%= age_group_badge(a) %>
+            </td>
+            <td>
+              <%= a.points %>
+            </td>
+            <td>
+              <%# TODO: Prize info %>
+            </td>
+            <td class="text-right">
+              <%= icon_link "edit", nil,
+                "#",
+                class: "btn btn-default btn-xs",
+                "data-toggle": "modal",
+                "data-target": "#modalResultForm",
+                "data-participant-name": full_name(a.participant),
+                "data-appearance-id": a.id,
+                "data-current-points": a.points
+                %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= render "_modal_result_form.html", conn: @conn, contest: @contest %>

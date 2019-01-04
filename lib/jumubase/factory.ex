@@ -160,6 +160,14 @@ defmodule Jumubase.Factory do
   end
 
   @doc """
+  Inserts an appearance into the given contest.
+  """
+  def insert_appearance(%Contest{} = c, attrs \\ []) do
+    %{appearances: [a]} = insert_performance(c, appearances: [build(:appearance, attrs)])
+    a
+  end
+
+  @doc """
   Inserts a participant into the given contest.
   """
   def insert_participant(%Contest{} = c, attrs \\ []) do

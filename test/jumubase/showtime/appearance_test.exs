@@ -73,6 +73,32 @@ defmodule Jumubase.AppearanceTest do
     end
   end
 
+  describe "result_changeset/2" do
+    test "is valid with valid points" do
+      for valid_points <- [0, 20, 25] do
+        changeset = Appearance.result_changeset(%Appearance{}, valid_points)
+        assert changeset.valid?
+      end
+    end
+
+    test "is invalid with invalid points" do
+      for invalid_points <- [-1, 20.9, 26] do
+        changeset = Appearance.result_changeset(%Appearance{}, invalid_points)
+        refute changeset.valid?
+      end
+    end
+
+    test "casts points given as string to integer" do
+      changeset = Appearance.result_changeset(%Appearance{}, "25")
+      assert changeset.changes.points == 25
+    end
+
+    test "discards empty point string" do
+      changeset = Appearance.result_changeset(%Appearance{}, "")
+      refute Map.has_key?(changeset.changes, :points)
+    end
+  end
+
   test "is_soloist/1 returns whether the appearance has a soloist role" do
     assert Appearance.is_soloist(build(:appearance, role: "soloist"))
     refute Appearance.is_soloist(build(:appearance, role: "ensemblist"))

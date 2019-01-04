@@ -86,4 +86,9 @@ defmodule Jumubase.JumuParams do
       "f" -> dgettext("epochs", "Neue Musik")
     end
   end
+
+  @doc """
+  Returns the range of possible point values.
+  """
+  def points, do: 0..25
 end

@@ -182,6 +182,29 @@ defmodule Jumubase.Showtime do
     performance |> Repo.preload(contest_category: [:contest, :category])
   end
 
+  @doc """
+  Gets a single appearance from the given contest.
+
+  Raises `Ecto.NoResultsError` if the appearance isn't found in that contest.
+  """
+  def get_appearance!(%Contest{id: contest_id}, id) do
+    query = from a in Appearance,
+      join: p in assoc(a, :performance),
+      join: cc in assoc(p, :contest_category),
+      where: cc.contest_id == ^contest_id
+
+    Repo.get!(query, id)
+  end
+
+  @doc """
+  Assigns the given points (if valid) to the appearance.
+  """
+  def set_points(%Appearance{} = appearance, points) do
+    appearance
+    |> Appearance.result_changeset(points)
+    |> Repo.update
+  end
+
   def list_participants(%Contest{id: contest_id}) do
     Participant
     |> preloaded_from_contest(contest_id)

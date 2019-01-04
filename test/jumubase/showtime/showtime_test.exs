@@ -782,6 +782,34 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "get_appearance!/2" do
+    test "gets an appearance from the given contest by id", %{contest: c} do
+      %{id: id} = insert_appearance(c)
+
+      result = Showtime.get_appearance!(c, id)
+      assert result.id == id
+    end
+
+    test "raises an error if the appearance isn't found in the given contest", %{contest: c} do
+      %{id: id} = insert_appearance(c)
+      other_c = insert(:contest)
+
+      assert_raise Ecto.NoResultsError, fn -> Showtime.get_appearance!(other_c, id) end
+    end
+  end
+
+  describe "set_points/2" do
+    test "assigns the given points to the appearance", %{contest: c} do
+      a = insert_appearance(c)
+      assert {:ok, a} = Showtime.set_points(a, 25)
+    end
+
+    test "returns an error for invalid points", %{contest: c} do
+      a = insert_appearance(c)
+      assert {:error, %Changeset{}} = Showtime.set_points(a, 26)
+    end
+  end
+
   describe "get_participant!/2" do
     test "gets a participant from the given contest by id", %{contest: c} do
       %{id: id} = insert_participant(c)

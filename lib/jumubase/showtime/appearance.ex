@@ -34,6 +34,15 @@ defmodule Jumubase.Showtime.Appearance do
     )
   end
 
+  @doc """
+  Allows setting a result for the given appearance.
+  """
+  def result_changeset(%Appearance{} = appearance, points) do
+    appearance
+    |> cast(%{points: points}, [:points])
+    |> validate_inclusion(:points, JumuParams.points)
+  end
+
   def is_soloist(%Appearance{role: role}), do: role == "soloist"
 
   def is_ensemblist(%Appearance{role: role}), do: role == "ensemblist"

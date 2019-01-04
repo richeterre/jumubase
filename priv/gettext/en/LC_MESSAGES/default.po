@@ -1390,3 +1390,13 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/stage_controller.ex:65
 msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:60
+msgid "Enter points"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:56
+msgid "Evaluation"
+msgstr ""

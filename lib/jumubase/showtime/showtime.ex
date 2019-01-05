@@ -183,26 +183,31 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
-  Gets a single appearance from the given contest.
-
-  Raises `Ecto.NoResultsError` if the appearance isn't found in that contest.
+  Returns the appearances with the given ids from the contest.
   """
-  def get_appearance!(%Contest{id: contest_id}, id) do
+  def list_appearances(%Contest{id: contest_id}, appearance_ids) when is_list(appearance_ids) do
     query = from a in Appearance,
       join: p in assoc(a, :performance),
       join: cc in assoc(p, :contest_category),
-      where: cc.contest_id == ^contest_id
+      where: cc.contest_id == ^contest_id,
+      where: a.id in ^appearance_ids
 
-    Repo.get!(query, id)
+    Repo.all(query)
   end
 
   @doc """
-  Assigns the given points (if valid) to the appearance.
+  Assigns the given points (if valid) to each of the appearances.
   """
-  def set_points(%Appearance{} = appearance, points) do
-    appearance
-    |> Appearance.result_changeset(points)
-    |> Repo.update
+  def set_points(appearances, points) when is_list(appearances) do
+    multi = Enum.reduce(appearances, Multi.new, fn a, acc ->
+      changeset = Appearance.result_changeset(a, points)
+      Multi.update(acc, a.id, changeset)
+    end)
+
+    case Repo.transaction(multi) do
+      {:ok, _} -> :ok
+      {:error, _, _, _} -> :error
+    end
   end
 
   def list_participants(%Contest{id: contest_id}) do

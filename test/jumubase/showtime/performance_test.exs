@@ -75,20 +75,6 @@ defmodule Jumubase.PerformanceTest do
     end
   end
 
-  describe "to_edit_code/2" do
-    test "generates an edit code string for a Kimu performance" do
-      assert Performance.to_edit_code(123, 0) == "000123"
-    end
-
-    test "generates an edit code string for an RW performance" do
-      assert Performance.to_edit_code(123, 1) == "100123"
-    end
-
-    test "generates an edit code string for an LW performance" do
-      assert Performance.to_edit_code(123, 2) == "200123"
-    end
-  end
-
   describe "stage_changeset/2" do
     @stage_id 1
     @stage_time "2019-01-01T07:00:00Z"
@@ -128,6 +114,116 @@ defmodule Jumubase.PerformanceTest do
       attrs = %{"stage_time" => @stage_time}
       changeset = Performance.stage_changeset(%Performance{}, attrs)
       refute changeset.valid?
+    end
+  end
+
+  describe "to_edit_code/2" do
+    test "generates an edit code string for a Kimu performance" do
+      assert Performance.to_edit_code(123, 0) == "000123"
+    end
+
+    test "generates an edit code string for an RW performance" do
+      assert Performance.to_edit_code(123, 1) == "100123"
+    end
+
+    test "generates an edit code string for an LW performance" do
+      assert Performance.to_edit_code(123, 2) == "200123"
+    end
+  end
+
+  describe "non_accompanists/1" do
+    test "returns the soloist from a solo performance" do
+      sol = build(:appearance, role: "soloist")
+      [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
+      p = build(:performance, appearances: [sol, acc1, acc2])
+      assert Performance.non_accompanists(p) == [sol]
+    end
+
+    test "returns the ensemblists from an ensemble performance" do
+      [ens1, ens2] = build_list(2, :appearance, role: "ensemblist")
+      [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
+      p = build(:performance, appearances: [ens1, ens2, acc1, acc2])
+      assert Performance.non_accompanists(p) == [ens1, ens2]
+    end
+  end
+
+  describe "accompanists/1" do
+    test "returns the accompanist(s) from a solo performance" do
+      sol = build(:appearance, role: "soloist")
+      [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
+      p = build(:performance, appearances: [sol, acc1, acc2])
+      assert Performance.accompanists(p) == [acc1, acc2]
+    end
+
+    test "returns the accompanist(s) from an ensemble performance" do
+      [ens1, ens2] = build_list(2, :appearance, role: "ensemblist")
+      [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
+      p = build(:performance, appearances: [ens1, ens2, acc1, acc2])
+      assert Performance.accompanists(p) == [acc1, acc2]
+    end
+  end
+
+  describe "grouped_appearances/1" do
+    test "groups appearances for a classical or Kimu solo performance without accompanists" do
+      for genre <- ["classical", "kimu"] do
+        sol = build(:appearance, role: "soloist")
+        cc = build(:contest_category, category: build(:category, genre: genre))
+        p = build(:performance, contest_category: cc, appearances: [sol])
+        assert Performance.grouped_appearances(p) == [[sol]]
+      end
+    end
+
+    test "groups appearances for a classical or Kimu solo performance with accompanists" do
+      for genre <- ["classical", "kimu"] do
+        sol = build(:appearance, role: "soloist")
+        acc1 = build(:appearance, role: "accompanist")
+        acc2 = build(:appearance, role: "accompanist")
+        cc = build(:contest_category, category: build(:category, genre: genre))
+        p = build(:performance, contest_category: cc, appearances: [sol, acc1, acc2])
+        assert Performance.grouped_appearances(p) == [[sol], [acc1], [acc2]]
+      end
+    end
+
+    test "groups appearances for a classical or Kimu ensemble performance" do
+      for genre <- ["classical", "kimu"] do
+        appearances = build_list(2, :appearance, role: "ensemblist")
+        cc = build(:contest_category, category: build(:category, genre: genre))
+        p = build(:performance, contest_category: cc, appearances: appearances)
+        assert Performance.grouped_appearances(p) == [appearances]
+      end
+    end
+
+    test "groups appearances for a popular solo performance without accompanists" do
+      sol = build(:appearance, role: "soloist")
+      cc = build(:contest_category, category: build(:category, genre: "popular"))
+      p = build(:performance, contest_category: cc, appearances: [sol])
+      assert Performance.grouped_appearances(p) == [[sol]]
+    end
+
+    test "groups appearances for a popular solo performance with accompanists" do
+      sol = build(:appearance, role: "soloist")
+      acc1 = build(:appearance, role: "accompanist")
+      acc2 = build(:appearance, role: "accompanist")
+      cc = build(:contest_category, category: build(:category, genre: "popular"))
+      p = build(:performance, contest_category: cc, appearances: [sol, acc1, acc2])
+      assert Performance.grouped_appearances(p) == [[sol], [acc1, acc2]]
+    end
+
+    test "groups appearances for a popular ensemble performance without accompanists" do
+      appearances = build_list(2, :appearance, role: "ensemblist")
+      cc = build(:contest_category, category: build(:category, genre: "popular"))
+      p = build(:performance, contest_category: cc, appearances: appearances)
+      assert Performance.grouped_appearances(p) == [appearances]
+    end
+
+    test "groups appearances for a popular ensemble performance with accompanists" do
+      ens1 = build(:appearance, role: "ensemblist")
+      ens2 = build(:appearance, role: "ensemblist")
+      acc1 = build(:appearance, role: "accompanist")
+      acc2 = build(:appearance, role: "accompanist")
+      cc = build(:contest_category, category: build(:category, genre: "popular"))
+      p = build(:performance, contest_category: cc, appearances: [ens1, ens2, acc1, acc2])
+      assert Performance.grouped_appearances(p) == [[ens1, ens2], [acc1, acc2]]
     end
   end
 

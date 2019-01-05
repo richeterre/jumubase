@@ -18,22 +18,12 @@ defmodule JumubaseWeb.Internal.AppearanceView do
     Instruments.name(instrument)
   end
 
+  def participant_names(appearances) when is_list(appearances) do
+    appearances |> Enum.map(&full_name(&1.participant)) |> Enum.join(", ")
+  end
+
   def prize(%Appearance{points: points}, round) do
     Results.get_prize(points, round)
-  end
-
-  @doc """
-  Returns only the accompanist appearances from the list.
-  """
-  def acc(appearances) do
-    Enum.filter(appearances, &Appearance.is_accompanist/1)
-  end
-
-  @doc """
-  Returns only the soloist and ensemblist appearances from the list.
-  """
-  def non_acc(appearances) do
-    Enum.filter(appearances, &!Appearance.is_accompanist(&1))
   end
 
   @doc """

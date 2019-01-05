@@ -1,7 +1,7 @@
 defmodule JumubaseWeb.Internal.PerformanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.AppearanceView, only: [
-    acc: 1, age_group_badge: 1, appearance_info: 1, instrument_name: 1, non_acc: 1, prize: 2
+    age_group_badge: 1, appearance_info: 1, instrument_name: 1, participant_names: 1, prize: 2
   ]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
@@ -77,6 +77,29 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     Showtime.total_duration(performance)
     |> Timex.Duration.to_time!
     |> Timex.format!("%-M'%S", :strftime)
+  end
+
+  @doc """
+  Returns the performance's soloist and ensemblist appearances.
+  """
+  def non_acc(%Performance{} = p), do: Performance.non_accompanists(p)
+
+  @doc """
+  Returns the performance's accompanist appearances.
+  """
+  def acc(%Performance{} = p), do: Performance.accompanists(p)
+
+  @doc """
+  Returns the performance's appearances as a nested list,
+  with the grouping being decided by which ones share a common result.
+  """
+  def result_groups(%Performance{} = p), do: Performance.grouped_appearances(p)
+
+  @doc """
+  Gets the appearance ids from a list of appearances, in a format suitable for form submission.
+  """
+  def appearance_ids(appearances) when is_list(appearances) do
+    get_ids(appearances) |> Enum.join(",")
   end
 
   @doc """

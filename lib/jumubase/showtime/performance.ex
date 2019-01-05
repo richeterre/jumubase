@@ -58,6 +58,35 @@ defmodule Jumubase.Showtime.Performance do
     "#{round_part}#{number_part}"
   end
 
+  @doc """
+  Returns the performance's soloist and ensemblist appearances.
+  """
+  def non_accompanists(%Performance{appearances: appearances}) do
+    Enum.filter(appearances, &!Appearance.is_accompanist(&1))
+  end
+
+  @doc """
+  Returns the performance's accompanist appearances.
+  """
+  def accompanists(%Performance{appearances: appearances}) do
+    Enum.filter(appearances, &Appearance.is_accompanist/1)
+  end
+
+  @doc """
+  Returns the performance's appearances grouped in nested lists,
+  based on which ones share a common result (as do e.g. ensemblists and pop accompanists).
+  """
+  def grouped_appearances(%Performance{contest_category: cc} = p) do
+    non_acc = non_accompanists(p)
+    acc = accompanists(p)
+
+    case {acc, cc.category.genre} do
+      {[], _} -> [non_acc]
+      {acc, "popular"} -> [non_acc] ++ [acc]
+      {acc, _} -> [non_acc] ++ Enum.chunk_every(acc, 1)
+    end
+  end
+
   # Private helpers
 
   defp validate_appearances(%Changeset{} = changeset) do

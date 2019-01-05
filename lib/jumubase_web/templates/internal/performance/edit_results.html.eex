@@ -29,40 +29,45 @@
     </thead>
     <tbody>
       <%= for performance <- @performances do %>
-        <% [first_a | _] = appearances = performance.appearances %>
-        <%= for a <- performance.appearances do %>
-          <tr>
-            <%= if a == first_a do %>
-              <td rowspan="<%= length(appearances) %>">
-                <%= link category_name(performance),
-                  to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
-                  %>
+        <% result_groups = result_groups(performance) %>
+
+        <%= for {group, group_index} <- result_groups |> Enum.with_index do %>
+          <%= for {appearance, a_index} <- group |> Enum.with_index do %>
+            <tr>
+              <%= if {group_index, a_index} == {0, 0} do %>
+                <td rowspan="<%= result_groups |> List.flatten |> length %>">
+                  <%= link category_name(performance),
+                    to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                    %>
+                </td>
+              <% end %>
+              <td>
+                <%= appearance_info(appearance) %>
               </td>
-            <% end %>
-            <td>
-              <%= appearance_info(a) %>
-            </td>
-            <td>
-              <%= age_group_badge(a) %>
-            </td>
-            <td>
-              <%= a.points %>
-            </td>
-            <td>
-              <%= prize(a, @contest.round) %>
-            </td>
-            <td class="text-right">
-              <%= icon_link "edit", nil,
-                "#",
-                class: "btn btn-default btn-xs",
-                "data-toggle": "modal",
-                "data-target": "#modalResultForm",
-                "data-participant-name": full_name(a.participant),
-                "data-appearance-id": a.id,
-                "data-current-points": a.points
-                %>
-            </td>
-          </tr>
+              <td>
+                <%= age_group_badge(appearance) %>
+              </td>
+              <td>
+                <%= appearance.points %>
+              </td>
+              <td>
+                <%= prize(appearance, @contest.round) %>
+              </td>
+              <%= if a_index == 0 do %>
+                <td rowspan="<%= length(group) %>" class="text-right">
+                  <%= icon_link "edit", nil,
+                    "#",
+                    class: "btn btn-default btn-xs",
+                    "data-toggle": "modal",
+                    "data-target": "#modalResultForm",
+                    "data-participant-names": participant_names(group),
+                    "data-appearance-ids": appearance_ids(group),
+                    "data-current-points": appearance.points
+                    %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
         <% end %>
       <% end %>
     </tbody>

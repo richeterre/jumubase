@@ -5,7 +5,7 @@
         <h4 class="modal-title">
           <%= gettext("Enter points") %>
           <br>
-          <small id="participant-name"></small>
+          <small id="participant-names"></small>
         </h4>
       </div>
 
@@ -16,17 +16,21 @@
 
       <%= form_for @conn,
         Routes.internal_contest_results_path(@conn, :update_results, @contest, performance_filter: filter),
-        [as: :results, method: :patch, class: "form-inline"],
+        [as: :results, method: :patch, class: "form-horizontal"],
         fn f -> %>
 
-        <%= hidden_input f, :appearance_id, id: "appearance-id" %>
+        <%= hidden_input f, :appearance_ids, id: "appearance-ids" %>
 
         <div class="modal-body">
-          <%= label f, :points, gettext("Points"), class: "control-label" %>
-          <%= number_input f, :points,
-            min: min_points, max: max_points,
-            id: "points-input", class: "form-control"
-            %>
+          <div class="form-group">
+            <%= label f, :points, gettext("Points"), class: "col-sm-2 control-label" %>
+            <div class="col-sm-3">
+              <%= number_input f, :points,
+                min: min_points, max: max_points,
+                id: "points-input", class: "form-control"
+                %>
+            </div>
+          </div>
         </div>
 
         <div class="modal-footer">

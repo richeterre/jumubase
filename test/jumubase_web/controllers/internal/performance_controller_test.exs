@@ -449,8 +449,9 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   defp attempt_update_results(conn, contest) do
-    a = insert_appearance(contest)
-    params = %{"results" => %{"appearance_id" => a.id, "points" => "25"}}
+    a1 = insert_appearance(contest)
+    a2 = insert_appearance(contest)
+    params = %{"results" => %{"appearance_ids" => "#{a1.id},#{a2.id}", "points" => "25"}}
     conn |> patch(Routes.internal_contest_results_path(conn, :update_results, contest), params)
   end
 

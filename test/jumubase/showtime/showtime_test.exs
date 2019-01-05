@@ -782,31 +782,30 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
-  describe "get_appearance!/2" do
-    test "gets an appearance from the given contest by id", %{contest: c} do
-      %{id: id} = insert_appearance(c)
-
-      result = Showtime.get_appearance!(c, id)
-      assert result.id == id
-    end
-
-    test "raises an error if the appearance isn't found in the given contest", %{contest: c} do
-      %{id: id} = insert_appearance(c)
+  describe "list_appearances/2" do
+    test "returns the appearances with the given ids from the contest", %{contest: c} do
+      a1 = insert_appearance(c)
+      a2 = insert_appearance(c)
       other_c = insert(:contest)
+      a3 = insert_appearance(other_c)
 
-      assert_raise Ecto.NoResultsError, fn -> Showtime.get_appearance!(other_c, id) end
+      assert_ids_match_unordered Showtime.list_appearances(c, [a1.id, a2.id, a3.id]), [a1, a2]
     end
   end
 
   describe "set_points/2" do
-    test "assigns the given points to the appearance", %{contest: c} do
-      a = insert_appearance(c)
-      assert {:ok, a} = Showtime.set_points(a, 25)
+    setup %{contest: c} do
+      a1 = insert_appearance(c)
+      a2 = insert_appearance(c)
+      [appearances: [a1, a2]]
     end
 
-    test "returns an error for invalid points", %{contest: c} do
-      a = insert_appearance(c)
-      assert {:error, %Changeset{}} = Showtime.set_points(a, 26)
+    test "assigns the given points to the appearances", %{appearances: appearances} do
+      assert :ok = Showtime.set_points(appearances, 25)
+    end
+
+    test "returns an error for invalid points", %{appearances: appearances} do
+      assert :error = Showtime.set_points(appearances, 26)
     end
   end
 

@@ -141,8 +141,9 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def update_results(conn, %{"results" => results} = params, contest) do
-    %{"appearance_id" => a_id, "points" => points} = results
-    appearance = Showtime.get_appearance!(contest, a_id)
+    %{"appearance_ids" => a_id_string, "points" => points} = results
+    a_ids = a_id_string |> String.split(",")
+    appearances = Showtime.list_appearances(contest, a_ids)
 
     list_path = case params["performance_filter"] do
       filter when is_map(filter) ->
@@ -151,10 +152,10 @@ defmodule JumubaseWeb.Internal.PerformanceController do
         Routes.internal_contest_results_path(conn, :edit_results, contest)
     end
 
-    case Showtime.set_points(appearance, points) do
-      {:ok, _appearance} ->
+    case Showtime.set_points(appearances, points) do
+      :ok ->
         conn |> redirect(to: list_path)
-      {:error, _changeset} ->
+      :error ->
         conn
         |> put_flash(:error, gettext("The points could not be saved at this time."))
         |> redirect(to: list_path)

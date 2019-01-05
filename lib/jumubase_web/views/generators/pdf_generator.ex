@@ -1,9 +1,9 @@
 defmodule JumubaseWeb.Generators.PDFGenerator do
   import Jumubase.Gettext
   import JumubaseWeb.DateHelpers
-  import JumubaseWeb.Internal.AppearanceView, only: [acc: 1, instrument_name: 1, non_acc: 1]
+  import JumubaseWeb.Internal.AppearanceView, only: [instrument_name: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1, category_info: 1]
+  import JumubaseWeb.Internal.PerformanceView, only: [acc: 1, category_name: 1, category_info: 1, non_acc: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, person_info: 1]
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
   alias Jumubase.Showtime.Results
@@ -72,9 +72,9 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     end
   end
 
-  defp render_appearances(%Performance{appearances: appearances, age_group: ag}) do
-    non_acc_div = [:div, non_acc(appearances) |> to_appearance_lines(ag)]
-    if (acc = acc(appearances)) != [] do
+  defp render_appearances(%Performance{age_group: ag} = p) do
+    non_acc_div = [:div, non_acc(p) |> to_appearance_lines(ag)]
+    if (acc = acc(p)) != [] do
       acc_div = [:div, acc |> to_appearance_lines(ag)]
       [non_acc_div, acc_heading(), acc_div]
     else
@@ -177,9 +177,9 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     ]
   end
 
-  defp render_list_appearances(%Performance{appearances: appearances, age_group: p_ag}) do
-    non_acc = non_acc(appearances) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
-    acc = acc(appearances) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
+  defp render_list_appearances(%Performance{age_group: p_ag} = p) do
+    non_acc = non_acc(p) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
+    acc = acc(p) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
 
     if acc != [], do: non_acc ++ [acc_heading()] ++ acc, else: non_acc
   end

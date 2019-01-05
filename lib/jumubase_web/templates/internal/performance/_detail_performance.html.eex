@@ -1,4 +1,4 @@
-<%= for appearance <- non_acc(@performance.appearances) do %>
+<%= for appearance <- non_acc(@performance) do %>
   <%= render "_detail_appearance.html",
     appearance: appearance,
     participant_path: Routes.internal_contest_participant_path(@conn, :show, @contest, appearance.participant)
@@ -6,7 +6,7 @@
   <br>
 <% end %>
 
-<%= if (acc_appearances = acc(@performance.appearances)) != [] do %>
+<%= if (acc_appearances = acc(@performance)) != [] do %>
   <h5 class="text-muted"><%= gettext("accompanied by") %></h5>
 
   <%= for appearance <- acc_appearances do %>

@@ -50,4 +50,11 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     ])
     assert PerformanceView.formatted_duration(p) == "4'33"
   end
+
+  test "appearance_ids/1 returns the appearances' ids as a comma-separated string" do
+    a1 = build(:appearance, id: 1)
+    a2 = build(:appearance, id: 2)
+    a3 = build(:appearance, id: 3)
+    assert PerformanceView.appearance_ids([a1, a2, a3]) == "1,2,3"
+  end
 end

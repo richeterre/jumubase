@@ -26,6 +26,12 @@ defmodule JumubaseWeb.Internal.AppearanceView do
     Results.get_prize(points, round)
   end
 
+  def advancement_label(%Appearance{} = a) do
+    if Results.advances?(a) do
+      content_tag :span, "WL", class: "label label-success"
+    end
+  end
+
   @doc """
   Creates an age group badge for an appearance.
   """

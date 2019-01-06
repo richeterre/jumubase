@@ -1,7 +1,8 @@
 defmodule JumubaseWeb.Internal.PerformanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.AppearanceView, only: [
-    age_group_badge: 1, appearance_info: 1, instrument_name: 1, participant_names: 1, prize: 2
+    advancement_label: 1, age_group_badge: 1, appearance_info: 1,
+    instrument_name: 1, participant_names: 1, prize: 2
   ]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]

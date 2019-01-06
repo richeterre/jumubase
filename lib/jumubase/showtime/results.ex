@@ -1,4 +1,7 @@
 defmodule Jumubase.Showtime.Results do
+  alias Jumubase.Repo
+  alias Jumubase.Foundation.AgeGroups
+  alias Jumubase.Showtime.{Appearance, Performance}
 
   @doc """
   Returns a mapping from point ranges to ratings, depending on round.
@@ -54,5 +57,27 @@ defmodule Jumubase.Showtime.Results do
     |> Enum.find_value(fn {point_range, name} ->
       if points in point_range, do: name, else: false
     end)
+  end
+
+  def advances?(%Performance{} = p) do
+    p = Repo.preload(p, [:contest_category, :appearances])
+    %{
+      min_advancing_age_group: min_ag,
+      max_advancing_age_group: max_ag
+    } = p.contest_category
+
+    # Check age group range, then decide based on first non-accompanist
+    AgeGroups.in_range?(p.age_group, min_ag, max_ag)
+      and Performance.non_accompanists(p) |> hd |> may_advance?
+  end
+  def advances?(%Appearance{} = a) do
+    a = Repo.preload(a, :performance)
+    may_advance?(a) and advances?(a.performance)
+  end
+
+  # Private helpers
+
+  defp may_advance?(%Appearance{points: points}) do
+    points in 23..25
   end
 end

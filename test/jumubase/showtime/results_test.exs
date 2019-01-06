@@ -3,7 +3,7 @@ defmodule Jumubase.ResultsTest do
   alias Jumubase.JumuParams
   alias Jumubase.Showtime.Results
 
-  describe "get_prize" do
+  describe "get_prize/2" do
     test "returns no prize for a Kimu appearance" do
       for points <- JumuParams.points do
         assert Results.get_prize(points, 0) == nil
@@ -29,5 +29,57 @@ defmodule Jumubase.ResultsTest do
       assert Results.get_prize(17, 2) == "3. Preis"
       assert Results.get_prize(16, 2) == nil
     end
+  end
+
+  describe "advances?/1" do
+    setup do
+      c = build(:contest)
+      cc = insert(:contest_category,
+        contest: c, min_advancing_age_group: "III", max_advancing_age_group: "IV"
+      )
+      [contest_category: cc]
+    end
+
+    test "returns false for a performance with an ineligible age group", %{contest_category: cc} do
+      for ag <- ~w(II V) do
+        p = insert_performance(cc, ag, [{"soloist", 23}])
+        refute Results.advances?(p)
+      end
+    end
+
+    test "returns false for a performance with insufficient non-acc points", %{contest_category: cc} do
+      p = insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
+      refute Results.advances?(p)
+    end
+
+    test "returns true for a performance with suitable age group and sufficient non-acc points", %{contest_category: cc} do
+      p = insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 22}])
+      assert Results.advances?(p)
+    end
+
+    test "behaves correctly for appearances in a non-advancing performance", %{contest_category: cc} do
+      %{appearances: [sol, acc]} =
+        insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
+      refute Results.advances?(sol)
+      refute Results.advances?(acc)
+    end
+
+    test "behaves correctly for appearances in an advancing performance", %{contest_category: cc} do
+      %{appearances: [sol, acc]} =
+        insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 22}])
+      assert Results.advances?(sol)
+      refute Results.advances?(acc)
+    end
+  end
+
+  # Private helpers
+
+  defp insert_performance(cc, age_group, appearance_shorthands) do
+    insert_performance(cc,
+      age_group: age_group,
+      appearances: Enum.map(appearance_shorthands, fn {role, points} ->
+        build(:appearance, role: role, points: points)
+      end)
+    )
   end
 end

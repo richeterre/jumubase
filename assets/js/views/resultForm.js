@@ -10,7 +10,7 @@ $('#modal-result-form').on('show.bs.modal', function(event) {
   const $modal = $(this)
   $modal.find('#participant-names').text(participantNames)
   $modal.find('#appearance-ids').val(appearanceIds)
-  $modal.find('#points-input').val(currentPoints)
+  $modal.find('#results_points').val(currentPoints)
 })
 
 $('#modal-result-form').on('shown.bs.modal', function() {

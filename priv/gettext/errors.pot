@@ -130,32 +130,32 @@ msgid "The password is too short."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:67
+#: lib/jumubase/showtime/performance.ex:96
 msgid "The performance must have at least one participant."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:92
+#: lib/jumubase/showtime/performance.ex:121
 msgid "The performance must have at least one piece."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:72
+#: lib/jumubase/showtime/performance.ex:101
 msgid "The performance can't have both soloists and ensemblists."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:75
+#: lib/jumubase/showtime/performance.ex:104
 msgid "The performance can't have more than one soloist."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:81
+#: lib/jumubase/showtime/performance.ex:110
 msgid "The performance can't have only accompanists."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:78
+#: lib/jumubase/showtime/performance.ex:107
 msgid "The performance can't have only one ensemblist."
 msgstr ""
 
@@ -185,6 +185,6 @@ msgid "can't be before the end date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:105
+#: lib/jumubase/showtime/performance.ex:134
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""

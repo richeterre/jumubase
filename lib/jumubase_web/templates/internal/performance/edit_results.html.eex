@@ -59,7 +59,7 @@
                     "#",
                     class: "btn btn-default btn-xs",
                     "data-toggle": "modal",
-                    "data-target": "#modalResultForm",
+                    "data-target": "#modal-result-form",
                     "data-participant-names": participant_names(group),
                     "data-appearance-ids": appearance_ids(group),
                     "data-current-points": appearance.points

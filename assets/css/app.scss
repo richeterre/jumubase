@@ -83,3 +83,6 @@ dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
 
 /* Hide certain form fields to fool and detect spambots */
 #trap { display: none; }
+
+/* Add some spacing to points field in modal result form */
+#modal-result-form #results_points { margin-left: 1em; }

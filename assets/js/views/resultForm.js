@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import "bootstrap-sass"
 
-$('#modalResultForm').on('show.bs.modal', function(event) {
+$('#modal-result-form').on('show.bs.modal', function(event) {
   const $button = $(event.relatedTarget)
   const participantNames = $button.data('participant-names')
   const appearanceIds = $button.data('appearance-ids')
@@ -13,6 +13,6 @@ $('#modalResultForm').on('show.bs.modal', function(event) {
   $modal.find('#points-input').val(currentPoints)
 })
 
-$('#modalResultForm').on('shown.bs.modal', function() {
-  $(this).find('#points-input').focus()
+$('#modal-result-form').on('shown.bs.modal', function() {
+  $(this).find('#results_points').focus()
 })

@@ -87,8 +87,8 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     |> Enum.map(fn a ->
       ag_info = age_group_info(a, performance_ag)
       [
-        [:b, full_name(a.participant)],
-        [:span, ", #{instrument_name(a.instrument)} #{ag_info}"]
+        [:b, "#{full_name(a.participant)},"],
+        [:span, " #{instrument_name(a.instrument)} #{ag_info}"]
       ]
     end)
     |> to_lines

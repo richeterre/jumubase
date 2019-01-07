@@ -31,6 +31,8 @@ defmodule Jumubase.Foundation.AgeGroups do
     birthdates |> average_date |> lookup_age_group(season)
   end
 
+  def in_range?(_ag, nil, _), do: false
+  def in_range?(_ag, _, nil), do: false
   def in_range?(ag, min_ag, max_ag) do
     [ag_index, min_index, max_index] = [ag, min_ag, max_ag] |> Enum.map(&find_index/1)
     ag_index in min_index..max_index

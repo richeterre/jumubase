@@ -40,6 +40,16 @@ defmodule Jumubase.ResultsTest do
       [contest_category: cc]
     end
 
+    test "returns false for a performance in a non-advancing contest category" do
+      cc = insert(:contest_category,
+        contest: build(:contest),
+        min_advancing_age_group: nil,
+        max_advancing_age_group: nil
+      )
+      p = insert_performance(cc, "III", [{"soloist", 23}])
+      refute Results.advances?(p)
+    end
+
     test "returns false for a performance with an ineligible age group", %{contest_category: cc} do
       for ag <- ~w(II V) do
         p = insert_performance(cc, ag, [{"soloist", 23}])

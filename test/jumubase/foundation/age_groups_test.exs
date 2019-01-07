@@ -64,11 +64,5 @@ defmodule Jumubase.AgeGroupsTest do
       for ag <- ~w(Ib II III), do: assert AgeGroups.in_range?(ag, min, max)
       for ag <- ~w(Ia IV V VI VII invalid), do: refute AgeGroups.in_range?(ag, min, max)
     end
-
-    test "returns false if nil is passed for min or max age group" do
-      refute AgeGroups.in_range?("II", nil, "II")
-      refute AgeGroups.in_range?("II", "II", nil)
-      refute AgeGroups.in_range?("II", nil, nil)
-    end
   end
 end

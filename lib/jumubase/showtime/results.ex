@@ -67,7 +67,8 @@ defmodule Jumubase.Showtime.Results do
     } = p.contest_category
 
     # Check age group range, then decide based on first non-accompanist
-    AgeGroups.in_range?(p.age_group, min_ag, max_ag)
+    Enum.all?([min_ag, max_ag])
+      and AgeGroups.in_range?(p.age_group, min_ag, max_ag)
       and Performance.non_accompanists(p) |> hd |> may_advance?
   end
   def advances?(%Appearance{} = a) do

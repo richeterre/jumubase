@@ -163,6 +163,20 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Publishes the results of all performances with the given ids found in the contest.
+  """
+  def publish_results(%Contest{} = contest, performance_ids) when is_list(performance_ids) do
+    update_results_public(contest, performance_ids, true)
+  end
+
+  @doc """
+  Unpublishes the results of all performances with the given ids found in the contest.
+  """
+  def unpublish_results(%Contest{} = contest, performance_ids) when is_list(performance_ids) do
+    update_results_public(contest, performance_ids, false)
+  end
+
+  @doc """
   Returns the performance's total duration as a Timex.Duration.
   """
   def total_duration(%Performance{pieces: pieces}) do
@@ -373,5 +387,15 @@ defmodule Jumubase.Showtime do
       where: cc.contest_id == ^contest_id,
       distinct: true,
       preload: [performances: {p, contest_category: {cc, category: cg}}]
+  end
+
+  defp update_results_public(contest, performance_ids, public) do
+    query = from p in Performance,
+      join: cc in assoc(p, :contest_category),
+      where: cc.contest_id == ^contest.id,
+      where: p.id in ^performance_ids
+
+    {count, _} = Repo.update_all(query, set: [results_public: public])
+    {:ok, count}
   end
 end

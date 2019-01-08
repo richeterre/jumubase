@@ -722,6 +722,38 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "publish_results/2" do
+    test "publishes the results of all given performances from the contest", %{contest: c} do
+      p1 = insert_performance(c, results_public: false)
+      p2 = insert_performance(c, results_public: false)
+      p3 = insert_performance(c, results_public: false)
+      other_c = insert(:contest)
+      p4 = insert_performance(other_c, results_public: false)
+
+      assert {:ok, 2} = Showtime.publish_results(c, [p1.id, p2.id, p4.id])
+      assert %{results_public: true} = Repo.get(Performance, p1.id)
+      assert %{results_public: true} = Repo.get(Performance, p2.id)
+      assert %{results_public: false} = Repo.get(Performance, p3.id)
+      assert %{results_public: false} = Repo.get(Performance, p4.id)
+    end
+  end
+
+  describe "unpublish_results/2" do
+    test "unpublishes the results of all given performances from the contest", %{contest: c} do
+      p1 = insert_performance(c, results_public: true)
+      p2 = insert_performance(c, results_public: true)
+      p3 = insert_performance(c, results_public: true)
+      other_c = insert(:contest)
+      p4 = insert_performance(other_c, results_public: true)
+
+      assert {:ok, 2} = Showtime.unpublish_results(c, [p1.id, p2.id, p4.id])
+      assert %{results_public: false} = Repo.get(Performance, p1.id)
+      assert %{results_public: false} = Repo.get(Performance, p2.id)
+      assert %{results_public: true} = Repo.get(Performance, p3.id)
+      assert %{results_public: true} = Repo.get(Performance, p4.id)
+    end
+  end
+
   describe "total_duration/1" do
     test "returns the total duration of a performance" do
       p = build(:performance, pieces: [

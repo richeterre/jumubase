@@ -31,6 +31,43 @@ defmodule Jumubase.ResultsTest do
     end
   end
 
+  describe "get_rating/2" do
+    test "returns the correct rating for a Kimu appearance" do
+      assert Results.get_rating(25, 0) == "mit hervorragendem Erfolg teilgenommen"
+      assert Results.get_rating(23, 0) == "mit hervorragendem Erfolg teilgenommen"
+      assert Results.get_rating(22, 0) == "mit sehr gutem Erfolg teilgenommen"
+      assert Results.get_rating(21, 0) == "mit sehr gutem Erfolg teilgenommen"
+      assert Results.get_rating(20, 0) == "mit gutem Erfolg teilgenommen"
+      assert Results.get_rating(17, 0) == "mit gutem Erfolg teilgenommen"
+      assert Results.get_rating(16, 0) == "mit Erfolg teilgenommen"
+      assert Results.get_rating(9, 0) == "mit Erfolg teilgenommen"
+      assert Results.get_rating(8, 0) == "teilgenommen"
+      assert Results.get_rating(0, 0) == "teilgenommen"
+    end
+
+    test "returns the correct rating for a RW appearance" do
+      assert Results.get_rating(25, 1) == nil
+      assert Results.get_rating(13, 1) == nil
+      assert Results.get_rating(12, 1) == "mit gutem Erfolg teilgenommen"
+      assert Results.get_rating(9, 1) == "mit gutem Erfolg teilgenommen"
+      assert Results.get_rating(8, 1) == "mit Erfolg teilgenommen"
+      assert Results.get_rating(5, 1) == "mit Erfolg teilgenommen"
+      assert Results.get_rating(4, 1) == "teilgenommen"
+      assert Results.get_rating(0, 1) == "teilgenommen"
+    end
+
+    test "returns the correct rating for a LW appearance" do
+      assert Results.get_rating(25, 2) == nil
+      assert Results.get_rating(17, 2) == nil
+      assert Results.get_rating(16, 2) == "mit gutem Erfolg teilgenommen"
+      assert Results.get_rating(14, 2) == "mit gutem Erfolg teilgenommen"
+      assert Results.get_rating(13, 2) == "mit Erfolg teilgenommen"
+      assert Results.get_rating(11, 2) == "mit Erfolg teilgenommen"
+      assert Results.get_rating(10, 2) == "teilgenommen"
+      assert Results.get_rating(0, 2) == "teilgenommen"
+    end
+  end
+
   describe "advances?/1" do
     setup do
       c = build(:contest)

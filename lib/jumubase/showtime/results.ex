@@ -53,10 +53,14 @@ defmodule Jumubase.Showtime.Results do
   Returns the prize resulting from the points in the given round, or nil if no prize is awarded.
   """
   def get_prize(points, round) do
-    prizes_for_round(round)
-    |> Enum.find_value(fn {point_range, name} ->
-      if points in point_range, do: name, else: false
-    end)
+    prizes_for_round(round) |> lookup(points)
+  end
+
+  @doc """
+  Returns the rating resulting from the points in the given round.
+  """
+  def get_rating(points, round) do
+    ratings_for_round(round) |> lookup(points)
   end
 
   def advances?(%Performance{} = p) do
@@ -80,5 +84,11 @@ defmodule Jumubase.Showtime.Results do
 
   defp may_advance?(%Appearance{points: points}) do
     points in 23..25
+  end
+
+  defp lookup(point_mapping, points) do
+    Enum.find_value(point_mapping, fn {point_range, result} ->
+      if points in point_range, do: result, else: false
+    end)
   end
 end

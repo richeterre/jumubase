@@ -23,7 +23,7 @@
 
         <div class="modal-body">
           <div class="form-group">
-            <%= label f, :points, gettext("Point amount"), class: "control-label" %>
+            <%= label f, :points, gettext("Points"), class: "control-label" %>
             <%= number_input f, :points, min: min_points, max: max_points, class: "form-control" %>
           </div>
         </div>

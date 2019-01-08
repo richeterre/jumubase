@@ -964,14 +964,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:172
+#: lib/jumubase_web/views/internal/performance_view.ex:184
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:177
+#: lib/jumubase_web/views/internal/performance_view.ex:189
 msgid "Filter active"
 msgstr ""
 
@@ -1410,6 +1410,8 @@ msgid "Evaluation"
 msgstr ""
 
 #, elixir-format
+#:
+#: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:26
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:25
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:54
 msgid "Points"
@@ -1439,12 +1441,6 @@ msgid "The points could not be saved at this time."
 msgstr ""
 
 #, elixir-format
-#:
-#: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:26
-msgid "Point amount"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:171
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:65
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:2
@@ -1453,12 +1449,12 @@ msgid "Publish results"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:112
+#: lib/jumubase_web/views/internal/performance_view.ex:124
 msgid "No"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:109
+#: lib/jumubase_web/views/internal/performance_view.ex:121
 msgid "Yes"
 msgstr ""
 
@@ -1496,4 +1492,14 @@ msgstr[1] ""
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:277
 msgid "The results of some performances below have already been published. Your changes will be visible to others instantly."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:115
+msgid "Result already published – please enter points!"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:114
+msgid "missing"
 msgstr ""

@@ -49,6 +49,7 @@
               </td>
               <td>
                 <%= appearance.points %>
+                <%= missing_points_error(appearance, performance.results_public) %>
               </td>
               <td>
                 <%= prize(appearance, @contest.round) %>

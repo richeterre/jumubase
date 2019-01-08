@@ -138,6 +138,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> prepare_filtered_list(params, contest)
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(name: gettext("Enter points"), path: current_path(conn))
+    |> add_public_results_warning
     |> render("edit_results.html")
   end
 
@@ -260,5 +261,23 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       count
     )
     conn |> put_flash(:warning, message)
+  end
+
+  defp add_public_results_warning(conn) do
+    if performances = conn.assigns[:performances] do
+      add_public_results_warning(conn, performances)
+    else
+      conn
+    end
+  end
+
+  defp add_public_results_warning(conn, performances) do
+    if Enum.any?(performances, &(&1.results_public)) do
+      put_flash(conn, :warning,
+        gettext("The results of some performances below have already been published. Your changes will be visible to others instantly.")
+      )
+    else
+      conn
+    end
   end
 end

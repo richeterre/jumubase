@@ -334,7 +334,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:6
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:10
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:9
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:12
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:13
 #: lib/jumubase_web/controllers/internal/stage_controller.ex:9
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
@@ -1013,17 +1013,17 @@ msgid "Manage performances"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:50
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:51
 msgid "The performance was created."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:74
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:75
 msgid "The performance was updated."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:87
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:88
 msgid "The performance was deleted."
 msgstr ""
 
@@ -1359,7 +1359,7 @@ msgid "Print jury sheets"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:114
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:115
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:46
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:2
 msgid "Create jury material"
@@ -1398,7 +1398,7 @@ msgid "This schedule has already been published. Your changes will be visible to
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:139
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:140
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:60
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:6
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:2
@@ -1435,7 +1435,7 @@ msgid "Save points"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:160
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:162
 msgid "The points could not be saved at this time."
 msgstr ""
 
@@ -1446,7 +1446,7 @@ msgid "Point amount"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:169
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:171
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:65
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:2
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:25
@@ -1481,15 +1481,20 @@ msgstr[0] "Do you really want to publish the results of this performance?"
 msgstr[1] "Do you really want to publish the results of these %{count} performances?"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:248
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:250
 msgid "The results of this performance were published."
 msgid_plural "The results of these %{count} performances were published."
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:256
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:258
 msgid "The results of this performance were unpublished."
 msgid_plural "The results of these %{count} performances were unpublished."
 msgstr[0] ""
 msgstr[1] ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:277
+msgid "The results of some performances below have already been published. Your changes will be visible to others instantly."
+msgstr ""

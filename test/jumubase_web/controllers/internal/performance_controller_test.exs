@@ -400,6 +400,54 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "publish_results/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users list a contest's performances for result publishing", %{conn: conn, contest: c} do
+        conn |> attempt_publish_results(c) |> assert_publish_results_success
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers list an own contest's performances for result publishing", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_publish_results(own_c) |> assert_publish_results_success
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to list a foreign contest's performances for result publishing", %{conn: conn, contest: c} do
+      conn |> attempt_publish_results(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to list a contest's performances for result publishing", %{conn: conn, contest: c} do
+      conn |> attempt_publish_results(c) |> assert_unauthorized_guest
+    end
+  end
+
+  describe "update_results_public/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users publish a contest's performance results", %{conn: conn, contest: c} do
+        conn |> attempt_update_results_public(c) |> assert_update_results_public_success(c)
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers publish an own contest's performance results", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_update_results_public(own_c) |> assert_update_results_public_success(own_c)
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to publish a foreign contest's performance results", %{conn: conn, contest: c} do
+      conn |> attempt_update_results_public(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to publish a contest's performance results", %{conn: conn, contest: c} do
+      conn |> attempt_update_results_public(c) |> assert_unauthorized_guest
+    end
+  end
+
   # Private helpers
 
   defp insert_own_contest(user) do
@@ -455,6 +503,17 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     conn |> patch(Routes.internal_contest_results_path(conn, :update_results, contest), params)
   end
 
+  defp attempt_publish_results(conn, contest) do
+    conn |> get(Routes.internal_contest_results_path(conn, :publish_results, contest))
+  end
+
+  defp attempt_update_results_public(conn, contest) do
+    p1 = insert_performance(contest)
+    p2 = insert_performance(contest)
+    params = %{"performance_ids" => [p1.id, p2.id], "public" => true}
+    conn |> patch(Routes.internal_contest_results_path(conn, :update_results_public, contest), params)
+  end
+
   defp assert_create_success(conn, contest, performance) do
     assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :show, contest, performance),
@@ -490,6 +549,17 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
   defp assert_update_results_success(conn, contest) do
     assert redirected_to(conn) == Routes.internal_contest_results_path(conn, :edit_results, contest)
+  end
+
+  defp assert_publish_results_success(conn) do
+    assert html_response(conn, 200) =~ "Publish results"
+  end
+
+  defp assert_update_results_public_success(conn, contest) do
+    assert_flash_redirect(conn,
+      Routes.internal_contest_results_path(conn, :publish_results, contest),
+      "The results of these 2 performances were published."
+    )
   end
 
   defp test_reschedule_success(conn, contest) do

@@ -57,6 +57,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     )
   end
 
+  def render("scripts.publish_results.html", _assigns), do: render_performance_filter()
+
   def stage_info(performance, style \\ :full)
   def stage_info(%Performance{stage: %Stage{name: name}, stage_time: stage_time}, style) do
     {format_datetime(stage_time, style), name}
@@ -101,6 +103,13 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   """
   def appearance_ids(appearances) when is_list(appearances) do
     get_ids(appearances) |> Enum.join(",")
+  end
+
+  def results_public_text(%Performance{results_public: true}) do
+    content_tag :span, gettext("Yes")
+  end
+  def results_public_text(%Performance{results_public: false}) do
+    content_tag :span, gettext("No"), class: "text-muted"
   end
 
   @doc """

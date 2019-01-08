@@ -233,6 +233,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 #: lib/jumubase_web/views/generators/pdf_generator.ex:151
 msgid "Category"
@@ -269,6 +270,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 #: lib/jumubase_web/views/generators/pdf_generator.ex:153
 msgid "Participants"
@@ -963,14 +965,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:163
+#: lib/jumubase_web/views/internal/performance_view.ex:172
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:168
+#: lib/jumubase_web/views/internal/performance_view.ex:177
 msgid "Filter active"
 msgstr ""
 
@@ -1375,6 +1377,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:24
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53
 #: lib/jumubase_web/views/generators/pdf_generator.ex:152
 msgid "AG"
 msgstr ""
@@ -1409,11 +1412,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:25
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:54
 msgid "Points"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:55
 msgid "Prize"
 msgstr ""
 
@@ -1441,6 +1446,50 @@ msgid "Point amount"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:169
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:65
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:2
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:25
 msgid "Publish results"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:112
+msgid "No"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:109
+msgid "Yes"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:38
+msgid "Unpublish results"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:56
+msgid "Published?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:30
+msgid "PUBLISH_RESULTS_CONFIRMATION_ONE"
+msgid_plural "PUBLISH_RESULTS_CONFIRMATION_MANY(%{count})"
+msgstr[0] "Do you really want to publish the results of this performance?"
+msgstr[1] "Do you really want to publish the results of these %{count} performances?"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:248
+msgid "The results of this performance were published."
+msgid_plural "The results of these %{count} performances were published."
+msgstr[0] ""
+msgstr[1] ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:256
+msgid "The results of this performance were unpublished."
+msgid_plural "The results of these %{count} performances were unpublished."
+msgstr[0] ""
+msgstr[1] ""

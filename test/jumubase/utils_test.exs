@@ -23,4 +23,16 @@ defmodule Jumubase.UtilsTest do
       assert Utils.mode([]) == []
     end
   end
+
+  describe "parse_bool/1" do
+    test "converts a boolean string into a boolean" do
+      assert Utils.parse_bool("true") == true
+      assert Utils.parse_bool("false") == false
+    end
+
+    test "preserves the value when passed a boolean" do
+      assert Utils.parse_bool(true) == true
+      assert Utils.parse_bool(false) == false
+    end
+  end
 end

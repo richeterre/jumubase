@@ -233,6 +233,7 @@ msgstr "Geburtsdatum"
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 #: lib/jumubase_web/views/generators/pdf_generator.ex:151
 msgid "Category"
@@ -269,6 +270,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
 #: lib/jumubase_web/views/generators/pdf_generator.ex:153
 msgid "Participants"
@@ -963,14 +965,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:163
+#: lib/jumubase_web/views/internal/performance_view.ex:172
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:168
+#: lib/jumubase_web/views/internal/performance_view.ex:177
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1375,6 +1377,7 @@ msgstr "Jurytabelle ausgeben"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:24
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53
 #: lib/jumubase_web/views/generators/pdf_generator.ex:152
 msgid "AG"
 msgstr "AG"
@@ -1409,11 +1412,13 @@ msgstr "Nach der Wertung"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:25
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:54
 msgid "Points"
 msgstr "Punkte"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:55
 msgid "Prize"
 msgstr "Preis"
 
@@ -1441,6 +1446,50 @@ msgid "Point amount"
 msgstr "Punktzahl"
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:169
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:65
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:2
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:25
 msgid "Publish results"
 msgstr "Ergebnisse freigeben"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:112
+msgid "No"
+msgstr "Nein"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:109
+msgid "Yes"
+msgstr "Ja"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:38
+msgid "Unpublish results"
+msgstr "Freigabe aufheben"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:56
+msgid "Published?"
+msgstr "Freigegeben?"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:30
+msgid "PUBLISH_RESULTS_CONFIRMATION_ONE"
+msgid_plural "PUBLISH_RESULTS_CONFIRMATION_MANY(%{count})"
+msgstr[0] "Möchtest du die Ergebnisse dieses Vorspiels wirklich freigeben?"
+msgstr[1] "Möchtest du die Ergebnisse dieser %{count} Vorspiele wirklich freigeben?"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:248
+msgid "The results of this performance were published."
+msgid_plural "The results of these %{count} performances were published."
+msgstr[0] "Die Ergebnisse dieses Vorspiels sind nun freigegeben."
+msgstr[1] "Die Ergebnisse dieser %{count} Vorspiele sind nun freigegeben."
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:256
+msgid "The results of this performance were unpublished."
+msgid_plural "The results of these %{count} performances were unpublished."
+msgstr[0] "Die Ergebnisse dieses Vorspiels sind nun nicht mehr freigegeben."
+msgstr[1] "Die Ergebnisse dieser %{count} Vorspiele sind nun nicht mehr freigegeben."

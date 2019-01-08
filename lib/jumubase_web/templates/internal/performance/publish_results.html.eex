@@ -1,0 +1,95 @@
+<h2>
+  <%= gettext("Publish results") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<%= render "_filter_form.html",
+  conn: @conn,
+  changeset: @filter_changeset,
+  path: Routes.internal_contest_results_path(@conn, :publish_results, @contest),
+  options: filter_options(@contest),
+  count: length(@performances),
+  filter_active: @filter_active
+  %>
+
+<div class="button-row">
+  <%
+    button_class = if Enum.empty?(@performances), do: "disabled", else: ""
+    performance_ids = get_ids(@performances)
+    filter = @conn.params["performance_filter"]
+  %>
+
+  <%= icon_link "eye-open", gettext("Publish results"),
+    Routes.internal_contest_results_path(@conn, :update_results_public, @contest,
+      [public: true, performance_ids: performance_ids, performance_filter: filter]
+    ),
+    method: :patch,
+    data: [confirm: ngettext(
+      "PUBLISH_RESULTS_CONFIRMATION_ONE",
+      "PUBLISH_RESULTS_CONFIRMATION_MANY(%{count})",
+      length(@performances)
+    )],
+    class: "btn btn-primary #{button_class}"
+    %>
+
+  <%= icon_link "eye-close", gettext("Unpublish results"),
+    Routes.internal_contest_results_path(@conn, :update_results_public, @contest,
+      [public: false, performance_ids: performance_ids, performance_filter: filter]
+    ),
+    method: :patch,
+    class: "btn btn-default #{button_class}"
+    %>
+</div>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Participants") %></th>
+        <th><%= gettext("AG") %></th>
+        <th><%= gettext("Points") %></th>
+        <th><%= gettext("Prize") %></th>
+        <th><%= gettext("Published?") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+        <% result_groups = result_groups(performance) %>
+
+        <%= for {group, group_index} <- result_groups |> Enum.with_index do %>
+          <%= for {appearance, a_index} <- group |> Enum.with_index do %>
+            <tr>
+              <%= if {group_index, a_index} == {0, 0} do %>
+                <td rowspan="<%= result_groups |> List.flatten |> length %>">
+                  <%= link category_name(performance),
+                    to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                    %>
+                </td>
+              <% end %>
+              <td>
+                <%= appearance_info(appearance) %>
+              </td>
+              <td>
+                <%= age_group_badge(appearance) %>
+              </td>
+              <td>
+                <%= appearance.points %>
+              </td>
+              <td>
+                <%= prize(appearance, @contest.round) %>
+                <%= advancement_label(appearance) %>
+              </td>
+              <td>
+                <%= results_public_text(performance) %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

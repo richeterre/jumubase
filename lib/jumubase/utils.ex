@@ -23,4 +23,9 @@ defmodule Jumubase.Utils do
 
     for {key, val} <- grouped_list, length(val) == max, do: key
   end
+
+  def parse_bool(string) when string in ~w(true false) do
+    String.to_existing_atom(string)
+  end
+  def parse_bool(bool) when is_boolean(bool), do: bool
 end

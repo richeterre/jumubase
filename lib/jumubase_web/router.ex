@@ -95,6 +95,7 @@ defmodule JumubaseWeb.Router do
       get "/performances/edit-results", PerformanceController, :edit_results, as: :results
       patch "/performances/update-results", PerformanceController, :update_results, as: :results
       get "/performances/publish-results", PerformanceController, :publish_results, as: :results
+      patch "/performances/update-results-public", PerformanceController, :update_results_public, as: :results
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]

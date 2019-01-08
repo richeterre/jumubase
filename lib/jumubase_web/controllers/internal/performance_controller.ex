@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Internal.PerformanceController do
   use JumubaseWeb, :controller
+  import Jumubase.Utils, only: [parse_bool: 1]
   import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
   import JumubaseWeb.ErrorHelpers, only: [get_translated_errors: 1]
   alias Ecto.Changeset
@@ -162,6 +163,33 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     end
   end
 
+  def publish_results(conn, params, contest) do
+    conn
+    |> prepare_filtered_list(params, contest)
+    |> add_contest_breadcrumb(contest)
+    |> add_breadcrumb(name: gettext("Publish results"), path: current_path(conn))
+    |> render("publish_results.html")
+  end
+
+  def update_results_public(conn, %{"performance_ids" => p_ids, "public" => public} = params, contest) do
+    public = parse_bool(public)
+    list_path = case params["performance_filter"] do
+      filter when is_map(filter) ->
+        Routes.internal_contest_results_path(conn, :publish_results, contest, performance_filter: filter)
+      _ ->
+        Routes.internal_contest_results_path(conn, :publish_results, contest)
+    end
+
+    {:ok, count} = case public do
+      true -> Showtime.publish_results(contest, p_ids)
+      false -> Showtime.unpublish_results(contest, p_ids)
+    end
+
+    conn
+    |> put_results_flash_message(public, count)
+    |> redirect(to: list_path)
+  end
+
   # Private helpers
 
   defp prepare_filtered_list(conn, params, contest) do
@@ -215,5 +243,22 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     conn
     |> add_breadcrumbs(c)
     |> add_breadcrumb(name: p.edit_code, path: performance_path)
+  end
+
+  defp put_results_flash_message(conn, true, count) do
+    message = ngettext(
+      "The results of this performance were published.",
+      "The results of these %{count} performances were published.",
+      count
+    )
+    conn |> put_flash(:success, message)
+  end
+  defp put_results_flash_message(conn, false, count) do
+    message = ngettext(
+      "The results of this performance were unpublished.",
+      "The results of these %{count} performances were unpublished.",
+      count
+    )
+    conn |> put_flash(:warning, message)
   end
 end

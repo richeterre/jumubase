@@ -33,6 +33,7 @@ defmodule JumubaseWeb.Api.PerformanceController do
 
     conn
     |> assign(:performances, performances)
+    |> assign(:round, c.round)
     |> render("index.json")
   end
 

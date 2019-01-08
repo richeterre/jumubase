@@ -963,14 +963,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:162
+#: lib/jumubase_web/views/internal/performance_view.ex:163
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:167
+#: lib/jumubase_web/views/internal/performance_view.ex:168
 msgid "Filter active"
 msgstr ""
 
@@ -1438,4 +1438,9 @@ msgstr ""
 #:
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:26
 msgid "Point amount"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:65
+msgid "Publish results"
 msgstr ""

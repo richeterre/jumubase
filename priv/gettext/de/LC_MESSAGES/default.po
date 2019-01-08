@@ -963,14 +963,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:162
+#: lib/jumubase_web/views/internal/performance_view.ex:163
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:167
+#: lib/jumubase_web/views/internal/performance_view.ex:168
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1439,3 +1439,8 @@ msgstr "Die Punktzahl konnte leider nicht gespeichert werden."
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:26
 msgid "Point amount"
 msgstr "Punktzahl"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:65
+msgid "Publish results"
+msgstr "Ergebnisse freigeben"

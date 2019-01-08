@@ -61,6 +61,11 @@
             Routes.internal_contest_results_path(@conn, :edit_results, @contest)
             %>
         </li>
+        <li class="list-group-item">
+          <%= icon_link "check", gettext("Publish results"),
+            Routes.internal_contest_results_path(@conn, :publish_results, @contest)
+            %>
+        </li>
       </ul>
     </div>
   </div>

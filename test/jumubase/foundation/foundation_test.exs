@@ -261,6 +261,11 @@ defmodule Jumubase.FoundationTest do
       assert result.id == id
     end
 
+    test "preloads the contest's host" do
+      %{id: id} = insert(:contest, timetables_public: true)
+      assert %Contest{host: %Host{}} = Foundation.get_public_contest!(id)
+    end
+
     test "raises an error if the contest isn't found" do
       assert_raise Ecto.NoResultsError, fn -> Foundation.get_public_contest!(123) end
     end

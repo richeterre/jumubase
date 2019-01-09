@@ -92,6 +92,7 @@ defmodule Jumubase.Foundation do
   def get_public_contest!(id) do
     Contest
     |> where(timetables_public: true)
+    |> preload(:host)
     |> Repo.get!(id)
   end
 

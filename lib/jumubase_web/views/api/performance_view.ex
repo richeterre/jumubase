@@ -2,22 +2,25 @@ defmodule JumubaseWeb.Api.PerformanceView do
   import JumubaseWeb.Internal.AppearanceView, only: [instrument_name: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1, sorted_appearances: 1]
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.Results
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
 
-  def render("index.json", %{performances: performances, round: round}) do
-    performances |> Enum.map(&render_performance(&1, round))
+  def render("index.json", %{performances: performances, contest: c}) do
+    performances |> Enum.map(&render_performance(&1, c))
   end
 
   # Private helpers
 
-  defp render_performance(%Performance{} = p, round) do
+  defp render_performance(%Performance{} = p, %Contest{} = c) do
+    %{time_zone: tz} = c.host
+
     %{
       id: to_string(p.id),
       category_name: category_name(p),
       age_group: p.age_group,
-      stage_time: to_utc_datetime(p.stage_time),
-      appearances: sorted_appearances(p) |> Enum.map(&render_appearance(&1, round, p.results_public)),
+      stage_time: p.stage_time |> to_local_datetime(tz),
+      appearances: sorted_appearances(p) |> Enum.map(&render_appearance(&1, c.round, p.results_public)),
       pieces: p.pieces |> Enum.map(&render_piece/1),
     }
   end
@@ -57,9 +60,11 @@ defmodule JumubaseWeb.Api.PerformanceView do
     }
   end
 
-  defp to_utc_datetime(nil), do: nil
-  defp to_utc_datetime(datetime) do
-    datetime |> DateTime.from_naive!("Etc/UTC")
+  defp to_local_datetime(nil, _time_zone), do: nil
+  defp to_local_datetime(datetime, time_zone) do
+    datetime
+    |> NaiveDateTime.to_erl
+    |> Timex.to_datetime(time_zone)
   end
 
   defp duration_in_seconds(%Piece{minutes: min, seconds: sec}) do

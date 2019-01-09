@@ -32,8 +32,8 @@ defmodule JumubaseWeb.Api.PerformanceController do
     performances = Showtime.list_performances(c, filter) |> Showtime.load_pieces
 
     conn
+    |> assign(:contest, c)
     |> assign(:performances, performances)
-    |> assign(:round, c.round)
     |> render("index.json")
   end
 

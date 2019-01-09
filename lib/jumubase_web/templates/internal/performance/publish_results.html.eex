@@ -58,37 +58,35 @@
     </thead>
     <tbody>
       <%= for performance <- @performances do %>
-        <% result_groups = result_groups(performance) %>
+        <% appearances = sorted_appearances(performance) %>
 
-        <%= for {group, group_index} <- result_groups |> Enum.with_index do %>
-          <%= for {appearance, a_index} <- group |> Enum.with_index do %>
-            <tr>
-              <%= if {group_index, a_index} == {0, 0} do %>
-                <td rowspan="<%= result_groups |> List.flatten |> length %>">
-                  <%= link category_name(performance),
-                    to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
-                    %>
-                </td>
-              <% end %>
-              <td>
-                <%= appearance_info(appearance) %>
+        <%= for {appearance, index} <- appearances |> Enum.with_index do %>
+          <tr>
+            <%= if index == 0 do %>
+              <td rowspan="<%= length(appearances) %>">
+                <%= link category_name(performance),
+                  to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                  %>
               </td>
-              <td>
-                <%= age_group_badge(appearance) %>
-              </td>
-              <td>
-                <%= appearance.points %>
-                <%= missing_points_error(appearance, performance.results_public) %>
-              </td>
-              <td>
-                <%= prize(appearance, @contest.round) %>
-                <%= advancement_label(appearance) %>
-              </td>
-              <td>
-                <%= results_public_text(performance) %>
-              </td>
-            </tr>
-          <% end %>
+            <% end %>
+            <td>
+              <%= appearance_info(appearance) %>
+            </td>
+            <td>
+              <%= age_group_badge(appearance) %>
+            </td>
+            <td>
+              <%= appearance.points %>
+              <%= missing_points_error(appearance, performance.results_public) %>
+            </td>
+            <td>
+              <%= prize(appearance, @contest.round) %>
+              <%= advancement_label(appearance) %>
+            </td>
+            <td>
+              <%= results_public_text(performance) %>
+            </td>
+          </tr>
         <% end %>
       <% end %>
     </tbody>

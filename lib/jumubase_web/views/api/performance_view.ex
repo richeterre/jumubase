@@ -57,6 +57,7 @@ defmodule JumubaseWeb.Api.PerformanceView do
     }
   end
 
+  defp to_utc_datetime(nil), do: nil
   defp to_utc_datetime(datetime) do
     datetime |> DateTime.from_naive!("Etc/UTC")
   end

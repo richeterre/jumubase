@@ -63,7 +63,13 @@ defmodule Jumubase.Foundation do
       where: c.timetables_public,
       join: h in assoc(c, :host),
       order_by: [{:desc, c.round}, h.name],
-      preload: [host: {h, :stages}, contest_categories: :category]
+      # Exclude unused stages
+      join: s in assoc(h, :stages),
+      join: cc in assoc(c, :contest_categories),
+      join: p in assoc(cc, :performances),
+      where: p.stage_id == s.id,
+      # Assign used stages manually in preload
+      preload: [host: {h, stages: s}, contest_categories: {cc, :category}]
 
     Repo.all(query)
   end

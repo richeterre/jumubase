@@ -10,7 +10,6 @@ defmodule Jumubase.Foundation.ContestCategory do
 
     belongs_to :contest, Contest
     belongs_to :category, Category
-    has_many :performances, Jumubase.Showtime.Performance
 
     timestamps()
   end

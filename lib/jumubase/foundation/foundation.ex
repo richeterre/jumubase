@@ -65,9 +65,9 @@ defmodule Jumubase.Foundation do
       order_by: [{:desc, c.round}, h.name],
       # Exclude unused stages
       join: s in assoc(h, :stages),
+      join: p in assoc(s, :performances),
       join: cc in assoc(c, :contest_categories),
-      join: p in assoc(cc, :performances),
-      where: p.stage_id == s.id,
+      where: p.contest_category_id == cc.id,
       # Assign used stages manually in preload
       preload: [host: {h, stages: s}, contest_categories: {cc, :category}]
 

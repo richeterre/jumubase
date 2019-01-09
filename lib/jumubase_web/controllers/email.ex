@@ -19,8 +19,8 @@ defmodule JumubaseWeb.Email do
       |> subject(gettext("New message via jumu-nordost.eu"))
       |> text_body(message)
 
-    # Include admin as BCC if different from contact email
-    if admin_email != contact_email, do: bcc(email, admin_email), else: email
+    # Include admin as CC if different from contact email
+    if admin_email != contact_email, do: cc(email, admin_email), else: email
   end
 
   @doc """

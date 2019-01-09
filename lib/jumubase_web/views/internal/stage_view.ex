@@ -4,7 +4,7 @@ defmodule JumubaseWeb.Internal.StageView do
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.PageView, only: [admin_email: 0]
   import JumubaseWeb.Internal.PerformanceView, only: [
-    cc_filter_options: 1, formatted_duration: 1
+    cc_filter_options: 1, formatted_duration: 1, sorted_appearances: 1
   ]
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -58,8 +58,8 @@ defmodule JumubaseWeb.Internal.StageView do
   @doc """
   Returns participant names and instruments of the performance's appearances.
   """
-  def appearances_info(%Performance{appearances: appearances}) do
-    appearances |> Enum.map(&appearance_info/1) |> Enum.join("\n")
+  def appearances_info(%Performance{} = p) do
+    sorted_appearances(p) |> Enum.map(&appearance_info/1) |> Enum.join("\n")
   end
 
   @doc """

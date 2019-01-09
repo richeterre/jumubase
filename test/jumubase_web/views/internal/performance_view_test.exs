@@ -51,6 +51,22 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     assert PerformanceView.formatted_duration(p) == "4'33"
   end
 
+  describe "sorted_appearances/1" do
+    test "returns a solo performance's appearances in display order" do
+      sol = build(:appearance, role: "soloist")
+      [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
+      p = build(:performance, appearances: [acc2, sol, acc1])
+      assert PerformanceView.sorted_appearances(p) == [sol, acc2, acc1]
+    end
+
+    test "returns an ensemble performance's appearances in display order" do
+      [ens1, ens2] = build_list(2, :appearance, role: "ensemblist")
+      [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
+      p = build(:performance, appearances: [acc2, ens2, acc1, ens1])
+      assert PerformanceView.sorted_appearances(p) == [ens2, ens1, acc2, acc1]
+    end
+  end
+
   test "appearance_ids/1 returns the appearances' ids as a comma-separated string" do
     a1 = build(:appearance, id: 1)
     a2 = build(:appearance, id: 2)

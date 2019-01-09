@@ -83,6 +83,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   @doc """
+  Returns the performance's appearances in display order,
+  i.e. soloists and ensemblists before accompanists.
+  """
+  def sorted_appearances(%Performance{} = p) do
+    non_acc(p) ++ acc(p)
+  end
+
+  @doc """
   Returns the performance's soloist and ensemblist appearances.
   """
   def non_acc(%Performance{} = p), do: Performance.non_accompanists(p)

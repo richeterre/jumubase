@@ -15,7 +15,7 @@ defmodule Jumubase.TestHelpers do
   Returns whether the ids of the lists' elements match, ignoring order.
   """
   def assert_ids_match_unordered(first_list, second_list) do
-    assert_ids_match_ordered(Enum.sort(first_list), Enum.sort(second_list))
+    assert get_sorted_ids(first_list) == get_sorted_ids(second_list)
   end
 
   @doc """
@@ -70,5 +70,11 @@ defmodule Jumubase.TestHelpers do
         ]
       }
     }
+  end
+
+  # Private helpers
+
+  defp get_sorted_ids(list) do
+    list |> get_ids |> Enum.sort
   end
 end

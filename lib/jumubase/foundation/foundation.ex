@@ -63,8 +63,7 @@ defmodule Jumubase.Foundation do
     query = from c in Contest,
       where: c.timetables_public,
       join: h in assoc(c, :host),
-      order_by: [{:desc, c.round}, h.name],
-      distinct: c.id
+      order_by: [{:desc, c.round}, h.name]
 
     Repo.all(query)
     |> Repo.preload([[host: [stages: :performances]], [contest_categories: :category]])

@@ -128,7 +128,7 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_public_contests/1" do
-    test "returns all contests with public timetables and at least one stage with performances" do
+    test "returns all contests with public timetables and at least one staged performance" do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
       # Matching contests
@@ -142,6 +142,22 @@ defmodule Jumubase.FoundationTest do
       insert_performance(c4, stage: s)
 
       assert_ids_match_unordered Foundation.list_public_contests, [c1]
+    end
+
+    test "orders the contest by round, then host name" do
+      %{stages: [s1]} = h1 = insert(:host, name: "B", stages: build_list(1, :stage))
+      %{stages: [s2]} = h2 = insert(:host, name: "A", stages: build_list(1, :stage))
+
+      c1 = insert(:contest, host: h1, round: 1, timetables_public: true)
+      insert_performance(c1, stage: s1)
+      c2 = insert(:contest, host: h1, round: 0, timetables_public: true)
+      insert_performance(c2, stage: s1)
+      c3 = insert(:contest, host: h2, round: 0, timetables_public: true)
+      insert_performance(c3, stage: s2)
+      c4 = insert(:contest, host: h2, round: 1, timetables_public: true)
+      insert_performance(c4, stage: s2)
+
+      assert_ids_match_ordered Foundation.list_public_contests, [c4, c1, c3, c2]
     end
 
     test "preloads the contests' hosts with used stages, as well as contest categories" do

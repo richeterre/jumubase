@@ -1,0 +1,69 @@
+<h2>
+  <%= gettext("Create certificates") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<%= render "_filter_form.html",
+  conn: @conn,
+  changeset: @filter_changeset,
+  path: Routes.internal_contest_performances_path(@conn, :certificates, @contest),
+  options: filter_options(@contest),
+  count: length(@performances),
+  filter_active: @filter_active
+  %>
+
+<p class="button-row">
+  <% button_class = if Enum.empty?(@performances), do: "disabled", else: "" %>
+  <%= icon_link "print", gettext("Print certificates"),
+    "#",
+    class: "btn btn-primary #{button_class}"
+    %>
+</p>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Participants") %></th>
+        <th><%= gettext("AG") %></th>
+        <th><%= gettext("Points") %></th>
+        <th><%= gettext("Prize") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+        <% appearances = sorted_appearances(performance) %>
+
+        <%= for {appearance, index} <- appearances |> Enum.with_index do %>
+          <tr>
+            <%= if index == 0 do %>
+              <td rowspan="<%= length(appearances) %>">
+                <%= link category_name(performance),
+                  to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                  %>
+              </td>
+            <% end %>
+            <td>
+              <%= appearance_info(appearance) %>
+            </td>
+            <td>
+              <%= age_group_badge(appearance) %>
+            </td>
+            <td>
+              <%= appearance.points %>
+              <%= missing_points_error(appearance, performance.results_public) %>
+            </td>
+            <td>
+              <%= prize(appearance, @contest.round) %>
+              <%= advancement_label(appearance) %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

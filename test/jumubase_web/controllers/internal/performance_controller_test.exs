@@ -471,7 +471,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   defp attempt_jury_material(conn, contest) do
-    get(conn, Routes.internal_contest_jury_material_path(conn, :jury_material, contest))
+    get(conn, Routes.internal_contest_performances_path(conn, :jury_material, contest))
   end
 
   defp attempt_print_jury_sheets(conn, contest) do

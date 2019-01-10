@@ -91,11 +91,12 @@ defmodule JumubaseWeb.Router do
 
     resources "/categories", CategoryController, except: [:show, :delete]
     resources "/contests", ContestController, only: [:index, :show, :edit, :update] do
-      get "/performances/jury-material", PerformanceController, :jury_material, as: :jury_material
+      get "/performances/jury-material", PerformanceController, :jury_material, as: :performances
       get "/performances/edit-results", PerformanceController, :edit_results, as: :results
       patch "/performances/update-results", PerformanceController, :update_results, as: :results
       get "/performances/publish-results", PerformanceController, :publish_results, as: :results
       patch "/performances/update-results-public", PerformanceController, :update_results_public, as: :results
+      get "/performances/certificates", PerformanceController, :certificates, as: :performances
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]

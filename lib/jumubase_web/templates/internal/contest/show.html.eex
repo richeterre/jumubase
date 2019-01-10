@@ -44,7 +44,7 @@
         </li>
         <li class="list-group-item">
           <%= icon_link "sunglasses", gettext("Create jury material"),
-            Routes.internal_contest_jury_material_path(@conn, :jury_material, @contest)
+            Routes.internal_contest_performances_path(@conn, :jury_material, @contest)
             %>
         </li>
       </ul>
@@ -64,6 +64,11 @@
         <li class="list-group-item">
           <%= icon_link "check", gettext("Publish results"),
             Routes.internal_contest_results_path(@conn, :publish_results, @contest)
+            %>
+        </li>
+        <li class="list-group-item">
+          <%= icon_link "certificate", gettext("Create certificates"),
+            Routes.internal_contest_performances_path(@conn, :certificates, @contest)
             %>
         </li>
       </ul>

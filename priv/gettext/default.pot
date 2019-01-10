@@ -964,14 +964,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:184
+#: lib/jumubase_web/views/internal/performance_view.ex:192
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:189
+#: lib/jumubase_web/views/internal/performance_view.ex:197
 msgid "Filter active"
 msgstr ""
 
@@ -1449,12 +1449,12 @@ msgid "Publish results"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:124
+#: lib/jumubase_web/views/internal/performance_view.ex:132
 msgid "No"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:121
+#: lib/jumubase_web/views/internal/performance_view.ex:129
 msgid "Yes"
 msgstr ""
 
@@ -1476,30 +1476,36 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:250
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:258
 msgid "The results of this performance were published."
 msgid_plural "The results of these %{count} performances were published."
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:258
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:266
 msgid "The results of this performance were unpublished."
 msgid_plural "The results of these %{count} performances were unpublished."
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:277
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:285
 msgid "The results of some performances below have already been published. Your changes will be visible to others instantly."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:115
+#: lib/jumubase_web/views/internal/performance_view.ex:123
 msgid "Result already published – please enter points!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:114
+#: lib/jumubase_web/views/internal/performance_view.ex:122
 msgid "missing"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:198
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:70
+msgid "Create certificates"
 msgstr ""

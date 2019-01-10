@@ -128,38 +128,46 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_public_contests/1" do
-    test "returns all contests with public timetables and 1+ scheduled performance" do
+    test "returns all contests with public timetables and at least one stage" do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
-      # Matching contest
+      # Matching contests
       c1 = insert(:contest, host: host_with_stage, timetables_public: true)
       insert_performance(c1, stage: s)
+      c2 = insert(:contest, host: host_with_stage, timetables_public: true)
 
       # Non-matching contests
-      insert(:contest, timetables_public: true)
-      insert(:contest, host: host_with_stage, timetables_public: true)
-      c2 = insert(:contest, host: host_with_stage, timetables_public: false)
-      insert_performance(c2, stage: s)
+      insert(:contest, host: build(:host, stages: []), timetables_public: true)
+      c4 = insert(:contest, host: host_with_stage, timetables_public: false)
+      insert_performance(c4, stage: s)
 
-      assert_ids_match_unordered Foundation.list_public_contests, [c1]
+      assert_ids_match_unordered Foundation.list_public_contests, [c1, c2]
     end
 
     test "preloads the contests' hosts with used stages, as well as contest categories" do
-      [s1, s2, _] = stages = insert_list(3, :stage)
+      [s1, s2, _s3] = stages = insert_list(3, :stage)
       host = insert(:host, stages: stages)
-      c = insert(:contest, host: host, contest_categories: [], timetables_public: true)
-      cc = insert_contest_category(c)
+      c1 = insert(:contest, host: host, contest_categories: [], timetables_public: true)
+      c2 = insert(:contest, host: host, contest_categories: [], timetables_public: true)
+      cc1 = insert_contest_category(c1)
+      cc2 = insert_contest_category(c2)
 
-      # Keep third stage unused
-      insert_performance(cc, stage: s1)
-      insert_performance(cc, stage: s2)
+      # Keep third stage (s3) unused
+      insert_performance(cc1, stage: s1)
+      insert_performance(cc1, stage: s2)
+      insert_performance(cc2, stage: s2)
 
-      [result] = Foundation.list_public_contests
+      [c1, c2] = Foundation.list_public_contests
       assert %Contest{
-        host: %Host{stages: result_stages},
+        host: %Host{stages: c1_stages},
         contest_categories: [%ContestCategory{category: %Category{}}]
-      } = result
-      assert_ids_match_unordered result_stages, [s1, s2]
+      } = c1
+      assert_ids_match_unordered c1_stages, [s1, s2]
+      assert %Contest{
+        host: %Host{stages: c2_stages},
+        contest_categories: [%ContestCategory{category: %Category{}}]
+      } = c2
+      assert_ids_match_unordered c2_stages, [s2]
     end
   end
 

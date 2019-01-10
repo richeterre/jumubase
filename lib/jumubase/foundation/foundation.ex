@@ -5,6 +5,7 @@ defmodule Jumubase.Foundation do
   """
 
   import Ecto.Query
+  import Jumubase.Utils, only: [get_ids: 1]
   alias Jumubase.Repo
   alias Jumubase.Utils
   alias Jumubase.Accounts.User
@@ -62,16 +63,13 @@ defmodule Jumubase.Foundation do
     query = from c in Contest,
       where: c.timetables_public,
       join: h in assoc(c, :host),
-      order_by: [{:desc, c.round}, h.name],
-      # Exclude unused stages
       join: s in assoc(h, :stages),
-      join: p in assoc(s, :performances),
-      join: cc in assoc(c, :contest_categories),
-      where: p.contest_category_id == cc.id,
-      # Assign used stages manually in preload
-      preload: [host: {h, stages: s}, contest_categories: {cc, :category}]
+      order_by: [{:desc, c.round}, h.name],
+      distinct: c.id
 
     Repo.all(query)
+    |> Repo.preload([[host: [stages: :performances]], [contest_categories: :category]])
+    |> exclude_unused_stages
   end
 
   @doc """
@@ -209,6 +207,21 @@ defmodule Jumubase.Foundation do
   end
 
   # Private helpers
+
+  # Filter nested contest stages by whether they have performances in that contest.
+  defp exclude_unused_stages(contests) do
+    Enum.map(contests, fn %{host: h} = c ->
+      host = Map.put(h, :stages, used_stages(c))
+      Map.put(c, :host, host)
+    end)
+  end
+
+  defp used_stages(%Contest{host: %{stages: stages}} = c) do
+    cc_ids = c.contest_categories |> get_ids
+    Enum.filter(stages, fn %{performances: p_list} ->
+      Enum.any?(p_list, &(&1.contest_category_id in cc_ids))
+    end)
+  end
 
   defp relevant_for_user(contest_query, %User{} = user) do
     from c in contest_query,

@@ -63,13 +63,13 @@ defmodule Jumubase.Foundation do
     query = from c in Contest,
       where: c.timetables_public,
       join: h in assoc(c, :host),
-      join: s in assoc(h, :stages),
       order_by: [{:desc, c.round}, h.name],
       distinct: c.id
 
     Repo.all(query)
     |> Repo.preload([[host: [stages: :performances]], [contest_categories: :category]])
     |> exclude_unused_stages
+    |> exclude_stageless_contests
   end
 
   @doc """
@@ -221,6 +221,11 @@ defmodule Jumubase.Foundation do
     Enum.filter(stages, fn %{performances: p_list} ->
       Enum.any?(p_list, &(&1.contest_category_id in cc_ids))
     end)
+  end
+
+  # Exclude contests without any stages (e.g. because all were removed as unused)
+  defp exclude_stageless_contests(contests) do
+    Enum.filter(contests, &(not Enum.empty?(&1.host.stages)))
   end
 
   defp relevant_for_user(contest_query, %User{} = user) do

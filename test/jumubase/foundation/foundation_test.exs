@@ -128,20 +128,20 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_public_contests/1" do
-    test "returns all contests with public timetables and at least one stage" do
+    test "returns all contests with public timetables and at least one stage with performances" do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
       # Matching contests
       c1 = insert(:contest, host: host_with_stage, timetables_public: true)
       insert_performance(c1, stage: s)
-      c2 = insert(:contest, host: host_with_stage, timetables_public: true)
 
       # Non-matching contests
-      insert(:contest, host: build(:host, stages: []), timetables_public: true)
-      c4 = insert(:contest, host: host_with_stage, timetables_public: false)
+      insert(:contest, host: build(:host, stages: []), timetables_public: true) # No stages
+      insert(:contest, host: host_with_stage, timetables_public: true) # No performances
+      c4 = insert(:contest, host: host_with_stage, timetables_public: false) # No public timetables
       insert_performance(c4, stage: s)
 
-      assert_ids_match_unordered Foundation.list_public_contests, [c1, c2]
+      assert_ids_match_unordered Foundation.list_public_contests, [c1]
     end
 
     test "preloads the contests' hosts with used stages, as well as contest categories" do

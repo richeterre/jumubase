@@ -62,6 +62,13 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
     end
   end
 
+  describe "year/1" do
+    test "returns a contest's year based on the season" do
+      contest = build(:contest, season: 56, start_date: ~D[2018-12-20], end_date: ~D[2018-12-20])
+      assert ContestView.year(contest) == 2019
+    end
+  end
+
   describe "schedule_link_path/2" do
     test "returns a direct link to the stage scheduler if the contest has only one stage" do
       s = insert(:stage)

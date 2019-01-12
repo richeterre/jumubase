@@ -82,6 +82,8 @@ defmodule JumubaseWeb.Router do
       PerformanceController, :print_jury_sheets, as: :contest_performance
     get "/contests/:contest_id/performances/print-jury-table",
       PerformanceController, :print_jury_table, as: :contest_performance
+    get "/contests/:contest_id/performances/print-certificates",
+      PerformanceController, :print_certificates, as: :contest_performance
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do

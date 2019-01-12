@@ -61,6 +61,10 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   def render("scripts.certificates.html", _assigns), do: render_performance_filter()
 
+  def render("certificates.pdf", %{performances: performances, contest: contest}) do
+    PDFGenerator.certificates(performances, contest)
+  end
+
   def stage_info(performance, style \\ :full)
   def stage_info(%Performance{stage: %Stage{name: name}, stage_time: stage_time}, style) do
     {format_datetime(stage_time, style), name}

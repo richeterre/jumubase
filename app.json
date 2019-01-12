@@ -2,7 +2,7 @@
   "name": "Jumubase Review App",
   "description": "A short-lived app for reviewing Jumubase pull requests.",
   "scripts": {
-    "postdeploy": "mix ecto.migrate && mix run priv/repo/seeds.exs",
+    "postdeploy": "mix ecto.migrate && mix run priv/repo/seeds.exs"
   },
   "env": {
     "GOOGLE_API_KEY": {

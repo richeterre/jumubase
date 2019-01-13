@@ -189,7 +189,7 @@ defmodule Jumubase.Showtime do
   end
 
   def load_pieces(performances) do
-    performances |> Repo.preload(:pieces)
+    performances |> Repo.preload(pieces: pieces_query())
   end
 
   def load_contest_category(%Performance{} = performance) do
@@ -368,15 +368,13 @@ defmodule Jumubase.Showtime do
 
   # Limits the query to the given contest id and fully preloads it
   defp preloaded_from_contest(Performance = query, contest_id) do
-    pieces_query = from pc in Piece, order_by: pc.inserted_at
-
     from p in query,
       join: cc in assoc(p, :contest_category),
       where: cc.contest_id == ^contest_id,
       preload: [
         [contest_category: {cc, :category}],
         [appearances: :participant],
-        [pieces: ^pieces_query],
+        [pieces: ^pieces_query()],
       ]
   end
   defp preloaded_from_contest(Participant = query, contest_id) do
@@ -397,5 +395,9 @@ defmodule Jumubase.Showtime do
 
     {count, _} = Repo.update_all(query, set: [results_public: public])
     {:ok, count}
+  end
+
+  defp pieces_query do
+    from pc in Piece, order_by: pc.inserted_at
   end
 end

@@ -764,11 +764,17 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
-  test "load_pieces/1 preloads a performance's pieces", %{contest: c} do
-    insert_performance(c, pieces: build_list(1, :piece))
+  test "load_pieces/1 preloads a performance's pieces in insertion order", %{contest: c} do
+    insert_performance(c, pieces: [
+      build(:piece, title: "Y"),
+      build(:piece, title: "X")
+    ])
     performance = Repo.one(Performance)
 
-    assert %{pieces: [%Piece{}]} = performance |> Showtime.load_pieces
+    assert %{pieces: [
+      %Piece{title: "Y"},
+      %Piece{title: "X"},
+    ]} = performance |> Showtime.load_pieces
   end
 
   test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do

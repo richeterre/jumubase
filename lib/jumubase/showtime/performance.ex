@@ -62,14 +62,18 @@ defmodule Jumubase.Showtime.Performance do
   Returns the performance's soloist and ensemblist appearances.
   """
   def non_accompanists(%Performance{appearances: appearances}) do
-    Enum.filter(appearances, &!Appearance.is_accompanist(&1))
+    appearances
+    |> Enum.filter(&!Appearance.is_accompanist(&1))
+    |> sort_by_insertion
   end
 
   @doc """
   Returns the performance's accompanist appearances.
   """
   def accompanists(%Performance{appearances: appearances}) do
-    Enum.filter(appearances, &Appearance.is_accompanist/1)
+    appearances
+    |> Enum.filter(&Appearance.is_accompanist/1)
+    |> sort_by_insertion
   end
 
   @doc """
@@ -157,5 +161,9 @@ defmodule Jumubase.Showtime.Performance do
     appearance_list
     |> Enum.filter(fn a -> a.role == role end)
     |> length
+  end
+
+  defp sort_by_insertion(appearances) do
+    appearances |> Enum.sort_by(&(&1.inserted_at))
   end
 end

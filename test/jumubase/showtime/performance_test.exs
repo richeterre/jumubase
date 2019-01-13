@@ -145,6 +145,14 @@ defmodule Jumubase.PerformanceTest do
       p = build(:performance, appearances: [ens1, ens2, acc1, acc2])
       assert Performance.non_accompanists(p) == [ens1, ens2]
     end
+
+    test "sorts ensemblists by insertion date, earliest first" do
+      now = Timex.now
+      ens1 = build(:appearance, role: "ensemblist", inserted_at: now)
+      ens2 = build(:appearance, role: "ensemblist", inserted_at: Timex.shift(now, seconds: -1))
+      p = build(:performance, appearances: [ens1, ens2])
+      assert Performance.non_accompanists(p) == [ens2, ens1]
+    end
   end
 
   describe "accompanists/1" do
@@ -160,6 +168,15 @@ defmodule Jumubase.PerformanceTest do
       [acc1, acc2] = build_list(2, :appearance, role: "accompanist")
       p = build(:performance, appearances: [ens1, ens2, acc1, acc2])
       assert Performance.accompanists(p) == [acc1, acc2]
+    end
+
+    test "sorts accompanists by insertion date, earliest first" do
+      now = Timex.now
+      sol = build(:appearance, role: "soloist")
+      acc1 = build(:appearance, role: "accompanist", inserted_at: now)
+      acc2 = build(:appearance, role: "accompanist", inserted_at: Timex.shift(now, seconds: -1))
+      p = build(:performance, appearances: [sol, acc1, acc2])
+      assert Performance.accompanists(p) == [acc2, acc1]
     end
   end
 

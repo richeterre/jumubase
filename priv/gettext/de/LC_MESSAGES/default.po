@@ -230,12 +230,13 @@ msgid "Birthdate"
 msgstr "Geburtsdatum"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:34
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
-#: lib/jumubase_web/views/generators/pdf_generator.ex:151
+#: lib/jumubase_web/views/generators/pdf_generator.ex:161
 msgid "Category"
 msgstr "Kategorie"
 
@@ -267,12 +268,13 @@ msgstr "Nachname"
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:35
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
-#: lib/jumubase_web/views/generators/pdf_generator.ex:153
+#: lib/jumubase_web/views/generators/pdf_generator.ex:163
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -356,7 +358,7 @@ msgstr "Tag"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
-#: lib/jumubase_web/views/internal/contest_view.ex:33
+#: lib/jumubase_web/views/internal/contest_view.ex:32
 msgid "Deadline"
 msgstr "Anmeldeschluss"
 
@@ -379,7 +381,7 @@ msgstr "Änderungscode"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
-#: lib/jumubase_web/views/generators/pdf_generator.ex:112
+#: lib/jumubase_web/views/generators/pdf_generator.ex:122
 msgid "Epoch"
 msgstr "Epoche"
 
@@ -435,7 +437,7 @@ msgstr "Jahr"
 #:
 #: lib/jumubase_web/templates/internal/performance/_detail_performance.html.eex:10
 #: lib/jumubase_web/templates/internal/performance/_list_performance.html.eex:7
-#: lib/jumubase_web/views/generators/pdf_generator.ex:99
+#: lib/jumubase_web/views/generators/pdf_generator.ex:109
 msgid "accompanied by"
 msgstr "begleitet von"
 
@@ -965,14 +967,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:192
+#: lib/jumubase_web/views/internal/performance_view.ex:186
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:197
+#: lib/jumubase_web/views/internal/performance_view.ex:191
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1366,7 +1368,7 @@ msgid "Create jury material"
 msgstr "Jurymaterial erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:159
+#: lib/jumubase_web/views/generators/pdf_generator.ex:169
 msgid "Result"
 msgstr "Ergebnis"
 
@@ -1376,14 +1378,15 @@ msgid "Print jury table"
 msgstr "Jurytabelle ausgeben"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:36
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53
-#: lib/jumubase_web/views/generators/pdf_generator.ex:152
+#: lib/jumubase_web/views/generators/pdf_generator.ex:162
 msgid "AG"
 msgstr "AG"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator.ex:137
+#: lib/jumubase_web/views/generators/pdf_generator.ex:147
 msgid "points"
 msgstr "Punkte"
 
@@ -1413,12 +1416,14 @@ msgstr "Nach der Wertung"
 #, elixir-format
 #:
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:26
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:37
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:25
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:54
 msgid "Points"
 msgstr "Punktzahl"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:38
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:26
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:55
 msgid "Prize"
@@ -1450,12 +1455,12 @@ msgid "Publish results"
 msgstr "Ergebnisse freigeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:132
+#: lib/jumubase_web/views/internal/performance_view.ex:126
 msgid "No"
 msgstr "Nein"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:129
+#: lib/jumubase_web/views/internal/performance_view.ex:123
 msgid "Yes"
 msgstr "Ja"
 
@@ -1477,36 +1482,42 @@ msgstr[0] "Möchtest du die Ergebnisse dieses Vorspiels wirklich freigeben?"
 msgstr[1] "Möchtest du die Ergebnisse dieser %{count} Vorspiele wirklich freigeben?"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:258
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:267
 msgid "The results of this performance were published."
 msgid_plural "The results of these %{count} performances were published."
 msgstr[0] "Die Ergebnisse dieses Vorspiels sind nun freigegeben."
 msgstr[1] "Die Ergebnisse dieser %{count} Vorspiele sind nun freigegeben."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:266
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:275
 msgid "The results of this performance were unpublished."
 msgid_plural "The results of these %{count} performances were unpublished."
 msgstr[0] "Die Ergebnisse dieses Vorspiels sind nun nicht mehr freigegeben."
 msgstr[1] "Die Ergebnisse dieser %{count} Vorspiele sind nun nicht mehr freigegeben."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:285
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:294
 msgid "The results of some performances below have already been published. Your changes will be visible to others instantly."
 msgstr "Die Ergebnisse einiger untenstehender Vorspiele wurden bereits freigegeben. Deine Änderungen sind für andere sofort sichtbar."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:123
+#: lib/jumubase_web/views/internal/appearance_view.ex:40
 msgid "Result already published – please enter points!"
 msgstr "Ergebnis bereits freigegeben – bitte Punkte eintragen!"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:122
+#: lib/jumubase_web/views/internal/appearance_view.ex:39
 msgid "missing"
 msgstr "fehlt"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:198
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:70
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:2
 msgid "Create certificates"
 msgstr "Urkunden erstellen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:20
+msgid "Print certificates"
+msgstr "Urkunden ausgeben"

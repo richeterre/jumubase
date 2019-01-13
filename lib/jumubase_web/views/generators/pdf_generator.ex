@@ -1,14 +1,19 @@
 defmodule JumubaseWeb.Generators.PDFGenerator do
   import Jumubase.Gettext
   import JumubaseWeb.DateHelpers
-  import JumubaseWeb.Internal.AppearanceView, only: [instrument_name: 1]
+  import JumubaseWeb.Internal.AppearanceView, only: [appearance_info: 1, instrument_name: 1]
+  import JumubaseWeb.Internal.ContestView, only: [round_name: 1, year: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  import JumubaseWeb.Internal.PerformanceView, only: [acc: 1, category_name: 1, category_info: 1, non_acc: 1]
+  import JumubaseWeb.Internal.PerformanceView,
+    only: [acc: 1, category_name: 1, category_info: 1, non_acc: 1, result_groups: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, person_info: 1]
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
   alias Jumubase.Showtime.Results
 
   @border_style "1px solid black"
+  @certificate_font_size 16
+  @line_height_factor 1.3
   @muted_color "#666"
 
   @doc """
@@ -25,16 +30,21 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     render_performance_table(performances) |> generate_pdf("landscape")
   end
 
+  def certificates(performances, contest) do
+    render_certificate_pages(performances, contest)
+    |> generate_pdf("portrait", "#{@certificate_font_size}px")
+  end
+
   # Private helpers
 
-  defp generate_pdf(body_html, orientation) do
+  defp generate_pdf(body_html, orientation, font_size \\ "18px") do
     html = Sneeze.render([:html,
       [:head, [:meta, %{charset: "UTF-8"}]],
       [:body,
         %{style: style(%{
           "font-family" => "LatoLatin",
-          "font-size" => "18px",
-          "line-height" => 1.3,
+          "font-size" => font_size,
+          "line-height" => @line_height_factor,
         })},
         body_html
       ]
@@ -203,6 +213,122 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     |> Map.merge(style_map)
     |> style
   end
+
+  defp render_certificate_pages(performances, %Contest{round: round} = contest) do
+    for p <- performances do
+      for group <- result_groups(p) do
+        for a <- group do
+          group_size = length(group)
+          appearances_height = @line_height_factor * @certificate_font_size * group_size
+
+          [:div, %{style: style(%{
+              "padding-left" => "65px",
+              "padding-right" => "65px",
+              "padding-top" => "310px",
+              "page-break-before" => "always",
+            })},
+            [:div, %{style: style(%{"height" => "#{200 - appearances_height}px"})},
+              certificate_heading(round)
+            ],
+            [:p,
+              [:b, group |> Enum.map(&([:span, appearance_info(&1)])) |> to_lines],
+            ],
+            [:p, %{style: style(%{"height" => "170px", "margin" => "50px 0 0 40px"})},
+              [
+                [:span, contest_text(contest, group_size)],
+                [:span, "für das instrumentale und vokale Musizieren der Jugend"],
+                [:span, category_text(round, a, p)],
+                [:span, "in der Altersgruppe #{a.age_group}"],
+                [:span, rating_points_text(round, a.points, group_size)],
+              ] |> to_lines
+            ],
+            [:p, %{style: style(%{"height" => "120px"})},
+              prize_text(round, a)
+            ],
+            [:p, %{style: style(%{"height" => "70px"})}, date_text(contest)],
+            [:p, signatures_text(round)],
+          ]
+        end
+      end
+    end
+  end
+
+  defp certificate_heading(0) do
+    [:span, %{style: style(%{
+      "display" => "block",
+      "font-size" => "84px",
+      "font-weight" => "normal",
+      "text-align" => "center",
+    })}, "URKUNDE"]
+  end
+  defp certificate_heading(_round), do: nil
+
+  defp contest_text(%Contest{} = c, 1), do: "hat am #{contest_name(c)}"
+  defp contest_text(%Contest{} = c, _group_size), do: "haben am #{contest_name(c)}"
+
+  defp contest_name(%Contest{host: h} = c) do
+    "#{round_text(c.round)} in #{h.city} #{year(c)}"
+  end
+
+  defp round_text(0), do: "Wettbewerb „Kinder musizieren“"
+  defp round_text(round), do: round_name(round)
+
+  defp category_text(0, _, _), do: nil
+  defp category_text(_round, %Appearance{role: "accompanist"}, %Performance{} = p) do
+    [
+      [[:span, "in der Wertung für "], [:i, "Instrumentalbegleitung"]],
+      [[:span, "in der Kategorie "], [:i, "#{category_name(p)}, AG #{p.age_group}"]]
+    ] |> to_lines
+  end
+  defp category_text(_round, %Appearance{}, %Performance{} = p) do
+    [[:span, "in der Wertung für "], [:i, category_name(p)], [:br]]
+  end
+
+  defp rating_points_text(0, _, _), do: "teilgenommen."
+  defp rating_points_text(round, points, group_size) do
+    [
+      [:span, Results.get_rating(points, round) || "teilgenommen"],
+      [:span, points_text(points, group_size)],
+    ] |> to_lines
+  end
+
+  defp points_text(points, 1), do: "und erreichte #{points} Punkte."
+  defp points_text(points, _group_size), do: "und erreichten #{points} Punkte."
+
+  defp prize_text(0, %Appearance{points: points}) do
+    [:b, "Zuerkannt wurde das Prädikat: #{Results.get_rating(points, 0)}"]
+  end
+  defp prize_text(round, %Appearance{points: points} = a) do
+    case Results.get_prize(points, round) do
+      nil -> nil
+      prize -> [
+        [:b, "Zuerkannt wurde ein #{prize}"],
+        [:span, advancement_text(a, round)]
+      ] |> to_lines
+    end
+  end
+
+  defp advancement_text(%Appearance{role: "accompanist"}, _round), do: nil
+  defp advancement_text(%Appearance{} = a, round) do
+    if Results.advances?(a) do
+      "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
+    end
+  end
+
+  defp date_text(%Contest{host: h, end_date: end_date, certificate_date: cert_date}) do
+    "#{h.city}, den #{format_date(cert_date || end_date)}"
+  end
+
+  defp signatures_text(0), do: [:p, "Für die Jury"]
+  defp signatures_text(round) when round in 1..2 do
+    [
+      [:span, "Für den #{committee_name(round)}"],
+      [:span, %{style: style(%{"margin-left" => "200px"})}, "Für die Jury"],
+    ]
+  end
+
+  defp committee_name(1), do: "Regionalausschuss"
+  defp committee_name(2), do: "Landesausschuss"
 
   defp style(style_map) do
     style_map

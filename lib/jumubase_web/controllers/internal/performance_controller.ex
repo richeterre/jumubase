@@ -191,6 +191,23 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> redirect(to: list_path)
   end
 
+  def certificates(conn, params, contest) do
+    conn
+    |> prepare_filtered_list(params, contest)
+    |> add_contest_breadcrumb(contest)
+    |> add_breadcrumb(name: gettext("Create certificates"), path: current_path(conn))
+    |> render("certificates.html")
+  end
+
+  def print_certificates(conn, %{"performance_ids" => p_ids}, contest) do
+    performances = Showtime.list_performances(contest, p_ids)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:performances, performances)
+    |> render("certificates.pdf")
+  end
+
   # Private helpers
 
   defp prepare_filtered_list(conn, params, contest) do

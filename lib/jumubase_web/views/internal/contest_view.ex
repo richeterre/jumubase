@@ -8,8 +8,7 @@ defmodule JumubaseWeb.Internal.ContestView do
   """
   def name(%Contest{} = contest) do
     round_name = short_round_name(contest.round)
-    contest_year = JumuParams.year(contest.season)
-    "#{contest.host.name}, #{round_name} #{contest_year}"
+    "#{contest.host.name}, #{round_name} #{year(contest)}"
   end
 
   def name_with_flag(%Contest{} = contest) do
@@ -47,6 +46,24 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
 
   @doc """
+  Returns the given contest's year (based on the season).
+  """
+  def year(%Contest{season: season}) do
+    JumuParams.year(season)
+  end
+
+  @doc """
+  Returns the user-facing name of the given round.
+  """
+  def round_name(round) do
+    case round do
+      0 -> "„Kinder musizieren“"
+      1 -> "Regionalwettbewerb"
+      2 -> "Landeswettbewerb"
+    end
+  end
+
+  @doc """
   Returns a link path for scheduling performances. If the contest has only one stage,
   we can guide the user to that stage directly, else we take them to the index page.
   """
@@ -74,14 +91,6 @@ defmodule JumubaseWeb.Internal.ContestView do
       1 -> "RW"
       2 -> "LW"
       3 -> "BW"
-    end
-  end
-
-  defp round_name(round) do
-    case round do
-      0 -> "“Kinder musizieren”"
-      1 -> "Regionalwettbewerb"
-      2 -> "Landeswettbewerb"
     end
   end
 end

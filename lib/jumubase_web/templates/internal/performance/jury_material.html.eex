@@ -9,14 +9,14 @@
 <%= render "_filter_form.html",
   conn: @conn,
   changeset: @filter_changeset,
-  path: Routes.internal_contest_jury_material_path(@conn, :jury_material, @contest),
+  path: Routes.internal_contest_performances_path(@conn, :jury_material, @contest),
   options: filter_options(@contest),
   count: length(@performances),
   filter_active: @filter_active
   %>
 
 <p class="button-row">
-  <% button_class = if @performances == [], do: "disabled", else: "" %>
+  <% button_class = if Enum.empty?(@performances), do: "disabled", else: "" %>
   <%= icon_link "print", gettext("Print jury sheets"),
     Routes.internal_contest_performance_path(@conn,
       :print_jury_sheets,

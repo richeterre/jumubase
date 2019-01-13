@@ -154,6 +154,16 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
   def filter_status(count, false), do: count_tag(count)
 
+  def certificate_instructions(0) do
+    gettext("Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper.")
+  end
+  def certificate_instructions(_round) do
+    gettext(
+      "The printed output matches the official Jumu certificate paper, which you can order %{link}.",
+      link: link(gettext("here"), to: certificate_order_address()) |> safe_to_string
+    ) |> raw
+  end
+
   # Private helpers
 
   defp render_performance_filter do
@@ -189,5 +199,9 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   defp active_filter_label do
     content_tag :span, gettext("Filter active"), class: "label label-warning"
+  end
+
+  defp certificate_order_address do
+    "mailto:jumu@musikrat.de?subject=Urkundenpapier"
   end
 end

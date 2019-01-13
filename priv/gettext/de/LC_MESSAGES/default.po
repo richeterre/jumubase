@@ -230,7 +230,7 @@ msgid "Birthdate"
 msgstr "Geburtsdatum"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:34
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:36
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
@@ -268,7 +268,7 @@ msgstr "Nachname"
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
-#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:35
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:37
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
@@ -967,14 +967,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:186
+#: lib/jumubase_web/views/internal/performance_view.ex:196
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:191
+#: lib/jumubase_web/views/internal/performance_view.ex:201
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1378,7 +1378,7 @@ msgid "Print jury table"
 msgstr "Jurytabelle ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:36
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:38
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:24
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53
 #: lib/jumubase_web/views/generators/pdf_generator.ex:162
@@ -1416,14 +1416,14 @@ msgstr "Nach der Wertung"
 #, elixir-format
 #:
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:26
-#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:37
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:39
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:25
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:54
 msgid "Points"
 msgstr "Punktzahl"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:38
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:40
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:26
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:55
 msgid "Prize"
@@ -1518,6 +1518,21 @@ msgid "Create certificates"
 msgstr "Urkunden erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:20
+#: lib/jumubase_web/templates/internal/performance/certificates.html.eex:22
 msgid "Print certificates"
 msgstr "Urkunden ausgeben"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:158
+msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
+msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem Logo bedruckte Papier erneut ein."
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:161
+msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
+msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/performance_view.ex:163
+msgid "here"
+msgstr "hier"

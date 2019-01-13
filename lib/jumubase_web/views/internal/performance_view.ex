@@ -2,7 +2,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.AppearanceView, only: [
     advancement_label: 1, age_group_badge: 1, appearance_info: 1,
-    instrument_name: 1, participant_names: 1, prize: 2
+    instrument_name: 1, missing_points_error: 1, participant_names: 1, prize: 2
   ]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
@@ -12,7 +12,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Performance}
+  alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Generators.PDFGenerator
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
@@ -117,18 +117,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   """
   def appearance_ids(appearances) when is_list(appearances) do
     get_ids(appearances) |> Enum.join(",")
-  end
-
-  @doc """
-  Returns an error label if the appearance has no points, but its result is public.
-  This hopefully animates the user to swiftly add the missing points.
-  """
-  def missing_points_error(%Appearance{points: points}, results_public) do
-    if !points and results_public do
-      content_tag :span, gettext("missing"),
-        title: gettext("Result already published – please enter points!"),
-        class: "label label-danger"
-    end
   end
 
   def results_public_text(%Performance{results_public: true}) do

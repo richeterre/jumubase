@@ -33,6 +33,16 @@ defmodule JumubaseWeb.Internal.AppearanceView do
   end
 
   @doc """
+  Returns an error label if the appearance has no points.
+  """
+  def missing_points_error(%Appearance{points: nil}) do
+    content_tag :span, gettext("missing"),
+      title: gettext("Result already published – please enter points!"),
+      class: "label label-danger"
+  end
+  def missing_points_error(%Appearance{points: _}), do: nil
+
+  @doc """
   Creates an age group badge for an appearance.
   """
   def age_group_badge(%Appearance{age_group: ag}), do: badge(ag)

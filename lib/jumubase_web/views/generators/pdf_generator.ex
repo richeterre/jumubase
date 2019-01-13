@@ -75,8 +75,8 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
             [:span, format_datetime(p.stage_time)]
           ] |> to_lines]
         ],
-        [:div, %{style: style(%{"margin-top" => "50px", "height" => "300px"})}, render_appearances(p)],
-        [:div, %{style: style(%{"height" => "580px"})}, render_pieces(p)],
+        [:div, %{style: style(%{"margin-top" => "50px", "height" => "250px"})}, render_appearances(p)],
+        [:div, %{style: style(%{"height" => "630px"})}, render_pieces(p)],
         [:div, %{style: style(%{"height" => "50px"})}, render_point_ranges(round)],
       ]
     end

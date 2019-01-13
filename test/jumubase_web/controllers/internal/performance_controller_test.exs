@@ -448,6 +448,54 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "certificates/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users list a contest's performances to create certificates", %{conn: conn, contest: c} do
+        conn |> attempt_certificates(c) |> assert_certificates_success
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers list an own contest's performances to create certificates", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_certificates(own_c) |> assert_certificates_success
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to list a foreign contest's performances to create certificates", %{conn: conn, contest: c} do
+      conn |> attempt_certificates(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to list a contest's performances to create certificates", %{conn: conn, contest: c} do
+      conn |> attempt_certificates(c) |> assert_unauthorized_guest
+    end
+  end
+
+  describe "print_certificates/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users print certificates for a contest's performances", %{conn: conn, contest: c} do
+        conn |> attempt_print_certificates(c) |> assert_pdf_response
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers print certificates for an own contest's performances", %{conn: conn, user: u} do
+      own_c = insert_own_contest(u)
+      conn |> attempt_print_certificates(own_c) |> assert_pdf_response
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to print certificates for a foreign contest's performances", %{conn: conn, contest: c} do
+      conn |> attempt_print_certificates(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to print certificates for a contest's performances", %{conn: conn, contest: c} do
+      conn |> attempt_print_certificates(c) |> assert_unauthorized_guest
+    end
+  end
+
   # Private helpers
 
   defp insert_own_contest(user) do
@@ -514,6 +562,19 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     conn |> patch(Routes.internal_contest_results_path(conn, :update_results_public, contest), params)
   end
 
+  defp attempt_certificates(conn, contest) do
+    get(conn, Routes.internal_contest_performances_path(conn, :certificates, contest))
+  end
+
+  defp attempt_print_certificates(conn, contest) do
+    p1 = insert_performance(contest)
+    p2 = insert_performance(contest)
+
+    get(conn, Routes.internal_contest_performance_path(conn,
+      :print_certificates, contest, performance_ids: [p1.id, p2.id])
+    )
+  end
+
   defp assert_create_success(conn, contest, performance) do
     assert_flash_redirect(conn,
       Routes.internal_contest_performance_path(conn, :show, contest, performance),
@@ -560,6 +621,10 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       Routes.internal_contest_results_path(conn, :publish_results, contest),
       "The results of these 2 performances were published."
     )
+  end
+
+  defp assert_certificates_success(conn) do
+    assert html_response(conn, 200) =~ "Create certificates"
   end
 
   defp test_reschedule_success(conn, contest) do

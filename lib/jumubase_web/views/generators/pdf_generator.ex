@@ -12,6 +12,8 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   alias Jumubase.Showtime.Results
 
   @border_style "1px solid black"
+  @certificate_font_size 16
+  @line_height_factor 1.3
   @muted_color "#666"
 
   @doc """
@@ -29,19 +31,20 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   end
 
   def certificates(performances, contest) do
-    render_certificate_pages(performances, contest) |> generate_pdf("portrait")
+    render_certificate_pages(performances, contest)
+    |> generate_pdf("portrait", "#{@certificate_font_size}px")
   end
 
   # Private helpers
 
-  defp generate_pdf(body_html, orientation) do
+  defp generate_pdf(body_html, orientation, font_size \\ "18px") do
     html = Sneeze.render([:html,
       [:head, [:meta, %{charset: "UTF-8"}]],
       [:body,
         %{style: style(%{
           "font-family" => "LatoLatin",
-          "font-size" => "18px",
-          "line-height" => 1.3,
+          "font-size" => font_size,
+          "line-height" => @line_height_factor,
         })},
         body_html
       ]
@@ -216,25 +219,30 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
       for group <- result_groups(p) do
         for a <- group do
           group_size = length(group)
-          [:div, %{style: style(%{"page-break-before" => "always"})},
+          appearances_height = @line_height_factor * @certificate_font_size * group_size
+
+          [:div, %{style: style(%{
+              "padding-left" => "65px",
+              "padding-right" => "65px",
+              "padding-top" => "#{490 - appearances_height}px",
+              "page-break-before" => "always",
+            })},
             [:p,
               [:b, group |> Enum.map(&([:span, appearance_info(&1)])) |> to_lines],
             ],
-            [:p,
+            [:p, %{style: style(%{"margin-left" => "40px", "margin-top" => "50px"})},
               [
                 [:span, contest_text(contest, group_size)],
                 [:span, "für das instrumentale und vokale Musizieren der Jugend"],
                 [:span, category_text(contest.round, a, p)],
-              ] |> to_lines
-            ],
-            [:p,
-              [
                 [:span, "in der Altersgruppe #{a.age_group}"],
                 [:span, rating_points_text(contest.round, a.points, group_size)],
               ] |> to_lines
             ],
-            [:p, prize_text(contest.round, a)],
-            [:p, date_text(contest)],
+            [:p, %{style: style(%{"height" => "130px", "margin-top" => "50px"})},
+              prize_text(contest.round, a)
+            ],
+            [:p, %{style: style(%{"height" => "70px"})}, date_text(contest)],
             [:p, signatures_text(contest.round)],
           ]
         end
@@ -260,7 +268,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     ] |> to_lines
   end
   defp category_text(_round, %Appearance{}, %Performance{} = p) do
-    [[:span, "in der Wertung für "], [:i, category_name(p)]]
+    [[:span, "in der Wertung für "], [:i, category_name(p)], [:br]]
   end
 
   defp rating_points_text(0, _, _), do: "teilgenommen."

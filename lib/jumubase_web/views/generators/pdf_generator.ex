@@ -214,7 +214,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     |> style
   end
 
-  defp render_certificate_pages(performances, contest) do
+  defp render_certificate_pages(performances, %Contest{round: round} = contest) do
     for p <- performances do
       for group <- result_groups(p) do
         for a <- group do
@@ -224,31 +224,44 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
           [:div, %{style: style(%{
               "padding-left" => "65px",
               "padding-right" => "65px",
-              "padding-top" => "#{490 - appearances_height}px",
+              "padding-top" => "310px",
               "page-break-before" => "always",
             })},
+            [:div, %{style: style(%{"height" => "#{200 - appearances_height}px"})},
+              certificate_heading(round)
+            ],
             [:p,
               [:b, group |> Enum.map(&([:span, appearance_info(&1)])) |> to_lines],
             ],
-            [:p, %{style: style(%{"margin-left" => "40px", "margin-top" => "50px"})},
+            [:p, %{style: style(%{"height" => "170px", "margin" => "50px 0 0 40px"})},
               [
                 [:span, contest_text(contest, group_size)],
                 [:span, "für das instrumentale und vokale Musizieren der Jugend"],
-                [:span, category_text(contest.round, a, p)],
+                [:span, category_text(round, a, p)],
                 [:span, "in der Altersgruppe #{a.age_group}"],
-                [:span, rating_points_text(contest.round, a.points, group_size)],
+                [:span, rating_points_text(round, a.points, group_size)],
               ] |> to_lines
             ],
-            [:p, %{style: style(%{"height" => "130px", "margin-top" => "50px"})},
-              prize_text(contest.round, a)
+            [:p, %{style: style(%{"height" => "120px"})},
+              prize_text(round, a)
             ],
             [:p, %{style: style(%{"height" => "70px"})}, date_text(contest)],
-            [:p, signatures_text(contest.round)],
+            [:p, signatures_text(round)],
           ]
         end
       end
     end
   end
+
+  defp certificate_heading(0) do
+    [:span, %{style: style(%{
+      "display" => "block",
+      "font-size" => "84px",
+      "font-weight" => "normal",
+      "text-align" => "center",
+    })}, "URKUNDE"]
+  end
+  defp certificate_heading(_round), do: nil
 
   defp contest_text(%Contest{} = c, 1), do: "hat am #{contest_name(c)}"
   defp contest_text(%Contest{} = c, _group_size), do: "haben am #{contest_name(c)}"

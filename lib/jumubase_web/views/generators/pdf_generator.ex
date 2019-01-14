@@ -308,7 +308,6 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
     end
   end
 
-  defp advancement_text(%Appearance{role: "accompanist"}, _round), do: nil
   defp advancement_text(%Appearance{} = a, round) do
     if Results.advances?(a) do
       "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."

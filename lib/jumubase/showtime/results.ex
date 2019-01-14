@@ -82,6 +82,7 @@ defmodule Jumubase.Showtime.Results do
 
   # Private helpers
 
+  defp may_advance?(%Appearance{role: "accompanist"}), do: false
   defp may_advance?(%Appearance{points: points}) do
     points in 23..25
   end

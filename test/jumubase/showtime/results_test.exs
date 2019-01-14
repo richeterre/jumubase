@@ -104,18 +104,16 @@ defmodule Jumubase.ResultsTest do
       assert Results.advances?(p)
     end
 
-    test "behaves correctly for appearances in a non-advancing performance", %{contest_category: cc} do
-      %{appearances: [sol, acc]} =
+    test "always returns false for appearances, no matter the soloist result", %{contest_category: cc} do
+      %{appearances: [sol1, acc1]} =
         insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
-      refute Results.advances?(sol)
-      refute Results.advances?(acc)
-    end
+      refute Results.advances?(sol1)
+      refute Results.advances?(acc1)
 
-    test "behaves correctly for appearances in an advancing performance", %{contest_category: cc} do
-      %{appearances: [sol, acc]} =
-        insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 22}])
-      assert Results.advances?(sol)
-      refute Results.advances?(acc)
+      %{appearances: [sol2, acc2]} =
+        insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 23}])
+      assert Results.advances?(sol2)
+      refute Results.advances?(acc2)
     end
   end
 

@@ -105,6 +105,7 @@ defmodule JumubaseWeb.Router do
       resources "/performances", PerformanceController
       resources "/stages", StageController, only: [:index] do
         get "/schedule", StageController, :schedule, as: :schedule
+        get "/timetable", StageController, :timetable, as: :timetable
       end
     end
     resources "/hosts", HostController, only: [:index, :new, :create]

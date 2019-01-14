@@ -1,7 +1,7 @@
 defmodule JumubaseWeb.Internal.StageController do
   use JumubaseWeb, :controller
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.Contest
+  alias Jumubase.Foundation.{Contest, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.PerformanceFilter
 
@@ -18,7 +18,7 @@ defmodule JumubaseWeb.Internal.StageController do
     conn
     |> assign(:contest, contest)
     |> assign(:stages, stages)
-    |> add_breadcrumbs(contest)
+    |> add_schedule_breadcrumbs(contest)
     |> render("index.html")
   end
 
@@ -46,18 +46,48 @@ defmodule JumubaseWeb.Internal.StageController do
     |> assign(:other_stages, stages -- [stage])
     |> assign(:date_range, date_range)
     |> assign(:performances, performances)
-    |> add_breadcrumbs(contest)
+    |> add_schedule_breadcrumbs(contest)
     |> add_breadcrumb(name: stage.name, path: current_path(conn))
     |> add_public_schedule_warning(contest)
     |> render("schedule.html")
   end
 
-  defp add_breadcrumbs(conn, %Contest{} = contest) do
+  def timetable(conn, %{"stage_id" => stage_id} = params, contest) do
+    stage = Foundation.get_stage!(contest, stage_id)
+    %{host: %{stages: stages}} = Foundation.load_stages(contest)
+
+    filter_params =
+      %{"stage_id" => stage_id, "stage_date" => contest.start_date}
+      |> Map.merge(params["performance_filter"] || %{})
+
+    filter = PerformanceFilter.from_params(filter_params)
+    filter_cs = PerformanceFilter.changeset(filter_params)
+    performances = Showtime.list_performances(contest, filter)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:stage, stage)
+    |> assign(:other_stages, stages -- [stage])
+    |> assign(:filter_changeset, filter_cs)
+    |> assign(:performances, performances)
+    |> add_contest_breadcrumb(contest)
+    |> add_timetable_breadcrumb(stage)
+    |> render("timetable.html")
+  end
+
+  # Private helpers
+
+  defp add_schedule_breadcrumbs(conn, %Contest{} = contest) do
     index_path = Routes.internal_contest_stage_path(conn, :index, contest)
 
     conn
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(name: gettext("Schedule performances"), path: index_path)
+  end
+
+  defp add_timetable_breadcrumb(conn, %Stage{} = stage) do
+    name = gettext("Timetable") <> ": " <> stage.name
+    add_breadcrumb(conn, name: name, path: current_path(conn))
   end
 
   defp add_public_schedule_warning(conn, %Contest{timetables_public: true}) do

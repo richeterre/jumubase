@@ -128,6 +128,10 @@ defmodule Jumubase.Factory do
 
   # Insertion helpers
 
+  def insert_own_contest(%User{} = user) do
+    insert(:contest, host: insert(:host, users: [user]))
+  end
+
   def insert_contest_category(%Contest{} = contest) do
     insert(:contest_category, contest: contest)
   end

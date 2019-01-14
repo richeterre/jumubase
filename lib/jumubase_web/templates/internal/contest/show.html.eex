@@ -75,3 +75,12 @@
     </div>
   </div>
 </div>
+
+<h3><%= gettext("Timetables") %></h3>
+
+<%= for stage <- @contest.host.stages do %>
+  <%= link stage.name,
+    to: Routes.internal_contest_stage_timetable_path(@conn, :timetable, @contest, stage),
+    class: "btn btn-default"
+    %>
+<% end %>

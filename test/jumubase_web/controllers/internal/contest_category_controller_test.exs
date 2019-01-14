@@ -34,10 +34,4 @@ defmodule JumubaseWeb.Internal.ContestCategoryControllerTest do
       assert_unauthorized_guest(conn)
     end
   end
-
-  # Private helpers
-
-  defp insert_own_contest(user) do
-    insert(:contest, host: insert(:host, users: [user]))
-  end
 end

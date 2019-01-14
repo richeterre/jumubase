@@ -4,10 +4,10 @@
   <small><%= name_with_flag(@contest) %></small>
 </h2>
 
-<%= if @other_stages != [] do %>
+<%= if !Enum.empty?(@other_stages) do %>
 <span class="text-muted">
   <%= gettext("Switch to stage") %>:
-  <%= stage_links(@conn, @contest, @other_stages, " · ") %>
+  <%= schedule_links(@conn, @contest, @other_stages) %>
 </span>
 <% end %>
 

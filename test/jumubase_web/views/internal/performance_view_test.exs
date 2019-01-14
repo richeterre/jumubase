@@ -2,6 +2,13 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.PerformanceView
 
+  describe "stage_time/1" do
+    test "returns a performance's stage time in time-only style" do
+      p = build(:performance, stage_time: ~N[2019-01-01T07:30:00])
+      assert PerformanceView.stage_time(p) == "07:30"
+    end
+  end
+
   describe "stage_info/1" do
     setup do
       p = build(:performance,

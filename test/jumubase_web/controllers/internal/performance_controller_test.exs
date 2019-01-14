@@ -498,10 +498,6 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
   # Private helpers
 
-  defp insert_own_contest(user) do
-    insert(:contest, host: insert(:host, users: [user]))
-  end
-
   defp attempt_new(conn, contest) do
     get(conn, Routes.internal_contest_performance_path(conn, :new, contest))
   end

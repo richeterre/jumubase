@@ -1,0 +1,5 @@
+<%= form_for @changeset, @path, [method: :get, class: "form-inline filter-form"], fn f -> %>
+  <div class="form-section">
+    <%= select f, :stage_date, @date_options, class: "form-control" %>
+  </div>
+<% end %>

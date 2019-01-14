@@ -1,0 +1,47 @@
+<h2>
+  <%= gettext("Timetable") %>: <%= @stage.name %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<%= if !Enum.empty?(@other_stages) do %>
+  <div class="text-muted">
+    <%= gettext("Switch to stage") %>:
+    <%= timetable_links(@conn, @contest, @other_stages) %>
+  </div>
+<% end %>
+
+<hr>
+
+<%= render "_filter_form.html",
+  changeset: @filter_changeset,
+  path: Routes.internal_contest_stage_timetable_path(@conn, :timetable, @contest, @stage),
+  date_options: stage_date_filter_options(@contest)
+  %>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= gettext("Time") %></th>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Participants") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+      <tr>
+        <td>
+          <%= stage_time(performance) %>
+        </td>
+        <td>
+          <%= category_name(performance) %>
+        </td>
+        <td>
+          <%= render JumubaseWeb.Internal.PerformanceView, "_list_performance.html", performance: performance %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

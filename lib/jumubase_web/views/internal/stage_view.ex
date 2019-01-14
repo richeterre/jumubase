@@ -4,7 +4,8 @@ defmodule JumubaseWeb.Internal.StageView do
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.PageView, only: [admin_email: 0]
   import JumubaseWeb.Internal.PerformanceView, only: [
-    cc_filter_options: 1, formatted_duration: 1, sorted_appearances: 1
+    category_name: 1, cc_filter_options: 1, formatted_duration: 1,
+    sorted_appearances: 1, stage_date_filter_options: 1, stage_time: 1
   ]
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -28,15 +29,30 @@ defmodule JumubaseWeb.Internal.StageView do
     }
   end
 
+  def render("scripts.timetable.html", _assigns) do
+    ~E{<script src="/js/performanceFilter.js"></script>}
+  end
+
   @doc """
-  Returns a list of links to the given stages, with separators in between.
+  Returns a list of links to the given stages' schedule pages, separated by dots.
   """
-  def stage_links(conn, contest, stages, separator) do
+  def schedule_links(conn, contest, stages) do
     stages
     |> Enum.map(fn s ->
       link s.name, to: Routes.internal_contest_stage_schedule_path(conn, :schedule, contest, s)
     end)
-    |> Enum.intersperse(separator)
+    |> with_dot_separators
+  end
+
+  @doc """
+  Returns a list of links to the given stages' timetable pages, separated by dots.
+  """
+  def timetable_links(conn, contest, stages) do
+    stages
+    |> Enum.map(fn s ->
+      link s.name, to: Routes.internal_contest_stage_timetable_path(conn, :timetable, contest, s)
+    end)
+    |> with_dot_separators
   end
 
   @doc """
@@ -121,6 +137,10 @@ defmodule JumubaseWeb.Internal.StageView do
   end
 
   # Private helpers
+
+  defp with_dot_separators(list) do
+    list |> Enum.intersperse(" · ")
+  end
 
   defp total_minutes(%Performance{} = performance) do
     Showtime.total_duration(performance) |> Timex.Duration.to_minutes

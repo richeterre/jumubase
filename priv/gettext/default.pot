@@ -234,6 +234,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:43
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:27
 #: lib/jumubase_web/templates/performance/_form.html.eex:9
 #: lib/jumubase_web/views/generators/pdf_generator.ex:161
 msgid "Category"
@@ -273,6 +274,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52
 #: lib/jumubase_web/templates/internal/performance/show.html.eex:14
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:28
 #: lib/jumubase_web/views/generators/pdf_generator.ex:163
 msgid "Participants"
 msgstr ""
@@ -966,14 +968,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:196
+#: lib/jumubase_web/views/internal/performance_view.ex:203
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:201
+#: lib/jumubase_web/views/internal/performance_view.ex:208
 msgid "Filter active"
 msgstr ""
 
@@ -1044,7 +1046,7 @@ msgid "Add Performance"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:60
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:85
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:41
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:2
@@ -1084,12 +1086,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:9
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:9
 msgid "Switch to stage"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:18
+#: lib/jumubase_web/views/internal/stage_view.ex:19
 msgid "Intermission"
 msgstr ""
 
@@ -1395,7 +1398,7 @@ msgid "Timetables public"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:65
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:95
 msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr ""
 
@@ -1454,12 +1457,12 @@ msgid "Publish results"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:126
+#: lib/jumubase_web/views/internal/performance_view.ex:130
 msgid "No"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:123
+#: lib/jumubase_web/views/internal/performance_view.ex:127
 msgid "Yes"
 msgstr ""
 
@@ -1522,16 +1525,32 @@ msgid "Print certificates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:158
+#: lib/jumubase_web/views/internal/performance_view.ex:170
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:161
+#: lib/jumubase_web/views/internal/performance_view.ex:173
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:163
+#: lib/jumubase_web/views/internal/performance_view.ex:175
 msgid "here"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:26
+msgid "Time"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:89
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:2
+msgid "Timetable"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:79
+msgid "Timetables"
 msgstr ""

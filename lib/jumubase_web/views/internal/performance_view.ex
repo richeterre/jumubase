@@ -65,9 +65,13 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     PDFGenerator.certificates(performances, contest)
   end
 
+  def stage_time(%Performance{stage_time: stage_time}) do
+    format_datetime(stage_time, :time)
+  end
+
   def stage_info(performance, style \\ :full)
-  def stage_info(%Performance{stage: %Stage{name: name}, stage_time: stage_time}, style) do
-    {format_datetime(stage_time, style), name}
+  def stage_info(%Performance{stage: %Stage{} = s, stage_time: stage_time}, style) do
+    {format_datetime(stage_time, style), s.name}
   end
   def stage_info(%Performance{stage: nil, stage_time: nil}, _style), do: nil
 
@@ -140,6 +144,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   @doc """
+  Returns stage date options for the contest, suitable for a filter form.
+  """
+  def stage_date_filter_options(%Contest{} = contest) do
+    Foundation.date_range(contest)
+    |> Enum.map(&{format_date(&1), Date.to_iso8601(&1)})
+  end
+
+  @doc """
   Returns contest category options for the contest, suitable for a filter form.
   """
   def cc_filter_options(%Contest{} = contest) do
@@ -168,11 +180,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   defp render_performance_filter do
     ~E(<script src="/js/performanceFilter.js"></script>)
-  end
-
-  defp stage_date_filter_options(%Contest{} = contest) do
-    Foundation.date_range(contest)
-    |> Enum.map(&{format_date(&1), Date.to_iso8601(&1)})
   end
 
   defp stage_filter_options(%Contest{} = contest) do

@@ -76,11 +76,15 @@
   </div>
 </div>
 
-<h3><%= gettext("Timetables") %></h3>
+<% stages = @contest.host.stages %>
 
-<%= for stage <- @contest.host.stages do %>
-  <%= link stage.name,
-    to: Routes.internal_contest_stage_timetable_path(@conn, :timetable, @contest, stage),
-    class: "btn btn-default"
-    %>
+<%= if !Enum.empty?(stages) do %>
+  <h3><%= gettext("Timetables") %></h3>
+
+  <%= for stage <- stages do %>
+    <%= link stage.name,
+      to: Routes.internal_contest_stage_timetable_path(@conn, :timetable, @contest, stage),
+      class: "btn btn-default"
+      %>
+  <% end %>
 <% end %>

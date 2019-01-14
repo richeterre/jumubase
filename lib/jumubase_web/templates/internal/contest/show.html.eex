@@ -24,7 +24,7 @@
             %>
         </li>
         <li class="list-group-item">
-          <%= icon_link "list-alt", gettext("Show categories"),
+          <%= icon_link "tags", gettext("Show categories"),
             Routes.internal_contest_contest_category_path(@conn, :index, @contest)
             %>
         </li>

@@ -6,6 +6,14 @@ $icon-font-path: "/fonts/"; // use fonts from priv/static/fonts
 @import "_scheduler.scss";
 @import "_fonts.scss";
 
+/* Hide certain elements based on media type */
+@media screen {
+  .noscreen { display: none; }
+}
+@media print {
+  .noprint { display: none; }
+}
+
 body {
   // Add vertical space around body
   padding-bottom: $line-height-computed * 2;
@@ -13,6 +21,10 @@ body {
 
   @media (min-width: $screen-sm-min) {
     padding-top: $navbar-height + $line-height-computed;
+  }
+
+  @media print {
+    padding-top: 0;
   }
 }
 

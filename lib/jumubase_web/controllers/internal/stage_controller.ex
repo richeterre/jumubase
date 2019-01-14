@@ -69,6 +69,7 @@ defmodule JumubaseWeb.Internal.StageController do
     |> assign(:stage, stage)
     |> assign(:other_stages, exclude(stages, stage))
     |> assign(:filter_changeset, filter_cs)
+    |> assign(:date, filter.stage_date)
     |> assign(:performances, performances)
     |> add_contest_breadcrumb(contest)
     |> add_timetable_breadcrumb(stage)

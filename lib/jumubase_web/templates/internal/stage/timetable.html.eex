@@ -19,6 +19,10 @@
   date_options: stage_date_filter_options(@contest)
   %>
 
+<h3 class="noscreen">
+  <%= format_date(@date) %>
+</h3>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>

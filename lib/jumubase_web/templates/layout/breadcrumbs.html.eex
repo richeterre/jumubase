@@ -1,4 +1,4 @@
-<ol class="breadcrumb">
+<ol class="breadcrumb noprint">
   <%= for breadcrumb <- @breadcrumbs do
     if breadcrumb_active(@conn, breadcrumb) do
       content_tag :li,

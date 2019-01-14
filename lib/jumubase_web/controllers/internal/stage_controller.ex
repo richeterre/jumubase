@@ -12,7 +12,7 @@ defmodule JumubaseWeb.Internal.StageController do
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 
   def index(conn, _params, contest) do
-    %{host: %{stages: stages}} = Foundation.load_stages(contest)
+    %{host: %{stages: stages}} = Foundation.load_available_stages(contest)
     stages = stages |> Enum.sort_by(&(&1.name))
 
     conn
@@ -24,7 +24,7 @@ defmodule JumubaseWeb.Internal.StageController do
 
   def schedule(conn, %{"stage_id" => stage_id}, contest) do
     stage = Foundation.get_stage!(contest, stage_id)
-    %{host: %{stages: stages}} = Foundation.load_stages(contest)
+    %{host: %{stages: stages}} = Foundation.load_available_stages(contest)
     date_range = Foundation.date_range(contest)
 
     unscheduled_performances = Showtime.unscheduled_performances(contest) |> Showtime.load_pieces
@@ -43,7 +43,7 @@ defmodule JumubaseWeb.Internal.StageController do
     conn
     |> assign(:contest, contest)
     |> assign(:stage, stage)
-    |> assign(:other_stages, stages -- [stage])
+    |> assign(:other_stages, exclude(stages, stage))
     |> assign(:date_range, date_range)
     |> assign(:performances, performances)
     |> add_schedule_breadcrumbs(contest)
@@ -54,7 +54,7 @@ defmodule JumubaseWeb.Internal.StageController do
 
   def timetable(conn, %{"stage_id" => stage_id} = params, contest) do
     stage = Foundation.get_stage!(contest, stage_id)
-    %{host: %{stages: stages}} = Foundation.load_stages(contest)
+    %{host: %{stages: stages}} = Foundation.load_used_stages(contest)
 
     filter_params =
       %{"stage_id" => stage_id, "stage_date" => contest.start_date}
@@ -67,7 +67,7 @@ defmodule JumubaseWeb.Internal.StageController do
     conn
     |> assign(:contest, contest)
     |> assign(:stage, stage)
-    |> assign(:other_stages, stages -- [stage])
+    |> assign(:other_stages, exclude(stages, stage))
     |> assign(:filter_changeset, filter_cs)
     |> assign(:performances, performances)
     |> add_contest_breadcrumb(contest)
@@ -76,6 +76,10 @@ defmodule JumubaseWeb.Internal.StageController do
   end
 
   # Private helpers
+
+  defp exclude(stages, %Stage{id: id}) do
+    stages |> Enum.filter(&(&1.id != id))
+  end
 
   defp add_schedule_breadcrumbs(conn, %Contest{} = contest) do
     index_path = Routes.internal_contest_stage_path(conn, :index, contest)

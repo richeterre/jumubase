@@ -184,7 +184,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   defp stage_filter_options(%Contest{} = contest) do
     contest
-    |> Foundation.load_stages
+    |> Foundation.load_used_stages
     |> Map.get(:host)
     |> Map.get(:stages)
     |> Enum.map(&{&1.name, &1.id})

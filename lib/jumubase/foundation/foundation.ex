@@ -201,18 +201,31 @@ defmodule Jumubase.Foundation do
     Repo.preload(contest, [contest_categories: :category])
   end
 
-  def load_stages(%Contest{} = contest) do
+  @doc """
+  Preloads all stages available to the contest.
+  """
+  def load_available_stages(%Contest{} = contest) do
     Repo.preload(contest, [host: :stages])
+  end
+
+  @doc """
+  Preloads only the contest's stages that have performances in that contest.
+  """
+  def load_used_stages(%Contest{} = contest) do
+    contest
+    |> Repo.preload([[host: [stages: :performances]], :contest_categories])
+    |> exclude_unused_stages
   end
 
   # Private helpers
 
   # Filter nested contest stages by whether they have performances in that contest.
+  defp exclude_unused_stages(%Contest{host: h} = c) do
+    host = Map.put(h, :stages, used_stages(c))
+    Map.put(c, :host, host)
+  end
   defp exclude_unused_stages(contests) do
-    Enum.map(contests, fn %{host: h} = c ->
-      host = Map.put(h, :stages, used_stages(c))
-      Map.put(c, :host, host)
-    end)
+    Enum.map(contests, &exclude_unused_stages/1)
   end
 
   defp used_stages(%Contest{host: %{stages: stages}} = c) do

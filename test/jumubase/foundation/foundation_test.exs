@@ -131,15 +131,20 @@ defmodule Jumubase.FoundationTest do
     test "returns all contests with public timetables and at least one staged performance" do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
-      # Matching contests
+      # Matching contest
       c1 = insert(:contest, host: host_with_stage, timetables_public: true)
       insert_performance(c1, stage: s)
 
-      # Non-matching contests
-      insert(:contest, host: build(:host, stages: []), timetables_public: true) # No stages
-      insert(:contest, host: host_with_stage, timetables_public: true) # No performances
-      c4 = insert(:contest, host: host_with_stage, timetables_public: false) # No public timetables
-      insert_performance(c4, stage: s)
+      # No stages
+      insert(:contest, host: build(:host, stages: []), timetables_public: true)
+      |> insert_performance
+
+      # No performances
+      insert(:contest, host: host_with_stage, timetables_public: true)
+
+      # No public timetables
+      insert(:contest, host: host_with_stage, timetables_public: false)
+      |> insert_performance(stage: s)
 
       assert_ids_match_unordered Foundation.list_public_contests, [c1]
     end
@@ -160,12 +165,13 @@ defmodule Jumubase.FoundationTest do
       assert_ids_match_ordered Foundation.list_public_contests, [c4, c1, c3, c2]
     end
 
-    test "preloads the contests' hosts with used stages, as well as contest categories" do
+    test "preloads the contests' hosts with used stages, as well as non-empty contest categories" do
       [s1, s2, _s3] = stages = insert_list(3, :stage)
       host = insert(:host, stages: stages)
       c1 = insert(:contest, host: host, contest_categories: [], timetables_public: true)
       c2 = insert(:contest, host: host, contest_categories: [], timetables_public: true)
       cc1 = insert_contest_category(c1)
+      insert_contest_category(c1)
       cc2 = insert_contest_category(c2)
 
       # Keep third stage (s3) unused

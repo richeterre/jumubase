@@ -1,6 +1,7 @@
 defmodule Jumubase.Foundation.ContestCategory do
   use Jumubase.Schema
   alias Jumubase.Foundation.{Category, Contest}
+  alias Jumubase.Showtime.Performance
 
   schema "contest_categories" do
     field :min_age_group, :string
@@ -10,6 +11,7 @@ defmodule Jumubase.Foundation.ContestCategory do
 
     belongs_to :contest, Contest
     belongs_to :category, Category
+    has_many :performances, Performance
 
     timestamps()
   end

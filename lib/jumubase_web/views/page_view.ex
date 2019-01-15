@@ -17,6 +17,8 @@ defmodule JumubaseWeb.PageView do
     c = Foundation.get_latest_official_contest
 
     cond do
+      is_nil(c) ->
+        nil
       Timex.after?(today, c.deadline) ->
         render "_rw_phase_panels.html", conn: conn
       true ->

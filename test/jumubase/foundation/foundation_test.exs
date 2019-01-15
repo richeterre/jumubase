@@ -191,6 +191,21 @@ defmodule Jumubase.FoundationTest do
       } = c2
       assert_ids_match_unordered c2_stages, [s2]
     end
+
+    test "orders preloaded contest categories by insertion date" do
+      now = Timex.now
+      s = insert(:stage, host: build(:host))
+      c = insert(:contest, host: s.host, timetables_public: true)
+      cc1 = insert(:contest_category, contest: c, inserted_at: now)
+      cc2 = insert(:contest_category, contest: c, inserted_at: now |> Timex.shift(seconds: 1))
+      cc3 = insert(:contest_category, contest: c, inserted_at: now |> Timex.shift(seconds: -1))
+      insert_performance(cc1, stage: s)
+      insert_performance(cc2, stage: s)
+      insert_performance(cc3, stage: s)
+
+      [result] = Foundation.list_public_contests
+      assert_ids_match_ordered result.contest_categories, [cc3, cc1, cc2]
+    end
   end
 
   describe "list_relevant_contests/2" do

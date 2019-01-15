@@ -16,6 +16,12 @@ config :jumubase, JumubaseWeb.MapHelpers,
 config :jumubase, JumubaseWeb.Api.Auth,
   api_key: System.get_env("JUMU_API_KEY")
 
+# Companion app IDs
+
+config :jumubase, :app_ids,
+  android: System.get_env("JUMU_APP_ID_ANDROID"),
+  ios: System.get_env("JUMU_APP_ID_IOS")
+
 # Set default locale
 locale = "de"
 config :jumubase, Jumubase.Gettext, default_locale: locale

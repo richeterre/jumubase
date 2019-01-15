@@ -10,6 +10,11 @@ defmodule JumubaseWeb.PageView do
     img_tag MapHelpers.host_map_url, class: "img-responsive map-image"
   end
 
+  def app_link(title, platform, opts) when platform in [:android, :ios] do
+    opts = opts |> Keyword.put(:to, app_url(platform))
+    link title, opts
+  end
+
   def rule_booklet_link(title, year, opts \\ []) do
     icon_link "file", title,
       Routes.static_path(Endpoint, "/resources/Ausschreibung_#{year}.pdf"),
@@ -33,6 +38,17 @@ defmodule JumubaseWeb.PageView do
   end
 
   # Private helpers
+
+  defp app_url(:android) do
+    "https://play.google.com/store/apps/details?id=#{app_id(:android)}&hl=de"
+  end
+  defp app_url(:ios) do
+    "https://itunes.apple.com/de/app/id#{app_id(:ios)}?mt=8"
+  end
+
+  defp app_id(platform) do
+    Application.get_env(:jumubase, :app_ids)[platform]
+  end
 
   defp get_locale, do: Gettext.get_locale(Jumubase.Gettext)
 

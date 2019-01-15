@@ -16,6 +16,11 @@ $icon-font-path: "/fonts/"; // use fonts from priv/static/fonts
   .noprint {
     display: none;
   }
+
+  /* Hide link URLs */
+  a[href]:after {
+    content: none !important;
+  }
 }
 
 body {

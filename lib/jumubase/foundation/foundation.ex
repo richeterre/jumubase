@@ -110,6 +110,17 @@ defmodule Jumubase.Foundation do
   end
   def get_matching_kimu_contest(%Contest{}), do: nil
 
+  @doc """
+  Returns the official (non-Kimu) contest with the latest end date.
+  """
+  def get_latest_official_contest do
+    Contest
+    |> where([c], c.round > 0)
+    |> order_by(desc: :end_date)
+    |> limit(1)
+    |> Repo.one
+  end
+
   def update_contest(%Contest{} = contest, attrs) do
     contest
     |> Contest.changeset(attrs)

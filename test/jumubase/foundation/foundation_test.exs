@@ -344,6 +344,18 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_latest_official_contest/1" do
+    test "returns the latest-ending non-Kimu contest" do
+      today = Timex.today
+      insert(:contest, round: 1, end_date: today)
+      %{id: id} = insert(:contest, round: 1, end_date: today |> Timex.shift(days: 1))
+      insert(:contest, round: 0, end_date: today |> Timex.shift(days: 2))
+      insert(:contest, round: 1, end_date: today |> Timex.shift(days: -1))
+
+      assert %Contest{id: ^id} = Foundation.get_latest_official_contest
+    end
+  end
+
   describe "update_contest/1" do
     test "updates a contest with valid data" do
       contest = insert(:contest, season: 56)

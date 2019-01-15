@@ -1,0 +1,26 @@
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Willkommen!</h3>
+    </div>
+    <div class="panel-body">
+      Auf dieser Website findest du Informationen rund um die Teilnahme
+      an “Jugend musiziert” und “Kinder musizieren”. Wir freuen uns auf dich!
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">Anmeldung <%= @year %></h3>
+    </div>
+    <div class="panel-body">
+      Ab sofort kannst du dich hier für Jumu oder Kimu <%= @year %>
+      <%= link "anmelden", to: Routes.page_path(@conn, :registration) %>.
+      <br><br>
+      Lies dir vorher die <%= link "Teilnahmeregeln", to: Routes.page_path(@conn, :rules) %> sowie unsere
+      <%= link "FAQ", to: Routes.page_path(@conn, :faq) %> gut durch!
+    </div>
+  </div>
+</div>

@@ -2,12 +2,27 @@ defmodule JumubaseWeb.PageView do
   use JumubaseWeb, :view
   import JumubaseWeb.LayoutView, only: [title: 0]
   import JumubaseWeb.Internal.ContestView, only: [deadline_info: 2, name_with_flag: 1]
+  alias Jumubase.JumuParams
+  alias Jumubase.Foundation
   alias Jumubase.Foundation.Host
   alias JumubaseWeb.Endpoint
   alias JumubaseWeb.MapHelpers
 
   def host_map_image do
     img_tag MapHelpers.host_map_url, class: "img-responsive map-image"
+  end
+
+  def render_phase_panels(conn) do
+    today = Timex.today
+    c = Foundation.get_latest_official_contest
+
+    cond do
+      Timex.after?(today, c.deadline) ->
+        render "_rw_phase_panels.html", conn: conn
+      true ->
+        jumu_year = JumuParams.year(c.season)
+        render "_pre_rw_phase_panels.html", conn: conn, year: jumu_year
+    end
   end
 
   def app_link(title, platform, opts) when platform in [:android, :ios] do

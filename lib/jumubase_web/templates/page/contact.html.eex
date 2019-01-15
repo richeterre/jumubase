@@ -17,7 +17,7 @@
 
     <%= render "_contact_form.html", conn: @conn %>
 
-    <h3><%= gettext("Member schools") %></h3>
+    <h3 id="member-schools"><%= gettext("Member schools") %></h3>
 
     <%= render "_accordion.html",
       id: "hosts-accordion",

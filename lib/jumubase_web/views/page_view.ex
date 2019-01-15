@@ -25,9 +25,9 @@ defmodule JumubaseWeb.PageView do
     end
   end
 
-  def app_link(title, platform, opts) when platform in [:android, :ios] do
-    opts = opts |> Keyword.put(:to, app_url(platform))
-    link title, opts
+  def app_link(platform) do
+    img_tag = img_tag app_badge_path(platform), height: 40
+    link img_tag, to: app_url(platform), class: "app-link"
   end
 
   def rule_booklet_link(title, year, opts \\ []) do
@@ -64,6 +64,9 @@ defmodule JumubaseWeb.PageView do
   defp app_id(platform) do
     Application.get_env(:jumubase, :app_ids)[platform]
   end
+
+  defp app_badge_path(:android), do: "/images/google-play-badge.png"
+  defp app_badge_path(:ios), do: "/images/app-store-badge.svg"
 
   defp get_locale, do: Gettext.get_locale(Jumubase.Gettext)
 

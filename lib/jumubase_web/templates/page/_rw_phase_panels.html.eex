@@ -20,8 +20,7 @@
         <%= link "Jumu-Kontaktperson", to: Routes.page_path(@conn, :contact) <> "#member-schools" %>
         sowie für viele Schulen auch über die Jumu-App:
       </p>
-      <%= app_link "iOS", :ios, class: "btn btn-default" %>
-      <%= app_link "Android", :android, class: "btn btn-default" %>
+      <%= app_link :ios %> <%= app_link :android %>
     </div>
   </div>
 </div>

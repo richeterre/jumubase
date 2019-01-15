@@ -8,10 +8,14 @@ $icon-font-path: "/fonts/"; // use fonts from priv/static/fonts
 
 /* Hide certain elements based on media type */
 @media screen {
-  .noscreen { display: none; }
+  .noscreen {
+    display: none;
+  }
 }
 @media print {
-  .noprint { display: none; }
+  .noprint {
+    display: none;
+  }
 }
 
 body {
@@ -35,7 +39,9 @@ body {
     margin-top: 1.5 * $line-height-computed;
   }
 
-  h4 { margin-top: $line-height-computed; }
+  h4 {
+    margin-top: $line-height-computed;
+  }
 }
 
 p.text-prominent {
@@ -43,7 +49,8 @@ p.text-prominent {
   margin-top: $line-height-computed;
 }
 
-p.alert, ol.breadcrumb {
+p.alert,
+ol.breadcrumb {
   margin-top: $line-height-computed;
 
   @media (min-width: $screen-sm-min) {
@@ -52,49 +59,84 @@ p.alert, ol.breadcrumb {
 }
 
 /* Add horizontal spacing to icons */
-span.glyphicon { margin: 0 0.2em; }
+span.glyphicon {
+  margin: 0 0.2em;
+}
 
 /* Tweak vertical alignment of badges */
-span.badge { vertical-align: baseline; }
+span.badge {
+  vertical-align: baseline;
+}
 
 /* Style mini-instructions inside form labels */
-form label > small { font-weight: normal; }
+form label > small {
+  font-weight: normal;
+}
 
 /* Add vertical spacing between definition list terms */
-dt:not(:first-child) { margin-top: 0.5 * $line-height-computed; }
+dt:not(:first-child) {
+  margin-top: 0.5 * $line-height-computed;
+}
 
 /* Make image fit into navbar */
-.navbar-brand > img { height: $line-height-computed; }
+.navbar-brand > img {
+  height: $line-height-computed;
+}
 
 /* Hide empty flash messages */
-.alert:empty { display: none; }
+.alert:empty {
+  display: none;
+}
 
 /* Use pointer cursor for collapsible panel headings */
-.panel-heading[data-toggle=collapse] { cursor: pointer; }
+.panel-heading[data-toggle="collapse"] {
+  cursor: pointer;
+}
 
 /* Tweak height of panel titles to match right-floating buttons */
-.panel-title.pull-left { line-height: 1.4em; }
+.panel-title.pull-left {
+  line-height: 1.4em;
+}
 
 /* Add bottom margin to map images for responsive stacking */
-.map-image { margin-bottom: $line-height-computed; }
+.map-image {
+  margin-bottom: $line-height-computed;
+}
+
+/* Space out app links */
+.app-link {
+  margin-right: 0.5em;
+}
 
 .filter-form {
   margin-bottom: $line-height-computed;
 
-  .form-section{
-    span.filter-count { vertical-align: middle; }
+  .form-section {
+    span.filter-count {
+      vertical-align: middle;
+    }
 
-    &:last-of-type { margin-top: 0.5 * $line-height-computed; }
+    &:last-of-type {
+      margin-top: 0.5 * $line-height-computed;
+    }
   }
 }
 
-.button-row { margin-bottom: $line-height-computed; }
+.button-row {
+  margin-bottom: $line-height-computed;
+}
 
 /* Enable Vue.js cloaking (hiding element before Vue is loaded) */
-[v-cloak] { display: none; }
+[v-cloak] {
+  display: none;
+}
 
 /* Hide certain form fields to fool and detect spambots */
-#trap { display: none; }
+#trap {
+  display: none;
+}
 
 /* Add some spacing to points field in modal result form */
-#modal-result-form #results_points { margin-left: 1em; }
+#modal-result-form #results_points {
+  margin-left: 1em;
+}

@@ -6,6 +6,13 @@
 
 <hr>
 
+<div class="button-row">
+  <%= icon_link "envelope", gettext("Compose group email"),
+    group_email_link(@participants),
+    class: "btn btn-default"
+    %>
+</div>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>

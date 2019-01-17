@@ -201,7 +201,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   defp count_tag(count) do
     content_tag :span,
       ngettext("%{count} performance", "%{count} performances", count),
-      class: "text-muted filter-count"
+      class: "text-muted"
   end
 
   defp active_filter_label do

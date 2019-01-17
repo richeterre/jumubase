@@ -11,7 +11,7 @@
     <%= filter_status(@count, @filter_active) %>
 
     <%= if @filter_active do %>
-      <%= link gettext("Show all"), to: @path, class: "btn btn-link" %>
+      <%= link gettext("Show all"), to: @path, class: "clear-filter" %>
     <% end %>
   </div>
 <% end %>

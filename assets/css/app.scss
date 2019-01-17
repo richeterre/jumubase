@@ -117,8 +117,13 @@ dt:not(:first-child) {
   margin-bottom: $line-height-computed;
 
   .form-section {
-    span.filter-count {
+    a,
+    span {
       vertical-align: middle;
+    }
+
+    a.clear-filter {
+      margin-left: 0.5em;
     }
 
     &:last-of-type {

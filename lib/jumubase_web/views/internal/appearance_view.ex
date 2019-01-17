@@ -1,7 +1,7 @@
 defmodule JumubaseWeb.Internal.AppearanceView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  alias Jumubase.Showtime.Appearance
+  alias Jumubase.Showtime.{Appearance, Performance}
   alias Jumubase.Showtime.{Instruments, Results}
 
   @doc """
@@ -26,8 +26,8 @@ defmodule JumubaseWeb.Internal.AppearanceView do
     Results.get_prize(points, round)
   end
 
-  def advancement_label(%Appearance{} = a) do
-    if Results.advances?(a) do
+  def advancement_label(%Appearance{} = a, %Performance{} = p) do
+    if Results.advances?(a, p) do
       content_tag :span, "WL", class: "label label-success"
     end
   end

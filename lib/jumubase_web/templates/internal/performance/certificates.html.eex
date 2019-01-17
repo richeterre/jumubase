@@ -65,7 +65,7 @@
             </td>
             <td>
               <%= prize(appearance, @contest.round) %>
-              <%= advancement_label(appearance) %>
+              <%= advancement_label(appearance, performance) %>
             </td>
           </tr>
         <% end %>

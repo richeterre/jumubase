@@ -1,5 +1,4 @@
 defmodule Jumubase.Showtime.Results do
-  alias Jumubase.Repo
   alias Jumubase.Foundation.AgeGroups
   alias Jumubase.Showtime.{Appearance, Performance}
 
@@ -63,21 +62,23 @@ defmodule Jumubase.Showtime.Results do
     ratings_for_round(round) |> lookup(points)
   end
 
-  def advances?(%Performance{} = p) do
-    p = Repo.preload(p, [:contest_category, :appearances])
+  def advances?(%Performance{contest_category: cc} = p) do
     %{
       min_advancing_age_group: min_ag,
       max_advancing_age_group: max_ag
-    } = p.contest_category
+    } = cc
 
     # Check age group range, then decide based on first non-accompanist
     Enum.all?([min_ag, max_ag])
       and AgeGroups.in_range?(p.age_group, min_ag, max_ag)
       and Performance.non_accompanists(p) |> hd |> may_advance?
   end
-  def advances?(%Appearance{} = a) do
-    a = Repo.preload(a, :performance)
-    may_advance?(a) and advances?(a.performance)
+
+  @doc """
+  Returns whether an appearance advances, using data from its parent performance.
+  """
+  def advances?(%Appearance{performance_id: id} = a, %Performance{id: id} = p) do
+    may_advance?(a) and advances?(p)
   end
 
   # Private helpers

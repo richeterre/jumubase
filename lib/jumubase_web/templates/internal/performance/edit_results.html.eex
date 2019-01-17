@@ -53,7 +53,7 @@
               </td>
               <td>
                 <%= prize(appearance, @contest.round) %>
-                <%= advancement_label(appearance) %>
+                <%= advancement_label(appearance, performance) %>
               </td>
               <%= if a_index == 0 do %>
                 <td rowspan="<%= length(group) %>" class="text-right">

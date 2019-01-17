@@ -20,12 +20,12 @@ defmodule JumubaseWeb.Api.PerformanceView do
       category_name: category_name(p),
       age_group: p.age_group,
       stage_time: p.stage_time |> to_local_datetime(tz),
-      appearances: sorted_appearances(p) |> Enum.map(&render_appearance(&1, c.round, p.results_public)),
+      appearances: sorted_appearances(p) |> Enum.map(&render_appearance(&1, p, c.round)),
       pieces: p.pieces |> Enum.map(&render_piece/1),
     }
   end
 
-  defp render_appearance(%Appearance{participant: pt} = a, round, include_result) do
+  defp render_appearance(%Appearance{participant: pt} = a, %Performance{} = p, round) do
     appearance = %{
       participant_name: full_name(pt),
       participant_role: a.role,
@@ -33,8 +33,8 @@ defmodule JumubaseWeb.Api.PerformanceView do
       age_group: a.age_group,
     }
 
-    if include_result do
-      appearance |> Map.put(:result, render_result(a, round))
+    if p.results_public do
+      appearance |> Map.put(:result, render_result(a, p, round))
     else
       appearance
     end
@@ -51,12 +51,12 @@ defmodule JumubaseWeb.Api.PerformanceView do
     }
   end
 
-  defp render_result(%Appearance{} = a, round) do
+  defp render_result(%Appearance{} = a, %Performance{} = p, round) do
     %{
       points: a.points,
       prize: Results.get_prize(a.points, round),
       rating: Results.get_rating(a.points, round),
-      advances_to_next_round: Results.advances?(a),
+      advances_to_next_round: Results.advances?(a, p),
     }
   end
 

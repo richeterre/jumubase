@@ -105,15 +105,21 @@ defmodule Jumubase.ResultsTest do
     end
 
     test "always returns false for appearances, no matter the soloist result", %{contest_category: cc} do
-      %{appearances: [sol1, acc1]} =
+      %{appearances: [sol1, acc1]} = p =
         insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
-      refute Results.advances?(sol1)
-      refute Results.advances?(acc1)
+      refute Results.advances?(sol1, p)
+      refute Results.advances?(acc1, p)
 
-      %{appearances: [sol2, acc2]} =
+      %{appearances: [sol2, acc2]} = p =
         insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 23}])
-      assert Results.advances?(sol2)
-      refute Results.advances?(acc2)
+      assert Results.advances?(sol2, p)
+      refute Results.advances?(acc2, p)
+    end
+
+    test "returns an error when the given appearance and performance don't match", %{contest_category: cc} do
+      %{appearances: [a]} = insert_performance(cc)
+      p = insert_performance(cc)
+      assert_raise FunctionClauseError, fn -> Results.advances?(a, p) end
     end
   end
 

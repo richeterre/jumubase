@@ -243,7 +243,7 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
               ] |> to_lines
             ],
             [:p, %{style: style(%{"height" => "120px"})},
-              prize_text(round, a)
+              prize_text(round, a, p)
             ],
             [:p, %{style: style(%{"height" => "70px"})}, date_text(contest)],
             [:p, signatures_text(round)],
@@ -295,21 +295,21 @@ defmodule JumubaseWeb.Generators.PDFGenerator do
   defp points_text(points, 1), do: "und erreichte #{points} Punkte."
   defp points_text(points, _group_size), do: "und erreichten #{points} Punkte."
 
-  defp prize_text(0, %Appearance{points: points}) do
+  defp prize_text(0, %Appearance{points: points}, _performance) do
     [:b, "Zuerkannt wurde das Prädikat: #{Results.get_rating(points, 0)}"]
   end
-  defp prize_text(round, %Appearance{points: points} = a) do
+  defp prize_text(round, %Appearance{points: points} = a, %Performance{} = p) do
     case Results.get_prize(points, round) do
       nil -> nil
       prize -> [
         [:b, "Zuerkannt wurde ein #{prize}"],
-        [:span, advancement_text(a, round)]
+        [:span, advancement_text(a, p, round)]
       ] |> to_lines
     end
   end
 
-  defp advancement_text(%Appearance{} = a, round) do
-    if Results.advances?(a) do
+  defp advancement_text(%Appearance{} = a, %Performance{} = p, round) do
+    if Results.advances?(a, p) do
       "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
     end
   end

@@ -293,12 +293,19 @@ defmodule Jumubase.Foundation do
       group_by: cg.genre,
       select: {cg.genre, count(p.id)}
 
-    [{"classical", classical_count}, {"popular", popular_count}] = Repo.all(query)
+    %{performances: Repo.all(query) |> count_performances}
+  end
 
-    %{performances: %{
-      classical: classical_count,
-      popular: popular_count,
-      total: classical_count + popular_count
-    }}
+  defp count_performances(results) do
+    Enum.reduce(results, %{total: 0, classical: 0, popular: 0}, fn
+      {"classical", count}, acc -> increase_count(acc, :classical, count)
+      {"popular", count}, acc -> increase_count(acc, :popular, count)
+    end)
+  end
+
+  defp increase_count(count_map, genre_key, count) do
+    count_map
+    |> Map.update!(genre_key, &(&1 + count))
+    |> Map.update!(:total, &(&1 + count))
   end
 end

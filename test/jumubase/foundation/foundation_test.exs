@@ -452,7 +452,7 @@ defmodule Jumubase.FoundationTest do
         == %{appearances: 5, participants: 4, performances: %{total: 2}}
     end
 
-    test "returns stats for a Jumu contest" do
+    test "returns stats for a non-empty Jumu contest" do
       c = insert(:contest, round: 1)
       pt = insert(:participant)
       cc1 = insert_contest_category(c, "classical")
@@ -471,6 +471,15 @@ defmodule Jumubase.FoundationTest do
         appearances: 5,
         participants: 4,
         performances: %{total: 2, classical: 1, popular: 1}
+      }
+    end
+
+    test "returns stats for an empty Jumu contest" do
+      c = insert(:contest, round: 1)
+      assert Foundation.statistics(c) == %{
+        appearances: 0,
+        participants: 0,
+        performances: %{total: 0, classical: 0, popular: 0}
       }
     end
   end

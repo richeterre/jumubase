@@ -88,3 +88,11 @@
       %>
   <% end %>
 <% end %>
+
+<h3><%= gettext("Statistics") %></h3>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= render_statistics(@contest) %>
+  </div>
+</div>

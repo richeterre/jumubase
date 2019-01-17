@@ -267,6 +267,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:39
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:4
+#: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.eex:4
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:2
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:37
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
@@ -359,7 +361,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
-#: lib/jumubase_web/views/internal/contest_view.ex:32
+#: lib/jumubase_web/views/internal/contest_view.ex:33
 msgid "Deadline"
 msgstr ""
 
@@ -404,6 +406,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/breadcrumbs.ex:47
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:5
+#: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.eex:5
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:2
 msgid "Performances"
 msgstr ""
@@ -579,6 +583,7 @@ msgid "The category \"%{name}\" was created."
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:11
 #: lib/jumubase_web/views/internal/category_view.ex:53
 msgid "Classical"
 msgstr ""
@@ -602,6 +607,7 @@ msgid "Kimu"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:12
 #: lib/jumubase_web/views/internal/category_view.ex:54
 msgid "Popular"
 msgstr ""
@@ -913,6 +919,8 @@ msgid "Show more…"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:6
+#: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.eex:6
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:23
 msgid "Appearances"
 msgstr ""
@@ -1558,4 +1566,16 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:10
 msgid "Compose group email"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/show.html.eex:92
+msgid "Statistics"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:9
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:10
+#: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:13
+msgid "Total"
 msgstr ""

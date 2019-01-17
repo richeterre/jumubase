@@ -150,6 +150,13 @@ defmodule Jumubase.Foundation do
     |> List.first
   end
 
+  def statistics(%Contest{} = c) do
+    Map.merge(
+      appearance_participant_stats(c),
+      performance_stats(c)
+    )
+  end
+
   ## Categories
 
   def list_categories do
@@ -262,5 +269,36 @@ defmodule Jumubase.Foundation do
         or
         c.round == 2 and ^user.role != "local-organizer"
       )
+  end
+
+  defp appearance_participant_stats(%Contest{} = c) do
+    from(cc in Ecto.assoc(c, :contest_categories),
+      join: p in assoc(cc, :performances),
+      join: a in assoc(p, :appearances),
+      join: pt in assoc(a, :participant),
+      select: %{appearances: count(a.id), participants: count(pt.id, :distinct)}
+    ) |> Repo.one
+  end
+
+  defp performance_stats(%Contest{round: 0} = c) do
+    from(cc in Ecto.assoc(c, :contest_categories),
+      join: p in assoc(cc, :performances),
+      select: %{performances: %{total: count(p.id)}}
+    ) |> Repo.one
+  end
+  defp performance_stats(%Contest{} = c) do
+    query = from cc in Ecto.assoc(c, :contest_categories),
+      join: cg in assoc(cc, :category),
+      join: p in assoc(cc, :performances),
+      group_by: cg.genre,
+      select: {cg.genre, count(p.id)}
+
+    [{"classical", classical_count}, {"popular", popular_count}] = Repo.all(query)
+
+    %{performances: %{
+      classical: classical_count,
+      popular: popular_count,
+      total: classical_count + popular_count
+    }}
   end
 end

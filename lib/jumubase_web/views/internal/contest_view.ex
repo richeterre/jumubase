@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.ContestView do
   use JumubaseWeb, :view
   alias Jumubase.JumuParams
+  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
 
   @doc """
@@ -74,6 +75,16 @@ defmodule JumubaseWeb.Internal.ContestView do
       _ ->
         Routes.internal_contest_stage_path(conn, :index, contest)
     end
+  end
+
+  @doc """
+  Renders a statistics template based on the contest's round.
+  """
+  def render_statistics(%Contest{round: 0} = c) do
+    render "_kimu_stats.html", stats: Foundation.statistics(c)
+  end
+  def render_statistics(%Contest{} = c) do
+    render "_jumu_stats.html", stats: Foundation.statistics(c)
   end
 
   @doc """

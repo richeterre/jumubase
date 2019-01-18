@@ -13,7 +13,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
-  alias JumubaseWeb.Generators.PDFGenerator
+  alias JumubaseWeb.PDFGenerator
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
 

@@ -32,6 +32,10 @@ config :jumubase, Jumubase.Repo,
 # Speed up tests by making hashing faster
 config :bcrypt_elixir, log_rounds: 4
 
+# Configure test PDF generator
+config :jumubase, JumubaseWeb.PDFGenerator,
+  engine: JumubaseWeb.PDFGenerator.TestEngine
+
 # Configure test mailer
 config :jumubase, Jumubase.Mailer,
   adapter: Bamboo.TestAdapter

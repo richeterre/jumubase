@@ -4,6 +4,7 @@ defmodule JumubaseWeb.Internal.ContestController do
   alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
+  alias Jumubase.Showtime
   alias JumubaseWeb.Internal.Permit
 
   plug :add_home_breadcrumb
@@ -30,8 +31,10 @@ defmodule JumubaseWeb.Internal.ContestController do
       |> Foundation.load_contest_categories
       |> Foundation.load_used_stages
 
+    performances = contest |> Showtime.list_performances
     conn
     |> assign(:contest, contest)
+    |> assign(:performances, performances)
     |> add_contest_breadcrumb(contest)
     |> render("show.html")
   end

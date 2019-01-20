@@ -764,6 +764,60 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "statistics/2" do
+    test "returns stats for a list of Kimu performances" do
+      c = insert(:contest, round: 0)
+      pt = insert(:participant)
+      p1 = insert_performance(c, appearances: [
+        build(:appearance, role: "ensemblist", participant: pt),
+        build(:appearance, role: "ensemblist"),
+        build(:appearance, role: "accompanist"),
+      ])
+      p2 = insert_performance(c, appearances: [
+        build(:appearance, role: "soloist", participant: pt),
+        build(:appearance, role: "accompanist"),
+      ])
+
+      assert Showtime.statistics([p1, p2], c.round)
+        == %{appearances: 5, participants: 4, performances: %{total: 2}}
+    end
+
+    test "returns stats for an empty Kimu performance list" do
+      assert Showtime.statistics([], 0)
+        == %{appearances: 0, participants: 0, performances: %{total: 0}}
+    end
+
+    test "returns stats for a list of Jumu performances" do
+      c = insert(:contest, round: 1)
+      pt = insert(:participant)
+      cc1 = insert_contest_category(c, "classical")
+      cc2 = insert_contest_category(c, "popular")
+      p1 = insert_performance(cc1, appearances: [
+        build(:appearance, role: "ensemblist", participant: pt),
+        build(:appearance, role: "ensemblist"),
+        build(:appearance, role: "accompanist"),
+      ])
+      p2 = insert_performance(cc2, appearances: [
+        build(:appearance, role: "soloist", participant: pt),
+        build(:appearance, role: "accompanist"),
+      ])
+
+      assert Showtime.statistics([p1, p2], c.round) == %{
+        appearances: 5,
+        participants: 4,
+        performances: %{total: 2, classical: 1, popular: 1}
+      }
+    end
+
+    test "returns stats for an empty Jumu performance list" do
+      assert Showtime.statistics([], 1) == %{
+        appearances: 0,
+        participants: 0,
+        performances: %{total: 0, classical: 0, popular: 0}
+      }
+    end
+  end
+
   test "load_pieces/1 preloads a performance's pieces in insertion order", %{contest: c} do
     insert_performance(c, pieces: [
       build(:piece, title: "Y"),

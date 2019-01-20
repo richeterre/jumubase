@@ -150,13 +150,6 @@ defmodule Jumubase.Foundation do
     |> List.first
   end
 
-  def statistics(%Contest{} = c) do
-    Map.merge(
-      appearance_participant_stats(c),
-      performance_stats(c)
-    )
-  end
-
   ## Categories
 
   def list_categories do
@@ -269,43 +262,5 @@ defmodule Jumubase.Foundation do
         or
         c.round == 2 and ^user.role != "local-organizer"
       )
-  end
-
-  defp appearance_participant_stats(%Contest{} = c) do
-    from(cc in Ecto.assoc(c, :contest_categories),
-      join: p in assoc(cc, :performances),
-      join: a in assoc(p, :appearances),
-      join: pt in assoc(a, :participant),
-      select: %{appearances: count(a.id), participants: count(pt.id, :distinct)}
-    ) |> Repo.one
-  end
-
-  defp performance_stats(%Contest{round: 0} = c) do
-    from(cc in Ecto.assoc(c, :contest_categories),
-      join: p in assoc(cc, :performances),
-      select: %{performances: %{total: count(p.id)}}
-    ) |> Repo.one
-  end
-  defp performance_stats(%Contest{} = c) do
-    query = from cc in Ecto.assoc(c, :contest_categories),
-      join: cg in assoc(cc, :category),
-      join: p in assoc(cc, :performances),
-      group_by: cg.genre,
-      select: {cg.genre, count(p.id)}
-
-    %{performances: Repo.all(query) |> count_performances}
-  end
-
-  defp count_performances(results) do
-    Enum.reduce(results, %{total: 0, classical: 0, popular: 0}, fn
-      {"classical", count}, acc -> increase_count(acc, :classical, count)
-      {"popular", count}, acc -> increase_count(acc, :popular, count)
-    end)
-  end
-
-  defp increase_count(count_map, genre_key, count) do
-    count_map
-    |> Map.update!(genre_key, &(&1 + count))
-    |> Map.update!(:total, &(&1 + count))
   end
 end

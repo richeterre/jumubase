@@ -93,6 +93,6 @@
 
 <div class="row">
   <div class="col-md-6">
-    <%= render_statistics(@contest) %>
+    <%= render_statistics(@performances, @contest.round) %>
   </div>
 </div>

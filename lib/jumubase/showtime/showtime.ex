@@ -188,6 +188,20 @@ defmodule Jumubase.Showtime do
     end)
   end
 
+  def statistics(performances, 0) do
+    appearances = performances |> appearances
+    %{
+      appearances: length(appearances),
+      participants: appearances |> unique_participants |> length,
+      performances: %{total: length(performances)}
+    }
+  end
+  def statistics(performances, round) do
+    statistics(performances, 0) # Use Kimu stats as base
+    |> put_in([:performances, :classical], genre_count(performances, "classical"))
+    |> put_in([:performances, :popular], genre_count(performances, "popular"))
+  end
+
   def load_pieces(performances) do
     performances |> Repo.preload(pieces: pieces_query())
   end
@@ -395,6 +409,21 @@ defmodule Jumubase.Showtime do
 
     {count, _} = Repo.update_all(query, set: [results_public: public])
     {:ok, count}
+  end
+
+  defp appearances(performances) do
+    performances |> Enum.flat_map(&(&1.appearances))
+  end
+
+  defp unique_participants(appearances) do
+    appearances |> Enum.map(&(&1.participant)) |> Enum.uniq
+  end
+
+  defp genre_count(performances, genre) do
+    performances
+    |> Enum.map(&(&1.contest_category.category))
+    |> Enum.filter(&(&1.genre == genre))
+    |> length
   end
 
   defp pieces_query do

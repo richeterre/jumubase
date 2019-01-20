@@ -434,56 +434,6 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "statistics/1" do
-    test "returns stats for a Kimu contest" do
-      c = insert(:contest, round: 0)
-      pt = insert(:participant)
-      insert_performance(c, appearances: [
-        build(:appearance, role: "ensemblist", participant: pt),
-        build(:appearance, role: "ensemblist"),
-        build(:appearance, role: "accompanist"),
-      ])
-      insert_performance(c, appearances: [
-        build(:appearance, role: "soloist", participant: pt),
-        build(:appearance, role: "accompanist"),
-      ])
-
-      assert Foundation.statistics(c)
-        == %{appearances: 5, participants: 4, performances: %{total: 2}}
-    end
-
-    test "returns stats for a non-empty Jumu contest" do
-      c = insert(:contest, round: 1)
-      pt = insert(:participant)
-      cc1 = insert_contest_category(c, "classical")
-      cc2 = insert_contest_category(c, "popular")
-      insert_performance(cc1, appearances: [
-        build(:appearance, role: "ensemblist", participant: pt),
-        build(:appearance, role: "ensemblist"),
-        build(:appearance, role: "accompanist"),
-      ])
-      insert_performance(cc2, appearances: [
-        build(:appearance, role: "soloist", participant: pt),
-        build(:appearance, role: "accompanist"),
-      ])
-
-      assert Foundation.statistics(c) == %{
-        appearances: 5,
-        participants: 4,
-        performances: %{total: 2, classical: 1, popular: 1}
-      }
-    end
-
-    test "returns stats for an empty Jumu contest" do
-      c = insert(:contest, round: 1)
-      assert Foundation.statistics(c) == %{
-        appearances: 0,
-        participants: 0,
-        performances: %{total: 0, classical: 0, popular: 0}
-      }
-    end
-  end
-
   describe "list_categories/0" do
     test "returns all categories" do
       categories = insert_list(2, :category)

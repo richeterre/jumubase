@@ -1,8 +1,8 @@
 defmodule JumubaseWeb.Internal.ContestView do
   use JumubaseWeb, :view
   alias Jumubase.JumuParams
-  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
+  alias Jumubase.Showtime
 
   @doc """
   Returns a display name for the given contest.
@@ -80,11 +80,11 @@ defmodule JumubaseWeb.Internal.ContestView do
   @doc """
   Renders a statistics template based on the contest's round.
   """
-  def render_statistics(%Contest{round: 0} = c) do
-    render "_kimu_stats.html", stats: Foundation.statistics(c)
+  def render_statistics(performances, 0) do
+    render "_kimu_stats.html", stats: Showtime.statistics(performances, 0)
   end
-  def render_statistics(%Contest{} = c) do
-    render "_jumu_stats.html", stats: Foundation.statistics(c)
+  def render_statistics(performances, round) do
+    render "_jumu_stats.html", stats: Showtime.statistics(performances, round)
   end
 
   @doc """

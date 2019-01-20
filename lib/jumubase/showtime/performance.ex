@@ -80,7 +80,7 @@ defmodule Jumubase.Showtime.Performance do
   Returns the performance's appearances grouped in nested lists,
   based on which ones share a common result (as do e.g. ensemblists and pop accompanists).
   """
-  def grouped_appearances(%Performance{contest_category: cc} = p) do
+  def result_groups(%Performance{contest_category: cc} = p) do
     non_acc = non_accompanists(p)
     acc = accompanists(p)
 

@@ -114,7 +114,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   Returns the performance's appearances as a nested list,
   with the grouping being decided by which ones share a common result.
   """
-  def result_groups(%Performance{} = p), do: Performance.grouped_appearances(p)
+  defdelegate result_groups(performance), to: Performance
 
   @doc """
   Gets the appearance ids from a list of appearances, in a format suitable for form submission.

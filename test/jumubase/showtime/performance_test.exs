@@ -180,13 +180,13 @@ defmodule Jumubase.PerformanceTest do
     end
   end
 
-  describe "grouped_appearances/1" do
+  describe "result_groups/1" do
     test "groups appearances for a classical or Kimu solo performance without accompanists" do
       for genre <- ["classical", "kimu"] do
         sol = build(:appearance, role: "soloist")
         cc = build(:contest_category, category: build(:category, genre: genre))
         p = build(:performance, contest_category: cc, appearances: [sol])
-        assert Performance.grouped_appearances(p) == [[sol]]
+        assert Performance.result_groups(p) == [[sol]]
       end
     end
 
@@ -197,7 +197,7 @@ defmodule Jumubase.PerformanceTest do
         acc2 = build(:appearance, role: "accompanist")
         cc = build(:contest_category, category: build(:category, genre: genre))
         p = build(:performance, contest_category: cc, appearances: [sol, acc1, acc2])
-        assert Performance.grouped_appearances(p) == [[sol], [acc1], [acc2]]
+        assert Performance.result_groups(p) == [[sol], [acc1], [acc2]]
       end
     end
 
@@ -206,7 +206,7 @@ defmodule Jumubase.PerformanceTest do
         appearances = build_list(2, :appearance, role: "ensemblist")
         cc = build(:contest_category, category: build(:category, genre: genre))
         p = build(:performance, contest_category: cc, appearances: appearances)
-        assert Performance.grouped_appearances(p) == [appearances]
+        assert Performance.result_groups(p) == [appearances]
       end
     end
 
@@ -214,7 +214,7 @@ defmodule Jumubase.PerformanceTest do
       sol = build(:appearance, role: "soloist")
       cc = build(:contest_category, category: build(:category, genre: "popular"))
       p = build(:performance, contest_category: cc, appearances: [sol])
-      assert Performance.grouped_appearances(p) == [[sol]]
+      assert Performance.result_groups(p) == [[sol]]
     end
 
     test "groups appearances for a popular solo performance with accompanists" do
@@ -223,14 +223,14 @@ defmodule Jumubase.PerformanceTest do
       acc2 = build(:appearance, role: "accompanist")
       cc = build(:contest_category, category: build(:category, genre: "popular"))
       p = build(:performance, contest_category: cc, appearances: [sol, acc1, acc2])
-      assert Performance.grouped_appearances(p) == [[sol], [acc1, acc2]]
+      assert Performance.result_groups(p) == [[sol], [acc1, acc2]]
     end
 
     test "groups appearances for a popular ensemble performance without accompanists" do
       appearances = build_list(2, :appearance, role: "ensemblist")
       cc = build(:contest_category, category: build(:category, genre: "popular"))
       p = build(:performance, contest_category: cc, appearances: appearances)
-      assert Performance.grouped_appearances(p) == [appearances]
+      assert Performance.result_groups(p) == [appearances]
     end
 
     test "groups appearances for a popular ensemble performance with accompanists" do
@@ -240,7 +240,7 @@ defmodule Jumubase.PerformanceTest do
       acc2 = build(:appearance, role: "accompanist")
       cc = build(:contest_category, category: build(:category, genre: "popular"))
       p = build(:performance, contest_category: cc, appearances: [ens1, ens2, acc1, acc2])
-      assert Performance.grouped_appearances(p) == [[ens1, ens2], [acc1, acc2]]
+      assert Performance.result_groups(p) == [[ens1, ens2], [acc1, acc2]]
     end
   end
 

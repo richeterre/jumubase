@@ -29,47 +29,46 @@
     </thead>
     <tbody>
       <%= for performance <- @performances do %>
-        <% result_groups = result_groups(performance) %>
+        <% groups = result_groups(performance) %>
 
-        <%= for {group, group_index} <- result_groups |> Enum.with_index do %>
-          <%= for {appearance, a_index} <- group |> Enum.with_index do %>
-            <tr>
-              <%= if {group_index, a_index} == {0, 0} do %>
-                <td rowspan="<%= result_groups |> List.flatten |> length %>">
-                  <%= link category_name(performance),
-                    to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
-                    %>
-                </td>
+        <%= for {group, index} <- Enum.with_index(groups) do %>
+          <% [first_a | _] = group %>
+          <tr>
+            <%= if index == 0 do %>
+              <td rowspan="<%= length(groups) %>">
+                <%= link category_name(performance),
+                  to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                  %>
+              </td>
+            <% end %>
+            <td>
+              <%= for appearance <- group do %>
+                <%= appearance_info(appearance) %><br>
               <% end %>
-              <td>
-                <%= appearance_info(appearance) %>
-              </td>
-              <td>
-                <%= age_group_badge(appearance) %>
-              </td>
-              <td>
-                <%= appearance.points %>
-                <%= if performance.results_public, do: missing_points_error(appearance) %>
-              </td>
-              <td>
-                <%= prize(appearance, @contest.round) %>
-                <%= advancement_label(appearance, performance) %>
-              </td>
-              <%= if a_index == 0 do %>
-                <td rowspan="<%= length(group) %>" class="text-right">
-                  <%= icon_link "edit", nil,
-                    "#",
-                    class: "btn btn-default btn-xs",
-                    "data-toggle": "modal",
-                    "data-target": "#modal-result-form",
-                    "data-participant-names": participant_names(group),
-                    "data-appearance-ids": appearance_ids(group),
-                    "data-current-points": appearance.points
-                    %>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
+            </td>
+            <td>
+              <%= age_group_badge(first_a) %>
+            </td>
+            <td>
+              <%= first_a.points %>
+              <%= if performance.results_public, do: missing_points_error(first_a) %>
+            </td>
+            <td>
+              <%= prize(first_a, @contest.round) %>
+              <%= advancement_label(first_a, performance) %>
+            </td>
+            <td class="text-right">
+              <%= icon_link "edit", nil,
+                "#",
+                class: "btn btn-default btn-xs",
+                "data-toggle": "modal",
+                "data-target": "#modal-result-form",
+                "data-participant-names": participant_names(group),
+                "data-appearance-ids": appearance_ids(group),
+                "data-current-points": first_a.points
+                %>
+            </td>
+          </tr>
         <% end %>
       <% end %>
     </tbody>

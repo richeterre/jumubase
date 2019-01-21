@@ -60,11 +60,19 @@
           <%= icon_link "edit", gettext("Enter points"),
             Routes.internal_contest_results_path(@conn, :edit_results, @contest)
             %>
+          <br>
+          <small class="text-muted">
+            <%= edit_points_completion_text(@result_completions) %>
+          </small>
         </li>
         <li class="list-group-item">
           <%= icon_link "check", gettext("Publish results"),
             Routes.internal_contest_results_path(@conn, :publish_results, @contest)
             %>
+          <br>
+          <small class="text-muted">
+            <%= publish_results_completion_text(@result_completions) %>
+          </small>
         </li>
         <li class="list-group-item">
           <%= icon_link "certificate", gettext("Create certificates"),

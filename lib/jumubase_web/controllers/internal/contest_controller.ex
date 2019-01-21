@@ -32,9 +32,12 @@ defmodule JumubaseWeb.Internal.ContestController do
       |> Foundation.load_used_stages
 
     performances = contest |> Showtime.list_performances
+    result_completions = performances |> Showtime.result_completions
+
     conn
     |> assign(:contest, contest)
     |> assign(:performances, performances)
+    |> assign(:result_completions, result_completions)
     |> add_contest_breadcrumb(contest)
     |> render("show.html")
   end

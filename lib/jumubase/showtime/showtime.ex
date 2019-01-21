@@ -188,6 +188,21 @@ defmodule Jumubase.Showtime do
     end)
   end
 
+  @doc """
+  Returns data on how many results have been entered/published for the performances.
+  """
+  def result_completions(performances) do
+    result_groups = result_groups(performances)
+    with_points = result_groups |> Enum.filter(&has_points?/1)
+    public = performances |> Enum.filter(&(&1.results_public)) |> result_groups
+
+    %{
+      total: length(result_groups),
+      with_points: length(with_points),
+      public: length(public),
+    }
+  end
+
   def statistics(performances, 0) do
     appearances = performances |> appearances
     %{
@@ -196,7 +211,7 @@ defmodule Jumubase.Showtime do
       performances: %{total: length(performances)}
     }
   end
-  def statistics(performances, round) do
+  def statistics(performances, _round) do
     statistics(performances, 0) # Use Kimu stats as base
     |> put_in([:performances, :classical], genre_count(performances, "classical"))
     |> put_in([:performances, :popular], genre_count(performances, "popular"))
@@ -409,6 +424,14 @@ defmodule Jumubase.Showtime do
 
     {count, _} = Repo.update_all(query, set: [results_public: public])
     {:ok, count}
+  end
+
+  defp result_groups(performances) do
+    performances |> Enum.flat_map(&Performance.result_groups/1)
+  end
+
+  defp has_points?(result_group) do
+    Enum.all?(result_group, &!is_nil(&1.points))
   end
 
   defp appearances(performances) do

@@ -764,6 +764,31 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "result_completions/1" do
+    test "returns result completion data for the given performances" do
+      c = insert(:contest)
+      classical_cc = insert_contest_category(c, "classical")
+      popular_cc = insert_contest_category(c, "popular")
+
+      performances = [
+        insert_performance(classical_cc, appearances: [
+          build(:appearance, role: "soloist", points: 25),
+          build(:appearance, role: "accompanist", points: nil),
+          build(:appearance, role: "accompanist", points: 25),
+        ], results_public: false),
+        insert_performance(popular_cc, appearances: [
+          build(:appearance, role: "ensemblist", points: 25),
+          build(:appearance, role: "ensemblist", points: 25),
+          build(:appearance, role: "accompanist", points: nil),
+          build(:appearance, role: "accompanist", points: nil),
+        ], results_public: true)
+      ]
+
+      assert Showtime.result_completions(performances)
+        == %{total: 5, with_points: 3, public: 2}
+    end
+  end
+
   describe "statistics/2" do
     test "returns stats for a list of Kimu performances" do
       c = insert(:contest, round: 0)

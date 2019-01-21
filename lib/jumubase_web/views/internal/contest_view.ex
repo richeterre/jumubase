@@ -77,6 +77,19 @@ defmodule JumubaseWeb.Internal.ContestView do
     end
   end
 
+  def edit_points_completion_text(%{total: total, with_points: completed}) do
+    case completed do
+      ^total -> gettext("All %{total} entered", total: total)
+      _ -> gettext("%{completed} of %{total} entered so far", completed: completed, total: total)
+    end
+  end
+  def publish_results_completion_text(%{total: total, public: completed}) do
+    case completed do
+      ^total -> gettext("All %{total} published", total: total)
+      _ -> gettext("%{completed} of %{total} published so far", completed: completed, total: total)
+    end
+  end
+
   @doc """
   Renders a statistics template based on the contest's round.
   """

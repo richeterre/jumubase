@@ -16,7 +16,8 @@ defmodule Jumubase.JumuParams do
   Returns the available competition rounds.
   """
   def rounds do
-    0..2 # Round 0 is for Kimu contests
+    # Round 0 is for Kimu contests
+    0..2
   end
 
   @doc """

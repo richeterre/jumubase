@@ -14,15 +14,17 @@ defmodule JumubaseWeb.ContactController do
         conn
         |> put_flash(:error, gettext("Please fill in all fields and try again!"))
         |> redirect(to: Routes.page_path(conn, :contact))
+
       # Detect spambots via "trap" field invisible to humans
       params["email_repeat"] != "" ->
         conn
         |> put_flash(:error, gettext("Please fill in only fields that are visible in the form."))
         |> redirect(to: Routes.page_path(conn, :contact))
+
       true ->
         changeset.changes
-        |> Email.contact_message
-        |> Mailer.deliver_now
+        |> Email.contact_message()
+        |> Mailer.deliver_now()
 
         conn
         |> put_flash(:success, gettext("Your message has been sent!"))
@@ -40,7 +42,7 @@ defmodule JumubaseWeb.ContactController do
     {data, types}
     |> Ecto.Changeset.cast(params, Map.keys(types))
     |> validate_required([:name, :email, :message])
-    |> validate_format(:email, Utils.email_format)
+    |> validate_format(:email, Utils.email_format())
     |> update_change(:name, &String.trim/1)
     |> update_change(:email, &String.trim/1)
     |> update_change(:message, &String.trim/1)

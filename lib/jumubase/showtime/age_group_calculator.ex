@@ -6,19 +6,21 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
     case Changeset.get_change(changeset, :appearances) do
       nil ->
         changeset
+
       appearances ->
         # TODO: Avoid this calculation by grabbing age group from soloist or ensemblist
-        performance_age_group = appearances
-        # Grab all non-accompanist appearances from nested changeset
-        |> exclude_obsolete
-        |> filter_roles(["soloist", "ensemblist"])
-        # Calculate joint age group for them
-        |> get_birthdates
-        |> AgeGroups.calculate_age_group(season)
+        performance_age_group =
+          appearances
+          # Grab all non-accompanist appearances from nested changeset
+          |> exclude_obsolete
+          |> filter_roles(["soloist", "ensemblist"])
+          # Calculate joint age group for them
+          |> get_birthdates
+          |> AgeGroups.calculate_age_group(season)
 
         changeset
         |> Changeset.put_change(:age_group, performance_age_group)
-        |> Changeset.update_change(:appearances, &(put_appearance_age_groups(&1, season, genre)))
+        |> Changeset.update_change(:appearances, &put_appearance_age_groups(&1, season, genre))
     end
   end
 
@@ -32,9 +34,11 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
   end
 
   # Assigns accompanist age groups either individually or joint, depending on genre.
-  defp put_accompanist_age_groups(changesets, season, genre) when genre in ["classical", "kimu"] do
+  defp put_accompanist_age_groups(changesets, season, genre)
+       when genre in ["classical", "kimu"] do
     put_individual_age_groups(changesets, "accompanist", season)
   end
+
   defp put_accompanist_age_groups(changesets, season, "popular") do
     put_joint_age_groups(changesets, "accompanist", season)
   end
@@ -57,6 +61,7 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
     case get_birthdates(changesets, role) do
       [] ->
         changesets
+
       birthdates ->
         Enum.map(changesets, fn cs ->
           if has_role?(cs, role) do

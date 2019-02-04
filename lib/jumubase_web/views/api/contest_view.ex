@@ -18,7 +18,7 @@ defmodule JumubaseWeb.Api.ContestView do
       start_date: to_utc_datetime(c.start_date),
       end_date: to_utc_datetime(c.end_date),
       venues: h.stages |> Enum.map(&render_stage/1),
-      contest_categories: c.contest_categories |> Enum.map(&render_contest_category/1),
+      contest_categories: c.contest_categories |> Enum.map(&render_contest_category/1)
     }
   end
 

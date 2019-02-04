@@ -7,25 +7,27 @@ defmodule Jumubase.Showtime.Results do
   """
   def ratings_for_round(0) do
     %{
-      23..25 => "mit hervorragendem Erfolg teilgenommen",
-      21..22 => "mit sehr gutem Erfolg teilgenommen",
-      17..20 => "mit gutem Erfolg teilgenommen",
-      9..16 => "mit Erfolg teilgenommen",
-      0..8 => "teilgenommen",
+      (23..25) => "mit hervorragendem Erfolg teilgenommen",
+      (21..22) => "mit sehr gutem Erfolg teilgenommen",
+      (17..20) => "mit gutem Erfolg teilgenommen",
+      (9..16) => "mit Erfolg teilgenommen",
+      (0..8) => "teilgenommen"
     }
   end
+
   def ratings_for_round(1) do
     %{
-      9..12 => "mit gutem Erfolg teilgenommen",
-      5..8 => "mit Erfolg teilgenommen",
-      0..4 => "teilgenommen",
+      (9..12) => "mit gutem Erfolg teilgenommen",
+      (5..8) => "mit Erfolg teilgenommen",
+      (0..4) => "teilgenommen"
     }
   end
+
   def ratings_for_round(2) do
     %{
-      14..16 => "mit gutem Erfolg teilgenommen",
-      11..13 => "mit Erfolg teilgenommen",
-      0..10 => "teilgenommen",
+      (14..16) => "mit gutem Erfolg teilgenommen",
+      (11..13) => "mit Erfolg teilgenommen",
+      (0..10) => "teilgenommen"
     }
   end
 
@@ -33,18 +35,20 @@ defmodule Jumubase.Showtime.Results do
   Returns a mapping from point ranges to prizes, depending on round.
   """
   def prizes_for_round(0), do: %{}
+
   def prizes_for_round(1) do
     %{
-      21..25 => "1. Preis",
-      17..20 => "2. Preis",
-      13..16 => "3. Preis",
+      (21..25) => "1. Preis",
+      (17..20) => "2. Preis",
+      (13..16) => "3. Preis"
     }
   end
+
   def prizes_for_round(2) do
     %{
-      23..25 => "1. Preis",
-      20..22 => "2. Preis",
-      17..19 => "3. Preis",
+      (23..25) => "1. Preis",
+      (20..22) => "2. Preis",
+      (17..19) => "3. Preis"
     }
   end
 
@@ -69,9 +73,9 @@ defmodule Jumubase.Showtime.Results do
     } = cc
 
     # Check age group range, then decide based on first non-accompanist
-    Enum.all?([min_ag, max_ag])
-      and AgeGroups.in_range?(p.age_group, min_ag, max_ag)
-      and Performance.non_accompanists(p) |> hd |> may_advance?
+    Enum.all?([min_ag, max_ag]) and
+      AgeGroups.in_range?(p.age_group, min_ag, max_ag) and
+      Performance.non_accompanists(p) |> hd |> may_advance?
   end
 
   @doc """
@@ -84,6 +88,7 @@ defmodule Jumubase.Showtime.Results do
   # Private helpers
 
   defp may_advance?(%Appearance{role: "accompanist"}), do: false
+
   defp may_advance?(%Appearance{points: points}) do
     points in 23..25
   end

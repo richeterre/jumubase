@@ -21,7 +21,7 @@ defmodule JumubaseWeb.Api.PerformanceView do
       age_group: p.age_group,
       stage_time: p.stage_time |> to_local_datetime(tz),
       appearances: sorted_appearances(p) |> Enum.map(&render_appearance(&1, p, c.round)),
-      pieces: p.pieces |> Enum.map(&render_piece/1),
+      pieces: p.pieces |> Enum.map(&render_piece/1)
     }
   end
 
@@ -30,7 +30,7 @@ defmodule JumubaseWeb.Api.PerformanceView do
       participant_name: full_name(pt),
       participant_role: a.role,
       instrument_name: instrument_name(a.instrument),
-      age_group: a.age_group,
+      age_group: a.age_group
     }
 
     if p.results_public do
@@ -47,7 +47,7 @@ defmodule JumubaseWeb.Api.PerformanceView do
       composer_born: pc.composer_born || "",
       composer_died: pc.composer_died || "",
       duration: duration_in_seconds(pc),
-      epoch: pc.epoch,
+      epoch: pc.epoch
     }
   end
 
@@ -56,14 +56,15 @@ defmodule JumubaseWeb.Api.PerformanceView do
       points: a.points,
       prize: Results.get_prize(a.points, round),
       rating: Results.get_rating(a.points, round),
-      advances_to_next_round: Results.advances?(a, p),
+      advances_to_next_round: Results.advances?(a, p)
     }
   end
 
   defp to_local_datetime(nil, _time_zone), do: nil
+
   defp to_local_datetime(datetime, time_zone) do
     datetime
-    |> NaiveDateTime.to_erl
+    |> NaiveDateTime.to_erl()
     |> Timex.to_datetime(time_zone)
   end
 

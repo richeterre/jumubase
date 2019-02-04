@@ -41,5 +41,6 @@ defmodule JumubaseWeb.SessionController do
   defp add_remember_me(conn, user_id, %{"remember_me" => "true"}) do
     Phauxth.Remember.add_rem_cookie(conn, user_id)
   end
+
   defp add_remember_me(conn, _, _), do: conn
 end

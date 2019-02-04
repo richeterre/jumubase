@@ -75,6 +75,6 @@ defmodule Jumubase.TestHelpers do
   # Private helpers
 
   defp get_sorted_ids(list) do
-    list |> get_ids |> Enum.sort
+    list |> get_ids |> Enum.sort()
   end
 end

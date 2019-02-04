@@ -24,44 +24,56 @@ defmodule Jumubase.PerformanceTest do
       params = Map.put(valid_attrs, :appearances, [])
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance must have at least one participant.", []}
+
+      assert changeset.errors[:base] ==
+               {"The performance must have at least one participant.", []}
     end
 
     test "with both soloist and ensemblist appearances", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :appearances, [
-        valid_appearance_attrs("soloist"),
-        valid_appearance_attrs("ensemblist"),
-      ])
+      params =
+        Map.put(valid_attrs, :appearances, [
+          valid_appearance_attrs("soloist"),
+          valid_appearance_attrs("ensemblist")
+        ])
+
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance can't have both soloists and ensemblists.", []}
+
+      assert changeset.errors[:base] ==
+               {"The performance can't have both soloists and ensemblists.", []}
     end
 
     test "with multiple soloist appearances", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :appearances, [
-        valid_appearance_attrs("soloist"),
-        valid_appearance_attrs("soloist"),
-      ])
+      params =
+        Map.put(valid_attrs, :appearances, [
+          valid_appearance_attrs("soloist"),
+          valid_appearance_attrs("soloist")
+        ])
+
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
       assert changeset.errors[:base] == {"The performance can't have more than one soloist.", []}
     end
 
     test "with a single ensemblist appearance", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :appearances, [
-        valid_appearance_attrs("ensemblist"),
-        valid_appearance_attrs("accompanist"),
-      ])
+      params =
+        Map.put(valid_attrs, :appearances, [
+          valid_appearance_attrs("ensemblist"),
+          valid_appearance_attrs("accompanist")
+        ])
+
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
       assert changeset.errors[:base] == {"The performance can't have only one ensemblist.", []}
     end
 
     test "with only accompanist appearances", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :appearances, [
-        valid_appearance_attrs("accompanist"),
-        valid_appearance_attrs("accompanist"),
-      ])
+      params =
+        Map.put(valid_attrs, :appearances, [
+          valid_appearance_attrs("accompanist"),
+          valid_appearance_attrs("accompanist")
+        ])
+
       changeset = Performance.changeset(%Performance{}, params)
       refute changeset.valid?
       assert changeset.errors[:base] == {"The performance can't have only accompanists.", []}
@@ -147,7 +159,7 @@ defmodule Jumubase.PerformanceTest do
     end
 
     test "sorts ensemblists by insertion date, earliest first" do
-      now = Timex.now
+      now = Timex.now()
       ens1 = build(:appearance, role: "ensemblist", inserted_at: now)
       ens2 = build(:appearance, role: "ensemblist", inserted_at: Timex.shift(now, seconds: -1))
       p = build(:performance, appearances: [ens1, ens2])
@@ -171,7 +183,7 @@ defmodule Jumubase.PerformanceTest do
     end
 
     test "sorts accompanists by insertion date, earliest first" do
-      now = Timex.now
+      now = Timex.now()
       sol = build(:appearance, role: "soloist")
       acc1 = build(:appearance, role: "accompanist", inserted_at: now)
       acc2 = build(:appearance, role: "accompanist", inserted_at: Timex.shift(now, seconds: -1))
@@ -257,6 +269,7 @@ defmodule Jumubase.PerformanceTest do
     params_for(:appearance)
     |> Map.put(:participant, params_for(:participant))
   end
+
   defp valid_appearance_attrs(role) do
     params_for(:appearance, role: role)
     |> Map.put(:participant, params_for(:participant))

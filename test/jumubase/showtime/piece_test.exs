@@ -62,9 +62,13 @@ defmodule Jumubase.PieceTest do
       old_piece = %Piece{composer: "X", composer_born: "1", composer_died: "2"}
       attrs = %{artist: "Y"}
       changeset = Piece.changeset(old_piece, attrs)
+
       assert changeset.changes == %{
-        artist: "Y", composer: nil, composer_born: nil, composer_died: nil
-      }
+               artist: "Y",
+               composer: nil,
+               composer_born: nil,
+               composer_died: nil
+             }
     end
 
     test "clears all artist data when adding a composer" do

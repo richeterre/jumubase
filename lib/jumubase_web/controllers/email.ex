@@ -31,9 +31,9 @@ defmodule JumubaseWeb.Email do
       contest_category: %{category: category},
       edit_code: edit_code,
       appearances: appearances
-    } = performance |> Showtime.load_contest_category
+    } = performance |> Showtime.load_contest_category()
 
-    participants = appearances |> Enum.map(&(&1.participant))
+    participants = appearances |> Enum.map(& &1.participant)
 
     email =
       base_email()
@@ -49,6 +49,7 @@ defmodule JumubaseWeb.Email do
         |> to(participant.email)
         |> assign(:participant, participant)
         |> render("registration_success_one.html")
+
       participants ->
         email
         |> to(participants |> get_unique_emails)
@@ -72,6 +73,7 @@ defmodule JumubaseWeb.Email do
       participant_count
     )
   end
+
   defp get_subject(%Category{name: cat_name}, participant_count) do
     ngettext(
       "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\"",
@@ -82,6 +84,6 @@ defmodule JumubaseWeb.Email do
   end
 
   def get_unique_emails(participants) do
-    participants |> Enum.map(&(&1.email)) |> Enum.uniq
+    participants |> Enum.map(& &1.email) |> Enum.uniq()
   end
 end

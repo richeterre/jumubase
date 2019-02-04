@@ -3,7 +3,9 @@ defmodule Jumubase.Repo.Migrations.CreatePerformances do
 
   def change do
     create table(:performances) do
-      add :contest_category_id, references(:contest_categories, on_delete: :delete_all), null: false
+      add :contest_category_id, references(:contest_categories, on_delete: :delete_all),
+        null: false
+
       add :edit_code, :string
       add :age_group, :string
 

@@ -12,10 +12,12 @@ defmodule Jumubase.Repo.Migrations.CreateAppearances do
       timestamps()
     end
 
-    create unique_index(:appearances,
-      [:performance_id, :participant_id],
-      name: :no_multiple_appearances
-    )
+    create unique_index(
+             :appearances,
+             [:performance_id, :participant_id],
+             name: :no_multiple_appearances
+           )
+
     create index(:appearances, [:participant_id])
   end
 end

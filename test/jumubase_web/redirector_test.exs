@@ -36,10 +36,11 @@ defmodule JumubaseWeb.RedirectorTest do
   end
 
   defp assert_redirected_to(conn, expected_url) do
-    actual_uri = conn
-    |> Plug.Conn.get_resp_header("location")
-    |> List.first
-    |> URI.parse
+    actual_uri =
+      conn
+      |> Plug.Conn.get_resp_header("location")
+      |> List.first()
+      |> URI.parse()
 
     expected_uri = URI.parse(expected_url)
 
@@ -50,9 +51,9 @@ defmodule JumubaseWeb.RedirectorTest do
 
     if actual_uri.query do
       assert Map.equal?(
-        URI.decode_query(actual_uri.query),
-        URI.decode_query(expected_uri.query)
-      )
+               URI.decode_query(actual_uri.query),
+               URI.decode_query(expected_uri.query)
+             )
     end
   end
 end

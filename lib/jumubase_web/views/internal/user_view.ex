@@ -14,7 +14,7 @@ defmodule JumubaseWeb.Internal.UserView do
   """
   def host_flags(user) do
     user.hosts
-    |> Enum.map(fn(host) -> emoji_flag(host.country_code) end)
+    |> Enum.map(fn host -> emoji_flag(host.country_code) end)
   end
 
   @doc """
@@ -22,7 +22,7 @@ defmodule JumubaseWeb.Internal.UserView do
   """
   def host_names(user) do
     user.hosts
-    |> Enum.map(&(&1.name))
+    |> Enum.map(& &1.name)
     |> Enum.join(", ")
   end
 
@@ -33,6 +33,7 @@ defmodule JumubaseWeb.Internal.UserView do
     case role do
       "local-organizer" ->
         nil
+
       _ ->
         text = role_name(role)
         content_tag(:span, text, class: "label label-#{label_class(role)}")

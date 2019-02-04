@@ -45,29 +45,36 @@ defmodule Jumubase.AppearanceTest do
     test "prevents name or birthdate changes when updating a nested participant" do
       %{appearances: [a]} = insert(:contest) |> insert_performance
 
-      changeset = Appearance.changeset(a, %{participant: %{
-        id: a.participant.id,
-        given_name: "X",
-        family_name: "X",
-        birthdate: ~D[2001-02-03],
-      }})
+      changeset =
+        Appearance.changeset(a, %{
+          participant: %{
+            id: a.participant.id,
+            given_name: "X",
+            family_name: "X",
+            birthdate: ~D[2001-02-03]
+          }
+        })
 
       refute changeset.valid?
+
       assert changeset.changes[:participant].errors == [
-        birthdate: {"can't be changed", []},
-        family_name: {"can't be changed", []},
-        given_name: {"can't be changed", []},
-      ]
+               birthdate: {"can't be changed", []},
+               family_name: {"can't be changed", []},
+               given_name: {"can't be changed", []}
+             ]
     end
 
     test "allows non-identity changes when updating a nested participant" do
       %{appearances: [a]} = insert(:contest) |> insert_performance
 
-      changeset = Appearance.changeset(a, %{participant: %{
-        id: a.participant.id,
-        phone: "456",
-        email: "new@example.org",
-      }})
+      changeset =
+        Appearance.changeset(a, %{
+          participant: %{
+            id: a.participant.id,
+            phone: "456",
+            email: "new@example.org"
+          }
+        })
 
       assert changeset.valid?
     end

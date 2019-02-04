@@ -39,7 +39,7 @@ defmodule Jumubase.Showtime.Instruments do
     "viola_da_gamba" => gettext("Viola da gamba"),
     "violin" => gettext("Violin"),
     "violoncello" => gettext("Violoncello"),
-    "vocals" => gettext("Vocals"),
+    "vocals" => gettext("Vocals")
   }
 
   def all, do: @instruments

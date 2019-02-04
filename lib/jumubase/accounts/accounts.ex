@@ -30,20 +30,22 @@ defmodule Jumubase.Accounts do
     %User{hosts: []}
     |> User.create_changeset(attrs)
     |> put_hosts_assoc(attrs)
-    |> change(confirmed_at: DateTime.utc_now()) # Auto-confirm
+    # Auto-confirm
+    |> change(confirmed_at: DateTime.utc_now())
     |> Repo.insert()
   end
 
   def create_password_reset(endpoint, attrs) do
     with %User{} = user <- get_by(attrs) do
-      change(user, %{reset_sent_at: DateTime.utc_now}) |> Repo.update
+      change(user, %{reset_sent_at: DateTime.utc_now()}) |> Repo.update()
       Phauxth.Token.sign(endpoint, attrs)
     end
   end
 
   def update_user(%User{} = user, attrs) do
     user
-    |> Repo.preload(:hosts) # needed for putting new hosts
+    # Preloading is needed for putting new hosts
+    |> Repo.preload(:hosts)
     |> User.changeset(attrs)
     |> put_hosts_assoc(attrs)
     |> Repo.update()
@@ -70,12 +72,12 @@ defmodule Jumubase.Accounts do
 
   def add_session(%User{sessions: sessions} = user, session_id, timestamp) do
     change(user, sessions: put_in(sessions, [session_id], timestamp))
-    |> Repo.update
+    |> Repo.update()
   end
 
   def delete_session(%User{sessions: sessions} = user, session_id) do
     change(user, sessions: Map.delete(sessions, session_id))
-    |> Repo.update
+    |> Repo.update()
   end
 
   # Private helpers

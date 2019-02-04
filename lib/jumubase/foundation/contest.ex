@@ -30,7 +30,7 @@ defmodule Jumubase.Foundation.Contest do
     |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
     |> validate_number(:season, greater_than: 0)
-    |> validate_inclusion(:round, JumuParams.rounds)
+    |> validate_inclusion(:round, JumuParams.rounds())
     |> validate_dates
   end
 
@@ -52,12 +52,20 @@ defmodule Jumubase.Foundation.Contest do
     cond do
       !start_date || !end_date || !deadline ->
         changeset
+
       Timex.before?(end_date, start_date) ->
         add_error(changeset, :end_date, dgettext("errors", "can't be before the start date"))
+
       not Timex.before?(deadline, start_date) ->
         add_error(changeset, :deadline, dgettext("errors", "must be before the start date"))
+
       !!certificate_date and Timex.before?(certificate_date, end_date) ->
-        add_error(changeset, :certificate_date, dgettext("errors", "can't be before the end date"))
+        add_error(
+          changeset,
+          :certificate_date,
+          dgettext("errors", "can't be before the end date")
+        )
+
       true ->
         changeset
     end

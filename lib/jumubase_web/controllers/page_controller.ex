@@ -30,6 +30,7 @@ defmodule JumubaseWeb.PageController do
     case String.trim(edit_code) do
       "" ->
         show_error(conn, gettext("Please enter an edit code."))
+
       edit_code ->
         perform_lookup(conn, edit_code)
     end
@@ -45,7 +46,7 @@ defmodule JumubaseWeb.PageController do
 
   def contact(conn, _params) do
     conn
-    |> assign(:hosts, Foundation.list_hosts)
+    |> assign(:hosts, Foundation.list_hosts())
     |> render("contact.html")
   end
 
@@ -63,16 +64,20 @@ defmodule JumubaseWeb.PageController do
   end
 
   defp perform_lookup(conn, edit_code) do
-    with \
-      {:ok, %{contest_category: %{contest: c}} = p} <- Showtime.lookup_performance(edit_code),
-      false <- deadline_passed?(c, Timex.today)
-    do
+    with {:ok, %{contest_category: %{contest: c}} = p} <- Showtime.lookup_performance(edit_code),
+         false <- deadline_passed?(c, Timex.today()) do
       redirect(conn, to: Routes.performance_path(conn, :edit, c, p, edit_code: edit_code))
     else
       {:error, _} ->
         show_error(conn, gettext("We could not find a registration for this edit code."))
+
       true ->
-        show_error(conn, gettext("The edit deadline for this contest has passed. Please contact us if you need assistance."))
+        show_error(
+          conn,
+          gettext(
+            "The edit deadline for this contest has passed. Please contact us if you need assistance."
+          )
+        )
     end
   end
 end

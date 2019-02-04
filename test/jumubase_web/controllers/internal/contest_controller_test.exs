@@ -100,7 +100,8 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       redirect_path = Routes.internal_contest_path(conn, :index)
 
       assert redirected_to(conn) == redirect_path
-      conn = get(recycle(conn), redirect_path) # Follow redirection
+      # Follow redirection
+      conn = get(recycle(conn), redirect_path)
       assert html_response(conn, 200) =~ "The contest #{name(c)} was updated."
     end
 
@@ -113,7 +114,11 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to update a contest", %{conn: conn, contest: c, params: params} do
+      test "redirects #{role} users when trying to update a contest", %{
+        conn: conn,
+        contest: c,
+        params: params
+      } do
         conn = put(conn, Routes.internal_contest_path(conn, :update, c, params))
         assert_unauthorized_user(conn)
       end

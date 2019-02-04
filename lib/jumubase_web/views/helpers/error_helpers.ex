@@ -10,15 +10,15 @@ defmodule JumubaseWeb.ErrorHelpers do
   Generates tag for inlined form input errors.
   """
   def error_tag(form, field) do
-    Enum.map(Keyword.get_values(form.errors, field), fn (error) ->
-      content_tag :span, translate_error(error), class: "help-block"
+    Enum.map(Keyword.get_values(form.errors, field), fn error ->
+      content_tag(:span, translate_error(error), class: "help-block")
     end)
   end
 
   def error_list_tag(errors) do
     content_tag :ul do
       for error <- errors do
-        content_tag :li, translate_error(error)
+        content_tag(:li, translate_error(error))
       end
     end
   end

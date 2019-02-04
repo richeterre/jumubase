@@ -24,7 +24,8 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
       redirect_path = Routes.internal_host_path(conn, :index)
 
       assert redirected_to(conn) == redirect_path
-      conn = get(recycle(conn), redirect_path) # Follow redirection
+      # Follow redirection
+      conn = get(recycle(conn), redirect_path)
       assert html_response(conn, 200) =~ "XYZ"
     end
 
@@ -52,12 +53,15 @@ defmodule JumubaseWeb.Internal.HostControllerTest do
   # Private helpers
 
   defp verify_all_routes(conn, assertion_fun) do
-    Enum.each([
-      get(conn, Routes.internal_host_path(conn, :index)),
-      get(conn, Routes.internal_host_path(conn, :new)),
-      post(conn, Routes.internal_host_path(conn, :create), %{host: %{}}),
-    ], fn conn ->
-      assertion_fun.(conn)
-    end)
+    Enum.each(
+      [
+        get(conn, Routes.internal_host_path(conn, :index)),
+        get(conn, Routes.internal_host_path(conn, :new)),
+        post(conn, Routes.internal_host_path(conn, :create), %{host: %{}})
+      ],
+      fn conn ->
+        assertion_fun.(conn)
+      end
+    )
   end
 end

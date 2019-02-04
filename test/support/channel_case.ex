@@ -25,13 +25,13 @@ defmodule JumubaseWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Jumubase.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Jumubase.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

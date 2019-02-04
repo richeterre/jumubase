@@ -6,7 +6,8 @@ defmodule Jumubase.ShowtimeTest do
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
 
-  @season 56 # important for age group matching in tests
+  # important for age group matching in tests
+  @season 56
 
   setup do
     [contest: insert(:contest, season: @season) |> with_contest_categories]
@@ -14,7 +15,7 @@ defmodule Jumubase.ShowtimeTest do
 
   describe "list_performances/1" do
     test "returns the given contest's performances in the right order", %{contest: c} do
-      now = Timex.now
+      now = Timex.now()
       later = Timex.shift(now, seconds: 1)
 
       # Performances in this contest
@@ -31,19 +32,22 @@ defmodule Jumubase.ShowtimeTest do
       insert_performance(other_c)
 
       # Check that performances are ordered by stage time, CC insertion, age group and insertion date
-      assert_ids_match_unordered Showtime.list_performances(c), [p6, p3, p5, p4, p1, p2]
+      assert_ids_match_unordered(Showtime.list_performances(c), [p6, p3, p5, p4, p1, p2])
     end
 
-    test "preloads each performance's contest category, category, appearances, participants and stage", %{contest: c} do
+    test "preloads each performance's contest category, category, appearances, participants and stage",
+         %{contest: c} do
       insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
-      assert [%Performance{
-        contest_category: %ContestCategory{category: %Category{}},
-        appearances: [
-          %Appearance{participant: %Participant{}}
-        ],
-        stage: %Stage{}
-      }] = Showtime.list_performances(c)
+      assert [
+               %Performance{
+                 contest_category: %ContestCategory{category: %Category{}},
+                 appearances: [
+                   %Appearance{participant: %Participant{}}
+                 ],
+                 stage: %Stage{}
+               }
+             ] = Showtime.list_performances(c)
     end
   end
 
@@ -60,11 +64,17 @@ defmodule Jumubase.ShowtimeTest do
         stage_id: s1.id,
         contest_category_id: cc1.id,
         age_group: "III",
-        results_public: true,
+        results_public: true
       }
 
       # Matching performance
-      p = insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today, results_public: true)
+      p =
+        insert_performance(cc1,
+          age_group: "III",
+          stage_id: s1.id,
+          stage_time: today,
+          results_public: true
+        )
 
       # Non-matching performances
       insert_performance(cc1, age_group: "III", stage_id: s2.id, stage_time: today)
@@ -73,12 +83,20 @@ defmodule Jumubase.ShowtimeTest do
       insert_performance(cc1, age_group: "IV", stage_id: s1.id, stage_time: today)
       insert_performance(cc2, age_group: "III", stage_id: s1.id, stage_time: today)
       insert_performance(cc2, age_group: "IV", stage_id: s1.id, stage_time: today)
-      insert_performance(cc1, age_group: "III", stage_id: s1.id, stage_time: today, results_public: false)
 
-      assert_ids_match_unordered Showtime.list_performances(c, filter), [p]
+      insert_performance(cc1,
+        age_group: "III",
+        stage_id: s1.id,
+        stage_time: today,
+        results_public: false
+      )
+
+      assert_ids_match_unordered(Showtime.list_performances(c, filter), [p])
     end
 
-    test "returns matching performances from the contest when passing a list of ids", %{contest: c} do
+    test "returns matching performances from the contest when passing a list of ids", %{
+      contest: c
+    } do
       # Matching performances
       p1 = insert_performance(c)
       p2 = insert_performance(c)
@@ -87,7 +105,7 @@ defmodule Jumubase.ShowtimeTest do
       p3 = insert_performance(insert(:contest))
       insert_performance(c)
 
-      assert_ids_match_unordered Showtime.list_performances(c, [p3.id, p2.id, p1.id]), [p1, p2]
+      assert_ids_match_unordered(Showtime.list_performances(c, [p3.id, p2.id, p1.id]), [p1, p2])
     end
   end
 
@@ -99,23 +117,26 @@ defmodule Jumubase.ShowtimeTest do
       p2 = insert_performance(cc2, stage_time: nil)
 
       # Non-matching performances
-      insert_performance(cc1, stage_time: Timex.now)
+      insert_performance(cc1, stage_time: Timex.now())
       other_c = insert(:contest)
       insert_performance(other_c, stage_time: nil)
 
-      assert_ids_match_unordered Showtime.unscheduled_performances(c), [p1, p2]
+      assert_ids_match_unordered(Showtime.unscheduled_performances(c), [p1, p2])
     end
 
-    test "preloads the performances' contest categories, categories, appearances, participants and stages", %{contest: c} do
+    test "preloads the performances' contest categories, categories, appearances, participants and stages",
+         %{contest: c} do
       insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
-      assert [%Performance{
-        contest_category: %ContestCategory{category: %Category{}},
-        appearances: [
-          %Appearance{participant: %Participant{}}
-        ],
-        stage: %Stage{}
-      }] = Showtime.unscheduled_performances(c)
+      assert [
+               %Performance{
+                 contest_category: %ContestCategory{category: %Category{}},
+                 appearances: [
+                   %Appearance{participant: %Participant{}}
+                 ],
+                 stage: %Stage{}
+               }
+             ] = Showtime.unscheduled_performances(c)
     end
   end
 
@@ -138,16 +159,17 @@ defmodule Jumubase.ShowtimeTest do
       %{id: id} = insert_performance(c)
 
       assert %Performance{
-        contest_category: %ContestCategory{category: %Category{}},
-        appearances: [%Appearance{participant: %Participant{}}],
-        pieces: [%Piece{}]
-      } = Showtime.get_performance!(c, id)
+               contest_category: %ContestCategory{category: %Category{}},
+               appearances: [%Appearance{participant: %Participant{}}],
+               pieces: [%Piece{}]
+             } = Showtime.get_performance!(c, id)
     end
 
     test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
-      %{id: id} = insert_performance(c,
-        pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
-      )
+      %{id: id} =
+        insert_performance(c,
+          pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
+        )
 
       %{pieces: [pc1, pc2]} = Showtime.get_performance!(c, id)
       assert pc1.title == "Y"
@@ -184,16 +206,17 @@ defmodule Jumubase.ShowtimeTest do
       %{id: id, edit_code: edit_code} = insert_performance(c)
 
       assert %Performance{
-        contest_category: %ContestCategory{category: %Category{}},
-        appearances: [%Appearance{participant: %Participant{}}],
-        pieces: [%Piece{}]
-      } = Showtime.get_performance!(c, id, edit_code)
+               contest_category: %ContestCategory{category: %Category{}},
+               appearances: [%Appearance{participant: %Participant{}}],
+               pieces: [%Piece{}]
+             } = Showtime.get_performance!(c, id, edit_code)
     end
 
     test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
-      %{id: id, edit_code: edit_code} = insert_performance(c,
-        pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
-      )
+      %{id: id, edit_code: edit_code} =
+        insert_performance(c,
+          pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
+        )
 
       %{pieces: [pc1, pc2]} = Showtime.get_performance!(c, id, edit_code)
       assert pc1.title == "Y"
@@ -212,9 +235,10 @@ defmodule Jumubase.ShowtimeTest do
     test "preloads the performance's contest category and contest", %{contest: c} do
       %{edit_code: edit_code} = insert_performance(c)
 
-      assert {:ok, %Performance{
-        contest_category: %ContestCategory{contest: %Contest{}},
-      }} = Showtime.lookup_performance(edit_code)
+      assert {:ok,
+              %Performance{
+                contest_category: %ContestCategory{contest: %Contest{}}
+              }} = Showtime.lookup_performance(edit_code)
     end
 
     test "returns an error for an unknown edit code" do
@@ -241,16 +265,17 @@ defmodule Jumubase.ShowtimeTest do
       %{edit_code: edit_code} = insert_performance(c)
 
       assert %Performance{
-        contest_category: %ContestCategory{category: %Category{}},
-        appearances: [%Appearance{participant: %Participant{}}],
-        pieces: [%Piece{}]
-      } = Showtime.lookup_performance!(c, edit_code)
+               contest_category: %ContestCategory{category: %Category{}},
+               appearances: [%Appearance{participant: %Participant{}}],
+               pieces: [%Piece{}]
+             } = Showtime.lookup_performance!(c, edit_code)
     end
 
     test "loads the performance's pieces in insertion order, earliest first", %{contest: c} do
-      %{edit_code: edit_code} = insert_performance(c,
-        pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
-      )
+      %{edit_code: edit_code} =
+        insert_performance(c,
+          pieces: [build(:piece, title: "Y"), build(:piece, title: "X")]
+        )
 
       %{pieces: [pc1, pc2]} = Showtime.lookup_performance!(c, edit_code)
       assert pc1.title == "Y"
@@ -264,10 +289,10 @@ defmodule Jumubase.ShowtimeTest do
       %{id: cc_id} = insert_contest_category(c)
 
       assert %Performance{
-        contest_category_id: ^cc_id,
-        appearances: [%Appearance{}],
-        pieces: [%Piece{}],
-      } = Showtime.build_performance(c)
+               contest_category_id: ^cc_id,
+               appearances: [%Appearance{}],
+               pieces: [%Piece{}]
+             } = Showtime.build_performance(c)
     end
 
     test "builds a bare performance for Kimu contests with multiple categories" do
@@ -275,29 +300,31 @@ defmodule Jumubase.ShowtimeTest do
       insert_list(2, :contest_category, contest: c)
 
       assert %Performance{
-        contest_category_id: nil,
-        appearances: %Ecto.Association.NotLoaded{},
-        pieces: %Ecto.Association.NotLoaded{},
-      } = Showtime.build_performance(c)
+               contest_category_id: nil,
+               appearances: %Ecto.Association.NotLoaded{},
+               pieces: %Ecto.Association.NotLoaded{}
+             } = Showtime.build_performance(c)
     end
 
     test "builds a bare performance for RW contests" do
       c = insert(:contest, round: 1)
 
       assert %Performance{
-        contest_category_id: nil,
-        appearances: %Ecto.Association.NotLoaded{},
-        pieces: %Ecto.Association.NotLoaded{},
-      } = Showtime.build_performance(c)
+               contest_category_id: nil,
+               appearances: %Ecto.Association.NotLoaded{},
+               pieces: %Ecto.Association.NotLoaded{}
+             } = Showtime.build_performance(c)
     end
   end
 
   describe "create_performance/2" do
     test "creates a new performance with an edit code", %{contest: c} do
       [cc, _] = c.contest_categories
-      attrs = performance_params(cc, [
-        {"soloist", birthdate: ~D[2007-01-01]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"soloist", birthdate: ~D[2007-01-01]}
+        ])
 
       assert {:ok, %Performance{edit_code: edit_code}} = Showtime.create_performance(c, attrs)
       assert Regex.match?(~r/^[0-9]{6}$/, edit_code)
@@ -319,10 +346,11 @@ defmodule Jumubase.ShowtimeTest do
       insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-02])
       pt = insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-01])
 
-      attrs = performance_params(cc, [
-        {"soloist", given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]},
-        {"accompanist", birthdate: ~D[2007-01-01]},
-      ])
+      attrs =
+        performance_params(cc, [
+          {"soloist", given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]},
+          {"accompanist", birthdate: ~D[2007-01-01]}
+        ])
 
       {:ok, performance} = Showtime.create_performance(c, attrs)
       sol = get_soloist(performance)
@@ -337,9 +365,10 @@ defmodule Jumubase.ShowtimeTest do
       matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
       old_pt = insert(:participant, matching_attrs ++ [email: "old@example.org"])
 
-      attrs = performance_params(cc, [
-        {"soloist", matching_attrs ++ [email: "new@example.org"]}
-      ])
+      attrs =
+        performance_params(cc, [
+          {"soloist", matching_attrs ++ [email: "new@example.org"]}
+        ])
 
       {:ok, performance} = Showtime.create_performance(c, attrs)
       %{participant: pt} = get_soloist(performance)
@@ -350,11 +379,15 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns a joint age group based on non-accompanists", %{contest: c} do
       [cc, _] = c.contest_categories
-      attrs = performance_params(cc, [
-        {"ensemblist", birthdate: ~D[2006-12-31]},
-        {"ensemblist", birthdate: ~D[2007-01-01]},
-        {"accompanist", birthdate: ~D[2000-01-01]} # should not affect age group
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"ensemblist", birthdate: ~D[2006-12-31]},
+          {"ensemblist", birthdate: ~D[2007-01-01]},
+          # should not affect age group
+          {"accompanist", birthdate: ~D[2000-01-01]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       assert performance.age_group == "III"
@@ -362,11 +395,14 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns the correct age groups for a classical solo performance", %{contest: c} do
       cc = insert_contest_category(c, "classical")
-      attrs = performance_params(cc, [
-        {"soloist", birthdate: ~D[2007-01-01]},
-        {"accompanist", birthdate: ~D[2000-01-01]},
-        {"accompanist", birthdate: ~D[2002-01-02]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"soloist", birthdate: ~D[2007-01-01]},
+          {"accompanist", birthdate: ~D[2000-01-01]},
+          {"accompanist", birthdate: ~D[2002-01-02]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       assert get_soloist(performance).age_group == "II"
@@ -378,12 +414,15 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns the correct age groups for a classical ensemble performance", %{contest: c} do
       cc = insert_contest_category(c, "classical")
-      attrs = performance_params(cc, [
-        {"ensemblist", birthdate: ~D[2006-12-31]},
-        {"ensemblist", birthdate: ~D[2007-01-01]},
-        {"accompanist", birthdate: ~D[2000-01-01]},
-        {"accompanist", birthdate: ~D[2002-01-02]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"ensemblist", birthdate: ~D[2006-12-31]},
+          {"ensemblist", birthdate: ~D[2007-01-01]},
+          {"accompanist", birthdate: ~D[2000-01-01]},
+          {"accompanist", birthdate: ~D[2002-01-02]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       for ens <- get_ensemblists(performance) do
@@ -397,11 +436,14 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns the correct age groups for a pop solo performance", %{contest: c} do
       cc = insert_contest_category(c, "popular")
-      attrs = performance_params(cc, [
-        {"soloist", birthdate: ~D[2007-01-01]},
-        {"accompanist", birthdate: ~D[2000-01-01]},
-        {"accompanist", birthdate: ~D[2002-01-02]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"soloist", birthdate: ~D[2007-01-01]},
+          {"accompanist", birthdate: ~D[2000-01-01]},
+          {"accompanist", birthdate: ~D[2002-01-02]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       assert get_soloist(performance).age_group == "II"
@@ -413,12 +455,15 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns the correct age groups for a pop ensemble performance", %{contest: c} do
       cc = insert_contest_category(c, "popular")
-      attrs = performance_params(cc, [
-        {"ensemblist", birthdate: ~D[2006-12-31]},
-        {"ensemblist", birthdate: ~D[2007-01-01]},
-        {"accompanist", birthdate: ~D[2000-01-01]},
-        {"accompanist", birthdate: ~D[2002-01-02]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"ensemblist", birthdate: ~D[2006-12-31]},
+          {"ensemblist", birthdate: ~D[2007-01-01]},
+          {"accompanist", birthdate: ~D[2000-01-01]},
+          {"accompanist", birthdate: ~D[2002-01-02]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       for ens <- get_ensemblists(performance) do
@@ -432,11 +477,14 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns the correct age groups for a Kimu solo performance", %{contest: c} do
       cc = insert_contest_category(c, "kimu")
-      attrs = performance_params(cc, [
-        {"soloist", birthdate: ~D[2011-01-01]},
-        {"accompanist", birthdate: ~D[2009-01-01]},
-        {"accompanist", birthdate: ~D[2008-12-31]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"soloist", birthdate: ~D[2011-01-01]},
+          {"accompanist", birthdate: ~D[2009-01-01]},
+          {"accompanist", birthdate: ~D[2008-12-31]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       assert get_soloist(performance).age_group == "Ia"
@@ -448,12 +496,15 @@ defmodule Jumubase.ShowtimeTest do
 
     test "assigns the correct age groups for a Kimu ensemble performance", %{contest: c} do
       cc = insert_contest_category(c, "kimu")
-      attrs = performance_params(cc, [
-        {"ensemblist", birthdate: ~D[2011-01-01]},
-        {"ensemblist", birthdate: ~D[2010-12-31]},
-        {"accompanist", birthdate: ~D[2009-01-01]},
-        {"accompanist", birthdate: ~D[2008-12-31]},
-      ])
+
+      attrs =
+        performance_params(cc, [
+          {"ensemblist", birthdate: ~D[2011-01-01]},
+          {"ensemblist", birthdate: ~D[2010-12-31]},
+          {"accompanist", birthdate: ~D[2009-01-01]},
+          {"accompanist", birthdate: ~D[2008-12-31]}
+        ])
+
       {:ok, performance} = Showtime.create_performance(c, attrs)
 
       for ens <- get_ensemblists(performance) do
@@ -489,17 +540,19 @@ defmodule Jumubase.ShowtimeTest do
     test "allows updating of participants", %{contest: c} do
       [cc, _] = c.contest_categories
 
-      old_p = insert_shorthand_performance(cc, [
-        {"ensemblist", birthdate: ~D[2001-01-01]},
-        {"ensemblist", birthdate: ~D[2002-01-01]},
-        {"ensemblist", birthdate: ~D[2003-01-01]},
-      ])
+      old_p =
+        insert_shorthand_performance(cc, [
+          {"ensemblist", birthdate: ~D[2001-01-01]},
+          {"ensemblist", birthdate: ~D[2002-01-01]},
+          {"ensemblist", birthdate: ~D[2003-01-01]}
+        ])
 
-      attrs = performance_params(cc, [
-        # Replace the second ensemblist and drop the third
-        {"ensemblist", birthdate: ~D[2001-01-01]},
-        {"ensemblist", birthdate: ~D[2002-01-02]},
-      ])
+      attrs =
+        performance_params(cc, [
+          # Replace the second ensemblist and drop the third
+          {"ensemblist", birthdate: ~D[2001-01-01]},
+          {"ensemblist", birthdate: ~D[2002-01-02]}
+        ])
 
       {:ok, %{id: id}} = Showtime.update_performance(c, old_p, attrs)
       # Force-reload before checking associations
@@ -511,37 +564,51 @@ defmodule Jumubase.ShowtimeTest do
     test "doesn't allow changes that affect a participant's identity", %{contest: c} do
       [cc, _] = c.contest_categories
 
-      old_p = insert_shorthand_performance(cc, [
-        {"soloist", [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]}
-      ])
+      old_p =
+        insert_shorthand_performance(cc, [
+          {"soloist", [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]}
+        ])
+
       old_sol = get_soloist(old_p)
 
-      attrs = performance_params(cc, [
-        {old_sol, "soloist", [given_name: "Y", family_name: "Y", birthdate: ~D[2001-01-02]]}
-      ])
+      attrs =
+        performance_params(cc, [
+          {old_sol, "soloist", [given_name: "Y", family_name: "Y", birthdate: ~D[2001-01-02]]}
+        ])
 
       {:error, changeset} = Showtime.update_performance(c, old_p, attrs)
-      assert [%Changeset{changes: %{
-        participant: %{errors: [
-          birthdate: {"can't be changed", []},
-          family_name: {"can't be changed", []},
-          given_name: {"can't be changed", []},
-        ]}
-      }}] = changeset.changes[:appearances]
+
+      assert [
+               %Changeset{
+                 changes: %{
+                   participant: %{
+                     errors: [
+                       birthdate: {"can't be changed", []},
+                       family_name: {"can't be changed", []},
+                       given_name: {"can't be changed", []}
+                     ]
+                   }
+                 }
+               }
+             ] = changeset.changes[:appearances]
     end
 
     test "allows changes that don't affect a participant's identity", %{contest: c} do
       [cc, _] = c.contest_categories
 
       matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
-      old_p = insert_shorthand_performance(cc, [
-        {"soloist", matching_attrs ++ [phone: "123", email: "old@example.org"]}
-      ])
+
+      old_p =
+        insert_shorthand_performance(cc, [
+          {"soloist", matching_attrs ++ [phone: "123", email: "old@example.org"]}
+        ])
+
       old_sol = get_soloist(old_p)
 
-      attrs = performance_params(cc, [
-        {old_sol, "soloist", matching_attrs ++ [phone: "456", email: "new@example.org"]}
-      ])
+      attrs =
+        performance_params(cc, [
+          {old_sol, "soloist", matching_attrs ++ [phone: "456", email: "new@example.org"]}
+        ])
 
       {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
       %{participant: pt} = get_soloist(performance)
@@ -555,14 +622,17 @@ defmodule Jumubase.ShowtimeTest do
 
       matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
       old_pt = insert(:participant, matching_attrs ++ [email: "old@example.org"])
-      old_p = insert_shorthand_performance(cc, [
-        {"soloist", birthdate: ~D[2001-01-02]}
-      ])
 
-      attrs = performance_params(cc, [
-        {"soloist", birthdate: ~D[2001-01-02]},
-        {"accompanist", matching_attrs ++ [email: "new@example.org"]}
-      ])
+      old_p =
+        insert_shorthand_performance(cc, [
+          {"soloist", birthdate: ~D[2001-01-02]}
+        ])
+
+      attrs =
+        performance_params(cc, [
+          {"soloist", birthdate: ~D[2001-01-02]},
+          {"accompanist", matching_attrs ++ [email: "new@example.org"]}
+        ])
 
       {:ok, performance} = Showtime.update_performance(c, old_p, attrs)
       [%{participant: pt}] = get_accompanists(performance)
@@ -574,18 +644,20 @@ defmodule Jumubase.ShowtimeTest do
     test "updates the age groups after modifying participants", %{contest: c} do
       [cc, _] = c.contest_categories
 
-      old_p = insert_shorthand_performance(cc, [
-        # These ensemblists together get AG IV
-        {"ensemblist", birthdate: ~D[2007-01-01]},
-        {"ensemblist", birthdate: ~D[2005-01-01]},
-        {"ensemblist", birthdate: ~D[2003-01-01]},
-      ])
+      old_p =
+        insert_shorthand_performance(cc, [
+          # These ensemblists together get AG IV
+          {"ensemblist", birthdate: ~D[2007-01-01]},
+          {"ensemblist", birthdate: ~D[2005-01-01]},
+          {"ensemblist", birthdate: ~D[2003-01-01]}
+        ])
 
-      attrs = performance_params(cc, [
-        # Replace two ensemblists and drop the third
-        {"ensemblist", birthdate: ~D[2007-01-02]},
-        {"ensemblist", birthdate: ~D[2006-12-31]},
-      ])
+      attrs =
+        performance_params(cc, [
+          # Replace two ensemblists and drop the third
+          {"ensemblist", birthdate: ~D[2007-01-02]},
+          {"ensemblist", birthdate: ~D[2006-12-31]}
+        ])
 
       {:ok, %{id: id}} = Showtime.update_performance(c, old_p, attrs)
       # Force-reload before checking associations
@@ -602,10 +674,14 @@ defmodule Jumubase.ShowtimeTest do
       old_cc = insert_contest_category(c, "classical")
 
       appearances = [
-        {"soloist", birthdate: ~D[2007-01-01]}, # AG II
-        {"accompanist", birthdate: ~D[2007-01-02]}, # AG II
-        {"accompanist", birthdate: ~D[2005-01-01]}, # AG III
-        {"accompanist", birthdate: ~D[2003-01-01]}, # AG IV
+        # AG II
+        {"soloist", birthdate: ~D[2007-01-01]},
+        # AG II
+        {"accompanist", birthdate: ~D[2007-01-02]},
+        # AG III
+        {"accompanist", birthdate: ~D[2005-01-01]},
+        # AG IV
+        {"accompanist", birthdate: ~D[2003-01-01]}
       ]
 
       old_p = insert_shorthand_performance(old_cc, appearances)
@@ -627,17 +703,23 @@ defmodule Jumubase.ShowtimeTest do
     test "allows updating of pieces", %{contest: c} do
       %{
         pieces: [old_pc1, old_pc2, old_pc3]
-      } = old_p = insert_performance(c, pieces: [
-        build(:piece, title: "A"),
-        build(:piece, title: "B"),
-        build(:piece, title: "C"),
-      ])
+      } =
+        old_p =
+        insert_performance(c,
+          pieces: [
+            build(:piece, title: "A"),
+            build(:piece, title: "B"),
+            build(:piece, title: "C")
+          ]
+        )
 
-      attrs = %{pieces: [
-        params_for(:piece, title: "A changed") |> Map.put(:id, old_pc1.id),
-        params_for(:piece, title: "B") |> Map.put(:id, old_pc2.id),
-        params_for(:piece, title: "D"),
-      ]}
+      attrs = %{
+        pieces: [
+          params_for(:piece, title: "A changed") |> Map.put(:id, old_pc1.id),
+          params_for(:piece, title: "B") |> Map.put(:id, old_pc2.id),
+          params_for(:piece, title: "D")
+        ]
+      }
 
       {:ok, %{id: id}} = Showtime.update_performance(c, old_p, attrs)
       # Force-reload before checking associations
@@ -670,6 +752,7 @@ defmodule Jumubase.ShowtimeTest do
     test "raises an error if the performance no longer exists", %{contest: c} do
       performance = insert_performance(c)
       Repo.delete(performance)
+
       assert_raise Ecto.StaleEntryError, fn ->
         Showtime.delete_performance!(performance)
       end
@@ -689,15 +772,17 @@ defmodule Jumubase.ShowtimeTest do
       items = [
         %{id: p1.id, stage_id: s1.id, stage_time: st1},
         %{id: p2.id, stage_id: s2.id, stage_time: st2},
-        %{id: p3.id, stage_id: nil, stage_time: nil},
+        %{id: p3.id, stage_id: nil, stage_time: nil}
       ]
 
       assert {:ok, stage_times} = Showtime.reschedule_performances(c, items)
+
       assert stage_times == [
-        {p1.id, st1},
-        {p2.id, st2},
-        {p3.id, nil}
-      ]
+               {p1.id, st1},
+               {p2.id, st2},
+               {p3.id, nil}
+             ]
+
       assert %{stage_id: ^s1_id, stage_time: ^st1} = Repo.get(Performance, p1.id)
       assert %{stage_id: ^s2_id, stage_time: ^st2} = Repo.get(Performance, p2.id)
       assert %{stage_id: nil, stage_time: nil} = Repo.get(Performance, p3.id)
@@ -712,7 +797,7 @@ defmodule Jumubase.ShowtimeTest do
 
       items = [
         %{id: p1.id, stage_id: s.id, stage_time: nil},
-        %{id: p2.id, stage_id: nil, stage_time: nil},
+        %{id: p2.id, stage_id: nil, stage_time: nil}
       ]
 
       assert {:error, ^p1_id, %Changeset{} = cs} = Showtime.reschedule_performances(c, items)
@@ -756,10 +841,14 @@ defmodule Jumubase.ShowtimeTest do
 
   describe "total_duration/1" do
     test "returns the total duration of a performance" do
-      p = build(:performance, pieces: [
-        build(:piece, minutes: 1, seconds: 59),
-        build(:piece, minutes: 2, seconds: 34)
-      ])
+      p =
+        build(:performance,
+          pieces: [
+            build(:piece, minutes: 1, seconds: 59),
+            build(:piece, minutes: 2, seconds: 34)
+          ]
+        )
+
       assert Showtime.total_duration(p) == Timex.Duration.from_clock({0, 4, 33, 0})
     end
   end
@@ -771,21 +860,27 @@ defmodule Jumubase.ShowtimeTest do
       popular_cc = insert_contest_category(c, "popular")
 
       performances = [
-        insert_performance(classical_cc, appearances: [
-          build(:appearance, role: "soloist", points: 25),
-          build(:appearance, role: "accompanist", points: nil),
-          build(:appearance, role: "accompanist", points: 25),
-        ], results_public: false),
-        insert_performance(popular_cc, appearances: [
-          build(:appearance, role: "ensemblist", points: 25),
-          build(:appearance, role: "ensemblist", points: 25),
-          build(:appearance, role: "accompanist", points: nil),
-          build(:appearance, role: "accompanist", points: nil),
-        ], results_public: true)
+        insert_performance(classical_cc,
+          appearances: [
+            build(:appearance, role: "soloist", points: 25),
+            build(:appearance, role: "accompanist", points: nil),
+            build(:appearance, role: "accompanist", points: 25)
+          ],
+          results_public: false
+        ),
+        insert_performance(popular_cc,
+          appearances: [
+            build(:appearance, role: "ensemblist", points: 25),
+            build(:appearance, role: "ensemblist", points: 25),
+            build(:appearance, role: "accompanist", points: nil),
+            build(:appearance, role: "accompanist", points: nil)
+          ],
+          results_public: true
+        )
       ]
 
-      assert Showtime.result_completions(performances)
-        == %{total: 5, with_points: 3, public: 2}
+      assert Showtime.result_completions(performances) ==
+               %{total: 5, with_points: 3, public: 2}
     end
   end
 
@@ -793,23 +888,31 @@ defmodule Jumubase.ShowtimeTest do
     test "returns stats for a list of Kimu performances" do
       c = insert(:contest, round: 0)
       pt = insert(:participant)
-      p1 = insert_performance(c, appearances: [
-        build(:appearance, role: "ensemblist", participant: pt),
-        build(:appearance, role: "ensemblist"),
-        build(:appearance, role: "accompanist"),
-      ])
-      p2 = insert_performance(c, appearances: [
-        build(:appearance, role: "soloist", participant: pt),
-        build(:appearance, role: "accompanist"),
-      ])
 
-      assert Showtime.statistics([p1, p2], c.round)
-        == %{appearances: 5, participants: 4, performances: %{total: 2}}
+      p1 =
+        insert_performance(c,
+          appearances: [
+            build(:appearance, role: "ensemblist", participant: pt),
+            build(:appearance, role: "ensemblist"),
+            build(:appearance, role: "accompanist")
+          ]
+        )
+
+      p2 =
+        insert_performance(c,
+          appearances: [
+            build(:appearance, role: "soloist", participant: pt),
+            build(:appearance, role: "accompanist")
+          ]
+        )
+
+      assert Showtime.statistics([p1, p2], c.round) ==
+               %{appearances: 5, participants: 4, performances: %{total: 2}}
     end
 
     test "returns stats for an empty Kimu performance list" do
-      assert Showtime.statistics([], 0)
-        == %{appearances: 0, participants: 0, performances: %{total: 0}}
+      assert Showtime.statistics([], 0) ==
+               %{appearances: 0, participants: 0, performances: %{total: 0}}
     end
 
     test "returns stats for a list of Jumu performances" do
@@ -817,43 +920,56 @@ defmodule Jumubase.ShowtimeTest do
       pt = insert(:participant)
       cc1 = insert_contest_category(c, "classical")
       cc2 = insert_contest_category(c, "popular")
-      p1 = insert_performance(cc1, appearances: [
-        build(:appearance, role: "ensemblist", participant: pt),
-        build(:appearance, role: "ensemblist"),
-        build(:appearance, role: "accompanist"),
-      ])
-      p2 = insert_performance(cc2, appearances: [
-        build(:appearance, role: "soloist", participant: pt),
-        build(:appearance, role: "accompanist"),
-      ])
+
+      p1 =
+        insert_performance(cc1,
+          appearances: [
+            build(:appearance, role: "ensemblist", participant: pt),
+            build(:appearance, role: "ensemblist"),
+            build(:appearance, role: "accompanist")
+          ]
+        )
+
+      p2 =
+        insert_performance(cc2,
+          appearances: [
+            build(:appearance, role: "soloist", participant: pt),
+            build(:appearance, role: "accompanist")
+          ]
+        )
 
       assert Showtime.statistics([p1, p2], c.round) == %{
-        appearances: 5,
-        participants: 4,
-        performances: %{total: 2, classical: 1, popular: 1}
-      }
+               appearances: 5,
+               participants: 4,
+               performances: %{total: 2, classical: 1, popular: 1}
+             }
     end
 
     test "returns stats for an empty Jumu performance list" do
       assert Showtime.statistics([], 1) == %{
-        appearances: 0,
-        participants: 0,
-        performances: %{total: 0, classical: 0, popular: 0}
-      }
+               appearances: 0,
+               participants: 0,
+               performances: %{total: 0, classical: 0, popular: 0}
+             }
     end
   end
 
   test "load_pieces/1 preloads a performance's pieces in insertion order", %{contest: c} do
-    insert_performance(c, pieces: [
-      build(:piece, title: "Y"),
-      build(:piece, title: "X")
-    ])
+    insert_performance(c,
+      pieces: [
+        build(:piece, title: "Y"),
+        build(:piece, title: "X")
+      ]
+    )
+
     performance = Repo.one(Performance)
 
-    assert %{pieces: [
-      %Piece{title: "Y"},
-      %Piece{title: "X"},
-    ]} = performance |> Showtime.load_pieces
+    assert %{
+             pieces: [
+               %Piece{title: "Y"},
+               %Piece{title: "X"}
+             ]
+           } = performance |> Showtime.load_pieces()
   end
 
   test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do
@@ -861,8 +977,8 @@ defmodule Jumubase.ShowtimeTest do
     performance = Repo.one(Performance)
 
     assert %{
-      contest_category: %{contest: %Contest{}, category: %Category{}}
-    } = performance |> Showtime.load_contest_category
+             contest_category: %{contest: %Contest{}, category: %Category{}}
+           } = performance |> Showtime.load_contest_category()
   end
 
   describe "list_participants/1" do
@@ -881,21 +997,24 @@ defmodule Jumubase.ShowtimeTest do
       other_c = insert(:contest)
       insert_performance(other_c, appearances: build_list(2, :appearance))
 
-      assert_ids_match_ordered Showtime.list_participants(c), [pt3, pt2, pt4, pt1]
+      assert_ids_match_ordered(Showtime.list_participants(c), [pt3, pt2, pt4, pt1])
     end
 
-    test "preloads the participants' performances + categories, but only within the contest", %{contest: c} do
+    test "preloads the participants' performances + categories, but only within the contest", %{
+      contest: c
+    } do
       pt = insert_participant(c)
 
       other_c = insert(:contest)
       insert_performance(other_c, appearances: [build(:appearance, participant: pt)])
 
       assert [%Participant{performances: [performance]}] = Showtime.list_participants(c)
+
       assert %Performance{
-        contest_category: %ContestCategory{
-          category: %Category{}
-        }
-      } = performance
+               contest_category: %ContestCategory{
+                 category: %Category{}
+               }
+             } = performance
     end
   end
 
@@ -906,7 +1025,7 @@ defmodule Jumubase.ShowtimeTest do
       other_c = insert(:contest)
       a3 = insert_appearance(other_c)
 
-      assert_ids_match_unordered Showtime.list_appearances(c, [a1.id, a2.id, a3.id]), [a1, a2]
+      assert_ids_match_unordered(Showtime.list_appearances(c, [a1.id, a2.id, a3.id]), [a1, a2])
     end
   end
 
@@ -955,12 +1074,14 @@ defmodule Jumubase.ShowtimeTest do
   defp performance_params(cc, appearance_shorthands) do
     %{
       contest_category_id: cc.id,
-      appearances: Enum.map(appearance_shorthands, fn
-        {role, participant_attrs} ->
-          appearance_params(role, participant_attrs)
-        {existing_appearance, role, participant_attrs} ->
-          appearance_params(existing_appearance, role, participant_attrs)
-      end),
+      appearances:
+        Enum.map(appearance_shorthands, fn
+          {role, participant_attrs} ->
+            appearance_params(role, participant_attrs)
+
+          {existing_appearance, role, participant_attrs} ->
+            appearance_params(existing_appearance, role, participant_attrs)
+        end),
       pieces: [params_for(:piece)]
     }
   end
@@ -973,8 +1094,10 @@ defmodule Jumubase.ShowtimeTest do
       participant: params_for(:participant, participant_attrs)
     }
   end
+
   defp appearance_params(existing_appearance, role, participant_attrs) do
     %{id: id, participant: %{id: participant_id}} = existing_appearance
+
     %{
       id: id,
       role: role,

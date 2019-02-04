@@ -14,22 +14,31 @@ defmodule JumubaseWeb.Api.PerformanceController do
         stage_date = NaiveDateTime.to_date(datetime)
         filter = PerformanceFilter.from_params(%{stage_id: stage_id, stage_date: stage_date})
         conn |> render_performances(contest, filter)
+
       {:error, _} ->
         handle_bad_request(conn)
     end
   end
-  def index(conn, %{"contest_id" => contest_id, "contest_category_id" => cc_id, "results_public" => results_public}) do
+
+  def index(conn, %{
+        "contest_id" => contest_id,
+        "contest_category_id" => cc_id,
+        "results_public" => results_public
+      }) do
     contest = Foundation.get_public_contest!(contest_id)
 
-    filter = PerformanceFilter.from_params(%{contest_category_id: cc_id, results_public: results_public})
+    filter =
+      PerformanceFilter.from_params(%{contest_category_id: cc_id, results_public: results_public})
+
     conn |> render_performances(contest, filter)
   end
+
   def index(conn, _params), do: handle_bad_request(conn)
 
   # Private helpers
 
   defp render_performances(conn, %Contest{} = c, %PerformanceFilter{} = filter) do
-    performances = Showtime.list_performances(c, filter) |> Showtime.load_pieces
+    performances = Showtime.list_performances(c, filter) |> Showtime.load_pieces()
 
     conn
     |> assign(:contest, c)

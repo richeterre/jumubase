@@ -7,6 +7,7 @@ defmodule JumubaseWeb.Internal.PieceView do
   Returns the piece's composer or artist info.
   """
   def person_info(%Piece{composer: nil, artist: artist}), do: artist
+
   def person_info(%Piece{composer: composer, artist: nil} = pc) do
     %{composer_born: born, composer_died: died} = pc
     "#{composer} (#{born}–#{died})"
@@ -29,6 +30,6 @@ defmodule JumubaseWeb.Internal.PieceView do
   # Private helpers
 
   defp pad_seconds(sec) do
-    sec |> Integer.to_string |> String.pad_leading(2, "0")
+    sec |> Integer.to_string() |> String.pad_leading(2, "0")
   end
 end

@@ -20,15 +20,18 @@ defmodule JumubaseWeb.ErrorView do
   # In case no render clause matches or no
   # template is found, let's render it as 500
   def template_not_found(_template, assigns) do
-    render "500.html", assigns
+    render("500.html", assigns)
   end
 
   # Private helpers
 
   defp render_error_layout(assigns, heading, message) do
-    render JumubaseWeb.LayoutView, "error.html",
+    render(
+      JumubaseWeb.LayoutView,
+      "error.html",
       assigns
       |> Map.put(:heading, heading)
       |> Map.put(:message, message)
+    )
   end
 end

@@ -29,7 +29,7 @@ defmodule Jumubase.Accounts.User do
     user
     |> cast(attrs, @base_attrs)
     |> validate_required(@base_attrs)
-    |> validate_format(:email, Utils.email_format)
+    |> validate_format(:email, Utils.email_format())
     |> validate_inclusion(:role, JumuParams.user_roles())
     |> unique_email
   end
@@ -61,14 +61,15 @@ defmodule Jumubase.Accounts.User do
     end)
   end
 
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
-      %{password: password}} = changeset) do
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Comeonin.Bcrypt.add_hash(password))
   end
+
   defp put_pass_hash(changeset), do: changeset
 
   defp strong_password?(password) when byte_size(password) > 7 do
     {:ok, password}
   end
+
   defp strong_password?(_), do: {:error, dgettext("errors", "The password is too short.")}
 end

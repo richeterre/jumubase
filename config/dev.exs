@@ -11,11 +11,16 @@ config :jumubase, JumubaseWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
-  watchers: [node: ["node_modules/webpack-cli/bin/cli.js",
-                    "--mode", "development",
-                    "--watch",
-                    "--stdin",
-                    cd: Path.expand("../assets", __DIR__)]]
+  watchers: [
+    node: [
+      "node_modules/webpack-cli/bin/cli.js",
+      "--mode",
+      "development",
+      "--watch",
+      "--stdin",
+      cd: Path.expand("../assets", __DIR__)
+    ]
+  ]
 
 # Set Phauxth token salt
 config :phauxth,

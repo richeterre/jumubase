@@ -28,7 +28,7 @@ defmodule JumubaseWeb.Internal.AppearanceView do
 
   def advancement_label(%Appearance{} = a, %Performance{} = p) do
     if Results.advances?(a, p) do
-      content_tag :span, "WL", class: "label label-success"
+      content_tag(:span, "WL", class: "label label-success")
     end
   end
 
@@ -36,10 +36,12 @@ defmodule JumubaseWeb.Internal.AppearanceView do
   Returns an error label if the appearance has no points.
   """
   def missing_points_error(%Appearance{points: nil}) do
-    content_tag :span, gettext("missing"),
+    content_tag(:span, gettext("missing"),
       title: gettext("Result already published – please enter points!"),
       class: "label label-danger"
+    )
   end
+
   def missing_points_error(%Appearance{points: _}), do: nil
 
   @doc """
@@ -51,7 +53,8 @@ defmodule JumubaseWeb.Internal.AppearanceView do
   Creates a badge for an age group.
   """
   def badge(nil), do: nil
+
   def badge(age_group) do
-    content_tag :span, age_group, class: "badge"
+    content_tag(:span, age_group, class: "badge")
   end
 end

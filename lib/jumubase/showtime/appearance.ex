@@ -25,7 +25,7 @@ defmodule Jumubase.Showtime.Appearance do
     appearance
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> validate_inclusion(:role, JumuParams.participant_roles)
+    |> validate_inclusion(:role, JumuParams.participant_roles())
     |> cast_assoc(:participant, required: true)
     |> preserve_participant_identity
     |> unique_constraint(:participant,
@@ -40,7 +40,7 @@ defmodule Jumubase.Showtime.Appearance do
   def result_changeset(%Appearance{} = appearance, points) do
     appearance
     |> cast(%{points: points}, [:points])
-    |> validate_inclusion(:points, JumuParams.points)
+    |> validate_inclusion(:points, JumuParams.points())
   end
 
   def is_soloist(%Appearance{role: role}), do: role == "soloist"
@@ -52,10 +52,13 @@ defmodule Jumubase.Showtime.Appearance do
   # Private helpers
 
   # Preserves the participant's identity when updating a nested participant.
-  defp preserve_participant_identity(%Changeset{
-    changes: %{participant: %{action: :update} = pt_cs}
-  } = changeset) do
-    put_change(changeset, :participant, Participant.preserve_identity(pt_cs))
+  defp preserve_participant_identity(%Changeset{} = changeset) do
+    case changeset do
+      %Changeset{changes: %{participant: %{action: :update} = pt_cs}} ->
+        put_change(changeset, :participant, Participant.preserve_identity(pt_cs))
+
+      _ ->
+        changeset
+    end
   end
-  defp preserve_participant_identity(%Changeset{} = changeset), do: changeset
 end

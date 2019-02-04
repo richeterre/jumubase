@@ -15,8 +15,9 @@ defmodule JumubaseWeb.ContactControllerTest do
 
       assert get_flash(conn, :success) =~ "Your message has been sent!"
       assert redirected_to(conn) == Routes.page_path(conn, :contact)
-      assert_delivered_email JumubaseWeb.Email.contact_message(
-        %{name: "A", email: "a@b.c", message: "Lorem ipsum"}
+
+      assert_delivered_email(
+        JumubaseWeb.Email.contact_message(%{name: "A", email: "a@b.c", message: "Lorem ipsum"})
       )
     end
 

@@ -28,9 +28,11 @@ defmodule JumubaseWeb.IconHelpers do
   Generates a link for deleting list items.
   """
   def delete_icon_link(path, confirm_text) do
-    icon_link "trash", nil, path,
-      method: :delete, data: [confirm: confirm_text],
+    icon_link("trash", nil, path,
+      method: :delete,
+      data: [confirm: confirm_text],
       class: "btn btn-danger btn-xs"
+    )
   end
 
   @doc """
@@ -38,8 +40,8 @@ defmodule JumubaseWeb.IconHelpers do
   """
   def emoji_flag(country_code) do
     country_code
-    |> String.to_charlist
-    |> Enum.map(&(127397 + &1))
+    |> String.to_charlist()
+    |> Enum.map(&(127_397 + &1))
     |> to_string
   end
 end

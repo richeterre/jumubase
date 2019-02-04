@@ -33,12 +33,10 @@ config :jumubase, Jumubase.Repo,
 config :bcrypt_elixir, log_rounds: 4
 
 # Configure test PDF generator
-config :jumubase, JumubaseWeb.PDFGenerator,
-  engine: JumubaseWeb.PDFGenerator.TestEngine
+config :jumubase, JumubaseWeb.PDFGenerator, engine: JumubaseWeb.PDFGenerator.TestEngine
 
 # Configure test mailer
-config :jumubase, Jumubase.Mailer,
-  adapter: Bamboo.TestAdapter
+config :jumubase, Jumubase.Mailer, adapter: Bamboo.TestAdapter
 
 # Configure test email
 config :jumubase, JumubaseWeb.Email,

@@ -53,8 +53,8 @@ defmodule Jumubase.Showtime.Performance do
   Generates an edit code string of suitable length from a number.
   """
   def to_edit_code(number, round) do
-    round_part = round |> Integer.to_string
-    number_part = number |> Integer.to_string |> String.pad_leading(5, "0")
+    round_part = round |> Integer.to_string()
+    number_part = number |> Integer.to_string() |> String.pad_leading(5, "0")
     "#{round_part}#{number_part}"
   end
 
@@ -63,7 +63,7 @@ defmodule Jumubase.Showtime.Performance do
   """
   def non_accompanists(%Performance{appearances: appearances}) do
     appearances
-    |> Enum.filter(&!Appearance.is_accompanist(&1))
+    |> Enum.filter(&(!Appearance.is_accompanist(&1)))
     |> sort_by_insertion
   end
 
@@ -96,22 +96,42 @@ defmodule Jumubase.Showtime.Performance do
   defp validate_appearances(%Changeset{} = changeset) do
     case get_field(changeset, :appearances) do
       [] ->
-        add_error(changeset, :base,
-          dgettext("errors", "The performance must have at least one participant."))
+        add_error(
+          changeset,
+          :base,
+          dgettext("errors", "The performance must have at least one participant.")
+        )
+
       appearances ->
         cond do
           has_soloists_and_ensemblists?(appearances) ->
-            add_error(changeset, :base,
-            dgettext("errors", "The performance can't have both soloists and ensemblists."))
+            add_error(
+              changeset,
+              :base,
+              dgettext("errors", "The performance can't have both soloists and ensemblists.")
+            )
+
           has_many_soloists?(appearances) ->
-            add_error(changeset, :base,
-              dgettext("errors", "The performance can't have more than one soloist."))
+            add_error(
+              changeset,
+              :base,
+              dgettext("errors", "The performance can't have more than one soloist.")
+            )
+
           has_single_ensemblist?(appearances) ->
-            add_error(changeset, :base,
-            dgettext("errors", "The performance can't have only one ensemblist."))
+            add_error(
+              changeset,
+              :base,
+              dgettext("errors", "The performance can't have only one ensemblist.")
+            )
+
           has_only_accompanists?(appearances) ->
-            add_error(changeset, :base,
-              dgettext("errors", "The performance can't have only accompanists."))
+            add_error(
+              changeset,
+              :base,
+              dgettext("errors", "The performance can't have only accompanists.")
+            )
+
           true ->
             changeset
         end
@@ -121,8 +141,12 @@ defmodule Jumubase.Showtime.Performance do
   defp validate_pieces(%Changeset{} = changeset) do
     case get_field(changeset, :pieces) do
       [] ->
-        add_error(changeset, :base,
-          dgettext("errors", "The performance must have at least one piece."))
+        add_error(
+          changeset,
+          :base,
+          dgettext("errors", "The performance must have at least one piece.")
+        )
+
       _ ->
         changeset
     end
@@ -134,8 +158,15 @@ defmodule Jumubase.Showtime.Performance do
 
     cond do
       :erlang.xor(!!stage_id, !!stage_time) ->
-        add_error(changeset, :base,
-        dgettext("errors", "The performance can either have both stage and stage time, or neither."))
+        add_error(
+          changeset,
+          :base,
+          dgettext(
+            "errors",
+            "The performance can either have both stage and stage time, or neither."
+          )
+        )
+
       true ->
         changeset
     end
@@ -164,6 +195,6 @@ defmodule Jumubase.Showtime.Performance do
   end
 
   defp sort_by_insertion(appearances) do
-    appearances |> Enum.sort_by(&(&1.inserted_at))
+    appearances |> Enum.sort_by(& &1.inserted_at)
   end
 end

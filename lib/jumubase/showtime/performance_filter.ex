@@ -19,7 +19,8 @@ defmodule Jumubase.Showtime.PerformanceFilter do
   """
   def changeset(params) do
     %PerformanceFilter{}
-    |> cast(params,
+    |> cast(
+      params,
       [:stage_date, :stage_id, :genre, :contest_category_id, :age_group, :results_public]
     )
   end
@@ -35,7 +36,7 @@ defmodule Jumubase.Showtime.PerformanceFilter do
   Returns whether the filter contains any set values.
   """
   def active?(%PerformanceFilter{} = filter) do
-    filter |> to_filter_map |> Enum.empty? |> Kernel.not
+    filter |> to_filter_map |> Enum.empty?() |> Kernel.not()
   end
 
   @doc """
@@ -43,8 +44,8 @@ defmodule Jumubase.Showtime.PerformanceFilter do
   """
   def to_filter_map(%PerformanceFilter{} = filter) do
     filter
-    |> Map.from_struct
+    |> Map.from_struct()
     |> Enum.reject(fn {_, value} -> is_nil(value) end)
-    |> Map.new
+    |> Map.new()
   end
 end

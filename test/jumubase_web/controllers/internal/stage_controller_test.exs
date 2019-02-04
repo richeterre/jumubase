@@ -22,7 +22,10 @@ defmodule JumubaseWeb.Internal.StageControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's stages", %{conn: conn, contest: c} do
+    test "redirects local organizers when trying to list a foreign contest's stages", %{
+      conn: conn,
+      contest: c
+    } do
       conn |> attempt_index(c) |> assert_unauthorized_user
     end
 
@@ -38,7 +41,11 @@ defmodule JumubaseWeb.Internal.StageControllerTest do
 
     for role <- roles_except("local-organizer") do
       @tag login_as: role
-      test "lets #{role} users schedule a contest's performances", %{conn: conn, contest: c, stage: s} do
+      test "lets #{role} users schedule a contest's performances", %{
+        conn: conn,
+        contest: c,
+        stage: s
+      } do
         conn |> attempt_schedule(c, s) |> assert_schedule_success(s)
       end
     end
@@ -51,11 +58,19 @@ defmodule JumubaseWeb.Internal.StageControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to schedule a foreign contest's performances", %{conn: conn, contest: c, stage: s} do
+    test "redirects local organizers when trying to schedule a foreign contest's performances", %{
+      conn: conn,
+      contest: c,
+      stage: s
+    } do
       conn |> attempt_schedule(c, s) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to schedule a contest's performances", %{conn: conn, contest: c, stage: s} do
+    test "redirects guests when trying to schedule a contest's performances", %{
+      conn: conn,
+      contest: c,
+      stage: s
+    } do
       conn |> attempt_schedule(c, s) |> assert_unauthorized_guest
     end
   end
@@ -67,7 +82,11 @@ defmodule JumubaseWeb.Internal.StageControllerTest do
 
     for role <- roles_except("local-organizer") do
       @tag login_as: role
-      test "lets #{role} users view a contest stage's timetable", %{conn: conn, contest: c, stage: s} do
+      test "lets #{role} users view a contest stage's timetable", %{
+        conn: conn,
+        contest: c,
+        stage: s
+      } do
         conn |> attempt_timetable(c, s) |> assert_timetable_success(s)
       end
     end
@@ -80,11 +99,19 @@ defmodule JumubaseWeb.Internal.StageControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to view a foreign contest stage's timetable", %{conn: conn, contest: c, stage: s} do
+    test "redirects local organizers when trying to view a foreign contest stage's timetable", %{
+      conn: conn,
+      contest: c,
+      stage: s
+    } do
       conn |> attempt_timetable(c, s) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to view a contest stage's timetable", %{conn: conn, contest: c, stage: s} do
+    test "redirects guests when trying to view a contest stage's timetable", %{
+      conn: conn,
+      contest: c,
+      stage: s
+    } do
       conn |> attempt_timetable(c, s) |> assert_unauthorized_guest
     end
   end

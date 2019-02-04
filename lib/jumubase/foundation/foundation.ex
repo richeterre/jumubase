@@ -16,6 +16,7 @@ defmodule Jumubase.Foundation do
   def list_hosts do
     Repo.all(Host)
   end
+
   def list_hosts(ids) do
     Repo.all(from h in Host, where: h.id in ^ids)
   end
@@ -25,7 +26,7 @@ defmodule Jumubase.Foundation do
   end
 
   def create_host(attrs) do
-    Host.changeset(%Host{}, attrs) |> Repo.insert
+    Host.changeset(%Host{}, attrs) |> Repo.insert()
   end
 
   ## Contests
@@ -34,10 +35,11 @@ defmodule Jumubase.Foundation do
   Returns all contests.
   """
   def list_contests(query \\ Contest) do
-    query = from c in query,
-      join: h in assoc(c, :host),
-      order_by: [{:desc, c.round}, h.name],
-      preload: [host: h]
+    query =
+      from c in query,
+        join: h in assoc(c, :host),
+        order_by: [{:desc, c.round}, h.name],
+        preload: [host: h]
 
     Repo.all(query)
   end
@@ -46,12 +48,14 @@ defmodule Jumubase.Foundation do
   Returns all contests in a round whose deadline has't passed.
   """
   def list_open_contests(round) do
-    query = from c in Contest,
-      where: c.round == ^round,
-      where: c.deadline >= ^Timex.today, # uses UTC
-      join: h in assoc(c, :host),
-      order_by: h.name,
-      preload: [host: h]
+    query =
+      from c in Contest,
+        where: c.round == ^round,
+        # uses UTC
+        where: c.deadline >= ^Timex.today(),
+        join: h in assoc(c, :host),
+        order_by: h.name,
+        preload: [host: h]
 
     Repo.all(query)
   end
@@ -60,13 +64,14 @@ defmodule Jumubase.Foundation do
   Returns all contests with public timetables.
   """
   def list_public_contests do
-    query = from c in Contest,
-      where: c.timetables_public,
-      join: h in assoc(c, :host),
-      join: cc in assoc(c, :contest_categories),
-      join: p in assoc(cc, :performances),
-      order_by: [{:desc, c.round}, h.name, cc.inserted_at],
-      preload: [host: {h, [stages: :performances]}, contest_categories: {cc, :category}]
+    query =
+      from c in Contest,
+        where: c.timetables_public,
+        join: h in assoc(c, :host),
+        join: cc in assoc(c, :contest_categories),
+        join: p in assoc(cc, :performances),
+        order_by: [{:desc, c.round}, h.name, cc.inserted_at],
+        preload: [host: {h, [stages: :performances]}, contest_categories: {cc, :category}]
 
     Repo.all(query)
     |> exclude_unused_stages
@@ -108,8 +113,9 @@ defmodule Jumubase.Foundation do
   def get_matching_kimu_contest(%Contest{round: 1} = c) do
     Contest
     |> where(host_id: ^c.host_id, season: ^c.season, round: 0)
-    |> Repo.one
+    |> Repo.one()
   end
+
   def get_matching_kimu_contest(%Contest{}), do: nil
 
   @doc """
@@ -120,7 +126,7 @@ defmodule Jumubase.Foundation do
     |> where([c], c.round > 0)
     |> order_by(desc: :end_date)
     |> limit(1)
-    |> Repo.one
+    |> Repo.one()
   end
 
   def update_contest(%Contest{} = contest, attrs) do
@@ -145,9 +151,9 @@ defmodule Jumubase.Foundation do
   """
   def general_deadline(contests) do
     contests
-    |> Enum.map(&(&1.deadline))
-    |> Utils.mode
-    |> List.first
+    |> Enum.map(& &1.deadline)
+    |> Utils.mode()
+    |> List.first()
   end
 
   ## Categories
@@ -161,13 +167,13 @@ defmodule Jumubase.Foundation do
   end
 
   def create_category(attrs) do
-    Category.changeset(%Category{}, attrs) |> Repo.insert
+    Category.changeset(%Category{}, attrs) |> Repo.insert()
   end
 
   def update_category(%Category{} = category, attrs) do
     category
     |> Category.changeset(attrs)
-    |> Repo.update
+    |> Repo.update()
   end
 
   def change_category(%Category{} = category) do
@@ -178,7 +184,7 @@ defmodule Jumubase.Foundation do
     ContestCategory
     |> where(contest_id: ^contest.id)
     |> preload(:category)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -196,10 +202,11 @@ defmodule Jumubase.Foundation do
   ## Stages
 
   def get_stage!(%Contest{id: contest_id}, id) do
-    query = from s in Stage,
-      join: h in assoc(s, :host),
-      join: c in assoc(h, :contests),
-      where: c.id == ^contest_id
+    query =
+      from s in Stage,
+        join: h in assoc(s, :host),
+        join: c in assoc(h, :contests),
+        where: c.id == ^contest_id
 
     Repo.get!(query, id)
   end
@@ -207,18 +214,18 @@ defmodule Jumubase.Foundation do
   ## Preloading
 
   def load_host_users(%Contest{} = contest) do
-    Repo.preload(contest, [host: :users])
+    Repo.preload(contest, host: :users)
   end
 
   def load_contest_categories(%Contest{} = contest) do
-    Repo.preload(contest, [contest_categories: :category])
+    Repo.preload(contest, contest_categories: :category)
   end
 
   @doc """
   Preloads all stages available to the contest.
   """
   def load_available_stages(%Contest{} = contest) do
-    Repo.preload(contest, [host: :stages])
+    Repo.preload(contest, host: :stages)
   end
 
   @doc """
@@ -237,12 +244,14 @@ defmodule Jumubase.Foundation do
     host = Map.put(h, :stages, used_stages(c))
     Map.put(c, :host, host)
   end
+
   defp exclude_unused_stages(contests) do
     Enum.map(contests, &exclude_unused_stages/1)
   end
 
   defp used_stages(%Contest{host: %{stages: stages}} = c) do
     cc_ids = c.contest_categories |> get_ids
+
     Enum.filter(stages, fn %{performances: p_list} ->
       Enum.any?(p_list, &(&1.contest_category_id in cc_ids))
     end)
@@ -257,10 +266,8 @@ defmodule Jumubase.Foundation do
     from c in contest_query,
       join: h in assoc(c, :host),
       left_join: u in assoc(h, :users),
-      where: (
-        u.id == ^user.id
-        or
-        c.round == 2 and ^user.role != "local-organizer"
-      )
+      where:
+        u.id == ^user.id or
+          (c.round == 2 and ^user.role != "local-organizer")
   end
 end

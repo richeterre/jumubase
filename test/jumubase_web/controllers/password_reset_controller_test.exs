@@ -42,7 +42,9 @@ defmodule JumubaseWeb.PasswordResetControllerTest do
   test "reset password fails for incorrect key", %{conn: conn} do
     invalid_attrs = %{email: "gladys@example.com", password: "^hEsdg*F899", key: "garbage"}
     conn = put(conn, Routes.password_reset_path(conn, :update), password_reset: invalid_attrs)
-    assert conn.private.phoenix_flash["error"] =~ "Unfortunately, the email or password was incorrect."
+
+    assert conn.private.phoenix_flash["error"] =~
+             "Unfortunately, the email or password was incorrect."
   end
 
   test "sessions are deleted when user updates password", %{conn: conn, user: user} do

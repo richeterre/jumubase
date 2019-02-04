@@ -72,6 +72,7 @@ defmodule Jumubase.ContestTest do
 
     test "is invalid with a deadline not before the start date" do
       %{start_date: start_date} = params_with_assocs(:contest)
+
       for deadline <- [start_date, Timex.shift(start_date, days: 1)] do
         params = params_with_assocs(:contest, deadline: deadline)
         changeset = Contest.changeset(%Contest{}, params)
@@ -96,7 +97,7 @@ defmodule Jumubase.ContestTest do
 
   describe "deadline_passed?/2" do
     test "returns whether the contest deadline has passed on the given date" do
-      deadline = Timex.today
+      deadline = Timex.today()
       c = build(:contest, deadline: deadline)
 
       refute Contest.deadline_passed?(c, deadline |> Timex.shift(days: -1))

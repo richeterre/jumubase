@@ -15,16 +15,16 @@ defmodule JumubaseWeb.ErrorViewTest do
 
   test "renders 404.html", %{conn: conn} do
     assert render_to_string(JumubaseWeb.ErrorView, "404.html", conn: conn) =~
-      "The page was not found."
+             "The page was not found."
   end
 
   test "render 500.html", %{conn: conn} do
     assert render_to_string(JumubaseWeb.ErrorView, "500.html", conn: conn) =~
-      "Something went wrong"
+             "Something went wrong"
   end
 
   test "render any other", %{conn: conn} do
     assert render_to_string(JumubaseWeb.ErrorView, "505.html", conn: conn) =~
-      "Something went wrong"
+             "Something went wrong"
   end
 end

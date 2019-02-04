@@ -23,6 +23,7 @@ defmodule Jumubase.Foundation.AgeGroups do
   def calculate_age_group(%Date{} = birthdate, season) do
     lookup_age_group(birthdate, season)
   end
+
   @doc """
   Returns the joint age group for the birthdates in the given season,
   by using the year that the "mean birthdate" falls into.
@@ -39,16 +40,17 @@ defmodule Jumubase.Foundation.AgeGroups do
   # Private helpers
 
   defp lookup_age_group(%Date{year: year}, season) do
-    index = case JumuParams.year(season) - year do
-      n when n in @min_age..8 -> 0
-      n when n in 9..10 -> 1
-      n when n in 11..12 -> 2
-      n when n in 13..14 -> 3
-      n when n in 15..16 -> 4
-      n when n in 17..18 -> 5
-      n when n in 19..21 -> 6
-      n when n in 22..@max_age -> 7
-    end
+    index =
+      case JumuParams.year(season) - year do
+        n when n in @min_age..8 -> 0
+        n when n in 9..10 -> 1
+        n when n in 11..12 -> 2
+        n when n in 13..14 -> 3
+        n when n in 15..16 -> 4
+        n when n in 17..18 -> 5
+        n when n in 19..21 -> 6
+        n when n in 22..@max_age -> 7
+      end
 
     all() |> Enum.fetch!(index)
   end
@@ -58,11 +60,11 @@ defmodule Jumubase.Foundation.AgeGroups do
     # Convert to UNIX timestamps
     |> Enum.map(&Timex.to_unix/1)
     # Calculate average timestamp
-    |> Enum.sum
+    |> Enum.sum()
     |> div(length(dates))
     # Convert back to date
-    |> Timex.from_unix
-    |> Timex.to_date
+    |> Timex.from_unix()
+    |> Timex.to_date()
   end
 
   defp find_index(age_group) do

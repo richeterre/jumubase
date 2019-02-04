@@ -93,7 +93,7 @@ defmodule Jumubase.ParticipantTest do
         changeset =
           build(:participant)
           |> Changeset.change([{field, "X"}])
-          |> Participant.preserve_identity
+          |> Participant.preserve_identity()
 
         assert changeset.errors[field] == {"can't be changed", []}
       end
@@ -103,7 +103,7 @@ defmodule Jumubase.ParticipantTest do
       changeset =
         build(:participant)
         |> Changeset.change(birthdate: ~D[2001-02-03])
-        |> Participant.preserve_identity
+        |> Participant.preserve_identity()
 
       assert changeset.errors[:birthdate] == {"can't be changed", []}
     end
@@ -112,7 +112,7 @@ defmodule Jumubase.ParticipantTest do
       changeset =
         build(:participant, phone: "123", email: "old@example.org")
         |> Changeset.change(phone: "456", email: "new@example.org")
-        |> Participant.preserve_identity
+        |> Participant.preserve_identity()
 
       assert changeset.valid?
     end

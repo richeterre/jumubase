@@ -29,14 +29,16 @@ defmodule JumubaseWeb.ConnCase do
       @endpoint JumubaseWeb.Endpoint
 
       def login_if_needed(%{conn: conn} = config) do
-        conn = conn
-        |> bypass_through(JumubaseWeb.Router, [:browser])
-        |> get("/")
+        conn =
+          conn
+          |> bypass_through(JumubaseWeb.Router, [:browser])
+          |> get("/")
 
         # Add user session if role given in config
         case config[:login_as] do
           nil ->
             {:ok, config}
+
           user_role ->
             {:ok, Map.merge(config, login_user(conn, user_role))}
         end
@@ -50,22 +52,24 @@ defmodule JumubaseWeb.ConnCase do
 
       defp login_user(conn, role) do
         user = add_user(role: role)
-        conn = conn
-        |> add_phauxth_session(user)
-        |> send_resp(:ok, "/")
+
+        conn =
+          conn
+          |> add_phauxth_session(user)
+          |> send_resp(:ok, "/")
 
         %{conn: conn, user: user}
       end
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Jumubase.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Jumubase.Repo, {:shared, self()})
     end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
-
 end

@@ -28,31 +28,39 @@ defmodule JumubaseWeb.Breadcrumbs do
   Adds a breadcrumb for the contest to the hierarchy.
   """
   def add_contest_breadcrumb(conn, %Contest{} = contest) do
-    add_breadcrumb(conn, name: name_with_flag(contest),
-      path: Routes.internal_contest_path(conn, :show, contest))
+    add_breadcrumb(conn,
+      name: name_with_flag(contest),
+      path: Routes.internal_contest_path(conn, :show, contest)
+    )
   end
 
   @doc """
   Adds a breadcrumb for the contest's participant list to the hierarchy.
   """
   def add_participants_breadcrumb(conn, %Contest{} = contest) do
-    add_breadcrumb(conn, name: gettext("Participants"),
-      path: Routes.internal_contest_participant_path(conn, :index, contest))
+    add_breadcrumb(conn,
+      name: gettext("Participants"),
+      path: Routes.internal_contest_participant_path(conn, :index, contest)
+    )
   end
 
   @doc """
   Adds a breadcrumb for the contest's performance list to the hierarchy.
   """
   def add_performances_breadcrumb(conn, %Contest{} = contest) do
-    add_breadcrumb(conn, name: gettext("Performances"),
-      path: Routes.internal_contest_performance_path(conn, :index, contest))
+    add_breadcrumb(conn,
+      name: gettext("Performances"),
+      path: Routes.internal_contest_performance_path(conn, :index, contest)
+    )
   end
 
   @doc """
   Adds a breadcrumb for the contest's category list to the hierarchy.
   """
   def add_contest_categories_breadcrumb(conn, %Contest{} = contest) do
-    add_breadcrumb(conn, name: gettext("Categories"),
-      path: Routes.internal_contest_contest_category_path(conn, :index, contest))
+    add_breadcrumb(conn,
+      name: gettext("Categories"),
+      path: Routes.internal_contest_contest_category_path(conn, :index, contest)
+    )
   end
 end

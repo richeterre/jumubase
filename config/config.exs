@@ -10,11 +10,9 @@ config :jumubase,
   ecto_repos: [Jumubase.Repo]
 
 # API keys
-config :jumubase, JumubaseWeb.MapHelpers,
-  google_api_key: System.get_env("GOOGLE_API_KEY")
+config :jumubase, JumubaseWeb.MapHelpers, google_api_key: System.get_env("GOOGLE_API_KEY")
 
-config :jumubase, JumubaseWeb.Api.Auth,
-  api_key: System.get_env("JUMU_API_KEY")
+config :jumubase, JumubaseWeb.Api.Auth, api_key: System.get_env("JUMU_API_KEY")
 
 # Companion app IDs
 
@@ -25,20 +23,18 @@ config :jumubase, :app_ids,
 # Set default locale
 locale = "de"
 config :jumubase, Jumubase.Gettext, default_locale: locale
-config :timex, default_locale: locale # Sets Timex.Translator.default_locale
-config :timex, Timex.Gettext, default_locale: locale # Sets Timex.Translator.current_locale
+config :timex, default_locale: locale
+config :timex, Timex.Gettext, default_locale: locale
 
 # Configure the endpoint
 config :jumubase, JumubaseWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "CItDuu3F0bThL/GnGj6lG4CNhFF/JPz/LHyWFVkLRdht2gpHfuFftGiO1paelppz",
   render_errors: [view: JumubaseWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Jumubase.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Jumubase.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Keep microsecond precision in timestamps
-config :jumubase, Jumubase.Repo,
-  migration_timestamps: [type: :naive_datetime_usec]
+config :jumubase, Jumubase.Repo, migration_timestamps: [type: :naive_datetime_usec]
 
 # Configure Phauxth authentication
 config :phauxth,
@@ -46,8 +42,7 @@ config :phauxth,
   user_messages: Jumubase.Accounts.UserMessages
 
 # Configure mailer
-config :jumubase, Jumubase.Mailer,
-  adapter: Bamboo.LocalAdapter
+config :jumubase, Jumubase.Mailer, adapter: Bamboo.LocalAdapter
 
 # Configure email
 config :jumubase, JumubaseWeb.Email,
@@ -69,4 +64,4 @@ config :sentry,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

@@ -3,14 +3,17 @@ defmodule JumubaseWeb.Endpoint do
   use Sentry.Phoenix.Endpoint
 
   socket "/socket", JumubaseWeb.UserSocket,
-    websocket: [timeout: 45_000] # timeout before Heroku does
+    # Time out before Heroku does
+    websocket: [timeout: 45_000]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :jumubase, gzip: false,
+    at: "/",
+    from: :jumubase,
+    gzip: false,
     only: ~w(css fonts images js resources favicons robots.txt)
 
   # Code reloading can be explicitly enabled under the

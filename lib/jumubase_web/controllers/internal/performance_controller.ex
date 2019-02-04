@@ -10,7 +10,11 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Showtime.PerformanceFilter
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &Routes.internal_contest_path/2, action: :index
+
+  plug :add_breadcrumb,
+    name: gettext("Contests"),
+    path_fun: &Routes.internal_contest_path/2,
+    action: :index
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -35,7 +39,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   def new(conn, _params, contest) do
     changeset =
       Showtime.build_performance(contest)
-      |> Showtime.change_performance
+      |> Showtime.change_performance()
 
     conn
     |> prepare_for_form(contest, changeset)
@@ -49,7 +53,10 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       {:ok, performance} ->
         conn
         |> put_flash(:success, gettext("The performance was created."))
-        |> redirect(to: Routes.internal_contest_performance_path(conn, :show, contest, performance))
+        |> redirect(
+          to: Routes.internal_contest_performance_path(conn, :show, contest, performance)
+        )
+
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, changeset)
@@ -69,11 +76,15 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     params = normalize_params(params)
 
     performance = Showtime.get_performance!(contest, id)
+
     case Showtime.update_performance(contest, performance, params) do
       {:ok, performance} ->
         conn
         |> put_flash(:success, gettext("The performance was updated."))
-        |> redirect(to: Routes.internal_contest_performance_path(conn, :show, contest, performance))
+        |> redirect(
+          to: Routes.internal_contest_performance_path(conn, :show, contest, performance)
+        )
+
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, performance, changeset)
@@ -82,7 +93,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def delete(conn, %{"id" => id}, contest) do
-    Showtime.get_performance!(contest, id) |> Showtime.delete_performance!
+    Showtime.get_performance!(contest, id) |> Showtime.delete_performance!()
 
     conn
     |> put_flash(:success, gettext("The performance was deleted."))
@@ -90,15 +101,17 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def reschedule(conn, %{"performances" => params}, contest) do
-    items = Enum.map(params, fn {key, value} ->
-      %{id: key, stage_id: value["stageId"], stage_time: value["stageTime"]}
-    end)
+    items =
+      Enum.map(params, fn {key, value} ->
+        %{id: key, stage_id: value["stageId"], stage_time: value["stageTime"]}
+      end)
 
     case Showtime.reschedule_performances(contest, items) do
       {:ok, stage_times} ->
         conn
         |> assign(:stage_times, stage_times)
         |> render("reschedule_success.json")
+
       {:error, p_id, changeset} ->
         conn
         |> assign(:performance_id, p_id)
@@ -117,7 +130,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def print_jury_sheets(conn, %{"performance_ids" => p_ids}, contest) do
-    performances = Showtime.list_performances(contest, p_ids) |> Showtime.load_pieces
+    performances = Showtime.list_performances(contest, p_ids) |> Showtime.load_pieces()
 
     conn
     |> assign(:performances, performances)
@@ -147,16 +160,21 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     a_ids = a_id_string |> String.split(",")
     appearances = Showtime.list_appearances(contest, a_ids)
 
-    list_path = case params["performance_filter"] do
-      filter when is_map(filter) ->
-        Routes.internal_contest_results_path(conn, :edit_results, contest, performance_filter: filter)
-      _ ->
-        Routes.internal_contest_results_path(conn, :edit_results, contest)
-    end
+    list_path =
+      case params["performance_filter"] do
+        filter when is_map(filter) ->
+          Routes.internal_contest_results_path(conn, :edit_results, contest,
+            performance_filter: filter
+          )
+
+        _ ->
+          Routes.internal_contest_results_path(conn, :edit_results, contest)
+      end
 
     case Showtime.set_points(appearances, points) do
       :ok ->
         conn |> redirect(to: list_path)
+
       :error ->
         conn
         |> put_flash(:error, gettext("The points could not be saved at this time."))
@@ -172,19 +190,29 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> render("publish_results.html")
   end
 
-  def update_results_public(conn, %{"performance_ids" => p_ids, "public" => public} = params, contest) do
+  def update_results_public(
+        conn,
+        %{"performance_ids" => p_ids, "public" => public} = params,
+        contest
+      ) do
     public = parse_bool(public)
-    list_path = case params["performance_filter"] do
-      filter when is_map(filter) ->
-        Routes.internal_contest_results_path(conn, :publish_results, contest, performance_filter: filter)
-      _ ->
-        Routes.internal_contest_results_path(conn, :publish_results, contest)
-    end
 
-    {:ok, count} = case public do
-      true -> Showtime.publish_results(contest, p_ids)
-      false -> Showtime.unpublish_results(contest, p_ids)
-    end
+    list_path =
+      case params["performance_filter"] do
+        filter when is_map(filter) ->
+          Routes.internal_contest_results_path(conn, :publish_results, contest,
+            performance_filter: filter
+          )
+
+        _ ->
+          Routes.internal_contest_results_path(conn, :publish_results, contest)
+      end
+
+    {:ok, count} =
+      case public do
+        true -> Showtime.publish_results(contest, p_ids)
+        false -> Showtime.unpublish_results(contest, p_ids)
+      end
 
     conn
     |> put_results_flash_message(public, count)
@@ -240,6 +268,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> add_breadcrumbs(c)
     |> add_breadcrumb(icon: "plus", path: current_path(conn))
   end
+
   defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p, %Changeset{} = cs) do
     conn
     |> assign(:contest, c)
@@ -264,19 +293,24 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   defp put_results_flash_message(conn, true, count) do
-    message = ngettext(
-      "The results of this performance were published.",
-      "The results of these %{count} performances were published.",
-      count
-    )
+    message =
+      ngettext(
+        "The results of this performance were published.",
+        "The results of these %{count} performances were published.",
+        count
+      )
+
     conn |> put_flash(:success, message)
   end
+
   defp put_results_flash_message(conn, false, count) do
-    message = ngettext(
-      "The results of this performance were unpublished.",
-      "The results of these %{count} performances were unpublished.",
-      count
-    )
+    message =
+      ngettext(
+        "The results of this performance were unpublished.",
+        "The results of these %{count} performances were unpublished.",
+        count
+      )
+
     conn |> put_flash(:warning, message)
   end
 
@@ -289,9 +323,13 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   defp add_public_results_warning(conn, performances) do
-    if Enum.any?(performances, &(&1.results_public)) do
-      put_flash(conn, :warning,
-        gettext("The results of some performances below have already been published. Your changes will be visible to others instantly.")
+    if Enum.any?(performances, & &1.results_public) do
+      put_flash(
+        conn,
+        :warning,
+        gettext(
+          "The results of some performances below have already been published. Your changes will be visible to others instantly."
+        )
       )
     else
       conn

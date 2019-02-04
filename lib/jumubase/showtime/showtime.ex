@@ -18,7 +18,7 @@ defmodule Jumubase.Showtime do
   Returns all performances from the contest.
   """
   def list_performances(%Contest{id: id}) do
-    performances_query(id) |> Repo.all
+    performances_query(id) |> Repo.all()
   end
 
   @doc """
@@ -27,16 +27,17 @@ defmodule Jumubase.Showtime do
   def list_performances(%Contest{id: id}, %PerformanceFilter{} = filter) do
     performances_query(id)
     |> apply_filter(filter)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
   Returns the performances with the given ids.
   """
-  def list_performances(%Contest{id: contest_id}, performance_ids) when is_list(performance_ids) do
+  def list_performances(%Contest{id: contest_id}, performance_ids)
+      when is_list(performance_ids) do
     performances_query(contest_id)
     |> where([p], p.id in ^performance_ids)
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -45,7 +46,7 @@ defmodule Jumubase.Showtime do
   def unscheduled_performances(%Contest{id: id}) do
     performances_query(id)
     |> where([p], is_nil(p.stage_time))
-    |> Repo.all
+    |> Repo.all()
   end
 
   @doc """
@@ -79,8 +80,9 @@ defmodule Jumubase.Showtime do
     case Repo.get_by(Performance, edit_code: edit_code) do
       nil ->
         {:error, :not_found}
+
       performance ->
-        {:ok, Repo.preload(performance, [contest_category: :contest])}
+        {:ok, Repo.preload(performance, contest_category: :contest)}
     end
   end
 
@@ -101,6 +103,7 @@ defmodule Jumubase.Showtime do
   """
   def build_performance(%Contest{round: 0} = contest) do
     contest = Foundation.load_contest_categories(contest)
+
     case contest do
       %Contest{contest_categories: [%ContestCategory{id: cc_id}]} ->
         %Performance{
@@ -108,10 +111,12 @@ defmodule Jumubase.Showtime do
           appearances: [%Appearance{}],
           pieces: [%Piece{}]
         }
+
       _ ->
         %Performance{}
     end
   end
+
   def build_performance(%Contest{round: 1}), do: %Performance{}
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
@@ -126,7 +131,7 @@ defmodule Jumubase.Showtime do
     |> Performance.changeset(attrs)
     |> stitch_participants
     |> put_age_groups(contest)
-    |> Repo.update
+    |> Repo.update()
   end
 
   def change_performance(%Performance{} = performance) do
@@ -144,19 +149,24 @@ defmodule Jumubase.Showtime do
   (a list of maps linking performance ids, stage ids and stage times).
   """
   def reschedule_performances(%Contest{} = contest, items) do
-    multi = Enum.reduce(items, Multi.new, fn item, acc ->
-      %{id: id, stage_id: s_id, stage_time: time} = item
-      changeset =
-        get_performance!(contest, id)
-        |> Performance.stage_changeset(%{stage_id: s_id, stage_time: time})
-      Multi.update(acc, id, changeset)
-    end)
+    multi =
+      Enum.reduce(items, Multi.new(), fn item, acc ->
+        %{id: id, stage_id: s_id, stage_time: time} = item
+
+        changeset =
+          get_performance!(contest, id)
+          |> Performance.stage_changeset(%{stage_id: s_id, stage_time: time})
+
+        Multi.update(acc, id, changeset)
+      end)
 
     case Repo.transaction(multi) do
       {:ok, result} ->
-        {:ok, Enum.map(result, fn
-          {id, %Performance{stage_time: stage_time}} -> {id, stage_time}
-        end)}
+        {:ok,
+         Enum.map(result, fn
+           {id, %Performance{stage_time: stage_time}} -> {id, stage_time}
+         end)}
+
       {:error, failed_p_id, failed_cs, _} ->
         {:error, failed_p_id, failed_cs}
     end
@@ -181,7 +191,7 @@ defmodule Jumubase.Showtime do
   """
   def total_duration(%Performance{pieces: pieces}) do
     pieces
-    |> Enum.reduce(Timex.Duration.zero, fn piece, total ->
+    |> Enum.reduce(Timex.Duration.zero(), fn piece, total ->
       total
       |> Timex.Duration.add(Timex.Duration.from_minutes(piece.minutes))
       |> Timex.Duration.add(Timex.Duration.from_seconds(piece.seconds))
@@ -194,25 +204,28 @@ defmodule Jumubase.Showtime do
   def result_completions(performances) do
     result_groups = result_groups(performances)
     with_points = result_groups |> Enum.filter(&has_points?/1)
-    public = performances |> Enum.filter(&(&1.results_public)) |> result_groups
+    public = performances |> Enum.filter(& &1.results_public) |> result_groups
 
     %{
       total: length(result_groups),
       with_points: length(with_points),
-      public: length(public),
+      public: length(public)
     }
   end
 
   def statistics(performances, 0) do
     appearances = performances |> appearances
+
     %{
       appearances: length(appearances),
       participants: appearances |> unique_participants |> length,
       performances: %{total: length(performances)}
     }
   end
+
   def statistics(performances, _round) do
-    statistics(performances, 0) # Use Kimu stats as base
+    # Use Kimu stats as base
+    statistics(performances, 0)
     |> put_in([:performances, :classical], genre_count(performances, "classical"))
     |> put_in([:performances, :popular], genre_count(performances, "popular"))
   end
@@ -229,11 +242,12 @@ defmodule Jumubase.Showtime do
   Returns the appearances with the given ids from the contest.
   """
   def list_appearances(%Contest{id: contest_id}, appearance_ids) when is_list(appearance_ids) do
-    query = from a in Appearance,
-      join: p in assoc(a, :performance),
-      join: cc in assoc(p, :contest_category),
-      where: cc.contest_id == ^contest_id,
-      where: a.id in ^appearance_ids
+    query =
+      from a in Appearance,
+        join: p in assoc(a, :performance),
+        join: cc in assoc(p, :contest_category),
+        where: cc.contest_id == ^contest_id,
+        where: a.id in ^appearance_ids
 
     Repo.all(query)
   end
@@ -242,10 +256,11 @@ defmodule Jumubase.Showtime do
   Assigns the given points (if valid) to each of the appearances.
   """
   def set_points(appearances, points) when is_list(appearances) do
-    multi = Enum.reduce(appearances, Multi.new, fn a, acc ->
-      changeset = Appearance.result_changeset(a, points)
-      Multi.update(acc, a.id, changeset)
-    end)
+    multi =
+      Enum.reduce(appearances, Multi.new(), fn a, acc ->
+        changeset = Appearance.result_changeset(a, points)
+        Multi.update(acc, a.id, changeset)
+      end)
 
     case Repo.transaction(multi) do
       {:ok, _} -> :ok
@@ -257,7 +272,7 @@ defmodule Jumubase.Showtime do
     Participant
     |> preloaded_from_contest(contest_id)
     |> order_by([pt], [pt.family_name, pt.given_name])
-    |> Repo.all
+    |> Repo.all()
   end
 
   def get_participant!(%Contest{id: contest_id}, id) do
@@ -286,16 +301,22 @@ defmodule Jumubase.Showtime do
     Enum.reduce(filter_map, query, fn
       {:stage_date, date}, query ->
         on_date(query, date)
+
       {:stage_id, s_id}, query ->
         on_stage(query, s_id)
+
       {:genre, genre}, query ->
         with_genre(query, genre)
+
       {:contest_category_id, cc_id}, query ->
         in_contest_category(query, cc_id)
+
       {:age_group, ag}, query ->
         with_age_group(query, ag)
+
       {:results_public, results_public}, query ->
         with_results_public(query, results_public)
+
       _, query ->
         query
     end)
@@ -305,6 +326,7 @@ defmodule Jumubase.Showtime do
     edit_code = :rand.uniform(99999) |> Performance.to_edit_code(round)
     put_change(changeset, :edit_code, edit_code)
   end
+
   defp put_edit_code(changeset, _round), do: changeset
 
   defp put_age_groups(%Changeset{valid?: true} = changeset, contest) do
@@ -313,16 +335,21 @@ defmodule Jumubase.Showtime do
 
     AgeGroupCalculator.put_age_groups(changeset, contest.season, genre)
   end
+
   defp put_age_groups(changeset, _contest), do: changeset
 
   # Attempts to connect nested appearances to participants that already
   # exist in the database, based on certain "identity fields".
-  defp stitch_participants(%Changeset{
-    valid?: true, changes: %{appearances: appearances} = changes
-  } = changeset) do
+  defp stitch_participants(
+         %Changeset{
+           valid?: true,
+           changes: %{appearances: appearances} = changes
+         } = changeset
+       ) do
     changes = %{changes | appearances: Enum.map(appearances, &stitch_participant/1)}
     %{changeset | changes: changes}
   end
+
   defp stitch_participants(changeset), do: changeset
 
   # Connects a to-be-inserted appearance to an existing participant,
@@ -333,14 +360,20 @@ defmodule Jumubase.Showtime do
     family_name = get_field(pt_cs, :family_name)
     birthdate = get_field(pt_cs, :birthdate)
 
-    case Repo.get_by(Participant, given_name: given_name, family_name: family_name, birthdate: birthdate) do
+    case Repo.get_by(Participant,
+           given_name: given_name,
+           family_name: family_name,
+           birthdate: birthdate
+         ) do
       nil ->
         appearance_cs
+
       existing_pt ->
         appearance_cs
         |> put_change(:participant, change(existing_pt, pt_cs.changes))
     end
   end
+
   defp stitch_participant(changeset), do: changeset
 
   # Attempts to insert a performance changeset into the database.
@@ -352,6 +385,7 @@ defmodule Jumubase.Showtime do
       {:error, %Changeset{errors: [edit_code: _]}} ->
         # Retry if edit code was invalid
         attempt_insert(changeset, round)
+
       other_result ->
         other_result
     end
@@ -403,9 +437,10 @@ defmodule Jumubase.Showtime do
       preload: [
         [contest_category: {cc, :category}],
         [appearances: :participant],
-        [pieces: ^pieces_query()],
+        [pieces: ^pieces_query()]
       ]
   end
+
   defp preloaded_from_contest(Participant = query, contest_id) do
     from pt in query,
       join: p in assoc(pt, :performances),
@@ -417,10 +452,11 @@ defmodule Jumubase.Showtime do
   end
 
   defp update_results_public(contest, performance_ids, public) do
-    query = from p in Performance,
-      join: cc in assoc(p, :contest_category),
-      where: cc.contest_id == ^contest.id,
-      where: p.id in ^performance_ids
+    query =
+      from p in Performance,
+        join: cc in assoc(p, :contest_category),
+        where: cc.contest_id == ^contest.id,
+        where: p.id in ^performance_ids
 
     {count, _} = Repo.update_all(query, set: [results_public: public])
     {:ok, count}
@@ -431,20 +467,20 @@ defmodule Jumubase.Showtime do
   end
 
   defp has_points?(result_group) do
-    Enum.all?(result_group, &!is_nil(&1.points))
+    Enum.all?(result_group, &(!is_nil(&1.points)))
   end
 
   defp appearances(performances) do
-    performances |> Enum.flat_map(&(&1.appearances))
+    performances |> Enum.flat_map(& &1.appearances)
   end
 
   defp unique_participants(appearances) do
-    appearances |> Enum.map(&(&1.participant)) |> Enum.uniq
+    appearances |> Enum.map(& &1.participant) |> Enum.uniq()
   end
 
   defp genre_count(performances, genre) do
     performances
-    |> Enum.map(&(&1.contest_category.category))
+    |> Enum.map(& &1.contest_category.category)
     |> Enum.filter(&(&1.genre == genre))
     |> length
   end

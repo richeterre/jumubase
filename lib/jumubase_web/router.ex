@@ -52,6 +52,7 @@ defmodule JumubaseWeb.Router do
     get "/anmeldung", PageController, :registration
     get "/anmeldung-bearbeiten", PageController, :edit_registration
     post "/lookup-registration", PageController, :lookup_registration
+
     resources "/contests/:contest_id/performances", PerformanceController,
       only: [:new, :create, :edit, :update]
 
@@ -71,19 +72,27 @@ defmodule JumubaseWeb.Router do
   scope "/internal", JumubaseWeb.Internal, as: :internal do
     pipe_through [:browser, :json_only]
 
-    patch "/contests/:contest_id/performances/reschedule",
-      PerformanceController, :reschedule, as: :contest_performance
+    patch "/contests/:contest_id/performances/reschedule", PerformanceController, :reschedule,
+      as: :contest_performance
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
     pipe_through [:browser, :pdf_only]
 
     get "/contests/:contest_id/performances/print-jury-sheets",
-      PerformanceController, :print_jury_sheets, as: :contest_performance
+        PerformanceController,
+        :print_jury_sheets,
+        as: :contest_performance
+
     get "/contests/:contest_id/performances/print-jury-table",
-      PerformanceController, :print_jury_table, as: :contest_performance
+        PerformanceController,
+        :print_jury_table,
+        as: :contest_performance
+
     get "/contests/:contest_id/performances/print-certificates",
-      PerformanceController, :print_certificates, as: :contest_performance
+        PerformanceController,
+        :print_certificates,
+        as: :contest_performance
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
@@ -92,27 +101,33 @@ defmodule JumubaseWeb.Router do
     get "/", PageController, :home
 
     resources "/categories", CategoryController, except: [:show, :delete]
+
     resources "/contests", ContestController, only: [:index, :show, :edit, :update] do
       get "/performances/jury-material", PerformanceController, :jury_material, as: :performances
       get "/performances/edit-results", PerformanceController, :edit_results, as: :results
       patch "/performances/update-results", PerformanceController, :update_results, as: :results
       get "/performances/publish-results", PerformanceController, :publish_results, as: :results
-      patch "/performances/update-results-public", PerformanceController, :update_results_public, as: :results
+
+      patch "/performances/update-results-public", PerformanceController, :update_results_public,
+        as: :results
+
       get "/performances/certificates", PerformanceController, :certificates, as: :performances
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
       resources "/performances", PerformanceController
+
       resources "/stages", StageController, only: [:index] do
         get "/schedule", StageController, :schedule, as: :schedule
         get "/timetable", StageController, :timetable, as: :timetable
       end
     end
+
     resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     scope "/dev" do
       forward "/sent_emails", Bamboo.SentEmailViewerPlug
     end

@@ -7,12 +7,16 @@ defmodule JumubaseWeb.Internal.UserController do
   alias Jumubase.Foundation
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Users"), path_fun: &Routes.internal_user_path/2, action: :index
+
+  plug :add_breadcrumb,
+    name: gettext("Users"),
+    path_fun: &Routes.internal_user_path/2,
+    action: :index
 
   plug :admin_check
 
   def index(conn, _params) do
-    users = Accounts.list_users |> Accounts.load_hosts
+    users = Accounts.list_users() |> Accounts.load_hosts()
     render(conn, "index.html", users: users)
   end
 
@@ -34,13 +38,13 @@ defmodule JumubaseWeb.Internal.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Accounts.get!(id) |> Accounts.load_hosts
+    user = Accounts.get!(id) |> Accounts.load_hosts()
     changeset = Accounts.change_user(user)
     render_edit_form(conn, user, changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get!(id) |> Accounts.load_hosts
+    user = Accounts.get!(id) |> Accounts.load_hosts()
 
     case Accounts.update_user(user, user_params) do
       {:ok, user} ->
@@ -73,6 +77,7 @@ defmodule JumubaseWeb.Internal.UserController do
 
   defp render_edit_form(conn, %User{} = user, %Changeset{} = changeset) do
     edit_path = Routes.internal_user_path(conn, :edit, user)
+
     conn
     |> add_breadcrumb(name: full_name(user), path: edit_path)
     |> add_breadcrumb(icon: "pencil", path: edit_path)
@@ -81,7 +86,8 @@ defmodule JumubaseWeb.Internal.UserController do
   end
 
   defp prepare_for_form(conn, %Changeset{} = changeset) do
-    host_options = Foundation.list_hosts |> Enum.map(&({&1.name, &1.id}))
+    host_options = Foundation.list_hosts() |> Enum.map(&{&1.name, &1.id})
+
     conn
     |> assign(:changeset, changeset)
     |> assign(:host_options, host_options)

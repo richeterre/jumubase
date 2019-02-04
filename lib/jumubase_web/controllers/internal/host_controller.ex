@@ -4,7 +4,11 @@ defmodule JumubaseWeb.Internal.HostController do
   alias Jumubase.Foundation.Host
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Hosts"), path_fun: &Routes.internal_host_path/2, action: :index
+
+  plug :add_breadcrumb,
+    name: gettext("Hosts"),
+    path_fun: &Routes.internal_host_path/2,
+    action: :index
 
   plug :admin_check
 
@@ -23,9 +27,12 @@ defmodule JumubaseWeb.Internal.HostController do
     case Foundation.create_host(params) do
       {:ok, host} ->
         conn
-        |> put_flash(:success,
-          gettext("The host \"%{name}\" was created.", name: host.name))
+        |> put_flash(
+          :success,
+          gettext("The host \"%{name}\" was created.", name: host.name)
+        )
         |> redirect(to: Routes.internal_host_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> assign(:changeset, changeset)

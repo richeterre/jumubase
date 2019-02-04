@@ -32,6 +32,7 @@ defmodule Jumubase.Factory do
 
   def contest_factory do
     year = JumuParams.year(@season)
+
     %Contest{
       season: @season,
       round: 1,
@@ -60,7 +61,7 @@ defmodule Jumubase.Factory do
       country_code: "DE",
       time_zone: "Europe/Berlin",
       latitude: 51.163375,
-      longitude: 10.447683,
+      longitude: 10.447683
     }
   end
 
@@ -78,7 +79,7 @@ defmodule Jumubase.Factory do
     %Performance{
       appearances: build_list(1, :appearance),
       pieces: build_list(1, :piece),
-      age_group: "III",
+      age_group: "III"
     }
   end
 
@@ -135,6 +136,7 @@ defmodule Jumubase.Factory do
   def insert_contest_category(%Contest{} = contest) do
     insert(:contest_category, contest: contest)
   end
+
   def insert_contest_category(%Contest{} = contest, genre) do
     insert(:contest_category,
       contest: contest,
@@ -146,6 +148,7 @@ defmodule Jumubase.Factory do
   Inserts a performance into the given entity.
   """
   def insert_performance(_entity, attrs \\ [])
+
   def insert_performance(%Contest{} = contest, attrs) do
     attrs =
       attrs
@@ -154,6 +157,7 @@ defmodule Jumubase.Factory do
 
     insert(:performance, attrs)
   end
+
   def insert_performance(%ContestCategory{contest: c} = cc, attrs) do
     attrs =
       attrs
@@ -175,9 +179,13 @@ defmodule Jumubase.Factory do
   Inserts a participant into the given contest.
   """
   def insert_participant(%Contest{} = c, attrs \\ []) do
-    %{appearances: [a]} = insert_performance(c, appearances: [
-      build(:appearance, participant: build(:participant, attrs))
-    ])
+    %{appearances: [a]} =
+      insert_performance(c,
+        appearances: [
+          build(:appearance, participant: build(:participant, attrs))
+        ]
+      )
+
     a.participant
   end
 

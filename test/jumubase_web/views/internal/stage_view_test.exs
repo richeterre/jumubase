@@ -4,25 +4,39 @@ defmodule JumubaseWeb.Internal.StageViewTest do
 
   describe "short_category_info/1" do
     test "returns the category and age group in a short style" do
-      p = build(:performance,
-        contest_category: build(:contest_category,
-          category: build(:category,
-            name: "Gesang (Pop) solo", short_name: "PopGesang"
-          )
-        ),
-        age_group: "III"
-      )
+      p =
+        build(:performance,
+          contest_category:
+            build(:contest_category,
+              category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
+            ),
+          age_group: "III"
+        )
+
       assert StageView.short_category_info(p) == "PopGesang III"
     end
   end
 
   describe "appearances_info/1" do
     test "returns participant names and instruments of the performance's appearances" do
-      p = build(:performance, appearances: [
-        build(:appearance, instrument: "violin", participant: build(:participant, given_name: "A", family_name: "B")),
-        build(:appearance, instrument: "violoncello", participant: build(:participant, given_name: "C", family_name: "D")),
-        build(:appearance, instrument: "piano", participant: build(:participant, given_name: "E", family_name: "F")),
-      ])
+      p =
+        build(:performance,
+          appearances: [
+            build(:appearance,
+              instrument: "violin",
+              participant: build(:participant, given_name: "A", family_name: "B")
+            ),
+            build(:appearance,
+              instrument: "violoncello",
+              participant: build(:participant, given_name: "C", family_name: "D")
+            ),
+            build(:appearance,
+              instrument: "piano",
+              participant: build(:participant, given_name: "E", family_name: "F")
+            )
+          ]
+        )
+
       assert StageView.appearances_info(p) == "A B, Violin\nC D, Violoncello\nE F, Piano"
     end
   end
@@ -62,22 +76,28 @@ defmodule JumubaseWeb.Internal.StageViewTest do
       [contest: insert(:contest), start: ~N[2019-01-01T09:30:00]]
     end
 
-    test "returns a spacer minute map for a single-item performance list", %{contest: c, start: start} do
+    test "returns a spacer minute map for a single-item performance list", %{
+      contest: c,
+      start: start
+    } do
       p = insert_performance(c, stage_time: start)
       assert StageView.spacer_map([p]) == %{p.id => 0}
     end
 
     test "returns a spacer minute map for many performances", %{contest: c, start: start} do
-      p1 = insert_performance(c,
-        stage_time: start,
-        pieces: [build(:piece, minutes: 12, seconds: 0)] # taking up 15 minutes
-      )
+      p1 =
+        insert_performance(c,
+          stage_time: start,
+          # taking up 15 minutes
+          pieces: [build(:piece, minutes: 12, seconds: 0)]
+        )
+
       p2 = insert_performance(c, stage_time: Timex.shift(start, minutes: 30))
 
       assert StageView.spacer_map([p1, p2]) == %{
-        p1.id => 15,
-        p2.id => 0
-      }
+               p1.id => 15,
+               p2.id => 0
+             }
     end
 
     test "returns an empty map for an empty performance list" do

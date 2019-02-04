@@ -27,7 +27,7 @@ defmodule Jumubase.Showtime.Participant do
     participant
     |> cast(attrs, @required_attrs)
     |> validate_required(@required_attrs)
-    |> validate_format(:email, Utils.email_format)
+    |> validate_format(:email, Utils.email_format())
     |> sanitize_text_input
   end
 
@@ -38,6 +38,7 @@ defmodule Jumubase.Showtime.Participant do
     case Enum.filter(@identity_attrs, &Map.has_key?(changes, &1)) do
       [] ->
         changeset
+
       changed_fields ->
         Enum.reduce(changed_fields, changeset, fn field, cs ->
           add_error(cs, field, dgettext("errors", "can't be changed"))

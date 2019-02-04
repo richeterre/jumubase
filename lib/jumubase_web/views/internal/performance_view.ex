@@ -1,9 +1,17 @@
 defmodule JumubaseWeb.Internal.PerformanceView do
   use JumubaseWeb, :view
-  import JumubaseWeb.Internal.AppearanceView, only: [
-    advancement_label: 2, age_group_badge: 1, appearance_info: 1,
-    instrument_name: 1, missing_points_error: 1, participant_names: 1, prize: 2
-  ]
+
+  import JumubaseWeb.Internal.AppearanceView,
+    only: [
+      advancement_label: 2,
+      age_group_badge: 1,
+      appearance_info: 1,
+      instrument_name: 1,
+      missing_points_error: 1,
+      participant_names: 1,
+      prize: 2
+    ]
+
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
@@ -34,10 +42,12 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   def render("reschedule_failure.json", %{performance_id: p_id, errors: errors}) do
-    %{error: %{
-      performanceId: p_id,
-      errors: errors
-    }}
+    %{
+      error: %{
+        performanceId: p_id,
+        errors: errors
+      }
+    }
   end
 
   def render("scripts.jury_material.html", _assigns), do: render_performance_filter()
@@ -70,9 +80,11 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   def stage_info(performance, style \\ :full)
+
   def stage_info(%Performance{stage: %Stage{} = s, stage_time: stage_time}, style) do
     {format_datetime(stage_time, style), s.name}
   end
+
   def stage_info(%Performance{stage: nil, stage_time: nil}, _style), do: nil
 
   def category_name(%Performance{} = performance) do
@@ -88,7 +100,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   """
   def formatted_duration(%Performance{} = performance) do
     Showtime.total_duration(performance)
-    |> Timex.Duration.to_time!
+    |> Timex.Duration.to_time!()
     |> Timex.format!("%-M'%S", :strftime)
   end
 
@@ -124,10 +136,11 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   def results_public_text(%Performance{results_public: true}) do
-    content_tag :span, gettext("Yes")
+    content_tag(:span, gettext("Yes"))
   end
+
   def results_public_text(%Performance{results_public: false}) do
-    content_tag :span, gettext("No"), class: "text-muted"
+    content_tag(:span, gettext("No"), class: "text-muted")
   end
 
   @doc """
@@ -139,7 +152,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       stage_options: stage_filter_options(contest),
       genre_options: genre_filter_options(contest),
       cc_options: cc_filter_options(contest),
-      ag_options: AgeGroups.all
+      ag_options: AgeGroups.all()
     }
   end
 
@@ -156,24 +169,29 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   """
   def cc_filter_options(%Contest{} = contest) do
     contest
-    |> Foundation.load_contest_categories
+    |> Foundation.load_contest_categories()
     |> Map.get(:contest_categories)
-    |> Enum.map(&({&1.category.name, &1.id}))
+    |> Enum.map(&{&1.category.name, &1.id})
   end
 
   def filter_status(count, true) do
     [count_tag(count), " ", active_filter_label()]
   end
+
   def filter_status(count, false), do: count_tag(count)
 
   def certificate_instructions(0) do
-    gettext("Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper.")
+    gettext(
+      "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
+    )
   end
+
   def certificate_instructions(_round) do
     gettext(
       "The printed output matches the official Jumu certificate paper, which you can order %{link}.",
       link: link(gettext("here"), to: certificate_order_address()) |> safe_to_string
-    ) |> raw
+    )
+    |> raw
   end
 
   # Private helpers
@@ -184,28 +202,32 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   defp stage_filter_options(%Contest{} = contest) do
     contest
-    |> Foundation.load_used_stages
+    |> Foundation.load_used_stages()
     |> Map.get(:host)
     |> Map.get(:stages)
     |> Enum.map(&{&1.name, &1.id})
   end
 
   defp genre_filter_options(%Contest{round: round}) do
-    genres = case round do
-      0 -> ["kimu"]
-      _ -> ["classical", "popular"]
-    end
+    genres =
+      case round do
+        0 -> ["kimu"]
+        _ -> ["classical", "popular"]
+      end
+
     Enum.map(genres, &{genre_name(&1), &1})
   end
 
   defp count_tag(count) do
-    content_tag :span,
+    content_tag(
+      :span,
       ngettext("%{count} performance", "%{count} performances", count),
       class: "text-muted"
+    )
   end
 
   defp active_filter_label do
-    content_tag :span, gettext("Filter active"), class: "label label-warning"
+    content_tag(:span, gettext("Filter active"), class: "label label-warning")
   end
 
   defp certificate_order_address do

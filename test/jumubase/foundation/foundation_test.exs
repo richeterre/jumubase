@@ -23,10 +23,11 @@ defmodule Jumubase.FoundationTest do
     test "returns the hosts' locations" do
       h1 = insert(:host, latitude: 50.5, longitude: 10.0)
       h2 = insert(:host, latitude: 25.0, longitude: 50.5)
-      assert Foundation.list_host_locations == [
-        {h1.latitude, h1.longitude},
-        {h2.latitude, h2.longitude},
-      ]
+
+      assert Foundation.list_host_locations() == [
+               {h1.latitude, h1.longitude},
+               {h2.latitude, h2.longitude}
+             ]
     end
   end
 
@@ -46,7 +47,7 @@ defmodule Jumubase.FoundationTest do
   describe "list_contests/0" do
     test "returns all contests" do
       contests = insert_list(2, :contest)
-      assert Foundation.list_contests == contests
+      assert Foundation.list_contests() == contests
     end
 
     test "orders contests by round and host name" do
@@ -58,12 +59,12 @@ defmodule Jumubase.FoundationTest do
       c4 = insert(:contest, round: 1, host: h1)
       c5 = insert(:contest, round: 2, host: h2)
       c6 = insert(:contest, round: 2, host: h1)
-      assert_ids_match_ordered Foundation.list_contests, [c6, c5, c4, c3, c2, c1]
+      assert_ids_match_ordered(Foundation.list_contests(), [c6, c5, c4, c3, c2, c1])
     end
 
     test "preloads the contests' hosts" do
       insert(:contest)
-      [result] = Foundation.list_contests
+      [result] = Foundation.list_contests()
       assert %Host{} = result.host
     end
   end
@@ -85,8 +86,8 @@ defmodule Jumubase.FoundationTest do
 
   describe "list_open_contests/1" do
     test "returns open RW contests, ordered by host name" do
-      today = Timex.today
-      tomorrow = Timex.today |> Timex.shift(days: 1)
+      today = Timex.today()
+      tomorrow = Timex.today() |> Timex.shift(days: 1)
 
       c1 = insert(:contest, round: 1, host: build(:host, name: "B"), deadline: today)
       c2 = insert(:contest, round: 1, host: build(:host, name: "A"), deadline: tomorrow)
@@ -96,8 +97,8 @@ defmodule Jumubase.FoundationTest do
     end
 
     test "returns open Kimu contests, ordered by host name" do
-      today = Timex.today
-      tomorrow = Timex.today |> Timex.shift(days: 1)
+      today = Timex.today()
+      tomorrow = Timex.today() |> Timex.shift(days: 1)
 
       c1 = insert(:contest, round: 0, host: build(:host, name: "B"), deadline: today)
       c2 = insert(:contest, round: 0, host: build(:host, name: "A"), deadline: tomorrow)
@@ -107,8 +108,8 @@ defmodule Jumubase.FoundationTest do
     end
 
     test "returns open LW contests, ordered by host name" do
-      today = Timex.today
-      tomorrow = Timex.today |> Timex.shift(days: 1)
+      today = Timex.today()
+      tomorrow = Timex.today() |> Timex.shift(days: 1)
 
       c1 = insert(:contest, round: 2, host: build(:host, name: "B"), deadline: today)
       c2 = insert(:contest, round: 2, host: build(:host, name: "A"), deadline: tomorrow)
@@ -118,7 +119,7 @@ defmodule Jumubase.FoundationTest do
     end
 
     test "does not return contests with a past signup deadline" do
-      yesterday = Timex.today |> Timex.shift(days: -1)
+      yesterday = Timex.today() |> Timex.shift(days: -1)
       insert(:contest, round: 0, deadline: yesterday)
       insert(:contest, round: 1, deadline: yesterday)
 
@@ -146,7 +147,7 @@ defmodule Jumubase.FoundationTest do
       insert(:contest, host: host_with_stage, timetables_public: false)
       |> insert_performance(stage: s)
 
-      assert_ids_match_unordered Foundation.list_public_contests, [c1]
+      assert_ids_match_unordered(Foundation.list_public_contests(), [c1])
     end
 
     test "orders the contest by round, then host name" do
@@ -162,7 +163,7 @@ defmodule Jumubase.FoundationTest do
       c4 = insert(:contest, host: h2, round: 1, timetables_public: true)
       insert_performance(c4, stage: s2)
 
-      assert_ids_match_ordered Foundation.list_public_contests, [c4, c1, c3, c2]
+      assert_ids_match_ordered(Foundation.list_public_contests(), [c4, c1, c3, c2])
     end
 
     test "preloads the contests' hosts with used stages, as well as non-empty contest categories" do
@@ -179,21 +180,25 @@ defmodule Jumubase.FoundationTest do
       insert_performance(cc1, stage: s2)
       insert_performance(cc2, stage: s2)
 
-      [c1, c2] = Foundation.list_public_contests
+      [c1, c2] = Foundation.list_public_contests()
+
       assert %Contest{
-        host: %Host{stages: c1_stages},
-        contest_categories: [%ContestCategory{category: %Category{}}]
-      } = c1
-      assert_ids_match_unordered c1_stages, [s1, s2]
+               host: %Host{stages: c1_stages},
+               contest_categories: [%ContestCategory{category: %Category{}}]
+             } = c1
+
+      assert_ids_match_unordered(c1_stages, [s1, s2])
+
       assert %Contest{
-        host: %Host{stages: c2_stages},
-        contest_categories: [%ContestCategory{category: %Category{}}]
-      } = c2
-      assert_ids_match_unordered c2_stages, [s2]
+               host: %Host{stages: c2_stages},
+               contest_categories: [%ContestCategory{category: %Category{}}]
+             } = c2
+
+      assert_ids_match_unordered(c2_stages, [s2])
     end
 
     test "orders preloaded contest categories by insertion date" do
-      now = Timex.now
+      now = Timex.now()
       s = insert(:stage, host: build(:host))
       c = insert(:contest, host: s.host, timetables_public: true)
       cc1 = insert(:contest_category, contest: c, inserted_at: now)
@@ -203,8 +208,8 @@ defmodule Jumubase.FoundationTest do
       insert_performance(cc2, stage: s)
       insert_performance(cc3, stage: s)
 
-      [result] = Foundation.list_public_contests
-      assert_ids_match_ordered result.contest_categories, [cc3, cc1, cc2]
+      [result] = Foundation.list_public_contests()
+      assert_ids_match_ordered(result.contest_categories, [cc3, cc1, cc2])
     end
   end
 
@@ -220,7 +225,6 @@ defmodule Jumubase.FoundationTest do
       own_kimu = insert(:contest, round: 0, host: own_host)
       own_rw = insert(:contest, round: 1, host: own_host)
       own_lw = insert(:contest, round: 2, host: own_host)
-
 
       assert_ids_match_unordered(
         Foundation.list_relevant_contests(Contest, u),
@@ -340,7 +344,10 @@ defmodule Jumubase.FoundationTest do
       [host: insert(:host), season: 56]
     end
 
-    test "returns a Kimu contest with the same season and host as a given RW contest", %{host: h, season: s} do
+    test "returns a Kimu contest with the same season and host as a given RW contest", %{
+      host: h,
+      season: s
+    } do
       kimu = insert(:contest, host: h, season: s, round: 0)
       rw = insert(:contest, host: h, season: s, round: 1)
 
@@ -356,9 +363,12 @@ defmodule Jumubase.FoundationTest do
     end
 
     test "returns nil if no matching Kimu contest exists", %{host: h, season: s} do
-      insert(:contest, host: build(:host), season: s, round: 0) # Wrong host
-      insert(:contest, host: h, season: s + 1, round: 0) # Wrong season
-      insert(:contest, host: h, season: s, round: 2) # Wrong round
+      # Wrong host
+      insert(:contest, host: build(:host), season: s, round: 0)
+      # Wrong season
+      insert(:contest, host: h, season: s + 1, round: 0)
+      # Wrong round
+      insert(:contest, host: h, season: s, round: 2)
       rw = insert(:contest, host: h, season: s, round: 1)
 
       assert Foundation.get_matching_kimu_contest(rw) == nil
@@ -367,13 +377,13 @@ defmodule Jumubase.FoundationTest do
 
   describe "get_latest_official_contest/1" do
     test "returns the latest-ending non-Kimu contest" do
-      today = Timex.today
+      today = Timex.today()
       insert(:contest, round: 1, end_date: today)
       %{id: id} = insert(:contest, round: 1, end_date: today |> Timex.shift(days: 1))
       insert(:contest, round: 0, end_date: today |> Timex.shift(days: 2))
       insert(:contest, round: 1, end_date: today |> Timex.shift(days: -1))
 
-      assert %Contest{id: ^id} = Foundation.get_latest_official_contest
+      assert %Contest{id: ^id} = Foundation.get_latest_official_contest()
     end
   end
 
@@ -409,27 +419,31 @@ defmodule Jumubase.FoundationTest do
   describe "general_deadline/1" do
     test "returns the deadline most common in the given contests" do
       [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
+
       contests = [
         build(:contest, deadline: d1),
         build(:contest, deadline: d3),
         build(:contest, deadline: d1),
         build(:contest, deadline: d3),
         build(:contest, deadline: d2),
-        build(:contest, deadline: d3),
+        build(:contest, deadline: d3)
       ]
+
       assert Foundation.general_deadline(contests) == d3
     end
 
     test "returns the earliest deadline if several are most common" do
       [d1, d2, d3] = [~D[2018-12-15], ~D[2018-12-01], ~D[2018-12-21]]
+
       contests = [
         build(:contest, deadline: d1),
         build(:contest, deadline: d2),
         build(:contest, deadline: d3),
         build(:contest, deadline: d3),
         build(:contest, deadline: d2),
-        build(:contest, deadline: d1),
+        build(:contest, deadline: d1)
       ]
+
       assert Foundation.general_deadline(contests) == d2
     end
   end
@@ -492,6 +506,7 @@ defmodule Jumubase.FoundationTest do
   describe "list_contest_categories/1" do
     test "returns all contest categories of the given contest" do
       c = insert(:contest, contest_categories: build_list(2, :contest_category))
+
       assert_ids_match_unordered(
         Foundation.list_contest_categories(c),
         c.contest_categories
@@ -524,8 +539,8 @@ defmodule Jumubase.FoundationTest do
       %{id: id} = insert_contest_category(c)
 
       assert %ContestCategory{
-        category: %Category{},
-      } = Foundation.get_contest_category!(c, id)
+               category: %Category{}
+             } = Foundation.get_contest_category!(c, id)
     end
   end
 
@@ -547,33 +562,40 @@ defmodule Jumubase.FoundationTest do
 
   describe "load_host_users/1" do
     test "preloads a contest's host with associated users" do
-      %{id: id} = insert(:contest, host: build(:host, users: [
-        build(:user, given_name: "A"),
-        build(:user, given_name: "B"),
-      ]))
+      %{id: id} =
+        insert(:contest,
+          host:
+            build(:host,
+              users: [
+                build(:user, given_name: "A"),
+                build(:user, given_name: "B")
+              ]
+            )
+        )
 
-      contest = Repo.get(Contest, id) |> Foundation.load_host_users
+      contest = Repo.get(Contest, id) |> Foundation.load_host_users()
       assert [%User{given_name: "A"}, %User{given_name: "B"}] = contest.host.users
     end
   end
 
   test "load_contest_categories/1 preloads a contest's contest categories" do
-    %{id: id} = insert(:contest,
-      contest_categories: build_list(1, :contest_category,
-        category: build(:category, name: "ABC")
+    %{id: id} =
+      insert(:contest,
+        contest_categories:
+          build_list(1, :contest_category, category: build(:category, name: "ABC"))
       )
-    )
 
-    contest = Repo.get(Contest, id) |> Foundation.load_contest_categories
+    contest = Repo.get(Contest, id) |> Foundation.load_contest_categories()
     assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
   end
 
   test "load_available_stages/1 preloads a contest's available stages" do
-    %{id: id} = insert(:contest,
-      host: build(:host, stages: build_list(1, :stage, name: "X"))
-    )
+    %{id: id} =
+      insert(:contest,
+        host: build(:host, stages: build_list(1, :stage, name: "X"))
+      )
 
-    contest = Repo.get(Contest, id) |> Foundation.load_available_stages
+    contest = Repo.get(Contest, id) |> Foundation.load_available_stages()
     assert [%Stage{name: "X"}] = contest.host.stages
   end
 
@@ -582,7 +604,7 @@ defmodule Jumubase.FoundationTest do
     c = insert(:contest, host: build(:host, stages: [s1, s2]))
     insert_performance(c, stage: s1)
 
-    contest = Repo.get(Contest, c.id) |> Foundation.load_used_stages
-    assert_ids_match_unordered contest.host.stages, [s1]
+    contest = Repo.get(Contest, c.id) |> Foundation.load_used_stages()
+    assert_ids_match_unordered(contest.host.stages, [s1])
   end
 end

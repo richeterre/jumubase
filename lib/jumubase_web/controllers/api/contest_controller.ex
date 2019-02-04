@@ -4,7 +4,7 @@ defmodule JumubaseWeb.Api.ContestController do
 
   def index(conn, %{"timetables_public" => "1"}) do
     conn
-    |> assign(:contests, Foundation.list_public_contests)
+    |> assign(:contests, Foundation.list_public_contests())
     |> render("index.json")
   end
 end

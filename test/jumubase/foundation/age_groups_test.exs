@@ -42,6 +42,7 @@ defmodule Jumubase.AgeGroupsTest do
       assert_raise CaseClauseError, fn ->
         AgeGroups.calculate_age_group(~D[2020-01-01], 56)
       end
+
       assert_raise CaseClauseError, fn ->
         AgeGroups.calculate_age_group(~D[1991-12-31], 56)
       end
@@ -61,8 +62,8 @@ defmodule Jumubase.AgeGroupsTest do
       min = "Ib"
       max = "III"
 
-      for ag <- ~w(Ib II III), do: assert AgeGroups.in_range?(ag, min, max)
-      for ag <- ~w(Ia IV V VI VII invalid), do: refute AgeGroups.in_range?(ag, min, max)
+      for ag <- ~w(Ib II III), do: assert(AgeGroups.in_range?(ag, min, max))
+      for ag <- ~w(Ia IV V VI VII invalid), do: refute(AgeGroups.in_range?(ag, min, max))
     end
   end
 end

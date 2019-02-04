@@ -11,12 +11,14 @@ defmodule JumubaseWeb.Internal.Permit do
   def scope_contests(query, %User{role: "local-organizer"} = user) do
     query |> at_own_host(user)
   end
+
   def scope_contests(query, %User{}), do: query
 
   def authorized?(%User{role: "local-organizer"} = u, %Contest{} = c) do
     %{host: %{users: users}} = Foundation.load_host_users(c)
     u.id in Utils.get_ids(users)
   end
+
   def authorized?(%User{}, %Contest{}), do: true
 
   # Private helpers

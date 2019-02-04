@@ -30,8 +30,9 @@ defmodule JumubaseWeb.Internal.PieceViewTest do
   describe "epoch_tag/1" do
     test "returns an epoch tag for a piece" do
       piece = build(:piece, epoch: "b")
+
       assert PieceView.epoch_tag(piece) |> safe_to_string ==
-        "<abbr title=\"Baroque\">b</abbr>"
+               "<abbr title=\"Baroque\">b</abbr>"
     end
   end
 end

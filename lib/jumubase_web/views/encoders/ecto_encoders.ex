@@ -12,11 +12,13 @@ defimpl Poison.Encoder, for: Ecto.Changeset do
       errors: get_errors(changeset),
       valid: changeset.valid?
     }
+
     Poison.encode!(output, options)
   end
 
   # Omit errors if changeset has no action (typically before first submission)
   defp get_errors(%Ecto.Changeset{action: nil}), do: []
+
   defp get_errors(%Ecto.Changeset{action: _} = changeset) do
     get_translated_errors(changeset)
   end

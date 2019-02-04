@@ -5,7 +5,7 @@ defmodule Jumubase.ResultsTest do
 
   describe "get_prize/2" do
     test "returns no prize for a Kimu appearance" do
-      for points <- JumuParams.points do
+      for points <- JumuParams.points() do
         assert Results.get_prize(points, 0) == nil
       end
     end
@@ -71,18 +71,25 @@ defmodule Jumubase.ResultsTest do
   describe "advances?/1" do
     setup do
       c = build(:contest)
-      cc = insert(:contest_category,
-        contest: c, min_advancing_age_group: "III", max_advancing_age_group: "IV"
-      )
+
+      cc =
+        insert(:contest_category,
+          contest: c,
+          min_advancing_age_group: "III",
+          max_advancing_age_group: "IV"
+        )
+
       [contest_category: cc]
     end
 
     test "returns false for a performance in a non-advancing contest category" do
-      cc = insert(:contest_category,
-        contest: build(:contest),
-        min_advancing_age_group: nil,
-        max_advancing_age_group: nil
-      )
+      cc =
+        insert(:contest_category,
+          contest: build(:contest),
+          min_advancing_age_group: nil,
+          max_advancing_age_group: nil
+        )
+
       p = insert_performance(cc, "III", [{"soloist", 23}])
       refute Results.advances?(p)
     end
@@ -94,29 +101,38 @@ defmodule Jumubase.ResultsTest do
       end
     end
 
-    test "returns false for a performance with insufficient non-acc points", %{contest_category: cc} do
+    test "returns false for a performance with insufficient non-acc points", %{
+      contest_category: cc
+    } do
       p = insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
       refute Results.advances?(p)
     end
 
-    test "returns true for a performance with suitable age group and sufficient non-acc points", %{contest_category: cc} do
+    test "returns true for a performance with suitable age group and sufficient non-acc points",
+         %{contest_category: cc} do
       p = insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 22}])
       assert Results.advances?(p)
     end
 
-    test "always returns false for appearances, no matter the soloist result", %{contest_category: cc} do
-      %{appearances: [sol1, acc1]} = p =
-        insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
+    test "always returns false for appearances, no matter the soloist result", %{
+      contest_category: cc
+    } do
+      %{appearances: [sol1, acc1]} =
+        p = insert_performance(cc, "III", [{"soloist", 22}, {"accompanist", 23}])
+
       refute Results.advances?(sol1, p)
       refute Results.advances?(acc1, p)
 
-      %{appearances: [sol2, acc2]} = p =
-        insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 23}])
+      %{appearances: [sol2, acc2]} =
+        p = insert_performance(cc, "III", [{"soloist", 23}, {"accompanist", 23}])
+
       assert Results.advances?(sol2, p)
       refute Results.advances?(acc2, p)
     end
 
-    test "returns an error when the given appearance and performance don't match", %{contest_category: cc} do
+    test "returns an error when the given appearance and performance don't match", %{
+      contest_category: cc
+    } do
       %{appearances: [a]} = insert_performance(cc)
       p = insert_performance(cc)
       assert_raise FunctionClauseError, fn -> Results.advances?(a, p) end
@@ -128,9 +144,10 @@ defmodule Jumubase.ResultsTest do
   defp insert_performance(cc, age_group, appearance_shorthands) do
     insert_performance(cc,
       age_group: age_group,
-      appearances: Enum.map(appearance_shorthands, fn {role, points} ->
-        build(:appearance, role: role, points: points)
-      end)
+      appearances:
+        Enum.map(appearance_shorthands, fn {role, points} ->
+          build(:appearance, role: role, points: points)
+        end)
     )
   end
 end

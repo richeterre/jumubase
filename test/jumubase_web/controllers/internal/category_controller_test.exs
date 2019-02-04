@@ -132,14 +132,16 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
   defp assert_create_success(conn) do
     redirect_path = Routes.internal_category_path(conn, :index)
     assert redirected_to(conn) == redirect_path
-    conn = get(recycle(conn), redirect_path) # Follow redirection
+    # Follow redirection
+    conn = get(recycle(conn), redirect_path)
     assert html_response(conn, 200) =~ @create_attrs[:name]
   end
 
   defp assert_update_success(conn) do
     redirect_path = Routes.internal_category_path(conn, :index)
     assert redirected_to(conn) == redirect_path
-    conn = get(recycle(conn), redirect_path) # Follow redirection
+    # Follow redirection
+    conn = get(recycle(conn), redirect_path)
     assert html_response(conn, 200) =~ @update_attrs[:name]
   end
 end

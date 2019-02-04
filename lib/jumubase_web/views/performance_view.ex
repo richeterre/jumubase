@@ -23,6 +23,7 @@ defmodule JumubaseWeb.PerformanceView do
   def registration_path(conn, %Contest{} = c) do
     Routes.performance_path(conn, :new, c)
   end
+
   def registration_path(_conn, nil), do: nil
 
   @doc """
@@ -30,7 +31,7 @@ defmodule JumubaseWeb.PerformanceView do
   """
   def kimu_link(path) do
     gettext("for Kimu, there’s a %{form_link}",
-      form_link: safe_to_string(link gettext("separate form"), to: path)
+      form_link: safe_to_string(link(gettext("separate form"), to: path))
     )
     |> raw
   end
@@ -41,18 +42,17 @@ defmodule JumubaseWeb.PerformanceView do
     %{
       conn: conn,
       contest: contest,
-      changeset: changeset,
+      changeset: changeset
     } = assigns
 
-    json = render_html_safe_json(
-      %{
+    json =
+      render_html_safe_json(%{
         changeset: changeset |> remove_obsolete_associations,
         params: conn.params["performance"],
-        contest_category_options: (
+        contest_category_options:
           for {name, id, type, genre} <- cc_options(contest) do
             %{id: id, name: name, type: type, genre: genre}
-          end
-        ),
+          end,
         birthdate_year_options: birthdate_year_options(contest.season),
         birthdate_month_options: birthdate_month_options(),
         role_options: role_options(),
@@ -67,8 +67,7 @@ defmodule JumubaseWeb.PerformanceView do
             accompanist: gettext("Accompanist")
           }
         }
-      }
-    )
+      })
 
     ~E{
       <script src="/js/registration.js"></script>
@@ -98,16 +97,16 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   defp birthdate_month_options() do
-    Timex.Translator.current_locale
-    |> Timex.Translator.get_months
-    |> Map.to_list
+    Timex.Translator.current_locale()
+    |> Timex.Translator.get_months()
+    |> Map.to_list()
     |> Enum.map(fn {ordinal, name} ->
       %{value: Integer.to_string(ordinal), label: name}
     end)
   end
 
   defp role_options do
-    Enum.map(JumuParams.participant_roles, fn
+    Enum.map(JumuParams.participant_roles(), fn
       role -> %{id: role, label: role_name(role)}
     end)
   end
@@ -121,13 +120,13 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   defp instrument_options do
-    Jumubase.Showtime.Instruments.all
+    Jumubase.Showtime.Instruments.all()
     |> Enum.sort_by(fn {_value, label} -> label end)
     |> Enum.map(fn {value, label} -> %{value: value, label: label} end)
   end
 
   defp epoch_options do
-    Enum.map(JumuParams.epochs, fn epoch ->
+    Enum.map(JumuParams.epochs(), fn epoch ->
       %{id: epoch, label: "#{epoch}) #{JumuParams.epoch_description(epoch)}"}
     end)
   end

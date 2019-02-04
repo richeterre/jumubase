@@ -19,7 +19,7 @@ defmodule JumubaseWeb.Internal.PermitTest do
       insert(:contest)
 
       assert_ids_match_unordered(
-        Permit.scope_contests(Contest, u) |> Repo.all,
+        Permit.scope_contests(Contest, u) |> Repo.all(),
         [c1, c2]
       )
     end
@@ -35,7 +35,7 @@ defmodule JumubaseWeb.Internal.PermitTest do
         c3 = insert(:contest)
 
         assert_ids_match_unordered(
-          Permit.scope_contests(Contest, u) |> Repo.all,
+          Permit.scope_contests(Contest, u) |> Repo.all(),
           [c1, c2, c3]
         )
       end

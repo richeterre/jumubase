@@ -8,7 +8,11 @@ defmodule JumubaseWeb.Internal.ContestController do
   alias JumubaseWeb.Internal.Permit
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &Routes.internal_contest_path/2, action: :index
+
+  plug :add_breadcrumb,
+    name: gettext("Contests"),
+    path_fun: &Routes.internal_contest_path/2,
+    action: :index
 
   plug :user_check when action in [:index]
   plug :contest_user_check when action in [:show]
@@ -18,7 +22,7 @@ defmodule JumubaseWeb.Internal.ContestController do
     contests =
       Contest
       |> Permit.scope_contests(user)
-      |> Foundation.list_contests
+      |> Foundation.list_contests()
 
     conn
     |> assign(:contests, contests)
@@ -28,11 +32,11 @@ defmodule JumubaseWeb.Internal.ContestController do
   def show(conn, %{"id" => id}) do
     contest =
       Foundation.get_contest!(id)
-      |> Foundation.load_contest_categories
-      |> Foundation.load_used_stages
+      |> Foundation.load_contest_categories()
+      |> Foundation.load_used_stages()
 
-    performances = contest |> Showtime.list_performances
-    result_completions = performances |> Showtime.result_completions
+    performances = contest |> Showtime.list_performances()
+    result_completions = performances |> Showtime.result_completions()
 
     conn
     |> assign(:contest, contest)
@@ -67,6 +71,7 @@ defmodule JumubaseWeb.Internal.ContestController do
   defp render_edit_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
     contest_path = Routes.internal_contest_path(conn, :show, contest)
     edit_path = Routes.internal_contest_path(conn, :edit, contest)
+
     conn
     |> add_breadcrumb(name: name_with_flag(contest), path: contest_path)
     |> add_breadcrumb(icon: "pencil", path: edit_path)
@@ -76,7 +81,8 @@ defmodule JumubaseWeb.Internal.ContestController do
   end
 
   defp prepare_for_form(conn, %Changeset{} = changeset) do
-    host_options = Foundation.list_hosts |> Enum.map(&({&1.name, &1.id}))
+    host_options = Foundation.list_hosts() |> Enum.map(&{&1.name, &1.id})
+
     conn
     |> assign(:changeset, changeset)
     |> assign(:host_options, host_options)

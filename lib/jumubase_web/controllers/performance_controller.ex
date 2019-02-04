@@ -13,7 +13,7 @@ defmodule JumubaseWeb.PerformanceController do
   def new(conn, _params, contest) do
     changeset =
       Showtime.build_performance(contest)
-      |> Showtime.change_performance
+      |> Showtime.change_performance()
 
     conn
     |> prepare_for_form(contest, changeset)
@@ -26,11 +26,12 @@ defmodule JumubaseWeb.PerformanceController do
 
     case Showtime.create_performance(contest, performance_params) do
       {:ok, %{edit_code: edit_code} = performance} ->
-        Email.registration_success(performance) |> Mailer.deliver_later
+        Email.registration_success(performance) |> Mailer.deliver_later()
 
         conn
         |> put_flash(:success, registration_success_message(edit_code))
         |> redirect(to: Routes.page_path(conn, :home))
+
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, changeset)
@@ -52,11 +53,13 @@ defmodule JumubaseWeb.PerformanceController do
     params = normalize_params(params)
 
     performance = Showtime.get_performance!(contest, id, edit_code)
+
     case Showtime.update_performance(contest, performance, params) do
       {:ok, _} ->
         conn
         |> put_flash(:success, gettext("Your changes to the registration were saved."))
         |> redirect(to: Routes.page_path(conn, :home))
+
       {:error, changeset} ->
         conn
         |> prepare_for_form(contest, changeset)
@@ -91,7 +94,12 @@ defmodule JumubaseWeb.PerformanceController do
 
   defp registration_success_message(edit_code) do
     success_msg = gettext("We received your registration!")
-    edit_msg = gettext("You can still change it later using the edit code %{edit_code}.", edit_code: edit_code)
+
+    edit_msg =
+      gettext("You can still change it later using the edit code %{edit_code}.",
+        edit_code: edit_code
+      )
+
     "#{success_msg} #{edit_msg}"
   end
 end

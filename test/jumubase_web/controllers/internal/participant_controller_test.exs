@@ -24,12 +24,18 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's participants", %{conn: conn, contest: c} do
+    test "redirects local organizers when trying to list a foreign contest's participants", %{
+      conn: conn,
+      contest: c
+    } do
       conn = get(conn, Routes.internal_contest_participant_path(conn, :index, c))
       assert_unauthorized_user(conn)
     end
 
-    test "redirects guests when trying to list a contest's participants", %{conn: conn, contest: c} do
+    test "redirects guests when trying to list a contest's participants", %{
+      conn: conn,
+      contest: c
+    } do
       conn = get(conn, Routes.internal_contest_participant_path(conn, :index, c))
       assert_unauthorized_guest(conn)
     end
@@ -54,7 +60,10 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to view a participant from a foreign contest", %{conn: conn, contest: c} do
+    test "redirects local organizers when trying to view a participant from a foreign contest", %{
+      conn: conn,
+      contest: c
+    } do
       pt = insert_participant(c)
       conn = get(conn, Routes.internal_contest_participant_path(conn, :show, c, pt))
       assert_unauthorized_user(conn)

@@ -14,9 +14,10 @@ defmodule JumubaseWeb.Internal.ParticipantView do
   def group_email_link(participants) do
     emails =
       participants
-      |> Enum.map(&(&1.email))
-      |> Enum.uniq
+      |> Enum.map(& &1.email)
+      |> Enum.uniq()
       |> Enum.join(",")
+
     "mailto:?bcc=#{emails}"
   end
 end

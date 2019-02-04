@@ -21,15 +21,20 @@ defmodule Jumubase.Seeder do
   """
   def start_kimu_seed(season) do
     kimu_category = Repo.get_by!(Category, genre: "kimu")
-    %{season: season, round: 0, contest_categories: [
-      Factory.build(:contest_category,
-        category: kimu_category,
-        min_age_group: "Ia",
-        max_age_group: "II",
-        min_advancing_age_group: nil,
-        max_advancing_age_group: nil
-      )
-    ]}
+
+    %{
+      season: season,
+      round: 0,
+      contest_categories: [
+        Factory.build(:contest_category,
+          category: kimu_category,
+          min_age_group: "Ia",
+          max_age_group: "II",
+          min_advancing_age_group: nil,
+          max_advancing_age_group: nil
+        )
+      ]
+    }
   end
 
   @doc """
@@ -39,15 +44,19 @@ defmodule Jumubase.Seeder do
   def add_category(seed, short_name, min_ag, max_ag, min_adv_ag, max_adv_ag) do
     category = Repo.get_by!(Category, short_name: short_name)
 
-    %{seed |
-      contest_categories: seed.contest_categories ++
-        [Factory.build(:contest_category,
-          category: category,
-          min_age_group: min_ag,
-          max_age_group: max_ag,
-          min_advancing_age_group: min_adv_ag,
-          max_advancing_age_group: max_adv_ag
-        )]
+    %{
+      seed
+      | contest_categories:
+          seed.contest_categories ++
+            [
+              Factory.build(:contest_category,
+                category: category,
+                min_age_group: min_ag,
+                max_age_group: max_ag,
+                min_advancing_age_group: min_adv_ag,
+                max_advancing_age_group: max_adv_ag
+              )
+            ]
     }
   end
 
@@ -75,8 +84,13 @@ defmodule Jumubase.Seeder do
     {:ok, deadline} = Date.new(year - 1, 12, 15)
 
     for host <- hosts do
-      Factory.insert(:contest, host: host, season: season, round: round,
-        start_date: start_date, end_date: end_date, deadline: deadline,
+      Factory.insert(:contest,
+        host: host,
+        season: season,
+        round: round,
+        start_date: start_date,
+        end_date: end_date,
+        deadline: deadline,
         contest_categories: ccs
       )
     end

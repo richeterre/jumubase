@@ -6,7 +6,7 @@ alias Jumubase.Accounts.User
 alias Jumubase.Foundation.{Category, Host}
 alias Jumubase.Showtime.{Participant}
 
-Repo.transaction fn ->
+Repo.transaction(fn ->
   # Clear existing data
   Repo.delete_all(Host)
   Repo.delete_all(User)
@@ -15,22 +15,152 @@ Repo.transaction fn ->
 
   # Create demo hosts
 
-  insert(:host, name: "DS Bratislava", city: "Bratislava", country_code: "SK", time_zone: "Europe/Bratislava", latitude: 48.1491521, longitude: 17.103554)
-  insert(:host, name: "DS Brüssel", city: "Brüssel", country_code: "BE", time_zone: "Europe/Brussels", latitude: 50.8519895, longitude: 4.4926787)
-  insert(:host, name: "DS Budapest", city: "Budapest", country_code: "HU", time_zone: "Europe/Budapest", latitude: 47.51, longitude: 18.983813)
-  host3 = insert(:host, name: "DS Dublin", city: "Dublin", country_code: "IE", time_zone: "Europe/Dublin", latitude: 53.303453, longitude: -6.2293214)
-  insert(:host, name: "DS Doha", city: "Doha", country_code: "QA", time_zone: "Asia/Qatar", latitude: 25.2559086, longitude: 51.501849)
-  insert(:host, name: "DS Genf", city: "Genf", country_code: "CH", time_zone: "Europe/Zurich", latitude: 46.2181677, longitude: 6.0874632)
-  host1 = insert(:host, name: "DS Helsinki", city: "Helsinki", country_code: "FI", time_zone: "Europe/Helsinki", latitude: 60.167165, longitude: 24.93205)
-  insert(:host, name: "DS Kopenhagen", city: "Kopenhagen", country_code: "DK", time_zone: "Europe/Copenhagen", latitude: 55.6800835, longitude: 12.5695033)
-  insert(:host, name: "DS London", city: "London", country_code: "GB", time_zone: "Europe/London", latitude: 51.4451339, longitude: -0.3050807)
-  insert(:host, name: "DS Moskau", city: "Moskau", country_code: "RU", time_zone: "Europe/Moscow", latitude: 55.6643808, longitude: 37.4953562)
-  insert(:host, name: "DS Oslo", city: "Oslo", country_code: "NO", time_zone: "Europe/Oslo", latitude: 59.9249933, longitude: 10.7251024)
-  insert(:host, name: "DS Paris", city: "Paris", country_code: "FR", time_zone: "Europe/Paris", latitude: 48.8423042, longitude: 2.2035179)
-  insert(:host, name: "DS Prag", city: "Prag", country_code: "CZ", time_zone: "Europe/Prague", latitude: 50.0556074, longitude: 14.3541417)
-  insert(:host, name: "DS Sofia", city: "Sofia", country_code: "BG", time_zone: "Europe/Sofia", latitude: 42.6691648, longitude: 23.3492821)
-  host2 = insert(:host, name: "DS Stockholm", city: "Stockholm", country_code: "SE", time_zone: "Europe/Stockholm", latitude: 59.3422421, longitude: 18.0699085)
-  insert(:host, name: "DS Warschau", city: "Warschau", country_code: "PL", time_zone: "Europe/Warsaw", latitude: 52.1577924, longitude: 21.0691116)
+  insert(:host,
+    name: "DS Bratislava",
+    city: "Bratislava",
+    country_code: "SK",
+    time_zone: "Europe/Bratislava",
+    latitude: 48.1491521,
+    longitude: 17.103554
+  )
+
+  insert(:host,
+    name: "DS Brüssel",
+    city: "Brüssel",
+    country_code: "BE",
+    time_zone: "Europe/Brussels",
+    latitude: 50.8519895,
+    longitude: 4.4926787
+  )
+
+  insert(:host,
+    name: "DS Budapest",
+    city: "Budapest",
+    country_code: "HU",
+    time_zone: "Europe/Budapest",
+    latitude: 47.51,
+    longitude: 18.983813
+  )
+
+  host3 =
+    insert(:host,
+      name: "DS Dublin",
+      city: "Dublin",
+      country_code: "IE",
+      time_zone: "Europe/Dublin",
+      latitude: 53.303453,
+      longitude: -6.2293214
+    )
+
+  insert(:host,
+    name: "DS Doha",
+    city: "Doha",
+    country_code: "QA",
+    time_zone: "Asia/Qatar",
+    latitude: 25.2559086,
+    longitude: 51.501849
+  )
+
+  insert(:host,
+    name: "DS Genf",
+    city: "Genf",
+    country_code: "CH",
+    time_zone: "Europe/Zurich",
+    latitude: 46.2181677,
+    longitude: 6.0874632
+  )
+
+  host1 =
+    insert(:host,
+      name: "DS Helsinki",
+      city: "Helsinki",
+      country_code: "FI",
+      time_zone: "Europe/Helsinki",
+      latitude: 60.167165,
+      longitude: 24.93205
+    )
+
+  insert(:host,
+    name: "DS Kopenhagen",
+    city: "Kopenhagen",
+    country_code: "DK",
+    time_zone: "Europe/Copenhagen",
+    latitude: 55.6800835,
+    longitude: 12.5695033
+  )
+
+  insert(:host,
+    name: "DS London",
+    city: "London",
+    country_code: "GB",
+    time_zone: "Europe/London",
+    latitude: 51.4451339,
+    longitude: -0.3050807
+  )
+
+  insert(:host,
+    name: "DS Moskau",
+    city: "Moskau",
+    country_code: "RU",
+    time_zone: "Europe/Moscow",
+    latitude: 55.6643808,
+    longitude: 37.4953562
+  )
+
+  insert(:host,
+    name: "DS Oslo",
+    city: "Oslo",
+    country_code: "NO",
+    time_zone: "Europe/Oslo",
+    latitude: 59.9249933,
+    longitude: 10.7251024
+  )
+
+  insert(:host,
+    name: "DS Paris",
+    city: "Paris",
+    country_code: "FR",
+    time_zone: "Europe/Paris",
+    latitude: 48.8423042,
+    longitude: 2.2035179
+  )
+
+  insert(:host,
+    name: "DS Prag",
+    city: "Prag",
+    country_code: "CZ",
+    time_zone: "Europe/Prague",
+    latitude: 50.0556074,
+    longitude: 14.3541417
+  )
+
+  insert(:host,
+    name: "DS Sofia",
+    city: "Sofia",
+    country_code: "BG",
+    time_zone: "Europe/Sofia",
+    latitude: 42.6691648,
+    longitude: 23.3492821
+  )
+
+  host2 =
+    insert(:host,
+      name: "DS Stockholm",
+      city: "Stockholm",
+      country_code: "SE",
+      time_zone: "Europe/Stockholm",
+      latitude: 59.3422421,
+      longitude: 18.0699085
+    )
+
+  insert(:host,
+    name: "DS Warschau",
+    city: "Warschau",
+    country_code: "PL",
+    time_zone: "Europe/Warsaw",
+    latitude: 52.1577924,
+    longitude: 21.0691116
+  )
 
   # Create demo stages
   insert(:stage, host: host1, name: "Aula")
@@ -47,7 +177,7 @@ Repo.transaction fn ->
     password: "password",
     role: "admin"
   })
-  |> Repo.insert!
+  |> Repo.insert!()
 
   User.create_changeset(%User{}, %{
     given_name: "Gustav",
@@ -57,7 +187,7 @@ Repo.transaction fn ->
     role: "global-organizer"
   })
   |> Changeset.put_assoc(:hosts, [host2])
-  |> Repo.insert!
+  |> Repo.insert!()
 
   User.create_changeset(%User{}, %{
     given_name: "Lucie",
@@ -67,7 +197,7 @@ Repo.transaction fn ->
     role: "local-organizer"
   })
   |> Changeset.put_assoc(:hosts, [host3])
-  |> Repo.insert!
+  |> Repo.insert!()
 
   User.create_changeset(%User{}, %{
     given_name: "Bernd",
@@ -76,7 +206,7 @@ Repo.transaction fn ->
     password: "password",
     role: "inspector"
   })
-  |> Repo.insert!
+  |> Repo.insert!()
 
   Repo.update_all(User, set: [confirmed_at: DateTime.utc_now()])
 
@@ -89,101 +219,167 @@ Repo.transaction fn ->
   kimu2 = insert(:contest, round: 0, host: host2)
   rw1 = insert(:contest, round: 1, host: host1)
   rw2 = insert(:contest, round: 1, host: host2)
-  rw3 = insert(:contest,
-    round: 1,
-    start_date: %{day: 1, month: 1, year: year},
-    end_date: %{day: 1, month: 1, year: year},
-    host: host3
-  )
-  lw = insert(:contest, %{
-    host: host1,
-    round: 2,
-    start_date: %{day: 15, month: 3, year: year},
-    end_date: %{day: 17, month: 3, year: year},
-    deadline: %{day: 28, month: 2, year: year}
-  })
+
+  rw3 =
+    insert(:contest,
+      round: 1,
+      start_date: %{day: 1, month: 1, year: year},
+      end_date: %{day: 1, month: 1, year: year},
+      host: host3
+    )
+
+  lw =
+    insert(:contest, %{
+      host: host1,
+      round: 2,
+      start_date: %{day: 15, month: 3, year: year},
+      end_date: %{day: 17, month: 3, year: year},
+      deadline: %{day: 28, month: 2, year: year}
+    })
 
   # Create demo categories
 
-  kimu = insert(:category, name: "\"Kinder musizieren\"", short_name: "Kimu", genre: "kimu", type: "solo_or_ensemble", group: "kimu")
-  vocal = insert(:category, name: "Gesang solo", short_name: "Gesang", genre: "classical", type: "solo", group: "classical_vocals")
-  wind_ens = insert(:category, name: "Bläser-Ensemble", short_name: "BläserEns", genre: "classical", type: "ensemble", group: "wind")
-  pop_drums = insert(:category, name: "Drumset (Pop) solo", short_name: "PopDrums", genre: "popular", type: "solo", group: "pop_instrumental")
-  pop_vocal_ens = insert(:category, name: "Vokal-Ensemble (Pop)", short_name: "PopVokalEns", genre: "popular", type: "ensemble", group: "pop_vocals")
+  kimu =
+    insert(:category,
+      name: "\"Kinder musizieren\"",
+      short_name: "Kimu",
+      genre: "kimu",
+      type: "solo_or_ensemble",
+      group: "kimu"
+    )
+
+  vocal =
+    insert(:category,
+      name: "Gesang solo",
+      short_name: "Gesang",
+      genre: "classical",
+      type: "solo",
+      group: "classical_vocals"
+    )
+
+  wind_ens =
+    insert(:category,
+      name: "Bläser-Ensemble",
+      short_name: "BläserEns",
+      genre: "classical",
+      type: "ensemble",
+      group: "wind"
+    )
+
+  pop_drums =
+    insert(:category,
+      name: "Drumset (Pop) solo",
+      short_name: "PopDrums",
+      genre: "popular",
+      type: "solo",
+      group: "pop_instrumental"
+    )
+
+  pop_vocal_ens =
+    insert(:category,
+      name: "Vokal-Ensemble (Pop)",
+      short_name: "PopVokalEns",
+      genre: "popular",
+      type: "ensemble",
+      group: "pop_vocals"
+    )
 
   # Add contest categories and demo performances to contests
 
   for kimu_contest <- [kimu1, kimu2] do
     cc = insert(:contest_category, contest: kimu_contest, category: kimu)
-    insert_performance(cc, appearances: [
+
+    insert_performance(cc,
+      appearances: [
         build(:appearance, role: "soloist", instrument: "trumpet"),
-        build(:appearance, role: "accompanist", instrument: "piano"),
-    ])
-    insert_performance(cc, appearances: [
-      build(:appearance, role: "ensemblist", instrument: "guitar"),
-      build(:appearance, role: "ensemblist", instrument: "guitar"),
-    ])
+        build(:appearance, role: "accompanist", instrument: "piano")
+      ]
+    )
+
+    insert_performance(cc,
+      appearances: [
+        build(:appearance, role: "ensemblist", instrument: "guitar"),
+        build(:appearance, role: "ensemblist", instrument: "guitar")
+      ]
+    )
   end
 
   for rw_contest <- [rw1, rw2, rw3] do
-    rw_vocal = insert(:contest_category, %{
-      contest: rw_contest,
-      category: vocal,
-      min_age_group: "Ia",
-      max_age_group: "VII",
-      min_advancing_age_group: "II",
-      max_advancing_age_group: "VII"
-    })
-    rw_wind_ens = insert(:contest_category, %{
-      contest: rw_contest,
-      category: wind_ens,
-      min_age_group: "Ia",
-      max_age_group: "VI",
-      min_advancing_age_group: "II",
-      max_advancing_age_group: "VI"
-    })
-    rw_pop_drums = insert(:contest_category, %{
-      contest: rw_contest,
-      category: pop_drums,
-      min_age_group: "Ia",
-      max_age_group: "VI",
-      min_advancing_age_group: "II",
-      max_advancing_age_group: "VI"
-    })
-    rw_pop_vocal_ens = insert(:contest_category, %{
-      contest: rw_contest,
-      category: pop_vocal_ens,
-      min_age_group: "Ia",
-      max_age_group: "VII",
-      min_advancing_age_group: "III",
-      max_advancing_age_group: "VII"
-    })
+    rw_vocal =
+      insert(:contest_category, %{
+        contest: rw_contest,
+        category: vocal,
+        min_age_group: "Ia",
+        max_age_group: "VII",
+        min_advancing_age_group: "II",
+        max_advancing_age_group: "VII"
+      })
 
-    insert_performance(rw_vocal, appearances: [
-      build(:appearance, role: "soloist", instrument: "vocals"),
-      build(:appearance, role: "accompanist", instrument: "piano"),
-    ])
+    rw_wind_ens =
+      insert(:contest_category, %{
+        contest: rw_contest,
+        category: wind_ens,
+        min_age_group: "Ia",
+        max_age_group: "VI",
+        min_advancing_age_group: "II",
+        max_advancing_age_group: "VI"
+      })
 
-    insert_performance(rw_wind_ens, appearances: [
-      build(:appearance, role: "ensemblist", instrument: "clarinet"),
-      build(:appearance, role: "ensemblist", instrument: "oboe"),
-      build(:appearance, role: "ensemblist", instrument: "bassoon"),
-    ])
+    rw_pop_drums =
+      insert(:contest_category, %{
+        contest: rw_contest,
+        category: pop_drums,
+        min_age_group: "Ia",
+        max_age_group: "VI",
+        min_advancing_age_group: "II",
+        max_advancing_age_group: "VI"
+      })
 
-    insert_performance(rw_pop_drums, appearances: [
-      build(:appearance, role: "soloist", instrument: "drumset"),
-      build(:appearance, role: "accompanist", instrument: "vocals"),
-      build(:appearance, role: "accompanist", instrument: "e-guitar"),
-      build(:appearance, role: "accompanist", instrument: "saxophone"),
-    ], pieces: build_list(1, :popular_piece))
+    rw_pop_vocal_ens =
+      insert(:contest_category, %{
+        contest: rw_contest,
+        category: pop_vocal_ens,
+        min_age_group: "Ia",
+        max_age_group: "VII",
+        min_advancing_age_group: "III",
+        max_advancing_age_group: "VII"
+      })
 
-    insert_performance(rw_pop_vocal_ens, appearances: [
-      build(:appearance, role: "ensemblist", instrument: "vocals"),
-      build(:appearance, role: "ensemblist", instrument: "vocals"),
-      build(:appearance, role: "accompanist", instrument: "e-guitar"),
-      build(:appearance, role: "accompanist", instrument: "e-bass"),
-      build(:appearance, role: "accompanist", instrument: "drumset"),
-    ], pieces: build_list(1, :popular_piece))
+    insert_performance(rw_vocal,
+      appearances: [
+        build(:appearance, role: "soloist", instrument: "vocals"),
+        build(:appearance, role: "accompanist", instrument: "piano")
+      ]
+    )
+
+    insert_performance(rw_wind_ens,
+      appearances: [
+        build(:appearance, role: "ensemblist", instrument: "clarinet"),
+        build(:appearance, role: "ensemblist", instrument: "oboe"),
+        build(:appearance, role: "ensemblist", instrument: "bassoon")
+      ]
+    )
+
+    insert_performance(rw_pop_drums,
+      appearances: [
+        build(:appearance, role: "soloist", instrument: "drumset"),
+        build(:appearance, role: "accompanist", instrument: "vocals"),
+        build(:appearance, role: "accompanist", instrument: "e-guitar"),
+        build(:appearance, role: "accompanist", instrument: "saxophone")
+      ],
+      pieces: build_list(1, :popular_piece)
+    )
+
+    insert_performance(rw_pop_vocal_ens,
+      appearances: [
+        build(:appearance, role: "ensemblist", instrument: "vocals"),
+        build(:appearance, role: "ensemblist", instrument: "vocals"),
+        build(:appearance, role: "accompanist", instrument: "e-guitar"),
+        build(:appearance, role: "accompanist", instrument: "e-bass"),
+        build(:appearance, role: "accompanist", instrument: "drumset")
+      ],
+      pieces: build_list(1, :popular_piece)
+    )
   end
 
   insert(:contest_category, %{
@@ -194,6 +390,7 @@ Repo.transaction fn ->
     min_advancing_age_group: "III",
     max_advancing_age_group: "VII"
   })
+
   insert(:contest_category, %{
     contest: lw,
     category: wind_ens,
@@ -202,6 +399,7 @@ Repo.transaction fn ->
     min_advancing_age_group: "III",
     max_advancing_age_group: "VI"
   })
+
   insert(:contest_category, %{
     contest: lw,
     category: pop_drums,
@@ -210,6 +408,7 @@ Repo.transaction fn ->
     min_advancing_age_group: "III",
     max_advancing_age_group: "VI"
   })
+
   insert(:contest_category, %{
     contest: lw,
     category: pop_vocal_ens,
@@ -218,4 +417,4 @@ Repo.transaction fn ->
     min_advancing_age_group: nil,
     max_advancing_age_group: nil
   })
-end
+end)

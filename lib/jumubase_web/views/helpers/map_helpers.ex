@@ -7,16 +7,16 @@ defmodule JumubaseWeb.MapHelpers do
   def host_map_url do
     base_url = "https://maps.googleapis.com/maps/api/staticmap?scale=2&size=640x400"
 
-    markers = get_markers(Foundation.list_host_locations, "green")
+    markers = get_markers(Foundation.list_host_locations(), "green")
 
     styles =
       "&style=element:labels|visibility:off" <>
-      "&style=feature:administrative.neighborhood|visibility:off" <>
-      "&style=feature:administrative|element:geometry|visibility:off" <>
-      "&style=feature:poi|visibility:off" <>
-      "&style=feature:road|visibility:off" <>
-      "&style=feature:road|element:labels.icon|visibility:off" <>
-      "&style=feature:transit|visibility:off"
+        "&style=feature:administrative.neighborhood|visibility:off" <>
+        "&style=feature:administrative|element:geometry|visibility:off" <>
+        "&style=feature:poi|visibility:off" <>
+        "&style=feature:road|visibility:off" <>
+        "&style=feature:road|element:labels.icon|visibility:off" <>
+        "&style=feature:transit|visibility:off"
 
     key = "&key=#{get_api_key()}"
 

@@ -6,14 +6,18 @@ defmodule JumubaseWeb.Internal.StageController do
   alias Jumubase.Showtime.PerformanceFilter
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Contests"), path_fun: &Routes.internal_contest_path/2, action: :index
+
+  plug :add_breadcrumb,
+    name: gettext("Contests"),
+    path_fun: &Routes.internal_contest_path/2,
+    action: :index
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 
   def index(conn, _params, contest) do
     %{host: %{stages: stages}} = Foundation.load_available_stages(contest)
-    stages = stages |> Enum.sort_by(&(&1.name))
+    stages = stages |> Enum.sort_by(& &1.name)
 
     conn
     |> assign(:contest, contest)
@@ -27,18 +31,20 @@ defmodule JumubaseWeb.Internal.StageController do
     %{host: %{stages: stages}} = Foundation.load_available_stages(contest)
     date_range = Foundation.date_range(contest)
 
-    unscheduled_performances = Showtime.unscheduled_performances(contest) |> Showtime.load_pieces
+    unscheduled_performances =
+      Showtime.unscheduled_performances(contest) |> Showtime.load_pieces()
 
     # Group performances by stage date
-    performances = Enum.reduce(
-      date_range,
-      %{unscheduled: unscheduled_performances},
-      fn date, acc ->
-        filter = %PerformanceFilter{stage_date: date, stage_id: stage_id}
-        performances = Showtime.list_performances(contest, filter) |> Showtime.load_pieces
-        Map.put(acc, date, performances)
-      end
-    )
+    performances =
+      Enum.reduce(
+        date_range,
+        %{unscheduled: unscheduled_performances},
+        fn date, acc ->
+          filter = %PerformanceFilter{stage_date: date, stage_id: stage_id}
+          performances = Showtime.list_performances(contest, filter) |> Showtime.load_pieces()
+          Map.put(acc, date, performances)
+        end
+      )
 
     conn
     |> assign(:contest, contest)
@@ -96,9 +102,14 @@ defmodule JumubaseWeb.Internal.StageController do
   end
 
   defp add_public_schedule_warning(conn, %Contest{timetables_public: true}) do
-    conn |> put_flash(:warning,
-      gettext("This schedule has already been published. Your changes will be visible to others instantly.")
+    conn
+    |> put_flash(
+      :warning,
+      gettext(
+        "This schedule has already been published. Your changes will be visible to others instantly."
+      )
     )
   end
+
   defp add_public_schedule_warning(conn, %Contest{timetables_public: false}), do: conn
 end

@@ -23,9 +23,12 @@ defmodule JumubaseWeb.EmailTest do
 
     test "composes an email to confirm a Jumu registration", %{contest: c} do
       cc = insert_contest_category(c, "classical")
-      performance = insert_performance(cc,
-        appearances: build_appearances(["pt@example.org"])
-      )
+
+      performance =
+        insert_performance(cc,
+          appearances: build_appearances(["pt@example.org"])
+        )
+
       cat_name = cc.category.name
 
       email = Email.registration_success(performance)
@@ -39,9 +42,12 @@ defmodule JumubaseWeb.EmailTest do
 
     test "addresses the email to all participants in a Jumu registration", %{contest: c} do
       cc = insert_contest_category(c, "popular")
-      performance = insert_performance(cc,
-        appearances: build_appearances(["pt1@example.org", "pt2@example.org"])
-      )
+
+      performance =
+        insert_performance(cc,
+          appearances: build_appearances(["pt1@example.org", "pt2@example.org"])
+        )
+
       cat_name = cc.category.name
 
       email = Email.registration_success(performance)
@@ -52,11 +58,16 @@ defmodule JumubaseWeb.EmailTest do
 
     test "handles duplicate participant email addresses", %{contest: c} do
       cc = insert_contest_category(c, "classical")
-      performance = insert_performance(cc,
-        appearances: build_appearances([
-          "pt1@example.org", "pt1@example.org", "pt2@example.org"
-        ])
-      )
+
+      performance =
+        insert_performance(cc,
+          appearances:
+            build_appearances([
+              "pt1@example.org",
+              "pt1@example.org",
+              "pt2@example.org"
+            ])
+        )
 
       email = Email.registration_success(performance)
       assert email.to == ["pt1@example.org", "pt2@example.org"]
@@ -64,9 +75,11 @@ defmodule JumubaseWeb.EmailTest do
 
     test "adjusts the subject when confirming a Kimu registration", %{contest: c} do
       cc = insert_contest_category(c, "kimu")
-      performance = insert_performance(cc,
-        appearances: build_appearances(["pt@example.org"])
-      )
+
+      performance =
+        insert_performance(cc,
+          appearances: build_appearances(["pt@example.org"])
+        )
 
       email = Email.registration_success(performance)
 

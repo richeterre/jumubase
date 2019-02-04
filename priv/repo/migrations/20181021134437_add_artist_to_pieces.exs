@@ -5,6 +5,7 @@ defmodule Jumubase.Repo.Migrations.AddArtistToPieces do
     alter table(:pieces) do
       add :artist, :string
     end
+
     rename table(:pieces), :composer_name, to: :composer
   end
 end

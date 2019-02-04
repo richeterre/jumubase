@@ -9,33 +9,38 @@ defmodule JumubaseWeb.PageView do
   alias JumubaseWeb.MapHelpers
 
   def host_map_image do
-    img_tag MapHelpers.host_map_url, class: "img-responsive map-image"
+    img_tag(MapHelpers.host_map_url(), class: "img-responsive map-image")
   end
 
   def render_phase_panels(conn) do
-    today = Timex.today
-    c = Foundation.get_latest_official_contest
+    today = Timex.today()
+    c = Foundation.get_latest_official_contest()
 
     cond do
       is_nil(c) ->
         nil
+
       Timex.after?(today, c.deadline) ->
-        render "_rw_phase_panels.html", conn: conn
+        render("_rw_phase_panels.html", conn: conn)
+
       true ->
         jumu_year = JumuParams.year(c.season)
-        render "_pre_rw_phase_panels.html", conn: conn, year: jumu_year
+        render("_pre_rw_phase_panels.html", conn: conn, year: jumu_year)
     end
   end
 
   def app_link(platform) do
-    img_tag = img_tag app_badge_path(platform), height: 40
-    link img_tag, to: app_url(platform), class: "app-link"
+    img_tag = img_tag(app_badge_path(platform), height: 40)
+    link(img_tag, to: app_url(platform), class: "app-link")
   end
 
   def rule_booklet_link(title, year, opts \\ []) do
-    icon_link "file", title,
+    icon_link(
+      "file",
+      title,
       Routes.static_path(Endpoint, "/resources/Ausschreibung_#{year}.pdf"),
       opts
+    )
   end
 
   def render("rules.html", assigns) do
@@ -59,6 +64,7 @@ defmodule JumubaseWeb.PageView do
   defp app_url(:android) do
     "https://play.google.com/store/apps/details?id=#{app_id(:android)}&hl=de"
   end
+
   defp app_url(:ios) do
     "https://itunes.apple.com/de/app/id#{app_id(:ios)}?mt=8"
   end
@@ -73,6 +79,7 @@ defmodule JumubaseWeb.PageView do
   defp get_locale, do: Gettext.get_locale(Jumubase.Gettext)
 
   defp render_markdown(nil), do: nil
+
   defp render_markdown(markdown) do
     case Earmark.as_html(markdown) do
       {:ok, result, _} -> raw(result)

@@ -5,7 +5,11 @@ defmodule JumubaseWeb.Internal.CategoryController do
   alias Jumubase.Foundation.Category
 
   plug :add_home_breadcrumb
-  plug :add_breadcrumb, name: gettext("Categories"), path_fun: &Routes.internal_category_path/2, action: :index
+
+  plug :add_breadcrumb,
+    name: gettext("Categories"),
+    path_fun: &Routes.internal_category_path/2,
+    action: :index
 
   plug :admin_check
 
@@ -24,9 +28,12 @@ defmodule JumubaseWeb.Internal.CategoryController do
     case Foundation.create_category(params) do
       {:ok, category} ->
         conn
-        |> put_flash(:success,
-          gettext("The category \"%{name}\" was created.", name: category.name))
+        |> put_flash(
+          :success,
+          gettext("The category \"%{name}\" was created.", name: category.name)
+        )
         |> redirect(to: Routes.internal_category_path(conn, :index))
+
       {:error, changeset} ->
         conn
         |> assign(:changeset, changeset)
@@ -48,6 +55,7 @@ defmodule JumubaseWeb.Internal.CategoryController do
         conn
         |> put_flash(:info, gettext("The category %{name} was updated.", name: category.name))
         |> redirect(to: Routes.internal_category_path(conn, :index))
+
       {:error, %Changeset{} = changeset} ->
         render_edit_form(conn, category, changeset)
     end
@@ -57,6 +65,7 @@ defmodule JumubaseWeb.Internal.CategoryController do
 
   defp render_edit_form(conn, %Category{} = category, %Changeset{} = changeset) do
     edit_path = Routes.internal_category_path(conn, :edit, category)
+
     conn
     |> assign(:changeset, changeset)
     |> add_breadcrumb(name: category.name, path: edit_path)

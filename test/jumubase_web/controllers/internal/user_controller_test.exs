@@ -2,7 +2,12 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
   use JumubaseWeb.ConnCase
   alias Jumubase.Accounts
 
-  @update_attrs %{email: "xyz@de.fi", given_name: "X Y", family_name: "Z", role: "global-organizer"}
+  @update_attrs %{
+    email: "xyz@de.fi",
+    given_name: "X Y",
+    family_name: "Z",
+    role: "global-organizer"
+  }
   @invalid_attrs %{email: nil, given_name: nil, family_name: nil, password_hash: nil, role: nil}
 
   setup config do
@@ -63,6 +68,7 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
       conn = delete(conn, Routes.internal_user_path(conn, :delete, user))
       assert redirected_to(conn) == Routes.internal_user_path(conn, :index)
       refute Accounts.get(user.id)
+
       assert_error_sent(404, fn ->
         get(conn, Routes.internal_user_path(conn, :edit, user))
       end)
@@ -88,15 +94,19 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
 
   defp verify_all_routes(conn, assertion_fun) do
     user = insert(:user)
-    Enum.each([
-      get(conn, Routes.internal_user_path(conn, :index)),
-      get(conn, Routes.internal_user_path(conn, :new)),
-      post(conn, Routes.internal_user_path(conn, :create), %{user: %{}}),
-      get(conn, Routes.internal_user_path(conn, :edit, user.id)),
-      put(conn, Routes.internal_user_path(conn, :update, user.id, %{user: %{"email" => ""}})),
-      delete(conn, Routes.internal_user_path(conn, :delete, user.id))
-    ], fn conn ->
-      assertion_fun.(conn)
-    end)
+
+    Enum.each(
+      [
+        get(conn, Routes.internal_user_path(conn, :index)),
+        get(conn, Routes.internal_user_path(conn, :new)),
+        post(conn, Routes.internal_user_path(conn, :create), %{user: %{}}),
+        get(conn, Routes.internal_user_path(conn, :edit, user.id)),
+        put(conn, Routes.internal_user_path(conn, :update, user.id, %{user: %{"email" => ""}})),
+        delete(conn, Routes.internal_user_path(conn, :delete, user.id))
+      ],
+      fn conn ->
+        assertion_fun.(conn)
+      end
+    )
   end
 end

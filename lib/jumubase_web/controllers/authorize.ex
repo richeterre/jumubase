@@ -13,6 +13,7 @@ defmodule JumubaseWeb.Authorize do
   def auth_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
     need_login(conn)
   end
+
   def auth_action(
         %Conn{assigns: %{current_user: current_user}, params: params} = conn,
         module
@@ -24,10 +25,12 @@ defmodule JumubaseWeb.Authorize do
   def user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
+
   def user_check(conn, _opts), do: conn
 
   # Plug to only allow unauthenticated users to access the resource.
   def guest_check(%Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
+
   def guest_check(%Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
     conn
     |> redirect(to: Routes.page_path(conn, :home))
@@ -38,10 +41,11 @@ defmodule JumubaseWeb.Authorize do
   def id_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
+
   def id_check(
-    %Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
-    _opts
-  ) do
+        %Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
+        _opts
+      ) do
     (id == to_string(current_user.id) and conn) ||
       unauthorized(conn, Routes.page_path(conn, :home))
   end
@@ -55,18 +59,19 @@ defmodule JumubaseWeb.Authorize do
   def contest_user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
+
   def contest_user_check(
-    %Conn{assigns: %{current_user: user}, params: %{"id" => id}} = conn,
-    _opts
-  ) do
+        %Conn{assigns: %{current_user: user}, params: %{"id" => id}} = conn,
+        _opts
+      ) do
     authorize_contest(conn, user, id, fn {:ok, _} -> conn end)
   end
 
   # Action override to check contest deadline before passing it to all actions
   def contest_deadline_check_action(
-    %Conn{params: %{"contest_id" => id} = params} = conn,
-    module
-  ) do
+        %Conn{params: %{"contest_id" => id} = params} = conn,
+        module
+      ) do
     check_contest_deadline(conn, id, fn {:ok, contest} ->
       apply(module, action_name(conn), [conn, params, contest])
     end)
@@ -76,10 +81,11 @@ defmodule JumubaseWeb.Authorize do
   def contest_user_check_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
     need_login(conn)
   end
+
   def contest_user_check_action(
-    %Conn{assigns: %{current_user: user}, params: %{"contest_id" => id} = params} = conn,
-    module
-  ) do
+        %Conn{assigns: %{current_user: user}, params: %{"contest_id" => id} = params} = conn,
+        module
+      ) do
     authorize_contest(conn, user, id, fn {:ok, contest} ->
       apply(module, action_name(conn), [conn, params, contest])
     end)
@@ -102,7 +108,10 @@ defmodule JumubaseWeb.Authorize do
     path = get_session(conn, :request_path) || path
 
     delete_session(conn, :request_path)
-    |> success(dgettext("auth", "You are now logged in."), get_session(conn, :request_path) || path)
+    |> success(
+      dgettext("auth", "You are now logged in."),
+      get_session(conn, :request_path) || path
+    )
   end
 
   def unauthorized(conn, path) do
@@ -115,6 +124,7 @@ defmodule JumubaseWeb.Authorize do
   defp role_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)
   end
+
   defp role_check(%Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],
       do: conn,
@@ -123,9 +133,17 @@ defmodule JumubaseWeb.Authorize do
 
   defp check_contest_deadline(conn, id, success_fun) do
     contest = Foundation.get_contest!(id)
-    if deadline_passed?(contest, Timex.today) do
+
+    if deadline_passed?(contest, Timex.today()) do
       path = Routes.page_path(conn, :registration)
-      error(conn, gettext("The registration deadline for this contest has passed. Please contact us if you need assistance."), path)
+
+      error(
+        conn,
+        gettext(
+          "The registration deadline for this contest has passed. Please contact us if you need assistance."
+        ),
+        path
+      )
     else
       success_fun.({:ok, contest})
     end
@@ -135,6 +153,7 @@ defmodule JumubaseWeb.Authorize do
   # and if yes, calls the success handler with {:ok, contest}.
   defp authorize_contest(conn, user, id, success_fun) do
     contest = Foundation.get_contest!(id)
+
     if Permit.authorized?(user, contest) do
       success_fun.({:ok, contest})
     else
@@ -145,6 +164,9 @@ defmodule JumubaseWeb.Authorize do
   defp need_login(conn) do
     conn
     |> put_session(:request_path, current_path(conn))
-    |> error(dgettext("auth", "You need to log in to view this page."), Routes.session_path(conn, :new))
+    |> error(
+      dgettext("auth", "You need to log in to view this page."),
+      Routes.session_path(conn, :new)
+    )
   end
 end

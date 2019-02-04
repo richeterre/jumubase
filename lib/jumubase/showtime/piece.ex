@@ -30,8 +30,8 @@ defmodule Jumubase.Showtime.Piece do
     piece
     |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
-    |> validate_person # composer or artist
-    |> validate_inclusion(:epoch, JumuParams.epochs)
+    |> validate_person
+    |> validate_inclusion(:epoch, JumuParams.epochs())
     |> validate_inclusion(:minutes, 0..59)
     |> validate_inclusion(:seconds, 0..59)
     |> clean_up_fields
@@ -49,12 +49,17 @@ defmodule Jumubase.Showtime.Piece do
         changeset
         |> add_error(:artist, dgettext("errors", "can't be blank"))
         |> add_error(:composer, dgettext("errors", "can't be blank"))
+
       !!composer and !!artist ->
-        add_error(changeset, :base,
+        add_error(
+          changeset,
+          :base,
           dgettext("errors", "can only have either a composer or an artist")
         )
+
       !!composer ->
         validate_required(changeset, :composer_born)
+
       true ->
         changeset
     end
@@ -77,18 +82,18 @@ defmodule Jumubase.Showtime.Piece do
   end
 
   # Removes composer data when setting artist, and vice versa.
-  defp clean_up_person_fields(
-    %Changeset{changes: %{artist: artist}} = changeset
-  ) when not is_nil(artist) do
+  defp clean_up_person_fields(%Changeset{changes: %{artist: artist}} = changeset)
+       when not is_nil(artist) do
     changeset
     |> put_change(:composer, nil)
     |> put_change(:composer_born, nil)
     |> put_change(:composer_died, nil)
   end
-  defp clean_up_person_fields(
-    %Changeset{changes: %{composer: composer}} = changeset
-  ) when not is_nil(composer) do
+
+  defp clean_up_person_fields(%Changeset{changes: %{composer: composer}} = changeset)
+       when not is_nil(composer) do
     put_change(changeset, :artist, nil)
   end
+
   defp clean_up_person_fields(changeset), do: changeset
 end

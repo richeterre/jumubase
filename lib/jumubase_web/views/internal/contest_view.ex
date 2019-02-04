@@ -13,10 +13,12 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
 
   def name_with_flag(%Contest{} = contest) do
-    flag_code = case contest.round do
-      2 -> "EU"
-      _ -> contest.host.country_code
-    end
+    flag_code =
+      case contest.round do
+        2 -> "EU"
+        _ -> contest.host.country_code
+      end
+
     "#{emoji_flag(flag_code)} #{name(contest)}"
   end
 
@@ -28,6 +30,7 @@ defmodule JumubaseWeb.Internal.ContestView do
     case deadline do
       ^general_deadline ->
         nil
+
       _ ->
         deadline_tag = content_tag(:strong, format_date(deadline, :medium))
         "(#{gettext("Deadline")}: #{safe_to_string(deadline_tag)})" |> raw
@@ -41,6 +44,7 @@ defmodule JumubaseWeb.Internal.ContestView do
     cond do
       sd == ed ->
         format_date(sd)
+
       true ->
         "#{format_date(sd)} – #{format_date(ed)}"
     end
@@ -72,6 +76,7 @@ defmodule JumubaseWeb.Internal.ContestView do
     case host.stages do
       [stage] ->
         Routes.internal_contest_stage_schedule_path(conn, :schedule, contest, stage)
+
       _ ->
         Routes.internal_contest_stage_path(conn, :index, contest)
     end
@@ -83,10 +88,14 @@ defmodule JumubaseWeb.Internal.ContestView do
       _ -> gettext("%{completed} of %{total} entered so far", completed: completed, total: total)
     end
   end
+
   def publish_results_completion_text(%{total: total, public: completed}) do
     case completed do
-      ^total -> gettext("All %{total} published", total: total)
-      _ -> gettext("%{completed} of %{total} published so far", completed: completed, total: total)
+      ^total ->
+        gettext("All %{total} published", total: total)
+
+      _ ->
+        gettext("%{completed} of %{total} published so far", completed: completed, total: total)
     end
   end
 
@@ -94,17 +103,18 @@ defmodule JumubaseWeb.Internal.ContestView do
   Renders a statistics template based on the contest's round.
   """
   def render_statistics(performances, 0) do
-    render "_kimu_stats.html", stats: Showtime.statistics(performances, 0)
+    render("_kimu_stats.html", stats: Showtime.statistics(performances, 0))
   end
+
   def render_statistics(performances, round) do
-    render "_jumu_stats.html", stats: Showtime.statistics(performances, round)
+    render("_jumu_stats.html", stats: Showtime.statistics(performances, round))
   end
 
   @doc """
   Returns a list of possible `round` values suitable for forms.
   """
   def round_options do
-    Enum.map(JumuParams.rounds, &({round_name(&1), &1}))
+    Enum.map(JumuParams.rounds(), &{round_name(&1), &1})
   end
 
   # Private helpers

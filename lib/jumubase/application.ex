@@ -11,7 +11,7 @@ defmodule Jumubase.Application do
       # Start the Ecto repository
       supervisor(Jumubase.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(JumubaseWeb.Endpoint, []),
+      supervisor(JumubaseWeb.Endpoint, [])
       # Start your own worker by calling: Jumubase.Worker.start_link(arg1, arg2, arg3)
       # worker(Jumubase.Worker, [arg1, arg2, arg3]),
     ]

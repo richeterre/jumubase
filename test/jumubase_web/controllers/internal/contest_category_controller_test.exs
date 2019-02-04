@@ -24,7 +24,10 @@ defmodule JumubaseWeb.Internal.ContestCategoryControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's categories", %{conn: conn, contest: c} do
+    test "redirects local organizers when trying to list a foreign contest's categories", %{
+      conn: conn,
+      contest: c
+    } do
       conn = get(conn, Routes.internal_contest_contest_category_path(conn, :index, c))
       assert_unauthorized_user(conn)
     end

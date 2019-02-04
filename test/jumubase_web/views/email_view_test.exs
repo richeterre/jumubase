@@ -11,8 +11,9 @@ defmodule JumubaseWeb.EmailViewTest do
     test "returns a greeting for two participants" do
       pts = [
         build(:participant, given_name: "Anna"),
-        build(:participant, given_name: "Ben"),
+        build(:participant, given_name: "Ben")
       ]
+
       assert EmailView.greeting(pts) == "Hello Anna and Ben"
     end
 
@@ -20,8 +21,9 @@ defmodule JumubaseWeb.EmailViewTest do
       pts = [
         build(:participant, given_name: "Anna"),
         build(:participant, given_name: "Ben"),
-        build(:participant, given_name: "Clara"),
+        build(:participant, given_name: "Clara")
       ]
+
       assert EmailView.greeting(pts) == "Hello Anna, Ben and Clara"
     end
   end

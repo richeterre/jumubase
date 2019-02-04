@@ -38,7 +38,14 @@ defmodule Jumubase.Seeder do
   end
 
   @doc """
-  Adds a (contest) category to an RW seed by short name.
+  Starts a seed for LW contests.
+  """
+  def start_lw_seed(season) do
+    %{season: season, round: 2, contest_categories: []}
+  end
+
+  @doc """
+  Adds a (contest) category to an RW or LW seed by short name.
   The age group params are needed to complete the contest category.
   """
   def add_category(seed, short_name, min_ag, max_ag, min_adv_ag, max_adv_ag) do
@@ -72,6 +79,10 @@ defmodule Jumubase.Seeder do
   """
   def apply_for_hosts(seed, host_names) when is_list(host_names) do
     apply_seed(seed, Repo.all(from h in Host, where: h.name in ^host_names))
+  end
+
+  def apply_for_host(seed, host_name) when is_binary(host_name) do
+    apply_seed(seed, Repo.all(from h in Host, where: h.name == ^host_name))
   end
 
   # Private helpers

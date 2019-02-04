@@ -55,14 +55,11 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
         [:head, [:meta, %{charset: "UTF-8"}]],
         [
           :body,
-          %{
-            style:
-              style(%{
-                "font-family" => "LatoLatin",
-                "font-size" => font_size,
-                "line-height" => @line_height_factor
-              })
-          },
+          style(%{
+            "font-family" => "LatoLatin",
+            "font-size" => font_size,
+            "line-height" => @line_height_factor
+          }),
           body_html
         ]
       ])
@@ -90,10 +87,10 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
     for p <- performances do
       [
         :div,
-        %{style: style(%{"page-break-before" => "always"})},
+        style(%{"page-break-before" => "always"}),
         [
           :div,
-          %{style: style(%{"border-bottom" => @border_style, "height" => "55px"})},
+          style(%{"border-bottom" => @border_style, "height" => "55px"}),
           [
             :p,
             [
@@ -105,11 +102,11 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
         ],
         [
           :div,
-          %{style: style(%{"margin-top" => "50px", "height" => "250px"})},
+          style(%{"margin-top" => "50px", "height" => "250px"}),
           render_appearances(p)
         ],
-        [:div, %{style: style(%{"height" => "630px"})}, render_pieces(p)],
-        [:div, %{style: style(%{"height" => "50px"})}, render_point_ranges(round)]
+        [:div, style(%{"height" => "630px"}), render_pieces(p)],
+        [:div, style(%{"height" => "50px"}), render_point_ranges(round)]
       ]
     end
   end
@@ -141,7 +138,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp acc_heading do
     [
       :div,
-      %{style: style(%{"color" => @muted_color, "line-height" => 2})},
+      style(%{"color" => @muted_color, "line-height" => 2}),
       gettext("accompanied by")
     ]
   end
@@ -153,13 +150,13 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp render_piece(%Piece{} = pc) do
     [
       :div,
-      %{style: style(%{"margin-bottom" => "20px"})},
+      style(%{"margin-bottom" => "20px"}),
       [
         [:b, person_info(pc)],
         [:span, pc.title],
         [
           :span,
-          %{style: style(%{"color" => @muted_color})},
+          style(%{"color" => @muted_color}),
           "#{duration(pc)} / #{gettext("Epoch")} #{pc.epoch}"
         ]
       ]
@@ -176,7 +173,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
 
     [
       :div,
-      %{style: style(%{"color" => @muted_color, "font-size" => "12px"})},
+      style(%{"color" => @muted_color, "font-size" => "12px"}),
       format_point_ranges(left_side),
       format_point_ranges(right_side)
     ]
@@ -212,15 +209,15 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
       },
       [
         :tr,
-        [:th, %{style: cell_style(%{"width" => "auto"})}, gettext("Category")],
-        [:th, %{style: cell_style(%{"width" => "1%", "white-space" => "nowrap"})}, gettext("AG")],
-        [:th, %{style: cell_style(%{"width" => "auto"})}, gettext("Participants")],
-        [:th, %{style: cell_style(%{"width" => "5%"})}, "J1"],
-        [:th, %{style: cell_style(%{"width" => "5%"})}, "J2"],
-        [:th, %{style: cell_style(%{"width" => "5%"})}, "J3"],
-        [:th, %{style: cell_style(%{"width" => "5%"})}, "J4"],
-        [:th, %{style: cell_style(%{"width" => "5%"})}, "J5"],
-        [:th, %{style: cell_style(%{"width" => "10%"})}, gettext("Result")]
+        [:th, cell_style(%{"width" => "auto"}), gettext("Category")],
+        [:th, cell_style(%{"width" => "1%", "white-space" => "nowrap"}), gettext("AG")],
+        [:th, cell_style(%{"width" => "auto"}), gettext("Participants")],
+        [:th, cell_style(%{"width" => "5%"}), "J1"],
+        [:th, cell_style(%{"width" => "5%"}), "J2"],
+        [:th, cell_style(%{"width" => "5%"}), "J3"],
+        [:th, cell_style(%{"width" => "5%"}), "J4"],
+        [:th, cell_style(%{"width" => "5%"}), "J5"],
+        [:th, cell_style(%{"width" => "10%"}), gettext("Result")]
       ]
     ]
 
@@ -231,16 +228,16 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp render_performance_row(%Performance{} = p) do
     [
       :tr,
-      %{style: style(%{"page-break-inside" => "avoid", "page-break-after" => "auto"})},
-      [:td, %{style: cell_style()}, category_name(p)],
-      [:td, %{style: cell_style()}, p.age_group],
-      [:td, %{style: cell_style()}, render_list_appearances(p)],
-      [:td, %{style: cell_style()}],
-      [:td, %{style: cell_style()}],
-      [:td, %{style: cell_style()}],
-      [:td, %{style: cell_style()}],
-      [:td, %{style: cell_style()}],
-      [:td, %{style: cell_style()}]
+      style(%{"page-break-inside" => "avoid", "page-break-after" => "auto"}),
+      [:td, cell_style(), category_name(p)],
+      [:td, cell_style(), p.age_group],
+      [:td, cell_style(), render_list_appearances(p)],
+      [:td, cell_style()],
+      [:td, cell_style()],
+      [:td, cell_style()],
+      [:td, cell_style()],
+      [:td, cell_style()],
+      [:td, cell_style()]
     ]
   end
 
@@ -280,24 +277,21 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
 
           [
             :div,
-            %{
-              style:
-                style(%{
-                  "padding-left" => "65px",
-                  "padding-right" => "65px",
-                  "padding-top" => "310px",
-                  "page-break-before" => "always"
-                })
-            },
+            style(%{
+              "padding-left" => "65px",
+              "padding-right" => "65px",
+              "padding-top" => "310px",
+              "page-break-before" => "always"
+            }),
             [
               :div,
-              %{style: style(%{"height" => "#{200 - appearances_height}px"})},
+              style(%{"height" => "#{200 - appearances_height}px"}),
               certificate_heading(round)
             ],
             [:p, [:b, group |> Enum.map(&[:span, appearance_info(&1)]) |> to_lines]],
             [
               :p,
-              %{style: style(%{"height" => "170px", "margin" => "50px 0 0 40px"})},
+              style(%{"height" => "170px", "margin" => "50px 0 0 40px"}),
               [
                 [:span, contest_text(contest, group_size)],
                 [:span, "für das instrumentale und vokale Musizieren der Jugend"],
@@ -307,8 +301,8 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
               ]
               |> to_lines
             ],
-            [:p, %{style: style(%{"height" => "120px"})}, prize_text(round, a, p)],
-            [:p, %{style: style(%{"height" => "70px"})}, date_text(contest)],
+            [:p, style(%{"height" => "120px"}), prize_text(round, a, p)],
+            [:p, style(%{"height" => "70px"}), date_text(contest)],
             [:p, signatures_text(round)]
           ]
         end
@@ -319,15 +313,12 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp certificate_heading(0) do
     [
       :span,
-      %{
-        style:
-          style(%{
-            "display" => "block",
-            "font-size" => "84px",
-            "font-weight" => "normal",
-            "text-align" => "center"
-          })
-      },
+      style(%{
+        "display" => "block",
+        "font-size" => "84px",
+        "font-weight" => "normal",
+        "text-align" => "center"
+      }),
       "URKUNDE"
     ]
   end
@@ -404,7 +395,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp signatures_text(round) when round in 1..2 do
     [
       [:span, "Für den #{committee_name(round)}"],
-      [:span, %{style: style(%{"margin-left" => "200px"})}, "Für die Jury"]
+      [:span, style(%{"margin-left" => "200px"}), "Für die Jury"]
     ]
   end
 
@@ -412,8 +403,11 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp committee_name(2), do: "Landesausschuss"
 
   defp style(style_map) do
-    style_map
-    |> Enum.map(fn {key, value} -> "#{key}: #{value}" end)
-    |> Enum.join(";")
+    style_string =
+      style_map
+      |> Enum.map(fn {key, value} -> "#{key}: #{value}" end)
+      |> Enum.join(";")
+
+    %{"style" => style_string}
   end
 end

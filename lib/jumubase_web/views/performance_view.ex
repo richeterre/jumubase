@@ -97,10 +97,7 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   defp birthdate_month_options() do
-    Timex.Translator.current_locale()
-    |> Timex.Translator.get_months()
-    |> Map.to_list()
-    |> Enum.map(fn {ordinal, name} ->
+    Enum.map(localized_months(), fn {ordinal, name} ->
       %{value: Integer.to_string(ordinal), label: name}
     end)
   end

@@ -907,7 +907,7 @@ msgstr "Beginn"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:2
 msgid "Edit Contest"
-msgstr ""
+msgstr "Wettbewerb bearbeiten"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:57

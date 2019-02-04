@@ -42,11 +42,8 @@ defmodule JumubaseWeb.Internal.ContestView do
   """
   def dates(%Contest{start_date: sd, end_date: ed}) do
     cond do
-      sd == ed ->
-        format_date(sd)
-
-      true ->
-        "#{format_date(sd)} – #{format_date(ed)}"
+      sd == ed -> format_date(sd)
+      true -> "#{format_date(sd)} – #{format_date(ed)}"
     end
   end
 

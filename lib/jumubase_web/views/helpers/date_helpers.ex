@@ -27,6 +27,15 @@ defmodule JumubaseWeb.DateHelpers do
 
   def format_datetime(nil, _style), do: nil
 
+  @doc """
+  Returns a list of localized month names and ordinals.
+  """
+  def localized_months() do
+    Timex.Translator.current_locale()
+    |> Timex.Translator.get_months()
+    |> Map.to_list()
+  end
+
   # Private helpers
 
   # Returns a date format for the locale.

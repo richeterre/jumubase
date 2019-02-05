@@ -18,7 +18,7 @@ defmodule Jumubase.Showtime do
   Returns all performances from the contest.
   """
   def list_performances(%Contest{id: id}) do
-    performances_query(id) |> Repo.all()
+    performances_query(id) |> preload(:stage) |> Repo.all()
   end
 
   @doc """
@@ -26,6 +26,7 @@ defmodule Jumubase.Showtime do
   """
   def list_performances(%Contest{id: id}, %PerformanceFilter{} = filter) do
     performances_query(id)
+    |> preload(:stage)
     |> apply_filter(filter)
     |> Repo.all()
   end
@@ -33,10 +34,10 @@ defmodule Jumubase.Showtime do
   @doc """
   Returns the performances with the given ids.
   """
-  def list_performances(%Contest{id: contest_id}, performance_ids)
-      when is_list(performance_ids) do
+  def list_performances(%Contest{id: contest_id}, ids) when is_list(ids) do
     performances_query(contest_id)
-    |> where([p], p.id in ^performance_ids)
+    |> preload(:stage)
+    |> where([p], p.id in ^ids)
     |> Repo.all()
   end
 
@@ -46,7 +47,17 @@ defmodule Jumubase.Showtime do
   def unscheduled_performances(%Contest{id: id}) do
     performances_query(id)
     |> where([p], is_nil(p.stage_time))
+    |> preload(:stage)
     |> Repo.all()
+  end
+
+  @doc """
+  Returns all performances from the contest that advance to the next round.
+  """
+  def advancing_performances(%Contest{id: id}) do
+    performances_query(id)
+    |> Repo.all()
+    |> Enum.filter(&Jumubase.Showtime.Results.advances?/1)
   end
 
   @doc """
@@ -290,8 +301,7 @@ defmodule Jumubase.Showtime do
       order_by: [p.stage_time, cc.inserted_at, p.age_group, p.inserted_at],
       preload: [
         [contest_category: {cc, :category}],
-        [appearances: :participant],
-        :stage
+        [appearances: :participant]
       ]
   end
 

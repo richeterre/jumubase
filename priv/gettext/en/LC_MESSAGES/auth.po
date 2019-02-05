@@ -12,7 +12,7 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:16 lib/jumubase/accounts/message.ex:25
+#: lib/jumubase/accounts/message.ex:16 lib/jumubase/accounts/message.ex:30
 msgid "Reset your password"
 msgstr ""
 
@@ -22,12 +22,12 @@ msgid "Unfortunately, the email or password was incorrect."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:109
+#: lib/jumubase_web/controllers/authorize.ex:118
 msgid "You are not authorized to view this page."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:105
+#: lib/jumubase_web/controllers/authorize.ex:112
 msgid "You are now logged in."
 msgstr ""
 
@@ -37,27 +37,27 @@ msgid "You are now logged out."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:148
+#: lib/jumubase_web/controllers/authorize.ex:168
 msgid "You need to log in to view this page."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:42
+#: lib/jumubase_web/controllers/password_reset_controller.ex:51
 msgid "Your password has been reset."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:16
+#: lib/jumubase_web/controllers/password_reset_controller.ex:18
 msgid "Check your inbox for instructions on how to reset your password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:19
+#: lib/jumubase_web/controllers/password_reset_controller.ex:25
 msgid "Please enter an email address"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:26
+#: lib/jumubase/accounts/message.ex:32
 msgid "Open this link now to choose a new password: %{url}"
 msgstr ""
 

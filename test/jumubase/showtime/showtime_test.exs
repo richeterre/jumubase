@@ -35,16 +35,14 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered(Showtime.list_performances(c), [p6, p3, p5, p4, p1, p2])
     end
 
-    test "preloads each performance's contest category, category, appearances, participants and stage",
+    test "preloads all necessary associations",
          %{contest: c} do
       insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
       assert [
                %Performance{
                  contest_category: %ContestCategory{category: %Category{}},
-                 appearances: [
-                   %Appearance{participant: %Participant{}}
-                 ],
+                 appearances: [%Appearance{participant: %Participant{}}],
                  stage: %Stage{}
                }
              ] = Showtime.list_performances(c)
@@ -94,6 +92,19 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered(Showtime.list_performances(c, filter), [p])
     end
 
+    test "preloads all necessary associations when passing a filter", %{contest: c} do
+      insert_performance(c, age_group: "III", stage: build(:stage))
+      filter = %PerformanceFilter{age_group: "III"}
+
+      assert [
+               %Performance{
+                 contest_category: %ContestCategory{category: %Category{}},
+                 appearances: [%Appearance{participant: %Participant{}}],
+                 stage: %Stage{}
+               }
+             ] = Showtime.list_performances(c, filter)
+    end
+
     test "returns matching performances from the contest when passing a list of ids", %{
       contest: c
     } do
@@ -106,6 +117,18 @@ defmodule Jumubase.ShowtimeTest do
       insert_performance(c)
 
       assert_ids_match_unordered(Showtime.list_performances(c, [p3.id, p2.id, p1.id]), [p1, p2])
+    end
+
+    test "preloads all necessary associations when passing a list of ids", %{contest: c} do
+      p = insert_performance(c, stage: build(:stage))
+
+      assert [
+               %Performance{
+                 contest_category: %ContestCategory{category: %Category{}},
+                 appearances: [%Appearance{participant: %Participant{}}],
+                 stage: %Stage{}
+               }
+             ] = Showtime.list_performances(c, [p.id])
     end
   end
 
@@ -124,19 +147,43 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered(Showtime.unscheduled_performances(c), [p1, p2])
     end
 
-    test "preloads the performances' contest categories, categories, appearances, participants and stages",
+    test "preloads all necessary associations",
          %{contest: c} do
       insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
 
       assert [
                %Performance{
                  contest_category: %ContestCategory{category: %Category{}},
-                 appearances: [
-                   %Appearance{participant: %Participant{}}
-                 ],
+                 appearances: [%Appearance{participant: %Participant{}}],
                  stage: %Stage{}
                }
              ] = Showtime.unscheduled_performances(c)
+    end
+  end
+
+  describe "advancing_performances/1" do
+    test "returns all performances from the contest that advance to the next round", %{contest: c} do
+      [cc1, _] = c.contest_categories
+
+      p =
+        insert_performance(cc1,
+          appearances: build_list(1, :appearance, role: "soloist", points: 23)
+        )
+
+      insert_performance(cc1, appearances: build_list(1, :appearance, role: "soloist", points: 22))
+
+      assert_ids_match_unordered(Showtime.advancing_performances(c), [p])
+    end
+
+    test "preloads all necessary associations", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance, role: "soloist", points: 23))
+
+      assert [
+               %Performance{
+                 contest_category: %ContestCategory{category: %Category{}},
+                 appearances: [%Appearance{participant: %Participant{}}]
+               }
+             ] = Showtime.advancing_performances(c)
     end
   end
 

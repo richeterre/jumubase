@@ -112,6 +112,7 @@ defmodule JumubaseWeb.Router do
         as: :results
 
       get "/performances/certificates", PerformanceController, :certificates, as: :performances
+      get "/performances/advancing", PerformanceController, :advancing, as: :performances
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]

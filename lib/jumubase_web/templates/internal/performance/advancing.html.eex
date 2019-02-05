@@ -1,0 +1,54 @@
+<h2>
+  <%= gettext("Advancing performances") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= gettext("Category") %></th>
+        <th><%= gettext("Participants") %></th>
+        <th><%= gettext("AG") %></th>
+        <th><%= gettext("Points") %></th>
+        <th><%= gettext("Prize") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for performance <- @performances do %>
+        <% groups = result_groups(performance) %>
+        <%= for {group, index} <- groups |> Enum.with_index do %>
+          <% [first_a | _] = group %>
+          <tr>
+            <%= if index == 0 do %>
+              <td rowspan="<%= length(groups) %>">
+                <%= link category_name(performance),
+                  to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
+                  %>
+              </td>
+            <% end %>
+            <td>
+              <%= for appearance <- group do %>
+                <%= appearance_info(appearance) %><br>
+              <% end %>
+            </td>
+            <td>
+              <%= age_group_badge(first_a) %>
+            </td>
+            <td>
+              <%= first_a.points %>
+              <%= missing_points_error(first_a) %>
+            </td>
+            <td>
+              <%= prize(first_a, @contest.round) %>
+              <%= advancement_label(first_a, performance) %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

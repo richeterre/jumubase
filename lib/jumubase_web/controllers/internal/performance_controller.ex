@@ -236,6 +236,17 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> render("certificates.pdf")
   end
 
+  def advancing(conn, _params, contest) do
+    performances = Showtime.advancing_performances(contest)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:performances, performances)
+    |> add_contest_breadcrumb(contest)
+    |> add_breadcrumb(name: gettext("Advancing performances"), path: current_path(conn))
+    |> render("advancing.html")
+  end
+
   # Private helpers
 
   defp prepare_filtered_list(conn, params, contest) do

@@ -617,6 +617,38 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "advancing/2" do
+    for role <- roles_except("local-organizer") do
+      @tag login_as: role
+      test "lets #{role} users list a contest's advancing performances", %{
+        conn: conn,
+        contest: c
+      } do
+        conn |> attempt_advancing(c) |> assert_advancing_success
+      end
+    end
+
+    @tag login_as: "local-organizer"
+    test "lets local organizers list an own contest's advancing performances", %{
+      conn: conn,
+      user: u
+    } do
+      own_c = insert_own_contest(u)
+      conn |> attempt_advancing(own_c) |> assert_advancing_success
+    end
+
+    @tag login_as: "local-organizer"
+    test "redirects local organizers when trying to list a foreign contest's advancing performances",
+         %{conn: conn, contest: c} do
+      conn |> attempt_advancing(c) |> assert_unauthorized_user
+    end
+
+    test "redirects guests when trying to list a contest's advancing performances",
+         %{conn: conn, contest: c} do
+      conn |> attempt_advancing(c) |> assert_unauthorized_guest
+    end
+  end
+
   # Private helpers
 
   defp attempt_new(conn, contest) do
@@ -703,6 +735,10 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     )
   end
 
+  defp attempt_advancing(conn, contest) do
+    get(conn, Routes.internal_contest_performances_path(conn, :advancing, contest))
+  end
+
   defp assert_create_success(conn, contest, performance) do
     assert_flash_redirect(
       conn,
@@ -758,6 +794,10 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
   defp assert_certificates_success(conn) do
     assert html_response(conn, 200) =~ "Create certificates"
+  end
+
+  defp assert_advancing_success(conn) do
+    assert html_response(conn, 200) =~ "Advancing performances"
   end
 
   defp test_reschedule_success(conn, contest) do

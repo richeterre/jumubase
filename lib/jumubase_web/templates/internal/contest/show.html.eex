@@ -79,6 +79,11 @@
             Routes.internal_contest_performances_path(@conn, :certificates, @contest)
             %>
         </li>
+        <li class="list-group-item">
+          <%= icon_link "share-alt", gettext("Show advancing"),
+            Routes.internal_contest_performances_path(@conn, :advancing, @contest)
+            %>
+        </li>
       </ul>
     </div>
   </div>

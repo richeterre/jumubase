@@ -12,31 +12,31 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:82
+#: lib/jumubase/jumu_params.ex:83
 msgid "Baroque"
 msgstr "Barock"
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:83
+#: lib/jumubase/jumu_params.ex:84
 msgid "Early Classical, Classical"
 msgstr "Frühklassik, Klassik"
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:85
+#: lib/jumubase/jumu_params.ex:86
 msgid "Modern Classical, Jazz, Pop"
 msgstr "Klassische Moderne, Jazz, Pop"
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:86
+#: lib/jumubase/jumu_params.ex:87
 msgid "Neue Musik"
 msgstr "Neue Musik"
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:81
+#: lib/jumubase/jumu_params.ex:82
 msgid "Renaissance, Early Baroque"
 msgstr "Renaissance, Frühbarock"
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:84
+#: lib/jumubase/jumu_params.ex:85
 msgid "Romantic, Impressionist"
 msgstr "Romantik, Impressionismus"

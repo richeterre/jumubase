@@ -210,6 +210,7 @@ defmodule Jumubase.Showtime do
     performances =
       performances_query(rw.id)
       |> where([p], p.id in ^performance_ids)
+      |> without_successor
       |> preload([:pieces, :stage])
       |> Repo.all()
 
@@ -474,6 +475,12 @@ defmodule Jumubase.Showtime do
 
   defp with_results_public(query, public) do
     from p in query, where: p.results_public == ^public
+  end
+
+  defp without_successor(query) do
+    from p in query,
+      left_join: suc in assoc(p, :successor),
+      where: is_nil(suc)
   end
 
   # Limits the query to the given contest id

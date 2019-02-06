@@ -944,6 +944,17 @@ defmodule Jumubase.ShowtimeTest do
       assert [] = Showtime.list_performances(lw)
     end
 
+    test "does not migrate performances that already have a successor", %{rw: rw, lw: lw} do
+      cg = insert(:category)
+      rw_cc = insert(:contest_category, contest: rw, category: cg)
+      lw_cc = insert(:contest_category, contest: lw, category: cg)
+
+      p = insert_performance(rw_cc)
+      insert_performance(lw_cc, predecessor: p)
+
+      assert {:ok, 0} = Showtime.migrate_performances(rw, [p.id], lw)
+    end
+
     test "does not migrate anything if the seasons or rounds mismatch", %{rw: rw} do
       c1 = insert(:contest, season: rw.season + 1, round: 2)
       c2 = insert(:contest, season: rw.season, round: 1)

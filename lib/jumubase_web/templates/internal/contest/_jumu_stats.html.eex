@@ -1,25 +1,27 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= gettext("Participants") %></th>
-      <th colspan="3"><%= gettext("Performances") %></th>
-      <th><%= gettext("Appearances") %></th>
-    </tr>
-    <tr class="text-muted">
-      <th><%= gettext("Total") %></th>
-      <th><%= gettext("Total") %></th>
-      <th><%= gettext("Classical") %></th>
-      <th><%= gettext("Popular") %></th>
-      <th><%= gettext("Total") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= @stats.participants %></td>
-      <td><%= @stats.performances.total %></td>
-      <td><%= @stats.performances.classical %></td>
-      <td><%= @stats.performances.popular %></td>
-      <td><%= @stats.appearances %></td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= gettext("Participants") %></th>
+        <th colspan="3"><%= gettext("Performances") %></th>
+        <th><%= gettext("Appearances") %></th>
+      </tr>
+      <tr class="text-muted">
+        <th><%= gettext("Total") %></th>
+        <th><%= gettext("Total") %></th>
+        <th><%= gettext("Classical") %></th>
+        <th><%= gettext("Popular") %></th>
+        <th><%= gettext("Total") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @stats.participants %></td>
+        <td><%= @stats.performances.total %></td>
+        <td><%= @stats.performances.classical %></td>
+        <td><%= @stats.performances.popular %></td>
+        <td><%= @stats.appearances %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

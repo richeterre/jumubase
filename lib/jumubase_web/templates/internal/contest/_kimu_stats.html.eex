@@ -1,16 +1,18 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= gettext("Participants") %></th>
-      <th><%= gettext("Performances") %></th>
-      <th><%= gettext("Appearances") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><%= @stats.participants %></td>
-      <td><%= @stats.performances.total %></td>
-      <td><%= @stats.appearances %></td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= gettext("Participants") %></th>
+        <th><%= gettext("Performances") %></th>
+        <th><%= gettext("Appearances") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @stats.participants %></td>
+        <td><%= @stats.performances.total %></td>
+        <td><%= @stats.appearances %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

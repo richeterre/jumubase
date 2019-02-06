@@ -25,7 +25,7 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
       assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, RW 2018"
     end
 
-    test "uses an EU flag for a LW contest" do
+    test "returns a display name for an LW contest" do
       contest =
         build(:contest,
           season: 55,
@@ -33,7 +33,7 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
           host: build(:host, country_code: "FI", name: "DS Helsinki")
         )
 
-      assert ContestView.name_with_flag(contest) == "🇪🇺 DS Helsinki, LW 2018"
+      assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, LW 2018"
     end
   end
 

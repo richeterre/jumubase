@@ -119,6 +119,19 @@ defmodule Jumubase.Foundation do
   def get_matching_kimu_contest(%Contest{}), do: nil
 
   @doc """
+  Returns the next-round contest that advancing performances go to,
+  or nil if no such contest exists.
+  """
+  def get_successor(%Contest{season: season, round: 1}) do
+    Contest
+    |> where(season: ^season, round: 2)
+    |> preload(:host)
+    |> Repo.one()
+  end
+
+  def get_successor(%Contest{round: _}), do: nil
+
+  @doc """
   Returns the official (non-Kimu) contest with the latest end date.
   """
   def get_latest_official_contest do

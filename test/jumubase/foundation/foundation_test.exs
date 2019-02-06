@@ -375,6 +375,48 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_successor/1" do
+    test "returns the next-round (LW) successor for an RW contest" do
+      c1 = insert(:contest, season: 56, round: 1)
+      # Irrelevant contests
+      insert(:contest, season: 56, round: 0)
+      insert(:contest, season: 56, round: 1)
+      insert(:contest, season: 57, round: 2)
+      # Successor contest
+      c2 = insert(:contest, season: 56, round: 2)
+
+      result = Foundation.get_successor(c1)
+      assert result.id == c2.id
+    end
+
+    test "preloads the necessary associations" do
+      c = insert(:contest, season: 56, round: 1)
+      insert(:contest, season: 56, round: 2)
+
+      assert %Contest{host: %Host{}} = Foundation.get_successor(c)
+    end
+
+    test "returns nil if there is no matching LW" do
+      c = insert(:contest, season: 56, round: 1)
+      assert Foundation.get_successor(c) == nil
+    end
+
+    test "returns nil for non-RW contests" do
+      c1 = insert(:contest, season: 56, round: 0)
+      c2 = insert(:contest, season: 56, round: 2)
+      assert Foundation.get_successor(c1) == nil
+      assert Foundation.get_successor(c2) == nil
+    end
+
+    test "raises an error if there are multiple results" do
+      c = insert(:contest, season: 56, round: 1)
+      insert(:contest, season: 56, round: 2)
+      insert(:contest, season: 56, round: 2)
+
+      assert_raise Ecto.MultipleResultsError, fn -> Foundation.get_successor(c) end
+    end
+  end
+
   describe "get_latest_official_contest/1" do
     test "returns the latest-ending non-Kimu contest" do
       today = Timex.today()

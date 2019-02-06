@@ -1,7 +1,7 @@
 defmodule Jumubase.ShowtimeTest do
   use Jumubase.DataCase
   alias Ecto.Changeset
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Stage}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
@@ -1075,22 +1075,23 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
-  test "load_pieces/1 preloads a performance's pieces in insertion order", %{contest: c} do
-    insert_performance(c,
-      pieces: [
-        build(:piece, title: "Y"),
-        build(:piece, title: "X")
-      ]
-    )
-
+  test "load_pieces/1 preloads each performance's pieces in insertion order", %{contest: c} do
+    insert_performance(c, pieces: [build(:piece, title: "Y"), build(:piece, title: "X")])
     performance = Repo.one(Performance)
 
-    assert %{
-             pieces: [
-               %Piece{title: "Y"},
-               %Piece{title: "X"}
-             ]
-           } = performance |> Showtime.load_pieces()
+    assert [%{pieces: [%Piece{title: "Y"}, %Piece{title: "X"}]}] =
+             Showtime.load_pieces([performance])
+  end
+
+  describe "load_predecessor_contests/1" do
+    test "preloads each performance's predecessor contest with host", %{contest: rw} do
+      lw = insert(:contest, round: 2)
+      insert_performance(lw, predecessor_contest: rw)
+      performance = Repo.one(Performance)
+
+      assert [%{predecessor_contest: %Contest{host: %Host{}}}] =
+               Showtime.load_predecessor_contests([performance])
+    end
   end
 
   test "load_contest_category/1 fully preloads a performance's contest category", %{contest: c} do

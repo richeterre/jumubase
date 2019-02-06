@@ -59,6 +59,22 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     assert PerformanceView.category_info(p) == "ABC, AG IV"
   end
 
+  describe "predecessor_info/1" do
+    test "returns the predecessor contest's host flag" do
+      p =
+        build(:performance,
+          predecessor_contest: build(:contest, host: build(:host, country_code: "FI"))
+        )
+
+      assert PerformanceView.predecessor_info(p) == "🇫🇮"
+    end
+
+    test "returns nil if the performance has no predecessor contest" do
+      p = build(:performance, predecessor_contest: nil)
+      assert PerformanceView.predecessor_info(p) == nil
+    end
+  end
+
   test "formatted_duration/1 returns the formatted duration of a performance" do
     p =
       build(:performance,

@@ -2,37 +2,45 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.ContestView
 
+  @host build(:host, country_code: "FI", name: "DS Helsinki")
+
+  describe "name/1" do
+    test "returns a name for a Kimu contest" do
+      contest = build(:contest, season: 55, round: 0, host: @host)
+      assert ContestView.name(contest) == "DS Helsinki, Kimu 2018"
+    end
+
+    test "returns a name for an RW contest" do
+      contest = build(:contest, season: 55, round: 1, host: @host)
+      assert ContestView.name(contest) == "DS Helsinki, RW 2018"
+    end
+
+    test "returns a name for an LW contest" do
+      contest = build(:contest, season: 55, round: 2, host: @host)
+      assert ContestView.name(contest) == "DS Helsinki, LW 2018"
+    end
+  end
+
+  describe "flag/1" do
+    test "returns a flag emoji for the contest" do
+      contest = build(:contest, host: @host)
+      assert ContestView.flag(contest) == "🇫🇮"
+    end
+  end
+
   describe "name_with_flag/1" do
     test "returns a display name for a Kimu contest" do
-      contest =
-        build(:contest,
-          season: 55,
-          round: 0,
-          host: build(:host, country_code: "FI", name: "DS Helsinki")
-        )
-
+      contest = build(:contest, season: 55, round: 0, host: @host)
       assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, Kimu 2018"
     end
 
     test "returns a display name for an RW contest" do
-      contest =
-        build(:contest,
-          season: 55,
-          round: 1,
-          host: build(:host, country_code: "FI", name: "DS Helsinki")
-        )
-
+      contest = build(:contest, season: 55, round: 1, host: @host)
       assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, RW 2018"
     end
 
     test "returns a display name for an LW contest" do
-      contest =
-        build(:contest,
-          season: 55,
-          round: 2,
-          host: build(:host, country_code: "FI", name: "DS Helsinki")
-        )
-
+      contest = build(:contest, season: 55, round: 2, host: @host)
       assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, LW 2018"
     end
   end
@@ -53,22 +61,12 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
 
   describe "dates/1" do
     test "returns a formatted date range for a multi-day contest" do
-      contest =
-        build(:contest,
-          start_date: ~D[2019-01-01],
-          end_date: ~D[2019-01-02]
-        )
-
+      contest = build(:contest, start_date: ~D[2019-01-01], end_date: ~D[2019-01-02])
       assert ContestView.dates(contest) == "1 January 2019 – 2 January 2019"
     end
 
     test "returns a single formatted date for a single-day contest" do
-      contest =
-        build(:contest,
-          start_date: ~D[2019-01-01],
-          end_date: ~D[2019-01-01]
-        )
-
+      contest = build(:contest, start_date: ~D[2019-01-01], end_date: ~D[2019-01-01])
       assert ContestView.dates(contest) == "1 January 2019"
     end
   end

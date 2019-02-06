@@ -5,13 +5,23 @@ defmodule JumubaseWeb.Internal.ContestView do
   alias Jumubase.Showtime
 
   @doc """
-  Returns a display name for the given contest.
+  Returns a display name for the contest.
   """
   def name(%Contest{} = contest) do
     round_name = short_round_name(contest.round)
     "#{contest.host.name}, #{round_name} #{year(contest)}"
   end
 
+  @doc """
+  Returns the flag associated with the contest's host.
+  """
+  def flag(%Contest{host: host}) do
+    emoji_flag(host.country_code)
+  end
+
+  @doc """
+  Returns a display name for the contest that includes a host flag.
+  """
   def name_with_flag(%Contest{} = contest) do
     flag_code = contest.host.country_code
     "#{emoji_flag(flag_code)} #{name(contest)}"

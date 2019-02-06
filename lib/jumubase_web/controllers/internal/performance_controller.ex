@@ -290,15 +290,18 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   defp handle_filter(conn, filter, contest) do
-    if PerformanceFilter.active?(filter) do
-      conn
-      |> assign(:filter_active, true)
-      |> assign(:performances, Showtime.list_performances(contest, filter))
-    else
-      conn
-      |> assign(:filter_active, false)
-      |> assign(:performances, Showtime.list_performances(contest))
-    end
+    conn
+    |> assign(:filter_active, PerformanceFilter.active?(filter))
+    |> assign(:performances, load_performances(contest, filter))
+  end
+
+  defp load_performances(%Contest{round: 2} = c, filter) do
+    # Since performances have predecessors here, preload them
+    c |> Showtime.list_performances(filter) |> Showtime.load_predecessor_contests()
+  end
+
+  defp load_performances(%Contest{} = c, filter) do
+    Showtime.list_performances(c, filter)
   end
 
   defp prepare_for_form(conn, %Contest{} = c, %Changeset{} = cs) do

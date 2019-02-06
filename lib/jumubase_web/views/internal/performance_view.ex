@@ -13,7 +13,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     ]
 
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
-  import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
+  import JumubaseWeb.Internal.ContestView, only: [flag: 1, name: 1, name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, epoch_tag: 1, person_info: 1]
   alias Jumubase.JumuParams
@@ -94,6 +94,10 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   def category_info(%Performance{} = performance) do
     "#{category_name(performance)}, AG #{performance.age_group}"
   end
+
+  def predecessor_info(%Performance{predecessor_contest: nil}), do: nil
+
+  def predecessor_info(%Performance{predecessor_contest: c}), do: flag(c)
 
   @doc """
   Returns the performance's formatted duration.

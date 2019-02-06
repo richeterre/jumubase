@@ -15,12 +15,19 @@
   filter_active: @filter_active
   %>
 
+<% show_predecessor_info? = @contest.round > 1 %>
+
 <div class="table-responsive">
   <table class="table table-hover">
     <thead>
       <tr>
         <th><%= gettext("Stage time") %></th>
         <th><%= gettext("Category") %></th>
+
+        <%= if show_predecessor_info? do %>
+        <th><%= gettext("RW") %></th>
+        <% end %>
+
         <th><%= gettext("Participants") %></th>
         <th></th>
       </tr>
@@ -40,6 +47,9 @@
             to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
             %>
         </td>
+        <%= if show_predecessor_info? do %>
+        <td><%= predecessor_info(performance) %></td>
+        <% end %>
         <td>
           <%= render "_list_performance.html", performance: performance %>
         </td>

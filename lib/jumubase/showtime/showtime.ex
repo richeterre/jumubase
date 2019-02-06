@@ -287,6 +287,10 @@ defmodule Jumubase.Showtime do
     performances |> Repo.preload(pieces: pieces_query())
   end
 
+  def load_predecessor_contests(performances) do
+    Repo.preload(performances, predecessor_contest: :host)
+  end
+
   def load_contest_category(%Performance{} = performance) do
     performance |> Repo.preload(contest_category: [:contest, :category])
   end

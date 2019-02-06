@@ -50,6 +50,17 @@ defmodule Jumubase.Showtime.Performance do
   end
 
   @doc """
+  Allows inserting a next-round performance based on the given one.
+  """
+  def migration_changeset(%Performance{appearances: appearances, pieces: pieces} = p) do
+    %Performance{}
+    |> Changeset.change(age_group: p.age_group)
+    |> Changeset.change(edit_code: bump_edit_code(p))
+    |> Changeset.put_assoc(:appearances, Enum.map(appearances, &Appearance.migration_changeset/1))
+    |> Changeset.put_assoc(:pieces, Enum.map(pieces, &Piece.migration_changeset/1))
+  end
+
+  @doc """
   Generates an edit code string of suitable length from a number.
   """
   def to_edit_code(number, round) do
@@ -170,6 +181,10 @@ defmodule Jumubase.Showtime.Performance do
       true ->
         changeset
     end
+  end
+
+  defp bump_edit_code(%Performance{edit_code: ec}) do
+    ec |> String.replace_prefix("1", "2")
   end
 
   defp has_soloists_and_ensemblists?(a_list) do

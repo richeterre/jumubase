@@ -43,6 +43,15 @@ defmodule Jumubase.Showtime.Appearance do
     |> validate_inclusion(:points, JumuParams.points())
   end
 
+  @doc """
+  Allows migrating the appearance by clearing its round-specific data.
+  """
+  def migration_changeset(%Appearance{} = a) do
+    %Appearance{instrument: a.instrument, role: a.role, age_group: a.age_group}
+    |> Changeset.change(points: nil)
+    |> Changeset.put_assoc(:participant, a.participant)
+  end
+
   def is_soloist(%Appearance{role: role}), do: role == "soloist"
 
   def is_ensemblist(%Appearance{role: role}), do: role == "ensemblist"

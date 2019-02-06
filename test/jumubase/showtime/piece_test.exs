@@ -3,7 +3,7 @@ defmodule Jumubase.PieceTest do
   import Ecto.Changeset
   alias Jumubase.Showtime.Piece
 
-  describe "changeset" do
+  describe "changeset/2" do
     test "is valid with valid attributes" do
       attrs = params_for(:piece)
       changeset = Piece.changeset(%Piece{}, attrs)
@@ -148,6 +148,58 @@ defmodule Jumubase.PieceTest do
       params = params_for(:piece, artist: " White Stripes  ")
       changeset = Piece.changeset(%Piece{}, params)
       assert get_change(changeset, :artist) == "White Stripes"
+    end
+  end
+
+  describe "migration_changeset/1" do
+    test "preserves a classical piece's content fields" do
+      pc =
+        build(:piece,
+          title: "Hello",
+          composer: "Composer",
+          composer_born: "1900",
+          composer_died: "2000",
+          epoch: "f",
+          minutes: 1,
+          seconds: 23
+        )
+
+      cs = Piece.migration_changeset(pc)
+      assert get_field(cs, :title) == pc.title
+      assert get_field(cs, :composer) == pc.composer
+      assert get_field(cs, :composer_born) == pc.composer_born
+      assert get_field(cs, :composer_died) == pc.composer_died
+      assert get_field(cs, :epoch) == pc.epoch
+      assert get_field(cs, :minutes) == pc.minutes
+      assert get_field(cs, :seconds) == pc.seconds
+    end
+
+    test "preserves a popular piece's content fields" do
+      pc =
+        build(:piece,
+          title: "Hello",
+          artist: "Artist",
+          epoch: "e",
+          minutes: 1,
+          seconds: 23
+        )
+
+      cs = Piece.migration_changeset(pc)
+      assert get_field(cs, :title) == pc.title
+      assert get_field(cs, :artist) == pc.artist
+      assert get_field(cs, :epoch) == pc.epoch
+      assert get_field(cs, :minutes) == pc.minutes
+      assert get_field(cs, :seconds) == pc.seconds
+    end
+
+    test "discards a piece's non-content fields" do
+      now = Timex.now()
+      pc = build(:piece, id: 1, inserted_at: now, updated_at: now)
+
+      cs = Piece.migration_changeset(pc)
+      assert get_field(cs, :id) == nil
+      assert get_field(cs, :inserted_at) == nil
+      assert get_field(cs, :updated_at) == nil
     end
   end
 end

@@ -37,6 +37,14 @@ defmodule Jumubase.Showtime.Piece do
     |> clean_up_fields
   end
 
+  @doc """
+  Allows migrating the piece by preserving only its "timeless" data.
+  """
+  def migration_changeset(%Piece{} = piece) do
+    attrs = piece |> Map.take(@required_attrs ++ @optional_attrs)
+    Changeset.change(%Piece{}, attrs)
+  end
+
   # Private helpers
 
   # Validates the changeset's person (composer or artist) data.

@@ -1,5 +1,6 @@
 defmodule Jumubase.AppearanceTest do
   use Jumubase.DataCase
+  alias Ecto.Changeset
   alias Jumubase.Showtime.Appearance
 
   describe "changeset" do
@@ -103,6 +104,29 @@ defmodule Jumubase.AppearanceTest do
     test "discards empty point string" do
       changeset = Appearance.result_changeset(%Appearance{}, "")
       refute Map.has_key?(changeset.changes, :points)
+    end
+  end
+
+  describe "migration_changeset/1" do
+    setup do
+      c = insert(:contest)
+      a = insert_appearance(c)
+      [changeset: Appearance.migration_changeset(a), appearance: a]
+    end
+
+    test "preserves the instrument, role and age group", %{changeset: cs, appearance: a} do
+      assert cs.data.instrument == a.instrument
+      assert cs.data.role == a.role
+      assert cs.data.age_group == a.age_group
+    end
+
+    test "clears the points", %{changeset: changeset} do
+      assert %Changeset{action: nil, data: %Appearance{points: nil}} = changeset
+    end
+
+    test "preserves the associated participant", %{changeset: cs, appearance: a} do
+      pt = a.participant
+      assert %Changeset{changes: %{participant: %Changeset{action: :update, data: ^pt}}} = cs
     end
   end
 

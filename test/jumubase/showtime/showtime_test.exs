@@ -886,6 +886,78 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "migrate_performances/3" do
+    setup do
+      [
+        rw: insert(:contest, season: 56, round: 1),
+        lw: insert(:contest, season: 56, round: 2)
+      ]
+    end
+
+    test "migrates the performances from an RW to a LW contest", %{rw: rw, lw: lw} do
+      cg = insert(:category)
+      rw_cc = insert(:contest_category, contest: rw, category: cg)
+      lw_cc = insert(:contest_category, contest: lw, category: cg)
+
+      p1 =
+        insert_performance(rw_cc,
+          edit_code: "100001",
+          appearances: [
+            build(:appearance, role: "soloist", points: 22),
+            build(:appearance, role: "accompanist", points: 22)
+          ],
+          pieces: build_list(2, :piece),
+          stage: build(:stage),
+          stage_time: ~N[2019-01-01T09:00:00],
+          results_public: true
+        )
+
+      assert :ok = Showtime.migrate_performances(rw, [p1.id], lw)
+
+      # Check fields of migrated performance
+      assert [%Performance{} = p] = Showtime.list_performances(lw) |> Showtime.load_pieces()
+      assert p.contest_category.id == lw_cc.id
+      assert p.age_group == p1.age_group
+      assert p.edit_code == "200001"
+      assert Enum.all?(p.appearances, &(&1.points == nil))
+      assert_ids_match_ordered(participants(p.appearances), participants(p1.appearances))
+      assert length(p.pieces) == length(p1.pieces)
+      assert p.stage == nil
+      assert p.stage_time == nil
+      refute p.results_public
+
+      # Check that original performance is preserved
+      reloaded_p1 = Showtime.get_performance!(rw, p1.id)
+      assert_ids_match_ordered(reloaded_p1.appearances, p1.appearances)
+      assert_ids_match_ordered(reloaded_p1.pieces, p1.pieces)
+    end
+
+    test "does not migrate performances without a target contest category", %{rw: rw, lw: lw} do
+      [cg1, cg2] = insert_list(2, :category)
+      rw_cc = insert(:contest_category, contest: rw, category: cg1)
+      insert(:contest_category, contest: lw, category: cg2)
+
+      p1 = insert_performance(rw_cc)
+      assert :ok = Showtime.migrate_performances(rw, [p1.id], lw)
+      assert [] = Showtime.list_performances(lw)
+    end
+
+    test "does not migrate anything if the seasons or rounds mismatch", %{rw: rw} do
+      c1 = insert(:contest, season: rw.season + 1, round: 2)
+      c2 = insert(:contest, season: rw.season, round: 1)
+      p = insert_performance(rw)
+      assert :error = Showtime.migrate_performances(rw, [p.id], c1)
+      assert :error = Showtime.migrate_performances(rw, [p.id], c2)
+    end
+
+    test "does not migrate performances not from the given RW contest", %{rw: rw, lw: lw} do
+      other_c = insert(:contest, season: rw.season, round: 1)
+      p = insert_performance(other_c)
+      Showtime.migrate_performances(rw, [p.id], lw)
+      assert [] = Showtime.list_performances(lw)
+    end
+  end
+
   describe "total_duration/1" do
     test "returns the total duration of a performance" do
       p =
@@ -1179,5 +1251,9 @@ defmodule Jumubase.ShowtimeTest do
 
   defp get_accompanists(%Performance{appearances: appearances}) do
     Enum.filter(appearances, &Appearance.is_accompanist/1)
+  end
+
+  defp participants(appearances) do
+    appearances |> Enum.map(& &1.participant)
   end
 end

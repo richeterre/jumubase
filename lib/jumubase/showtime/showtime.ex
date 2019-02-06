@@ -197,6 +197,46 @@ defmodule Jumubase.Showtime do
     update_results_public(contest, performance_ids, false)
   end
 
+  def migrate_performances(
+        %Contest{season: season, round: 1} = rw,
+        performance_ids,
+        %Contest{season: season, round: 2} = lw
+      )
+      when is_list(performance_ids) do
+    # Perform required preloads
+    [rw, lw] = Enum.map([rw, lw], &Foundation.load_contest_categories/1)
+
+    # Fetch performances
+    performances =
+      performances_query(rw.id)
+      |> where([p], p.id in ^performance_ids)
+      |> preload([:pieces, :stage])
+      |> Repo.all()
+
+    # Perform migration as single transaction
+    multi =
+      Enum.reduce(performances, Multi.new(), fn p, acc ->
+        case find_matching_cc(p, lw) do
+          nil ->
+            acc
+
+          target_cc ->
+            changeset =
+              Performance.migration_changeset(p)
+              |> Ecto.Changeset.put_assoc(:contest_category, target_cc)
+
+            Multi.insert(acc, p.id, changeset)
+        end
+      end)
+
+    case Repo.transaction(multi) do
+      {:ok, _} -> :ok
+      {:error, _, _, _} -> :error
+    end
+  end
+
+  def migrate_performances(%Contest{}, _performance_ids, %Contest{}), do: :error
+
   @doc """
   Returns the performance's total duration as a Timex.Duration.
   """
@@ -497,5 +537,11 @@ defmodule Jumubase.Showtime do
 
   defp pieces_query do
     from pc in Piece, order_by: pc.inserted_at
+  end
+
+  # Returns the contest category from the target contest that shares a category
+  # with the performance's own CC, or nil if no match is found.
+  defp find_matching_cc(%Performance{contest_category: cc}, %Contest{} = target_c) do
+    Enum.find(target_c.contest_categories, &(&1.category.id == cc.category.id))
   end
 end

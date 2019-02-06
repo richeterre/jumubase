@@ -1,6 +1,7 @@
 defmodule Jumubase.PerformanceTest do
   use Jumubase.DataCase
-  alias Jumubase.Showtime.Performance
+  alias Ecto.Changeset
+  alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
   describe "changeset" do
     setup do
@@ -126,6 +127,65 @@ defmodule Jumubase.PerformanceTest do
       attrs = %{"stage_time" => @stage_time}
       changeset = Performance.stage_changeset(%Performance{}, attrs)
       refute changeset.valid?
+    end
+  end
+
+  describe "migration_changeset/1" do
+    setup do
+      c = insert(:contest, round: 1)
+
+      p =
+        insert_performance(c,
+          age_group: "IV",
+          edit_code: "100001",
+          appearances: [
+            build(:appearance, role: "soloist", points: 23),
+            build(:appearance, role: "accompanist", points: 22)
+          ],
+          pieces: build_list(2, :piece)
+        )
+
+      [changeset: Performance.migration_changeset(p), performance: p]
+    end
+
+    test "preserves the age group", %{changeset: changeset} do
+      assert changeset.changes[:age_group] == "IV"
+    end
+
+    test "updates the edit code", %{changeset: changeset} do
+      assert changeset.changes[:edit_code] == "200001"
+    end
+
+    test "inserts new appearances with empty points", %{changeset: changeset} do
+      assert [
+               %Changeset{action: :insert, data: %Appearance{points: nil}},
+               %Changeset{action: :insert, data: %Appearance{points: nil}}
+             ] = changeset.changes[:appearances]
+    end
+
+    test "reuses existing appearance participants", %{changeset: changeset, performance: p} do
+      # Get existing participant ids
+      [%{id: pt1_id}, %{id: pt2_id}] = p.appearances |> Enum.map(& &1.participant)
+
+      assert [
+               %Changeset{
+                 changes: %{
+                   participant: %Changeset{action: :update, data: %Participant{id: ^pt1_id}}
+                 }
+               },
+               %Changeset{
+                 changes: %{
+                   participant: %Changeset{action: :update, data: %Participant{id: ^pt2_id}}
+                 }
+               }
+             ] = changeset.changes[:appearances]
+    end
+
+    test "inserts new pieces", %{changeset: changeset} do
+      assert [
+               %Changeset{action: :insert, data: %Piece{}},
+               %Changeset{action: :insert, data: %Piece{}}
+             ] = changeset.changes[:pieces]
     end
   end
 

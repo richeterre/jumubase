@@ -912,7 +912,7 @@ defmodule Jumubase.ShowtimeTest do
           results_public: true
         )
 
-      assert :ok = Showtime.migrate_performances(rw, [p1.id], lw)
+      assert {:ok, 1} = Showtime.migrate_performances(rw, [p1.id], lw)
 
       # Check fields of migrated performance
       assert [%Performance{} = p] = Showtime.list_performances(lw) |> Showtime.load_pieces()
@@ -938,7 +938,7 @@ defmodule Jumubase.ShowtimeTest do
       insert(:contest_category, contest: lw, category: cg2)
 
       p1 = insert_performance(rw_cc)
-      assert :ok = Showtime.migrate_performances(rw, [p1.id], lw)
+      assert {:ok, 0} = Showtime.migrate_performances(rw, [p1.id], lw)
       assert [] = Showtime.list_performances(lw)
     end
 

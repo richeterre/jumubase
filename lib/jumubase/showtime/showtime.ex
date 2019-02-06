@@ -230,7 +230,7 @@ defmodule Jumubase.Showtime do
       end)
 
     case Repo.transaction(multi) do
-      {:ok, _} -> :ok
+      {:ok, result} -> {:ok, Enum.count(result)}
       {:error, _, _, _} -> :error
     end
   end

@@ -6,6 +6,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       advancement_label: 2,
       age_group_badge: 1,
       appearance_info: 1,
+      ineligibility_warning: 3,
       instrument_name: 1,
       missing_points_error: 1,
       participant_names: 1,

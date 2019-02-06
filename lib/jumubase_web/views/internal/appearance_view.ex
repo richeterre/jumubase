@@ -45,6 +45,19 @@ defmodule JumubaseWeb.Internal.AppearanceView do
   def missing_points_error(%Appearance{points: _}), do: nil
 
   @doc """
+  Displays a warning if the appearance might be ineligible for the next round,
+  due to its points or other rule restrictions (e.g. accompanist groups).
+  """
+  def ineligibility_warning(%Appearance{} = a, %Performance{} = p, round) do
+    if Results.needs_eligibility_check?(a, p, round) do
+      content_tag(:span, icon_tag("alert"),
+        title: gettext("Please check eligibility for next round"),
+        class: "label label-warning"
+      )
+    end
+  end
+
+  @doc """
   Creates an age group badge for an appearance.
   """
   def age_group_badge(%Appearance{age_group: ag}), do: badge(ag)

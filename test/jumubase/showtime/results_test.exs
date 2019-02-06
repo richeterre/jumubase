@@ -1,6 +1,7 @@
 defmodule Jumubase.ResultsTest do
   use Jumubase.DataCase
   alias Jumubase.JumuParams
+  alias Jumubase.Showtime.Performance
   alias Jumubase.Showtime.Results
 
   describe "get_prize/2" do
@@ -139,7 +140,92 @@ defmodule Jumubase.ResultsTest do
     end
   end
 
+  describe "needs_eligibility_check?/3" do
+    test "checks advancing RW performance with accompanist group having <23 points" do
+      c = insert(:contest, round: 1)
+      p = do_insert_performance(c, [{"soloist", 23}, {"accompanist", 22}, {"accompanist", 22}])
+
+      for non_acc <- Performance.non_accompanists(p) do
+        refute Results.needs_eligibility_check?(non_acc, p, c.round)
+      end
+
+      for acc <- Performance.accompanists(p) do
+        assert Results.needs_eligibility_check?(acc, p, c.round)
+      end
+    end
+
+    test "checks advancing RW performance with accompanist group having 23+ points" do
+      c = insert(:contest, round: 1)
+      p = do_insert_performance(c, [{"soloist", 23}, {"accompanist", 23}, {"accompanist", 23}])
+
+      for a <- p.appearances, do: refute(Results.needs_eligibility_check?(a, p, c.round))
+    end
+
+    test "checks advancing RW performance with single accompanist having <23 points" do
+      c = insert(:contest, round: 1)
+      p = do_insert_performance(c, [{"soloist", 23}, {"accompanist", 22}])
+
+      for a <- p.appearances, do: refute(Results.needs_eligibility_check?(a, p, c.round))
+    end
+
+    test "checks non-advancing RW performance with accompanist group" do
+      c = insert(:contest, round: 1)
+      p = do_insert_performance(c, [{"soloist", 22}, {"accompanist", 22}, {"accompanist", 22}])
+
+      for a <- p.appearances, do: refute(Results.needs_eligibility_check?(a, p, c.round))
+    end
+
+    test "checks advancing LW performance with accompanist group having <23 points" do
+      c = insert(:contest, round: 2)
+      p = do_insert_performance(c, [{"soloist", 23}, {"accompanist", 22}, {"accompanist", 22}])
+
+      for non_acc <- Performance.non_accompanists(p) do
+        refute Results.needs_eligibility_check?(non_acc, p, c.round)
+      end
+
+      for acc <- Performance.accompanists(p) do
+        assert Results.needs_eligibility_check?(acc, p, c.round)
+      end
+    end
+
+    test "checks advancing LW performance with accompanist group having 23+ points" do
+      c = insert(:contest, round: 2)
+      p = do_insert_performance(c, [{"soloist", 23}, {"accompanist", 23}, {"accompanist", 23}])
+
+      for non_acc <- Performance.non_accompanists(p) do
+        refute Results.needs_eligibility_check?(non_acc, p, c.round)
+      end
+
+      for acc <- Performance.accompanists(p) do
+        assert Results.needs_eligibility_check?(acc, p, c.round)
+      end
+    end
+
+    test "checks advancing LW performance with single accompanist having <23 points" do
+      c = insert(:contest, round: 2)
+      p = do_insert_performance(c, [{"soloist", 23}, {"accompanist", 22}])
+
+      for a <- p.appearances, do: refute(Results.needs_eligibility_check?(a, p, c.round))
+    end
+
+    test "checks non-advancing LW performance with accompanist group" do
+      c = insert(:contest, round: 2)
+      p = do_insert_performance(c, [{"soloist", 22}, {"accompanist", 22}, {"accompanist", 22}])
+
+      for a <- p.appearances, do: refute(Results.needs_eligibility_check?(a, p, c.round))
+    end
+  end
+
   # Private helpers
+
+  defp do_insert_performance(c, appearance_shorthands) do
+    insert_performance(c,
+      appearances:
+        Enum.map(appearance_shorthands, fn {role, points} ->
+          build(:appearance, role: role, points: points)
+        end)
+    )
+  end
 
   defp insert_performance(cc, age_group, appearance_shorthands) do
     insert_performance(cc,

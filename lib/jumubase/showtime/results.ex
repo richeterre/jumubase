@@ -85,17 +85,39 @@ defmodule Jumubase.Showtime.Results do
     may_advance?(a) and advances?(p)
   end
 
+  @doc """
+  Returns whether an appearance might be ineligible for the next round,
+  (example: pop accompanist groups) and should be checked by a human.
+  """
+  def needs_eligibility_check?(
+        %Appearance{performance_id: id, role: "accompanist", points: points},
+        %Performance{id: id} = p,
+        round
+      ) do
+    advances?(p) and
+      has_acc_group?(p) and
+      (round > 1 or points not in advancing_point_range())
+  end
+
+  def needs_eligibility_check?(_appearance, _performance, _round), do: false
+
   # Private helpers
+
+  defp advancing_point_range, do: 23..25
 
   defp may_advance?(%Appearance{role: "accompanist"}), do: false
 
   defp may_advance?(%Appearance{points: points}) do
-    points in 23..25
+    points in advancing_point_range()
   end
 
   defp lookup(point_mapping, points) do
     Enum.find_value(point_mapping, fn {point_range, result} ->
       if points in point_range, do: result, else: false
     end)
+  end
+
+  defp has_acc_group?(p) do
+    p |> Performance.accompanists() |> length > 1
   end
 end

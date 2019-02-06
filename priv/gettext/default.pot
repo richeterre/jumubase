@@ -979,14 +979,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:233
+#: lib/jumubase_web/views/internal/performance_view.ex:234
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:239
+#: lib/jumubase_web/views/internal/performance_view.ex:240
 msgid "Filter active"
 msgstr ""
 
@@ -1471,14 +1471,14 @@ msgid "Publish results"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:102
-#: lib/jumubase_web/views/internal/performance_view.ex:152
+#: lib/jumubase_web/views/internal/performance_view.ex:103
+#: lib/jumubase_web/views/internal/performance_view.ex:153
 msgid "No"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:105
-#: lib/jumubase_web/views/internal/performance_view.ex:148
+#: lib/jumubase_web/views/internal/performance_view.ex:106
+#: lib/jumubase_web/views/internal/performance_view.ex:149
 msgid "Yes"
 msgstr ""
 
@@ -1541,17 +1541,17 @@ msgid "Print certificates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:193
+#: lib/jumubase_web/views/internal/performance_view.ex:194
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:199
+#: lib/jumubase_web/views/internal/performance_view.ex:200
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:201
+#: lib/jumubase_web/views/internal/performance_view.ex:202
 msgid "here"
 msgstr ""
 
@@ -1646,4 +1646,9 @@ msgstr ""
 #:
 #: lib/jumubase_web/templates/internal/performance/_migration_controls.html.eex:8
 msgid "Do you really want to migrate the performances?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/appearance_view.ex:54
+msgid "Please check eligibility for next round"
 msgstr ""

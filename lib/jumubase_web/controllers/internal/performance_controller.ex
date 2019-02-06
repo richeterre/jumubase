@@ -240,7 +240,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def advancing(conn, _params, contest) do
-    performances = Showtime.advancing_performances(contest)
+    performances = contest |> Showtime.advancing_performances() |> Showtime.load_successors()
     target_contest = Foundation.get_successor(contest)
 
     conn

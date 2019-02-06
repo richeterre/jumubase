@@ -96,8 +96,13 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   def predecessor_info(%Performance{predecessor_contest: nil}), do: nil
-
   def predecessor_info(%Performance{predecessor_contest: c}), do: flag(c)
+
+  def migration_status(%Performance{successor: nil}) do
+    content_tag(:span, gettext("No"), class: "text-muted")
+  end
+
+  def migration_status(%Performance{successor: _}), do: gettext("Yes")
 
   @doc """
   Returns the performance's formatted duration.

@@ -288,6 +288,10 @@ defmodule Jumubase.Showtime do
     performances |> Repo.preload(pieces: pieces_query())
   end
 
+  def load_successors(performances) do
+    Repo.preload(performances, :successor)
+  end
+
   def load_predecessor_contests(performances) do
     Repo.preload(performances, predecessor_contest: :host)
   end

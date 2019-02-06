@@ -1094,6 +1094,16 @@ defmodule Jumubase.ShowtimeTest do
              Showtime.load_pieces([performance])
   end
 
+  describe "load_successors/1" do
+    test "preloads each performance's successor", %{contest: c} do
+      p = insert_performance(c)
+      lw = insert(:contest, round: 2)
+      insert_performance(lw, predecessor: p)
+
+      assert [%Performance{successor: %Performance{}}] = Showtime.load_successors([p])
+    end
+  end
+
   describe "load_predecessor_contests/1" do
     test "preloads each performance's predecessor contest with host", %{contest: rw} do
       lw = insert(:contest, round: 2)

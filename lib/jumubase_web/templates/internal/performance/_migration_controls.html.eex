@@ -5,11 +5,7 @@
       performance_ids: get_ids(@performances)
     ),
     method: :post,
-    data: [confirm: ngettext(
-      "MIGRATE_PERFORMANCES_CONFIRMATION_ONE",
-      "MIGRATE_PERFORMANCES_CONFIRMATION_MANY(%{count})",
-      length(@performances)
-    )],
+    data: [confirm: gettext("Do you really want to migrate the performances?")],
     class: "btn btn-primary"
     %>
 </div>

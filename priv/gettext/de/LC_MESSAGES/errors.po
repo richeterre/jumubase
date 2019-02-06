@@ -108,7 +108,7 @@ msgid "can only appear once in a performance"
 msgstr "darf nur einen Auftritt pro Vorspiel haben"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:39
+#: lib/jumubase/showtime/performance.ex:42
 msgid "must be unique"
 msgstr "muss eindeutig sein"
 
@@ -123,32 +123,32 @@ msgid "The password is too short."
 msgstr "Das Passwort ist zu kurz"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:113
+#: lib/jumubase/showtime/performance.ex:116
 msgid "The performance must have at least one participant."
 msgstr "Das Vorspiel muss mindestens einen Teilnehmer haben."
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:158
+#: lib/jumubase/showtime/performance.ex:161
 msgid "The performance must have at least one piece."
 msgstr "Das Vorspiel muss mindestens ein Stück haben."
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:122
+#: lib/jumubase/showtime/performance.ex:125
 msgid "The performance can't have both soloists and ensemblists."
 msgstr "Das Vorspiel darf nicht sowohl Solisten als auch Ensemblepartner haben."
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:129
+#: lib/jumubase/showtime/performance.ex:132
 msgid "The performance can't have more than one soloist."
 msgstr "Das Vorspiel darf nicht mehrere Solisten haben."
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:143
+#: lib/jumubase/showtime/performance.ex:146
 msgid "The performance can't have only accompanists."
 msgstr "Das Vorspiel darf nicht nur Begleiter haben."
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:136
+#: lib/jumubase/showtime/performance.ex:139
 msgid "The performance can't have only one ensemblist."
 msgstr "Das Vorspiel darf nicht nur einen Ensemblepartner haben."
 
@@ -178,6 +178,6 @@ msgid "can't be before the end date"
 msgstr "kann nicht vor dem Ende liegen"
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:175
+#: lib/jumubase/showtime/performance.ex:178
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""

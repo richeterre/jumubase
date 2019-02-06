@@ -25,7 +25,7 @@
         <th><%= gettext("Category") %></th>
 
         <%= if show_predecessor_info? do %>
-        <th><%= gettext("RW") %></th>
+        <th><%= gettext("Country") %></th>
         <% end %>
 
         <th><%= gettext("Participants") %></th>

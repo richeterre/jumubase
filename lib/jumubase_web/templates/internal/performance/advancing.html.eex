@@ -6,6 +6,8 @@
 
 <hr>
 
+<% show_migration_status? = admin?(@current_user) %>
+
 <%= if admin?(@current_user) and !Enum.empty?(@performances) and @target_contest do %>
   <%= render "_migration_controls.html",
     conn: @conn,
@@ -24,6 +26,10 @@
         <th><%= gettext("AG") %></th>
         <th><%= gettext("Points") %></th>
         <th><%= gettext("Prize") %></th>
+
+        <%= if show_migration_status? do %>
+        <th><%= gettext("Migrated?") %></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -55,6 +61,12 @@
               <%= prize(first_a, @contest.round) %>
               <%= advancement_label(first_a, performance) %>
             </td>
+
+            <%= if show_migration_status? do %>
+            <td>
+              <%= migration_status(performance) %>
+            </td>
+            <% end %>
           </tr>
         <% end %>
       <% end %>

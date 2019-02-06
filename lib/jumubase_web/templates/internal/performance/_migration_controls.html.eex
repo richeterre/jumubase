@@ -1,0 +1,15 @@
+<div class="button-row">
+  <%= icon_link "share-alt",
+    gettext("Migrate performances to %{name}", name: name(@target_contest)),
+    Routes.internal_contest_performances_path(@conn, :migrate_advancing, @source_contest,
+      performance_ids: get_ids(@performances)
+    ),
+    method: :post,
+    data: [confirm: ngettext(
+      "MIGRATE_PERFORMANCES_CONFIRMATION_ONE",
+      "MIGRATE_PERFORMANCES_CONFIRMATION_MANY(%{count})",
+      length(@performances)
+    )],
+    class: "btn btn-primary"
+    %>
+</div>

@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   use JumubaseWeb.ConnCase
   alias Jumubase.Repo
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.Performance
 
   setup config do
@@ -649,6 +650,33 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     end
   end
 
+  describe "migrate_advancing/2" do
+    @tag login_as: "admin"
+    test "lets admins migrate advancing performances", %{
+      conn: conn,
+      contest: c
+    } do
+      conn |> attempt_migrate_advancing(c) |> assert_migrate_advancing_success(c)
+    end
+
+    for role <- roles_except("admin") do
+      @tag login_as: role
+      test "redirects #{role} users when trying to migrate advancing performances", %{
+        conn: conn,
+        contest: c
+      } do
+        conn |> attempt_migrate_advancing(c) |> assert_unauthorized_user
+      end
+    end
+
+    test "redirects guests when trying to migrate advancing performances", %{
+      conn: conn,
+      contest: c
+    } do
+      conn |> attempt_migrate_advancing(c) |> assert_unauthorized_guest
+    end
+  end
+
   # Private helpers
 
   defp attempt_new(conn, contest) do
@@ -739,6 +767,23 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     get(conn, Routes.internal_contest_performances_path(conn, :advancing, contest))
   end
 
+  defp attempt_migrate_advancing(conn, %Contest{round: 1} = rw) do
+    lw = insert(:contest, season: rw.season, round: 2)
+    cg = insert(:category)
+    rw_cc = insert(:contest_category, contest: rw, category: cg)
+    insert(:contest_category, contest: lw, category: cg)
+
+    p1 = insert_performance(rw_cc)
+    p2 = insert_performance(rw_cc)
+
+    post(
+      conn,
+      Routes.internal_contest_performances_path(conn, :migrate_advancing, rw,
+        performance_ids: [p1.id, p2.id]
+      )
+    )
+  end
+
   defp assert_create_success(conn, contest, performance) do
     assert_flash_redirect(
       conn,
@@ -798,6 +843,14 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
   defp assert_advancing_success(conn) do
     assert html_response(conn, 200) =~ "Advancing performances"
+  end
+
+  defp assert_migrate_advancing_success(conn, contest) do
+    assert_flash_redirect(
+      conn,
+      Routes.internal_contest_performances_path(conn, :advancing, contest),
+      "2 performances were migrated."
+    )
   end
 
   defp test_reschedule_success(conn, contest) do

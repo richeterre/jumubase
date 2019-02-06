@@ -6,6 +6,15 @@
 
 <hr>
 
+<%= if admin?(@current_user) and !Enum.empty?(@performances) and @target_contest do %>
+  <%= render "_migration_controls.html",
+    conn: @conn,
+    source_contest: @contest,
+    target_contest: @target_contest,
+    performances: @performances
+    %>
+<% end %>
+
 <div class="table-responsive">
   <table class="table">
     <thead>

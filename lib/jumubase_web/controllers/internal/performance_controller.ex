@@ -4,6 +4,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
   import JumubaseWeb.ErrorHelpers, only: [get_translated_errors: 1]
   alias Ecto.Changeset
+  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
@@ -15,6 +16,8 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     name: gettext("Contests"),
     path_fun: &Routes.internal_contest_path/2,
     action: :index
+
+  plug :admin_check when action in [:migrate_advancing]
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -238,13 +241,39 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   def advancing(conn, _params, contest) do
     performances = Showtime.advancing_performances(contest)
+    target_contest = Foundation.get_successor(contest)
 
     conn
     |> assign(:contest, contest)
     |> assign(:performances, performances)
+    |> assign(:target_contest, target_contest)
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(name: gettext("Advancing performances"), path: current_path(conn))
     |> render("advancing.html")
+  end
+
+  def migrate_advancing(conn, %{"performance_ids" => p_ids}, contest) do
+    target_contest = Foundation.get_successor(contest)
+    advancing_path = Routes.internal_contest_performances_path(conn, :advancing, contest)
+
+    case Showtime.migrate_performances(contest, p_ids, target_contest) do
+      {:ok, count} ->
+        conn
+        |> put_flash(
+          :success,
+          ngettext(
+            "MIGRATE_PERFORMANCES_SUCCESS_ONE",
+            "MIGRATE_PERFORMANCES_SUCCESS_MANY(%{count})",
+            count
+          )
+        )
+        |> redirect(to: advancing_path)
+
+      :error ->
+        conn
+        |> put_flash(:error, gettext("The performances could not be migrated."))
+        |> redirect(to: advancing_path)
+    end
   end
 
   # Private helpers

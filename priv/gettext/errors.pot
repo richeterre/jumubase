@@ -8,7 +8,7 @@
 ## date. Leave `msgstr`s empty as changing them here as no
 ## effect: edit them in PO (`.po`) files instead.
 ## From Ecto.Changeset.cast/4
-#: lib/jumubase/showtime/piece.ex:50 lib/jumubase/showtime/piece.ex:51
+#: lib/jumubase/showtime/piece.ex:58 lib/jumubase/showtime/piece.ex:59
 msgid "can't be blank"
 msgstr ""
 
@@ -120,7 +120,7 @@ msgid "must be unique"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/piece.ex:57
+#: lib/jumubase/showtime/piece.ex:65
 msgid "can only have either a composer or an artist"
 msgstr ""
 
@@ -130,32 +130,32 @@ msgid "The password is too short."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:102
+#: lib/jumubase/showtime/performance.ex:113
 msgid "The performance must have at least one participant."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:147
+#: lib/jumubase/showtime/performance.ex:158
 msgid "The performance must have at least one piece."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:111
+#: lib/jumubase/showtime/performance.ex:122
 msgid "The performance can't have both soloists and ensemblists."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:118
+#: lib/jumubase/showtime/performance.ex:129
 msgid "The performance can't have more than one soloist."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:132
+#: lib/jumubase/showtime/performance.ex:143
 msgid "The performance can't have only accompanists."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:125
+#: lib/jumubase/showtime/performance.ex:136
 msgid "The performance can't have only one ensemblist."
 msgstr ""
 
@@ -185,6 +185,6 @@ msgid "can't be before the end date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:164
+#: lib/jumubase/showtime/performance.ex:175
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""

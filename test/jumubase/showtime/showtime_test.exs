@@ -919,12 +919,14 @@ defmodule Jumubase.ShowtimeTest do
       assert p.contest_category.id == lw_cc.id
       assert p.age_group == p1.age_group
       assert p.edit_code == "200001"
-      assert Enum.all?(p.appearances, &(&1.points == nil))
-      assert_ids_match_ordered(participants(p.appearances), participants(p1.appearances))
-      assert length(p.pieces) == length(p1.pieces)
       assert p.stage == nil
       assert p.stage_time == nil
       refute p.results_public
+      assert p.predecessor_id == p1.id
+      assert p.predecessor_contest_id == rw.id
+      assert Enum.all?(p.appearances, &(&1.points == nil))
+      assert_ids_match_ordered(participants(p.appearances), participants(p1.appearances))
+      assert length(p.pieces) == length(p1.pieces)
 
       # Check that original performance is preserved
       reloaded_p1 = Showtime.get_performance!(rw, p1.id)

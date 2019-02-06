@@ -223,7 +223,9 @@ defmodule Jumubase.Showtime do
           target_cc ->
             changeset =
               Performance.migration_changeset(p)
-              |> Ecto.Changeset.put_assoc(:contest_category, target_cc)
+              |> put_assoc(:contest_category, target_cc)
+              |> put_assoc(:predecessor, p)
+              |> put_assoc(:predecessor_contest, rw)
 
             Multi.insert(acc, p.id, changeset)
         end

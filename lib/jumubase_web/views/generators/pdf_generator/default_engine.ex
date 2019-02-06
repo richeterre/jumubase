@@ -182,9 +182,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp format_point_ranges(point_ranges) do
     [
       :div,
-      %{
-        style: style(%{"display" => "inline-block", "vertical-align" => "top", "width" => "50%"})
-      },
+      style(%{"display" => "inline-block", "vertical-align" => "top", "width" => "50%"}),
       point_ranges |> Enum.map(&format_point_range/1) |> to_lines
     ]
   end
@@ -198,15 +196,12 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp render_performance_table(performances) do
     table = [
       :table,
-      %{
-        style:
-          style(%{
-            "border" => "1px solid black",
-            "border-collapse" => "collapse",
-            "page-break-inside" => "auto",
-            "width" => "100%"
-          })
-      },
+      style(%{
+        "border" => "1px solid black",
+        "border-collapse" => "collapse",
+        "page-break-inside" => "auto",
+        "width" => "100%"
+      }),
       [
         :tr,
         [:th, cell_style(%{"width" => "auto"}), gettext("Category")],

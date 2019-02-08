@@ -19,6 +19,26 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_predecessor_hosts/1" do
+    setup do
+      [lw: insert(:contest, season: 56, round: 2)]
+    end
+
+    test "returns all hosts with predecessor contests of the given LW, ordered by name", %{lw: lw} do
+      # Matching contests
+      %{host: h1} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "C"))
+      %{host: h2} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "A"))
+      %{host: h3} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "B"))
+
+      # Non-matching contests
+      insert(:contest, season: lw.season - 1, round: 1)
+      insert(:contest, season: lw.season, round: 0)
+      insert(:contest, season: lw.season, round: 2)
+
+      assert_ids_match_ordered(Foundation.list_predecessor_hosts(lw), [h2, h3, h1])
+    end
+  end
+
   describe "list_host_locations/0" do
     test "returns the hosts' locations" do
       h1 = insert(:host, latitude: 50.5, longitude: 10.0)

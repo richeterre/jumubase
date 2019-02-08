@@ -40,7 +40,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
 
   # Private helpers
 
-  def add_participant_breadcrumb(conn, %Contest{} = contest, %Participant{} = participant) do
+  defp add_participant_breadcrumb(conn, %Contest{} = contest, %Participant{} = participant) do
     add_breadcrumb(conn,
       name: full_name(participant),
       path: Routes.internal_contest_participant_path(conn, :show, contest, participant)

@@ -21,6 +21,17 @@ defmodule Jumubase.Foundation do
     Repo.all(from h in Host, where: h.id in ^ids)
   end
 
+  def list_predecessor_hosts(%Contest{round: 2, season: season}) do
+    query =
+      from h in Host,
+        join: c in assoc(h, :contests),
+        where: c.season == ^season and c.round == 1,
+        order_by: h.name,
+        distinct: true
+
+    Repo.all(query)
+  end
+
   def list_host_locations do
     Repo.all(from h in Host, select: {h.latitude, h.longitude})
   end

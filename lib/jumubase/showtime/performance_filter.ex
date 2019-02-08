@@ -9,6 +9,7 @@ defmodule Jumubase.Showtime.PerformanceFilter do
     field :stage_date, :date, default: nil
     field :stage_id, :id, default: nil
     field :genre, :string, default: nil
+    field :predecessor_host_id, :id, default: nil
     field :contest_category_id, :id, default: nil
     field :age_group, :string, default: nil
     field :results_public, :boolean, default: nil
@@ -19,10 +20,7 @@ defmodule Jumubase.Showtime.PerformanceFilter do
   """
   def changeset(params) do
     %PerformanceFilter{}
-    |> cast(
-      params,
-      [:stage_date, :stage_id, :genre, :contest_category_id, :age_group, :results_public]
-    )
+    |> cast(params, PerformanceFilter.__schema__(:fields))
   end
 
   @doc """

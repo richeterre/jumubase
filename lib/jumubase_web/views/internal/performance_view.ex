@@ -156,14 +156,11 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   @doc """
   Returns various field options suitable for a filter form.
   """
-  def filter_options(%Contest{} = contest) do
-    %{
-      stage_date_options: stage_date_filter_options(contest),
-      stage_options: stage_filter_options(contest),
-      genre_options: genre_filter_options(contest),
-      cc_options: cc_filter_options(contest),
-      ag_options: AgeGroups.all()
-    }
+  def filter_options(%Contest{round: 1} = c), do: base_filter_options(c)
+
+  def filter_options(%Contest{round: 2} = c) do
+    host_options = c |> Foundation.list_predecessor_hosts() |> Enum.map(&{&1.name, &1.id})
+    c |> base_filter_options |> Map.put(:predecessor_host_options, host_options)
   end
 
   @doc """
@@ -208,6 +205,16 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   defp render_performance_filter do
     ~E(<script src="/js/performanceFilter.js"></script>)
+  end
+
+  defp base_filter_options(%Contest{} = contest) do
+    %{
+      stage_date_options: stage_date_filter_options(contest),
+      stage_options: stage_filter_options(contest),
+      genre_options: genre_filter_options(contest),
+      cc_options: cc_filter_options(contest),
+      ag_options: AgeGroups.all()
+    }
   end
 
   defp stage_filter_options(%Contest{} = contest) do

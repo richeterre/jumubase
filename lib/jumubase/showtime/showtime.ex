@@ -369,6 +369,9 @@ defmodule Jumubase.Showtime do
       {:genre, genre}, query ->
         with_genre(query, genre)
 
+      {:predecessor_host_id, h_id}, query ->
+        with_predecessor_host(query, h_id)
+
       {:contest_category_id, cc_id}, query ->
         in_contest_category(query, cc_id)
 
@@ -465,6 +468,13 @@ defmodule Jumubase.Showtime do
       join: cc in assoc(p, :contest_category),
       join: c in assoc(cc, :category),
       where: c.genre == ^genre
+  end
+
+  defp with_predecessor_host(query, h_id) do
+    from p in query,
+      join: pre_c in assoc(p, :predecessor_contest),
+      join: h in assoc(pre_c, :host),
+      where: h.id == ^h_id
   end
 
   defp in_contest_category(query, cc_id) do

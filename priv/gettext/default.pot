@@ -1652,3 +1652,8 @@ msgstr ""
 #: lib/jumubase_web/views/internal/appearance_view.ex:54
 msgid "Please check eligibility for next round"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:8
+msgid "All schools"
+msgstr ""

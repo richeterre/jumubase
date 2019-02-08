@@ -28,6 +28,13 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
 
   @doc """
+  Returns the deadline in full-length format.
+  """
+  def deadline(%Contest{deadline: deadline}) do
+    format_date(deadline, :full)
+  end
+
+  @doc """
   Returns formatted deadline info in case the contest's deadline
   doesn't match the general deadline.
   """

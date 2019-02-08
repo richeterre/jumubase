@@ -427,6 +427,11 @@ defmodule Jumubase.FoundationTest do
 
       assert %Contest{id: ^id} = Foundation.get_latest_official_contest()
     end
+
+    test "preloads the contest host" do
+      insert(:contest)
+      assert %Contest{host: %Host{}} = Foundation.get_latest_official_contest()
+    end
   end
 
   describe "update_contest/1" do

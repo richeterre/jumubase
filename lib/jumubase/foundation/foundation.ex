@@ -139,6 +139,7 @@ defmodule Jumubase.Foundation do
     |> where([c], c.round > 0)
     |> order_by(desc: :end_date)
     |> limit(1)
+    |> preload(:host)
     |> Repo.one()
   end
 

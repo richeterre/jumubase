@@ -1,0 +1,21 @@
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Landeswettbewerb <%= year(@contest) %></h3>
+    </div>
+    <div class="panel-body">
+      Der Landeswettbewerb findet dieses Jahr an der <strong><%= @contest.host.name %></strong> statt.
+    </div>
+  </div>
+</div>
+
+<div class="col-md-5">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">Aktuelle Infos</h3>
+    </div>
+    <div class="panel-body">
+      Alle weitergeleiteten Teilnehmer werden automatisch zum LW angemeldet. Sie bekommen rechtzeitig per Mail einen neuen Änderungscode, mit dem sie ihre Anmeldung noch bis zum <strong><%= deadline(@contest) %></strong> <%= link "bearbeiten", to: Routes.page_path(@conn, :edit_registration) %> können.
+    </div>
+  </div>
+</div>

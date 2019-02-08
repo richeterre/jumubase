@@ -45,6 +45,13 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
     end
   end
 
+  describe "deadline/1" do
+    test "returns the deadline in full format" do
+      contest = build(:contest, deadline: ~D[2018-12-14])
+      assert ContestView.deadline(contest) == "14 December 2018"
+    end
+  end
+
   describe "deadline_info/2" do
     test "returns formatted deadline info if the contest deadline differs from the general one" do
       contest = build(:contest, deadline: ~D[2018-12-14])

@@ -156,12 +156,12 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   @doc """
   Returns various field options suitable for a filter form.
   """
-  def filter_options(%Contest{round: 1} = c), do: base_filter_options(c)
-
   def filter_options(%Contest{round: 2} = c) do
     host_options = c |> Foundation.list_predecessor_hosts() |> Enum.map(&{&1.name, &1.id})
     c |> base_filter_options |> Map.put(:predecessor_host_options, host_options)
   end
+
+  def filter_options(%Contest{round: _} = c), do: base_filter_options(c)
 
   @doc """
   Returns stage date options for the contest, suitable for a filter form.

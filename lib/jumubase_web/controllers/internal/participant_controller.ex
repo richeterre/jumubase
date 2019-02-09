@@ -4,6 +4,8 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Participant
+  alias Jumubase.Mailer
+  alias JumubaseWeb.Email
 
   plug :add_home_breadcrumb
 
@@ -11,6 +13,8 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     name: gettext("Contests"),
     path_fun: &Routes.internal_contest_path/2,
     action: :index
+
+  plug :admin_check when action in [:send_welcome_emails]
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -36,6 +40,16 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     |> add_participants_breadcrumb(contest)
     |> add_participant_breadcrumb(contest, participant)
     |> render("show.html")
+  end
+
+  def send_welcome_emails(conn, _params, contest) do
+    contest
+    |> Email.welcome_advanced()
+    |> Enum.each(&Mailer.deliver_later/1)
+
+    conn
+    |> put_flash(:success, gettext("The welcome emails were sent."))
+    |> redirect(to: Routes.internal_contest_participant_path(conn, :index, contest))
   end
 
   # Private helpers

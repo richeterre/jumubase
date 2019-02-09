@@ -279,7 +279,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:31
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:44
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52
-#: lib/jumubase_web/templates/internal/performance/show.html.eex:14
+#: lib/jumubase_web/templates/internal/performance/show.html.eex:16
 #: lib/jumubase_web/templates/internal/stage/timetable.html.eex:32
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:209
 msgid "Participants"
@@ -417,7 +417,7 @@ msgid "Performances"
 msgstr "Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/show.html.eex:22
+#: lib/jumubase_web/templates/internal/performance/show.html.eex:24
 msgid "Programme"
 msgstr "Vorspielprogramm"
 
@@ -432,7 +432,7 @@ msgid "Title"
 msgstr "Titel"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/show.html.eex:27
+#: lib/jumubase_web/templates/internal/performance/show.html.eex:29
 msgid "Total duration: %{d}"
 msgstr "Gesamtdauer: %{d}"
 
@@ -717,7 +717,7 @@ msgid "and"
 msgstr "und"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:104
+#: lib/jumubase_web/controllers/email.ex:103
 msgid "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE"
 msgid_plural "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY"
 msgstr[0] "Deine Kimu-Anmeldung"
@@ -1663,20 +1663,25 @@ msgid "Send welcome emails"
 msgstr "Willkommensmails senden"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:49
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:51
 msgid "The welcome emails were sent."
 msgstr "Die Willkommensmails wurden versandt."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:112
+#: lib/jumubase_web/controllers/email.ex:111
 msgid "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE(%{name})"
 msgid_plural "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY(%{name})"
 msgstr[0] "Deine Jumu-Anmeldung in der Kategorie \"%{name}\""
 msgstr[1] "Eure Jumu-Anmeldung in der Kategorie \"%{name}\""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:121
+#: lib/jumubase_web/controllers/email.ex:120
 msgid "JUMU_WELCOME_ADVANCED_SUBJECT_ONE(%{contest}, %{city})"
 msgid_plural "JUMU_WELCOME_ADVANCED_SUBJECT_MANY(%{contest}, %{city})"
 msgstr[0] "Deine Teilnahme am %{contest} in %{city}"
 msgstr[1] "Eure Teilnahme am %{contest} in %{city}"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/show.html.eex:13
+msgid "Last edited"
+msgstr "Zuletzt geändert"

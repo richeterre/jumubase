@@ -9,6 +9,11 @@
 
 <p>
   <%= gettext("Edit code") %>: <code><%= @performance.edit_code %></code>
+  <br>
+  <%= gettext("Last edited") %>:
+  <span title="<%= format_datetime(@performance.updated_at) %>">
+    <%= Timex.from_now(@performance.updated_at) %>
+  </span>
 </p>
 
 <h3><%= gettext("Participants") %></h3>

@@ -74,7 +74,6 @@ defmodule JumubaseWeb.Email do
         |> assign(:contest, contest)
         |> assign(:edit_code, edit_code)
         |> assign(:edit_url, Routes.page_url(Endpoint, :edit_registration))
-        |> assign(:rules_url, Routes.page_path(Endpoint, :rules))
 
       case participants do
         [participant] ->

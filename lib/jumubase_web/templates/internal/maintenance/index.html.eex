@@ -1,0 +1,37 @@
+<h2><%= gettext("Data maintenance") %></h2>
+
+<div class="row">
+  <div class="col-md-6">
+    <h3>
+      <%= gettext("Duplicate participants") %>
+      <span class="text-muted">(<%= length(@duplicate_participants) %>)</span>
+    </h3>
+
+    <%= for pt <- @duplicate_participants do %>
+      <%= full_name(pt) %>, <%= format_date(pt.birthdate) %>
+      (<code><%= pt.id %></code>)
+      <br>
+    <% end %>
+  </div>
+
+  <div class="col-md-6">
+    <h3>
+      <%= gettext("Orphaned participants") %>
+      <span class="text-muted">(<%= length(@orphaned_participants) %>)</span>
+    </h3>
+
+    <p>
+      <%= @orphaned_participants |> Enum.map(&(full_name(&1))) |> Enum.join(" / ") %>
+    </p>
+
+    <p>
+      <% disabled_class = if Enum.empty?(@orphaned_participants), do: "disabled" %>
+      <%= link gettext("Delete all"),
+        to: Routes.internal_maintenance_path(@conn, :delete_orphaned_participants),
+        method: :delete,
+        data: [confirm: gettext("Do you really want to delete all orphaned participants?")],
+        class: "btn btn-danger #{disabled_class}"
+        %>
+    </p>
+  </div>
+</div>

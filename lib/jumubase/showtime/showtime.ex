@@ -15,6 +15,15 @@ defmodule Jumubase.Showtime do
   alias Jumubase.Showtime.PerformanceFilter
 
   @doc """
+  Gets the Levenshtein distance between two strings as part of an SQL query.
+  """
+  defmacro levenshtein(str1, str2) do
+    quote do
+      fragment("LEVENSHTEIN(LOWER(?), LOWER(?))", unquote(str1), unquote(str2))
+    end
+  end
+
+  @doc """
   Returns all performances from the contest.
   """
   def list_performances(%Contest{id: id}) do
@@ -337,6 +346,31 @@ defmodule Jumubase.Showtime do
     |> Repo.all()
   end
 
+  def list_orphaned_participants do
+    orphaned_participants_query() |> order_by(:updated_at) |> Repo.all()
+  end
+
+  def delete_orphaned_participants do
+    orphaned_participants_query() |> Repo.delete_all()
+  end
+
+  def list_duplicate_participants do
+    threshold = 2
+
+    query =
+      from(pt in Participant,
+        join: pt2 in Participant,
+        on:
+          levenshtein(pt.given_name, pt2.given_name) <= ^threshold and
+            levenshtein(pt.family_name, pt2.family_name) <= ^threshold and
+            pt.id != pt2.id,
+        order_by: pt.given_name,
+        distinct: [pt.family_name, pt.id]
+      )
+
+    Repo.all(query)
+  end
+
   def get_participant!(%Contest{id: contest_id}, id) do
     Participant
     |> from_contest(contest_id)
@@ -570,5 +604,10 @@ defmodule Jumubase.Showtime do
   # with the performance's own CC, or nil if no match is found.
   defp find_matching_cc(%Performance{contest_category: cc}, %Contest{} = target_c) do
     Enum.find(target_c.contest_categories, &(&1.category.id == cc.category.id))
+  end
+
+  defp orphaned_participants_query do
+    from pt in Participant,
+      where: fragment("? NOT IN (SELECT participant_id FROM appearances)", pt.id)
   end
 end

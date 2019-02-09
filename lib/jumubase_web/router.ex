@@ -99,6 +99,11 @@ defmodule JumubaseWeb.Router do
     pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
+    get "/maintenance", MaintenanceController, :index
+
+    delete "/maintenance/participants/orphaned",
+           MaintenanceController,
+           :delete_orphaned_participants
 
     resources "/categories", CategoryController, except: [:show, :delete]
 

@@ -26,6 +26,9 @@
           <li class="list-group-item">
             <%= icon_link("list-alt", gettext("Categories"), Routes.internal_category_path(@conn, :index)) %>
           </li>
+          <li class="list-group-item">
+            <%= icon_link("leaf", gettext("Data maintenance"), Routes.internal_maintenance_path(@conn, :index)) %>
+          </li>
         </ul>
       </div>
     </div>

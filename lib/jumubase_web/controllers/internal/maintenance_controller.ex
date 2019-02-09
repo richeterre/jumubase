@@ -1,0 +1,37 @@
+defmodule JumubaseWeb.Internal.MaintenanceController do
+  use JumubaseWeb, :controller
+  alias Jumubase.Showtime
+
+  plug :add_home_breadcrumb
+
+  plug :admin_check
+
+  def index(conn, _params) do
+    duplicate_participants = Showtime.list_duplicate_participants()
+    orphaned_participants = Showtime.list_orphaned_participants()
+
+    conn
+    |> assign(:duplicate_participants, duplicate_participants)
+    |> assign(:orphaned_participants, orphaned_participants)
+    |> add_breadcrumb(name: gettext("Data maintenance"), path: current_path(conn))
+    |> render("index.html")
+  end
+
+  def delete_orphaned_participants(conn, _params) do
+    {count, nil} = Showtime.delete_orphaned_participants()
+
+    conn
+    |> put_flash(:success, delete_orphaned_success_text(count))
+    |> redirect(to: Routes.internal_maintenance_path(conn, :index))
+  end
+
+  # Private helpers
+
+  defp delete_orphaned_success_text(count) do
+    ngettext(
+      "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_ONE",
+      "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_MANY(%{count})",
+      count
+    )
+  end
+end

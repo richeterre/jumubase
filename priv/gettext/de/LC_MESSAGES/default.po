@@ -347,7 +347,7 @@ msgstr "Komponist"
 #: lib/jumubase_web/controllers/internal/stage_controller.ex:11
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:24
-#: lib/jumubase_web/templates/internal/page/home.html.eex:37
+#: lib/jumubase_web/templates/internal/page/home.html.eex:40
 msgid "Contests"
 msgstr "Wettbewerbe"
 
@@ -365,7 +365,7 @@ msgstr "Tag"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:9
-#: lib/jumubase_web/views/internal/contest_view.ex:41
+#: lib/jumubase_web/views/internal/contest_view.ex:48
 msgid "Deadline"
 msgstr "Anmeldeschluss"
 
@@ -918,7 +918,7 @@ msgid "The contest %{name} was updated."
 msgstr "Der Wettbewerb %{name} wurde aktualisiert."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/page/home.html.eex:49
+#: lib/jumubase_web/templates/internal/page/home.html.eex:52
 msgid "Show more…"
 msgstr "Weitere anzeigen…"
 
@@ -980,29 +980,29 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:234
+#: lib/jumubase_web/views/internal/performance_view.ex:241
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:240
+#: lib/jumubase_web/views/internal/performance_view.ex:247
 msgid "Filter active"
 msgstr "Filter aktiv"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:14
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:19
 msgid "Show all"
 msgstr "Alle anzeigen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:7
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:12
 msgid "All AGs"
 msgstr "Alle AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:6
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:11
 #: lib/jumubase_web/templates/internal/stage/schedule.html.eex:22
 msgid "All categories"
 msgstr "Alle Kategorien"
@@ -1542,17 +1542,17 @@ msgid "Print certificates"
 msgstr "Urkunden ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:194
+#: lib/jumubase_web/views/internal/performance_view.ex:191
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem Logo bedruckte Papier erneut ein."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:200
+#: lib/jumubase_web/views/internal/performance_view.ex:197
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:202
+#: lib/jumubase_web/views/internal/performance_view.ex:199
 msgid "here"
 msgstr "hier"
 
@@ -1590,22 +1590,22 @@ msgid "Total"
 msgstr "Gesamt"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:90
+#: lib/jumubase_web/views/internal/contest_view.ex:97
 msgid "%{completed} of %{total} entered so far"
 msgstr "Bisher %{completed} von %{total} eingetragen"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:100
+#: lib/jumubase_web/views/internal/contest_view.ex:107
 msgid "%{completed} of %{total} published so far"
 msgstr "Bisher %{completed} von %{total} freigegeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:89
+#: lib/jumubase_web/views/internal/contest_view.ex:96
 msgid "All %{total} entered"
 msgstr "Alle %{total} eingetragen"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:97
+#: lib/jumubase_web/views/internal/contest_view.ex:104
 msgid "All %{total} published"
 msgstr "Alle %{total} freigegeben"
 
@@ -1655,6 +1655,40 @@ msgid "Please check eligibility for next round"
 msgstr "Bitte Teilnahmeberechtigung zur nächsten Runde prüfen"
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:15
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:1
+#: lib/jumubase_web/templates/internal/page/home.html.eex:30
+msgid "Data maintenance"
+msgstr "Datenpflege"
+
+#, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:8
 msgid "All schools"
 msgstr "Alle Schulen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:22
+msgid "Duplicate participants"
+msgstr "Teilnehmer-Duplikate"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:4
+msgid "Orphaned participants"
+msgstr "Verwaiste Teilnehmer"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:25
+msgid "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_ONE"
+msgid_plural "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_MANY(%{count})"
+msgstr[0] "Der verwaiste Teilnehmer wurde gelöscht."
+msgstr[1] "Es wurden %{count} verwaiste Teilnehmer gelöscht."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:13
+msgid "Delete all"
+msgstr "Alle löschen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:16
+msgid "Do you really want to delete all orphaned participants?"
+msgstr "Möchtest du wirklich alle verwaisten Teilnehmer löschen?"

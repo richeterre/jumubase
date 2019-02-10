@@ -27,6 +27,8 @@ defmodule JumubaseWeb.Internal.ContestView do
     "#{emoji_flag(flag_code)} #{name(contest)}"
   end
 
+  def city(%Contest{host: host}), do: host.city
+
   @doc """
   Returns the deadline in full-length format.
   """
@@ -75,6 +77,10 @@ defmodule JumubaseWeb.Internal.ContestView do
       1 -> "Regionalwettbewerb"
       2 -> "Landeswettbewerb"
     end
+  end
+
+  def round_name_and_year(%Contest{round: round} = contest) do
+    "#{round_name(round)} #{year(contest)}"
   end
 
   @doc """

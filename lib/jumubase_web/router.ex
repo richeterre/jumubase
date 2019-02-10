@@ -122,6 +122,8 @@ defmodule JumubaseWeb.Router do
       post "/performances/migrate-advancing", PerformanceController, :migrate_advancing,
         as: :performances
 
+      post "/participants/send-welcome-emails", ParticipantController, :send_welcome_emails
+
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
       resources "/performances", PerformanceController

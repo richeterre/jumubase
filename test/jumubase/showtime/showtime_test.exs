@@ -353,14 +353,16 @@ defmodule Jumubase.ShowtimeTest do
              } = Showtime.build_performance(c)
     end
 
-    test "builds a bare performance for RW contests" do
-      c = insert(:contest, round: 1)
+    test "builds a bare performance for RW and LW contests" do
+      for round <- [1, 2] do
+        c = insert(:contest, round: round)
 
-      assert %Performance{
-               contest_category_id: nil,
-               appearances: %Ecto.Association.NotLoaded{},
-               pieces: %Ecto.Association.NotLoaded{}
-             } = Showtime.build_performance(c)
+        assert %Performance{
+                 contest_category_id: nil,
+                 appearances: %Ecto.Association.NotLoaded{},
+                 pieces: %Ecto.Association.NotLoaded{}
+               } = Showtime.build_performance(c)
+      end
     end
   end
 

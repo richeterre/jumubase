@@ -11,6 +11,13 @@
     group_email_link(@participants),
     class: "btn btn-default"
     %>
+  <%= if admin?(@current_user), do:
+    icon_link "bullhorn", gettext("Send welcome emails"),
+    Routes.internal_contest_participant_path(@conn, :send_welcome_emails, @contest),
+    method: :post,
+    data: [confirm: gettext("Do you really want to send the welcome emails?")],
+    class: "btn btn-warning"
+   %>
 </div>
 
 <div class="table-responsive">

@@ -137,7 +137,7 @@ defmodule Jumubase.Showtime do
     end
   end
 
-  def build_performance(%Contest{round: 1}), do: %Performance{}
+  def build_performance(%Contest{round: _}), do: %Performance{}
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
     Performance.changeset(%Performance{}, attrs)

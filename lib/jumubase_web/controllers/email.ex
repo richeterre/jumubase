@@ -1,10 +1,11 @@
 defmodule JumubaseWeb.Email do
   use Bamboo.Phoenix, view: JumubaseWeb.EmailView
-
   import Jumubase.Gettext
-  alias Jumubase.Foundation.Category
+  import JumubaseWeb.Internal.ContestView, only: [city: 1, round_name_and_year: 1]
+  alias Jumubase.Foundation.{Category, Contest}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
+  alias JumubaseWeb.Endpoint
   alias JumubaseWeb.Email
   alias JumubaseWeb.Router.Helpers, as: Routes
 
@@ -37,11 +38,11 @@ defmodule JumubaseWeb.Email do
 
     email =
       base_email()
-      |> subject(get_subject(category, length(participants)))
+      |> subject(registration_success_subject(category, length(participants)))
       |> assign(:genre, category.genre)
       |> assign(:category_name, category.name)
       |> assign(:edit_code, edit_code)
-      |> assign(:edit_url, Routes.page_url(JumubaseWeb.Endpoint, :edit_registration))
+      |> assign(:edit_url, Routes.page_url(Endpoint, :edit_registration))
 
     case participants do
       [participant] ->
@@ -58,6 +59,38 @@ defmodule JumubaseWeb.Email do
     end
   end
 
+  @doc """
+  Sends welcome emails to participants who advanced to an LW contest.
+  """
+  def welcome_advanced(%Contest{round: 2} = contest) do
+    Showtime.list_performances(contest)
+    |> Enum.map(fn p ->
+      %{edit_code: edit_code, appearances: appearances} = p
+      participants = appearances |> Enum.map(& &1.participant)
+
+      email =
+        base_email()
+        |> subject(welcome_advanced_subject(contest, length(participants)))
+        |> assign(:contest, contest)
+        |> assign(:edit_code, edit_code)
+        |> assign(:edit_url, Routes.page_url(Endpoint, :edit_registration))
+
+      case participants do
+        [participant] ->
+          email
+          |> to(participant.email)
+          |> assign(:participant, participant)
+          |> render("welcome_advanced_one.html")
+
+        participants ->
+          email
+          |> to(participants |> get_unique_emails)
+          |> assign(:participants, participants)
+          |> render("welcome_advanced_many.html")
+      end
+    end)
+  end
+
   # Private helpers
 
   defp base_email do
@@ -66,7 +99,7 @@ defmodule JumubaseWeb.Email do
     new_email() |> from(sender)
   end
 
-  defp get_subject(%Category{genre: "kimu"}, participant_count) do
+  defp registration_success_subject(%Category{genre: "kimu"}, participant_count) do
     ngettext(
       "KIMU_REGISTRATION_SUCCESS_SUBJECT_ONE",
       "KIMU_REGISTRATION_SUCCESS_SUBJECT_MANY",
@@ -74,16 +107,26 @@ defmodule JumubaseWeb.Email do
     )
   end
 
-  defp get_subject(%Category{name: cat_name}, participant_count) do
+  defp registration_success_subject(%Category{name: cat_name}, participant_count) do
     ngettext(
-      "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE: \"%{name}\"",
-      "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY: \"%{name}\"",
+      "JUMU_REGISTRATION_SUCCESS_SUBJECT_ONE(%{name})",
+      "JUMU_REGISTRATION_SUCCESS_SUBJECT_MANY(%{name})",
       participant_count,
       name: cat_name
     )
   end
 
-  def get_unique_emails(participants) do
+  defp welcome_advanced_subject(%Contest{} = c, participant_count) do
+    ngettext(
+      "JUMU_WELCOME_ADVANCED_SUBJECT_ONE(%{contest}, %{city})",
+      "JUMU_WELCOME_ADVANCED_SUBJECT_MANY(%{contest}, %{city})",
+      participant_count,
+      contest: round_name_and_year(c),
+      city: city(c)
+    )
+  end
+
+  defp get_unique_emails(participants) do
     participants |> Enum.map(& &1.email) |> Enum.uniq()
   end
 end

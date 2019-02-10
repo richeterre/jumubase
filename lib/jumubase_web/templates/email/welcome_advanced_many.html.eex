@@ -1,0 +1,12 @@
+
+<p><%= greeting(@participants) %>,</p>
+
+<p>Herzlichen Glückwunsch zur Weiterleitung zum <%= round_name_and_year(@contest) %>!</p>
+
+<p>Mit dem Änderungscode <strong><%= @edit_code %></strong> könnt ihr euer Vorspielprogramm bis zum <%= format_date(@contest.deadline, :medium) %> hier ändern:</p>
+
+<p><%= link @edit_url, to: @edit_url %></p>
+
+<p>Auch Begleitpartner dürfen unter Beachtung der Teilnahmeregeln noch gewechselt werden.</p>
+
+<p>Bis bald in <%= city(@contest) %> – wir freuen uns auf euch!</p>

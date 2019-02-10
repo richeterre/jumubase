@@ -4,11 +4,12 @@ defmodule Jumubase.Accounts do
   """
 
   import Ecto.Changeset
+  import Ecto.Query
   alias Jumubase.{Accounts.User, Repo}
   alias Jumubase.Foundation
 
   def list_users do
-    Repo.all(User)
+    User |> order_by(:given_name) |> Repo.all()
   end
 
   @doc """

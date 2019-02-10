@@ -3,9 +3,11 @@ defmodule Jumubase.AccountsTest do
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
 
-  test "list_users/0 returns all users" do
-    user = insert(:user)
-    assert Accounts.list_users() == [user]
+  test "list_users/0 returns all users, ordered by given name" do
+    u1 = insert(:user, given_name: "C")
+    u2 = insert(:user, given_name: "A")
+    u3 = insert(:user, given_name: "B")
+    assert Accounts.list_users() == [u2, u3, u1]
   end
 
   test "load_hosts/1 loads associated hosts into a single user or list of users" do

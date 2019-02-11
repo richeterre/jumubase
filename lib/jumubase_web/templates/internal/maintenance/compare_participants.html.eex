@@ -1,0 +1,77 @@
+<h2><%= gettext("Compare participants") %></h2>
+
+<hr>
+
+<%= form_for @conn,
+  Routes.internal_maintenance_path(@conn, :merge_participants, @base.id, @other.id),
+  [as: :merge_fields, method: :patch],
+  fn f -> %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= gettext("Original") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <p>
+            <%= full_name(@base) %><br>
+            * <%= format_date(@base.birthdate) %>
+          </p>
+          <p>
+            <%= @base.phone %><br>
+            <%= @base.email %>
+          </p>
+        </div>
+        <div class="panel-footer text-muted">
+          <%= format_datetime(@base.inserted_at) %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= gettext("Possible duplicate") %>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="checkbox">
+            <%= label f, :given_name do %>
+              <%= checkbox f, :given_name %> <%= @other.given_name %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :family_name do %>
+              <%= checkbox f, :family_name %> <%= @other.family_name %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :birthdate do %>
+              <%= checkbox f, :birthdate %> <%= format_date(@other.birthdate) %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :phone do %>
+              <%= checkbox f, :phone %> <%= @other.phone %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :email do %>
+              <%= checkbox f, :email %> <%= @other.email %>
+            <% end %>
+          </div>
+        </div>
+        <div class="panel-footer text-muted">
+          <%= format_datetime(@other.inserted_at) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p><%= gettext("Before merging, select the values that should be preserved.") %></p>
+
+  <%= submit gettext("Merge participants"), class: "btn btn-primary" %>
+<% end %>

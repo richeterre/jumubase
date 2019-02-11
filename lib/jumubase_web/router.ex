@@ -101,6 +101,14 @@ defmodule JumubaseWeb.Router do
     get "/", PageController, :home
     get "/maintenance", MaintenanceController, :index
 
+    get "/maintenance/participants/compare/:base_id/:other_id",
+        MaintenanceController,
+        :compare_participants
+
+    patch "/maintenance/participants/merge/:base_id/:other_id",
+          MaintenanceController,
+          :merge_participants
+
     delete "/maintenance/participants/orphaned",
            MaintenanceController,
            :delete_orphaned_participants

@@ -1,37 +1,51 @@
 <h2><%= gettext("Data maintenance") %></h2>
 
+<hr>
+
+<h3><%= gettext("Duplicate participants") %></h3>
+
 <div class="row">
-  <div class="col-md-6">
-    <h3>
-      <%= gettext("Duplicate participants") %>
-      <span class="text-muted">(<%= length(@duplicate_participants) %>)</span>
-    </h3>
+  <div class="col-md-8">
+    <table class="table table-striped">
+      <tbody>
+        <%= for {base, other} <- @duplicate_pairs do %>
+        <tr>
+          <td>
+            <%= full_name(base) %>
+            <span class="text-muted">(* <%= format_date(base.birthdate) %>)</span>
+          </td>
+          <td>
+            <%= icon_link "transfer", nil,
+              Routes.internal_maintenance_path(@conn, :compare_participants, base.id, other.id),
+              class: "btn btn-default btn-xs"
+              %>
+          </td>
+          <td>
+            <%= full_name(other) %>
+            <span class="text-muted">(* <%= format_date(other.birthdate) %>)</span>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-    <%= for pt <- @duplicate_participants do %>
-      <%= full_name(pt) %>, <%= format_date(pt.birthdate) %>
-      (<code><%= pt.id %></code>)
-      <br>
+    <h3><%= gettext("Orphaned participants") %></h3>
+
+    <%= if !Enum.empty?(@orphaned_participants) do %>
+      <p>
+        <%= @orphaned_participants |> Enum.map(&(full_name(&1))) |> Enum.join(" / ") %>
+      </p>
+
+      <p>
+        <%= link gettext("Delete all"),
+          to: Routes.internal_maintenance_path(@conn, :delete_orphaned_participants),
+          method: :delete,
+          data: [confirm: gettext("Do you really want to delete all orphaned participants?")],
+          class: "btn btn-danger"
+          %>
+      </p>
+    <% else %>
+      <p class="text-muted"><%= gettext("No orphaned participants were found.") %></p>
     <% end %>
-  </div>
-
-  <div class="col-md-6">
-    <h3>
-      <%= gettext("Orphaned participants") %>
-      <span class="text-muted">(<%= length(@orphaned_participants) %>)</span>
-    </h3>
-
-    <p>
-      <%= @orphaned_participants |> Enum.map(&(full_name(&1))) |> Enum.join(" / ") %>
-    </p>
-
-    <p>
-      <% disabled_class = if Enum.empty?(@orphaned_participants), do: "disabled" %>
-      <%= link gettext("Delete all"),
-        to: Routes.internal_maintenance_path(@conn, :delete_orphaned_participants),
-        method: :delete,
-        data: [confirm: gettext("Do you really want to delete all orphaned participants?")],
-        class: "btn btn-danger #{disabled_class}"
-        %>
-    </p>
   </div>
 </div>

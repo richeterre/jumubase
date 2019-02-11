@@ -363,9 +363,9 @@ defmodule Jumubase.Showtime do
         on:
           levenshtein(pt.given_name, pt2.given_name) <= ^threshold and
             levenshtein(pt.family_name, pt2.family_name) <= ^threshold and
-            pt.id != pt2.id,
+            pt.id < pt2.id,
         order_by: pt.given_name,
-        distinct: [pt.family_name, pt.id]
+        select: {pt, pt2}
       )
 
     Repo.all(query)

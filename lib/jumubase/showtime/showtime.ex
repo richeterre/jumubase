@@ -15,11 +15,22 @@ defmodule Jumubase.Showtime do
   alias Jumubase.Showtime.PerformanceFilter
 
   @doc """
-  Gets the Levenshtein distance between two strings as part of an SQL query.
+  Checks whether the two strings are similar in that they begin or end the same way,
+  disregarding capitalization and diacritical marks (accents).
   """
-  defmacro levenshtein(str1, str2) do
+  defmacro similar(str1, str2) do
     quote do
-      fragment("LEVENSHTEIN(LOWER(?), LOWER(?))", unquote(str1), unquote(str2))
+      contains?(unquote(str1), unquote(str2)) or contains?(unquote(str2), unquote(str1))
+    end
+  end
+
+  @doc """
+  Returns an SQL fragment to check whether the second string is a substring of the first,
+  disregarding capitalization and diacritical marks (accents).
+  """
+  defmacro contains?(str1, str2) do
+    quote do
+      fragment("unaccent(?) ILIKE '%' || unaccent(?) || '%'", unquote(str2), unquote(str1))
     end
   end
 
@@ -355,20 +366,16 @@ defmodule Jumubase.Showtime do
   end
 
   def list_duplicate_participants do
-    threshold = 2
-
-    query =
-      from(pt in Participant,
-        join: pt2 in Participant,
-        on:
-          levenshtein(pt.given_name, pt2.given_name) <= ^threshold and
-            levenshtein(pt.family_name, pt2.family_name) <= ^threshold and
-            pt.id < pt2.id,
-        order_by: pt.given_name,
-        select: {pt, pt2}
-      )
-
-    Repo.all(query)
+    from(base_pt in Participant,
+      join: other_pt in Participant,
+      on:
+        base_pt.id < other_pt.id and
+          similar(base_pt.given_name, other_pt.given_name) and
+          similar(base_pt.family_name, other_pt.family_name),
+      order_by: base_pt.given_name,
+      select: {base_pt, other_pt}
+    )
+    |> Repo.all()
   end
 
   def get_participant!(id), do: Repo.get!(Participant, id)

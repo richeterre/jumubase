@@ -19,6 +19,13 @@ defmodule Jumubase.TestHelpers do
   end
 
   @doc """
+  Returns whether the ids of the lists' tuple elements match in that order.
+  """
+  def assert_tuple_ids_match_ordered(first_list, second_list) do
+    assert Enum.map(first_list, &get_tuple_ids/1) == Enum.map(second_list, &get_tuple_ids/1)
+  end
+
+  @doc """
   Returns all user roles.
   """
   def all_roles, do: JumuParams.user_roles()
@@ -76,5 +83,9 @@ defmodule Jumubase.TestHelpers do
 
   defp get_sorted_ids(list) do
     list |> get_ids |> Enum.sort()
+  end
+
+  defp get_tuple_ids({left, right}) do
+    {left.id, right.id}
   end
 end

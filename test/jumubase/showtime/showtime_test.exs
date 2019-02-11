@@ -1185,6 +1185,53 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "list_duplicate_participants/0" do
+    test "returns participant pairs with the same name" do
+      pt1 = insert(:participant, given_name: "X", family_name: "Y")
+      pt2 = insert(:participant, given_name: "X", family_name: "Y")
+
+      assert_tuple_ids_match_ordered(
+        Showtime.list_duplicate_participants(),
+        [{pt1, pt2}]
+      )
+    end
+
+    test "returns participant pairs whose names differ only by diacritics" do
+      pt1 = insert(:participant, given_name: "Frøya", family_name: "Åsnæs")
+      pt2 = insert(:participant, given_name: "Froya", family_name: "Asnaes")
+      pt3 = insert(:participant, given_name: "Jánoš", family_name: "Bečvář")
+      pt4 = insert(:participant, given_name: "Janos", family_name: "Becvar")
+
+      assert_tuple_ids_match_ordered(
+        Showtime.list_duplicate_participants(),
+        [{pt1, pt2}, {pt3, pt4}]
+      )
+    end
+
+    test "returns participant pairs with similar given and family names" do
+      pt1 = insert(:participant, given_name: "Anna", family_name: "Cho")
+      pt2 = insert(:participant, given_name: "Anna Belle", family_name: "Dyson-Cho")
+      pt3 = insert(:participant, given_name: "Marianna", family_name: "Cho Dyson")
+
+      assert_tuple_ids_match_ordered(
+        Showtime.list_duplicate_participants(),
+        [{pt1, pt2}, {pt1, pt3}]
+      )
+    end
+
+    test "orders the pairs by the first participant's given name" do
+      pt1 = insert(:participant, given_name: "C", family_name: "A")
+      pt2 = insert(:participant, given_name: "A", family_name: "B")
+      pt3 = insert(:participant, given_name: "B", family_name: "C")
+      pt4 = insert(:participant, given_name: "ABC", family_name: "BAC")
+
+      assert_tuple_ids_match_ordered(
+        Showtime.list_duplicate_participants(),
+        [{pt2, pt4}, {pt3, pt4}, {pt1, pt4}]
+      )
+    end
+  end
+
   describe "list_appearances/2" do
     test "returns the appearances with the given ids from the contest", %{contest: c} do
       a1 = insert_appearance(c)

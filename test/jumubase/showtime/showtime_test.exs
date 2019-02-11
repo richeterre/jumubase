@@ -1155,6 +1155,36 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "list_orphaned_participants/0" do
+    test "returns all participants without appearances, in order of last update", %{contest: c} do
+      now = Timex.now()
+      # Matching participants
+      pt1 = insert(:participant, updated_at: now)
+      pt2 = insert(:participant, updated_at: Timex.shift(now, seconds: -1))
+
+      # Non-matching participants
+      [pt3, pt4] = insert_list(2, :participant)
+      insert_appearance(c, participant: pt3)
+      insert_appearance(c, participant: pt4)
+      other_c = insert(:contest, round: 2)
+      insert_appearance(other_c, participant: pt4)
+
+      assert_ids_match_ordered(Showtime.list_orphaned_participants(), [pt2, pt1])
+    end
+  end
+
+  describe "delete_orphaned_participants/0" do
+    test "deletes all participants without appearances", %{contest: c} do
+      [pt1, pt2, pt3] = insert_list(3, :participant)
+      insert_appearance(c, participant: pt2)
+
+      Showtime.delete_orphaned_participants()
+      refute Repo.get(Participant, pt1.id)
+      assert Repo.get(Participant, pt2.id)
+      refute Repo.get(Participant, pt3.id)
+    end
+  end
+
   describe "list_appearances/2" do
     test "returns the appearances with the given ids from the contest", %{contest: c} do
       a1 = insert_appearance(c)

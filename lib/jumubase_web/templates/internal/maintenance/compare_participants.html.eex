@@ -16,17 +16,14 @@
           </h3>
         </div>
         <div class="panel-body">
-          <p>
-            <%= full_name(@base) %><br>
-            * <%= format_date(@base.birthdate) %>
-          </p>
-          <p>
-            <%= @base.phone %><br>
-            <%= @base.email %>
-          </p>
+          <div class="checkbox"><%= @base.given_name %></div>
+          <div class="checkbox"><%= @base.family_name %></div>
+          <div class="checkbox">* <%= format_date(@base.birthdate) %></div>
+          <div class="checkbox"><%= @base.phone %></div>
+          <div class="checkbox"><%= @base.email %></div>
         </div>
         <div class="panel-footer text-muted">
-          <%= format_datetime(@base.inserted_at) %>
+          <%= format_datetime(@base.updated_at) %>
         </div>
       </div>
     </div>
@@ -65,7 +62,7 @@
           </div>
         </div>
         <div class="panel-footer text-muted">
-          <%= format_datetime(@other.inserted_at) %>
+          <%= format_datetime(@other.updated_at) %>
         </div>
       </div>
     </div>

@@ -190,9 +190,7 @@ defmodule Jumubase.ShowtimeTest do
   describe "get_performance!/2" do
     test "gets a performance from the given contest by id", %{contest: c} do
       %{id: id} = insert_performance(c)
-
-      result = Showtime.get_performance!(c, id)
-      assert result.id == id
+      assert %Performance{id: ^id} = Showtime.get_performance!(c, id)
     end
 
     test "raises an error if the performance isn't found in the given contest", %{contest: c} do
@@ -227,9 +225,7 @@ defmodule Jumubase.ShowtimeTest do
   describe "get_performance!/3" do
     test "gets a performance from the given contest by id and edit code", %{contest: c} do
       %{id: id, edit_code: edit_code} = insert_performance(c)
-
-      result = Showtime.get_performance!(c, id, edit_code)
-      assert result.id == id
+      assert %Performance{id: ^id} = Showtime.get_performance!(c, id, edit_code)
     end
 
     test "raises an error if the contest doesn't match", %{contest: c} do
@@ -274,9 +270,7 @@ defmodule Jumubase.ShowtimeTest do
   describe "lookup_performance/1" do
     test "gets a performance by its edit code", %{contest: c} do
       %{id: id, edit_code: edit_code} = insert_performance(c)
-
-      assert {:ok, result} = Showtime.lookup_performance(edit_code)
-      assert result.id == id
+      assert {:ok, %Performance{id: ^id}} = Showtime.lookup_performance(edit_code)
     end
 
     test "preloads the performance's contest category and contest", %{contest: c} do
@@ -296,9 +290,7 @@ defmodule Jumubase.ShowtimeTest do
   describe "lookup_performance!/2" do
     test "gets a performance from the given contest by edit code", %{contest: c} do
       %{id: id, edit_code: edit_code} = insert_performance(c)
-
-      result = Showtime.lookup_performance!(c, edit_code)
-      assert result.id == id
+      assert %Performance{id: ^id} = Showtime.lookup_performance!(c, edit_code)
     end
 
     test "raises an error if the performance isn't found in the given contest", %{contest: c} do
@@ -1190,12 +1182,21 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "get_participant!/1" do
+    test "gets a participant by id", %{contest: c} do
+      %{id: id} = insert_participant(c)
+      assert %Participant{id: ^id} = Showtime.get_participant!(id)
+    end
+
+    test "raises an error if the participant isn't found" do
+      assert_raise Ecto.NoResultsError, fn -> Showtime.get_participant!(123) end
+    end
+  end
+
   describe "get_participant!/2" do
     test "gets a participant from the given contest by id", %{contest: c} do
       %{id: id} = insert_participant(c)
-
-      result = Showtime.get_participant!(c, id)
-      assert result.id == id
+      assert %Participant{id: ^id} = Showtime.get_participant!(c, id)
     end
 
     test "gets a participant that has multiple appearances", %{contest: c} do
@@ -1210,6 +1211,67 @@ defmodule Jumubase.ShowtimeTest do
       other_c = insert(:contest)
 
       assert_raise Ecto.NoResultsError, fn -> Showtime.get_participant!(other_c, id) end
+    end
+  end
+
+  describe "merge_participants/3" do
+    test "replaces the second by the first participant across contests", %{contest: c} do
+      other_c = insert(:contest, round: 2)
+
+      %{participant: pt1} = pt1_a1 = insert_appearance(c)
+      pt1_a2 = insert_appearance(c, participant: pt1)
+      pt1_a3 = insert_appearance(other_c, participant: pt1)
+
+      %{participant: pt2} = pt2_a1 = insert_appearance(c)
+      pt2_a2 = insert_appearance(c, participant: pt2)
+      pt2_a3 = insert_appearance(other_c, participant: pt2)
+
+      assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [])
+      assert_raise Ecto.NoResultsError, fn -> Repo.get!(Participant, pt2.id) end
+
+      for a <- [pt1_a1, pt1_a2, pt1_a3, pt2_a1, pt2_a2, pt2_a3] do
+        a = Repo.get!(Appearance, a.id) |> Repo.preload(:participant)
+        assert a.participant.id == pt1.id
+      end
+    end
+
+    test "merges the given fields' values into the base participant", %{contest: c} do
+      pt1 =
+        insert_participant(c,
+          given_name: "G1",
+          family_name: "F1",
+          birthdate: ~D[2000-01-01],
+          phone: "1",
+          email: "1@example.org"
+        )
+
+      pt2 =
+        insert_participant(c,
+          given_name: "G2",
+          family_name: "F2",
+          birthdate: ~D[2000-01-02],
+          phone: "2",
+          email: "2@example.org"
+        )
+
+      assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:given_name, :birthdate, :email])
+      pt1 = Repo.get!(Participant, pt1.id)
+      # Check that listed fields were replaced
+      assert pt1.given_name == pt2.given_name
+      assert pt1.birthdate == pt2.birthdate
+      assert pt1.email == pt2.email
+      # Check that non-listed fields were not replaced
+      assert pt1.family_name == pt1.family_name
+      assert pt1.phone == pt1.phone
+    end
+
+    test "ignores invalid field names", %{contest: c} do
+      pt1 = insert_participant(c, given_name: "G1")
+      pt2 = insert_participant(c, given_name: "G2")
+
+      assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:given_name, :unknown])
+      pt1 = Repo.get!(Participant, pt1.id)
+      assert pt1.given_name == pt2.given_name
     end
   end
 

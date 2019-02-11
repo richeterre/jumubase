@@ -371,10 +371,36 @@ defmodule Jumubase.Showtime do
     Repo.all(query)
   end
 
+  def get_participant!(id), do: Repo.get!(Participant, id)
+
   def get_participant!(%Contest{id: contest_id}, id) do
     Participant
     |> from_contest(contest_id)
     |> Repo.get!(id)
+  end
+
+  @doc """
+  Replaces the other participant in all their appearances by the base participant,
+  merging the given fields' values into the base participant in the process.
+  """
+  def merge_participants(base_id, other_id, fields_to_merge) do
+    other_pt = get_participant!(other_id)
+    appearances = Ecto.assoc(other_pt, :appearances)
+    merge_map = other_pt |> Map.take(fields_to_merge)
+
+    base_pt = get_participant!(base_id)
+    base_changeset = base_pt |> change(merge_map)
+
+    multi =
+      Multi.new()
+      |> Multi.update(:update_base, base_changeset)
+      |> Multi.update_all(:update_appearances, appearances, set: [participant_id: base_id])
+      |> Multi.delete(:delete_other, other_pt)
+
+    case Repo.transaction(multi) do
+      {:ok, _} -> :ok
+      {:error, _, _, _} -> :error
+    end
   end
 
   # Private helpers

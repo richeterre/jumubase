@@ -1673,8 +1673,8 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/maintenance_controller.ex:63
 msgid "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_ONE"
 msgid_plural "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_MANY(%{count})"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "One orphaned participant was deleted."
+msgstr[1] "%{count} orphaned participants were deleted."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:18

@@ -592,11 +592,20 @@ defmodule Jumubase.Showtime do
   defp preloaded_from_contest(Participant = query, contest_id) do
     from pt in query,
       join: p in assoc(pt, :performances),
+      left_join: pre_c in assoc(p, :predecessor_contest),
+      left_join: pre_h in assoc(pre_c, :host),
       join: cc in assoc(p, :contest_category),
       join: cg in assoc(cc, :category),
       where: cc.contest_id == ^contest_id,
       distinct: true,
-      preload: [performances: {p, contest_category: {cc, category: cg}}]
+      preload: [
+        performances:
+          {p,
+           [
+             contest_category: {cc, category: cg},
+             predecessor_contest: {pre_c, host: pre_h}
+           ]}
+      ]
   end
 
   defp update_results_public(contest, performance_ids, public) do

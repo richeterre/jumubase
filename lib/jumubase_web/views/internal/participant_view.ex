@@ -1,7 +1,7 @@
 defmodule JumubaseWeb.Internal.ParticipantView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
-  alias Jumubase.Showtime.Participant
+  alias Jumubase.Showtime.{Participant, Performance}
   alias JumubaseWeb.Internal.PerformanceView
 
   @doc """
@@ -11,6 +11,9 @@ defmodule JumubaseWeb.Internal.ParticipantView do
     "#{given_name} #{family_name}"
   end
 
+  @doc """
+  Returns an email link with all unique participant emails in BCC.
+  """
   def group_email_link(participants) do
     emails =
       participants
@@ -19,5 +22,12 @@ defmodule JumubaseWeb.Internal.ParticipantView do
       |> Enum.join(",")
 
     "mailto:?bcc=#{emails}"
+  end
+
+  @doc """
+  Returns the performance's category and predecessor info.
+  """
+  def performance_info(%Performance{} = p) do
+    "#{PerformanceView.category_name(p)} #{PerformanceView.predecessor_info(p)}"
   end
 end

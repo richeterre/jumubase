@@ -46,7 +46,7 @@
         <td><%= format_date(participant.birthdate, :full) %></td>
         <td>
           <%= for p <- participant.performances do %>
-            <%= link PerformanceView.category_name(p),
+            <%= link performance_info(p),
               to: Routes.internal_contest_performance_path(@conn, :show, @contest, p)
               %>
             <br>

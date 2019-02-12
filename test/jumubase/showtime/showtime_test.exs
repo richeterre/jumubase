@@ -774,6 +774,15 @@ defmodule Jumubase.ShowtimeTest do
       refute pc3.id == old_pc3.id
       assert pc3.title == "D"
     end
+
+    test "doesn't allow updating performances that have results", %{contest: c} do
+      p =
+        insert_performance(c,
+          appearances: [build(:appearance, points: nil), build(:appearance, points: 1)]
+        )
+
+      assert {:error, :has_results} = Showtime.update_performance(c, p, %{})
+    end
   end
 
   describe "change_performance/1" do
@@ -1446,15 +1455,15 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   defp get_soloist(%Performance{appearances: appearances}) do
-    Enum.find(appearances, &Appearance.is_soloist/1)
+    Enum.find(appearances, &Appearance.soloist?/1)
   end
 
   defp get_ensemblists(%Performance{appearances: appearances}) do
-    Enum.filter(appearances, &Appearance.is_ensemblist/1)
+    Enum.filter(appearances, &Appearance.ensemblist?/1)
   end
 
   defp get_accompanists(%Performance{appearances: appearances}) do
-    Enum.filter(appearances, &Appearance.is_accompanist/1)
+    Enum.filter(appearances, &Appearance.accompanist?/1)
   end
 
   defp participants(appearances) do

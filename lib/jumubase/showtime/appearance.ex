@@ -52,11 +52,13 @@ defmodule Jumubase.Showtime.Appearance do
     |> Changeset.put_assoc(:participant, a.participant)
   end
 
-  def is_soloist(%Appearance{role: role}), do: role == "soloist"
+  def soloist?(%Appearance{role: role}), do: role == "soloist"
 
-  def is_ensemblist(%Appearance{role: role}), do: role == "ensemblist"
+  def ensemblist?(%Appearance{role: role}), do: role == "ensemblist"
 
-  def is_accompanist(%Appearance{role: role}), do: role == "accompanist"
+  def accompanist?(%Appearance{role: role}), do: role == "accompanist"
+
+  def has_points?(%Appearance{points: points}), do: points != nil
 
   # Private helpers
 

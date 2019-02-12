@@ -77,7 +77,7 @@ defmodule Jumubase.Showtime.Performance do
   """
   def non_accompanists(%Performance{appearances: appearances}) do
     appearances
-    |> Enum.filter(&(!Appearance.is_accompanist(&1)))
+    |> Enum.filter(&(!Appearance.accompanist?(&1)))
     |> sort_by_insertion
   end
 
@@ -86,7 +86,7 @@ defmodule Jumubase.Showtime.Performance do
   """
   def accompanists(%Performance{appearances: appearances}) do
     appearances
-    |> Enum.filter(&Appearance.is_accompanist/1)
+    |> Enum.filter(&Appearance.accompanist?/1)
     |> sort_by_insertion
   end
 
@@ -103,6 +103,13 @@ defmodule Jumubase.Showtime.Performance do
       {acc, "popular"} -> [non_acc] ++ [acc]
       {acc, _} -> [non_acc] ++ Enum.chunk_every(acc, 1)
     end
+  end
+
+  @doc """
+  Returns whether the performance contains any appearance that has points.
+  """
+  def has_results?(%Performance{appearances: appearances}) do
+    Enum.any?(appearances, &Appearance.has_points?/1)
   end
 
   # Private helpers

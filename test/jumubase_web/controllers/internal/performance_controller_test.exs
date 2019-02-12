@@ -182,6 +182,18 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
       assert_unauthorized_guest(conn)
     end
+
+    @tag login_as: "admin"
+    test "redirects users if the performance has results", %{conn: conn, contest: c} do
+      p = insert_performance(c, appearances: [build(:appearance, points: 1)])
+
+      conn
+      |> get(Routes.internal_contest_performance_path(conn, :edit, c, p))
+      |> assert_flash_redirect(
+        Routes.internal_contest_performance_path(conn, :index, c),
+        "This performance already has results. To edit it, please clear them first."
+      )
+    end
   end
 
   describe "update/2" do
@@ -233,6 +245,20 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
       conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
       assert_unauthorized_guest(conn)
+    end
+
+    @tag login_as: "admin"
+    test "redirects users if the performance has results", %{conn: conn, contest: c} do
+      p = insert_performance(c, appearances: [build(:appearance, points: 1)])
+      [_cc1, cc2] = c.contest_categories
+      params = valid_performance_params(cc2)
+
+      conn
+      |> put(Routes.internal_contest_performance_path(conn, :update, c, p), params)
+      |> assert_flash_redirect(
+        Routes.internal_contest_performance_path(conn, :index, c),
+        "This performance already has results. To edit it, please clear them first."
+      )
     end
   end
 

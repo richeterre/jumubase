@@ -70,9 +70,13 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   def edit(conn, %{"id" => id}, contest) do
     performance = Showtime.get_performance!(contest, id)
 
-    conn
-    |> prepare_for_form(contest, performance, Showtime.change_performance(performance))
-    |> render("edit.html")
+    if Performance.has_results?(performance) do
+      handle_has_results_error(conn, contest)
+    else
+      conn
+      |> prepare_for_form(contest, performance, Showtime.change_performance(performance))
+      |> render("edit.html")
+    end
   end
 
   def update(conn, %{"id" => id, "performance" => params}, contest) do
@@ -88,10 +92,13 @@ defmodule JumubaseWeb.Internal.PerformanceController do
           to: Routes.internal_contest_performance_path(conn, :show, contest, performance)
         )
 
-      {:error, changeset} ->
+      {:error, %Changeset{} = changeset} ->
         conn
         |> prepare_for_form(contest, performance, changeset)
         |> render("edit.html")
+
+      {:error, :has_results} ->
+        handle_has_results_error(conn, contest)
     end
   end
 
@@ -377,5 +384,14 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     else
       conn
     end
+  end
+
+  defp handle_has_results_error(conn, contest) do
+    conn
+    |> put_flash(
+      :error,
+      gettext("This performance already has results. To edit it, please clear them first.")
+    )
+    |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
   end
 end

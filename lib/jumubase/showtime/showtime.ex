@@ -158,11 +158,15 @@ defmodule Jumubase.Showtime do
   end
 
   def update_performance(%Contest{} = contest, %Performance{} = performance, attrs \\ %{}) do
-    performance
-    |> Performance.changeset(attrs)
-    |> stitch_participants
-    |> put_age_groups(contest)
-    |> Repo.update()
+    if Performance.has_results?(performance) do
+      {:error, :has_results}
+    else
+      performance
+      |> Performance.changeset(attrs)
+      |> stitch_participants
+      |> put_age_groups(contest)
+      |> Repo.update()
+    end
   end
 
   def change_performance(%Performance{} = performance) do

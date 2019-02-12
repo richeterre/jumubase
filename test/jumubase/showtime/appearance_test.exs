@@ -130,21 +130,26 @@ defmodule Jumubase.AppearanceTest do
     end
   end
 
-  test "is_soloist/1 returns whether the appearance has a soloist role" do
-    assert Appearance.is_soloist(build(:appearance, role: "soloist"))
-    refute Appearance.is_soloist(build(:appearance, role: "ensemblist"))
-    refute Appearance.is_soloist(build(:appearance, role: "accompanist"))
+  test "soloist?/1 returns whether the appearance has a soloist role" do
+    assert Appearance.soloist?(build(:appearance, role: "soloist"))
+    refute Appearance.soloist?(build(:appearance, role: "ensemblist"))
+    refute Appearance.soloist?(build(:appearance, role: "accompanist"))
   end
 
-  test "is_ensemblist/1 returns whether the appearance has an ensemblist role" do
-    assert Appearance.is_ensemblist(build(:appearance, role: "ensemblist"))
-    refute Appearance.is_ensemblist(build(:appearance, role: "soloist"))
-    refute Appearance.is_ensemblist(build(:appearance, role: "accompanist"))
+  test "ensemblist?/1 returns whether the appearance has an ensemblist role" do
+    assert Appearance.ensemblist?(build(:appearance, role: "ensemblist"))
+    refute Appearance.ensemblist?(build(:appearance, role: "soloist"))
+    refute Appearance.ensemblist?(build(:appearance, role: "accompanist"))
   end
 
-  test "is_accompanist/1 returns whether the appearance has an accompanist role" do
-    assert Appearance.is_accompanist(build(:appearance, role: "accompanist"))
-    refute Appearance.is_accompanist(build(:appearance, role: "soloist"))
-    refute Appearance.is_accompanist(build(:appearance, role: "ensemblist"))
+  test "accompanist?/1 returns whether the appearance has an accompanist role" do
+    assert Appearance.accompanist?(build(:appearance, role: "accompanist"))
+    refute Appearance.accompanist?(build(:appearance, role: "soloist"))
+    refute Appearance.accompanist?(build(:appearance, role: "ensemblist"))
+  end
+
+  test "has_points?/1 returns whether the appearance has points" do
+    assert Appearance.has_points?(build(:appearance, points: 25))
+    refute Appearance.has_points?(build(:appearance, points: nil))
   end
 end

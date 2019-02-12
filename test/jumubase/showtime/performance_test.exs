@@ -316,6 +316,26 @@ defmodule Jumubase.PerformanceTest do
     end
   end
 
+  describe "has_results?/1" do
+    test "returns whether the performance contains any appearance with points" do
+      p1 =
+        build(:performance,
+          appearances: [build(:appearance, points: 25), build(:appearance, points: 21)]
+        )
+
+      p2 =
+        build(:performance,
+          appearances: [build(:appearance, points: 25), build(:appearance, points: nil)]
+        )
+
+      p3 = build(:performance, appearances: build_list(2, :appearance, points: nil))
+
+      assert Performance.has_results?(p1)
+      assert Performance.has_results?(p2)
+      refute Performance.has_results?(p3)
+    end
+  end
+
   # Private helpers
 
   defp valid_performance_attrs(contest_category) do

@@ -6,34 +6,17 @@
 
 <div class="row">
   <div class="col-md-8">
-    <table class="table table-striped">
-      <tbody>
-        <%= for {base, other} <- @duplicate_pairs do %>
-        <tr>
-          <td>
-            <%= full_name(base) %>
-            <span class="text-muted">(* <%= format_date(base.birthdate) %>)</span>
-          </td>
-          <td>
-            <%= icon_link "transfer", nil,
-              Routes.internal_maintenance_path(@conn, :compare_participants, base.id, other.id),
-              class: "btn btn-default btn-xs"
-              %>
-          </td>
-          <td>
-            <%= full_name(other) %>
-            <span class="text-muted">(* <%= format_date(other.birthdate) %>)</span>
-          </td>
-        </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= if !Enum.empty?(@duplicate_pairs) do %>
+      <%= render "_duplicate_participants.html", conn: @conn, pairs: @duplicate_pairs %>
+    <% else %>
+      <p class="text-muted"><%= gettext("No duplicate participants were found.") %></p>
+    <% end %>
 
     <h3><%= gettext("Orphaned participants") %></h3>
 
     <%= if !Enum.empty?(@orphaned_participants) do %>
       <p>
-        <%= @orphaned_participants |> Enum.map(&(full_name(&1))) |> Enum.join(" / ") %>
+        <%= list_participants(@orphaned_participants) %>
       </p>
 
       <p>

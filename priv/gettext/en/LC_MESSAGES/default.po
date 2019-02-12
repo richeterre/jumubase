@@ -412,6 +412,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/breadcrumbs.ex:52
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:6
 #: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.eex:6
+#: lib/jumubase_web/templates/internal/maintenance/_performances_info.html.eex:1
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:2
 msgid "Performances"
 msgstr ""
@@ -1665,12 +1666,12 @@ msgid "Duplicate participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:32
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:36
 msgid "Orphaned participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:63
+#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:66
 msgid "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_ONE"
 msgid_plural "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_MANY(%{count})"
 msgstr[0] "One orphaned participant was deleted."
@@ -1711,46 +1712,46 @@ msgid "Last edited"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:40
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:44
 msgid "Delete all"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:43
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:47
 msgid "Do you really want to delete all orphaned participants?"
 msgstr ""
 
 #, elixir-format
 #:
-#: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:74
+#: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:79
 msgid "Before merging, select the values that should be preserved."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:37
+#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:40
 #: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:1
 msgid "Compare participants"
 msgstr ""
 
 #, elixir-format
 #:
-#: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:76
+#: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:81
 msgid "Merge participants"
 msgstr ""
 
 #, elixir-format
 #:
-#: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:37
+#: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:38
 msgid "Possible duplicate"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:54
+#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:57
 msgid "The participants could not be merged."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:51
+#: lib/jumubase_web/controllers/internal/maintenance_controller.ex:54
 msgid "The participants were merged."
 msgstr ""
 
@@ -1761,6 +1762,11 @@ msgid "Original"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:48
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:52
 msgid "No orphaned participants were found."
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/jumubase_web/templates/internal/maintenance/index.html.eex:33
+msgid "No duplicate participants were found."
 msgstr ""

@@ -243,7 +243,8 @@ defmodule Jumubase.Foundation do
   end
 
   def load_contest_categories(%Contest{} = contest) do
-    Repo.preload(contest, contest_categories: :category)
+    query = from cc in ContestCategory, order_by: :inserted_at
+    Repo.preload(contest, contest_categories: {query, :category})
   end
 
   @doc """

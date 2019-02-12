@@ -645,15 +645,21 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  test "load_contest_categories/1 preloads a contest's contest categories" do
+  test "load_contest_categories/1 preloads a contest's contest categories in insertion order" do
     %{id: id} =
       insert(:contest,
-        contest_categories:
-          build_list(1, :contest_category, category: build(:category, name: "ABC"))
+        contest_categories: [
+          build(:contest_category, category: build(:category, name: "First")),
+          build(:contest_category, category: build(:category, name: "Second"))
+        ]
       )
 
     contest = Repo.get(Contest, id) |> Foundation.load_contest_categories()
-    assert [%ContestCategory{category: %Category{name: "ABC"}}] = contest.contest_categories
+
+    assert [
+             %ContestCategory{category: %Category{name: "First"}},
+             %ContestCategory{category: %Category{name: "Second"}}
+           ] = contest.contest_categories
   end
 
   test "load_available_stages/1 preloads a contest's available stages" do

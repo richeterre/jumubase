@@ -60,11 +60,19 @@ defmodule JumubaseWeb.PerformanceController do
         |> put_flash(:success, gettext("Your changes to the registration were saved."))
         |> redirect(to: Routes.page_path(conn, :home))
 
-      {:error, changeset} ->
+      {:error, %Changeset{} = changeset} ->
         conn
         |> prepare_for_form(contest, changeset)
         |> assign(:performance, performance)
         |> render("edit.html")
+
+      {:error, :has_results} ->
+        conn
+        |> put_flash(
+          :error,
+          gettext("Your changes could not be saved. Please contact us if you need assistance.")
+        )
+        |> redirect(to: Routes.page_path(conn, :edit_registration))
     end
   end
 

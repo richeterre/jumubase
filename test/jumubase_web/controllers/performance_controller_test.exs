@@ -196,10 +196,19 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       [_cc1, cc2] = c.contest_categories
       params = valid_performance_params(cc2)
 
-      conn =
-        put(conn, Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
+      conn
+      |> put(Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
+      |> assert_deadline_error
+    end
 
-      assert_deadline_error(conn)
+    test "shows an error if the performance already has results", %{conn: conn, contest: c} do
+      p = insert_performance(c, appearances: [build(:appearance, points: 1)])
+      [_cc1, cc2] = c.contest_categories
+      params = valid_performance_params(cc2)
+
+      conn
+      |> put(Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
+      |> assert_has_results_error
     end
   end
 
@@ -214,5 +223,12 @@ defmodule JumubaseWeb.PerformanceControllerTest do
              "The registration deadline for this contest has passed. Please contact us if you need assistance."
 
     assert redirected_to(conn) == Routes.page_path(conn, :registration)
+  end
+
+  defp assert_has_results_error(conn) do
+    assert get_flash(conn, :error) ==
+             "Your changes could not be saved. Please contact us if you need assistance."
+
+    assert redirected_to(conn) == Routes.page_path(conn, :edit_registration)
   end
 end

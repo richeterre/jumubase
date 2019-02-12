@@ -851,12 +851,12 @@ msgid "To find out how we process your data, please see our"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:96
+#: lib/jumubase_web/controllers/performance_controller.ex:104
 msgid "We received your registration!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:99
+#: lib/jumubase_web/controllers/performance_controller.ex:107
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr ""
 
@@ -1773,4 +1773,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:393
 msgid "This performance already has results. To edit it, please clear them first."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:73
+msgid "Your changes could not be saved. Please contact us if you need assistance."
 msgstr ""

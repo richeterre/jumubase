@@ -852,12 +852,12 @@ msgid "To find out how we process your data, please see our"
 msgstr "Wie wir deine Daten verarbeiten, steht in unserer"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:96
+#: lib/jumubase_web/controllers/performance_controller.ex:104
 msgid "We received your registration!"
 msgstr "Wir haben deine Anmeldung erhalten!"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/performance_controller.ex:99
+#: lib/jumubase_web/controllers/performance_controller.ex:107
 msgid "You can still change it later using the edit code %{edit_code}."
 msgstr "Mit dem Änderungscode %{edit_code} kannst du sie später noch bearbeiten."
 
@@ -1775,3 +1775,8 @@ msgstr "Es wurden keine Teilnehmer-Duplikate gefunden."
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:393
 msgid "This performance already has results. To edit it, please clear them first."
 msgstr "Dieses Vorspiel hat bereits Ergebnisse. Um es zu bearbeiten, musst du diese zunächst entfernen."
+
+#, elixir-format
+#: lib/jumubase_web/controllers/performance_controller.ex:73
+msgid "Your changes could not be saved. Please contact us if you need assistance."
+msgstr "Deine Änderungen konnten nicht gespeichert werden. Bitte kontaktiere uns, falls du Hilfe brauchst."

@@ -31,9 +31,12 @@ defmodule JumubaseWeb.Internal.MaintenanceController do
   end
 
   def compare_participants(conn, %{"base_id" => base_id, "other_id" => other_id}) do
+    base_pt = Showtime.get_participant!(base_id) |> Showtime.load_performances()
+    other_pt = Showtime.get_participant!(other_id) |> Showtime.load_performances()
+
     conn
-    |> assign(:base, Showtime.get_participant!(base_id))
-    |> assign(:other, Showtime.get_participant!(other_id))
+    |> assign(:base, base_pt)
+    |> assign(:other, other_pt)
     |> add_breadcrumb(name: gettext("Compare participants"), path: current_path(conn))
     |> render("compare_participants.html")
   end

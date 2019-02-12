@@ -21,6 +21,10 @@
           <div class="checkbox">* <%= format_date(@base.birthdate) %></div>
           <div class="checkbox"><%= @base.phone %></div>
           <div class="checkbox"><%= @base.email %></div>
+
+          <hr>
+
+          <%= render "_performances_info.html", conn: @conn, participant: @base %>
         </div>
         <div class="panel-footer text-muted">
           <%= format_datetime(@base.updated_at) %>
@@ -60,6 +64,10 @@
               <%= checkbox f, :email %> <%= @other.email %>
             <% end %>
           </div>
+
+          <hr>
+
+          <%= render "_performances_info.html", conn: @conn, participant: @other %>
         </div>
         <div class="panel-footer text-muted">
           <%= format_datetime(@other.updated_at) %>

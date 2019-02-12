@@ -1723,7 +1723,7 @@ msgstr "Möchtest du wirklich alle verwaisten Teilnehmer löschen?"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/maintenance/compare_participants.html.eex:74
 msgid "Before merging, select the values that should be preserved."
-msgstr "Wähle zunächst die Felder aus, deren Werte erhalten bleiben sollen."
+msgstr "Wähle zunächst die Felder aus, deren Werte übernommen werden sollen."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/maintenance_controller.ex:37

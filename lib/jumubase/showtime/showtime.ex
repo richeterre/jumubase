@@ -410,6 +410,10 @@ defmodule Jumubase.Showtime do
     end
   end
 
+  def load_performances(%Participant{} = pt) do
+    Repo.preload(pt, performances: [contest_category: :contest])
+  end
+
   # Private helpers
 
   defp performances_query(contest_id) do

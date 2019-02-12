@@ -1,0 +1,5 @@
+<%= gettext("Performances") %>:
+<br>
+<%= for %{contest_category: %{contest: c}} = p <- @participant.performances do %>
+  <%= link p.edit_code, to: Routes.internal_contest_performance_path(@conn, :show, c, p) %>
+<% end %>

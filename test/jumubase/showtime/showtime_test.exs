@@ -1352,6 +1352,31 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "load_performances/1" do
+    test "loads a participant's performances with contests" do
+      [c1, c2] = insert_list(2, :contest)
+      pt = insert_participant(c1)
+      insert_appearance(c2, participant: pt)
+
+      pt = Repo.get(Participant, pt.id)
+
+      assert %Participant{
+               appearances: [
+                 %Appearance{
+                   performance: %Performance{
+                     contest_category: %ContestCategory{contest: %Contest{}}
+                   }
+                 },
+                 %Appearance{
+                   performance: %Performance{
+                     contest_category: %ContestCategory{contest: %Contest{}}
+                   }
+                 }
+               ]
+             } = Showtime.load_performances(pt)
+    end
+  end
+
   # Private helpers
 
   # Returns insertion params for a performance.

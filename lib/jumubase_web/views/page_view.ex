@@ -45,6 +45,10 @@ defmodule JumubaseWeb.PageView do
     render("privacy.#{get_locale()}.html", assigns)
   end
 
+  def render("scripts.privacy.html", assigns) do
+    ~E{<script src="/js/privacy.js"></script>}
+  end
+
   def to_accordion_item(%Host{} = host) do
     %{id: host.id, title: host.name, body: render_markdown(host.address)}
   end

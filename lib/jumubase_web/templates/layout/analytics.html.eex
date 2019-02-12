@@ -1,0 +1,25 @@
+<script type="text/javascript">
+  var Countly = Countly || {};
+  Countly.q = Countly.q || [];
+
+  // Configure app key and server
+  Countly.app_key = "<%= countly_app_key() %>";
+  Countly.url = "<%= countly_server_url() %>";
+
+  // Start pushing function calls to queue
+  Countly.q.push(["track_sessions"]);
+  Countly.q.push(["track_pageview"]);
+
+  // Load Countly script asynchronously
+  (function() {
+    var cly = document.createElement("script");
+    cly.type = "text/javascript";
+    cly.async = true;
+    cly.src = "<%= countly_sdk_url() %>";
+    cly.onload = function() {
+      Countly.init();
+    };
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(cly, s);
+  })();
+</script>

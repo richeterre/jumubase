@@ -50,6 +50,11 @@ config :jumubase, JumubaseWeb.Email,
   contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
   admin_email: System.get_env("JUMU_ADMIN_EMAIL")
 
+# Set up analytics
+config :jumubase, :analytics,
+  countly_app_key: System.get_env("COUNTLY_APP_KEY"),
+  countly_server_url: System.get_env("COUNTLY_SERVER_URL")
+
 # Configure Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

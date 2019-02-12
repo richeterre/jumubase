@@ -31,8 +31,8 @@ defmodule JumubaseWeb.Internal.MaintenanceController do
   end
 
   def compare_participants(conn, %{"base_id" => base_id, "other_id" => other_id}) do
-    base_pt = Showtime.get_participant!(base_id) |> Showtime.load_performances()
-    other_pt = Showtime.get_participant!(other_id) |> Showtime.load_performances()
+    base_pt = Showtime.get_participant!(base_id)
+    other_pt = Showtime.get_participant!(other_id)
 
     conn
     |> assign(:base, base_pt)

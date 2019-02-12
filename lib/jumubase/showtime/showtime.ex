@@ -382,7 +382,17 @@ defmodule Jumubase.Showtime do
     |> Repo.all()
   end
 
-  def get_participant!(id), do: Repo.get!(Participant, id)
+  def get_participant!(id) do
+    query =
+      from pt in Participant,
+        join: p in assoc(pt, :performances),
+        join: cc in assoc(p, :contest_category),
+        join: c in assoc(cc, :contest),
+        order_by: c.start_date,
+        preload: [performances: {p, contest_category: {cc, contest: c}}]
+
+    Repo.get!(query, id)
+  end
 
   def get_participant!(%Contest{id: contest_id}, id) do
     Participant
@@ -412,10 +422,6 @@ defmodule Jumubase.Showtime do
       {:ok, _} -> :ok
       {:error, _, _, _} -> :error
     end
-  end
-
-  def load_performances(%Participant{} = pt) do
-    Repo.preload(pt, performances: [contest_category: :contest])
   end
 
   # Private helpers

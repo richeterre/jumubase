@@ -1288,6 +1288,27 @@ defmodule Jumubase.ShowtimeTest do
       assert %Participant{id: ^id} = Showtime.get_participant!(id)
     end
 
+    test "preloads the participant's performances with contests, ordered by contest start date" do
+      %{id: c1_id} = c1 = insert(:contest, start_date: ~D[2019-01-02])
+      %{id: c2_id} = c2 = insert(:contest, start_date: ~D[2019-01-01])
+
+      pt = insert_participant(c1)
+      insert_appearance(c2, participant: pt)
+
+      pt = Repo.get(Participant, pt.id)
+
+      assert %Participant{
+               performances: [
+                 %Performance{
+                   contest_category: %ContestCategory{contest: %Contest{id: ^c2_id}}
+                 },
+                 %Performance{
+                   contest_category: %ContestCategory{contest: %Contest{id: ^c1_id}}
+                 }
+               ]
+             } = Showtime.get_participant!(pt.id)
+    end
+
     test "raises an error if the participant isn't found" do
       assert_raise Ecto.NoResultsError, fn -> Showtime.get_participant!(123) end
     end
@@ -1372,31 +1393,6 @@ defmodule Jumubase.ShowtimeTest do
       assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:given_name, :unknown])
       pt1 = Repo.get!(Participant, pt1.id)
       assert pt1.given_name == pt2.given_name
-    end
-  end
-
-  describe "load_performances/1" do
-    test "loads a participant's performances with contests" do
-      [c1, c2] = insert_list(2, :contest)
-      pt = insert_participant(c1)
-      insert_appearance(c2, participant: pt)
-
-      pt = Repo.get(Participant, pt.id)
-
-      assert %Participant{
-               appearances: [
-                 %Appearance{
-                   performance: %Performance{
-                     contest_category: %ContestCategory{contest: %Contest{}}
-                   }
-                 },
-                 %Appearance{
-                   performance: %Performance{
-                     contest_category: %ContestCategory{contest: %Contest{}}
-                   }
-                 }
-               ]
-             } = Showtime.load_performances(pt)
     end
   end
 

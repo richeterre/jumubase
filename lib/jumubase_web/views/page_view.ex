@@ -45,7 +45,7 @@ defmodule JumubaseWeb.PageView do
     render("privacy.#{get_locale()}.html", assigns)
   end
 
-  def render("scripts.privacy.html", assigns) do
+  def render("scripts.privacy.html", _assigns) do
     ~E{<script src="/js/privacy.js"></script>}
   end
 

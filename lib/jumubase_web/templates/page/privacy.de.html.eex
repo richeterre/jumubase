@@ -51,7 +51,11 @@
 
     <p>Die obenstehenden <em>persönlichen Daten</em> sowie <em>Wettbewerbsdaten</em> sind notwendig, um die Wettbewerbe “Jugend musiziert” und “Kinder musizieren” zu planen und durchzuführen. Die <em>Kontaktdaten</em> benötigen wir, um die Teilnehmenden bezüglich Anmeldung, Auftritt oder anderen Bereichen des Wettbewerbs zu kontaktieren. <em>Bild- und Tondaten</em> werden für die Berichterstattung und Dokumentation benötigt, um den öffentlichen und transparenten Charakter des Wettbewerbs zu wahren. Rechtsgrundlage hierfür ist <%= link "Art. 6 Abs. 1 lit. b und f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO.</p>
 
-    <h3>4. Weitergabe von Daten an Dritte</h3>
+    <h3>4. Veröffentlichung von Daten</h3>
+
+    <p>Bedingt durch den öffentlichen Charakter des Wettbewerbs können Vor- und Nachnamen der Teilnehmer zusammen mit Wettbewerbsdaten wie Instrument, Kategorie und Ergebnis vom jeweiligen Wettbewerbsträger in Form von Zeitplänen, Programmheften, Ergebnislisten u.ä. veröffentlicht werden. Gleiches gilt für Bild- und Tonaufnahmen.</p>
+
+    <h3>5. Weitergabe von Daten an Dritte</h3>
 
     <p>Die erhobenen Daten werden nur an solche Dritte weitergegeben, die direkt an der Durchführung des jeweiligen Wettbewerbs beteiligt sind, wie z.B. der Jury und dem Organisationsteam.</p>
 
@@ -59,15 +63,15 @@
 
     <p>Die unter (2) genannten Daten werden nicht an Dritte außerhalb des Wettbewerbs “Jugend musiziert” weitergegeben, mit Ausnahme der E-Mailadresse beim Versenden von E-Mails (siehe "E-Mailversand").</p>
 
-    <h3>5. Aufbewahrung der Daten</h3>
+    <h3>6. Aufbewahrung der Daten</h3>
 
     <p>Für Zwecke der Dokumentation, Statistik sowie Unterstützung bei späteren Anmeldungen werden die unter (2) genannten Daten auch über das Wettbewerbsjahr hinaus aufbewahrt. Rechtsgrundlage hierfür ist <%= link "Art. 6 Abs. 1 lit. b und f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO.</p>
 
-    <h3>6. Inhalte von Dritten</h3>
+    <h3>7. Inhalte von Dritten</h3>
 
     <p>Auf dieser Website setzen wir Karten (Google Maps) des Anbieters Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA, ein. Hierfür besteht ein berechtigtes Interesse im Sinne des <%= link "Art. 6 Abs. 1 lit. f", to: "https://dsgvo-gesetz.de/art-6-dsgvo/" %> der DSGVO. Die Einbindung erfolgt durch einen Serveraufruf, bei dem die IP-Adresse des Besuchers an Google übertragen wird. Die Verarbeitung dieser unterliegt der <%= link "Datenschutzerklärung von Google", to: "https://www.google.com/policies/privacy/" %>.</p>
 
-    <h3>7. Deine Rechte</h3>
+    <h3>8. Deine Rechte</h3>
 
     <p>Laut DSGVO hast du unter anderem das Recht, jederzeit und unentgeltlich</p>
 
@@ -80,7 +84,7 @@
 
     <p>Außerdem hast du das Recht auf Beschwerde bei einer <%= link "Aufsichtsbehörde", to: "https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html" %>, wenn du der Ansicht bist, dass die Verarbeitung deiner personenbezogenen Daten gegen die DSGVO verstößt.</p>
 
-    <h3>8. Änderungen</h3>
+    <h3>9. Änderungen</h3>
 
     <p>Sollten wir Änderungen an dieser Datenschutzerklärung vornehmen, die eine Verarbeitung deiner Daten außerhalb obengenannter Zwecke vorsieht, so werden wir dich hierüber informieren und deine Einwilligung einholen, falls dies rechtlich erforderlich ist.</p>
 

@@ -19,7 +19,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   plug :admin_check when action in [:migrate_advancing]
 
-  plug :non_inspector_check
+  plug :non_observer_check
        when action in [
               :create,
               :update,

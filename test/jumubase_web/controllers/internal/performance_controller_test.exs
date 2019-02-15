@@ -138,8 +138,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_create(c) |> assert_unauthorized_user
     end
 
-    @tag login_as: "inspector"
-    test "redirects inspectors when trying to create a performance", %{conn: conn, contest: c} do
+    @tag login_as: "observer"
+    test "redirects observers when trying to create a performance", %{conn: conn, contest: c} do
       conn |> attempt_create(c) |> assert_unauthorized_user
     end
 
@@ -230,8 +230,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_update(c, p) |> assert_unauthorized_user
     end
 
-    @tag login_as: "inspector"
-    test "redirects inspectors when trying to update a performance", %{
+    @tag login_as: "observer"
+    test "redirects observers when trying to update a performance", %{
       conn: conn,
       contest: c,
       performance: p
@@ -280,8 +280,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_delete(c) |> assert_unauthorized_user
     end
 
-    @tag login_as: "inspector"
-    test "redirects inspectors when trying to delete a performance", %{conn: conn, contest: c} do
+    @tag login_as: "observer"
+    test "redirects observers when trying to delete a performance", %{conn: conn, contest: c} do
       conn |> attempt_delete(c) |> assert_unauthorized_user
     end
 
@@ -313,8 +313,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_reschedule(c) |> assert_unauthorized_user
     end
 
-    @tag login_as: "inspector"
-    test "redirects inspectors when trying to reschedule performances", %{conn: conn, contest: c} do
+    @tag login_as: "observer"
+    test "redirects observers when trying to reschedule performances", %{conn: conn, contest: c} do
       conn |> attempt_reschedule(c) |> assert_unauthorized_user
     end
 
@@ -505,8 +505,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_update_results(c) |> assert_unauthorized_user
     end
 
-    @tag login_as: "inspector"
-    test "redirects inspectors when trying to update results for a contest's performances", %{
+    @tag login_as: "observer"
+    test "redirects observers when trying to update results for a contest's performances", %{
       conn: conn,
       contest: c
     } do
@@ -578,8 +578,8 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_update_results_public(c) |> assert_unauthorized_user
     end
 
-    @tag login_as: "inspector"
-    test "redirects inspectors when trying to publish a contest's performance results",
+    @tag login_as: "observer"
+    test "redirects observers when trying to publish a contest's performance results",
          %{conn: conn, contest: c} do
       conn |> attempt_update_results_public(c) |> assert_unauthorized_user
     end

@@ -56,7 +56,7 @@ msgstr "Startseite"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:54
-msgid "Inspector"
+msgid "Observer"
 msgstr "Beobachter"
 
 #, elixir-format
@@ -954,7 +954,7 @@ msgid "The edit deadline for this contest has passed. Please contact us if you n
 msgstr "Der Änderungsschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:142
+#: lib/jumubase_web/controllers/authorize.ex:147
 msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
@@ -1022,17 +1022,17 @@ msgid "Manage performances"
 msgstr "Vorspiele verwalten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:58
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:68
 msgid "The performance was created."
 msgstr "Das Vorspiel wurde erstellt."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:90
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:100
 msgid "The performance was updated."
 msgstr "Das Vorspiel wurde aktualisiert."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:109
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:119
 msgid "The performance was deleted."
 msgstr "Das Vorspiel wurde gelöscht."
 
@@ -1369,7 +1369,7 @@ msgid "Print jury sheets"
 msgstr "Jurybögen ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:138
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:148
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:46
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:2
 msgid "Create jury material"
@@ -1410,7 +1410,7 @@ msgid "This schedule has already been published. Your changes will be visible to
 msgstr "Dieser Vorspielplan wurde bereits veröffentlicht. Deine Änderungen sind für andere sofort sichtbar."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:163
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:173
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:60
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.eex:6
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:2
@@ -1453,12 +1453,12 @@ msgid "Save points"
 msgstr "Punkte speichern"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:190
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:200
 msgid "The points could not be saved at this time."
 msgstr "Die Punktzahl konnte leider nicht gespeichert werden."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:199
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:209
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:69
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:2
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:25
@@ -1495,21 +1495,21 @@ msgstr[0] "Möchtest du die Ergebnisse dieses Vorspiels wirklich freigeben?"
 msgstr[1] "Möchtest du die Ergebnisse dieser %{count} Vorspiele wirklich freigeben?"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:347
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:357
 msgid "The results of this performance were published."
 msgid_plural "The results of these %{count} performances were published."
 msgstr[0] "Die Ergebnisse dieses Vorspiels sind nun freigegeben."
 msgstr[1] "Die Ergebnisse dieser %{count} Vorspiele sind nun freigegeben."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:358
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:368
 msgid "The results of this performance were unpublished."
 msgid_plural "The results of these %{count} performances were unpublished."
 msgstr[0] "Die Ergebnisse dieses Vorspiels sind nun nicht mehr freigegeben."
 msgstr[1] "Die Ergebnisse dieser %{count} Vorspiele sind nun nicht mehr freigegeben."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:380
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:390
 msgid "The results of some performances below have already been published. Your changes will be visible to others instantly."
 msgstr "Die Ergebnisse einiger untenstehender Vorspiele wurden bereits freigegeben. Deine Änderungen sind für andere sofort sichtbar."
 
@@ -1524,7 +1524,7 @@ msgid "missing"
 msgstr "fehlt"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:236
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:246
 #: lib/jumubase_web/templates/internal/contest/show.html.eex:78
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:2
 msgid "Create certificates"
@@ -1604,7 +1604,7 @@ msgid "All %{total} published"
 msgstr "Alle %{total} freigegeben"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:258
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:268
 #: lib/jumubase_web/templates/internal/performance/advancing.html.eex:2
 msgid "Advancing performances"
 msgstr "Weiterleitungen"
@@ -1615,7 +1615,7 @@ msgid "Show advancing"
 msgstr "Weiterleitungen anzeigen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:271
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:281
 msgid "MIGRATE_PERFORMANCES_SUCCESS_ONE"
 msgid_plural "MIGRATE_PERFORMANCES_SUCCESS_MANY(%{count})"
 msgstr[0] "Ein Vorspiel wurde migriert."
@@ -1628,7 +1628,7 @@ msgid "Migrate performances to %{name}"
 msgstr "Vorspiele migrieren nach: %{name}"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:281
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:291
 msgid "The performances could not be migrated."
 msgstr "Die Vorspiele konnten nicht migriert werden."
 
@@ -1772,7 +1772,7 @@ msgid "No duplicate participants were found."
 msgstr "Es wurden keine Teilnehmer-Duplikate gefunden."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:393
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:403
 msgid "This performance already has results. To edit it, please clear them first."
 msgstr "Dieses Vorspiel hat bereits Ergebnisse. Um es zu bearbeiten, musst du diese zunächst entfernen."
 

@@ -55,8 +55,8 @@ defmodule JumubaseWeb.Authorize do
     role_check(conn, opts ++ [roles: ["admin"]])
   end
 
-  # Plug to prevent inspectors from accessing the resource.
-  def non_inspector_check(%Conn{} = conn, opts) do
+  # Plug to prevent observers from accessing the resource.
+  def non_observer_check(%Conn{} = conn, opts) do
     role_check(conn, opts ++ [roles: ["admin", "global-organizer", "local-organizer"]])
   end
 

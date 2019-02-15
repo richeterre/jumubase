@@ -202,9 +202,9 @@ Repo.transaction(fn ->
   User.create_changeset(%User{}, %{
     given_name: "Bernd",
     family_name: "Beobachter",
-    email: "inspector@example.org",
+    email: "observer@example.org",
     password: "password",
-    role: "inspector"
+    role: "observer"
   })
   |> Repo.insert!()
 

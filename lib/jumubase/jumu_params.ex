@@ -29,8 +29,8 @@ defmodule Jumubase.JumuParams do
       "local-organizer",
       # A user organizing LW (2nd round) contests in various countries
       "global-organizer",
-      # An outside official looking for statistics
-      "inspector",
+      # A user who can view, but not change or delete anything
+      "observer",
       # An omnipotent being
       "admin"
     ]

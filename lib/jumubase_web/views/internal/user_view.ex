@@ -51,7 +51,7 @@ defmodule JumubaseWeb.Internal.UserView do
   defp role_name(role) do
     case role do
       "admin" -> gettext("Admin")
-      "inspector" -> gettext("Inspector")
+      "observer" -> gettext("Observer")
       "global-organizer" -> gettext("Global Organizer")
       "local-organizer" -> gettext("Local Organizer")
     end
@@ -61,7 +61,7 @@ defmodule JumubaseWeb.Internal.UserView do
   defp label_class(role) do
     case role do
       "admin" -> "danger"
-      "inspector" -> "info"
+      "observer" -> "info"
       "global-organizer" -> "warning"
       _ -> "default"
     end

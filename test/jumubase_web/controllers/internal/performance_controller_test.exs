@@ -114,7 +114,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       [contest: c |> with_contest_categories]
     end
 
-    for role <- roles_except("local-organizer") do
+    for role <- ["admin", "global-organizer"] do
       @tag login_as: role
       test "lets #{role} users create a performance", %{conn: conn, contest: c} do
         conn
@@ -135,6 +135,11 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to create a performance from a foreign contest",
          %{conn: conn, contest: c} do
+      conn |> attempt_create(c) |> assert_unauthorized_user
+    end
+
+    @tag login_as: "inspector"
+    test "redirects inspectors when trying to create a performance", %{conn: conn, contest: c} do
       conn |> attempt_create(c) |> assert_unauthorized_user
     end
 
@@ -203,36 +208,35 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       [contest: c, performance: insert_performance(cc1)]
     end
 
-    for role <- roles_except("local-organizer") do
+    for role <- ["admin", "global-organizer"] do
       @tag login_as: role
       test "lets #{role} users update a performance", %{conn: conn, contest: c, performance: p} do
-        [_cc1, cc2] = c.contest_categories
-        params = valid_performance_params(cc2)
-
-        conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
-        assert_update_success(conn, c, p)
+        conn |> attempt_update(c, p) |> assert_update_success(c, p)
       end
     end
 
     @tag login_as: "local-organizer"
     test "lets local organizers update a performance from an own contest", %{conn: conn, user: u} do
       own_c = insert_own_contest(u) |> with_contest_categories
-      [cc1, cc2] = own_c.contest_categories
+      [cc1, _] = own_c.contest_categories
       p = insert_performance(cc1)
-      params = valid_performance_params(cc2)
 
-      conn = put(conn, Routes.internal_contest_performance_path(conn, :update, own_c, p), params)
-      assert_update_success(conn, own_c, p)
+      conn |> attempt_update(own_c, p) |> assert_update_success(own_c, p)
     end
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to update a performance from a foreign contest",
          %{conn: conn, contest: c, performance: p} do
-      [_cc1, cc2] = c.contest_categories
-      params = valid_performance_params(cc2)
+      conn |> attempt_update(c, p) |> assert_unauthorized_user
+    end
 
-      conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
-      assert_unauthorized_user(conn)
+    @tag login_as: "inspector"
+    test "redirects inspectors when trying to update a performance", %{
+      conn: conn,
+      contest: c,
+      performance: p
+    } do
+      conn |> attempt_update(c, p) |> assert_unauthorized_user
     end
 
     test "redirects guests when trying to update a performance", %{
@@ -240,21 +244,15 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       contest: c,
       performance: p
     } do
-      [_cc1, cc2] = c.contest_categories
-      params = valid_performance_params(cc2)
-
-      conn = put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
-      assert_unauthorized_guest(conn)
+      conn |> attempt_update(c, p) |> assert_unauthorized_guest
     end
 
     @tag login_as: "admin"
     test "redirects users if the performance has results", %{conn: conn, contest: c} do
       p = insert_performance(c, appearances: [build(:appearance, points: 1)])
-      [_cc1, cc2] = c.contest_categories
-      params = valid_performance_params(cc2)
 
       conn
-      |> put(Routes.internal_contest_performance_path(conn, :update, c, p), params)
+      |> attempt_update(c, p)
       |> assert_flash_redirect(
         Routes.internal_contest_performance_path(conn, :index, c),
         "This performance already has results. To edit it, please clear them first."
@@ -263,40 +261,37 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "delete/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- ["admin", "global-organizer"] do
       @tag login_as: role
       test "lets #{role} users delete a performance", %{conn: conn, contest: c} do
-        p = insert_performance(c)
-        conn = delete(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
-        assert_deletion_success(conn, c)
+        conn |> attempt_delete(c) |> assert_deletion_success(c)
       end
     end
 
     @tag login_as: "local-organizer"
     test "lets local organizers delete a performance from an own contest", %{conn: conn, user: u} do
       own_c = insert_own_contest(u)
-      p = insert_performance(own_c)
-      conn = delete(conn, Routes.internal_contest_performance_path(conn, :delete, own_c, p))
-      assert_deletion_success(conn, own_c)
+      conn |> attempt_delete(own_c) |> assert_deletion_success(own_c)
     end
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to delete a performance from a foreign contest",
          %{conn: conn, contest: c} do
-      p = insert_performance(c)
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
-      assert_unauthorized_user(conn)
+      conn |> attempt_delete(c) |> assert_unauthorized_user
+    end
+
+    @tag login_as: "inspector"
+    test "redirects inspectors when trying to delete a performance", %{conn: conn, contest: c} do
+      conn |> attempt_delete(c) |> assert_unauthorized_user
     end
 
     test "redirects guests when trying to delete a performance", %{conn: conn, contest: c} do
-      p = insert_performance(c)
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
-      assert_unauthorized_guest(conn)
+      conn |> attempt_delete(c) |> assert_unauthorized_guest
     end
   end
 
   describe "reschedule/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- ["admin", "global-organizer"] do
       @tag login_as: role
       test "lets #{role} users reschedule performances", %{conn: conn, contest: c} do
         test_reschedule_success(conn, c)
@@ -315,6 +310,11 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to reschedule performances from a foreign contest",
          %{conn: conn, contest: c} do
+      conn |> attempt_reschedule(c) |> assert_unauthorized_user
+    end
+
+    @tag login_as: "inspector"
+    test "redirects inspectors when trying to reschedule performances", %{conn: conn, contest: c} do
       conn |> attempt_reschedule(c) |> assert_unauthorized_user
     end
 
@@ -480,7 +480,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "update_results/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- ["admin", "global-organizer"] do
       @tag login_as: role
       test "lets #{role} users update results for a contest's performances", %{
         conn: conn,
@@ -502,6 +502,14 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to update results for a foreign contest's performances",
          %{conn: conn, contest: c} do
+      conn |> attempt_update_results(c) |> assert_unauthorized_user
+    end
+
+    @tag login_as: "inspector"
+    test "redirects inspectors when trying to update results for a contest's performances", %{
+      conn: conn,
+      contest: c
+    } do
       conn |> attempt_update_results(c) |> assert_unauthorized_user
     end
 
@@ -548,7 +556,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "update_results_public/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- ["admin", "global-organizer"] do
       @tag login_as: role
       test "lets #{role} users publish a contest's performance results", %{conn: conn, contest: c} do
         conn |> attempt_update_results_public(c) |> assert_update_results_public_success(c)
@@ -566,6 +574,12 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
     @tag login_as: "local-organizer"
     test "redirects local organizers when trying to publish a foreign contest's performance results",
+         %{conn: conn, contest: c} do
+      conn |> attempt_update_results_public(c) |> assert_unauthorized_user
+    end
+
+    @tag login_as: "inspector"
+    test "redirects inspectors when trying to publish a contest's performance results",
          %{conn: conn, contest: c} do
       conn |> attempt_update_results_public(c) |> assert_unauthorized_user
     end
@@ -713,6 +727,17 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     [cc, _] = contest.contest_categories
     params = valid_performance_params(cc)
     post(conn, Routes.internal_contest_performance_path(conn, :create, contest), params)
+  end
+
+  defp attempt_update(conn, c, p) do
+    [_cc1, cc2] = c.contest_categories
+    params = valid_performance_params(cc2)
+    put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
+  end
+
+  defp attempt_delete(conn, c) do
+    p = insert_performance(c)
+    delete(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
   end
 
   defp attempt_reschedule(conn, contest) do

@@ -19,6 +19,16 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   plug :admin_check when action in [:migrate_advancing]
 
+  plug :non_inspector_check
+       when action in [
+              :create,
+              :update,
+              :delete,
+              :reschedule,
+              :update_results,
+              :update_results_public
+            ]
+
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 

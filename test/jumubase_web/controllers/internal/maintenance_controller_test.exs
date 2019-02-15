@@ -101,7 +101,7 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
   end
 
   defp attempt_compare_participants(conn) do
-    [pt1, pt2] = insert_list(2, :participant)
+    {pt1, pt2} = insert_participant_pair
     get(conn, Routes.internal_maintenance_path(conn, :compare_participants, pt1.id, pt2.id))
   end
 
@@ -110,7 +110,7 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
   end
 
   defp attempt_merge_participants(conn) do
-    [pt1, pt2] = insert_list(2, :participant)
+    {pt1, pt2} = insert_participant_pair
 
     patch(
       conn,
@@ -135,5 +135,10 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
     # Follow redirection
     conn = get(recycle(conn), redirect_path)
     assert html_response(conn, 200) =~ message
+  end
+
+  defp insert_participant_pair do
+    c = insert(:contest)
+    {insert_participant(c), insert_participant(c)}
   end
 end

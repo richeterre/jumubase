@@ -9,6 +9,7 @@ defmodule JumubaseWeb.Internal.StageView do
       category_name: 1,
       cc_filter_options: 1,
       formatted_duration: 1,
+      predecessor_info: 1,
       sorted_appearances: 1,
       stage_date_filter_options: 1,
       stage_time: 1
@@ -75,10 +76,10 @@ defmodule JumubaseWeb.Internal.StageView do
   def start_time_options(_), do: time_options(nil)
 
   @doc """
-  Returns shorthand category and age group information.
+  Returns shorthand category, age group and predecessor information.
   """
-  def short_category_info(%Performance{contest_category: cc} = p) do
-    "#{cc.category.short_name} #{p.age_group}"
+  def performance_info(%Performance{contest_category: cc} = p) do
+    "#{cc.category.short_name} #{p.age_group} #{predecessor_info(p)}"
   end
 
   @doc """

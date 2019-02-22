@@ -13,7 +13,7 @@
 
   <div class="main-content">
     <div class="category-info">
-      <%= short_category_info(@performance) %>
+      <%= performance_info(@performance) %>
     </div>
 
     <div class="text-muted">

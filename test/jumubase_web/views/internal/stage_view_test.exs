@@ -2,18 +2,33 @@ defmodule JumubaseWeb.Internal.StageViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.StageView
 
-  describe "short_category_info/1" do
-    test "returns the category and age group in a short style" do
+  describe "performance_info/1" do
+    test "returns the category short name and age group for a non-LW performance" do
       p =
         build(:performance,
           contest_category:
             build(:contest_category,
               category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
             ),
-          age_group: "III"
+          age_group: "III",
+          predecessor_contest: nil
         )
 
-      assert StageView.short_category_info(p) == "PopGesang III"
+      assert StageView.performance_info(p) == "PopGesang III"
+    end
+
+    test "returns the category short name, age group and predecessor flag for an LW performance" do
+      p =
+        build(:performance,
+          contest_category:
+            build(:contest_category,
+              category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
+            ),
+          age_group: "III",
+          predecessor_contest: build(:contest, host: build(:host, country_code: "FI"))
+        )
+
+      assert StageView.performance_info(p) == "PopGesang III 🇫🇮"
     end
   end
 

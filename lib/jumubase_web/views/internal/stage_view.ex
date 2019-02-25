@@ -79,7 +79,10 @@ defmodule JumubaseWeb.Internal.StageView do
   Returns shorthand category, age group and predecessor information.
   """
   def performance_info(%Performance{contest_category: cc} = p) do
-    "#{cc.category.short_name} #{p.age_group} #{predecessor_info(p)}"
+    case predecessor_info(p) do
+      nil -> "#{cc.category.short_name} #{p.age_group}"
+      pre_info -> "#{cc.category.short_name} #{p.age_group} #{pre_info}"
+    end
   end
 
   @doc """

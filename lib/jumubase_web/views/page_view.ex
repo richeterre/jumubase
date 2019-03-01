@@ -67,7 +67,7 @@ defmodule JumubaseWeb.PageView do
 
   defp do_render_phase_panels(conn, %Contest{round: 2} = c) do
     if Timex.after?(Timex.today(), c.deadline) do
-      render("_lw_phase_panels.html", conn: conn)
+      render("_lw_phase_panels.html", conn: conn, contest: c)
     else
       render("_pre_lw_phase_panels.html", conn: conn, contest: c)
     end

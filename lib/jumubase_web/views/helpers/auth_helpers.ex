@@ -1,4 +1,6 @@
 defmodule JumubaseWeb.AuthHelpers do
+  alias Jumubase.Accounts.User
+
   @doc """
   Returns whether the given user is an admin.
   """

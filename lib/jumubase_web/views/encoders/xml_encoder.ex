@@ -11,7 +11,11 @@ defmodule JumubaseWeb.XMLEncoder do
   Encodes the list of performances to XML.
   """
   def encode(performances) do
-    performances = Showtime.load_pieces(performances)
+    performances =
+      performances
+      |> Showtime.load_pieces()
+      |> Showtime.load_predecessor_contests()
+
     {:jumu, nil, Enum.map(performances, &to_xml/1)} |> XmlBuilder.generate()
   end
 
@@ -24,6 +28,7 @@ defmodule JumubaseWeb.XMLEncoder do
       {:teilnehmer, %{id: a.participant.id},
        [
          to_xml(a),
+         {:rwkurz, nil, p.predecessor_contest.host.name},
          {:wertung, %{id: p.id},
           [
             {:type, nil, map_role(a.role)},

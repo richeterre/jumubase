@@ -96,6 +96,9 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     "#{category_name(performance)}, AG #{performance.age_group}"
   end
 
+  def predecessor_host_name(%Performance{predecessor_contest: nil}), do: nil
+  def predecessor_host_name(%Performance{predecessor_contest: c}), do: c.host.name
+
   def predecessor_info(%Performance{predecessor_contest: nil}), do: nil
   def predecessor_info(%Performance{predecessor_contest: c}), do: flag(c)
 

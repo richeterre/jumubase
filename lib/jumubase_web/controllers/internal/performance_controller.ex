@@ -150,7 +150,10 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def print_jury_sheets(conn, %{"performance_ids" => p_ids}, contest) do
-    performances = Showtime.list_performances(contest, p_ids) |> Showtime.load_pieces()
+    performances =
+      Showtime.list_performances(contest, p_ids)
+      |> Showtime.load_pieces()
+      |> Showtime.load_predecessor_contests()
 
     conn
     |> assign(:performances, performances)

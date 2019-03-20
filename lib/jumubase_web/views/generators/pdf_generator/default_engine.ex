@@ -12,7 +12,14 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
 
   import JumubaseWeb.Internal.PerformanceView,
-    only: [acc: 1, category_name: 1, category_info: 1, non_acc: 1, result_groups: 1]
+    only: [
+      acc: 1,
+      category_name: 1,
+      category_info: 1,
+      non_acc: 1,
+      predecessor_host_name: 1,
+      result_groups: 1
+    ]
 
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, person_info: 1]
   alias Jumubase.Foundation.Contest
@@ -92,12 +99,20 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
           :div,
           style(%{"border-bottom" => @border_style, "height" => "55px"}),
           [
-            :p,
             [
-              [:span, category_info(p)],
-              [:span, format_datetime(p.stage_time)]
+              :div,
+              style(%{"float" => "left"}),
+              [
+                [:span, category_info(p)],
+                [:span, format_datetime(p.stage_time)]
+              ]
+              |> to_lines
+            ],
+            [
+              :div,
+              style(%{"float" => "right"}),
+              [:br, [:span, predecessor_host_name(p)]]
             ]
-            |> to_lines
           ]
         ],
         [

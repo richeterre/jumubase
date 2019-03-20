@@ -44,8 +44,8 @@ defmodule JumubaseWeb.XMLEncoder do
 
   defp to_xml(%Appearance{participant: p} = a) do
     [
-      {:vorname, nil, p.given_name},
       {:nachname, nil, p.family_name},
+      {:vorname, nil, p.given_name},
       {:geburtstag, nil, format_date(p.birthdate)},
       {:tel, nil, p.phone},
       {:email, nil, p.email},

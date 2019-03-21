@@ -75,6 +75,22 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     end
   end
 
+  describe "predecessor_host_country/1" do
+    test "returns the predecessor contest's host country" do
+      p =
+        build(:performance,
+          predecessor_contest: build(:contest, host: build(:host, country_code: "FI"))
+        )
+
+      assert PerformanceView.predecessor_host_country(p) == "FI"
+    end
+
+    test "returns nil if the performance has no predecessor contest" do
+      p = build(:performance, predecessor_contest: nil)
+      assert PerformanceView.predecessor_host_country(p) == nil
+    end
+  end
+
   describe "predecessor_info/1" do
     test "returns the predecessor contest's host flag" do
       p =

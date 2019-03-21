@@ -1,7 +1,15 @@
 defmodule JumubaseWeb.Api.PerformanceView do
   import JumubaseWeb.Internal.AppearanceView, only: [instrument_name: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1, sorted_appearances: 1]
+
+  import JumubaseWeb.Internal.PerformanceView,
+    only: [
+      category_name: 1,
+      predecessor_host_country: 1,
+      predecessor_host_name: 1,
+      sorted_appearances: 1
+    ]
+
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.Results
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
@@ -18,6 +26,8 @@ defmodule JumubaseWeb.Api.PerformanceView do
     %{
       id: to_string(p.id),
       category_name: category_name(p),
+      predecessor_host_name: predecessor_host_name(p),
+      predecessor_host_country: predecessor_host_country(p),
       age_group: p.age_group,
       stage_time: p.stage_time |> to_local_datetime(tz),
       appearances: sorted_appearances(p) |> Enum.map(&render_appearance(&1, p, c.round)),

@@ -38,7 +38,10 @@ defmodule JumubaseWeb.Api.PerformanceController do
   # Private helpers
 
   defp render_performances(conn, %Contest{} = c, %PerformanceFilter{} = filter) do
-    performances = Showtime.list_performances(c, filter) |> Showtime.load_pieces()
+    performances =
+      Showtime.list_performances(c, filter)
+      |> Showtime.load_pieces()
+      |> Showtime.load_predecessor_contests()
 
     conn
     |> assign(:contest, c)

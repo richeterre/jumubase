@@ -76,6 +76,7 @@ defmodule JumubaseWeb.Internal.ContestView do
       0 -> "„Kinder musizieren“"
       1 -> "Regionalwettbewerb"
       2 -> "Landeswettbewerb"
+      3 -> "Bundeswettbewerb"
     end
   end
 

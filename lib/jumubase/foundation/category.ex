@@ -10,16 +10,18 @@ defmodule Jumubase.Foundation.Category do
     field :genre, :string
     field :type, :string
     field :group, :string
+    field :bw_code, :string
 
     timestamps()
   end
 
   @required_attrs [:name, :short_name, :genre, :type, :group]
+  @optional_attrs [:bw_code]
 
   @doc false
   def changeset(%Category{} = category, attrs) do
     category
-    |> cast(attrs, @required_attrs)
+    |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
     |> validate_inclusion(:genre, JumuParams.genres())
     |> validate_inclusion(:type, JumuParams.category_types())

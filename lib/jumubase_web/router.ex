@@ -20,6 +20,10 @@ defmodule JumubaseWeb.Router do
     plug :accepts, ["html"]
   end
 
+  pipeline :html_and_xml do
+    plug :accepts, ["html", "xml"]
+  end
+
   pipeline :json_only do
     plug :accepts, ["json"]
   end
@@ -96,6 +100,14 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
+    pipe_through [:browser, :html_and_xml]
+
+    resources "/contests", ContestController, only: [] do
+      get "/performances/advancing", PerformanceController, :advancing, as: :performances
+    end
+  end
+
+  scope "/internal", JumubaseWeb.Internal, as: :internal do
     pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
@@ -125,7 +137,6 @@ defmodule JumubaseWeb.Router do
         as: :results
 
       get "/performances/certificates", PerformanceController, :certificates, as: :performances
-      get "/performances/advancing", PerformanceController, :advancing, as: :performances
 
       post "/performances/migrate-advancing", PerformanceController, :migrate_advancing,
         as: :performances

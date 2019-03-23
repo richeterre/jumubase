@@ -52,7 +52,7 @@ defmodule Jumubase.Mixfile do
       {:sentry, "~> 7.0"},
       {:sneeze, "~> 1.1"},
       {:timex, "~> 3.0"},
-      {:xml_builder, "~> 2.0.0"}
+      {:xml_builder, "~> 2.1.0"}
     ]
   end
 

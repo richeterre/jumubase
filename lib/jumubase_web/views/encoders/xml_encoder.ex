@@ -33,7 +33,7 @@ defmodule JumubaseWeb.XMLEncoder do
           [
             {:type, nil, map_role(a.role)},
             {:instrument_stimmlage, nil, Instruments.name(a.instrument)},
-            {:kategorie, nil, map_category(cc.category)}
+            {:kategorie, nil, cc.category.bw_code}
           ]},
          {:spielpartner, nil,
           Enum.map(other_appearances, &{:partner, %{id: &1.participant.id}, to_xml(&1)})},
@@ -68,9 +68,6 @@ defmodule JumubaseWeb.XMLEncoder do
   defp map_role("soloist"), do: "solo"
   defp map_role("ensemblist"), do: "gruppe"
   defp map_role("accompanist"), do: "begleiter"
-
-  defp map_category(%{type: "solo"}), do: "A21"
-  defp map_category(%{type: "ensemble"}), do: "B85"
 
   defp map_person(%Piece{artist: nil, composer: composer}) do
     {first_names, [last_name]} = String.split(composer) |> Enum.split(-1)

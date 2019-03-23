@@ -12,11 +12,11 @@
   <% end %>
 
   <%= if @source_contest.round == 2 do %>
-    <%= icon_link "export", gettext("Für JMDaten exportieren"),
+    <%= icon_link "export", gettext("Export for JMDaten"),
       Routes.internal_contest_performances_path(
         @conn, :advancing, @source_contest, Map.put(@conn.params, :_format, "xml")
       ),
-      class: "btn btn-primary"
+      class: "btn btn-default"
       %>
   <% end %>
 </div>

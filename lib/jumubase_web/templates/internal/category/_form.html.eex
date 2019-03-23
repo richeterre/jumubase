@@ -50,6 +50,14 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label f, :group, gettext("BW Code"), class: "control-label" %>
+      <%= text_input f, :bw_code, class: "form-control" %>
+      <%= error_tag f, :bw_code %>
+    </div>
+  </div>
+
   <hr>
 
   <%= submit @submit_title, class: "btn btn-primary" %>

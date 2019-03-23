@@ -15,15 +15,6 @@
   filter_active: @filter_active
   %>
 
-<%= if admin?(@current_user) do %>
-  <%= link gettext("Export to XML"),
-    to: Routes.internal_contest_performance_path(
-      @conn, :index, @contest, Map.put(@conn.params, :_format, "xml")
-    ),
-    class: "btn btn-default"
-    %>
-<% end %>
-
 <hr>
 
 <% show_predecessor_info? = @contest.round > 1 %>

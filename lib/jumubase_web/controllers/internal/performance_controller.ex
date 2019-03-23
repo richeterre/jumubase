@@ -36,7 +36,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     conn
     |> prepare_filtered_list(params, contest)
     |> add_breadcrumbs(contest)
-    |> render(:index)
+    |> render("index.html")
   end
 
   def show(conn, %{"id" => id}, contest) do
@@ -269,7 +269,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> assign(:target_contest, target_contest)
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(name: gettext("Advancing performances"), path: current_path(conn))
-    |> render("advancing.html")
+    |> render(:advancing)
   end
 
   def migrate_advancing(conn, %{"performance_ids" => p_ids}, contest) do

@@ -1,11 +1,22 @@
 <div class="button-row">
-  <%= icon_link "share-alt",
-    gettext("Migrate performances to %{name}", name: name(@target_contest)),
-    Routes.internal_contest_performances_path(@conn, :migrate_advancing, @source_contest,
-      performance_ids: get_ids(@performances)
-    ),
-    method: :post,
-    data: [confirm: gettext("Do you really want to migrate the performances?")],
-    class: "btn btn-primary"
-    %>
+  <%= if @target_contest do %>
+    <%= icon_link "share-alt",
+      gettext("Migrate performances to %{name}", name: name(@target_contest)),
+      Routes.internal_contest_performances_path(@conn, :migrate_advancing, @source_contest,
+        performance_ids: get_ids(@performances)
+      ),
+      method: :post,
+      data: [confirm: gettext("Do you really want to migrate the performances?")],
+      class: "btn btn-primary"
+      %>
+  <% end %>
+
+  <%= if @source_contest.round == 2 do %>
+    <%= icon_link "export", gettext("Für JMDaten exportieren"),
+      Routes.internal_contest_performances_path(
+        @conn, :advancing, @source_contest, Map.put(@conn.params, :_format, "xml")
+      ),
+      class: "btn btn-primary"
+      %>
+  <% end %>
 </div>

@@ -100,6 +100,14 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
+    pipe_through [:browser, :html_and_xml]
+
+    resources "/contests", ContestController, only: [] do
+      get "/performances/advancing", PerformanceController, :advancing, as: :performances
+    end
+  end
+
+  scope "/internal", JumubaseWeb.Internal, as: :internal do
     pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
@@ -129,7 +137,6 @@ defmodule JumubaseWeb.Router do
         as: :results
 
       get "/performances/certificates", PerformanceController, :certificates, as: :performances
-      get "/performances/advancing", PerformanceController, :advancing, as: :performances
 
       post "/performances/migrate-advancing", PerformanceController, :migrate_advancing,
         as: :performances
@@ -138,7 +145,7 @@ defmodule JumubaseWeb.Router do
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
-      resources "/performances", PerformanceController, except: [:index]
+      resources "/performances", PerformanceController
 
       resources "/stages", StageController, only: [:index] do
         get "/schedule", StageController, :schedule, as: :schedule
@@ -148,14 +155,6 @@ defmodule JumubaseWeb.Router do
 
     resources "/hosts", HostController, only: [:index, :new, :create]
     resources "/users", UserController, except: [:show]
-  end
-
-  scope "/internal", JumubaseWeb.Internal, as: :internal do
-    pipe_through [:browser, :html_and_xml]
-
-    resources "/contests", ContestController, only: [] do
-      resources "/performances", PerformanceController, only: [:index]
-    end
   end
 
   if Mix.env() == :dev do

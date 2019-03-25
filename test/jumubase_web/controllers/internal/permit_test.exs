@@ -72,5 +72,31 @@ defmodule JumubaseWeb.Internal.PermitTest do
         assert Permit.authorized?(u, c3)
       end
     end
+
+    @tag role: "admin"
+    test "lets admins migrate advancing performances", %{user: u} do
+      assert Permit.authorized?(u, :migrate_advancing)
+    end
+
+    for role <- roles_except("admin") do
+      @tag role: role
+      test "does not let #{role} users migrate advancing performances", %{user: u} do
+        refute Permit.authorized?(u, :migrate_advancing)
+      end
+    end
+
+    for role <- ["admin", "observer"] do
+      @tag role: role
+      test "lets #{role} users export advancing performances", %{user: u} do
+        assert Permit.authorized?(u, :export_advancing)
+      end
+    end
+
+    for role <- roles_except(["admin", "observer"]) do
+      @tag role: role
+      test "does not let #{role} users export advancing performances", %{user: u} do
+        refute Permit.authorized?(u, :export_advancing)
+      end
+    end
   end
 end

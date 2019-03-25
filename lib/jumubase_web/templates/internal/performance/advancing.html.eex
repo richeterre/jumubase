@@ -7,18 +7,38 @@
 <hr>
 
 <% can_migrate? =
-  admin?(@current_user)
+  Permit.authorized?(@current_user, :migrate_advancing)
   and !Enum.empty?(@performances)
+  and !!@target_contest
   %>
 
-<%= if can_migrate? do %>
-  <%= render "_migration_controls.html",
-    conn: @conn,
-    source_contest: @contest,
-    target_contest: @target_contest,
-    performances: @performances
-    %>
-<% end %>
+<% can_export? =
+  Permit.authorized?(@current_user, :export_advancing)
+  and @contest.round == 2
+  %>
+
+<div class="button-row">
+  <%= if can_migrate? do %>
+    <%= icon_link "share-alt",
+      gettext("Migrate performances to %{name}", name: name(@target_contest)),
+      Routes.internal_contest_performances_path(@conn, :migrate_advancing, @contest,
+        performance_ids: get_ids(@performances)
+      ),
+      method: :post,
+      data: [confirm: gettext("Do you really want to migrate the performances?")],
+      class: "btn btn-primary"
+      %>
+  <% end %>
+
+  <%= if can_export? do %>
+    <%= icon_link "export", gettext("Export for JMDaten"),
+      Routes.internal_contest_performances_path(
+        @conn, :advancing, @contest, Map.put(@conn.params, :_format, "xml")
+      ),
+      class: "btn btn-default"
+      %>
+  <% end %>
+</div>
 
 <div class="table-responsive">
   <table class="table">

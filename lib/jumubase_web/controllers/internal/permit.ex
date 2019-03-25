@@ -21,6 +21,14 @@ defmodule JumubaseWeb.Internal.Permit do
 
   def authorized?(%User{}, %Contest{}), do: true
 
+  def authorized?(%User{role: role}, :migrate_advancing) do
+    role == "admin"
+  end
+
+  def authorized?(%User{role: role}, :export_advancing) do
+    role in ["admin", "observer"]
+  end
+
   # Private helpers
 
   # Excludes contests not hosted at one of the user's hosts.

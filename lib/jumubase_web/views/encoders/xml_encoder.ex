@@ -21,7 +21,9 @@ defmodule JumubaseWeb.XMLEncoder do
 
   # Private helpers
 
-  defp to_xml(%Performance{appearances: appearances, contest_category: cc} = p) do
+  defp to_xml(%Performance{contest_category: cc} = p) do
+    appearances = Performance.result_groups(p) |> List.flatten()
+
     for a <- appearances do
       other_appearances = appearances |> List.delete(a)
 

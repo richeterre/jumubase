@@ -49,6 +49,7 @@ defmodule JumubaseWeb.XMLEncoder do
       {:nachname, nil, p.family_name},
       {:vorname, nil, p.given_name},
       {:geburtstag, nil, format_date(p.birthdate)},
+      {:wohnbundesland, nil, "DSN"},
       {:tel, nil, p.phone},
       {:email, nil, p.email},
       {:instrument, nil, Instruments.name(a.instrument)}

@@ -33,6 +33,8 @@ defmodule Jumubase.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:absinthe, "~> 1.4.0"},
+      {:absinthe_plug, "~> 1.4"},
       {:bamboo, "~> 1.1"},
       {:bcrypt_elixir, "~> 1.0"},
       {:earmark, "~> 1.2"},

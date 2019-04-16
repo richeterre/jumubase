@@ -9,18 +9,24 @@ defmodule JumubaseWeb.Schema do
   ]
 
   query do
-    field :people, :person do
+    field :people, non_null_list_of(:person) do
       resolve(fn _, _ -> {:ok, @people} end)
     end
   end
 
   object :person do
-    field :name, :string
-    field :shoe_size, :integer
-    field :favorite_toy, :toy
+    field :name, non_null(:string)
+    field :shoe_size, non_null(:integer)
+    field :favorite_toy, non_null(:toy)
   end
 
   object :toy, description: "Something nice to play with" do
-    field :name, :string, description: "What to call the toy"
+    field :name, non_null(:string), description: "What to call the toy"
+  end
+
+  # Internal helpers
+
+  defp non_null_list_of(type) do
+    non_null(list_of(non_null(type)))
   end
 end

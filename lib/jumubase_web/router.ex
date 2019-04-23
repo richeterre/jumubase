@@ -162,6 +162,10 @@ defmodule JumubaseWeb.Router do
   if Mix.env() == :dev do
     scope "/dev" do
       forward "/sent_emails", Bamboo.SentEmailViewerPlug
+
+      forward "/graphql-playground", Absinthe.Plug.GraphiQL,
+        schema: JumubaseWeb.Schema,
+        interface: :playground
     end
   end
 end

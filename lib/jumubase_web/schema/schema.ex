@@ -1,27 +1,21 @@
 defmodule JumubaseWeb.Schema do
   use Absinthe.Schema
-
-  # Here is some fake data
-  @people [
-    %{name: "Annick", shoe_size: 39, favorite_toy: %{name: "iPad"}},
-    %{name: "Ben", shoe_size: 22, favorite_toy: %{name: "Bai"}},
-    %{name: "Stefan", shoe_size: 46, favorite_toy: %{name: "Frying pan"}}
-  ]
+  alias JumubaseWeb.ContestResolver
 
   query do
-    field :people, non_null_list_of(:person) do
-      resolve(fn _, _ -> {:ok, @people} end)
+    field :contests, non_null_list_of(:contest) do
+      description "The contests with public timetables."
+      resolve &ContestResolver.public_contests/2
     end
   end
 
-  object :person do
-    field :name, non_null(:string)
-    field :shoe_size, non_null(:integer)
-    field :favorite_toy, non_null(:toy)
-  end
+  object :contest do
+    field :id, :id
 
-  object :toy, description: "Something nice to play with" do
-    field :name, non_null(:string), description: "What to call the toy"
+    field :name, :string do
+      description "The contest’s name containing the round, year and host."
+      resolve &ContestResolver.name/2
+    end
   end
 
   # Internal helpers

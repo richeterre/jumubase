@@ -19,6 +19,11 @@ defmodule JumubaseWeb.Schema do
       resolve &ContestResolver.name/2
     end
 
+    field :country_code, :string do
+      description "The country code of the contest's host."
+      resolve &ContestResolver.country_code/2
+    end
+
     field :start_date, :date do
       description "The first day of the contest."
     end

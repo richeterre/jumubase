@@ -25,7 +25,8 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
   end
 
   test "returns all contest fields", %{conn: conn} do
-    %{stages: [s]} = h = insert(:host, name: "DS Helsinki", stages: build_list(1, :stage))
+    %{stages: [s]} =
+      h = insert(:host, name: "DS Helsinki", country_code: "FI", stages: build_list(1, :stage))
 
     c =
       insert(:contest,
@@ -39,7 +40,7 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
 
     insert_performance(c, stage: s)
 
-    query = "query { contests { id name startDate endDate } }"
+    query = "query { contests { id name countryCode startDate endDate } }"
     conn = get(conn, "/graphql", query: query)
 
     assert json_response(conn, 200) == %{
@@ -48,6 +49,7 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
                  %{
                    "id" => "#{c.id}",
                    "name" => "DS Helsinki, RW 2019",
+                   "countryCode" => "FI",
                    "startDate" => "2019-01-01",
                    "endDate" => "2019-01-02"
                  }

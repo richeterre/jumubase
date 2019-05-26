@@ -8,4 +8,8 @@ defmodule JumubaseWeb.ContestResolver do
   def name(_args, %{source: contest}) do
     {:ok, ContestView.name(contest)}
   end
+
+  def country_code(_args, %{source: contest}) do
+    {:ok, contest.host.country_code}
+  end
 end

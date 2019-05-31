@@ -12,9 +12,9 @@ defmodule JumubaseWeb.Schema do
   end
 
   object :contest do
-    field :id, :id
+    field :id, non_null(:id)
 
-    field :name, :string do
+    field :name, non_null(:string) do
       description "The contest’s name containing the round, year and host."
       resolve &ContestResolver.name/2
     end
@@ -24,11 +24,11 @@ defmodule JumubaseWeb.Schema do
       resolve &ContestResolver.country_code/2
     end
 
-    field :start_date, :date do
+    field :start_date, non_null(:date) do
       description "The first day of the contest."
     end
 
-    field :end_date, :date do
+    field :end_date, non_null(:date) do
       description "The last day of the contest."
     end
   end

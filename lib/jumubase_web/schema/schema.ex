@@ -30,6 +30,10 @@ defmodule JumubaseWeb.Schema do
       resolve &ContestResolver.country_code/2
     end
 
+    field :dates, non_null_list_of(:date) do
+      resolve &ContestResolver.dates/2
+    end
+
     field :start_date, non_null(:date) do
       description "The first day of the contest."
     end

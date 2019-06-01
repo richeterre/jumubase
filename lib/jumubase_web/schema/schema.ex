@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.Schema do
   use Absinthe.Schema
-  alias JumubaseWeb.ContestResolver
+  alias JumubaseWeb.{ContestResolver, PerformanceResolver}
 
   import_types Absinthe.Type.Custom
 
@@ -8,6 +8,12 @@ defmodule JumubaseWeb.Schema do
     field :contests, non_null_list_of(:contest) do
       description "The contests with public timetables."
       resolve &ContestResolver.public_contests/2
+    end
+
+    field :performances, non_null_list_of(:performance) do
+      arg :contest_id, non_null(:id)
+      description "The performances of a contest."
+      resolve &PerformanceResolver.performances/2
     end
   end
 
@@ -30,6 +36,24 @@ defmodule JumubaseWeb.Schema do
 
     field :end_date, non_null(:date) do
       description "The last day of the contest."
+    end
+  end
+
+  object :performance do
+    field :id, non_null(:id)
+
+    field :stage_time, non_null(:string) do
+      resolve &PerformanceResolver.stage_time/2
+    end
+
+    field :category_info, non_null(:string) do
+      description "The performance's contest category and age group."
+      resolve &PerformanceResolver.category_info/2
+    end
+
+    field :appearances, non_null_list_of(:string) do
+      description "The performance's appearances."
+      resolve &PerformanceResolver.appearances/2
     end
   end
 

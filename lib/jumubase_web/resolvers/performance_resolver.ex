@@ -1,11 +1,13 @@
 defmodule JumubaseWeb.PerformanceResolver do
   alias Jumubase.Showtime.Performance
+  alias Jumubase.Showtime.PerformanceFilter
   alias JumubaseWeb.Internal.PerformanceView
   alias JumubaseWeb.Internal.AppearanceView
 
-  def performances(%{contest_id: c_id}, _) do
+  def performances(%{contest_id: c_id, date: date}, _) do
     contest = Jumubase.Foundation.get_contest!(c_id)
-    {:ok, Jumubase.Showtime.list_performances(contest)}
+    filter = %PerformanceFilter{stage_date: date}
+    {:ok, Jumubase.Showtime.list_performances(contest, filter)}
   end
 
   def stage_time(_, %{source: %Performance{} = p}) do

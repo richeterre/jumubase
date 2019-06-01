@@ -12,6 +12,7 @@ defmodule JumubaseWeb.Schema do
 
     field :performances, non_null_list_of(:performance) do
       arg :contest_id, non_null(:id)
+      arg :date, non_null(:date)
       description "The performances of a contest."
       resolve &PerformanceResolver.performances/2
     end

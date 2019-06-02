@@ -21,6 +21,10 @@ defmodule JumubaseWeb.ContestResolver do
     {:ok, dates}
   end
 
+  def stages(_, %{source: contest}) do
+    {:ok, contest.host.stages}
+  end
+
   def name(_args, %{source: contest}) do
     {:ok, ContestView.name(contest)}
   end

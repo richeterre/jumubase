@@ -35,6 +35,10 @@ defmodule JumubaseWeb.Schema do
       resolve &ContestResolver.dates/2
     end
 
+    field :stages, non_null_list_of(:stage) do
+      resolve &ContestResolver.stages/2
+    end
+
     field :start_date, non_null(:date) do
       description "The first day of the contest."
     end
@@ -60,6 +64,12 @@ defmodule JumubaseWeb.Schema do
       description "The performance's appearances."
       resolve &PerformanceResolver.appearances/2
     end
+  end
+
+  object :stage do
+    field :id, non_null(:id)
+
+    field :name, non_null(:string)
   end
 
   # Internal helpers

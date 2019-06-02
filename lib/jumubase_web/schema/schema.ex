@@ -11,9 +11,9 @@ defmodule JumubaseWeb.Schema do
     end
 
     field :performances, non_null_list_of(:performance) do
-      arg :contest_id, non_null(:id)
-      arg :date, non_null(:date)
       description "The performances of a contest."
+      arg :contest_id, non_null(:id)
+      arg :filter, :performance_filter
       resolve &PerformanceResolver.performances/2
     end
   end
@@ -70,6 +70,11 @@ defmodule JumubaseWeb.Schema do
     field :id, non_null(:id)
 
     field :name, non_null(:string)
+  end
+
+  input_object :performance_filter do
+    field :stage_date, :date
+    field :stage_id, :id
   end
 
   # Internal helpers

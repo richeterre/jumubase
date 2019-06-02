@@ -10,6 +10,11 @@ defmodule JumubaseWeb.PerformanceResolver do
     {:ok, Jumubase.Showtime.list_performances(contest, filter)}
   end
 
+  def performances(%{contest_id: c_id}, _) do
+    contest = Jumubase.Foundation.get_contest!(c_id)
+    {:ok, Jumubase.Showtime.list_performances(contest)}
+  end
+
   def stage_time(_, %{source: %Performance{} = p}) do
     {:ok, PerformanceView.stage_time(p)}
   end

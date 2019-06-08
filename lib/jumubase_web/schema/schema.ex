@@ -26,7 +26,7 @@ defmodule JumubaseWeb.Schema do
       resolve &ContestResolver.name/2
     end
 
-    field :country_code, :string do
+    field :country_code, non_null(:string) do
       description "The country code of the contest's host."
       resolve &ContestResolver.country_code/2
     end

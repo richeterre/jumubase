@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.Internal.PerformanceController do
   use JumubaseWeb, :controller
-  import Jumubase.Utils, only: [parse_bool: 1]
+  import Jumubase.Utils, only: [parse_bool: 1, parse_ids: 1]
   import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
   import JumubaseWeb.ErrorHelpers, only: [get_translated_errors: 1]
   alias Ecto.Changeset
@@ -180,7 +180,8 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   def update_results(conn, %{"results" => results} = params, contest) do
     %{"appearance_ids" => a_id_string, "points" => points} = results
-    a_ids = a_id_string |> String.split(",")
+    a_ids = parse_ids(a_id_string)
+
     appearances = Showtime.list_appearances(contest, a_ids)
 
     list_path =

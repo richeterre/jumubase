@@ -519,6 +519,12 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     } do
       conn |> attempt_update_results(c) |> assert_unauthorized_guest
     end
+
+    @tag login_as: "admin"
+    test "handles updating results with an empty appearance id array", %{conn: conn, contest: c} do
+      params = %{"results" => %{"appearance_ids" => "", "points" => "25"}}
+      patch(conn, Routes.internal_contest_results_path(conn, :update_results, c), params)
+    end
   end
 
   describe "publish_results/2" do

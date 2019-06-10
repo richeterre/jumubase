@@ -3,6 +3,8 @@ defmodule Jumubase.UtilsTest do
   alias Jumubase.Utils
   alias Jumubase.Foundation.Host
 
+  doctest Utils
+
   describe "get_ids/1" do
     test "returns a list of ids for the given structs" do
       structs = [%{id: 1}, %Host{id: 2}, %{id: "3"}]

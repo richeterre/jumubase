@@ -34,13 +34,18 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
         season: 56,
         round: 1,
         start_date: ~D[2019-01-01],
-        end_date: ~D[2019-01-02],
+        end_date: ~D[2019-01-03],
         timetables_public: true
       )
 
     insert_performance(c, stage: s)
 
-    query = "query { contests { id name countryCode startDate endDate } }"
+    query = """
+    query {
+      contests { id name countryCode startDate endDate dates }
+    }
+    """
+
     conn = get(conn, "/graphql", query: query)
 
     assert json_response(conn, 200) == %{
@@ -51,7 +56,8 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
                    "name" => "DS Helsinki, RW 2019",
                    "countryCode" => "FI",
                    "startDate" => "2019-01-01",
-                   "endDate" => "2019-01-02"
+                   "endDate" => "2019-01-03",
+                   "dates" => ["2019-01-01", "2019-01-02", "2019-01-03"],
                  }
                ]
              }

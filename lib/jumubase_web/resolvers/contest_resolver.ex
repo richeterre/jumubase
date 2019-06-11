@@ -3,11 +3,7 @@ defmodule JumubaseWeb.ContestResolver do
   alias JumubaseWeb.Internal.ContestView
 
   def public_contests(_, _) do
-    {:ok, Jumubase.Foundation.list_public_contests()}
-  end
-
-  def stages(_, %{source: contest}) do
-    {:ok, contest.host.stages}
+    {:ok, Foundation.list_public_contests()}
   end
 
   def name(_args, %{source: contest}) do
@@ -20,5 +16,9 @@ defmodule JumubaseWeb.ContestResolver do
 
   def dates(_, %{source: contest}) do
     {:ok, Foundation.date_range(contest) |> Enum.to_list()}
+  end
+
+  def stages(_, %{source: contest}) do
+    {:ok, contest.host.stages}
   end
 end

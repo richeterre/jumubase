@@ -17,7 +17,10 @@ Jumubase also exposes some public data, such as timetables and results, via a JS
 
 ## Setup instructions
 
+Jumubase is built with [Elixir][elixir] and the [Phoenix framework][phoenix-framework]. Follow these steps to set up a local environment:
+
 0. Clone this codebase
+0. [Install Elixir][elixir-installation]
 0. Install PostgreSQL, e.g. through the provided `docker-compose.yml` file or [Postgres.app][postgres-app]
 0. Install dependencies with `mix deps.get`
 0. Install JS dependencies with `cd assets && npm install`
@@ -26,7 +29,10 @@ Jumubase also exposes some public data, such as timetables and results, via a JS
 
 Then, point your browser to [`localhost:4000`][localhost].
 
-[postgres-app]: http://postgresapp.com
+[elixir]: https://www.elixir-lang.org
+[phoenix-framework]: https://phoenixframework.org
+[elixir-installation]: https://elixir-lang.org/install.html
+[postgres-app]: https://postgresapp.com
 [localhost]: http://localhost:4000
 
 ## Release instructions

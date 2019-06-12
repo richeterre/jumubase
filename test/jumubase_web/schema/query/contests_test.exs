@@ -26,7 +26,12 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
 
   test "returns all contest fields", %{conn: conn} do
     %{stages: [s]} =
-      h = insert(:host, name: "DS Helsinki", country_code: "FI", stages: build_list(1, :stage))
+      h =
+      insert(:host,
+        name: "DS Helsinki",
+        country_code: "FI",
+        stages: [build(:stage, name: "Aula")]
+      )
 
     c =
       insert(:contest,
@@ -42,7 +47,7 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
 
     query = """
     query {
-      contests { id name countryCode startDate endDate dates }
+      contests { id name countryCode startDate endDate dates stages { id name } }
     }
     """
 
@@ -58,6 +63,9 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
                    "startDate" => "2019-01-01",
                    "endDate" => "2019-01-03",
                    "dates" => ["2019-01-01", "2019-01-02", "2019-01-03"],
+                   "stages" => [
+                     %{"id" => "#{s.id}", "name" => "Aula"}
+                   ]
                  }
                ]
              }

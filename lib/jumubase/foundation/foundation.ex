@@ -82,7 +82,7 @@ defmodule Jumubase.Foundation do
         join: cc in assoc(c, :contest_categories),
         join: p in assoc(cc, :performances),
         order_by: [{:desc, c.round}, h.name, cc.inserted_at],
-        preload: [host: {h, [stages: :performances]}, contest_categories: {cc, :category}]
+        preload: [host: {h, [stages: ^stages_query()]}, contest_categories: {cc, :category}]
 
     Repo.all(query)
     |> exclude_unused_stages
@@ -259,11 +259,17 @@ defmodule Jumubase.Foundation do
   """
   def load_used_stages(%Contest{} = contest) do
     contest
-    |> Repo.preload([[host: [stages: :performances]], :contest_categories])
+    |> Repo.preload([[host: [stages: stages_query()]], :contest_categories])
     |> exclude_unused_stages
   end
 
   # Private helpers
+
+  # Build query for fetching stages in display order.
+  # This preloads performances to allow removing unused stages after executing the query.
+  defp stages_query do
+    from s in Stage, order_by: s.inserted_at, preload: :performances
+  end
 
   # Filter nested contest stages by whether they have performances in that contest.
   defp exclude_unused_stages(%Contest{host: h} = c) do

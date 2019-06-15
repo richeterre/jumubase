@@ -71,4 +71,36 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
              }
            }
   end
+
+  test "returns stages ordered by creation date", %{conn: conn} do
+    h = insert(:host)
+    now = Timex.now()
+    s1 = insert(:stage, host: h, inserted_at: now)
+    s2 = insert(:stage, host: h, inserted_at: now |> Timex.shift(seconds: 1))
+    s3 = insert(:stage, host: h, inserted_at: now |> Timex.shift(seconds: -1))
+
+    c = insert(:contest, host: h, timetables_public: true)
+
+    insert_performance(c, stage: s1)
+    insert_performance(c, stage: s2)
+    insert_performance(c, stage: s3)
+
+    query = "query { contests { stages { id } } }"
+
+    conn = get(conn, "/graphql", query: query)
+
+    assert json_response(conn, 200) == %{
+             "data" => %{
+               "contests" => [
+                 %{
+                   "stages" => [
+                     %{"id" => "#{s3.id}"},
+                     %{"id" => "#{s1.id}"},
+                     %{"id" => "#{s2.id}"}
+                   ]
+                 }
+               ]
+             }
+           }
+  end
 end

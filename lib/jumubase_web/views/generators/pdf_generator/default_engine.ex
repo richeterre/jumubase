@@ -86,7 +86,8 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
 
     PdfGenerator.generate_binary!(html,
       page_size: "A4",
-      shell_params: shell_params
+      # shell_params: shell_params,
+      generator: :chrome
     )
   end
 
@@ -97,11 +98,15 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
         style(%{"page-break-before" => "always"}),
         [
           :div,
-          style(%{"border-bottom" => @border_style, "height" => "55px"}),
+          style(%{
+            "border-bottom" => @border_style,
+            "height" => "55px",
+            "display" => "flex",
+            "justify-content" => "space-between"
+          }),
           [
             [
               :div,
-              style(%{"float" => "left"}),
               [
                 [:span, category_info(p)],
                 [:span, format_datetime(p.stage_time)]
@@ -110,7 +115,6 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
             ],
             [
               :div,
-              style(%{"float" => "right"}),
               [:br, [:span, predecessor_host_name(p)]]
             ]
           ]

@@ -60,6 +60,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configure PDF generation
+config :pdf_generator,
+  use_chrome: true,
+  raise_on_missing_wkhtmltopdf_binary: false
+
 # Configure Sentry
 config :sentry,
   dsn: System.get_env("SENTRY_DSN"),

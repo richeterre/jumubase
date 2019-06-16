@@ -71,7 +71,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
         ]
       ])
 
-    base_params = ["--disable-smart-shrinking", "--orientation", orientation, "--quiet"]
+    base_params = ["--disable-smart-shrinking", "--orientation", orientation]
 
     # Adjust zoom level to account for different DPI, using Mac (96 dpi) as baseline
     shell_params =

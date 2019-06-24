@@ -110,11 +110,12 @@ defmodule Jumubase.Foundation do
     Repo.get!(Contest, id) |> Repo.preload(:host)
   end
 
+  def get_public_contest(id) do
+    public_contests_query() |> Repo.get(id)
+  end
+
   def get_public_contest!(id) do
-    Contest
-    |> where(timetables_public: true)
-    |> preload(:host)
-    |> Repo.get!(id)
+    public_contests_query() |> Repo.get!(id)
   end
 
   @doc """
@@ -265,7 +266,14 @@ defmodule Jumubase.Foundation do
 
   # Private helpers
 
-  # Build query for fetching stages in display order.
+  # Build a query for fetching public contests.
+  defp public_contests_query do
+    Contest
+    |> where(timetables_public: true)
+    |> preload(:host)
+  end
+
+  # Build a query for fetching stages in display order.
   # This preloads performances to allow removing unused stages after executing the query.
   defp stages_query do
     from s in Stage, order_by: s.inserted_at, preload: :performances

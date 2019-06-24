@@ -352,6 +352,28 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_public_contest/1" do
+    test "returns a contest with public timetables" do
+      %{id: id} = insert(:contest, timetables_public: true)
+      result = Foundation.get_public_contest(id)
+      assert result.id == id
+    end
+
+    test "preloads the contest's host" do
+      %{id: id} = insert(:contest, timetables_public: true)
+      assert %Contest{host: %Host{}} = Foundation.get_public_contest(id)
+    end
+
+    test "returns nil if the contest isn't found" do
+      assert Foundation.get_public_contest(123) == nil
+    end
+
+    test "returns nil if the contest doesn't have public timetables" do
+      %{id: id} = insert(:contest, timetables_public: false)
+      assert Foundation.get_public_contest(id) == nil
+    end
+  end
+
   describe "get_public_contest!/1" do
     test "returns a contest with public timetables" do
       %{id: id} = insert(:contest, timetables_public: true)

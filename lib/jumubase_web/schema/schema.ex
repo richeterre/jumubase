@@ -15,7 +15,7 @@ defmodule JumubaseWeb.Schema do
     field :performances, list_of(non_null(:performance)) do
       description "The performances of a contest."
       arg :contest_id, non_null(:id)
-      arg :filter, :performance_filter, default_value: %{}
+      arg :filter, :performance_filter
       resolve &PerformanceResolver.performances/2
     end
   end

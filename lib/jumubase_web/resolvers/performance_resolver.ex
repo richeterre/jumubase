@@ -15,10 +15,6 @@ defmodule JumubaseWeb.PerformanceResolver do
     end
   end
 
-  def stage_time(_, %{source: %Performance{} = p}) do
-    {:ok, PerformanceView.stage_time(p)}
-  end
-
   def category_info(_, %{source: %Performance{} = p}) do
     {:ok, PerformanceView.category_info(p)}
   end

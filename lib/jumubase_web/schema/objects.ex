@@ -50,8 +50,8 @@ defmodule JumubaseWeb.Schema.Objects do
   object :performance do
     field :id, non_null(:id)
 
-    field :stage_time, non_null(:string) do
-      resolve &PerformanceResolver.stage_time/2
+    field :stage_time, non_null(:time) do
+      description "The scheduled wall time of the performance."
     end
 
     field :category_info, non_null(:string) do

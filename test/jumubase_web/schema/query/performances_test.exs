@@ -114,7 +114,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                "performances" => [
                  %{
                    "id" => "#{p.id}",
-                   "stageTime" => "09:00",
+                   "stageTime" => "09:00:00",
                    "categoryInfo" => "Tuba solo, AG IV",
                    "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}]
                  }

@@ -30,20 +30,22 @@ defmodule JumubaseWeb.Schema.Objects do
       resolve &ContestResolver.country_code/2
     end
 
-    field :dates, non_null_list_of(:date) do
-      resolve &ContestResolver.dates/2
-    end
-
-    field :stages, non_null_list_of(:stage) do
-      resolve &ContestResolver.stages/2
-    end
-
     field :start_date, non_null(:date) do
       description "The first day of the contest."
     end
 
     field :end_date, non_null(:date) do
       description "The last day of the contest."
+    end
+
+    field :dates, non_null_list_of(:date) do
+      description "The dates on which the contest is happening."
+      resolve &ContestResolver.dates/2
+    end
+
+    field :stages, non_null_list_of(:stage) do
+      description "The stages used in this contest."
+      resolve &ContestResolver.stages/2
     end
   end
 
@@ -68,7 +70,9 @@ defmodule JumubaseWeb.Schema.Objects do
   object :stage do
     field :id, non_null(:id)
 
-    field :name, non_null(:string)
+    field :name, non_null(:string) do
+      description "The public name of the stage."
+    end
   end
 
   input_object :performance_filter do

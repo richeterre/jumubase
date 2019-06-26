@@ -1,7 +1,21 @@
 defmodule JumubaseWeb.Schema.Objects do
   use Absinthe.Schema.Notation
   import JumubaseWeb.Schema.Helpers
-  alias JumubaseWeb.{ContestResolver, PerformanceResolver}
+  alias JumubaseWeb.{AppearanceResolver, ContestResolver, PerformanceResolver}
+
+  object :appearance do
+    field :id, non_null(:id)
+
+    field :participant_name, non_null(:string) do
+      description "The full name of the appearance's participant."
+      resolve &AppearanceResolver.participant_name/2
+    end
+
+    field :instrument_name, non_null(:string) do
+      description "The name of the participant's instrument in this appearance."
+      resolve &AppearanceResolver.instrument_name/2
+    end
+  end
 
   object :contest do
     field :id, non_null(:id)
@@ -45,7 +59,7 @@ defmodule JumubaseWeb.Schema.Objects do
       resolve &PerformanceResolver.category_info/2
     end
 
-    field :appearances, non_null_list_of(:string) do
+    field :appearances, non_null_list_of(:appearance) do
       description "The performance's appearances."
       resolve &PerformanceResolver.appearances/2
     end

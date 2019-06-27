@@ -1,6 +1,8 @@
 defmodule JumubaseWeb.Schema.Objects do
   use Absinthe.Schema.Notation
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   import JumubaseWeb.Schema.Helpers
+  alias Jumubase.Showtime
   alias JumubaseWeb.{AppearanceResolver, ContestResolver, PerformanceResolver}
 
   object :appearance do
@@ -64,6 +66,19 @@ defmodule JumubaseWeb.Schema.Objects do
     field :appearances, non_null_list_of(:appearance) do
       description "The performance's appearances."
       resolve &PerformanceResolver.appearances/2
+    end
+
+    field :pieces, non_null_list_of(:piece) do
+      description "The performance's pieces."
+      resolve dataloader(Showtime)
+    end
+  end
+
+  object :piece do
+    field :id, non_null(:id)
+
+    field :title, non_null(:string) do
+      description "The title of the piece."
     end
   end
 

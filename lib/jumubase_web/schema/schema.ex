@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Schema do
   use Absinthe.Schema
   import JumubaseWeb.Schema.Helpers
+  alias Jumubase.Showtime
   alias JumubaseWeb.{ContestResolver, PerformanceResolver}
 
   import_types Absinthe.Type.Custom
@@ -18,5 +19,21 @@ defmodule JumubaseWeb.Schema do
       arg :filter, :performance_filter
       resolve &PerformanceResolver.performances/2
     end
+  end
+
+  @doc """
+  Sets up a dataloader for fetching batched data, to avoid n+1 queries.
+  """
+  def dataloader do
+    Dataloader.new()
+    |> Dataloader.add_source(Showtime, Showtime.data())
+  end
+
+  def context(ctx) do
+    Map.put(ctx, :loader, dataloader())
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader | Absinthe.Plugin.defaults()]
   end
 end

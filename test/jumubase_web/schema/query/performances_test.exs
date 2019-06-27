@@ -90,7 +90,8 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
             participant: build(:participant, given_name: "A", family_name: "B"),
             instrument: "violin"
           )
-        ]
+        ],
+        pieces: [build(:piece, title: "4’33”")]
       )
 
     query = """
@@ -102,6 +103,9 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
         appearances {
           participantName
           instrumentName
+        }
+        pieces {
+          title
         }
       }
     }
@@ -116,7 +120,8 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                    "id" => "#{p.id}",
                    "stageTime" => "09:00:00",
                    "categoryInfo" => "Tuba solo, AG IV",
-                   "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}]
+                   "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}],
+                   "pieces" => [%{"title" => "4’33”"}]
                  }
                ]
              }

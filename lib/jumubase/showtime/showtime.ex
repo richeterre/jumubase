@@ -424,6 +424,13 @@ defmodule Jumubase.Showtime do
     end
   end
 
+  @doc """
+  Defines a Dataloader source.
+  """
+  def data do
+    Dataloader.Ecto.new(Repo)
+  end
+
   # Private helpers
 
   defp performances_query(contest_id) do

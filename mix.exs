@@ -37,6 +37,7 @@ defmodule Jumubase.Mixfile do
       {:absinthe_plug, "~> 1.4"},
       {:bamboo, "~> 1.1"},
       {:bcrypt_elixir, "~> 1.0"},
+      {:dataloader, "1.0.6"},
       {:earmark, "~> 1.2"},
       {:ecto_sql, "~> 3.0"},
       {:ex_machina, "~> 2.2"},

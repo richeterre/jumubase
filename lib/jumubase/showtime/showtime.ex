@@ -71,6 +71,16 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Returns the contest's scheduled performances that match the given filter.
+  """
+  def scheduled_performances(%Contest{id: c_id}, %PerformanceFilter{} = filter) do
+    performances_query(c_id)
+    |> where([p], not is_nil(p.stage_time))
+    |> apply_filter(filter)
+    |> Repo.all()
+  end
+
+  @doc """
   Returns all performances from the contest that advance to the next round.
   """
   def advancing_performances(%Contest{id: id}) do

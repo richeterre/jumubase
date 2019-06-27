@@ -1,17 +1,19 @@
 defmodule JumubaseWeb.PerformanceResolver do
+  alias Jumubase.Foundation
+  alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias Jumubase.Showtime.PerformanceFilter
   alias JumubaseWeb.Internal.PerformanceView
 
   def performances(%{contest_id: c_id} = args, _) do
-    case Jumubase.Foundation.get_public_contest(c_id) do
+    case Foundation.get_public_contest(c_id) do
       nil ->
         {:error, "No public contest found for this ID"}
 
       contest ->
         filter_params = args[:filter] || %{}
         filter = PerformanceFilter.from_params(filter_params)
-        {:ok, Jumubase.Showtime.list_performances(contest, filter)}
+        {:ok, Showtime.scheduled_performances(contest, filter)}
     end
   end
 

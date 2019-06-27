@@ -64,10 +64,9 @@ defmodule Jumubase.Showtime do
   @doc """
   Returns all performances without a stage time from the contest.
   """
-  def unscheduled_performances(%Contest{id: id}) do
-    performances_query(id)
+  def unscheduled_performances(%Contest{id: c_id}) do
+    performances_query(c_id)
     |> where([p], is_nil(p.stage_time))
-    |> preload(:stage)
     |> Repo.all()
   end
 

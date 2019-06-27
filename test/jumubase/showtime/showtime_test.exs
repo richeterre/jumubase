@@ -147,15 +147,13 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered(Showtime.unscheduled_performances(c), [p1, p2])
     end
 
-    test "preloads all necessary associations",
-         %{contest: c} do
-      insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
+    test "preloads all necessary associations", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance))
 
       assert [
                %Performance{
                  contest_category: %ContestCategory{category: %Category{}},
-                 appearances: [%Appearance{participant: %Participant{}}],
-                 stage: %Stage{}
+                 appearances: [%Appearance{participant: %Participant{}}]
                }
              ] = Showtime.unscheduled_performances(c)
     end

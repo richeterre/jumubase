@@ -91,7 +91,14 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
             instrument: "violin"
           )
         ],
-        pieces: [build(:piece, title: "4’33”")]
+        pieces: [
+          build(:piece,
+            composer: "John Cage",
+            composer_born: "1912",
+            composer_died: "1992",
+            title: "4′33″"
+          )
+        ]
       )
 
     query = """
@@ -105,6 +112,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
           instrumentName
         }
         pieces {
+          personInfo
           title
         }
       }
@@ -121,7 +129,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                    "stageTime" => "09:00:00",
                    "categoryInfo" => "Tuba solo, AG IV",
                    "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}],
-                   "pieces" => [%{"title" => "4’33”"}]
+                   "pieces" => [%{"personInfo" => "John Cage (1912–1992)", "title" => "4′33″"}]
                  }
                ]
              }

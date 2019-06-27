@@ -3,7 +3,7 @@ defmodule JumubaseWeb.Schema.Objects do
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   import JumubaseWeb.Schema.Helpers
   alias Jumubase.Showtime
-  alias JumubaseWeb.{AppearanceResolver, ContestResolver, PerformanceResolver}
+  alias JumubaseWeb.{AppearanceResolver, ContestResolver, PerformanceResolver, PieceResolver}
 
   object :appearance do
     field :id, non_null(:id)
@@ -76,6 +76,15 @@ defmodule JumubaseWeb.Schema.Objects do
 
   object :piece do
     field :id, non_null(:id)
+
+    field :person_info, non_null(:string) do
+      description """
+      For classical pieces, this contains the name and biographical dates of the piece's composer.
+      For popular pieces, the artist name is returned.
+      """
+
+      resolve &PieceResolver.person_info/2
+    end
 
     field :title, non_null(:string) do
       description "The title of the piece."

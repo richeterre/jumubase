@@ -17,6 +17,13 @@ defmodule JumubaseWeb.PerformanceResolver do
     end
   end
 
+  def performance(%{id: id}, _) do
+    case Showtime.get_public_performance(id) do
+      nil -> {:error, "No public performance found for this ID"}
+      performance -> {:ok, performance}
+    end
+  end
+
   def category_info(_, %{source: %Performance{} = p}) do
     {:ok, PerformanceView.category_info(p)}
   end

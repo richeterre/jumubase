@@ -112,6 +112,27 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Gets a single public, scheduled performance.
+
+  Returns nil if the performance is not found, unscheduled or not part of a public contest.
+  """
+  def get_public_performance(id) do
+    query =
+      from p in Performance,
+        join: cc in assoc(p, :contest_category),
+        join: c in assoc(cc, :contest),
+        where: c.timetables_public,
+        where: not is_nil(p.stage_time),
+        preload: [
+          [contest_category: {cc, :category}],
+          [appearances: :participant],
+          [pieces: ^pieces_query()]
+        ]
+
+    Repo.get(query, id)
+  end
+
+  @doc """
   Looks up a performance with the given edit code.
 
   Returns an error tuple if no performance could be found.

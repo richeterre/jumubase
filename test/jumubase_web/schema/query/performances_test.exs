@@ -134,4 +134,99 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
              }
     end
   end
+
+  describe "performance" do
+    test "returns a single performance", %{conn: conn} do
+      c = insert(:contest, timetables_public: true)
+      cc = insert(:contest_category, contest: c, category: build(:category, name: "Violine solo"))
+
+      p =
+        insert_scheduled_performance(cc,
+          stage_time: ~N[2019-01-01 09:45:00],
+          age_group: "IV",
+          appearances: [
+            build(:appearance,
+              role: "soloist",
+              participant: build(:participant, given_name: "A", family_name: "B"),
+              instrument: "violin"
+            )
+          ],
+          pieces: [
+            build(:piece,
+              composer: "John Cage",
+              composer_born: "1912",
+              composer_died: "1992",
+              title: "4′33″"
+            )
+          ]
+        )
+
+      query = """
+      query Performance($id: ID!) {
+        performance(id: $id) {
+          id
+          stageTime
+          categoryInfo
+          appearances {
+            participantName
+            instrumentName
+          }
+          pieces {
+            personInfo
+            title
+          }
+        }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"id" => p.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performance" => %{
+                   "id" => "#{p.id}",
+                   "stageTime" => "09:45:00",
+                   "categoryInfo" => "Violine solo, AG IV",
+                   "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}],
+                   "pieces" => [%{"personInfo" => "John Cage (1912–1992)", "title" => "4′33″"}]
+                 }
+               }
+             }
+    end
+
+    test "returns nil for a performance from a non-public contest", %{conn: conn} do
+      c = insert(:contest, timetables_public: false)
+      p = insert_scheduled_performance(c)
+
+      conn |> assert_nil_performance(p.id)
+    end
+
+    test "returns nil for an unscheduled performance", %{conn: conn} do
+      c = insert(:contest, timetables_public: true)
+      p = insert_performance(c)
+
+      conn |> assert_nil_performance(p.id)
+    end
+
+    test "returns nil for an unknown performance", %{conn: conn} do
+      conn |> assert_nil_performance(123)
+    end
+  end
+
+  # Private helpers
+
+  # Queries the performance with the given ID and asserts a nil response with an error message.
+  defp assert_nil_performance(conn, p_id) do
+    query = """
+    query Performance($id: ID!) {
+      performance(id: $id) { id }
+    }
+    """
+
+    conn = get(conn, "/graphql", query: query, variables: %{"id" => p_id})
+
+    assert response = json_response(conn, 200)
+    assert response["data"] == %{"performance" => nil}
+    assert [%{"message" => "No public performance found for this ID"}] = response["errors"]
+  end
 end

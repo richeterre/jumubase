@@ -14,10 +14,16 @@ defmodule JumubaseWeb.Schema do
     end
 
     field :performances, list_of(non_null(:performance)) do
-      description "The performances of a contest."
+      description "The scheduled performances of a public contest."
       arg :contest_id, non_null(:id)
       arg :filter, :performance_filter
       resolve &PerformanceResolver.performances/2
+    end
+
+    field :performance, :performance do
+      description "A single performance that's scheduled in a public contest."
+      arg :id, non_null(:id)
+      resolve &PerformanceResolver.performance/2
     end
   end
 

@@ -296,6 +296,58 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "get_public_performance/1" do
+    test "gets a public performance by id" do
+      c = insert(:contest, timetables_public: true)
+      %{id: id} = insert_scheduled_performance(c)
+      assert %Performance{id: ^id} = Showtime.get_public_performance(id)
+    end
+
+    test "returns nil for a scheduled performance in a non-public contest" do
+      c = insert(:contest, timetables_public: false)
+      %{id: id} = insert_scheduled_performance(c)
+      assert Showtime.get_public_performance(id) == nil
+    end
+
+    test "returns nil for an unscheduled performance in a public contest" do
+      c = insert(:contest, timetables_public: true)
+      %{id: id} = insert_performance(c)
+      assert Showtime.get_public_performance(id) == nil
+    end
+
+    test "returns nil for an unknown id" do
+      assert Showtime.get_public_performance(123) == nil
+    end
+
+    test "preloads the correct associations" do
+      c = insert(:contest, timetables_public: true)
+      %{id: id} = insert_scheduled_performance(c)
+
+      assert %Performance{
+               contest_category: %ContestCategory{category: %Category{}},
+               appearances: [%Appearance{participant: %Participant{}}],
+               pieces: [%Piece{}]
+             } = Showtime.get_public_performance(id)
+    end
+
+    test "preloads the pieces in insertion order, earliest first" do
+      c = insert(:contest, timetables_public: true)
+      now = Timex.now()
+
+      %{id: id} =
+        insert_scheduled_performance(c,
+          pieces: [
+            build(:piece, title: "A", inserted_at: now |> Timex.shift(seconds: 1)),
+            build(:piece, title: "B", inserted_at: now |> Timex.shift(seconds: -1)),
+            build(:piece, title: "C", inserted_at: now)
+          ]
+        )
+
+      assert %{pieces: [%{title: "B"}, %{title: "C"}, %{title: "A"}]} =
+               Showtime.get_public_performance(id)
+    end
+  end
+
   describe "lookup_performance/1" do
     test "gets a performance by its edit code", %{contest: c} do
       %{id: id, edit_code: edit_code} = insert_performance(c)

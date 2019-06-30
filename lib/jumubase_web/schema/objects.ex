@@ -3,19 +3,19 @@ defmodule JumubaseWeb.Schema.Objects do
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
   import JumubaseWeb.Schema.Helpers
   alias Jumubase.Showtime
-  alias JumubaseWeb.{AppearanceResolver, ContestResolver, PerformanceResolver, PieceResolver}
+  alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
   object :appearance do
     field :id, non_null(:id)
 
     field :participant_name, non_null(:string) do
       description "The full name of the appearance's participant."
-      resolve &AppearanceResolver.participant_name/2
+      resolve &ShowtimeResolver.participant_name/3
     end
 
     field :instrument_name, non_null(:string) do
       description "The name of the participant's instrument in this appearance."
-      resolve &AppearanceResolver.instrument_name/2
+      resolve &ShowtimeResolver.instrument_name/3
     end
   end
 
@@ -24,12 +24,12 @@ defmodule JumubaseWeb.Schema.Objects do
 
     field :name, non_null(:string) do
       description "The contest’s name containing the round, year and host."
-      resolve &ContestResolver.name/2
+      resolve &FoundationResolver.name/3
     end
 
     field :country_code, non_null(:string) do
       description "The country code of the contest's host."
-      resolve &ContestResolver.country_code/2
+      resolve &FoundationResolver.country_code/3
     end
 
     field :start_date, non_null(:date) do
@@ -42,12 +42,12 @@ defmodule JumubaseWeb.Schema.Objects do
 
     field :dates, non_null_list_of(:date) do
       description "The dates on which the contest is happening."
-      resolve &ContestResolver.dates/2
+      resolve &FoundationResolver.dates/3
     end
 
     field :stages, non_null_list_of(:stage) do
       description "The stages used in this contest."
-      resolve &ContestResolver.stages/2
+      resolve &FoundationResolver.stages/3
     end
   end
 
@@ -72,17 +72,17 @@ defmodule JumubaseWeb.Schema.Objects do
 
     field :category_info, non_null(:string) do
       description "The performance's contest category and age group."
-      resolve &PerformanceResolver.category_info/2
+      resolve &ShowtimeResolver.category_info/3
     end
 
     field :predecessor_host, :host do
       description "The host of the performance's predecessor contest."
-      resolve &PerformanceResolver.predecessor_host/2
+      resolve &ShowtimeResolver.predecessor_host/3
     end
 
     field :appearances, non_null_list_of(:appearance) do
       description "The performance's appearances."
-      resolve &PerformanceResolver.appearances/2
+      resolve &ShowtimeResolver.appearances/3
     end
 
     field :pieces, non_null_list_of(:piece) do
@@ -100,7 +100,7 @@ defmodule JumubaseWeb.Schema.Objects do
       For popular pieces, the artist name is returned.
       """
 
-      resolve &PieceResolver.person_info/2
+      resolve &ShowtimeResolver.person_info/3
     end
 
     field :title, non_null(:string) do

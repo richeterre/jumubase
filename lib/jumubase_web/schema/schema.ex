@@ -2,7 +2,7 @@ defmodule JumubaseWeb.Schema do
   use Absinthe.Schema
   import JumubaseWeb.Schema.Helpers
   alias Jumubase.Showtime
-  alias JumubaseWeb.{ContestResolver, PerformanceResolver}
+  alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
   import_types Absinthe.Type.Custom
   import_types JumubaseWeb.Schema.Objects
@@ -10,20 +10,20 @@ defmodule JumubaseWeb.Schema do
   query do
     field :contests, non_null_list_of(:contest) do
       description "The contests with public timetables."
-      resolve &ContestResolver.public_contests/2
+      resolve &FoundationResolver.public_contests/3
     end
 
     field :performances, list_of(non_null(:performance)) do
       description "The scheduled performances of a public contest."
       arg :contest_id, non_null(:id)
       arg :filter, :performance_filter
-      resolve &PerformanceResolver.performances/2
+      resolve &ShowtimeResolver.performances/3
     end
 
     field :performance, :performance do
       description "A single performance that's scheduled in a public contest."
       arg :id, non_null(:id)
-      resolve &PerformanceResolver.performance/2
+      resolve &ShowtimeResolver.performance/3
     end
   end
 

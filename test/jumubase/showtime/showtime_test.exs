@@ -1188,6 +1188,17 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "load_predecessor_contest/1" do
+    test "preloads the performance's predecessor contest with host", %{contest: rw} do
+      lw = insert(:contest, round: 2)
+      insert_performance(lw, predecessor_contest: rw)
+      performance = Repo.one(Performance)
+
+      assert %{predecessor_contest: %Contest{host: %Host{}}} =
+               Showtime.load_predecessor_contest(performance)
+    end
+  end
+
   describe "load_predecessor_contests/1" do
     test "preloads each performance's predecessor contest with host", %{contest: rw} do
       lw = insert(:contest, round: 2)

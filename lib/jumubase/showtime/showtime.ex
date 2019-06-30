@@ -346,7 +346,11 @@ defmodule Jumubase.Showtime do
     Repo.preload(performances, :successor)
   end
 
-  def load_predecessor_contests(performances) do
+  def load_predecessor_contest(%Performance{} = performance) do
+    Repo.preload(performance, predecessor_contest: :host)
+  end
+
+  def load_predecessor_contests(performances) when is_list(performances) do
     Repo.preload(performances, predecessor_contest: :host)
   end
 

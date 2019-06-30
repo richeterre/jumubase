@@ -91,6 +91,37 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
              }
     end
 
+    test "returns predecessor host fields if available, or else nil", %{conn: conn} do
+      rw = insert(:contest, round: 1, host: build(:host, name: "DS Helsinki", country_code: "FI"))
+      lw = insert(:contest, round: 2, timetables_public: true)
+
+      p1 = insert_scheduled_performance(lw, predecessor_contest: rw)
+      p2 = insert_scheduled_performance(lw, predecessor_contest: nil)
+
+      query = """
+      query Performances($contestId: ID!) {
+        performances(contestId: $contestId) { id predecessorHost { name countryCode } }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"contestId" => lw.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performances" => [
+                   %{
+                     "id" => to_string(p1.id),
+                     "predecessorHost" => %{"name" => "DS Helsinki", "countryCode" => "FI"}
+                   },
+                   %{
+                     "id" => to_string(p2.id),
+                     "predecessorHost" => nil
+                   }
+                 ]
+               }
+             }
+    end
+
     test "returns performance appearances in role order", %{conn: conn} do
       c = insert(:contest, timetables_public: true)
 
@@ -190,6 +221,48 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                    "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}],
                    "pieces" => [%{"personInfo" => "John Cage (1912–1992)", "title" => "4′33″"}]
                  }
+               }
+             }
+    end
+
+    test "returns predecessor host fields when available", %{conn: conn} do
+      h = build(:host, name: "DS Helsinki", country_code: "FI")
+      rw = insert(:contest, host: h, round: 1)
+      lw = insert(:contest, round: 2, timetables_public: true)
+      p = insert_scheduled_performance(lw, predecessor_contest: rw)
+
+      query = """
+      query Performance($id: ID!) {
+        performance(id: $id) { predecessorHost { name countryCode } }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"id" => p.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performance" => %{
+                   "predecessorHost" => %{"name" => "DS Helsinki", "countryCode" => "FI"}
+                 }
+               }
+             }
+    end
+
+    test "returns nil for a missing predecessor host", %{conn: conn} do
+      c = insert(:contest, timetables_public: true)
+      p = insert_scheduled_performance(c, predecessor_contest: nil)
+
+      query = """
+      query Performance($id: ID!) {
+        performance(id: $id) { predecessorHost { name countryCode } }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"id" => p.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performance" => %{"predecessorHost" => nil}
                }
              }
     end

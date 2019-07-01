@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.Schema.Objects do
   use Absinthe.Schema.Notation
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1]
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1, dataloader: 3]
   alias Jumubase.Showtime
   alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
@@ -15,6 +15,11 @@ defmodule JumubaseWeb.Schema.Objects do
     field :instrument_name, non_null(:string) do
       description "The name of the participant's instrument in this appearance."
       resolve &ShowtimeResolver.instrument_name/3
+    end
+
+    field :result, :result do
+      description "The appearance's result, if publicly available."
+      resolve dataloader(Showtime, :performance, callback: &ShowtimeResolver.result/3)
     end
   end
 
@@ -105,6 +110,10 @@ defmodule JumubaseWeb.Schema.Objects do
     field :title, non_null(:string) do
       description "The title of the piece."
     end
+  end
+
+  object :result do
+    field :points, non_null(:integer)
   end
 
   object :stage do

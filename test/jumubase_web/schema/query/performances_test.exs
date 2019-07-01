@@ -121,49 +121,6 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                }
              }
     end
-
-    test "returns performance appearances in role order", %{conn: conn} do
-      c = insert(:contest, timetables_public: true)
-
-      insert_scheduled_performance(c,
-        appearances: [
-          build(:appearance,
-            role: "ensemblist",
-            participant: build(:participant, given_name: "A", family_name: "B")
-          ),
-          build(:appearance,
-            role: "accompanist",
-            participant: build(:participant, given_name: "C", family_name: "D")
-          ),
-          build(:appearance,
-            role: "ensemblist",
-            participant: build(:participant, given_name: "E", family_name: "F")
-          )
-        ]
-      )
-
-      query = """
-      query Performances($contestId: ID!) {
-        performances(contestId: $contestId) { appearances { participantName } }
-      }
-      """
-
-      conn = get(conn, "/graphql", query: query, variables: %{"contestId" => c.id})
-
-      assert json_response(conn, 200) == %{
-               "data" => %{
-                 "performances" => [
-                   %{
-                     "appearances" => [
-                       %{"participantName" => "A B"},
-                       %{"participantName" => "E F"},
-                       %{"participantName" => "C D"}
-                     ]
-                   }
-                 ]
-               }
-             }
-    end
   end
 
   describe "performance" do
@@ -263,6 +220,106 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
       assert json_response(conn, 200) == %{
                "data" => %{
                  "performance" => %{"predecessorHost" => nil}
+               }
+             }
+    end
+
+    test "returns appearances in role order", %{conn: conn} do
+      c = insert(:contest, timetables_public: true)
+
+      p =
+        insert_scheduled_performance(c,
+          appearances: [
+            build(:appearance,
+              role: "ensemblist",
+              participant: build(:participant, given_name: "A", family_name: "B")
+            ),
+            build(:appearance,
+              role: "accompanist",
+              participant: build(:participant, given_name: "C", family_name: "D")
+            ),
+            build(:appearance,
+              role: "ensemblist",
+              participant: build(:participant, given_name: "E", family_name: "F")
+            )
+          ]
+        )
+
+      query = """
+      query Performance($id: ID!) {
+        performance(id: $id) { appearances { participantName } }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"id" => p.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performance" => %{
+                   "appearances" => [
+                     %{"participantName" => "A B"},
+                     %{"participantName" => "E F"},
+                     %{"participantName" => "C D"}
+                   ]
+                 }
+               }
+             }
+    end
+
+    test "returns appearance results when they are available and public", %{conn: conn} do
+      c = insert(:contest, timetables_public: true)
+
+      p =
+        insert_scheduled_performance(c,
+          appearances: [
+            build(:appearance, role: "soloist", points: 23),
+            build(:appearance, role: "accompanist", points: nil)
+          ],
+          results_public: true
+        )
+
+      query = """
+      query Performance($id: ID!) {
+        performance(id: $id) { appearances { result { points } } }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"id" => p.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performance" => %{
+                   "appearances" => [
+                     %{"result" => %{"points" => 23}},
+                     %{"result" => nil}
+                   ]
+                 }
+               }
+             }
+    end
+
+    test "returns nil for a non-public result", %{conn: conn} do
+      c = insert(:contest, timetables_public: true)
+
+      p =
+        insert_scheduled_performance(c,
+          appearances: [build(:appearance, role: "soloist", points: 23)],
+          results_public: false
+        )
+
+      query = """
+      query Performance($id: ID!) {
+        performance(id: $id) { appearances { result { points } } }
+      }
+      """
+
+      conn = get(conn, "/graphql", query: query, variables: %{"id" => p.id})
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "performance" => %{
+                   "appearances" => [%{"result" => nil}]
+                 }
                }
              }
     end

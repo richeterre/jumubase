@@ -52,6 +52,14 @@ defmodule JumubaseWeb.ShowtimeResolver do
     {:ok, AppearanceView.instrument_name(a.instrument)}
   end
 
+  def result(%Performance{} = p, %Appearance{} = a, _) do
+    if !!a.points and p.results_public do
+      {:ok, %{points: a.points}}
+    else
+      {:ok, nil}
+    end
+  end
+
   def person_info(%Piece{} = pc, _, _) do
     {:ok, PieceView.person_info(pc)}
   end

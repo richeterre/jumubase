@@ -1,7 +1,6 @@
 defmodule JumubaseWeb.Schema.Objects do
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 1]
-  import JumubaseWeb.Schema.Helpers
   alias Jumubase.Showtime
   alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
@@ -40,12 +39,12 @@ defmodule JumubaseWeb.Schema.Objects do
       description "The last day of the contest."
     end
 
-    field :dates, non_null_list_of(:date) do
+    field :dates, non_null(list_of(non_null(:date))) do
       description "The dates on which the contest is happening."
       resolve &FoundationResolver.dates/3
     end
 
-    field :stages, non_null_list_of(:stage) do
+    field :stages, non_null(list_of(non_null(:stage))) do
       description "The stages used in this contest."
       resolve &FoundationResolver.stages/3
     end
@@ -80,12 +79,12 @@ defmodule JumubaseWeb.Schema.Objects do
       resolve &ShowtimeResolver.predecessor_host/3
     end
 
-    field :appearances, non_null_list_of(:appearance) do
+    field :appearances, non_null(list_of(non_null(:appearance))) do
       description "The performance's appearances."
       resolve &ShowtimeResolver.appearances/3
     end
 
-    field :pieces, non_null_list_of(:piece) do
+    field :pieces, non_null(list_of(non_null(:piece))) do
       description "The performance's pieces."
       resolve dataloader(Showtime)
     end

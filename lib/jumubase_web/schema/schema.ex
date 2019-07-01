@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.Schema do
   use Absinthe.Schema
-  import JumubaseWeb.Schema.Helpers
   alias Jumubase.Showtime
   alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
@@ -8,7 +7,7 @@ defmodule JumubaseWeb.Schema do
   import_types JumubaseWeb.Schema.Objects
 
   query do
-    field :contests, non_null_list_of(:contest) do
+    field :contests, non_null(list_of(non_null(:contest))) do
       description "The contests with public timetables."
       resolve &FoundationResolver.public_contests/3
     end

@@ -272,7 +272,8 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
       p =
         insert_scheduled_performance(c,
           appearances: [
-            build(:appearance, role: "soloist", points: 23),
+            build(:appearance, role: "soloist", points: 25),
+            build(:appearance, role: "accompanist", points: 5),
             build(:appearance, role: "accompanist", points: nil)
           ],
           results_public: true
@@ -280,7 +281,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
 
       query = """
       query Performance($id: ID!) {
-        performance(id: $id) { appearances { result { points advances } } }
+        performance(id: $id) { appearances { result { points prize advances } } }
       }
       """
 
@@ -290,7 +291,8 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                "data" => %{
                  "performance" => %{
                    "appearances" => [
-                     %{"result" => %{"points" => 23, "advances" => true}},
+                     %{"result" => %{"points" => 25, "prize" => "1. Preis", "advances" => true}},
+                     %{"result" => %{"points" => 5, "prize" => nil, "advances" => false}},
                      %{"result" => nil}
                    ]
                  }

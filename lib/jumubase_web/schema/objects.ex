@@ -117,7 +117,13 @@ defmodule JumubaseWeb.Schema.Objects do
   end
 
   object :result do
-    field :points, non_null(:integer)
+    field :points, non_null(:integer) do
+      description "The points awarded to this appearance."
+    end
+
+    field :prize, :string do
+      description "The prize corresponding to the appearance's points."
+    end
 
     field :advances, non_null(:boolean) do
       description "Whether the participant will advance to the next round with this appearance."

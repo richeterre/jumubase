@@ -55,7 +55,14 @@ defmodule JumubaseWeb.ShowtimeResolver do
 
   def result(%Performance{} = p, %Appearance{} = a, _) do
     if !!a.points and p.results_public do
-      {:ok, %{points: a.points, advances: Results.advances?(a, p)}}
+      %{round: round} = p.contest_category.contest
+
+      {:ok,
+       %{
+         points: a.points,
+         prize: Results.get_prize(a.points, round),
+         advances: Results.advances?(a, p)
+       }}
     else
       {:ok, nil}
     end

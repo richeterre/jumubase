@@ -280,7 +280,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
 
       query = """
       query Performance($id: ID!) {
-        performance(id: $id) { appearances { result { points } } }
+        performance(id: $id) { appearances { result { points advances } } }
       }
       """
 
@@ -290,7 +290,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                "data" => %{
                  "performance" => %{
                    "appearances" => [
-                     %{"result" => %{"points" => 23}},
+                     %{"result" => %{"points" => 23, "advances" => true}},
                      %{"result" => nil}
                    ]
                  }

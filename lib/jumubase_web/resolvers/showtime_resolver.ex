@@ -3,6 +3,7 @@ defmodule JumubaseWeb.ShowtimeResolver do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
+  alias Jumubase.Showtime.Results
   alias JumubaseWeb.Internal.{AppearanceView, ParticipantView, PerformanceView, PieceView}
 
   def performances(_, %{contest_id: c_id} = args, _) do
@@ -54,7 +55,7 @@ defmodule JumubaseWeb.ShowtimeResolver do
 
   def result(%Performance{} = p, %Appearance{} = a, _) do
     if !!a.points and p.results_public do
-      {:ok, %{points: a.points}}
+      {:ok, %{points: a.points, advances: Results.advances?(a, p)}}
     else
       {:ok, nil}
     end

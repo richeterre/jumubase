@@ -19,7 +19,11 @@ defmodule JumubaseWeb.Schema.Objects do
 
     field :result, :result do
       description "The appearance's result, if publicly available."
-      resolve dataloader(Showtime, :performance, callback: &ShowtimeResolver.result/3)
+
+      resolve dataloader(Showtime, :performance,
+                args: %{scope: :result},
+                callback: &ShowtimeResolver.result/3
+              )
     end
   end
 
@@ -114,6 +118,10 @@ defmodule JumubaseWeb.Schema.Objects do
 
   object :result do
     field :points, non_null(:integer)
+
+    field :advances, non_null(:boolean) do
+      description "Whether the participant will advance to the next round with this appearance."
+    end
   end
 
   object :stage do

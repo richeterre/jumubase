@@ -462,8 +462,15 @@ defmodule Jumubase.Showtime do
   Defines a Dataloader source.
   """
   def data do
-    Dataloader.Ecto.new(Repo)
+    Dataloader.Ecto.new(Repo, query: &query/2)
   end
+
+  def query(Performance, %{scope: :result}) do
+    # Preload associations needed for result calculation
+    Performance |> preload([[contest_category: :contest], :appearances])
+  end
+
+  def query(queryable, _), do: queryable
 
   # Private helpers
 

@@ -147,17 +147,46 @@ defmodule Jumubase.ShowtimeTest do
       assert_ids_match_unordered(Showtime.unscheduled_performances(c), [p1, p2])
     end
 
-    test "preloads all necessary associations",
-         %{contest: c} do
-      insert_performance(c, appearances: build_list(1, :appearance), stage: build(:stage))
+    test "preloads all necessary associations", %{contest: c} do
+      insert_performance(c, appearances: build_list(1, :appearance))
 
       assert [
                %Performance{
                  contest_category: %ContestCategory{category: %Category{}},
-                 appearances: [%Appearance{participant: %Participant{}}],
-                 stage: %Stage{}
+                 appearances: [%Appearance{participant: %Participant{}}]
                }
              ] = Showtime.unscheduled_performances(c)
+    end
+  end
+
+  describe "scheduled_performances/2" do
+    test "returns the contest's scheduled performances that match the filter", %{contest: c} do
+      [cc1, cc2] = c.contest_categories
+
+      # Matching performances
+      p1 = insert_scheduled_performance(cc1, age_group: "III")
+      p2 = insert_scheduled_performance(cc2, age_group: "III")
+
+      # Non-matching performances
+      insert_scheduled_performance(cc1, age_group: "II")
+      insert_performance(cc1, stage_time: nil)
+      other_c = insert(:contest)
+      insert_performance(other_c, stage_time: nil)
+
+      filter = %PerformanceFilter{age_group: "III"}
+
+      assert_ids_match_unordered(Showtime.scheduled_performances(c, filter), [p1, p2])
+    end
+
+    test "preloads all necessary associations", %{contest: c} do
+      insert_scheduled_performance(c, appearances: build_list(1, :appearance))
+
+      assert [
+               %Performance{
+                 contest_category: %ContestCategory{category: %Category{}},
+                 appearances: [%Appearance{participant: %Participant{}}]
+               }
+             ] = Showtime.scheduled_performances(c, %PerformanceFilter{})
     end
   end
 
@@ -264,6 +293,58 @@ defmodule Jumubase.ShowtimeTest do
       %{pieces: [pc1, pc2]} = Showtime.get_performance!(c, id, edit_code)
       assert pc1.title == "Y"
       assert pc2.title == "X"
+    end
+  end
+
+  describe "get_public_performance/1" do
+    test "gets a public performance by id" do
+      c = insert(:contest, timetables_public: true)
+      %{id: id} = insert_scheduled_performance(c)
+      assert %Performance{id: ^id} = Showtime.get_public_performance(id)
+    end
+
+    test "returns nil for a scheduled performance in a non-public contest" do
+      c = insert(:contest, timetables_public: false)
+      %{id: id} = insert_scheduled_performance(c)
+      assert Showtime.get_public_performance(id) == nil
+    end
+
+    test "returns nil for an unscheduled performance in a public contest" do
+      c = insert(:contest, timetables_public: true)
+      %{id: id} = insert_performance(c)
+      assert Showtime.get_public_performance(id) == nil
+    end
+
+    test "returns nil for an unknown id" do
+      assert Showtime.get_public_performance(123) == nil
+    end
+
+    test "preloads the correct associations" do
+      c = insert(:contest, timetables_public: true)
+      %{id: id} = insert_scheduled_performance(c)
+
+      assert %Performance{
+               contest_category: %ContestCategory{category: %Category{}},
+               appearances: [%Appearance{participant: %Participant{}}],
+               pieces: [%Piece{}]
+             } = Showtime.get_public_performance(id)
+    end
+
+    test "preloads the pieces in insertion order, earliest first" do
+      c = insert(:contest, timetables_public: true)
+      now = Timex.now()
+
+      %{id: id} =
+        insert_scheduled_performance(c,
+          pieces: [
+            build(:piece, title: "A", inserted_at: now |> Timex.shift(seconds: 1)),
+            build(:piece, title: "B", inserted_at: now |> Timex.shift(seconds: -1)),
+            build(:piece, title: "C", inserted_at: now)
+          ]
+        )
+
+      assert %{pieces: [%{title: "B"}, %{title: "C"}, %{title: "A"}]} =
+               Showtime.get_public_performance(id)
     end
   end
 
@@ -1104,6 +1185,17 @@ defmodule Jumubase.ShowtimeTest do
       insert_performance(lw, predecessor: p)
 
       assert [%Performance{successor: %Performance{}}] = Showtime.load_successors([p])
+    end
+  end
+
+  describe "load_predecessor_contest/1" do
+    test "preloads the performance's predecessor contest with host", %{contest: rw} do
+      lw = insert(:contest, round: 2)
+      insert_performance(lw, predecessor_contest: rw)
+      performance = Repo.one(Performance)
+
+      assert %{predecessor_contest: %Contest{host: %Host{}}} =
+               Showtime.load_predecessor_contest(performance)
     end
   end
 

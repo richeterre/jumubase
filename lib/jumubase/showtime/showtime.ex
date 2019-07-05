@@ -64,10 +64,19 @@ defmodule Jumubase.Showtime do
   @doc """
   Returns all performances without a stage time from the contest.
   """
-  def unscheduled_performances(%Contest{id: id}) do
-    performances_query(id)
+  def unscheduled_performances(%Contest{id: c_id}) do
+    performances_query(c_id)
     |> where([p], is_nil(p.stage_time))
-    |> preload(:stage)
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns the contest's scheduled performances that match the given filter.
+  """
+  def scheduled_performances(%Contest{id: c_id}, %PerformanceFilter{} = filter) do
+    performances_query(c_id)
+    |> where([p], not is_nil(p.stage_time))
+    |> apply_filter(filter)
     |> Repo.all()
   end
 
@@ -100,6 +109,27 @@ defmodule Jumubase.Showtime do
     Performance
     |> preloaded_from_contest(contest_id)
     |> Repo.get_by!(%{id: id, edit_code: edit_code})
+  end
+
+  @doc """
+  Gets a single public, scheduled performance.
+
+  Returns nil if the performance is not found, unscheduled or not part of a public contest.
+  """
+  def get_public_performance(id) do
+    query =
+      from p in Performance,
+        join: cc in assoc(p, :contest_category),
+        join: c in assoc(cc, :contest),
+        where: c.timetables_public,
+        where: not is_nil(p.stage_time),
+        preload: [
+          [contest_category: {cc, :category}],
+          [appearances: :participant],
+          [pieces: ^pieces_query()]
+        ]
+
+    Repo.get(query, id)
   end
 
   @doc """
@@ -316,7 +346,11 @@ defmodule Jumubase.Showtime do
     Repo.preload(performances, :successor)
   end
 
-  def load_predecessor_contests(performances) do
+  def load_predecessor_contest(%Performance{} = performance) do
+    Repo.preload(performance, predecessor_contest: :host)
+  end
+
+  def load_predecessor_contests(performances) when is_list(performances) do
     Repo.preload(performances, predecessor_contest: :host)
   end
 
@@ -423,6 +457,20 @@ defmodule Jumubase.Showtime do
       {:error, _, _, _} -> :error
     end
   end
+
+  @doc """
+  Defines a Dataloader source.
+  """
+  def data do
+    Dataloader.Ecto.new(Repo, query: &query/2)
+  end
+
+  def query(Performance, %{scope: :result}) do
+    # Preload associations needed for result calculation
+    Performance |> preload([[contest_category: :contest], :appearances])
+  end
+
+  def query(queryable, _), do: queryable
 
   # Private helpers
 

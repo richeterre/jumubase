@@ -40,6 +40,8 @@ defmodule JumubaseWeb.Router do
     end
   end
 
+  forward "/graphql", Absinthe.Plug, schema: JumubaseWeb.Schema
+
   scope "/", JumubaseWeb do
     pipe_through [:browser, :html_only]
 
@@ -160,6 +162,10 @@ defmodule JumubaseWeb.Router do
   if Mix.env() == :dev do
     scope "/dev" do
       forward "/sent_emails", Bamboo.SentEmailViewerPlug
+
+      forward "/graphql-playground", Absinthe.Plug.GraphiQL,
+        schema: JumubaseWeb.Schema,
+        interface: :playground
     end
   end
 end

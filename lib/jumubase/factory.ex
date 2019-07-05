@@ -168,6 +168,21 @@ defmodule Jumubase.Factory do
   end
 
   @doc """
+  Inserts a scheduled performance into the given entity.
+  """
+  def insert_scheduled_performance(_entity, attrs \\ [])
+
+  def insert_scheduled_performance(%Contest{} = c, attrs) do
+    attrs = stage_attrs(c) |> Keyword.merge(attrs)
+    insert_performance(c, attrs)
+  end
+
+  def insert_scheduled_performance(%ContestCategory{contest: c} = cc, attrs) do
+    attrs = stage_attrs(c) |> Keyword.merge(attrs)
+    insert_performance(cc, attrs)
+  end
+
+  @doc """
   Inserts an appearance into the given contest.
   """
   def insert_appearance(%Contest{} = c, attrs \\ []) do
@@ -194,5 +209,11 @@ defmodule Jumubase.Factory do
   # Generates a unique edit code with the given round.
   defp generate_edit_code(round) do
     sequence(:edit_code, &to_edit_code(&1, round))
+  end
+
+  # Returns a keyword list of attributes for scheduling a performance in the given contest.
+  defp stage_attrs(%Contest{} = c) do
+    s = insert(:stage, host: c.host)
+    [stage: s, stage_time: Timex.now()]
   end
 end

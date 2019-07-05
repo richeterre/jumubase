@@ -217,6 +217,21 @@ defmodule Jumubase.FoundationTest do
       assert_ids_match_unordered(c2_stages, [s2])
     end
 
+    test "orders preloaded host stages by insertion date" do
+      now = Timex.now()
+      h = insert(:host)
+      c = insert(:contest, host: h, timetables_public: true)
+      s1 = insert(:stage, host: h, inserted_at: now)
+      s2 = insert(:stage, host: h, inserted_at: now |> Timex.shift(seconds: 1))
+      s3 = insert(:stage, host: h, inserted_at: now |> Timex.shift(seconds: -1))
+      insert_performance(c, stage: s1)
+      insert_performance(c, stage: s2)
+      insert_performance(c, stage: s3)
+
+      [result] = Foundation.list_public_contests()
+      assert_ids_match_ordered(result.host.stages, [s3, s1, s2])
+    end
+
     test "orders preloaded contest categories by insertion date" do
       now = Timex.now()
       s = insert(:stage, host: build(:host))
@@ -334,6 +349,28 @@ defmodule Jumubase.FoundationTest do
 
     test "raises an error if the contest isn't found" do
       assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest!(123) end
+    end
+  end
+
+  describe "get_public_contest/1" do
+    test "returns a contest with public timetables" do
+      %{id: id} = insert(:contest, timetables_public: true)
+      result = Foundation.get_public_contest(id)
+      assert result.id == id
+    end
+
+    test "preloads the contest's host" do
+      %{id: id} = insert(:contest, timetables_public: true)
+      assert %Contest{host: %Host{}} = Foundation.get_public_contest(id)
+    end
+
+    test "returns nil if the contest isn't found" do
+      assert Foundation.get_public_contest(123) == nil
+    end
+
+    test "returns nil if the contest doesn't have public timetables" do
+      %{id: id} = insert(:contest, timetables_public: false)
+      assert Foundation.get_public_contest(id) == nil
     end
   end
 
@@ -672,12 +709,17 @@ defmodule Jumubase.FoundationTest do
     assert [%Stage{name: "X"}] = contest.host.stages
   end
 
-  test "load_used_stages/1 preloads a contest's used stages" do
-    [s1, s2] = insert_list(2, :stage)
-    c = insert(:contest, host: build(:host, stages: [s1, s2]))
-    insert_performance(c, stage: s1)
+  test "load_used_stages/1 preloads a contest's used stages in insertion order" do
+    now = Timex.now()
+    [s1, s2] = insert_list(2, :stage, inserted_at: now)
+    s3 = insert(:stage, inserted_at: now |> Timex.shift(seconds: 1))
+    s4 = insert(:stage, inserted_at: now |> Timex.shift(seconds: -1))
+    c = insert(:contest, host: build(:host, stages: [s1, s2, s3, s4]))
+    insert_performance(c, stage: s2)
+    insert_performance(c, stage: s3)
+    insert_performance(c, stage: s4)
 
     contest = Repo.get(Contest, c.id) |> Foundation.load_used_stages()
-    assert_ids_match_unordered(contest.host.stages, [s1])
+    assert_ids_match_ordered(contest.host.stages, [s4, s2, s3])
   end
 end

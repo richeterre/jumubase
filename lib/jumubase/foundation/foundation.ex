@@ -264,6 +264,19 @@ defmodule Jumubase.Foundation do
     |> exclude_unused_stages
   end
 
+  @doc """
+  Defines a Dataloader source.
+  """
+  def data do
+    Dataloader.Ecto.new(Repo, query: &query/2)
+  end
+
+  def query(ContestCategory, _) do
+    ContestCategory |> preload(:category)
+  end
+
+  def query(queryable, _), do: queryable
+
   # Private helpers
 
   # Build a query for fetching public contests.

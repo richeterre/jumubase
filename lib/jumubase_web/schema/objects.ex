@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Schema.Objects do
   use Absinthe.Schema.Notation
   import Absinthe.Resolution.Helpers, only: [dataloader: 1, dataloader: 3]
+  alias Jumubase.Foundation
   alias Jumubase.Showtime
   alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
@@ -48,6 +49,28 @@ defmodule JumubaseWeb.Schema.Objects do
     field :stages, non_null(list_of(non_null(:stage))) do
       description "The stages used in this contest."
       resolve &FoundationResolver.stages/3
+    end
+
+    field :contest_categories, non_null(list_of(non_null(:contest_category))) do
+      description "The contest categories offered at this contest."
+      resolve dataloader(Foundation)
+    end
+  end
+
+  object :contest_category do
+    field :id, non_null(:id)
+
+    field :name, non_null(:string) do
+      description "The contest category's name."
+      resolve &FoundationResolver.name/3
+    end
+
+    field :public_result_count, non_null(:integer) do
+      description "The amount of performances with public results in this contest category."
+
+      resolve dataloader(Foundation, :performances,
+                callback: &FoundationResolver.public_result_count/3
+              )
     end
   end
 

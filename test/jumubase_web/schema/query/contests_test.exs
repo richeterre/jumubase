@@ -43,11 +43,19 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
         timetables_public: true
       )
 
-    insert_performance(c, stage: s)
+    cc =
+      insert(:contest_category,
+        contest: c,
+        category: build(:category, name: "Violine solo"),
+        performances: []
+      )
+
+    insert_performance(cc, stage: s, results_public: true)
+    insert_performance(cc, stage: s, results_public: false)
 
     query = """
     query {
-      contests { id name countryCode dates stages { id name } }
+      contests { id name countryCode dates stages { id name } contestCategories { id name publicResultCount } }
     }
     """
 
@@ -63,6 +71,9 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
                    "dates" => ["2019-01-01", "2019-01-02", "2019-01-03"],
                    "stages" => [
                      %{"id" => "#{s.id}", "name" => "Aula"}
+                   ],
+                   "contestCategories" => [
+                     %{"id" => "#{cc.id}", "name" => "Violine solo", "publicResultCount" => 1}
                    ]
                  }
                ]

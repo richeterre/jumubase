@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.FoundationResolver do
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.Contest
+  alias Jumubase.Foundation.{Contest, ContestCategory}
   alias JumubaseWeb.Internal.ContestView
 
   def public_contests(_, _, _) do
@@ -9,6 +9,10 @@ defmodule JumubaseWeb.FoundationResolver do
 
   def name(%Contest{} = c, _, _) do
     {:ok, ContestView.name(c)}
+  end
+
+  def name(%ContestCategory{} = cc, _, _) do
+    {:ok, cc.category.name}
   end
 
   def country_code(%Contest{} = c, _, _) do
@@ -21,5 +25,9 @@ defmodule JumubaseWeb.FoundationResolver do
 
   def stages(%Contest{} = c, _, _) do
     {:ok, c.host.stages}
+  end
+
+  def public_result_count(performances, _, _) do
+    {:ok, performances |> Enum.count(& &1.results_public)}
   end
 end

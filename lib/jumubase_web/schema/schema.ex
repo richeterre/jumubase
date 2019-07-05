@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Schema do
   use Absinthe.Schema
+  alias Jumubase.Foundation
   alias Jumubase.Showtime
   alias JumubaseWeb.{FoundationResolver, ShowtimeResolver}
 
@@ -31,6 +32,7 @@ defmodule JumubaseWeb.Schema do
   """
   def dataloader do
     Dataloader.new()
+    |> Dataloader.add_source(Foundation, Foundation.data())
     |> Dataloader.add_source(Showtime, Showtime.data())
   end
 

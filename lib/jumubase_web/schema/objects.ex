@@ -40,14 +40,6 @@ defmodule JumubaseWeb.Schema.Objects do
       resolve &FoundationResolver.country_code/3
     end
 
-    field :start_date, non_null(:date) do
-      description "The first day of the contest."
-    end
-
-    field :end_date, non_null(:date) do
-      description "The last day of the contest."
-    end
-
     field :dates, non_null(list_of(non_null(:date))) do
       description "The dates on which the contest is happening."
       resolve &FoundationResolver.dates/3

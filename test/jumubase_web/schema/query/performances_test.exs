@@ -110,11 +110,11 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                "data" => %{
                  "performances" => [
                    %{
-                     "id" => to_string(p1.id),
+                     "id" => "#{p1.id}",
                      "predecessorHost" => %{"name" => "DS Helsinki", "countryCode" => "FI"}
                    },
                    %{
-                     "id" => to_string(p2.id),
+                     "id" => "#{p2.id}",
                      "predecessorHost" => nil
                    }
                  ]

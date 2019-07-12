@@ -154,7 +154,12 @@ defmodule JumubaseWeb.Schema.Objects do
   end
 
   input_object :performance_filter do
-    field :stage_date, :date
-    field :stage_id, :id
+    field :stage_date, :date do
+      description "The date on which the performances are scheduled."
+    end
+
+    field :stage_id, :id do
+      description "The ID of the stage on which the performances happen."
+    end
   end
 end

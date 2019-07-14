@@ -15,6 +15,28 @@ defmodule Jumubase.HostTest do
       refute changeset.valid?
     end
 
+    test "is invalid without a grouping" do
+      params = params_for(:host, current_grouping: nil)
+      changeset = Host.changeset(%Host{}, params)
+      refute changeset.valid?
+    end
+
+    test "is invalid with an invalid grouping" do
+      for grouping <- [1, "0", "A"] do
+        params = params_for(:host, current_grouping: grouping)
+        changeset = Host.changeset(%Host{}, params)
+        refute changeset.valid?
+      end
+    end
+
+    test "is valid with a valid grouping" do
+      for grouping <- ~w(1 2 3) do
+        params = params_for(:host, current_grouping: grouping)
+        changeset = Host.changeset(%Host{}, params)
+        assert changeset.valid?
+      end
+    end
+
     test "is invalid without an address" do
       params = params_for(:host, address: "")
       changeset = Host.changeset(%Host{}, params)

@@ -21,6 +21,13 @@ defmodule Jumubase.JumuParams do
   end
 
   @doc """
+  Returns the available groupings of hosts & contests.
+  """
+  def groupings do
+    ~w(1 2 3)
+  end
+
+  @doc """
   Returns all possible user roles.
   """
   def user_roles do

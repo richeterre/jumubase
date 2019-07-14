@@ -7,6 +7,7 @@ defmodule Jumubase.Factory do
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
   @season 56
+  @grouping "1"
 
   # Factories
 
@@ -37,6 +38,7 @@ defmodule Jumubase.Factory do
       season: @season,
       round: 1,
       host: build(:host),
+      grouping: @grouping,
       start_date: %{day: 1, month: 1, year: year},
       end_date: %{day: 2, month: 1, year: year},
       deadline: %{day: 15, month: 12, year: year - 1}
@@ -55,6 +57,7 @@ defmodule Jumubase.Factory do
 
   def host_factory do
     %Host{
+      current_grouping: @grouping,
       name: sequence(:name, &"Host #{&1}"),
       address: "c/o Jane Doe<br>Jumu Lane 1<br>Jumutown",
       city: "Jumutown",

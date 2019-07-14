@@ -1,5 +1,7 @@
 <h2><%= gettext("Contests") %></h2>
 
+<hr>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>

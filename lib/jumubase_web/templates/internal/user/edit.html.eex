@@ -1,5 +1,7 @@
 <h2><%= gettext("Edit User") %></h2>
 
+<hr>
+
 <%=
   render "form.html", Map.merge(assigns, %{
     action: Routes.internal_user_path(@conn, :update, @user),

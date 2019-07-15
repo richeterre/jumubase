@@ -32,10 +32,6 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
-  def list_host_locations do
-    Repo.all(from h in Host, select: {h.latitude, h.longitude})
-  end
-
   def create_host(attrs) do
     Host.changeset(%Host{}, attrs) |> Repo.insert()
   end

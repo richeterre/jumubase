@@ -7,7 +7,13 @@ defmodule JumubaseWeb.MapHelpers do
   def host_map_url do
     base_url = "https://maps.googleapis.com/maps/api/staticmap?scale=2&size=640x400"
 
-    markers = get_markers(Foundation.list_host_locations(), "green")
+    markers =
+      Foundation.list_hosts()
+      |> Enum.group_by(& &1.current_grouping, &{&1.latitude, &1.longitude})
+      |> Enum.reduce("", fn {grouping, locations}, acc ->
+        color = get_marker_color(grouping)
+        acc <> get_markers(locations, color)
+      end)
 
     styles =
       "&style=element:labels|visibility:off" <>
@@ -24,6 +30,14 @@ defmodule JumubaseWeb.MapHelpers do
   end
 
   # Private helpers
+
+  defp get_marker_color(grouping) do
+    case grouping do
+      "1" -> "blue"
+      "2" -> "green"
+      "3" -> "yellow"
+    end
+  end
 
   defp get_markers(locations, color) do
     marker_locations =

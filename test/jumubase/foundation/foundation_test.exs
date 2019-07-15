@@ -39,18 +39,6 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "list_host_locations/0" do
-    test "returns the hosts' locations" do
-      h1 = insert(:host, latitude: 50.5, longitude: 10.0)
-      h2 = insert(:host, latitude: 25.0, longitude: 50.5)
-
-      assert Foundation.list_host_locations() == [
-               {h1.latitude, h1.longitude},
-               {h2.latitude, h2.longitude}
-             ]
-    end
-  end
-
   describe "create_host/1" do
     test "creates a host with valid data" do
       params = params_for(:host, name: "X")

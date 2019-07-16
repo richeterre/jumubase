@@ -100,7 +100,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/edit.html.eex:9
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:73
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:81
 #: lib/jumubase_web/templates/internal/performance/edit.html.eex:13
 #: lib/jumubase_web/templates/internal/user/edit.html.eex:10
 #: lib/jumubase_web/templates/performance/edit.html.eex:13
@@ -340,7 +340,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:8
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:13
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:14
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:13
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:16
 #: lib/jumubase_web/controllers/internal/stage_controller.ex:11
@@ -351,19 +351,19 @@ msgid "Contests"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.eex:10
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:11
 msgid "Dates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:59
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:67
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:86
 msgid "Day"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:37
-#: lib/jumubase_web/templates/internal/contest/index.html.eex:11
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:45
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:12
 #: lib/jumubase_web/views/internal/contest_view.ex:50
 msgid "Deadline"
 msgstr ""
@@ -397,7 +397,7 @@ msgid "Hello %{name},"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:58
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:66
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:100
 msgid "Month"
 msgstr ""
@@ -437,7 +437,7 @@ msgid "Total duration: %{d}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:65
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:114
 msgid "Year"
 msgstr ""
@@ -681,11 +681,6 @@ msgid "Location"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/home.html.eex:4
-msgid "The website for “Jugend musiziert” at German schools in the region “Nord- und Osteuropa”"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/password_reset/edit.html.eex:19
 msgid "Cancel (keep old password)"
 msgstr ""
@@ -876,7 +871,7 @@ msgid "Who takes part?"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:49
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:57
 msgid "End date"
 msgstr ""
 
@@ -896,7 +891,7 @@ msgid "Season"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:43
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:51
 msgid "Start date"
 msgstr ""
 
@@ -906,7 +901,7 @@ msgid "Edit Contest"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:61
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:62
 msgid "The contest %{name} was updated."
 msgstr ""
 
@@ -943,7 +938,7 @@ msgid "Please fix these errors and try again:"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:55
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:63
 msgid "Certificate date"
 msgstr ""
 
@@ -1399,7 +1394,7 @@ msgid "points"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/edit.html.eex:66
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:74
 msgid "Timetables public"
 msgstr ""
 
@@ -1790,7 +1785,14 @@ msgid "BW Code"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/edit.html.eex:38
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/new.html.eex:18
 msgid "Grouping"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/home.html.eex:4
+msgid "The website for “Jugend musiziert” at German schools abroad"
 msgstr ""

@@ -106,9 +106,9 @@ defmodule JumubaseWeb.PageView do
 
   defp grouping_name(grouping) do
     case grouping do
-      "1" -> "#{gettext("Grouping")} 1 (#{gettext("blue")})"
-      "2" -> "#{gettext("Grouping")} 2 (#{gettext("green")})"
-      "3" -> "#{gettext("Grouping")} 3 (#{gettext("yellow")})"
+      "1" -> "#{gettext("Grouping")} 1 — #{gettext("blue")}"
+      "2" -> "#{gettext("Grouping")} 2 — #{gettext("green")}"
+      "3" -> "#{gettext("Grouping")} 3 — #{gettext("yellow")}"
     end
   end
 

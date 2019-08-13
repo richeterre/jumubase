@@ -16,7 +16,18 @@ Repo.transaction(fn ->
   # Create demo hosts
 
   insert(:host,
+    name: "DS Valencia",
+    current_grouping: "1",
+    city: "Valencia",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 39.482104,
+    longitude: -0.363545
+  )
+
+  insert(:host,
     name: "DS Bratislava",
+    current_grouping: "2",
     city: "Bratislava",
     country_code: "SK",
     time_zone: "Europe/Bratislava",
@@ -26,6 +37,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Brüssel",
+    current_grouping: "2",
     city: "Brüssel",
     country_code: "BE",
     time_zone: "Europe/Brussels",
@@ -35,6 +47,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Budapest",
+    current_grouping: "2",
     city: "Budapest",
     country_code: "HU",
     time_zone: "Europe/Budapest",
@@ -45,6 +58,7 @@ Repo.transaction(fn ->
   host3 =
     insert(:host,
       name: "DS Dublin",
+      current_grouping: "2",
       city: "Dublin",
       country_code: "IE",
       time_zone: "Europe/Dublin",
@@ -54,6 +68,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Doha",
+    current_grouping: "2",
     city: "Doha",
     country_code: "QA",
     time_zone: "Asia/Qatar",
@@ -63,6 +78,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Genf",
+    current_grouping: "2",
     city: "Genf",
     country_code: "CH",
     time_zone: "Europe/Zurich",
@@ -73,6 +89,7 @@ Repo.transaction(fn ->
   host1 =
     insert(:host,
       name: "DS Helsinki",
+      current_grouping: "2",
       city: "Helsinki",
       country_code: "FI",
       time_zone: "Europe/Helsinki",
@@ -82,6 +99,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Kopenhagen",
+    current_grouping: "2",
     city: "Kopenhagen",
     country_code: "DK",
     time_zone: "Europe/Copenhagen",
@@ -91,6 +109,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS London",
+    current_grouping: "2",
     city: "London",
     country_code: "GB",
     time_zone: "Europe/London",
@@ -100,6 +119,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Moskau",
+    current_grouping: "2",
     city: "Moskau",
     country_code: "RU",
     time_zone: "Europe/Moscow",
@@ -109,6 +129,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Oslo",
+    current_grouping: "2",
     city: "Oslo",
     country_code: "NO",
     time_zone: "Europe/Oslo",
@@ -118,6 +139,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Paris",
+    current_grouping: "2",
     city: "Paris",
     country_code: "FR",
     time_zone: "Europe/Paris",
@@ -127,6 +149,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Prag",
+    current_grouping: "2",
     city: "Prag",
     country_code: "CZ",
     time_zone: "Europe/Prague",
@@ -136,6 +159,7 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Sofia",
+    current_grouping: "2",
     city: "Sofia",
     country_code: "BG",
     time_zone: "Europe/Sofia",
@@ -146,6 +170,7 @@ Repo.transaction(fn ->
   host2 =
     insert(:host,
       name: "DS Stockholm",
+      current_grouping: "2",
       city: "Stockholm",
       country_code: "SE",
       time_zone: "Europe/Stockholm",
@@ -155,11 +180,22 @@ Repo.transaction(fn ->
 
   insert(:host,
     name: "DS Warschau",
+    current_grouping: "2",
     city: "Warschau",
     country_code: "PL",
     time_zone: "Europe/Warsaw",
     latitude: 52.1577924,
     longitude: 21.0691116
+  )
+
+  insert(:host,
+    name: "DS Rom",
+    current_grouping: "3",
+    city: "Rom",
+    country_code: "IT",
+    time_zone: "Europe/Rome",
+    latitude: 41.890161,
+    longitude: 12.424819
   )
 
   # Create demo stages

@@ -12,7 +12,7 @@ defmodule JumubaseWeb.MapHelpers do
       |> Enum.group_by(& &1.current_grouping, &{&1.latitude, &1.longitude})
       |> Enum.reduce("", fn {grouping, locations}, acc ->
         color = get_marker_color(grouping)
-        acc <> get_markers(locations, color)
+        acc <> get_markers(locations, color, grouping)
       end)
 
     styles =
@@ -39,13 +39,13 @@ defmodule JumubaseWeb.MapHelpers do
     end
   end
 
-  defp get_markers(locations, color) do
+  defp get_markers(locations, color, label) do
     marker_locations =
       locations
       |> Enum.map(fn {lat, lon} -> "#{lat},#{lon}" end)
       |> Enum.join("|")
 
-    "&markers=color:#{color}|" <> marker_locations
+    "&markers=color:#{color}|label:#{label}|" <> marker_locations
   end
 
   def get_api_key do

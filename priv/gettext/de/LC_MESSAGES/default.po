@@ -92,6 +92,7 @@ msgstr "Neuer Benutzer"
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:35
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:46
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
+#: lib/jumubase_web/templates/page/rules.de.html.eex:21
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
 #: lib/jumubase_web/templates/performance/_form.html.eex:22
@@ -366,6 +367,7 @@ msgstr "Tag"
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:45
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:12
 #: lib/jumubase_web/views/internal/contest_view.ex:50
+#: lib/jumubase_web/views/internal/contest_view.ex:50
 msgid "Deadline"
 msgstr "Anmeldeschluss"
 
@@ -388,6 +390,7 @@ msgstr "Änderungscode"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 msgid "Epoch"
 msgstr "Epoche"
@@ -703,11 +706,14 @@ msgstr "Deine Änderungen an der Anmeldung wurden gespeichert."
 
 #, elixir-format
 #: lib/jumubase_web/views/email_view.ex:10
+#: lib/jumubase_web/views/email_view.ex:10
+#: lib/jumubase_web/views/email_view.ex:22
 #: lib/jumubase_web/views/email_view.ex:22
 msgid "Hello"
 msgstr "Hallo"
 
 #, elixir-format
+#: lib/jumubase_web/views/email_view.ex:20
 #: lib/jumubase_web/views/email_view.ex:20
 msgid "and"
 msgstr "und"
@@ -731,7 +737,7 @@ msgid "Here is how you can get in touch with us."
 msgstr "So erreichst du uns bei Fragen und Anregungen."
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:20
+#: lib/jumubase_web/templates/page/contact.html.eex:21
 msgid "Member schools"
 msgstr "Teilnehmende Schulen"
 
@@ -751,7 +757,7 @@ msgid "Send message"
 msgstr "Nachricht absenden"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:15
+#: lib/jumubase_web/templates/page/contact.html.eex:16
 msgid "For questions about local contests, consider contacting your local Jumu organizer (see list below)."
 msgstr "Bei Fragen zum Regionalwettbewerb hilft dir auch deine Jumu-Kontaktperson (siehe Liste unten) weiter."
 
@@ -796,7 +802,7 @@ msgid "Preparation"
 msgstr "Vor der Wertung"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:59
+#: lib/jumubase_web/templates/page/contact.html.eex:60
 #: lib/jumubase_web/templates/performance/_form.html.eex:63
 msgid "privacy policy"
 msgstr "Datenschutzerklärung"
@@ -807,22 +813,22 @@ msgid "The data you enter will be handled as described in the"
 msgstr "Wie wir deine Angaben verarbeiten, steht in der"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:28
+#: lib/jumubase_web/templates/page/contact.html.eex:29
 msgid "State-level committee"
 msgstr "Landesausschuss"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:47
+#: lib/jumubase_web/templates/page/contact.html.eex:48
 msgid "chair"
 msgstr "Vorsitz"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:48
+#: lib/jumubase_web/templates/page/contact.html.eex:49
 msgid "deputy chair"
 msgstr "2. Vorsitz"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:29
+#: lib/jumubase_web/templates/page/contact.html.eex:30
 msgid "responsible for this website"
 msgstr "verantwortlich für diese Website"
 
@@ -832,12 +838,12 @@ msgid "FAQ"
 msgstr "FAQ"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:55
+#: lib/jumubase_web/templates/page/contact.html.eex:56
 msgid "Privacy"
 msgstr "Datenschutz"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:58
+#: lib/jumubase_web/templates/page/contact.html.eex:59
 msgid "To find out how we process your data, please see our"
 msgstr "Wie wir deine Daten verarbeiten, steht in unserer"
 
@@ -1108,6 +1114,7 @@ msgid "admin"
 msgstr "Admin"
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 msgid "Add stage"
 msgstr "Bühne hinzufügen"
@@ -1385,6 +1392,7 @@ msgid "AG"
 msgstr "AG"
 
 #, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 msgid "points"
 msgstr "Punkte"
@@ -1785,8 +1793,14 @@ msgstr "BW-Code"
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/new.html.eex:18
+#: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:111
+#: lib/jumubase_web/views/page_view.ex:111
 msgid "Grouping"
-msgstr "Verbund"
+msgstr "Region"
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/home.html.eex:4
@@ -1797,3 +1811,21 @@ msgstr "Die Website für “Jugend musiziert” an Deutschen Schulen im Ausland"
 #: lib/jumubase_web/controllers/email.ex:20
 msgid "New message via jumu-weltweit.org"
 msgstr "Neue Nachricht über jumu-weltweit.org"
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:109
+msgid "blue"
+msgstr "blau"
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:110
+msgid "green"
+msgstr "grün"
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:111
+#: lib/jumubase_web/views/page_view.ex:111
+msgid "yellow"
+msgstr "gelb"

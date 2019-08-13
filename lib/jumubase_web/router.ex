@@ -10,6 +10,7 @@ defmodule JumubaseWeb.Router do
     plug :put_secure_browser_headers
     plug Phauxth.Authenticate
     plug Phauxth.Remember
+    plug JumubaseWeb.Plugs.Grouping
   end
 
   pipeline :api do

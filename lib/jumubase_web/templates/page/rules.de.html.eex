@@ -8,102 +8,20 @@
 
 <div class="row">
   <div id="rules-container" class="col-md-8 col-lg-7">
-    <p>Bitte lies dir zunächst die aktuelle Ausschreibung durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
+    <p>Bitte lies dir zunächst die aktuelle <strong>Ausschreibung</strong> durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
 
     <p class="text-prominent">
       <%= rule_booklet_link "Ausschreibung 2019", 2019, class: "btn btn-info" %>
     </p>
 
-    <p>In der <strong>Region Nord- und Osteuropa</strong> bestehen zusätzlich die folgenden Sonderregelungen:</p>
+    <p>Darüber hinaus gibt es <strong>Sonderregelungen</strong> für die einzelnen Regionen. Wähle hierfür deine Region aus:</p>
 
-    <h3>Populäre Musik</h3>
+    <%= form_for @conn, @conn.request_path, [method: :get, class: "form-inline grouping-form"], fn f -> %>
+      <%= select f, :grouping, grouping_options(),
+        prompt: gettext("Please choose"), selected: @active_grouping,
+        class: "form-control" %>
+    <% end %>
 
-    <h4>Erweiterung offizieller Pop-Kategorien</h4>
-
-    <p><strong>Grundsätzlich gilt: Ist eine Pop-Kategorie offiziell ausgeschrieben, gelten für sie die Regeln der Ausschreibung.</strong> Eine Weiterleitung ist dann je nach Altersgruppe bis zum Bundeswettbewerb möglich.</p>
-
-    <p>Die Region Nord- und Osteuropa erweitert diese Kategorie(n) um die Sonderregelung, dass im Landeswettbewerb bis zu drei jugendliche Begleiter mitwirken können, deren gemeinsame Altersgruppe zwischen III und VI liegen muss. Sie müssen im Regionalwettbewerb ebenfalls 23 Punkte erreicht haben und werden gesondert als Begleitgruppe gewertet. Für den Bundeswettbewerb gilt dann nur noch die offizielle Ausschreibung.</p>
-
-    <h4>Sonderkategorien</h4>
-
-    <p>In der Region Nord- und Osteuropa werden außerdem die untenstehenden Sonderkategorien angeboten. In diesen ist die Teilnahme grundsätzlich <strong>nur in den Altersgruppen III–VI</strong> (bei Gesangskategorien: <strong>III–VII</strong>) möglich, und sie führen <strong>nur bis zum Landeswettbewerb.</strong></p>
-
-    <p>Für die Begleitgruppe wird eine gemeinsame Altersgruppe errechnet, die zwischen III und VI liegen muss.</p>
-
-    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="heading-1">
-          <h5 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#panel-1" aria-expanded="true" aria-controls="panel-1">
-              Instrumental-Solo (Pop)
-            </a>
-          </h5>
-        </div>
-        <div id="panel-1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-1">
-          <div class="panel-body">
-            <p>Zugelassen sind <strong>alle elektronisch verstärkten Instrumente</strong>, für die im Wettbewerbsjahr keine offizielle Pop-Kategorie ausgeschrieben ist. Ebenfalls erlaubt sind <strong>akustische Instrumente, nicht jedoch Klavier.</strong> Eine Teilnahme mit Keyboard ist dagegen möglich, sofern dessen klangtechnische Möglichkeiten ausgeschöpft werden.</p>
-
-            <p>Empfohlen wird eine große Bandbreite an Stilistiken und Techniken der populären Musik. Bei elektronisch verstärkten Instrumenten empfiehlt sich die Verwendung unterschiedlicher Sounds. Bei akustischen Instrumenten sollten auch Spieltechniken verwendet werden, die bei der Interpretation klassischer Musik nicht üblich sind.</p>
-
-            <h4>Vorspielprogramm</h4>
-
-            <ul>
-              <li>Ein Titel muss völlig unbegleitet präsentiert werden. Bei begleiteten Titeln muss die solistische Rolle klar zum Tragen kommen, z.B. in Form eines Instrumentalsolos.</li>
-              <li>Nur ein Titel darf mit Playback begleitet werden. Der eigene Part darf nicht im Playback gedoppelt sein.</li>
-              <li>Bei höchstens einem Werk ist ein Loop zulässig.</li>
-              <li>Die Auftrittszeit (siehe Tabelle) darf einschließlich Umbau und Stimmen nicht überschritten werden.</li>
-            </ul>
-
-            <table class="table table-striped table-condensed">
-              <thead>
-                <tr>
-                  <th>Altersgruppe</th>
-                  <th>Programm</th>
-                  <th>Auftrittszeit</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>III</td>
-                  <td>mindestens zwei stilistisch unterschiedliche Titel</td>
-                  <td>10–15 Minuten</td>
-                </tr>
-                <tr>
-                  <td>IV</td>
-                  <td>mindestens drei stilistisch unterschiedliche Titel, darunter eine eigene Komposition oder Improvisation</td>
-                  <td>10–15 Minuten</td>
-                </tr>
-                <tr>
-                  <td>V und VI</td>
-                  <td>mindestens drei stilistisch unterschiedliche Titel, darunter eine eigene Komposition oder Improvisation</td>
-                  <td>15–20 Minuten</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h4>Begleiter</h4>
-
-            <p>Zugelassen für alle Altersgruppen sind bis zu drei jugendliche Begleiter, die gesondert als Begleitgruppe bewertet werden. Gewertet wird nur, wer an mindestens zwei Stücken mitwirkt. Auch Begleitgruppen brauchen für eine Weiterleitung mindestens 23 Punkte. Alternativ ist auch ein erwachsener, nicht zu bewertender Begleiter möglich.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <h3>“Kinder musizieren” (Kimu)</h3>
-
-    <p>Der Wettbewerb “Kinder musizieren” wird mittlerweile an zahlreichen Schulen der Region Nord- und Osteuropa angeboten. Es kann mit einem beliebigen Instrument oder Gesang teilgenommen werden. Auch Mehrfachteilnahmen und Ensemblespiel sind erlaubt.</p>
-
-    <p>Empfohlen wird Kimu besonders für Instrumentalanfänger, die noch keine oder wenig Bühnenerfahrung besitzen. Kimu ist der sanfte Einstieg, bei dem die Motivation zum Weitermachen im Vordergrund steht.</p>
-
-    <p>
-      Teilnahmeanforderungen:
-
-      <ul>
-        <li>Mindestens zwei Stücke unterschiedlichen Charakters (z.B. schnell – langsam)</li>
-        <li>Vorspieldauer: höchstens 5 Minuten</li>
-      </ul>
-    </p>
-
-    <p>Die Anmeldung findet, genau wie für den "großen" Jumu-Wettbewerb, über diese Website statt. Dazu einfach auf der <%= link "Anmeldeseite", to: Routes.page_path(@conn, :registration) %> den Kimu-Wettbewerb der jeweiligen Schule auswählen!</p>
+    <%= render_existing PageView, rules_fragment(@active_grouping), conn: @conn %>
   </div>
 </div>

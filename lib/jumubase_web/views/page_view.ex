@@ -5,8 +5,10 @@ defmodule JumubaseWeb.PageView do
   import JumubaseWeb.Internal.ContestView,
     only: [deadline: 1, deadline_info: 2, name_with_flag: 1, year: 1]
 
+  alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Contest, Host}
+  alias JumubaseWeb.PageView
   alias JumubaseWeb.Endpoint
   alias JumubaseWeb.MapHelpers
 
@@ -22,6 +24,14 @@ defmodule JumubaseWeb.PageView do
   def app_link(platform) do
     img_tag = img_tag(app_badge_path(platform), height: 40)
     link(img_tag, to: app_url(platform), class: "app-link")
+  end
+
+  def grouping_options do
+    JumuParams.groupings() |> Enum.map(&{grouping_name(&1), &1})
+  end
+
+  def rules_fragment(grouping) do
+    "_grouping_#{grouping}_rules.html"
   end
 
   def rule_booklet_link(title, year, opts \\ []) do
@@ -43,6 +53,10 @@ defmodule JumubaseWeb.PageView do
 
   def render("privacy.html", assigns) do
     render("privacy.#{get_locale()}.html", assigns)
+  end
+
+  def render("scripts.rules.html", _assigns) do
+    ~E{<script src="/js/groupingPicker.js"></script>}
   end
 
   def render("scripts.privacy.html", _assigns) do
@@ -89,6 +103,14 @@ defmodule JumubaseWeb.PageView do
   defp app_badge_path(:ios), do: "/images/app-store-badge.svg"
 
   defp get_locale, do: Gettext.get_locale(Jumubase.Gettext)
+
+  defp grouping_name(grouping) do
+    case grouping do
+      "1" -> "#{gettext("Grouping")} 1 (#{gettext("blue")})"
+      "2" -> "#{gettext("Grouping")} 2 (#{gettext("green")})"
+      "3" -> "#{gettext("Grouping")} 3 (#{gettext("yellow")})"
+    end
+  end
 
   defp render_markdown(nil), do: nil
 

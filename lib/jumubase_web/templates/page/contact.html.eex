@@ -12,6 +12,7 @@
 
     <p class="text-muted">
       <%= gettext("This form is for contacting the international committee of the region \"Nord- und Osteuropa\".") %>
+
       <%= gettext("For questions about local contests, consider contacting your local Jumu organizer (see list below).") %>
     </p>
 

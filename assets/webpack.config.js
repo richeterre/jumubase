@@ -5,16 +5,17 @@ const webpack = require("webpack");
 module.exports = {
   entry: {
     app: ["./js/app.js", "./css/app.scss"],
+    groupingPicker: "./js/views/groupingPicker.js",
     performanceFilter: "./js/views/performanceFilter.js",
     privacy: "./js/views/privacy.js",
     registration: "./js/views/registration.js",
     resultForm: "./js/views/resultForm.js",
-    scheduler: "./js/views/scheduler.js"
+    scheduler: "./js/views/scheduler.js",
   },
 
   output: {
     path: `${__dirname}/../priv/static/js`,
-    filename: "[name].js"
+    filename: "[name].js",
   },
 
   module: {
@@ -22,45 +23,45 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: "babel-loader"
+        use: "babel-loader",
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
         test: /\.woff$/,
         use: {
           loader: "url-loader",
           options: {
-            limit: 50000
-          }
-        }
-      }
-    ]
+            limit: 50000,
+          },
+        },
+      },
+    ],
   },
 
   plugins: [
     new webpack.ProvidePlugin({
       $: "jquery",
-      jQuery: "jquery"
+      jQuery: "jquery",
     }),
     new MiniCssExtractPlugin({
-      filename: "../css/[name].css"
+      filename: "../css/[name].css",
     }),
     new CopyWebpackPlugin([
       {
         from: "node_modules/bootstrap-sass/assets/fonts/bootstrap/",
-        to: "../fonts/"
+        to: "../fonts/",
       },
       {
         from: "static/**",
-        to: "../../"
-      }
-    ])
-  ]
+        to: "../../",
+      },
+    ]),
+  ],
 };

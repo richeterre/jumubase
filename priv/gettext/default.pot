@@ -91,6 +91,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:35
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:46
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
+#: lib/jumubase_web/templates/page/rules.de.html.eex:21
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
 #: lib/jumubase_web/templates/performance/_form.html.eex:22
@@ -365,6 +366,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:45
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:12
 #: lib/jumubase_web/views/internal/contest_view.ex:50
+#: lib/jumubase_web/views/internal/contest_view.ex:50
 msgid "Deadline"
 msgstr ""
 
@@ -387,6 +389,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 msgid "Epoch"
 msgstr ""
@@ -702,11 +705,14 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/views/email_view.ex:10
+#: lib/jumubase_web/views/email_view.ex:10
+#: lib/jumubase_web/views/email_view.ex:22
 #: lib/jumubase_web/views/email_view.ex:22
 msgid "Hello"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/views/email_view.ex:20
 #: lib/jumubase_web/views/email_view.ex:20
 msgid "and"
 msgstr ""
@@ -730,7 +736,7 @@ msgid "Here is how you can get in touch with us."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:20
+#: lib/jumubase_web/templates/page/contact.html.eex:21
 msgid "Member schools"
 msgstr ""
 
@@ -750,7 +756,7 @@ msgid "Send message"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:15
+#: lib/jumubase_web/templates/page/contact.html.eex:16
 msgid "For questions about local contests, consider contacting your local Jumu organizer (see list below)."
 msgstr ""
 
@@ -795,7 +801,7 @@ msgid "Preparation"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:59
+#: lib/jumubase_web/templates/page/contact.html.eex:60
 #: lib/jumubase_web/templates/performance/_form.html.eex:63
 msgid "privacy policy"
 msgstr ""
@@ -806,22 +812,22 @@ msgid "The data you enter will be handled as described in the"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:28
+#: lib/jumubase_web/templates/page/contact.html.eex:29
 msgid "State-level committee"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:47
+#: lib/jumubase_web/templates/page/contact.html.eex:48
 msgid "chair"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:48
+#: lib/jumubase_web/templates/page/contact.html.eex:49
 msgid "deputy chair"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:29
+#: lib/jumubase_web/templates/page/contact.html.eex:30
 msgid "responsible for this website"
 msgstr ""
 
@@ -831,12 +837,12 @@ msgid "FAQ"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:55
+#: lib/jumubase_web/templates/page/contact.html.eex:56
 msgid "Privacy"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:58
+#: lib/jumubase_web/templates/page/contact.html.eex:59
 msgid "To find out how we process your data, please see our"
 msgstr ""
 
@@ -1107,6 +1113,7 @@ msgid "admin"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 msgid "Add stage"
 msgstr ""
@@ -1384,6 +1391,7 @@ msgid "AG"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 msgid "points"
 msgstr ""
@@ -1784,6 +1792,12 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/new.html.eex:18
+#: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:111
+#: lib/jumubase_web/views/page_view.ex:111
 msgid "Grouping"
 msgstr ""
 
@@ -1795,4 +1809,21 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/email.ex:20
 msgid "New message via jumu-weltweit.org"
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:109
+msgid "blue"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:110
+msgid "green"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:111
+#: lib/jumubase_web/views/page_view.ex:111
+msgid "yellow"
 msgstr ""

@@ -51,7 +51,12 @@ defmodule JumubaseWeb.PageController do
   end
 
   def groupings(conn, _params) do
+    grouped_hosts =
+      Foundation.list_hosts()
+      |> Enum.group_by(& &1.current_grouping)
+
     conn
+    |> assign(:grouped_hosts, grouped_hosts)
     |> render("groupings.html")
   end
 

@@ -10,4 +10,11 @@
   <div class="col-md-6">
     <%= host_map_image() %>
   </div>
+
+  <div class="col-md-6">
+    <%= for {grouping, hosts} <- @grouped_hosts do %>
+      <h3><%= grouping_name_with_color(grouping) %></h3>
+      <p><%= hosts |> Enum.map(&(&1.name)) |> Enum.join(", ") %></p>
+    <% end %>
+  </div>
 </div>

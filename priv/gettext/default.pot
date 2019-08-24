@@ -548,7 +548,7 @@ msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:77
+#: lib/jumubase_web/controllers/page_controller.ex:82
 msgid "We could not find a registration for this edit code."
 msgstr ""
 
@@ -939,7 +939,7 @@ msgid "Certificate date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:82
+#: lib/jumubase_web/controllers/page_controller.ex:87
 msgid "The edit deadline for this contest has passed. Please contact us if you need assistance."
 msgstr ""
 
@@ -1785,9 +1785,13 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/new.html.eex:18
+#: lib/jumubase_web/templates/page/groupings.de.html.eex:16
 #: lib/jumubase_web/views/page_view.ex:113
 #: lib/jumubase_web/views/page_view.ex:114
 #: lib/jumubase_web/views/page_view.ex:115
+#: lib/jumubase_web/views/page_view.ex:121
+#: lib/jumubase_web/views/page_view.ex:122
+#: lib/jumubase_web/views/page_view.ex:123
 msgid "Grouping"
 msgstr ""
 
@@ -1820,4 +1824,11 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/page/_grouping_picker.html.eex:6
 msgid "How do I find my grouping?"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/page_view.ex:121
+#: lib/jumubase_web/views/page_view.ex:122
+#: lib/jumubase_web/views/page_view.ex:123
+msgid "formerly"
 msgstr ""

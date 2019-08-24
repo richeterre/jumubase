@@ -27,7 +27,7 @@ defmodule JumubaseWeb.PageView do
   end
 
   def grouping_options do
-    JumuParams.groupings() |> Enum.map(&{grouping_name(&1), &1})
+    JumuParams.groupings() |> Enum.map(&{grouping_name_with_legacy(&1), &1})
   end
 
   def rules_fragment(grouping) do
@@ -108,11 +108,19 @@ defmodule JumubaseWeb.PageView do
 
   defp get_locale, do: Gettext.get_locale(Jumubase.Gettext)
 
-  defp grouping_name(grouping) do
+  defp grouping_name_with_color(grouping) do
     case grouping do
       "1" -> "#{gettext("Grouping")} 1 — #{gettext("blue")}"
       "2" -> "#{gettext("Grouping")} 2 — #{gettext("green")}"
       "3" -> "#{gettext("Grouping")} 3 — #{gettext("yellow")}"
+    end
+  end
+
+  defp grouping_name_with_legacy(grouping) do
+    case grouping do
+      "1" -> "#{gettext("Grouping")} 1 – #{gettext("formerly")} “Spanien/Portugal”"
+      "2" -> "#{gettext("Grouping")} 2 – #{gettext("formerly")} “Nord-/Osteuropa”"
+      "3" -> "#{gettext("Grouping")} 3 – #{gettext("formerly")} “Östl. Mittelmeer”"
     end
   end
 

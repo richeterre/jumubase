@@ -1,0 +1,7 @@
+<%= form_for @conn, @conn.request_path, [method: :get, class: "form-inline grouping-picker"], fn f -> %>
+  <%= select f, :grouping, grouping_options(),
+    prompt: gettext("Please choose"), selected: @active_grouping,
+    class: "form-control" %>
+
+  <%= link gettext("How do I find my grouping?"), to: Routes.page_path(@conn, :groupings), class: "help-link" %>
+<% end %>

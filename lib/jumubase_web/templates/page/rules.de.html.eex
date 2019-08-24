@@ -14,13 +14,9 @@
       <%= rule_booklet_link "Ausschreibung 2019", 2019, class: "btn btn-info" %>
     </p>
 
-    <p>Darüber hinaus gibt es <strong>Sonderregelungen</strong> für die einzelnen Regionen. Wähle hierfür deine Region aus:</p>
+    <p>Darüber hinaus gibt es <strong>Sonderregelungen</strong> für die einzelnen Wettbewerbsverbunde. Wähle hierfür deinen Verbund aus:</p>
 
-    <%= form_for @conn, @conn.request_path, [method: :get, class: "form-inline grouping-form"], fn f -> %>
-      <%= select f, :grouping, grouping_options(),
-        prompt: gettext("Please choose"), selected: @active_grouping,
-        class: "form-control" %>
-    <% end %>
+    <%= render "_grouping_picker.html", conn: @conn, active_grouping: @active_grouping %>
 
     <%= render_existing PageView, rules_fragment(@active_grouping), conn: @conn %>
   </div>

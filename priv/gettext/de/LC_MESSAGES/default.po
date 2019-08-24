@@ -92,7 +92,7 @@ msgstr "Neuer Benutzer"
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:35
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:46
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42
-#: lib/jumubase_web/templates/page/rules.de.html.eex:21
+#: lib/jumubase_web/templates/page/_grouping_picker.html.eex:3
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:139
 #: lib/jumubase_web/templates/performance/_appearance_panels.html.eex:160
 #: lib/jumubase_web/templates/performance/_form.html.eex:22
@@ -367,7 +367,6 @@ msgstr "Tag"
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:45
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:12
 #: lib/jumubase_web/views/internal/contest_view.ex:50
-#: lib/jumubase_web/views/internal/contest_view.ex:50
 msgid "Deadline"
 msgstr "Anmeldeschluss"
 
@@ -390,7 +389,6 @@ msgstr "Änderungscode"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 msgid "Epoch"
 msgstr "Epoche"
@@ -551,7 +549,7 @@ msgid "Search"
 msgstr "Suchen"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:72
+#: lib/jumubase_web/controllers/page_controller.ex:77
 msgid "We could not find a registration for this edit code."
 msgstr "Wir konnten keine Anmeldung unter diesem Änderungscode finden."
 
@@ -706,14 +704,11 @@ msgstr "Deine Änderungen an der Anmeldung wurden gespeichert."
 
 #, elixir-format
 #: lib/jumubase_web/views/email_view.ex:10
-#: lib/jumubase_web/views/email_view.ex:10
-#: lib/jumubase_web/views/email_view.ex:22
 #: lib/jumubase_web/views/email_view.ex:22
 msgid "Hello"
 msgstr "Hallo"
 
 #, elixir-format
-#: lib/jumubase_web/views/email_view.ex:20
 #: lib/jumubase_web/views/email_view.ex:20
 msgid "and"
 msgstr "und"
@@ -945,7 +940,7 @@ msgid "Certificate date"
 msgstr "Urkundendatum"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/page_controller.ex:77
+#: lib/jumubase_web/controllers/page_controller.ex:82
 msgid "The edit deadline for this contest has passed. Please contact us if you need assistance."
 msgstr "Der Änderungsschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
@@ -1114,7 +1109,6 @@ msgid "admin"
 msgstr "Admin"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 msgid "Add stage"
 msgstr "Bühne hinzufügen"
@@ -1392,7 +1386,6 @@ msgid "AG"
 msgstr "AG"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 msgid "points"
 msgstr "Punkte"
@@ -1793,14 +1786,11 @@ msgstr "BW-Code"
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/new.html.eex:18
-#: lib/jumubase_web/views/page_view.ex:109
-#: lib/jumubase_web/views/page_view.ex:109
-#: lib/jumubase_web/views/page_view.ex:110
-#: lib/jumubase_web/views/page_view.ex:110
-#: lib/jumubase_web/views/page_view.ex:111
-#: lib/jumubase_web/views/page_view.ex:111
+#: lib/jumubase_web/views/page_view.ex:113
+#: lib/jumubase_web/views/page_view.ex:114
+#: lib/jumubase_web/views/page_view.ex:115
 msgid "Grouping"
-msgstr "Region"
+msgstr "Verbund"
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/home.html.eex:4
@@ -1815,17 +1805,21 @@ msgstr "Neue Nachricht über jumu-weltweit.org"
 #, elixir-format
 #: lib/jumubase_web/views/page_view.ex:109
 #: lib/jumubase_web/views/page_view.ex:109
+#: lib/jumubase_web/views/page_view.ex:113
 msgid "blue"
 msgstr "blau"
 
 #, elixir-format
-#: lib/jumubase_web/views/page_view.ex:110
-#: lib/jumubase_web/views/page_view.ex:110
+#: lib/jumubase_web/views/page_view.ex:114
 msgid "green"
 msgstr "grün"
 
 #, elixir-format
-#: lib/jumubase_web/views/page_view.ex:111
-#: lib/jumubase_web/views/page_view.ex:111
+#: lib/jumubase_web/views/page_view.ex:115
 msgid "yellow"
 msgstr "gelb"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/_grouping_picker.html.eex:6
+msgid "How do I find my grouping?"
+msgstr "Wie finde ich meinen Verbund?"

@@ -50,6 +50,11 @@ defmodule JumubaseWeb.PageController do
     |> render("contact.html")
   end
 
+  def groupings(conn, _params) do
+    conn
+    |> render("groupings.html")
+  end
+
   def privacy(conn, _params) do
     conn
     |> render("privacy.html")

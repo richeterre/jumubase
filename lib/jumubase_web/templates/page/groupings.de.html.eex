@@ -1,0 +1,13 @@
+<h2>Übersicht der Verbunde</h2>
+
+<p class="lead">
+  Hier siehst du, zu welchem Wettbewerbsverbund deine Schule gehört.
+</p>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= host_map_image() %>
+  </div>
+</div>

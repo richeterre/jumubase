@@ -132,6 +132,16 @@ dt:not(:first-child) {
   }
 }
 
+.grouping-picker {
+  a {
+    vertical-align: middle;
+  }
+
+  a.help-link {
+    margin-left: 0.5em;
+  }
+}
+
 .button-row {
   margin-bottom: $line-height-computed;
 }

@@ -49,6 +49,7 @@ defmodule JumubaseWeb.Router do
     get "/", PageController, :home
     get "/regeln", PageController, :rules
     get "/faq", PageController, :faq
+    get "/verbunde", PageController, :groupings
     get "/datenschutz", PageController, :privacy
 
     # Contact

@@ -138,7 +138,9 @@ dt:not(:first-child) {
   }
 
   a.help-link {
-    margin-left: 0.5em;
+    @media (min-width: $screen-sm-min) {
+      margin-left: 0.5em;
+    }
   }
 }
 

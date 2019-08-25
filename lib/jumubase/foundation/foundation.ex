@@ -22,6 +22,15 @@ defmodule Jumubase.Foundation do
     Repo.all(from h in Host, where: h.id in ^ids)
   end
 
+  def list_hosts_by_grouping(grouping) do
+    query =
+      from h in Host,
+        where: h.current_grouping == ^grouping,
+        order_by: :name
+
+    Repo.all(query)
+  end
+
   def list_predecessor_hosts(%Contest{round: 2, season: season}) do
     query =
       from h in Host,

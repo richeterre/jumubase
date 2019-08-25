@@ -23,6 +23,15 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_hosts_by_grouping/1" do
+    test "returns the hosts that currently belong to the given grouping, sorted by name" do
+      h1 = insert(:host, current_grouping: "1", name: "B")
+      _h2 = insert(:host, current_grouping: "2")
+      h3 = insert(:host, current_grouping: "1", name: "A")
+      assert Foundation.list_hosts_by_grouping("1") == [h3, h1]
+    end
+  end
+
   describe "list_predecessor_hosts/1" do
     setup do
       [lw: insert(:contest, season: 56, round: 2)]

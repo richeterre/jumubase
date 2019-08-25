@@ -46,7 +46,7 @@ defmodule JumubaseWeb.PageController do
 
   def contact(conn, _params) do
     conn
-    |> assign(:hosts, Foundation.list_hosts())
+    |> assign(:hosts, Foundation.list_hosts_by_grouping("2"))
     |> render("contact.html")
   end
 

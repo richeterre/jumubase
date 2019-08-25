@@ -761,11 +761,6 @@ msgid "Message us"
 msgstr "Nachricht senden"
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:14
-msgid "This form is for contacting the international committee of the region \"Nord- und Osteuropa\"."
-msgstr "Mit diesem Formular erreichst du den Landesausschuss Nord-und Osteuropa."
-
-#, elixir-format
 #: lib/jumubase_web/controllers/contact_controller.ex:15
 msgid "Please fill in all fields and try again!"
 msgstr "Bitte fülle alle Felder aus und versuche es erneut!"
@@ -1797,3 +1792,8 @@ msgstr "Die Website für “Jugend musiziert” an Deutschen Schulen im Ausland"
 #: lib/jumubase_web/controllers/email.ex:20
 msgid "New message via jumu-weltweit.org"
 msgstr "Neue Nachricht über jumu-weltweit.org"
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:14
+msgid "This form is for contacting the international committee of Grouping 2."
+msgstr "Mit diesem Formular erreichst du den Landesausschuss des Verbunds 2."

@@ -1,0 +1,53 @@
+<div class="panel panel-default">
+  <div class="panel-heading" role="tab" id="pop-vocal-ensemble">
+    <h5 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#panel-pop-vocal-ensemble" aria-expanded="true" aria-controls="panel-pop-vocal-ensemble">
+        Vokal-Ensemble (Pop)
+      </a>
+    </h5>
+  </div>
+  <div id="panel-pop-vocal-ensemble" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pop-vocal-ensemble">
+    <div class="panel-body">
+      <p>Es können 2–4 Sänger allein oder mit Begleitung teilnehmen. Die Gesamtanzahl von 5 Mitgliedern, einschließlich Begleitung, darf nicht überschritten werden. Die zu bewertenden Sänger müssen bei allen Titeln mitwirken. Die Verteilung der Gesangsparts im Programm sollte gleichwertig sein. Durchgängige Stimmverdopplungen und durchgängige einfache Terzgänge sind nicht erwünscht.</p>
+
+      <h4>Vorspielprogramm</h4>
+
+      <ul>
+        <li>Ein Titel muss völlig unbegleitet präsentiert werden.</li>
+        <li>Die Auftrittszeit (siehe Tabelle) darf einschließlich Umbau und Stimmen nicht überschritten werden.</li>
+        <li>Es kann mit oder ohne Mikrofon gesungen werden. Playbacks sind nicht erlaubt.</li>
+      </ul>
+
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Altersgruppe</th>
+            <th>Programm</th>
+            <th>Auftrittszeit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>III</td>
+            <td>mindestens zwei stilistisch unterschiedliche Titel</td>
+            <td>10–15 Minuten</td>
+          </tr>
+          <tr>
+            <td>IV</td>
+            <td>mindestens drei stilistisch unterschiedliche Titel, darunter eine eigene Komposition oder Improvisation</td>
+            <td>10–15 Minuten</td>
+          </tr>
+          <tr>
+            <td>V und VI</td>
+            <td>mindestens drei stilistisch unterschiedliche Titel, darunter eine eigene Komposition oder Improvisation</td>
+            <td>15–20 Minuten</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h4>Begleiter</h4>
+
+      <p>Zugelassen für alle Altersgruppen sind bis zu drei jugendliche Begleiter, die gesondert als Begleitgruppe bewertet werden. Gewertet wird nur, wer an mindestens der Hälfte des Programms mitwirkt. Auch Begleitgruppen brauchen für eine Weiterleitung mindestens 23 Punkte. Instrumente dürfen gewechselt werden, Begleiter dürfen aber nicht mitsingen. Sänger dürfen sich auch selbst begleiten. Alternativ ist die Begleitung durch einen Erwachsenen möglich, sofern es sich nicht um die Gesangslehrkraft handelt.</p>
+    </div>
+  </div>
+</div>

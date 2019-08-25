@@ -45,6 +45,28 @@ defmodule Jumubase.ContestTest do
       end
     end
 
+    test "is invalid without a grouping" do
+      params = params_with_assocs(:contest, grouping: nil)
+      changeset = Contest.changeset(%Contest{}, params)
+      refute changeset.valid?
+    end
+
+    test "is invalid with an invalid grouping" do
+      for grouping <- [1, "0", "A"] do
+        params = params_with_assocs(:contest, grouping: grouping)
+        changeset = Contest.changeset(%Contest{}, params)
+        refute changeset.valid?
+      end
+    end
+
+    test "is valid with a valid grouping" do
+      for grouping <- ~w(1 2 3) do
+        params = params_with_assocs(:contest, grouping: grouping)
+        changeset = Contest.changeset(%Contest{}, params)
+        assert changeset.valid?
+      end
+    end
+
     test "is invalid without a start date" do
       params = params_with_assocs(:contest, start_date: nil)
       changeset = Contest.changeset(%Contest{}, params)

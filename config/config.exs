@@ -46,7 +46,7 @@ config :jumubase, Jumubase.Mailer, adapter: Bamboo.LocalAdapter
 
 # Configure email
 config :jumubase, JumubaseWeb.Email,
-  default_sender: {"Jumu Nordost", "no-reply@jumu-nordost.eu"},
+  default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
   contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
   admin_email: System.get_env("JUMU_ADMIN_EMAIL")
 

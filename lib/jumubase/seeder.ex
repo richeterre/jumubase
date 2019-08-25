@@ -68,10 +68,11 @@ defmodule Jumubase.Seeder do
   end
 
   @doc """
-  Applies the seed for all hosts in the system.
+  Applies the seed for all hosts in the given grouping.
   """
-  def apply_for_all_hosts(seed) do
-    apply_seed(seed, Repo.all(Host))
+  def apply_for_hosts_in_grouping(seed, grouping) do
+    hosts = Host |> where(current_grouping: ^grouping) |> Repo.all()
+    apply_seed(seed, hosts)
   end
 
   @doc """
@@ -99,6 +100,7 @@ defmodule Jumubase.Seeder do
         host: host,
         season: season,
         round: round,
+        grouping: host.current_grouping,
         start_date: start_date,
         end_date: end_date,
         deadline: deadline,

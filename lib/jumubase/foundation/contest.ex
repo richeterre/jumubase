@@ -9,6 +9,7 @@ defmodule Jumubase.Foundation.Contest do
   schema "contests" do
     field :season, :integer
     field :round, :integer
+    field :grouping, :string
     field :deadline, :date
     field :start_date, :date
     field :end_date, :date
@@ -21,7 +22,7 @@ defmodule Jumubase.Foundation.Contest do
     timestamps()
   end
 
-  @required_attrs [:season, :round, :deadline, :start_date, :end_date]
+  @required_attrs [:season, :round, :grouping, :deadline, :start_date, :end_date]
   @optional_attrs [:certificate_date, :timetables_public]
 
   @doc false
@@ -31,6 +32,7 @@ defmodule Jumubase.Foundation.Contest do
     |> validate_required(@required_attrs)
     |> validate_number(:season, greater_than: 0)
     |> validate_inclusion(:round, JumuParams.rounds())
+    |> validate_inclusion(:grouping, JumuParams.groupings())
     |> validate_dates
   end
 

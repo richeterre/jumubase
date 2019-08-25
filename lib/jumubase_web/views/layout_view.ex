@@ -2,7 +2,7 @@ defmodule JumubaseWeb.LayoutView do
   use JumubaseWeb, :view
   import JumubaseWeb.BreadcrumbHelpers
 
-  def title, do: "Jumu Nordost"
+  def title, do: "Jumu ♫ weltweit"
 
   @doc """
   Tells whether the given breadcrumb is active.

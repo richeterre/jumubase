@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.ContestController do
   use JumubaseWeb, :controller
   import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1, round_options: 0]
+  import JumubaseWeb.Internal.HostView, only: [grouping_options: 0]
   alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
@@ -87,5 +88,6 @@ defmodule JumubaseWeb.Internal.ContestController do
     |> assign(:changeset, changeset)
     |> assign(:host_options, host_options)
     |> assign(:round_options, round_options())
+    |> assign(:grouping_options, grouping_options())
   end
 end

@@ -1,10 +1,13 @@
 <h2><%= gettext("Hosts") %></h2>
 
+<hr>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
       <tr>
         <th><%= gettext("Name") %></th>
+        <th><%= gettext("Grouping") %></th>
         <th><%= gettext("City") %></th>
         <th><%= gettext("Country") %></th>
         <th><%= gettext("Time Zone") %></th>
@@ -15,6 +18,7 @@
       <%= for host <- @hosts do %>
       <tr>
         <td><%= host.name %></td>
+        <td><%= host.current_grouping %></td>
         <td><%= host.city %></td>
         <td><%= emoji_flag(host.country_code) %></td>
         <td><code><%= host.time_zone %></code></td>

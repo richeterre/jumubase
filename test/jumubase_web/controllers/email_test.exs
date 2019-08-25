@@ -11,7 +11,7 @@ defmodule JumubaseWeb.EmailTest do
       assert email.from == {"A", "a@b.c"}
       assert email.to == config[:contact_email]
       assert email.cc == config[:admin_email]
-      assert email.subject == "New message via jumu-nordost.eu"
+      assert email.subject == "New message via jumu-weltweit.org"
       assert email.text_body == "Lorem ipsum"
     end
   end

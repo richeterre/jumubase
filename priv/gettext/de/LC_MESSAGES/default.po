@@ -746,11 +746,6 @@ msgid "Message"
 msgstr "Nachricht"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/email.ex:20
-msgid "New message via jumu-nordost.eu"
-msgstr "Neue Nachricht über jumu-nordost.eu"
-
-#, elixir-format
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:34
 msgid "Send message"
 msgstr "Nachricht absenden"
@@ -1797,3 +1792,8 @@ msgstr "Verbund"
 #: lib/jumubase_web/templates/page/home.html.eex:4
 msgid "The website for “Jugend musiziert” at German schools abroad"
 msgstr "Die Website für “Jugend musiziert” an Deutschen Schulen im Ausland"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/email.ex:20
+msgid "New message via jumu-weltweit.org"
+msgstr "Neue Nachricht über jumu-weltweit.org"

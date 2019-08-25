@@ -17,7 +17,7 @@ defmodule JumubaseWeb.Email do
       new_email()
       |> from({name, email})
       |> to(contact_email)
-      |> subject(gettext("New message via jumu-nordost.eu"))
+      |> subject(gettext("New message via jumu-weltweit.org"))
       |> text_body(message)
 
     # Include admin as CC if different from contact email

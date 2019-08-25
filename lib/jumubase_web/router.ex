@@ -155,7 +155,7 @@ defmodule JumubaseWeb.Router do
       end
     end
 
-    resources "/hosts", HostController, only: [:index, :new, :create]
+    resources "/hosts", HostController, except: [:show, :delete]
     resources "/users", UserController, except: [:show]
   end
 

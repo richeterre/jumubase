@@ -1,0 +1,9 @@
+<h2><%= gettext("Edit Host") %></h2>
+
+<hr>
+
+<%= render "_form.html",
+  changeset: @changeset,
+  action: Routes.internal_host_path(@conn, :update, @host),
+  submit_title: gettext("Save Changes")
+  %>

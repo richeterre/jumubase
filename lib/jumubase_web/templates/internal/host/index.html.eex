@@ -12,6 +12,7 @@
         <th><%= gettext("Country") %></th>
         <th><%= gettext("Time Zone") %></th>
         <th><%= gettext("Location") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -23,6 +24,11 @@
         <td><%= emoji_flag(host.country_code) %></td>
         <td><code><%= host.time_zone %></code></td>
         <td><code><%= host.latitude %>, <%= host.longitude %></code></td>
+        <td class="text-right">
+          <%= edit_icon_link(
+            Routes.internal_host_path(@conn, :edit, host)
+          ) %>
+        </td>
       </tr>
       <% end %>
     </tbody>

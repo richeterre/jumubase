@@ -2,78 +2,8 @@
 
 <hr>
 
-<%= form_for @changeset, Routes.internal_host_path(@conn, :create), fn f -> %>
-  <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
-
-  <div class="row">
-    <div class="form-group col-sm-5">
-      <%= label f, :name, gettext("Name") %>
-      <%= text_input f, :name, class: "form-control" %>
-      <%= error_tag f, :name %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-sm-2">
-      <%= label f, :current_grouping, gettext("Grouping") %>
-      <%= select f, :current_grouping, grouping_options(), class: "form-control" %>
-      <%= error_tag f, :current_grouping %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-sm-5">
-      <%= label f, :address, gettext("Address") %>
-      <%= textarea f, :address, class: "form-control" %>
-      <%= error_tag f, :address %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-sm-5">
-      <%= label f, :city, gettext("City") %>
-      <%= text_input f, :city, class: "form-control" %>
-      <%= error_tag f, :city %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-sm-2">
-      <%= label f, :country_code, gettext("Country code") %>
-      <%= text_input f, :country_code, class: "form-control" %>
-      <%= error_tag f, :country_code %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-sm-4">
-      <%= label f, :time_zone, gettext("Time zone") %>
-      <%= text_input f, :time_zone, class: "form-control" %>
-      <%= error_tag f, :time_zone %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-sm-3">
-      <%= label f, :latitude, gettext("Latitude") %>
-      <div class="input-group">
-        <%= text_input f, :latitude, class: "form-control" %>
-        <span class="input-group-addon">&deg;</span>
-      </div>
-      <%= error_tag f, :latitude %>
-    </div>
-
-    <div class="form-group col-sm-3">
-      <%= label f, :longitude, gettext("Longitude") %>
-      <div class="input-group">
-        <%= text_input f, :longitude, class: "form-control" %>
-        <span class="input-group-addon">&deg;</span>
-      </div>
-      <%= error_tag f, :longitude %>
-    </div>
-  </div>
-
-  <hr>
-
-  <%= submit gettext("Create Host"), class: "btn btn-primary" %>
-<% end %>
+<%= render "_form.html",
+  changeset: @changeset,
+  action: Routes.internal_host_path(@conn, :create),
+  submit_title: gettext("Create Host")
+  %>

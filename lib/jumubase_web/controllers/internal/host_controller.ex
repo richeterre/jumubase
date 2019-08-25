@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Internal.HostController do
   use JumubaseWeb, :controller
+  alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Host
 
@@ -38,5 +39,37 @@ defmodule JumubaseWeb.Internal.HostController do
         |> assign(:changeset, changeset)
         |> render("new.html")
     end
+  end
+
+  def edit(conn, %{"id" => id}) do
+    host = Foundation.get_host!(id)
+    changeset = Foundation.change_host(host)
+    render_edit_form(conn, host, changeset)
+  end
+
+  def update(conn, %{"id" => id, "host" => params}) do
+    host = Foundation.get_host!(id)
+
+    case Foundation.update_host(host, params) do
+      {:ok, host} ->
+        conn
+        |> put_flash(:info, gettext("The host %{name} was updated.", name: host.name))
+        |> redirect(to: Routes.internal_host_path(conn, :index))
+
+      {:error, %Changeset{} = changeset} ->
+        render_edit_form(conn, host, changeset)
+    end
+  end
+
+  # Private helpers
+
+  defp render_edit_form(conn, %Host{} = host, %Changeset{} = changeset) do
+    edit_path = Routes.internal_host_path(conn, :edit, host)
+
+    conn
+    |> assign(:changeset, changeset)
+    |> add_breadcrumb(name: host.name, path: edit_path)
+    |> add_breadcrumb(icon: "pencil", path: edit_path)
+    |> render("edit.html", host: host)
   end
 end

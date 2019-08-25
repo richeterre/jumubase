@@ -39,6 +39,17 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "get_host!/1" do
+    test "returns a host" do
+      host = insert(:host)
+      assert Foundation.get_host!(host.id) == host
+    end
+
+    test "raises an error if the host isn't found" do
+      assert_raise Ecto.NoResultsError, fn -> Foundation.get_host!(123) end
+    end
+  end
+
   describe "create_host/1" do
     test "creates a host with valid data" do
       params = params_for(:host, name: "X")
@@ -49,6 +60,26 @@ defmodule Jumubase.FoundationTest do
     test "returns an error changeset for invalid data" do
       params = params_for(:host, name: nil)
       assert {:error, %Changeset{}} = Foundation.create_host(params)
+    end
+  end
+
+  describe "update_host/1" do
+    test "updates a host with valid data" do
+      host = insert(:host, name: "A")
+      assert {:ok, result} = Foundation.update_host(host, %{name: "B"})
+      assert result.name == "B"
+    end
+
+    test "returns an error changeset for invalid data" do
+      host = insert(:host)
+      assert {:error, %Ecto.Changeset{}} = Foundation.update_host(host, %{name: nil})
+    end
+  end
+
+  describe "change_host/1" do
+    test "returns a host changeset" do
+      host = insert(:host)
+      assert %Ecto.Changeset{} = Foundation.change_host(host)
     end
   end
 

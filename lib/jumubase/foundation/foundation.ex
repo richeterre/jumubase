@@ -32,8 +32,22 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
+  def get_host!(id) do
+    Repo.get!(Host, id)
+  end
+
   def create_host(attrs) do
     Host.changeset(%Host{}, attrs) |> Repo.insert()
+  end
+
+  def update_host(%Host{} = host, attrs) do
+    host
+    |> Host.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def change_host(%Host{} = host) do
+    Host.changeset(host, %{})
   end
 
   ## Contests

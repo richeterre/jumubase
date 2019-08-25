@@ -14,7 +14,8 @@ defmodule Jumubase.Foundation do
   ## Hosts
 
   def list_hosts do
-    Repo.all(Host)
+    query = from h in Host, order_by: [:current_grouping, :name]
+    Repo.all(query)
   end
 
   def list_hosts(ids) do

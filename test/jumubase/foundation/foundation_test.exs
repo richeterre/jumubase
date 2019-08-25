@@ -6,9 +6,13 @@ defmodule Jumubase.FoundationTest do
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
 
   describe "list_hosts/0 " do
-    test "returns all hosts" do
-      host = insert(:host)
-      assert Foundation.list_hosts() == [host]
+    test "returns all hosts ordered by current grouping and name" do
+      h1 = insert(:host, current_grouping: "2")
+      h2 = insert(:host, current_grouping: "1", name: "B")
+      h3 = insert(:host, current_grouping: "3")
+      h4 = insert(:host, current_grouping: "1", name: "A")
+
+      assert Foundation.list_hosts() == [h4, h2, h1, h3]
     end
   end
 

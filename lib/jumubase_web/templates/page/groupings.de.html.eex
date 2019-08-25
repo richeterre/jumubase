@@ -11,10 +11,23 @@
     <%= host_map_image() %>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-4">
     <%= for {grouping, hosts} <- @grouped_hosts do %>
       <h3><%= grouping_name_with_color(grouping) %></h3>
-      <p><%= hosts |> Enum.map(&(&1.name)) |> Enum.join(", ") %></p>
+
+      <div class="row">
+        <% columns = hosts |> Enum.split(round(length(hosts) / 2)) |> Tuple.to_list %>
+
+        <%= for column_hosts <- columns do %>
+          <div class="col-md-6">
+            <%= for host <- column_hosts do %>
+              <%= host_name_with_flag(host) %>
+              <br>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
     <% end %>
   </div>
 </div>

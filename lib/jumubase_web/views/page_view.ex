@@ -71,6 +71,10 @@ defmodule JumubaseWeb.PageView do
     %{id: host.id, title: host.name, body: render_markdown(host.address)}
   end
 
+  def host_name_with_flag(%Host{name: name, country_code: country_code}) do
+    "#{emoji_flag(country_code)} #{name}"
+  end
+
   # Private helpers
 
   defp do_render_phase_panels(_conn, nil), do: nil

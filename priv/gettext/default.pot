@@ -1785,13 +1785,12 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/index.html.eex:10
 #: lib/jumubase_web/templates/internal/host/new.html.eex:18
-#: lib/jumubase_web/templates/page/groupings.de.html.eex:16
-#: lib/jumubase_web/views/page_view.ex:113
-#: lib/jumubase_web/views/page_view.ex:114
-#: lib/jumubase_web/views/page_view.ex:115
-#: lib/jumubase_web/views/page_view.ex:121
-#: lib/jumubase_web/views/page_view.ex:122
-#: lib/jumubase_web/views/page_view.ex:123
+#: lib/jumubase_web/views/page_view.ex:117
+#: lib/jumubase_web/views/page_view.ex:118
+#: lib/jumubase_web/views/page_view.ex:119
+#: lib/jumubase_web/views/page_view.ex:125
+#: lib/jumubase_web/views/page_view.ex:126
+#: lib/jumubase_web/views/page_view.ex:127
 msgid "Grouping"
 msgstr ""
 
@@ -1803,21 +1802,20 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/email.ex:20
 msgid "New message via jumu-weltweit.org"
+msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/page_view.ex:109
-#: lib/jumubase_web/views/page_view.ex:109
-#: lib/jumubase_web/views/page_view.ex:113
+#: lib/jumubase_web/views/page_view.ex:117
 msgid "blue"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/page_view.ex:114
+#: lib/jumubase_web/views/page_view.ex:118
 msgid "green"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/page_view.ex:115
+#: lib/jumubase_web/views/page_view.ex:119
 msgid "yellow"
 msgstr ""
 
@@ -1827,8 +1825,8 @@ msgid "How do I find my grouping?"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/page_view.ex:121
-#: lib/jumubase_web/views/page_view.ex:122
-#: lib/jumubase_web/views/page_view.ex:123
+#: lib/jumubase_web/views/page_view.ex:125
+#: lib/jumubase_web/views/page_view.ex:126
+#: lib/jumubase_web/views/page_view.ex:127
 msgid "formerly"
 msgstr ""

@@ -335,12 +335,21 @@ defmodule Jumubase.Foundation do
     Enum.filter(contests, &(not Enum.empty?(&1.host.stages)))
   end
 
-  defp relevant_for_user(contest_query, %User{} = user) do
+  defp relevant_for_user(contest_query, %User{id: user_id, role: "local-organizer"}) do
+    from [contests: c, users: u] in with_users(contest_query),
+      where: u.id == ^user_id
+  end
+
+  defp relevant_for_user(contest_query, %User{id: user_id}) do
+    from [contests: c, users: u] in with_users(contest_query),
+      where: c.round == 2 or u.id == ^user_id
+  end
+
+  defp with_users(contest_query) do
     from c in contest_query,
+      as: :contests,
       join: h in assoc(c, :host),
       left_join: u in assoc(h, :users),
-      where:
-        u.id == ^user.id or
-          (c.round == 2 and ^user.role != "local-organizer")
+      as: :users
   end
 end

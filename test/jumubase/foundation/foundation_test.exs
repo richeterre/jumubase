@@ -283,22 +283,27 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "list_relevant_contests/2" do
+  describe "list_latest_relevant_contests/2" do
     setup %{role: role} do
       [user: insert(:user, role: role)]
     end
 
     @tag role: "local-organizer"
-    test "returns all own contests to local organizers", %{user: u} do
+    test "returns latest-season own contests to local organizers", %{user: u} do
       own_host = build(:host, users: [u])
 
-      own_kimu = insert(:contest, round: 0, host: own_host)
-      own_rw = insert(:contest, round: 1, host: own_host)
-      own_lw = insert(:contest, round: 2, host: own_host)
+      c1 = insert(:contest, season: 57, round: 0, host: own_host)
+      c2 = insert(:contest, season: 57, round: 1, host: own_host)
+      c3 = insert(:contest, season: 57, round: 2, host: own_host)
+
+      # Earlier contests that should not be returned
+      insert(:contest, season: 56, round: 0, host: own_host)
+      insert(:contest, season: 56, round: 1, host: own_host)
+      insert(:contest, season: 56, round: 2, host: own_host)
 
       assert_ids_match_unordered(
-        Foundation.list_relevant_contests(Contest, u),
-        [own_kimu, own_rw, own_lw]
+        Foundation.list_latest_relevant_contests(Contest, u),
+        [c1, c2, c3]
       )
     end
 
@@ -308,20 +313,26 @@ defmodule Jumubase.FoundationTest do
       insert(:contest, round: 1)
       insert(:contest, round: 2)
 
-      assert Foundation.list_relevant_contests(Contest, u) == []
+      assert Foundation.list_latest_relevant_contests(Contest, u) == []
     end
 
     for role <- roles_except("local-organizer") do
       @tag role: role
-      test "returns all own contests and foreign LW contests to #{role} users", %{user: u} do
+      test "returns latest own contests and foreign LW contests to #{role} users", %{user: u} do
         own_host = build(:host, users: [u])
-        c1 = insert(:contest, round: 0, host: own_host)
-        c2 = insert(:contest, round: 1, host: own_host)
-        c3 = insert(:contest, round: 2, host: own_host)
-        c4 = insert(:contest, round: 2)
+        c1 = insert(:contest, season: 57, round: 0, host: own_host)
+        c2 = insert(:contest, season: 57, round: 1, host: own_host)
+        c3 = insert(:contest, season: 57, round: 2, host: own_host)
+        c4 = insert(:contest, season: 57, round: 2)
+
+        # Earlier contests that should not be returned
+        insert(:contest, season: 56, round: 0, host: own_host)
+        insert(:contest, season: 56, round: 1, host: own_host)
+        insert(:contest, season: 56, round: 2, host: own_host)
+        insert(:contest, season: 56, round: 2)
 
         assert_ids_match_unordered(
-          Foundation.list_relevant_contests(Contest, u),
+          Foundation.list_latest_relevant_contests(Contest, u),
           [c1, c2, c3, c4]
         )
       end
@@ -331,7 +342,21 @@ defmodule Jumubase.FoundationTest do
         insert(:contest, round: 0)
         insert(:contest, round: 1)
 
-        assert Foundation.list_relevant_contests(Contest, u) == []
+        assert Foundation.list_latest_relevant_contests(Contest, u) == []
+      end
+    end
+
+    for role <- all_roles() do
+      @tag role: role
+      test "returns nothing if the latest season is above a #{role} user's own contests", %{
+        user: u
+      } do
+        own_host = build(:host, users: [u])
+
+        insert(:contest, season: 56, round: 2, host: own_host)
+        insert(:contest, season: 57, round: 1)
+
+        assert Foundation.list_latest_relevant_contests(Contest, u) == []
       end
     end
 
@@ -348,7 +373,7 @@ defmodule Jumubase.FoundationTest do
       c6 = insert(:contest, round: 2, host: h1)
 
       assert_ids_match_ordered(
-        Foundation.list_relevant_contests(Contest, u),
+        Foundation.list_latest_relevant_contests(Contest, u),
         [c6, c5, c4, c3, c2, c1]
       )
     end
@@ -356,7 +381,7 @@ defmodule Jumubase.FoundationTest do
     @tag role: "local-organizer"
     test "preloads the contests' hosts", %{user: u} do
       insert(:contest, host: build(:host, users: [u]))
-      [result] = Foundation.list_relevant_contests(Contest, u)
+      [result] = Foundation.list_latest_relevant_contests(Contest, u)
       assert %Host{} = result.host
     end
   end

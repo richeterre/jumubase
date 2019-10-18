@@ -110,12 +110,15 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
-  Returns all contests relevant to the given user,
+  Returns the latest contests relevant to the given user,
   i.e. own contests and, for non-local users, LW contests.
   """
-  def list_relevant_contests(query, user) do
+  def list_latest_relevant_contests(query, user) do
+    latest_season = get_latest_season()
+
     query
     |> relevant_for_user(user)
+    |> where(season: ^latest_season)
     |> list_contests
   end
 
@@ -172,6 +175,14 @@ defmodule Jumubase.Foundation do
     |> order_by(desc: :end_date)
     |> limit(1)
     |> preload(:host)
+    |> Repo.one()
+  end
+
+  def get_latest_season do
+    Contest
+    |> order_by(desc: :season)
+    |> limit(1)
+    |> select([c], c.season)
     |> Repo.one()
   end
 

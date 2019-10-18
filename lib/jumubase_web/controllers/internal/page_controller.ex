@@ -11,7 +11,7 @@ defmodule JumubaseWeb.Internal.PageController do
 
   def home(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
     permitted = Permit.scope_contests(Contest, user)
-    contests = Foundation.list_relevant_contests(permitted, user)
+    contests = Foundation.list_latest_relevant_contests(permitted, user)
     count = Foundation.count_contests(permitted)
 
     conn

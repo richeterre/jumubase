@@ -70,7 +70,7 @@ defmodule JumubaseWeb.PageView do
 
     cond do
       Timex.after?(today, c.end_date |> Timex.shift(months: 3)) ->
-        render("_interseason_phase_panels.html", conn: conn, contest: c)
+        render("_interseason_phase_panels.html", conn: conn)
 
       Timex.after?(today, c.deadline) ->
         render("_lw_phase_panels.html", conn: conn, contest: c)

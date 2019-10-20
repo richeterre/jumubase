@@ -76,6 +76,12 @@
             Routes.internal_page_path(@conn, :literature_guidance)
             ) %>
         </li>
+        <li class="list-group-item">
+          <%= icon_link("briefcase",
+            gettext("Meeting minutes"),
+            Routes.internal_page_path(@conn, :meeting_minutes)
+            ) %>
+        </li>
       </ul>
     </div>
   </div>

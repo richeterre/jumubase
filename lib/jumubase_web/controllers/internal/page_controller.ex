@@ -38,4 +38,13 @@ defmodule JumubaseWeb.Internal.PageController do
     )
     |> render("literature_guidance.html")
   end
+
+  def meeting_minutes(conn, _params) do
+    conn
+    |> add_breadcrumb(
+      name: gettext("Meeting minutes"),
+      path: Routes.internal_page_path(conn, :meeting_minutes)
+    )
+    |> render("meeting_minutes.html")
+  end
 end

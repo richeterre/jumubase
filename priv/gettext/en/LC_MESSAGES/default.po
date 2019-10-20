@@ -1828,6 +1828,12 @@ msgid "Materials"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/controllers/internal/page_controller.ex:36
 #: lib/jumubase_web/templates/internal/page/home.html.eex:75
 msgid "Literature guidance"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/page_controller.ex:45
+msgid "Meeting minutes"
 msgstr ""

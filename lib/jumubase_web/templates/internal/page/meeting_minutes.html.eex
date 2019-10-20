@@ -1,0 +1,23 @@
+<h2>Sitzungsprotokolle</h2>
+
+<p class="lead">
+  Hier findest du die Protokolle der Konferenzen beim Landeswettbewerb.
+</p>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <%= document_link("LW 2014 Kopenhagen", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2014.pdf")) %>
+    <br>
+    <%= document_link("LW 2015 Paris", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2015.pdf")) %>
+    <br>
+    <%= document_link("LW 2016 Helsinki", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2016.pdf")) %>
+    <br>
+    <%= document_link("LW 2017 Brüssel", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2017.pdf")) %>
+    <br>
+    <%= document_link("LW 2018 Stockholm", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2018.pdf")) %>
+    <br>
+    <%= document_link("LW 2019 Prag", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2019.pdf")) %>
+  </div>
+</div>

@@ -8,15 +8,11 @@
 
 <div class="row">
   <div class="col-md-8 col-lg-7">
-    <p>
-      <em>
-        Welche Werke gibt es für eine bestimmte Besetzung?
-        <br>
-        Gilt ein bestimmtes Stück als Duo, oder ist es ein Solostück mit Begleitung?
-        <br>
-        Wo finde ich seltenere Werke jenseits der "Hitparade"?
-      </em>
-    </p>
+    <blockquote>
+      Welche Werke gibt es für eine bestimmte Besetzung?
+      <br>Gilt dieses Stück als Duo, oder ist es ein Solostück mit Begleitung?
+      <br>Wo finde ich seltenere Werke jenseits der “Hitparade”?
+    </blockquote>
 
     <p>Bei diesen und ähnlichen Fragen hilft dir die Bundesgeschäftsstelle des Deutschen Musikrats weiter. Hier findest du die <%= link "Kontaktdaten", to: "https://www.jugend-musiziert.org/bundesgeschaeftsstelle/kontakt/team.html" %> (Suchwort: "Literaturberatung").</p>
 

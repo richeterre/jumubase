@@ -20,4 +20,13 @@ defmodule JumubaseWeb.Internal.PageController do
     |> assign(:has_more, length(contests) < count)
     |> render("home.html")
   end
+
+  def jury_work(conn, _params) do
+    conn
+    |> add_breadcrumb(
+      name: gettext("Jury work"),
+      path: Routes.internal_page_path(conn, :jury_work)
+    )
+    |> render("jury_work.html")
+  end
 end

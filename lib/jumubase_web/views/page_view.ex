@@ -25,12 +25,15 @@ defmodule JumubaseWeb.PageView do
   end
 
   def rule_booklet_link(title, year, opts \\ []) do
-    icon_link(
-      "file",
+    document_link(
       title,
       Routes.static_path(Endpoint, "/resources/Ausschreibung_#{year}.pdf"),
       opts
     )
+  end
+
+  def document_link(title, path, opts \\ []) do
+    icon_link("file", title, path, opts)
   end
 
   def render("rules.html", assigns) do

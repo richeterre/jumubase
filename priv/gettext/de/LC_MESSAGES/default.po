@@ -367,6 +367,7 @@ msgstr "Tag"
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:45
 #: lib/jumubase_web/templates/internal/contest/index.html.eex:12
 #: lib/jumubase_web/views/internal/contest_view.ex:50
+#: lib/jumubase_web/views/internal/contest_view.ex:50
 msgid "Deadline"
 msgstr "Anmeldeschluss"
 
@@ -389,6 +390,7 @@ msgstr "Änderungscode"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
 msgid "Epoch"
 msgstr "Epoche"
@@ -704,11 +706,14 @@ msgstr "Deine Änderungen an der Anmeldung wurden gespeichert."
 
 #, elixir-format
 #: lib/jumubase_web/views/email_view.ex:10
+#: lib/jumubase_web/views/email_view.ex:10
+#: lib/jumubase_web/views/email_view.ex:22
 #: lib/jumubase_web/views/email_view.ex:22
 msgid "Hello"
 msgstr "Hallo"
 
 #, elixir-format
+#: lib/jumubase_web/views/email_view.ex:20
 #: lib/jumubase_web/views/email_view.ex:20
 msgid "and"
 msgstr "und"
@@ -1105,6 +1110,7 @@ msgstr "Admin"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/index.html.eex:32
+#: lib/jumubase_web/templates/internal/stage/index.html.eex:32
 msgid "Add stage"
 msgstr "Bühne hinzufügen"
 
@@ -1381,6 +1387,7 @@ msgid "AG"
 msgstr "AG"
 
 #, elixir-format
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 #: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
 msgid "points"
 msgstr "Punkte"
@@ -1808,3 +1815,13 @@ msgstr "Schule bearbeiten"
 #: lib/jumubase_web/controllers/internal/host_controller.ex:56
 msgid "The host %{name} was updated."
 msgstr "Die Schule %{name} wurde aktualisiert."
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/page_controller.ex:27
+msgid "Jury work"
+msgstr "Juryarbeit"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/page/home.html.eex:64
+msgid "Materials"
+msgstr "Materialien"

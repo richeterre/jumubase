@@ -113,6 +113,8 @@ defmodule JumubaseWeb.Router do
     pipe_through [:browser, :html_only]
 
     get "/", PageController, :home
+    get "/jury_work", PageController, :jury_work
+
     get "/maintenance", MaintenanceController, :index
 
     get "/maintenance/participants/compare/:base_id/:other_id",

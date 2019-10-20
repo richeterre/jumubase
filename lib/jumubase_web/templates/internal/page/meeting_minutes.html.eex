@@ -9,16 +9,16 @@
 <div class="row">
   <div class="col-md-8 col-lg-7">
     <h4>Verbund 2 (ehemals “Nord- und Osteuropa”)</h4>
-    <%= document_link("LW 2019 Prag", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2019.pdf")) %>
+    <%= meeting_minutes_link("Prag", "2019") %>
     <br>
-    <%= document_link("LW 2018 Stockholm", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2018.pdf")) %>
+    <%= meeting_minutes_link("Stockholm", "2018") %>
     <br>
-    <%= document_link("LW 2017 Brüssel", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2017.pdf")) %>
+    <%= meeting_minutes_link("Brüssel", "2017") %>
     <br>
-    <%= document_link("LW 2016 Helsinki", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2016.pdf")) %>
+    <%= meeting_minutes_link("Helsinki", "2016") %>
     <br>
-    <%= document_link("LW 2015 Paris", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2015.pdf")) %>
+    <%= meeting_minutes_link("Paris", "2015") %>
     <br>
-    <%= document_link("LW 2014 Kopenhagen", Routes.static_path(Endpoint, "/resources/LW-Protokoll 2014.pdf")) %>
+    <%= meeting_minutes_link("Kopenhagen", "2014") %>
   </div>
 </div>

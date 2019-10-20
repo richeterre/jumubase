@@ -9,16 +9,14 @@
 <div class="row">
   <div class="col-md-4">
     <%= render "_document_panel.html",
-      title: "Juryrichtlinien",
-      file_name: "Juryrichtlinien.pdf",
+      link: jury_material_link("Juryrichtlinien", "Juryrichtlinien.pdf"),
       body: "Die Richtlinien für die Arbeitsweise der Jury, herausgegeben vom Deutschen Musikrat."
       %>
   </div>
 
   <div class="col-md-4">
     <%= render "_document_panel.html",
-        title: "Teilnehmerberatung",
-        file_name: "Vademecum_TN-Beratung.pdf",
+        link: jury_material_link("Teilnehmerberatung", "Vademecum TN-Beratung.pdf"),
         body: "Ein kleiner Begleiter mit wertvollen Tipps für die Beratungsgespräche."
         %>
   </div>

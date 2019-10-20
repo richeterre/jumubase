@@ -1,13 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-body">
-    <h4>
-      <%= document_link(
-        @title,
-        Routes.static_path(Endpoint, "/resources/#{@file_name}")
-        ) %>
-    </h4>
-    <p>
-    <%= @body %>
-    </p>
+    <h4><%= @link %></h4>
+    <p><%= @body %></p>
   </div>
 </div>

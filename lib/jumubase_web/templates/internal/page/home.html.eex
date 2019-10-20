@@ -65,7 +65,16 @@
       </div>
       <ul class="list-group">
         <li class="list-group-item">
-          <%= icon_link("education", gettext("Jury work"), Routes.internal_page_path(@conn, :jury_work)) %>
+          <%= icon_link("education",
+            gettext("Jury work"),
+            Routes.internal_page_path(@conn, :jury_work)
+            ) %>
+        </li>
+        <li class="list-group-item">
+          <%= icon_link("earphone",
+            gettext("Literature guidance"),
+            Routes.internal_page_path(@conn, :literature_guidance)
+            ) %>
         </li>
       </ul>
     </div>

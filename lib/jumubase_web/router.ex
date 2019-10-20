@@ -114,6 +114,7 @@ defmodule JumubaseWeb.Router do
 
     get "/", PageController, :home
     get "/jury_work", PageController, :jury_work
+    get "/literature_guidance", PageController, :literature_guidance
 
     get "/maintenance", MaintenanceController, :index
 

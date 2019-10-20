@@ -29,4 +29,13 @@ defmodule JumubaseWeb.Internal.PageController do
     )
     |> render("jury_work.html")
   end
+
+  def literature_guidance(conn, _params) do
+    conn
+    |> add_breadcrumb(
+      name: gettext("Literature guidance"),
+      path: Routes.internal_page_path(conn, :literature_guidance)
+    )
+    |> render("literature_guidance.html")
+  end
 end

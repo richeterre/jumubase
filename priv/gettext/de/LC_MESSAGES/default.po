@@ -1818,6 +1818,7 @@ msgstr "Die Schule %{name} wurde aktualisiert."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/page_controller.ex:27
+#: lib/jumubase_web/templates/internal/page/home.html.eex:69
 msgid "Jury work"
 msgstr "Juryarbeit"
 
@@ -1825,3 +1826,8 @@ msgstr "Juryarbeit"
 #: lib/jumubase_web/templates/internal/page/home.html.eex:64
 msgid "Materials"
 msgstr "Materialien"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/page/home.html.eex:75
+msgid "Literature guidance"
+msgstr "Literaturberatung"

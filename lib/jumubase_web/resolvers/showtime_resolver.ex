@@ -30,6 +30,14 @@ defmodule JumubaseWeb.ShowtimeResolver do
     end
   end
 
+  def stage_date(%Performance{} = p, _, _) do
+    {:ok, NaiveDateTime.to_date(p.stage_time)}
+  end
+
+  def stage_time(%Performance{} = p, _, _) do
+    {:ok, NaiveDateTime.to_time(p.stage_time)}
+  end
+
   def category_name(%Performance{} = p, _, _) do
     {:ok, PerformanceView.category_name(p)}
   end

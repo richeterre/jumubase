@@ -89,8 +89,14 @@ defmodule JumubaseWeb.Schema.Objects do
   object :performance do
     field :id, non_null(:id)
 
+    field :stage_date, non_null(:date) do
+      description "The scheduled date of the performance."
+      resolve &ShowtimeResolver.stage_date/3
+    end
+
     field :stage_time, non_null(:time) do
       description "The scheduled wall time of the performance."
+      resolve &ShowtimeResolver.stage_time/3
     end
 
     field :category_name, non_null(:string) do

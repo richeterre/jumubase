@@ -30,8 +30,8 @@ defmodule JumubaseWeb.ShowtimeResolver do
     end
   end
 
-  def category_info(%Performance{} = p, _, _) do
-    {:ok, PerformanceView.category_info(p)}
+  def category_name(%Performance{} = p, _, _) do
+    {:ok, PerformanceView.category_name(p)}
   end
 
   def predecessor_host(%Performance{} = p, _, _) do

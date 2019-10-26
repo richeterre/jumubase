@@ -154,7 +154,8 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
         performance(id: $id) {
           id
           stageTime
-          categoryInfo
+          categoryName
+          ageGroup
           appearances {
             participantName
             instrumentName
@@ -174,7 +175,8 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                  "performance" => %{
                    "id" => "#{p.id}",
                    "stageTime" => "09:45:00",
-                   "categoryInfo" => "Violine solo, AG IV",
+                   "categoryName" => "Violine solo",
+                   "ageGroup" => "IV",
                    "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}],
                    "pieces" => [%{"personInfo" => "John Cage (1912–1992)", "title" => "4′33″"}]
                  }

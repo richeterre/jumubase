@@ -93,9 +93,13 @@ defmodule JumubaseWeb.Schema.Objects do
       description "The scheduled wall time of the performance."
     end
 
-    field :category_info, non_null(:string) do
-      description "The performance's contest category and age group."
-      resolve &ShowtimeResolver.category_info/3
+    field :category_name, non_null(:string) do
+      description "The name of the performance's category."
+      resolve &ShowtimeResolver.category_name/3
+    end
+
+    field :age_group, non_null(:string) do
+      description "The performance's age group."
     end
 
     field :predecessor_host, :host do

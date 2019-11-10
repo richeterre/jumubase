@@ -18,6 +18,11 @@ defmodule JumubaseWeb.Schema.Objects do
       resolve &ShowtimeResolver.instrument_name/3
     end
 
+    field :is_accompanist, non_null(:boolean) do
+      description "Whether the appearance's participant has an accompanist role."
+      resolve &ShowtimeResolver.accompanist?/3
+    end
+
     field :result, :result do
       description "The appearance's result, if publicly available."
 

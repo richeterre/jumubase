@@ -61,6 +61,10 @@ defmodule JumubaseWeb.ShowtimeResolver do
     {:ok, AppearanceView.instrument_name(a.instrument)}
   end
 
+  def accompanist?(%Appearance{} = a, _, _) do
+    {:ok, Appearance.accompanist?(a)}
+  end
+
   def result(%Performance{} = p, %Appearance{} = a, _) do
     if !!a.points and p.results_public do
       %{round: round} = p.contest_category.contest

@@ -137,6 +137,11 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
               role: "soloist",
               participant: build(:participant, given_name: "A", family_name: "B"),
               instrument: "violin"
+            ),
+            build(:appearance,
+              role: "accompanist",
+              participant: build(:participant, given_name: "C", family_name: "D"),
+              instrument: "piano"
             )
           ],
           pieces: [
@@ -159,6 +164,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
           appearances {
             participantName
             instrumentName
+            isAccompanist
           }
           pieces {
             personInfo
@@ -177,7 +183,18 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                    "stageTime" => "09:45:00",
                    "categoryName" => "Violine solo",
                    "ageGroup" => "IV",
-                   "appearances" => [%{"participantName" => "A B", "instrumentName" => "Violin"}],
+                   "appearances" => [
+                     %{
+                       "participantName" => "A B",
+                       "instrumentName" => "Violin",
+                       "isAccompanist" => false
+                     },
+                     %{
+                       "participantName" => "C D",
+                       "instrumentName" => "Piano",
+                       "isAccompanist" => true
+                     }
+                   ],
                    "pieces" => [%{"personInfo" => "John Cage (1912–1992)", "title" => "4′33″"}]
                  }
                }

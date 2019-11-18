@@ -55,11 +55,6 @@ defmodule JumubaseWeb.Schema.Objects do
       description "The stages used in this contest."
       resolve &FoundationResolver.stages/3
     end
-
-    field :contest_categories, non_null(list_of(non_null(:contest_category))) do
-      description "The contest categories offered at this contest."
-      resolve dataloader(Foundation)
-    end
   end
 
   object :contest_category do

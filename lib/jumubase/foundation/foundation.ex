@@ -240,6 +240,7 @@ defmodule Jumubase.Foundation do
   def list_contest_categories(%Contest{} = contest) do
     ContestCategory
     |> where(contest_id: ^contest.id)
+    |> order_by(:inserted_at)
     |> preload(:category)
     |> Repo.all()
   end

@@ -668,12 +668,14 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_contest_categories/1" do
-    test "returns all contest categories of the given contest" do
-      c = insert(:contest, contest_categories: build_list(2, :contest_category))
+    test "returns all contest categories of the given contest in insertion order" do
+      c = insert(:contest)
+      cc1 = insert_contest_category(c)
+      cc2 = insert_contest_category(c)
 
-      assert_ids_match_unordered(
+      assert_ids_match_ordered(
         Foundation.list_contest_categories(c),
-        c.contest_categories
+        [cc1, cc2]
       )
     end
 

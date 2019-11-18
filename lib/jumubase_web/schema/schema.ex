@@ -13,6 +13,12 @@ defmodule JumubaseWeb.Schema do
       resolve &FoundationResolver.public_contests/3
     end
 
+    field :contest_categories, list_of(non_null(:contest_category)) do
+      description "The contest categories of a public contest."
+      arg :contest_id, non_null(:id)
+      resolve &FoundationResolver.contest_categories/3
+    end
+
     field :performances, list_of(non_null(:performance)) do
       description "The scheduled performances of a public contest."
       arg :contest_id, non_null(:id)

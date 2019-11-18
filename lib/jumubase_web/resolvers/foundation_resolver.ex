@@ -7,6 +7,13 @@ defmodule JumubaseWeb.FoundationResolver do
     {:ok, Foundation.list_public_contests()}
   end
 
+  def contest_categories(_, %{contest_id: c_id}, _) do
+    case Foundation.get_public_contest(c_id) do
+      nil -> {:error, "No public contest found for this ID"}
+      contest -> {:ok, Foundation.list_contest_categories(contest)}
+    end
+  end
+
   def name(%Contest{} = c, _, _) do
     {:ok, ContestView.name(c)}
   end

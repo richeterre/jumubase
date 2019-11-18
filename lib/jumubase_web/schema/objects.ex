@@ -164,6 +164,10 @@ defmodule JumubaseWeb.Schema.Objects do
   end
 
   input_object :performance_filter do
+    field :contest_category_id, :id do
+      description "The ID of the performances' contest category."
+    end
+
     field :stage_date, :date do
       description "The date on which the performances are scheduled."
     end

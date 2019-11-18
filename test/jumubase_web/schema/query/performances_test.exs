@@ -62,10 +62,16 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
     test "allows filtering of performances", %{conn: conn} do
       %{stages: [s1, s2]} = h = insert(:host, stages: build_list(2, :stage))
       c = insert(:contest, host: h, timetables_public: true)
+      cc1 = insert_contest_category(c)
+      cc2 = insert_contest_category(c)
 
-      p = insert_performance(c, stage: s1, stage_time: ~N[2019-01-01 09:00:00])
-      insert_performance(c, stage: s1, stage_time: ~N[2019-01-02 09:00:00])
-      insert_performance(c, stage: s2)
+      p = insert_performance(cc1, stage: s1, stage_time: ~N[2019-01-01 09:00:00])
+      # Different contest category:
+      insert_performance(cc2, stage: s1, stage_time: ~N[2019-01-01 10:00:00])
+      # Different date:
+      insert_performance(cc1, stage: s1, stage_time: ~N[2019-01-02 09:00:00])
+      # Different stage:
+      insert_performance(cc1, stage: s2)
 
       query = """
       query Performances($contestId: ID!, $filter: PerformanceFilter) {
@@ -78,7 +84,11 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
           query: query,
           variables: %{
             "contestId" => c.id,
-            "filter" => %{"stageId" => s1.id, "stageDate" => "2019-01-01"}
+            "filter" => %{
+              "contestCategoryId" => cc1.id,
+              "stageDate" => "2019-01-01",
+              "stageId" => s1.id
+            }
           }
         )
 

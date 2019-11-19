@@ -168,6 +168,10 @@ defmodule JumubaseWeb.Schema.Objects do
       description "The ID of the performances' contest category."
     end
 
+    field :results_public, :boolean do
+      description "Whether the performances' results are public."
+    end
+
     field :stage_date, :date do
       description "The date on which the performances are scheduled."
     end

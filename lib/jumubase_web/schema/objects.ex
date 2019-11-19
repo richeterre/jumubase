@@ -23,6 +23,10 @@ defmodule JumubaseWeb.Schema.Objects do
       resolve &ShowtimeResolver.accompanist?/3
     end
 
+    field :age_group, non_null(:string) do
+      description "The appearance's age group (which may differ from the perfomance's)."
+    end
+
     field :result, :result do
       description "The appearance's result, if publicly available."
 

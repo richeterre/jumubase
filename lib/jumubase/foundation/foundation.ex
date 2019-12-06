@@ -114,12 +114,16 @@ defmodule Jumubase.Foundation do
   i.e. own contests and, for non-local users, LW contests.
   """
   def list_latest_relevant_contests(query, user) do
-    latest_season = get_latest_season()
+    case get_latest_season() do
+      nil ->
+        []
 
-    query
-    |> relevant_for_user(user)
-    |> where(season: ^latest_season)
-    |> list_contests
+      latest_season ->
+        query
+        |> relevant_for_user(user)
+        |> where(season: ^latest_season)
+        |> list_contests
+    end
   end
 
   @doc """

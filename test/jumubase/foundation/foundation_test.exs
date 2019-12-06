@@ -358,6 +358,11 @@ defmodule Jumubase.FoundationTest do
 
         assert Foundation.list_latest_relevant_contests(Contest, u) == []
       end
+
+      @tag role: role
+      test "returns nothing to #{role} users if there are no contests", %{user: u} do
+        assert Foundation.list_latest_relevant_contests(Contest, u) == []
+      end
     end
 
     @tag role: "local-organizer"

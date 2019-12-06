@@ -1,7 +1,9 @@
 <%= form_for @changeset, @path, [method: :get, class: "form-inline filter-form"], fn f -> %>
   <div class="form-section">
     <%= select f, :stage_date, @options.stage_date_options, prompt: gettext("All dates"), class: "form-control" %>
+
     <%= select f, :stage_id, @options.stage_options, prompt: gettext("All stages"), class: "form-control" %>
+
     <%= select f, :genre, @options.genre_options, prompt: gettext("All genres"), class: "form-control" %>
 
     <%= if host_options = @options[:predecessor_host_options] do %>
@@ -9,6 +11,7 @@
     <% end %>
 
     <%= select f, :contest_category_id, @options.cc_options, prompt: gettext("All categories"), class: "form-control" %>
+
     <%= select f, :age_group, @options.ag_options, prompt: gettext("All AGs"), class: "form-control" %>
   </div>
 

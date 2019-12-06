@@ -290,14 +290,9 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
             style(%{
               "padding-left" => "65px",
               "padding-right" => "65px",
-              "padding-top" => "310px",
+              "padding-top" => "#{510 - appearances_height}px",
               "page-break-before" => "always"
             }),
-            [
-              :div,
-              style(%{"height" => "#{200 - appearances_height}px"}),
-              certificate_heading(round)
-            ],
             [:p, [:b, group |> Enum.map(&[:span, appearance_info(&1)]) |> to_lines]],
             [
               :p,
@@ -319,21 +314,6 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
       end
     end
   end
-
-  defp certificate_heading(0) do
-    [
-      :span,
-      style(%{
-        "display" => "block",
-        "font-size" => "84px",
-        "font-weight" => "normal",
-        "text-align" => "center"
-      }),
-      "URKUNDE"
-    ]
-  end
-
-  defp certificate_heading(_round), do: nil
 
   defp contest_text(%Contest{} = c, 1), do: "hat am #{contest_name(c)}"
   defp contest_text(%Contest{} = c, _group_size), do: "haben am #{contest_name(c)}"

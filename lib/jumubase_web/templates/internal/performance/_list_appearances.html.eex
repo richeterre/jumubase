@@ -1,6 +1,4 @@
 <%= for appearance <- @appearances do %>
-  <%= full_name(appearance.participant) %>,
-  <%= instrument_name(appearance.instrument) %>
-  <%= age_group_badge(appearance) %>
+  <%= full_name(appearance.participant) %>, <%= instrument_name(appearance.instrument) %> <%= age_group_badge(appearance) %>
   <br>
 <% end %>

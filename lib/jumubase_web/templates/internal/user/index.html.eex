@@ -20,6 +20,7 @@
         <td><%= content_tag :span, host_flags(user), title: host_names(user) %></td>
         <td class="text-right">
           <%= edit_icon_link(Routes.internal_user_path(@conn, :edit, user)) %>
+
           <%= delete_icon_link(
             Routes.internal_user_path(@conn, :delete, user),
             gettext("Do you really want to delete this user?")

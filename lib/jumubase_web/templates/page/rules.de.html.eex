@@ -14,7 +14,23 @@
       <%= rule_booklet_link "Ausschreibung 2020", 2020, class: "btn btn-info" %>
     </p>
 
-    <p>Im <strong>Verbund&nbsp;2 (früher “Nord- und Osteuropa”)</strong> bestehen zusätzlich die folgenden Sonderregelungen:</p>
+    <p>Zusätzlich gibt es die nachfolgenden, regional begrenzten Sonderregelungen.</p>
+
+    <p class="text-prominent">
+      <%= document_link("Verbund 1 (bisher “Spanien/Portugal”)",
+        Routes.static_path(@conn, "/resources/special_rules/Regionale Kategorien Verbund 1.pdf"))
+        %>
+    </p>
+
+    <p class="text-prominent">
+      <%= document_link("Verbund 3 (bisher “Östlicher Mittelmeerraum”)",
+        Routes.static_path(@conn, "/resources/special_rules/Regionale Kategorien Verbund 3.pdf"))
+        %>
+    </p>
+
+    <p class="text-prominent">
+      Im <strong>Verbund 2</strong> (bisher “Nord- und Osteuropa”) bestehen folgende Sonderregelungen:
+    </p>
 
     <h3>Populäre Musik</h3>
 

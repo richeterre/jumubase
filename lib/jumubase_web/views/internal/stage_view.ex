@@ -151,7 +151,10 @@ defmodule JumubaseWeb.Internal.StageView do
   Example: 12' playtime scheduled as 15' => 80%
   """
   def playtime_percentage(%Performance{} = p) do
-    "#{total_minutes(p) / scheduled_minutes(p) * 100}%"
+    case scheduled_minutes(p) do
+      0 -> "0.0%"
+      scheduled_minutes -> "#{total_minutes(p) / scheduled_minutes * 100}%"
+    end
   end
 
   # Private helpers

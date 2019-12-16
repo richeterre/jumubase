@@ -124,8 +124,13 @@ defmodule JumubaseWeb.Internal.StageViewTest do
     test "returns what percentage of the performance's schedule minutes is taken up by playtime" do
       p1 = build(:performance, pieces: [build(:piece, minutes: 12, seconds: 0)])
       p2 = build(:performance, pieces: [build(:piece, minutes: 15, seconds: 0)])
+      p3 = build(:performance, pieces: [build(:piece, minutes: 1, seconds: 0)])
+      p4 = build(:performance, pieces: [build(:piece, minutes: 0, seconds: 30)])
+
       assert StageView.playtime_percentage(p1) == "80.0%"
       assert StageView.playtime_percentage(p2) == "100.0%"
+      assert StageView.playtime_percentage(p3) == "20.0%"
+      assert StageView.playtime_percentage(p4) == "0.0%"
     end
   end
 end

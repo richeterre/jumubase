@@ -11,7 +11,7 @@ defmodule JumubaseWeb.Internal.StageViewTest do
               category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
             ),
           age_group: "III",
-          predecessor_contest: nil
+          predecessor_host: nil
         )
 
       assert StageView.performance_info(p) == "PopGesang III"
@@ -25,7 +25,7 @@ defmodule JumubaseWeb.Internal.StageViewTest do
               category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
             ),
           age_group: "III",
-          predecessor_contest: build(:contest, host: build(:host, country_code: "FI"))
+          predecessor_host: build(:host, country_code: "FI")
         )
 
       assert StageView.performance_info(p) == "PopGesang III 🇫🇮"

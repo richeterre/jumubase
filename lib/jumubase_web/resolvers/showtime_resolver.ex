@@ -17,7 +17,7 @@ defmodule JumubaseWeb.ShowtimeResolver do
 
         performances =
           Showtime.scheduled_performances(contest, filter)
-          |> Showtime.load_predecessor_contests()
+          |> Showtime.load_predecessor_hosts()
 
         {:ok, performances}
     end
@@ -26,7 +26,7 @@ defmodule JumubaseWeb.ShowtimeResolver do
   def performance(_, %{id: id}, _) do
     case Showtime.get_public_performance(id) do
       nil -> {:error, "No public performance found for this ID"}
-      performance -> {:ok, performance |> Showtime.load_predecessor_contest()}
+      performance -> {:ok, performance |> Showtime.load_predecessor_host()}
     end
   end
 
@@ -40,13 +40,6 @@ defmodule JumubaseWeb.ShowtimeResolver do
 
   def category_name(%Performance{} = p, _, _) do
     {:ok, PerformanceView.category_name(p)}
-  end
-
-  def predecessor_host(%Performance{} = p, _, _) do
-    case p.predecessor_contest do
-      nil -> {:ok, nil}
-      contest -> {:ok, contest.host}
-    end
   end
 
   def appearances(%Performance{} = p, _, _) do

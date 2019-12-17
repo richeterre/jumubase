@@ -114,7 +114,6 @@ defmodule JumubaseWeb.Schema.Objects do
 
     field :predecessor_host, :host do
       description "The host of the performance's predecessor contest."
-      resolve &ShowtimeResolver.predecessor_host/3
     end
 
     field :appearances, non_null(list_of(non_null(:appearance))) do

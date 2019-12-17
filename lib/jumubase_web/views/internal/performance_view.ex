@@ -14,7 +14,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     ]
 
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
-  import JumubaseWeb.Internal.ContestView, only: [flag: 1, name: 1, name_with_flag: 1]
+  import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
+  import JumubaseWeb.Internal.HostView, only: [flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, epoch_tag: 1, person_info: 1]
   alias Jumubase.JumuParams
@@ -101,14 +102,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     "#{category_name(performance)}, AG #{performance.age_group}"
   end
 
-  def predecessor_host_name(%Performance{predecessor_contest: nil}), do: nil
-  def predecessor_host_name(%Performance{predecessor_contest: c}), do: c.host.name
+  def predecessor_host_name(%Performance{predecessor_host: nil}), do: nil
+  def predecessor_host_name(%Performance{predecessor_host: h}), do: h.name
 
-  def predecessor_host_country(%Performance{predecessor_contest: nil}), do: nil
-  def predecessor_host_country(%Performance{predecessor_contest: c}), do: c.host.country_code
+  def predecessor_host_country(%Performance{predecessor_host: nil}), do: nil
+  def predecessor_host_country(%Performance{predecessor_host: h}), do: h.country_code
 
-  def predecessor_info(%Performance{predecessor_contest: nil}), do: nil
-  def predecessor_info(%Performance{predecessor_contest: c}), do: flag(c)
+  def predecessor_info(%Performance{predecessor_host: nil}), do: nil
+  def predecessor_info(%Performance{predecessor_host: h}), do: flag(h)
 
   def migration_status(%Performance{successor: nil}) do
     content_tag(:span, gettext("No"), class: "text-muted")

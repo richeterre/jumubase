@@ -41,7 +41,7 @@ defmodule JumubaseWeb.Api.PerformanceController do
     performances =
       Showtime.list_performances(c, filter)
       |> Showtime.load_pieces()
-      |> Showtime.load_predecessor_contests()
+      |> Showtime.load_predecessor_hosts()
 
     conn
     |> assign(:contest, c)

@@ -61,48 +61,36 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
 
   describe "predecessor_host_name/1" do
     test "returns the predecessor contest's host name" do
-      p =
-        build(:performance,
-          predecessor_contest: build(:contest, host: build(:host, name: "DS Helsinki"))
-        )
-
+      p = build(:performance, predecessor_host: build(:host, name: "DS Helsinki"))
       assert PerformanceView.predecessor_host_name(p) == "DS Helsinki"
     end
 
-    test "returns nil if the performance has no predecessor contest" do
-      p = build(:performance, predecessor_contest: nil)
+    test "returns nil if the performance has no predecessor host" do
+      p = build(:performance, predecessor_host: nil)
       assert PerformanceView.predecessor_info(p) == nil
     end
   end
 
   describe "predecessor_host_country/1" do
-    test "returns the predecessor contest's host country" do
-      p =
-        build(:performance,
-          predecessor_contest: build(:contest, host: build(:host, country_code: "FI"))
-        )
-
+    test "returns the predecessor host's country" do
+      p = build(:performance, predecessor_host: build(:host, country_code: "FI"))
       assert PerformanceView.predecessor_host_country(p) == "FI"
     end
 
-    test "returns nil if the performance has no predecessor contest" do
-      p = build(:performance, predecessor_contest: nil)
+    test "returns nil if the performance has no predecessor host" do
+      p = build(:performance, predecessor_host: nil)
       assert PerformanceView.predecessor_host_country(p) == nil
     end
   end
 
   describe "predecessor_info/1" do
-    test "returns the predecessor contest's host flag" do
-      p =
-        build(:performance,
-          predecessor_contest: build(:contest, host: build(:host, country_code: "FI"))
-        )
-
+    test "returns the predecessor host's flag" do
+      p = build(:performance, predecessor_host: build(:host, country_code: "FI"))
       assert PerformanceView.predecessor_info(p) == "🇫🇮"
     end
 
-    test "returns nil if the performance has no predecessor contest" do
-      p = build(:performance, predecessor_contest: nil)
+    test "returns nil if the performance has no predecessor host" do
+      p = build(:performance, predecessor_host: nil)
       assert PerformanceView.predecessor_info(p) == nil
     end
   end

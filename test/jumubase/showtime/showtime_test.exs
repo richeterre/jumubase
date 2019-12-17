@@ -1008,6 +1008,7 @@ defmodule Jumubase.ShowtimeTest do
       refute p.results_public
       assert p.predecessor_id == p1.id
       assert p.predecessor_contest_id == rw.id
+      assert p.predecessor_host_id == rw.host.id
       assert Enum.all?(p.appearances, &(&1.points == nil))
       assert_ids_match_ordered(participants(p.appearances), participants(p1.appearances))
       assert length(p.pieces) == length(p1.pieces)
@@ -1188,25 +1189,23 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
-  describe "load_predecessor_contest/1" do
-    test "preloads the performance's predecessor contest with host", %{contest: rw} do
+  describe "load_predecessor_host/1" do
+    test "preloads the performance's predecessor host", %{contest: rw} do
       lw = insert(:contest, round: 2)
-      insert_performance(lw, predecessor_contest: rw)
+      insert_performance(lw, predecessor_host: rw.host)
       performance = Repo.one(Performance)
 
-      assert %{predecessor_contest: %Contest{host: %Host{}}} =
-               Showtime.load_predecessor_contest(performance)
+      assert %{predecessor_host: %Host{}} = Showtime.load_predecessor_host(performance)
     end
   end
 
-  describe "load_predecessor_contests/1" do
-    test "preloads each performance's predecessor contest with host", %{contest: rw} do
+  describe "load_predecessor_hosts/1" do
+    test "preloads each performance's predecessor host", %{contest: rw} do
       lw = insert(:contest, round: 2)
-      insert_performance(lw, predecessor_contest: rw)
+      insert_performance(lw, predecessor_host: rw.host)
       performance = Repo.one(Performance)
 
-      assert [%{predecessor_contest: %Contest{host: %Host{}}}] =
-               Showtime.load_predecessor_contests([performance])
+      assert [%{predecessor_host: %Host{}}] = Showtime.load_predecessor_hosts([performance])
     end
   end
 
@@ -1239,10 +1238,7 @@ defmodule Jumubase.ShowtimeTest do
     end
 
     test "preloads the necessary associations within an RW contest", %{contest: rw} do
-      pt = insert_participant(rw)
-
-      other_c = insert(:contest)
-      insert_performance(other_c, appearances: [build(:appearance, participant: pt)])
+      insert_participant(rw)
 
       assert [%Participant{performances: [performance]}] = Showtime.list_participants(rw)
 
@@ -1250,14 +1246,13 @@ defmodule Jumubase.ShowtimeTest do
                contest_category: %ContestCategory{
                  category: %Category{}
                },
-               predecessor_contest: nil
+               predecessor_host: nil
              } = performance
     end
 
     test "preloads the necessary associations within an LW contest", %{contest: rw} do
       lw = insert(:contest, round: 2)
-      %{appearances: [%{participant: pt}]} = insert_performance(lw, predecessor_contest: rw)
-      insert_performance(rw, appearances: [build(:appearance, participant: pt)])
+      insert_performance(lw, predecessor_host: rw.host)
 
       assert [%Participant{performances: [performance]}] = Showtime.list_participants(lw)
 
@@ -1265,7 +1260,7 @@ defmodule Jumubase.ShowtimeTest do
                contest_category: %ContestCategory{
                  category: %Category{}
                },
-               predecessor_contest: %Contest{host: %Host{}}
+               predecessor_host: %Host{}
              } = performance
     end
   end

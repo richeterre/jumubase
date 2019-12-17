@@ -102,11 +102,11 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
     end
 
     test "returns predecessor host fields if available, or else nil", %{conn: conn} do
-      rw = insert(:contest, round: 1, host: build(:host, name: "DS Helsinki", country_code: "FI"))
+      rw_host = insert(:host, name: "DS Helsinki", country_code: "FI")
       lw = insert(:contest, round: 2, timetables_public: true)
 
-      p1 = insert_scheduled_performance(lw, predecessor_contest: rw)
-      p2 = insert_scheduled_performance(lw, predecessor_contest: nil)
+      p1 = insert_scheduled_performance(lw, predecessor_host: rw_host)
+      p2 = insert_scheduled_performance(lw, predecessor_host: nil)
 
       query = """
       query Performances($contestId: ID!) {
@@ -212,10 +212,9 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
     end
 
     test "returns predecessor host fields when available", %{conn: conn} do
-      h = build(:host, name: "DS Helsinki", country_code: "FI")
-      rw = insert(:contest, host: h, round: 1)
+      rw_host = build(:host, name: "DS Helsinki", country_code: "FI")
       lw = insert(:contest, round: 2, timetables_public: true)
-      p = insert_scheduled_performance(lw, predecessor_contest: rw)
+      p = insert_scheduled_performance(lw, predecessor_host: rw_host)
 
       query = """
       query Performance($id: ID!) {
@@ -236,7 +235,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
 
     test "returns nil for a missing predecessor host", %{conn: conn} do
       c = insert(:contest, timetables_public: true)
-      p = insert_scheduled_performance(c, predecessor_contest: nil)
+      p = insert_scheduled_performance(c, predecessor_host: nil)
 
       query = """
       query Performance($id: ID!) {

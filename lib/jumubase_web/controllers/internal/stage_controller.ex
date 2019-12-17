@@ -34,7 +34,7 @@ defmodule JumubaseWeb.Internal.StageController do
     unscheduled_performances =
       Showtime.unscheduled_performances(contest)
       |> Showtime.load_pieces()
-      |> Showtime.load_predecessor_contests()
+      |> Showtime.load_predecessor_hosts()
 
     # Group performances by stage date
     performances =
@@ -47,7 +47,7 @@ defmodule JumubaseWeb.Internal.StageController do
           performances =
             Showtime.list_performances(contest, filter)
             |> Showtime.load_pieces()
-            |> Showtime.load_predecessor_contests()
+            |> Showtime.load_predecessor_hosts()
 
           Map.put(acc, date, performances)
         end

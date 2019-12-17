@@ -3,7 +3,7 @@ defmodule Jumubase.Showtime.Performance do
   import Ecto.Changeset
   import Jumubase.Gettext
   alias Ecto.Changeset
-  alias Jumubase.Foundation.{Contest, ContestCategory, Stage}
+  alias Jumubase.Foundation.{Contest, ContestCategory, Host, Stage}
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
 
   schema "performances" do
@@ -16,6 +16,7 @@ defmodule Jumubase.Showtime.Performance do
     belongs_to :stage, Stage
     belongs_to :predecessor, Performance
     belongs_to :predecessor_contest, Contest
+    belongs_to :predecessor_host, Host
     has_many :appearances, Appearance, on_replace: :delete
     has_many :participants, through: [:appearances, :participant]
     has_many :pieces, Piece, on_replace: :delete

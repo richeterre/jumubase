@@ -153,7 +153,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     performances =
       Showtime.list_performances(contest, p_ids)
       |> Showtime.load_pieces()
-      |> Showtime.load_predecessor_contests()
+      |> Showtime.load_predecessor_hosts()
 
     conn
     |> assign(:performances, performances)
@@ -318,7 +318,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   defp load_performances(%Contest{round: 2} = c, filter) do
     # Since performances have predecessors here, preload them
-    c |> Showtime.list_performances(filter) |> Showtime.load_predecessor_contests()
+    c |> Showtime.list_performances(filter) |> Showtime.load_predecessor_hosts()
   end
 
   defp load_performances(%Contest{} = c, filter) do

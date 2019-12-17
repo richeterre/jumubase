@@ -252,7 +252,7 @@ defmodule Jumubase.Showtime do
   end
 
   def migrate_performances(
-        %Contest{season: season, round: 1} = rw,
+        %Contest{host: rw_host, season: season, round: 1} = rw,
         performance_ids,
         %Contest{season: season, round: 2} = lw
       )
@@ -281,6 +281,7 @@ defmodule Jumubase.Showtime do
               |> put_assoc(:contest_category, target_cc)
               |> put_assoc(:predecessor, p)
               |> put_assoc(:predecessor_contest, rw)
+              |> put_assoc(:predecessor_host, rw_host)
 
             Multi.insert(acc, p.id, changeset)
         end
@@ -346,12 +347,12 @@ defmodule Jumubase.Showtime do
     Repo.preload(performances, :successor)
   end
 
-  def load_predecessor_contest(%Performance{} = performance) do
-    Repo.preload(performance, predecessor_contest: :host)
+  def load_predecessor_host(%Performance{} = performance) do
+    Repo.preload(performance, :predecessor_host)
   end
 
-  def load_predecessor_contests(performances) when is_list(performances) do
-    Repo.preload(performances, predecessor_contest: :host)
+  def load_predecessor_hosts(performances) when is_list(performances) do
+    Repo.preload(performances, :predecessor_host)
   end
 
   def load_contest_category(%Performance{} = performance) do
@@ -601,9 +602,8 @@ defmodule Jumubase.Showtime do
 
   defp with_predecessor_host(query, h_id) do
     from p in query,
-      join: pre_c in assoc(p, :predecessor_contest),
-      join: h in assoc(pre_c, :host),
-      where: h.id == ^h_id
+      join: pre_h in assoc(p, :predecessor_host),
+      where: pre_h.id == ^h_id
   end
 
   defp in_contest_category(query, cc_id) do
@@ -650,8 +650,7 @@ defmodule Jumubase.Showtime do
   defp preloaded_from_contest(Participant = query, contest_id) do
     from pt in query,
       join: p in assoc(pt, :performances),
-      left_join: pre_c in assoc(p, :predecessor_contest),
-      left_join: pre_h in assoc(pre_c, :host),
+      left_join: pre_h in assoc(p, :predecessor_host),
       join: cc in assoc(p, :contest_category),
       join: cg in assoc(cc, :category),
       where: cc.contest_id == ^contest_id,
@@ -661,7 +660,7 @@ defmodule Jumubase.Showtime do
           {p,
            [
              contest_category: {cc, category: cg},
-             predecessor_contest: {pre_c, host: pre_h}
+             predecessor_host: pre_h
            ]}
       ]
   end

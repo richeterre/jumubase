@@ -183,7 +183,7 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "list_public_contests/1" do
+  describe "list_public_contests/0" do
     test "returns all contests with public timetables and at least one staged performance" do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
@@ -280,6 +280,20 @@ defmodule Jumubase.FoundationTest do
 
       [result] = Foundation.list_public_contests()
       assert_ids_match_ordered(result.contest_categories, [cc3, cc1, cc2])
+    end
+  end
+
+  describe "list_public_contests/1" do
+    test "accepts an option for restricting contests to those in the latest season" do
+      %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
+
+      c1 = insert(:contest, host: host_with_stage, season: 56, timetables_public: true)
+      c2 = insert(:contest, host: host_with_stage, season: 57, timetables_public: true)
+      insert_performance(c1, stage: s)
+      insert_performance(c2, stage: s)
+
+      assert_ids_match_unordered(Foundation.list_public_contests(current_only: false), [c1, c2])
+      assert_ids_match_unordered(Foundation.list_public_contests(current_only: true), [c2])
     end
   end
 

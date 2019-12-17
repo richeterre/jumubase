@@ -94,7 +94,7 @@ defmodule Jumubase.Foundation do
   @doc """
   Returns all contests with public timetables.
   """
-  def list_public_contests do
+  def list_public_contests(opts \\ []) do
     query =
       from c in Contest,
         where: c.timetables_public,
@@ -103,6 +103,13 @@ defmodule Jumubase.Foundation do
         join: p in assoc(cc, :performances),
         order_by: [{:desc, c.round}, h.name, cc.inserted_at],
         preload: [host: {h, [stages: ^stages_query()]}, contest_categories: {cc, :category}]
+
+    query =
+      if opts[:current_only] do
+        query |> where(season: ^get_latest_season())
+      else
+        query
+      end
 
     Repo.all(query)
     |> exclude_unused_stages

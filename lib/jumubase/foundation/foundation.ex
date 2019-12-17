@@ -101,7 +101,7 @@ defmodule Jumubase.Foundation do
         join: h in assoc(c, :host),
         join: cc in assoc(c, :contest_categories),
         join: p in assoc(cc, :performances),
-        order_by: [{:desc, c.round}, h.name, cc.inserted_at],
+        order_by: [{:desc, c.season}, {:desc, c.round}, h.name, cc.inserted_at],
         preload: [host: {h, [stages: ^stages_query()]}, contest_categories: {cc, :category}]
 
     query =

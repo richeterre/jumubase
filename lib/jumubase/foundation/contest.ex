@@ -22,7 +22,7 @@ defmodule Jumubase.Foundation.Contest do
     timestamps()
   end
 
-  @required_attrs [:season, :round, :grouping, :deadline, :start_date, :end_date]
+  @required_attrs [:season, :round, :host_id, :grouping, :deadline, :start_date, :end_date]
   @optional_attrs [:certificate_date, :timetables_public]
 
   @doc false

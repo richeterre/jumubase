@@ -31,18 +31,24 @@ defmodule Jumubase.Factory do
     }
   end
 
-  def contest_factory do
+  def contest_factory(attrs) do
+    # Default to host's current grouping for grouping field
+    host = Map.get(attrs, :host, build(:host))
+    grouping = Map.get(attrs, :grouping, host.current_grouping)
+
     year = JumuParams.year(@season)
 
-    %Contest{
+    contest = %Contest{
       season: @season,
       round: 1,
       host: build(:host),
-      grouping: @grouping,
+      grouping: grouping,
       start_date: %{day: 1, month: 1, year: year},
       end_date: %{day: 2, month: 1, year: year},
       deadline: %{day: 15, month: 12, year: year - 1}
     }
+
+    merge_attributes(contest, attrs)
   end
 
   def contest_category_factory do

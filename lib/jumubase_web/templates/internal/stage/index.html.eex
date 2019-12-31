@@ -19,6 +19,7 @@
         to: Routes.internal_contest_stage_schedule_path(@conn, :schedule, @contest, stage),
         class: "btn btn-default"
         %>
+      &#32;
     <% end %>
   </p>
 <% else %>

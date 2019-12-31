@@ -99,6 +99,7 @@
       to: Routes.internal_contest_stage_timetable_path(@conn, :timetable, @contest, stage),
       class: "btn btn-default"
       %>
+    &#32;
   <% end %>
 <% end %>
 

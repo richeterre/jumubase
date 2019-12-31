@@ -55,6 +55,7 @@
             </td>
             <td>
               <%= prize(first_a, @contest.round) %>
+              &#32;
               <%= advancement_label(first_a, performance) %>
             </td>
             <td class="text-right">

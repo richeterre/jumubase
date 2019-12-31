@@ -59,7 +59,7 @@
           <%= edit_icon_link(
             Routes.internal_contest_performance_path(@conn, :edit, @contest, performance)
             ) %>
-
+          &#32;
           <%= delete_icon_link(
             Routes.internal_contest_performance_path(@conn, :delete, @contest, performance),
             gettext("Do you really want to delete this performance?")

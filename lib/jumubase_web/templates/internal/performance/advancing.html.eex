@@ -79,10 +79,12 @@
             <td>
               <%= first_a.points %>
               <%= missing_points_error(first_a) %>
+              &#32;
               <%= ineligibility_warning(first_a, performance, @contest.round) %>
             </td>
             <td>
               <%= prize(first_a, @contest.round) %>
+              &#32;
               <%= advancement_label(first_a, performance) %>
             </td>
 

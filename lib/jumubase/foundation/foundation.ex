@@ -82,7 +82,8 @@ defmodule Jumubase.Foundation do
     query =
       from c in Contest,
         where: c.round == ^round,
-        # uses UTC
+        where: c.allows_registration,
+        # We don't currently consider host time zone in deadline check:
         where: c.deadline >= ^Timex.today(),
         join: h in assoc(c, :host),
         order_by: h.name,

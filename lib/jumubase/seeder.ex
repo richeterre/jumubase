@@ -96,14 +96,17 @@ defmodule Jumubase.Seeder do
     {:ok, deadline} = Date.new(year - 1, 12, 15)
 
     for host <- hosts do
+      grouping = host.current_grouping
+
       Factory.insert(:contest,
         host: host,
         season: season,
         round: round,
-        grouping: host.current_grouping,
+        grouping: grouping,
         start_date: start_date,
         end_date: end_date,
         deadline: deadline,
+        allows_registration: grouping != "2",
         contest_categories: ccs
       )
     end

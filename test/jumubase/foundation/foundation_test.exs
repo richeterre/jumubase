@@ -173,13 +173,28 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.list_open_contests(2) == [c2, c1, c3]
     end
 
-    test "does not return contests with a past signup deadline" do
-      yesterday = Timex.today() |> Timex.shift(days: -1)
-      insert(:contest, round: 0, deadline: yesterday)
-      insert(:contest, round: 1, deadline: yesterday)
+    test "does not return contests that don't allow registration" do
+      today = Timex.today()
+
+      insert(:contest, round: 0, allows_registration: false, deadline: today)
+      insert(:contest, round: 1, allows_registration: false, deadline: today)
+      insert(:contest, round: 2, allows_registration: false, deadline: today)
 
       assert Foundation.list_open_contests(0) == []
       assert Foundation.list_open_contests(1) == []
+      assert Foundation.list_open_contests(2) == []
+    end
+
+    test "does not return contests with a past signup deadline" do
+      yesterday = Timex.today() |> Timex.shift(days: -1)
+
+      insert(:contest, round: 0, deadline: yesterday)
+      insert(:contest, round: 1, deadline: yesterday)
+      insert(:contest, round: 2, deadline: yesterday)
+
+      assert Foundation.list_open_contests(0) == []
+      assert Foundation.list_open_contests(1) == []
+      assert Foundation.list_open_contests(2) == []
     end
   end
 

@@ -1,90 +1,190 @@
 defmodule Jumubase.PerformanceTest do
   use Jumubase.DataCase
   alias Ecto.Changeset
+  alias Jumubase.JumuParams
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
 
-  describe "changeset" do
-    setup do
-      c = insert(:contest) |> with_contest_categories
-      [cc, _] = c.contest_categories
-      [valid_attrs: valid_performance_attrs(cc)]
+  describe "changeset/2" do
+    setup %{round: round} do
+      [round: round]
     end
 
-    test "with valid attributes", %{valid_attrs: valid_attrs} do
-      changeset = Performance.changeset(%Performance{}, valid_attrs)
+    for round <- JumuParams.rounds() do
+      @tag round: round
+      test "is valid for round #{round} with valid attributes", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+        changeset = Performance.changeset(%Performance{}, valid_attrs, round)
+        assert changeset.valid?
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} without a contest category", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+        params = Map.put(valid_attrs, :contest_category_id, nil)
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} without an appearance", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+        params = Map.put(valid_attrs, :appearances, [])
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+
+        assert changeset.errors[:base] ==
+                 {"The performance must have at least one participant.", []}
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} with both soloist and ensemblist appearances", %{
+        round: round
+      } do
+        valid_attrs = valid_performance_attrs(round)
+
+        params =
+          Map.put(valid_attrs, :appearances, [
+            valid_appearance_attrs("soloist"),
+            valid_appearance_attrs("ensemblist")
+          ])
+
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+
+        assert changeset.errors[:base] ==
+                 {"The performance can't have both soloists and ensemblists.", []}
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} with multiple soloist appearances", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+
+        params =
+          Map.put(valid_attrs, :appearances, [
+            valid_appearance_attrs("soloist"),
+            valid_appearance_attrs("soloist")
+          ])
+
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+
+        assert changeset.errors[:base] ==
+                 {"The performance can't have more than one soloist.", []}
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} with a single ensemblist appearance", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+
+        params =
+          Map.put(valid_attrs, :appearances, [
+            valid_appearance_attrs("ensemblist"),
+            valid_appearance_attrs("accompanist")
+          ])
+
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+        assert changeset.errors[:base] == {"The performance can't have only one ensemblist.", []}
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} with only accompanist appearances", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+
+        params =
+          Map.put(valid_attrs, :appearances, [
+            valid_appearance_attrs("accompanist"),
+            valid_appearance_attrs("accompanist")
+          ])
+
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+        assert changeset.errors[:base] == {"The performance can't have only accompanists.", []}
+      end
+
+      @tag round: round
+      test "is invalid for round #{round} without a piece", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+        params = Map.put(valid_attrs, :pieces, [])
+        changeset = Performance.changeset(%Performance{}, params, round)
+        refute changeset.valid?
+        assert changeset.errors[:base] == {"The performance must have at least one piece.", []}
+      end
+    end
+
+    for round <- 0..1 do
+      @tag round: round
+      test "ignores the given predecessor host for round #{round}", %{round: round} do
+        valid_attrs = valid_performance_attrs(round)
+        params = Map.put(valid_attrs, :predecessor_host_id, 1)
+        changeset = Performance.changeset(%Performance{}, params, round)
+        assert get_change(changeset, :predecessor_host_id) == nil
+      end
+    end
+
+    @tag round: 2
+    test "is valid for round 2 with no predecessor host change and existing predecessor data", %{
+      round: round
+    } do
+      performance = %Performance{
+        predecessor_host_id: 1,
+        predecessor_contest_id: 1,
+        predecessor_id: 1
+      }
+
+      valid_attrs = valid_performance_attrs(round)
+      params = Map.put(valid_attrs, :predecessor_host_id, 1)
+      changeset = Performance.changeset(performance, params, round)
       assert changeset.valid?
     end
 
-    test "without an associated contest category", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :contest_category_id, nil)
-      changeset = Performance.changeset(%Performance{}, params)
+    @tag round: 2
+    test "is invalid for round 2 with a predecessor host change on top of existing predecessor data",
+         %{
+           round: round
+         } do
+      performance = %Performance{
+        predecessor_host_id: 1,
+        predecessor_contest_id: 1,
+        predecessor_id: 1
+      }
+
+      valid_attrs = valid_performance_attrs(round)
+      params = Map.put(valid_attrs, :predecessor_host_id, 2)
+      changeset = Performance.changeset(performance, params, round)
       refute changeset.valid?
     end
 
-    test "without an appearance", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :appearances, [])
-      changeset = Performance.changeset(%Performance{}, params)
-      refute changeset.valid?
+    @tag round: 2
+    test "is valid with a predecessor host change and no existing predecessor data", %{
+      round: round
+    } do
+      performance = %Performance{
+        predecessor_host_id: nil,
+        predecessor_contest_id: nil,
+        predecessor_id: nil
+      }
 
-      assert changeset.errors[:base] ==
-               {"The performance must have at least one participant.", []}
+      valid_attrs = valid_performance_attrs(round)
+      params = Map.put(valid_attrs, :predecessor_host_id, 1)
+      changeset = Performance.changeset(performance, params, round)
+      assert changeset.valid?
     end
 
-    test "with both soloist and ensemblist appearances", %{valid_attrs: valid_attrs} do
-      params =
-        Map.put(valid_attrs, :appearances, [
-          valid_appearance_attrs("soloist"),
-          valid_appearance_attrs("ensemblist")
-        ])
+    @tag round: 2
+    test "is invalid with no predecessor host and no existing predecessor data", %{
+      round: round
+    } do
+      performance = %Performance{
+        predecessor_host_id: nil,
+        predecessor_contest_id: nil,
+        predecessor_id: nil
+      }
 
-      changeset = Performance.changeset(%Performance{}, params)
+      valid_attrs = valid_performance_attrs(round)
+      params = Map.put(valid_attrs, :predecessor_host_id, nil)
+      changeset = Performance.changeset(performance, params, round)
       refute changeset.valid?
-
-      assert changeset.errors[:base] ==
-               {"The performance can't have both soloists and ensemblists.", []}
-    end
-
-    test "with multiple soloist appearances", %{valid_attrs: valid_attrs} do
-      params =
-        Map.put(valid_attrs, :appearances, [
-          valid_appearance_attrs("soloist"),
-          valid_appearance_attrs("soloist")
-        ])
-
-      changeset = Performance.changeset(%Performance{}, params)
-      refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance can't have more than one soloist.", []}
-    end
-
-    test "with a single ensemblist appearance", %{valid_attrs: valid_attrs} do
-      params =
-        Map.put(valid_attrs, :appearances, [
-          valid_appearance_attrs("ensemblist"),
-          valid_appearance_attrs("accompanist")
-        ])
-
-      changeset = Performance.changeset(%Performance{}, params)
-      refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance can't have only one ensemblist.", []}
-    end
-
-    test "with only accompanist appearances", %{valid_attrs: valid_attrs} do
-      params =
-        Map.put(valid_attrs, :appearances, [
-          valid_appearance_attrs("accompanist"),
-          valid_appearance_attrs("accompanist")
-        ])
-
-      changeset = Performance.changeset(%Performance{}, params)
-      refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance can't have only accompanists.", []}
-    end
-
-    test "without a piece", %{valid_attrs: valid_attrs} do
-      params = Map.put(valid_attrs, :pieces, [])
-      changeset = Performance.changeset(%Performance{}, params)
-      refute changeset.valid?
-      assert changeset.errors[:base] == {"The performance must have at least one piece.", []}
     end
   end
 
@@ -338,11 +438,19 @@ defmodule Jumubase.PerformanceTest do
 
   # Private helpers
 
-  defp valid_performance_attrs(contest_category) do
-    params_for(:performance, edit_code: nil, age_group: nil)
-    |> Map.put(:contest_category_id, contest_category.id)
-    |> Map.put(:appearances, [valid_appearance_attrs()])
-    |> Map.put(:pieces, [params_for(:piece)])
+  defp valid_performance_attrs(round) do
+    base_params =
+      params_for(:performance, edit_code: nil, age_group: nil)
+      |> Map.put(:contest_category_id, 1)
+      |> Map.put(:appearances, [valid_appearance_attrs()])
+      |> Map.put(:pieces, [params_for(:piece)])
+
+    if round == 2 do
+      base_params
+      |> Map.put(:predecessor_host_id, 1)
+    else
+      base_params
+    end
   end
 
   defp valid_appearance_attrs do

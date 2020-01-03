@@ -181,7 +181,7 @@ defmodule Jumubase.Showtime do
   def build_performance(%Contest{round: _}), do: %Performance{}
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
-    Performance.changeset(%Performance{}, attrs)
+    Performance.changeset(%Performance{}, attrs, contest.round)
     |> stitch_participants
     |> put_age_groups(contest)
     |> attempt_insert(contest.round)
@@ -192,7 +192,7 @@ defmodule Jumubase.Showtime do
       {:error, :has_results}
     else
       performance
-      |> Performance.changeset(attrs)
+      |> Performance.changeset(attrs, contest.round)
       |> stitch_participants
       |> put_age_groups(contest)
       |> Repo.update()
@@ -202,7 +202,7 @@ defmodule Jumubase.Showtime do
   def change_performance(%Performance{} = performance) do
     performance
     |> Repo.preload([:appearances, :pieces])
-    |> Performance.changeset(%{})
+    |> change()
   end
 
   def delete_performance!(%Performance{} = performance) do

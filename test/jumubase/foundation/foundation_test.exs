@@ -534,13 +534,14 @@ defmodule Jumubase.FoundationTest do
 
   describe "get_successor/1" do
     test "returns the next-round (LW) successor for an RW contest" do
-      c1 = insert(:contest, season: 56, round: 1)
+      c1 = insert(:contest, season: 56, round: 1, grouping: "1")
       # Irrelevant contests
-      insert(:contest, season: 56, round: 0)
-      insert(:contest, season: 56, round: 1)
-      insert(:contest, season: 57, round: 2)
+      insert(:contest, season: 57, round: 2, grouping: "1")
+      insert(:contest, season: 56, round: 0, grouping: "1")
+      insert(:contest, season: 56, round: 1, grouping: "1")
+      insert(:contest, season: 56, round: 2, grouping: "2")
       # Successor contest
-      c2 = insert(:contest, season: 56, round: 2)
+      c2 = insert(:contest, season: 56, round: 2, grouping: "1")
 
       result = Foundation.get_successor(c1)
       assert result.id == c2.id

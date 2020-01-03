@@ -169,9 +169,9 @@ defmodule Jumubase.Foundation do
   Returns the next-round contest that advancing performances go to,
   or nil if no such contest exists.
   """
-  def get_successor(%Contest{season: season, round: 1}) do
+  def get_successor(%Contest{season: season, round: 1, grouping: grouping}) do
     Contest
-    |> where(season: ^season, round: 2)
+    |> where(season: ^season, round: 2, grouping: ^grouping)
     |> preload(:host)
     |> Repo.one()
   end

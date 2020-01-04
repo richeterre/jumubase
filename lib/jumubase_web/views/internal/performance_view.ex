@@ -13,6 +13,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       prize: 2
     ]
 
+  import JumubaseWeb.PerformanceView, only: [predecessor_host_options: 1]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
   import JumubaseWeb.Internal.HostView, only: [flag: 1]

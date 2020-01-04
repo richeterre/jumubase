@@ -1,7 +1,18 @@
 <div class="row">
   <div id="registration-form" v-cloak class="col-lg-9">
-    <%= form_for @changeset, @path, [novalidate: true], fn _ -> %>
+    <%= form_for @changeset, @path, [novalidate: true], fn f -> %>
       <%= render "_form_error_summary.html" %>
+
+      <%= if !Enum.empty?(@predecessor_host_options) do %>
+        <div class="row">
+          <div class="form-group col-md-5">
+            <%= label f, :predecessor_host_id, gettext("First round"), class: "control-label" %>
+            <%= select f, :predecessor_host_id, @predecessor_host_options,
+              prompt: gettext("Please choose"), class: "form-control" %>
+            <%= error_tag f, :predecessor_host_id %>
+          </div>
+        </div>
+      <% end %>
 
       <div class="row">
         <div class="form-group col-md-5">

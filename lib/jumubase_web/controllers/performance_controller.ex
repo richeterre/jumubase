@@ -7,8 +7,8 @@ defmodule JumubaseWeb.PerformanceController do
   alias Jumubase.Showtime
   alias JumubaseWeb.Email
 
-  # Check deadline of nested contest and pass it to all actions
-  def action(conn, _), do: contest_deadline_check_action(conn, __MODULE__)
+  # Check that nested contest is open, then pass it to all actions
+  def action(conn, _), do: contest_openness_check_action(conn, __MODULE__)
 
   def new(conn, _params, contest) do
     changeset =

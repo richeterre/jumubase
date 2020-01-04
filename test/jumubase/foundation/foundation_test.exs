@@ -34,19 +34,24 @@ defmodule Jumubase.FoundationTest do
 
   describe "list_predecessor_hosts/1" do
     setup do
-      [lw: insert(:contest, season: 56, round: 2)]
+      [lw: insert(:contest, season: 56, round: 2, grouping: "1")]
     end
 
     test "returns all hosts with predecessor contests of the given LW, ordered by name", %{lw: lw} do
+      h1 = insert(:host, name: "C")
+      h2 = insert(:host, name: "A")
+      h3 = insert(:host, name: "B")
+
       # Matching contests
-      %{host: h1} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "C"))
-      %{host: h2} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "A"))
-      %{host: h3} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "B"))
+      insert(:contest, season: lw.season, round: 1, grouping: "1", host: h1)
+      insert(:contest, season: lw.season, round: 1, grouping: "1", host: h2)
+      insert(:contest, season: lw.season, round: 1, grouping: "1", host: h3)
 
       # Non-matching contests
-      insert(:contest, season: lw.season - 1, round: 1)
-      insert(:contest, season: lw.season, round: 0)
-      insert(:contest, season: lw.season, round: 2)
+      insert(:contest, season: lw.season - 1, round: 1, grouping: "1")
+      insert(:contest, season: lw.season, round: 0, grouping: "1")
+      insert(:contest, season: lw.season, round: 2, grouping: "1")
+      insert(:contest, season: lw.season, round: 1, grouping: "2")
 
       assert_ids_match_ordered(Foundation.list_predecessor_hosts(lw), [h2, h3, h1])
     end

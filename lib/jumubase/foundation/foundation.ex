@@ -31,11 +31,11 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
-  def list_predecessor_hosts(%Contest{round: 2, season: season}) do
+  def list_predecessor_hosts(%Contest{season: season, round: 2, grouping: grouping}) do
     query =
       from h in Host,
         join: c in assoc(h, :contests),
-        where: c.season == ^season and c.round == 1,
+        where: c.season == ^season and c.round == 1 and c.grouping == ^grouping,
         order_by: h.name,
         distinct: true
 

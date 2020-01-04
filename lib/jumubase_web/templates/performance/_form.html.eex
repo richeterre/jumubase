@@ -5,7 +5,7 @@
 
       <%= if !Enum.empty?(@predecessor_host_options) do %>
         <div class="row">
-          <div class="form-group col-md-5">
+          <div class="form-group col-md-5 <%= if f.errors[:predecessor_host_id], do: "has-error" %>">
             <%= label f, :predecessor_host_id, gettext("First round"), class: "control-label" %>
             <%= select f, :predecessor_host_id, @predecessor_host_options,
               prompt: gettext("Please choose"), class: "form-control" %>

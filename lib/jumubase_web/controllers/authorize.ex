@@ -72,12 +72,12 @@ defmodule JumubaseWeb.Authorize do
     authorize_contest(conn, user, id, fn {:ok, _} -> conn end)
   end
 
-  # Action override to check contest deadline before passing it to all actions
-  def contest_deadline_check_action(
+  # Action override to ensure contest is open for registration before passing it to action
+  def contest_openness_check_action(
         %Conn{params: %{"contest_id" => id} = params} = conn,
         module
       ) do
-    check_contest_deadline(conn, id, fn {:ok, contest} ->
+    check_contest_openness(conn, id, fn {:ok, contest} ->
       apply(module, action_name(conn), [conn, params, contest])
     end)
   end
@@ -136,21 +136,31 @@ defmodule JumubaseWeb.Authorize do
       else: unauthorized(conn, Routes.internal_page_path(conn, :home))
   end
 
-  defp check_contest_deadline(conn, id, success_fun) do
+  defp check_contest_openness(conn, id, success_fun) do
     contest = Foundation.get_contest!(id)
+    failure_path = Routes.page_path(conn, :registration)
 
-    if deadline_passed?(contest, Timex.today()) do
-      path = Routes.page_path(conn, :registration)
+    cond do
+      deadline_passed?(contest, Timex.today()) ->
+        error(
+          conn,
+          gettext(
+            "The registration deadline for this contest has passed. Please contact us if you need assistance."
+          ),
+          failure_path
+        )
 
-      error(
-        conn,
-        gettext(
-          "The registration deadline for this contest has passed. Please contact us if you need assistance."
-        ),
-        path
-      )
-    else
-      success_fun.({:ok, contest})
+      !contest.allows_registration ->
+        error(
+          conn,
+          gettext(
+            "This contest is not open for registration. Please contact us if you need assistance."
+          ),
+          failure_path
+        )
+
+      true ->
+        success_fun.({:ok, contest})
     end
   end
 

@@ -34,19 +34,24 @@ defmodule Jumubase.FoundationTest do
 
   describe "list_predecessor_hosts/1" do
     setup do
-      [lw: insert(:contest, season: 56, round: 2)]
+      [lw: insert(:contest, season: 56, round: 2, grouping: "1")]
     end
 
     test "returns all hosts with predecessor contests of the given LW, ordered by name", %{lw: lw} do
+      h1 = insert(:host, name: "C")
+      h2 = insert(:host, name: "A")
+      h3 = insert(:host, name: "B")
+
       # Matching contests
-      %{host: h1} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "C"))
-      %{host: h2} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "A"))
-      %{host: h3} = insert(:contest, season: lw.season, round: 1, host: build(:host, name: "B"))
+      insert(:contest, season: lw.season, round: 1, grouping: "1", host: h1)
+      insert(:contest, season: lw.season, round: 1, grouping: "1", host: h2)
+      insert(:contest, season: lw.season, round: 1, grouping: "1", host: h3)
 
       # Non-matching contests
-      insert(:contest, season: lw.season - 1, round: 1)
-      insert(:contest, season: lw.season, round: 0)
-      insert(:contest, season: lw.season, round: 2)
+      insert(:contest, season: lw.season - 1, round: 1, grouping: "1")
+      insert(:contest, season: lw.season, round: 0, grouping: "1")
+      insert(:contest, season: lw.season, round: 2, grouping: "1")
+      insert(:contest, season: lw.season, round: 1, grouping: "2")
 
       assert_ids_match_ordered(Foundation.list_predecessor_hosts(lw), [h2, h3, h1])
     end
@@ -173,13 +178,28 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.list_open_contests(2) == [c2, c1, c3]
     end
 
-    test "does not return contests with a past signup deadline" do
-      yesterday = Timex.today() |> Timex.shift(days: -1)
-      insert(:contest, round: 0, deadline: yesterday)
-      insert(:contest, round: 1, deadline: yesterday)
+    test "does not return contests that don't allow registration" do
+      today = Timex.today()
+
+      insert(:contest, round: 0, allows_registration: false, deadline: today)
+      insert(:contest, round: 1, allows_registration: false, deadline: today)
+      insert(:contest, round: 2, allows_registration: false, deadline: today)
 
       assert Foundation.list_open_contests(0) == []
       assert Foundation.list_open_contests(1) == []
+      assert Foundation.list_open_contests(2) == []
+    end
+
+    test "does not return contests with a past signup deadline" do
+      yesterday = Timex.today() |> Timex.shift(days: -1)
+
+      insert(:contest, round: 0, deadline: yesterday)
+      insert(:contest, round: 1, deadline: yesterday)
+      insert(:contest, round: 2, deadline: yesterday)
+
+      assert Foundation.list_open_contests(0) == []
+      assert Foundation.list_open_contests(1) == []
+      assert Foundation.list_open_contests(2) == []
     end
   end
 
@@ -519,13 +539,14 @@ defmodule Jumubase.FoundationTest do
 
   describe "get_successor/1" do
     test "returns the next-round (LW) successor for an RW contest" do
-      c1 = insert(:contest, season: 56, round: 1)
+      c1 = insert(:contest, season: 56, round: 1, grouping: "1")
       # Irrelevant contests
-      insert(:contest, season: 56, round: 0)
-      insert(:contest, season: 56, round: 1)
-      insert(:contest, season: 57, round: 2)
+      insert(:contest, season: 57, round: 2, grouping: "1")
+      insert(:contest, season: 56, round: 0, grouping: "1")
+      insert(:contest, season: 56, round: 1, grouping: "1")
+      insert(:contest, season: 56, round: 2, grouping: "2")
       # Successor contest
-      c2 = insert(:contest, season: 56, round: 2)
+      c2 = insert(:contest, season: 56, round: 2, grouping: "1")
 
       result = Foundation.get_successor(c1)
       assert result.id == c2.id

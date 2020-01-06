@@ -9,7 +9,9 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
   setup context do
     deadline = Map.get(context, :deadline, @today)
-    contest = insert(:contest, deadline: deadline)
+    allows_registration = Map.get(context, :allows_registration, true)
+
+    contest = insert(:contest, deadline: deadline, allows_registration: allows_registration)
     [contest: contest |> with_contest_categories]
   end
 
@@ -23,6 +25,12 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     test "shows an error if the contest deadline has passed", %{conn: conn, contest: c} do
       conn = get(conn, Routes.performance_path(conn, :new, c))
       assert_deadline_error(conn)
+    end
+
+    @tag allows_registration: false
+    test "shows an error if the contest allows no registration", %{conn: conn, contest: c} do
+      conn = get(conn, Routes.performance_path(conn, :new, c))
+      assert_allows_no_registration_error(conn)
     end
   end
 
@@ -86,6 +94,15 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       conn = post(conn, Routes.performance_path(conn, :create, c), params)
       assert_deadline_error(conn)
     end
+
+    @tag allows_registration: false
+    test "shows an error if the contest allows no registration", %{conn: conn, contest: c} do
+      [cc, _] = c.contest_categories
+      params = valid_performance_params(cc)
+
+      conn = post(conn, Routes.performance_path(conn, :create, c), params)
+      assert_allows_no_registration_error(conn)
+    end
   end
 
   describe "edit/3" do
@@ -127,6 +144,16 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     } do
       conn = get(conn, Routes.performance_path(conn, :edit, c, p, edit_code: p.edit_code))
       assert_deadline_error(conn)
+    end
+
+    @tag allows_registration: false
+    test "shows an error if the contest allows no registration", %{
+      conn: conn,
+      contest: c,
+      performance: p
+    } do
+      conn = get(conn, Routes.performance_path(conn, :edit, c, p, edit_code: p.edit_code))
+      assert_allows_no_registration_error(conn)
     end
   end
 
@@ -201,6 +228,20 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       |> assert_deadline_error
     end
 
+    @tag allows_registration: false
+    test "shows an error if the contest allows no registration", %{
+      conn: conn,
+      contest: c,
+      performance: p
+    } do
+      [_cc1, cc2] = c.contest_categories
+      params = valid_performance_params(cc2)
+
+      conn
+      |> put(Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
+      |> assert_allows_no_registration_error
+    end
+
     test "shows an error if the performance already has results", %{conn: conn, contest: c} do
       p = insert_performance(c, appearances: [build(:appearance, points: 1)])
       [_cc1, cc2] = c.contest_categories
@@ -221,6 +262,13 @@ defmodule JumubaseWeb.PerformanceControllerTest do
   defp assert_deadline_error(conn) do
     assert get_flash(conn, :error) ==
              "The registration deadline for this contest has passed. Please contact us if you need assistance."
+
+    assert redirected_to(conn) == Routes.page_path(conn, :registration)
+  end
+
+  defp assert_allows_no_registration_error(conn) do
+    assert get_flash(conn, :error) ==
+             "This contest is not open for registration. Please contact us if you need assistance."
 
     assert redirected_to(conn) == Routes.page_path(conn, :registration)
   end

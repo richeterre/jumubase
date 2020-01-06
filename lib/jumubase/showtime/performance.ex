@@ -25,16 +25,22 @@ defmodule Jumubase.Showtime.Performance do
     timestamps()
   end
 
-  @registration_attrs [:contest_category_id]
-  @stage_attrs [:stage_id, :stage_time]
-
   @doc """
   Allows registering (and updating) a performance.
   """
-  def changeset(%Performance{} = performance, attrs) do
-    performance
-    |> cast(attrs, @registration_attrs)
-    |> validate_required(@registration_attrs)
+  def changeset(%Performance{} = performance, attrs, round) do
+    changeset_for_round =
+      if round == 2 do
+        performance
+        |> cast(attrs, [:predecessor_host_id, :contest_category_id])
+        |> validate_predecessor_fields
+      else
+        performance
+        |> cast(attrs, [:contest_category_id])
+      end
+
+    changeset_for_round
+    |> validate_required(:contest_category_id)
     |> cast_assoc(:appearances)
     |> validate_appearances
     |> cast_assoc(:pieces)
@@ -49,7 +55,7 @@ defmodule Jumubase.Showtime.Performance do
   """
   def stage_changeset(%Performance{} = performance, attrs) do
     performance
-    |> cast(attrs, @stage_attrs)
+    |> cast(attrs, [:stage_id, :stage_time])
     |> validate_stage_fields
   end
 
@@ -114,6 +120,29 @@ defmodule Jumubase.Showtime.Performance do
   end
 
   # Private helpers
+
+  defp validate_predecessor_fields(%Changeset{} = changeset) do
+    %{predecessor_id: pre_id, predecessor_contest_id: pre_c_id} = changeset.data
+
+    if pre_id || pre_c_id do
+      # Ensure we don't change the predecessor host of a performance that already
+      # has a predecessor contest or performance set, as this would cause a mismatch.
+      validate_blank_predecessor_host(changeset)
+    else
+      # Ensure there is a predecessor host, as the performance has no other predecessor info.
+      validate_required(changeset, :predecessor_host_id)
+    end
+  end
+
+  defp validate_blank_predecessor_host(%Changeset{} = changeset) do
+    validate_change(changeset, :predecessor_host_id, fn key, pre_host_id ->
+      if pre_host_id do
+        [{key, dgettext("errors", "can't be changed")}]
+      else
+        []
+      end
+    end)
+  end
 
   defp validate_appearances(%Changeset{} = changeset) do
     case get_field(changeset, :appearances) do

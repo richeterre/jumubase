@@ -31,11 +31,11 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
-  def list_predecessor_hosts(%Contest{round: 2, season: season}) do
+  def list_predecessor_hosts(%Contest{season: season, round: 2, grouping: grouping}) do
     query =
       from h in Host,
         join: c in assoc(h, :contests),
-        where: c.season == ^season and c.round == 1,
+        where: c.season == ^season and c.round == 1 and c.grouping == ^grouping,
         order_by: h.name,
         distinct: true
 
@@ -82,7 +82,8 @@ defmodule Jumubase.Foundation do
     query =
       from c in Contest,
         where: c.round == ^round,
-        # uses UTC
+        where: c.allows_registration,
+        # We don't currently consider host time zone in deadline check:
         where: c.deadline >= ^Timex.today(),
         join: h in assoc(c, :host),
         order_by: h.name,
@@ -168,9 +169,9 @@ defmodule Jumubase.Foundation do
   Returns the next-round contest that advancing performances go to,
   or nil if no such contest exists.
   """
-  def get_successor(%Contest{season: season, round: 1}) do
+  def get_successor(%Contest{season: season, round: 1, grouping: grouping}) do
     Contest
-    |> where(season: ^season, round: 2)
+    |> where(season: ^season, round: 2, grouping: ^grouping)
     |> preload(:host)
     |> Repo.one()
   end

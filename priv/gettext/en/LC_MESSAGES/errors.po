@@ -98,17 +98,18 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:59
+#: lib/jumubase/foundation/contest.ex:60
 msgid "can't be before the start date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:62
+#: lib/jumubase/foundation/contest.ex:63
 msgid "must be before the start date"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/participant.ex:44
+#: lib/jumubase/showtime/performance.ex:140
 msgid "can't be changed"
 msgstr ""
 
@@ -118,7 +119,7 @@ msgid "can only appear once in a performance"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:42
+#: lib/jumubase/showtime/performance.ex:49
 msgid "must be unique"
 msgstr ""
 
@@ -133,32 +134,32 @@ msgid "The password is too short."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:123
+#: lib/jumubase/showtime/performance.ex:153
 msgid "The performance must have at least one participant."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:168
+#: lib/jumubase/showtime/performance.ex:198
 msgid "The performance must have at least one piece."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:132
+#: lib/jumubase/showtime/performance.ex:162
 msgid "The performance can't have both soloists and ensemblists."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:139
+#: lib/jumubase/showtime/performance.ex:169
 msgid "The performance can't have more than one soloist."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:153
+#: lib/jumubase/showtime/performance.ex:183
 msgid "The performance can't have only accompanists."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:146
+#: lib/jumubase/showtime/performance.ex:176
 msgid "The performance can't have only one ensemblist."
 msgstr ""
 
@@ -183,11 +184,11 @@ msgid "Oh no…"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:68
+#: lib/jumubase/foundation/contest.ex:69
 msgid "can't be before the end date"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/performance.ex:185
+#: lib/jumubase/showtime/performance.ex:215
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""

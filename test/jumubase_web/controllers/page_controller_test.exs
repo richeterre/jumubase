@@ -10,20 +10,32 @@ defmodule JumubaseWeb.PageControllerTest do
   end
 
   describe "registration/2" do
-    test "lists open RW and Kimu contests", %{conn: conn} do
-      kimu = insert(:contest, round: 0, deadline: Timex.today())
-      rw = insert(:contest, round: 1, deadline: Timex.today())
+    test "lists open Kimu, RW and LW contests", %{conn: conn} do
+      today = Timex.today()
+
+      kimu = insert(:contest, round: 0, deadline: today)
+      rw = insert(:contest, round: 1, deadline: today)
+      lw = insert(:contest, round: 2, deadline: today)
+
       conn = get(conn, Routes.page_path(conn, :registration))
 
       assert html_response(conn, 200) =~ "Registration"
       assert html_response(conn, 200) =~ ContestView.name_with_flag(kimu)
       assert html_response(conn, 200) =~ ContestView.name_with_flag(rw)
+      assert html_response(conn, 200) =~ ContestView.name_with_flag(lw)
     end
 
-    test "does not list open LW contests", %{conn: conn} do
-      lw = insert(:contest, round: 2, deadline: Timex.today())
+    test "does not list contests that don't allow registration", %{conn: conn} do
+      today = Timex.today()
+
+      kimu = insert(:contest, allows_registration: false, round: 0, deadline: today)
+      rw = insert(:contest, allows_registration: false, round: 1, deadline: today)
+      lw = insert(:contest, allows_registration: false, round: 2, deadline: today)
+
       conn = get(conn, Routes.page_path(conn, :registration))
 
+      refute html_response(conn, 200) =~ ContestView.name_with_flag(kimu)
+      refute html_response(conn, 200) =~ ContestView.name_with_flag(rw)
       refute html_response(conn, 200) =~ ContestView.name_with_flag(lw)
     end
   end

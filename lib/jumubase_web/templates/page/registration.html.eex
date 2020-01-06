@@ -20,7 +20,7 @@
         <h3><%= gettext("Jumu") %></h3>
         <%= render "_contest_list.html",
           conn: @conn,
-          contests: @rw_contests,
+          contests: @jumu_contests,
           general_deadline: @general_deadline
           %>
       </div>

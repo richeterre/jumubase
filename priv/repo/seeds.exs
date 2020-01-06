@@ -16,13 +16,113 @@ Repo.transaction(fn ->
   # Create demo hosts
 
   insert(:host,
+    name: "DS Barcelona",
+    current_grouping: "1",
+    city: "Barcelona",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 41.382911,
+    longitude: 2.08914
+  )
+
+  insert(:host,
+    name: "DS Bilbao",
+    current_grouping: "1",
+    city: "Bilbao",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 43.2597465,
+    longitude: -2.9099354
+  )
+
+  insert(:host,
+    name: "DS Gran Canaria",
+    current_grouping: "1",
+    city: "Las Palmas de Gran Canaria",
+    country_code: "ES",
+    time_zone: "Atlantic/Canary",
+    latitude: 28.0815451,
+    longitude: -15.4718158
+  )
+
+  insert(:host,
+    name: "DS Lissabon",
+    current_grouping: "1",
+    city: "Lissabon",
+    country_code: "PT",
+    time_zone: "Europe/Lisbon",
+    latitude: 38.7527909,
+    longitude: -9.1857376
+  )
+
+  insert(:host,
+    name: "DS Madrid",
+    current_grouping: "1",
+    city: "Madrid",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 40.5068463,
+    longitude: -3.7076739
+  )
+
+  insert(:host,
+    name: "DS Málaga",
+    current_grouping: "1",
+    city: "Ojén (Málaga)",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 36.5297043,
+    longitude: -4.7567107
+  )
+
+  insert(:host,
+    name: "DS Porto",
+    current_grouping: "1",
+    city: "Porto",
+    country_code: "PT",
+    time_zone: "Europe/Lisbon",
+    latitude: 41.1464018,
+    longitude: -8.65784
+  )
+
+  insert(:host,
+    name: "DS San Sebastián",
+    current_grouping: "1",
+    city: "Donostia-San Sebastián",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 43.2982861,
+    longitude: -1.9927501
+  )
+
+  insert(:host,
+    name: "DS Sevilla",
+    current_grouping: "1",
+    city: "Sevilla",
+    country_code: "ES",
+    time_zone: "Europe/Madrid",
+    latitude: 37.3910806,
+    longitude: -5.9941453
+  )
+
+  insert(:host,
+    name: "DS Teneriffa",
+    current_grouping: "1",
+    city: "Tabaiba",
+    country_code: "ES",
+    time_zone: "Atlantic/Canary",
+    latitude: 28.4915469,
+    longitude: -16.2923725
+  )
+
+  insert(:host,
     name: "DS Valencia",
     current_grouping: "1",
     city: "Valencia",
     country_code: "ES",
     time_zone: "Europe/Madrid",
-    latitude: 39.482104,
-    longitude: -0.363545
+    latitude: 39.4821081,
+    longitude: -0.3657337
   )
 
   insert(:host,
@@ -189,13 +289,93 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
+    name: "DS Alexandria",
+    current_grouping: "3",
+    city: "Alexandria",
+    country_code: "EG",
+    time_zone: "Africa/Cairo",
+    latitude: 31.1675474,
+    longitude: 29.8508133
+  )
+
+  insert(:host,
+    name: "DS Athen",
+    current_grouping: "3",
+    city: "Athen",
+    country_code: "GR",
+    time_zone: "Europe/Athens",
+    latitude: 38.0363279,
+    longitude: 23.7853563
+  )
+
+  insert(:host,
+    name: "DS Istanbul",
+    current_grouping: "3",
+    city: "Istanbul",
+    country_code: "TR",
+    time_zone: "Europe/Istanbul",
+    latitude: 41.0279952,
+    longitude: 28.9735805
+  )
+
+  insert(:host,
+    name: "DS Kairo-Ost",
+    current_grouping: "3",
+    city: "Kairo",
+    country_code: "EG",
+    time_zone: "Africa/Cairo",
+    latitude: 30.0264896,
+    longitude: 31.4210053
+  )
+
+  insert(:host,
+    name: "DS Mailand",
+    current_grouping: "3",
+    city: "Mailand",
+    country_code: "IT",
+    time_zone: "Europe/Rome",
+    latitude: 45.4788856,
+    longitude: 9.1558576
+  )
+
+  insert(:host,
     name: "DS Rom",
     current_grouping: "3",
     city: "Rom",
     country_code: "IT",
     time_zone: "Europe/Rome",
-    latitude: 41.890161,
-    longitude: 12.424819
+    latitude: 41.890165,
+    longitude: 12.4248243
+  )
+
+  insert(:host,
+    name: "DS Thessaloniki",
+    current_grouping: "3",
+    city: "Thessaloniki",
+    country_code: "GR",
+    time_zone: "Europe/Athens",
+    latitude: 40.5758298,
+    longitude: 22.9855775
+  )
+
+  insert(:host,
+    name: "DS Kairo-West",
+    current_grouping: "3",
+    city: "Kairo",
+    country_code: "EG",
+    time_zone: "Africa/Cairo",
+    latitude: 30.0273617,
+    longitude: 31.2520294
+  )
+
+  insert(:host,
+    name: "DS Jerusalem",
+    current_grouping: "3",
+    city: "Jerusalem",
+    country_code: "PS",
+    time_zone: "Asia/Jerusalem",
+    latitude: 31.7821572,
+    longitude: 35.2234264
   )
 
   # Create demo stages

@@ -28,7 +28,7 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
     %{stages: [s]} =
       h =
       insert(:host,
-        name: "DS Helsinki",
+        name: "Helsinki",
         country_code: "FI",
         stages: [build(:stage, name: "Aula")]
       )
@@ -59,7 +59,7 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
                "contests" => [
                  %{
                    "id" => "#{c.id}",
-                   "name" => "DS Helsinki, RW 2019",
+                   "name" => "RW Helsinki 2019",
                    "countryCode" => "FI",
                    "dates" => ["2019-01-01", "2019-01-02", "2019-01-03"],
                    "stages" => [

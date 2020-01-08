@@ -2,22 +2,22 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.ContestView
 
-  @host build(:host, country_code: "FI", name: "DS Helsinki")
+  @host build(:host, country_code: "FI", name: "Helsinki")
 
   describe "name/1" do
     test "returns a name for a Kimu contest" do
       contest = build(:contest, season: 55, round: 0, host: @host)
-      assert ContestView.name(contest) == "DS Helsinki, Kimu 2018"
+      assert ContestView.name(contest) == "Kimu Helsinki 2018"
     end
 
     test "returns a name for an RW contest" do
       contest = build(:contest, season: 55, round: 1, host: @host)
-      assert ContestView.name(contest) == "DS Helsinki, RW 2018"
+      assert ContestView.name(contest) == "RW Helsinki 2018"
     end
 
     test "returns a name for an LW contest" do
       contest = build(:contest, season: 55, round: 2, host: @host)
-      assert ContestView.name(contest) == "DS Helsinki, LW 2018"
+      assert ContestView.name(contest) == "LW Helsinki 2018"
     end
   end
 
@@ -31,17 +31,17 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
   describe "name_with_flag/1" do
     test "returns a display name for a Kimu contest" do
       contest = build(:contest, season: 55, round: 0, host: @host)
-      assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, Kimu 2018"
+      assert ContestView.name_with_flag(contest) == "🇫🇮 Kimu Helsinki 2018"
     end
 
     test "returns a display name for an RW contest" do
       contest = build(:contest, season: 55, round: 1, host: @host)
-      assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, RW 2018"
+      assert ContestView.name_with_flag(contest) == "🇫🇮 RW Helsinki 2018"
     end
 
     test "returns a display name for an LW contest" do
       contest = build(:contest, season: 55, round: 2, host: @host)
-      assert ContestView.name_with_flag(contest) == "🇫🇮 DS Helsinki, LW 2018"
+      assert ContestView.name_with_flag(contest) == "🇫🇮 LW Helsinki 2018"
     end
   end
 

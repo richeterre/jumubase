@@ -21,7 +21,7 @@
         <td><%= host.name %></td>
         <td><%= host.current_grouping %></td>
         <td><%= host.city %></td>
-        <td><%= emoji_flag(host.country_code) %></td>
+        <td><%= flag(host) %></td>
         <td><code><%= host.time_zone %></code></td>
         <td><code><%= host.latitude %>, <%= host.longitude %></code></td>
         <td class="text-right">

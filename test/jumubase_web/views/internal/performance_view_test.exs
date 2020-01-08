@@ -67,7 +67,7 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
 
     test "returns nil if the performance has no predecessor host" do
       p = build(:performance, predecessor_host: nil)
-      assert PerformanceView.predecessor_info(p) == nil
+      assert PerformanceView.predecessor_host_name(p) == nil
     end
   end
 
@@ -83,15 +83,21 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     end
   end
 
-  describe "predecessor_info/1" do
-    test "returns the predecessor host's flag" do
+  describe "predecessor_info/2" do
+    test "returns the predecessor host's flag as a short value" do
       p = build(:performance, predecessor_host: build(:host, country_code: "FI"))
-      assert PerformanceView.predecessor_info(p) == "🇫🇮"
+      assert PerformanceView.predecessor_info(p, :short) == "🇫🇮"
+    end
+
+    test "returns the predecessor host's name and flag as a long value" do
+      p = build(:performance, predecessor_host: build(:host, name: "Helsinki", country_code: "FI"))
+      assert PerformanceView.predecessor_info(p, :long) == "🇫🇮 Helsinki"
     end
 
     test "returns nil if the performance has no predecessor host" do
       p = build(:performance, predecessor_host: nil)
-      assert PerformanceView.predecessor_info(p) == nil
+      assert PerformanceView.predecessor_info(p, :short) == nil
+      assert PerformanceView.predecessor_info(p, :long) == nil
     end
   end
 

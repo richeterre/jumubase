@@ -27,7 +27,7 @@
         <th><%= gettext("Category") %></th>
 
         <%= if show_predecessor_info? do %>
-        <th><%= gettext("Country") %></th>
+        <th><%= gettext("RW") %></th>
         <% end %>
 
         <th><%= gettext("Participants") %></th>
@@ -50,7 +50,7 @@
             %>
         </td>
         <%= if show_predecessor_info? do %>
-        <td><%= predecessor_info(performance) %></td>
+        <td><%= predecessor_info(performance, :long) %></td>
         <% end %>
         <td>
           <%= render "_list_performance.html", performance: performance %>

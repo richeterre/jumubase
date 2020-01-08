@@ -11,6 +11,13 @@ defmodule JumubaseWeb.Internal.HostView do
   end
 
   @doc """
+  Returns the host's name and associated flag.
+  """
+  def name_with_flag(%Host{} = h) do
+    "#{flag(h)} #{h.name}"
+  end
+
+  @doc """
   Returns a list of possible `grouping` values suitable for forms.
   """
   def grouping_options do

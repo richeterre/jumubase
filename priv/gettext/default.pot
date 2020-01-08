@@ -141,7 +141,6 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:12
-#: lib/jumubase_web/templates/internal/performance/index.html.eex:30
 msgid "Country"
 msgstr ""
 
@@ -1825,4 +1824,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/controllers/authorize.ex:156
 msgid "This contest is not open for registration. Please contact us if you need assistance."
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/index.html.eex:30
+msgid "RW"
 msgstr ""

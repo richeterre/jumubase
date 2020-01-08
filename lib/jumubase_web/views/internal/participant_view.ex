@@ -28,6 +28,6 @@ defmodule JumubaseWeb.Internal.ParticipantView do
   Returns the performance's category and predecessor info.
   """
   def performance_info(%Performance{} = p) do
-    "#{PerformanceView.category_name(p)} #{PerformanceView.predecessor_info(p)}"
+    "#{PerformanceView.category_name(p)} #{PerformanceView.predecessor_info(p, :short)}"
   end
 end

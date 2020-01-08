@@ -3,7 +3,7 @@ defmodule JumubaseWeb.PageView do
   import JumubaseWeb.LayoutView, only: [title: 0]
 
   import JumubaseWeb.Internal.ContestView,
-    only: [deadline: 1, deadline_info: 2, name_with_flag: 1, year: 1]
+    only: [deadline_info: 2, name_with_flag: 1, year: 1]
 
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Contest, Host}

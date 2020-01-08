@@ -16,7 +16,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   import JumubaseWeb.PerformanceView, only: [predecessor_host_options: 1]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
-  import JumubaseWeb.Internal.HostView, only: [flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration: 1, epoch_tag: 1, person_info: 1]
   alias Jumubase.JumuParams
@@ -25,6 +24,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Internal.Permit
+  alias JumubaseWeb.Internal.HostView
   alias JumubaseWeb.{PDFGenerator, XMLEncoder}
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
@@ -109,8 +109,9 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   def predecessor_host_country(%Performance{predecessor_host: nil}), do: nil
   def predecessor_host_country(%Performance{predecessor_host: h}), do: h.country_code
 
-  def predecessor_info(%Performance{predecessor_host: nil}), do: nil
-  def predecessor_info(%Performance{predecessor_host: h}), do: flag(h)
+  def predecessor_info(%Performance{predecessor_host: nil}, _), do: nil
+  def predecessor_info(%Performance{predecessor_host: h}, :long), do: HostView.name_with_flag(h)
+  def predecessor_info(%Performance{predecessor_host: h}, :short), do: HostView.flag(h)
 
   def migration_status(%Performance{successor: nil}) do
     content_tag(:span, gettext("No"), class: "text-muted")

@@ -627,7 +627,7 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "general_deadline/1" do
-    test "returns the deadline most common in the given contests" do
+    test "returns the single most common deadline of given contests" do
       [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
 
       contests = [
@@ -642,7 +642,7 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.general_deadline(contests) == d3
     end
 
-    test "returns the earliest deadline if several are most common" do
+    test "returns nil if several deadlines are most common" do
       [d1, d2, d3] = [~D[2018-12-15], ~D[2018-12-01], ~D[2018-12-21]]
 
       contests = [
@@ -654,7 +654,7 @@ defmodule Jumubase.FoundationTest do
         build(:contest, deadline: d1)
       ]
 
-      assert Foundation.general_deadline(contests) == d2
+      assert Foundation.general_deadline(contests) == nil
     end
   end
 

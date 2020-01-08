@@ -219,10 +219,15 @@ defmodule Jumubase.Foundation do
   Returns the most common deadline within the given contests.
   """
   def general_deadline(contests) do
-    contests
-    |> Enum.map(& &1.deadline)
-    |> Utils.mode()
-    |> List.first()
+    most_common_deadlines =
+      contests
+      |> Enum.map(& &1.deadline)
+      |> Utils.mode()
+
+    case most_common_deadlines do
+      [deadline] -> deadline
+      _ -> nil
+    end
   end
 
   ## Categories

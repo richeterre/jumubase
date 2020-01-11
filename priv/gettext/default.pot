@@ -695,11 +695,6 @@ msgid "Here is how you can get in touch with us."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:21
-msgid "Member schools"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/templates/internal/host/_form.html.eex:22
 msgid "Address"
 msgstr ""
@@ -755,7 +750,7 @@ msgid "Preparation"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:60
+#: lib/jumubase_web/templates/page/contact.html.eex:87
 #: lib/jumubase_web/templates/performance/_form.html.eex:74
 msgid "privacy policy"
 msgstr ""
@@ -766,22 +761,17 @@ msgid "The data you enter will be handled as described in the"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:29
-msgid "State-level committee"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:48
+#: lib/jumubase_web/templates/page/contact.html.eex:52
 msgid "chair"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:49
+#: lib/jumubase_web/templates/page/contact.html.eex:53
 msgid "deputy chair"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:30
+#: lib/jumubase_web/templates/page/contact.html.eex:41
 msgid "responsible for this website"
 msgstr ""
 
@@ -791,12 +781,12 @@ msgid "FAQ"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:56
+#: lib/jumubase_web/templates/page/contact.html.eex:83
 msgid "Privacy"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/page/contact.html.eex:59
+#: lib/jumubase_web/templates/page/contact.html.eex:86
 msgid "To find out how we process your data, please see our"
 msgstr ""
 
@@ -922,14 +912,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:254
+#: lib/jumubase_web/views/internal/performance_view.ex:255
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:260
+#: lib/jumubase_web/views/internal/performance_view.ex:261
 msgid "Filter active"
 msgstr ""
 
@@ -1404,14 +1394,14 @@ msgid "Publish results"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:116
-#: lib/jumubase_web/views/internal/performance_view.ex:166
+#: lib/jumubase_web/views/internal/performance_view.ex:117
+#: lib/jumubase_web/views/internal/performance_view.ex:167
 msgid "No"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:119
-#: lib/jumubase_web/views/internal/performance_view.ex:162
+#: lib/jumubase_web/views/internal/performance_view.ex:120
+#: lib/jumubase_web/views/internal/performance_view.ex:163
 msgid "Yes"
 msgstr ""
 
@@ -1473,17 +1463,17 @@ msgid "Print certificates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:204
+#: lib/jumubase_web/views/internal/performance_view.ex:205
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:210
+#: lib/jumubase_web/views/internal/performance_view.ex:211
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:212
+#: lib/jumubase_web/views/internal/performance_view.ex:213
 msgid "here"
 msgstr ""
 
@@ -1829,4 +1819,19 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:30
 msgid "RW"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:74
+msgid "Regional-level hosts"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:21
+msgid "State level"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/page/contact.html.eex:75
+msgid "currently grouping 2 only"
 msgstr ""

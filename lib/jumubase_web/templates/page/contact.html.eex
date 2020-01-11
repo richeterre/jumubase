@@ -18,30 +18,34 @@
 
     <%= render "_contact_form.html", conn: @conn %>
 
-    <h3 id="member-schools"><%= gettext("Member schools") %></h3>
+    <h3><%= gettext("State level") %></h3>
 
-    <%= render "_accordion.html",
-      id: "hosts-accordion",
-      items: Enum.map(@hosts, &to_accordion_item/1)
-    %>
-
-    <h3>
-      <%= gettext("State-level committee") %>
-      <small>(<%= gettext("responsible for this website") %>)</small>
-    </h3>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Landesausschuss DSA-Verbund 1</h4>
+      </div>
+      <div class="panel-body">
+        <p>
+          c/o Peter Seidelmann<br>
+          Deutsche Schule Valencia<br>
+          c/ Jaime Roig 14, 46010 Valencia<br>
+          <%= link "jugendmusiziert@dsvalencia.org", to: "mailto:jugendmusiziert@dsvalencia.org" %>
+        </p>
+      </div>
+    </div>
 
     <div class="panel panel-default">
       <div class="panel-heading">
         <h4 class="panel-title">
-          Landesausschuss des DSA-Verbunds 2
+          Landesausschuss DSA-Verbund 2
+          <small>(<%= gettext("responsible for this website") %>)</small>
         </h4>
       </div>
       <div class="panel-body">
         <p>
-          c/o Robert Bär<br>
+          c/o <%= link "Robert Bär", to: "mailto:robert.bar@dsh.fi" %><br>
           Deutsche Schule Helsinki<br>
           Malminkatu 14, 00100 Helsinki<br>
-          Finnland
         </p>
 
         <ul>
@@ -52,6 +56,29 @@
         </ul>
       </div>
     </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Landesausschuss DSA-Verbund 3</h4>
+      </div>
+      <div class="panel-body">
+        <p>
+          c/o <%= link "Lorenzo Rüdiger", to: "mailto:lorenzorudiger@tiscali.it" %><br>
+          Deutsche Schule Rom<br>
+          Via Aurelia Antica 397-403, 00165 Rom
+        </p>
+      </div>
+    </div>
+
+    <h3 id="member-schools">
+      <%= gettext("Regional-level hosts") %>
+      <small>(<%= gettext("currently grouping 2 only") %>)</small>
+    </h3>
+
+    <%= render "_accordion.html",
+      id: "hosts-accordion",
+      items: Enum.map(@hosts, &to_accordion_item/1)
+    %>
 
     <h3><%= gettext("Privacy") %></h3>
 

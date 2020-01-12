@@ -48,7 +48,7 @@ defmodule Jumubase.Seeder do
   Adds a (contest) category to an RW or LW seed by short name.
   The age group params are needed to complete the contest category.
   """
-  def add_category(seed, short_name, min_ag, max_ag, min_adv_ag, max_adv_ag) do
+  def add_category(seed, short_name, min_ag, max_ag, min_adv_ag, max_adv_ag, groups_acc) do
     category = Repo.get_by!(Category, short_name: short_name)
 
     %{
@@ -61,7 +61,8 @@ defmodule Jumubase.Seeder do
                 min_age_group: min_ag,
                 max_age_group: max_ag,
                 min_advancing_age_group: min_adv_ag,
-                max_advancing_age_group: max_adv_ag
+                max_advancing_age_group: max_adv_ag,
+                groups_accompanists: groups_acc
               )
             ]
     }

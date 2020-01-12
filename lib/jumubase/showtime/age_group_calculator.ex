@@ -2,7 +2,11 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
   alias Ecto.Changeset
   alias Jumubase.Foundation.AgeGroups
 
-  def put_age_groups(%Changeset{} = changeset, season, genre) do
+  @doc """
+  Sets age groups for appearances inside the `changeset`.
+  When `group_accompanists` is true, accompanists receive a shared age group.
+  """
+  def put_age_groups(%Changeset{} = changeset, season, group_accompanists) do
     case Changeset.get_change(changeset, :appearances) do
       nil ->
         changeset
@@ -20,26 +24,28 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
 
         changeset
         |> Changeset.put_change(:age_group, performance_age_group)
-        |> Changeset.update_change(:appearances, &put_appearance_age_groups(&1, season, genre))
+        |> Changeset.update_change(
+          :appearances,
+          &put_appearance_age_groups(&1, season, group_accompanists)
+        )
     end
   end
 
   # Private helpers
 
-  defp put_appearance_age_groups(changesets, season, genre) do
+  defp put_appearance_age_groups(changesets, season, group_accompanists) do
     changesets
     |> put_individual_age_groups("soloist", season)
     |> put_joint_age_groups("ensemblist", season)
-    |> put_accompanist_age_groups(season, genre)
+    |> put_accompanist_age_groups(season, group_accompanists)
   end
 
   # Assigns accompanist age groups either individually or joint, depending on genre.
-  defp put_accompanist_age_groups(changesets, season, genre)
-       when genre in ["classical", "kimu"] do
+  defp put_accompanist_age_groups(changesets, season, _group_accompanists = false) do
     put_individual_age_groups(changesets, "accompanist", season)
   end
 
-  defp put_accompanist_age_groups(changesets, season, "popular") do
+  defp put_accompanist_age_groups(changesets, season, _group_accompanists = true) do
     put_joint_age_groups(changesets, "accompanist", season)
   end
 

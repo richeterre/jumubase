@@ -105,10 +105,10 @@ defmodule Jumubase.Showtime.Performance do
     non_acc = non_accompanists(p)
     acc = accompanists(p)
 
-    case {acc, cc.category.genre} do
+    case {acc, cc.groups_accompanists} do
       {[], _} -> [non_acc]
-      {acc, "popular"} -> [non_acc] ++ [acc]
-      {acc, _} -> [non_acc] ++ Enum.chunk_every(acc, 1)
+      {acc, true} -> [non_acc] ++ [acc]
+      {acc, false} -> [non_acc] ++ Enum.chunk_every(acc, 1)
     end
   end
 

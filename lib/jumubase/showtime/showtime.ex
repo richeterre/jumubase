@@ -525,9 +525,8 @@ defmodule Jumubase.Showtime do
 
   defp put_age_groups(%Changeset{valid?: true} = changeset, contest) do
     cc_id = get_field(changeset, :contest_category_id)
-    %{category: %{genre: genre}} = Foundation.get_contest_category!(contest, cc_id)
-
-    AgeGroupCalculator.put_age_groups(changeset, contest.season, genre)
+    %{groups_accompanists: groups_acc} = Foundation.get_contest_category!(contest, cc_id)
+    AgeGroupCalculator.put_age_groups(changeset, contest.season, groups_acc)
   end
 
   defp put_age_groups(changeset, _contest), do: changeset

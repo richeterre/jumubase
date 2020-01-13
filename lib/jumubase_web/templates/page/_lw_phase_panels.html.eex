@@ -1,10 +1,10 @@
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Landeswettbewerb <%= year(@contest) %></h3>
+      <h3 class="panel-title">Landeswettbewerbe 2020</h3>
     </div>
     <div class="panel-body">
-      Der Landeswettbewerb findet dieses Jahr an der <strong><%= @contest.host.name %></strong> statt.
+      Die Landeswettbewerbe finden dieses Jahr in <strong>Valencia</strong>, <strong>Warschau</strong> und <strong>Rom</strong> statt.
     </div>
   </div>
 </div>
@@ -15,7 +15,7 @@
       <h3 class="panel-title">Aktuelle Infos</h3>
     </div>
     <div class="panel-body">
-      <p>Vorspielpläne und Ergebnisse findest du ab Mitte März in der Jumu-App:
+      <p>Vorspielpläne und Ergebnisse findest du rund um den jeweiligen Wettbewerb in der Jumu-App:
       </p>
       <%= app_link :ios %> <%= app_link :android %>
     </div>

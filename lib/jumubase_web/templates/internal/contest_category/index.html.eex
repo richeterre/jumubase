@@ -13,6 +13,7 @@
         <th></th>
         <th colspan="2"><%= gettext("Participation") %></th>
         <th colspan="2"><%= gettext("Advancement") %></th>
+        <th></th>
       </tr>
       <tr>
         <th><%= gettext("Name") %></th>
@@ -20,6 +21,7 @@
         <th><%= gettext("AG max") %></th>
         <th><%= gettext("AG min") %></th>
         <th><%= gettext("AG max") %></th>
+        <th><%= gettext("Rating of accompanists") %></th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +32,7 @@
           <td><%= badge(cc.max_age_group) %></td>
           <td><%= badge(cc.min_advancing_age_group) %></td>
           <td><%= badge(cc.max_advancing_age_group) %></td>
+          <td><%= accompanist_rating_info(cc) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -70,7 +70,7 @@ msgstr "Jumu-Logo"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:6
 #: lib/jumubase_web/templates/internal/category/index.html.eex:9 lib/jumubase_web/templates/internal/contest/index.html.eex:9
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:18 lib/jumubase_web/templates/internal/host/_form.html.eex:6
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:19 lib/jumubase_web/templates/internal/host/_form.html.eex:6
 #: lib/jumubase_web/templates/internal/host/index.html.eex:9 lib/jumubase_web/templates/internal/user/index.html.eex:9
 #: lib/jumubase_web/templates/page/_contact_form.html.eex:6
 msgid "Name"
@@ -603,14 +603,14 @@ msgid "Type"
 msgstr "Typ"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:20
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:22
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:21
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:23
 msgid "AG max"
 msgstr "bis AG"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:19
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:21
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:20
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:22
 msgid "AG min"
 msgstr "von AG"
 
@@ -1836,3 +1836,18 @@ msgstr "Landesebene"
 #: lib/jumubase_web/templates/page/contact.html.eex:75
 msgid "currently grouping 2 only"
 msgstr "derzeit nur Verbund 2"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:24
+msgid "Rating of accompanists"
+msgstr "Bewertung der Begleiter"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_category_view.ex:9
+msgid "as group"
+msgstr "als Gruppe"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_category_view.ex:11
+msgid "separately"
+msgstr "einzeln"

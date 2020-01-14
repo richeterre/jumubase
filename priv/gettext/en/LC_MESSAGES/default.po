@@ -1793,11 +1793,6 @@ msgid "Oud"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/instruments.ex:38
-msgid "Qanun"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase/showtime/instruments.ex:41
 msgid "Tabla"
 msgstr ""
@@ -1843,11 +1838,16 @@ msgid "Rating of accompanists"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:9
+#: lib/jumubase_web/views/internal/contest_category_view.ex:12
 msgid "as group"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:11
+#: lib/jumubase_web/views/internal/contest_category_view.ex:13
 msgid "separately"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/instruments.ex:38
+msgid "Qanun"
 msgstr ""

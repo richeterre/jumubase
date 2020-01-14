@@ -20,6 +20,13 @@ defmodule JumubaseWeb.Internal.PieceView do
     "#{min}'#{pad_seconds(sec)}"
   end
 
+  def epoch_text(%Piece{} = pc) do
+    case pc.epoch do
+      "trad" -> "trad."
+      epoch -> "#{gettext("Epoch")} #{epoch}"
+    end
+  end
+
   @doc """
   Returns HTML element(s) describing the piece's epoch.
   """

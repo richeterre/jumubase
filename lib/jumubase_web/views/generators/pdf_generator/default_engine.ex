@@ -21,7 +21,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
       result_groups: 1
     ]
 
-  import JumubaseWeb.Internal.PieceView, only: [duration: 1, person_info: 1]
+  import JumubaseWeb.Internal.PieceView, only: [duration: 1, epoch_text: 1, person_info: 1]
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
   alias Jumubase.Showtime.Results
@@ -172,7 +172,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
         [
           :span,
           style(%{"color" => @muted_color}),
-          "#{duration(pc)} / #{gettext("Epoch")} #{pc.epoch}"
+          "#{duration(pc)} / #{epoch_text(pc)}"
         ]
       ]
       |> to_lines

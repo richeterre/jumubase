@@ -61,7 +61,7 @@ defmodule JumubaseWeb.XMLEncoder do
        map_person(pc),
        {:geburtsjahr, nil, pc.composer_born},
        {:sterbejahr, nil, pc.composer_died},
-       {:epoche, nil, pc.epoch},
+       {:epoche, nil, format_epoch(pc)},
        {:titel_opus, nil, pc.title},
        {:spieldauer, nil, format_duration(pc)}
      ]}
@@ -91,6 +91,10 @@ defmodule JumubaseWeb.XMLEncoder do
   defp format_duration(%Piece{minutes: min, seconds: sec}) do
     "#{zero_pad(min)}:#{zero_pad(sec)}"
   end
+
+  # "Trad." epoch doesn't officially exist yet, so leave empty
+  defp format_epoch(%Piece{epoch: "trad"}), do: nil
+  defp format_epoch(%Piece{epoch: epoch}), do: epoch
 
   defp zero_pad(number) do
     number |> Integer.to_string() |> String.pad_leading(2, "0")

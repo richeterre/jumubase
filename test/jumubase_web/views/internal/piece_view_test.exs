@@ -27,12 +27,15 @@ defmodule JumubaseWeb.Internal.PieceViewTest do
     end
   end
 
-  describe "epoch_tag/1" do
-    test "returns an epoch tag for a piece" do
-      piece = build(:piece, epoch: "b")
+  describe "epoch_info/1" do
+    test "returns epoch information for a traditional piece" do
+      assert PieceView.epoch_info("trad") |> safe_to_string ==
+               "<abbr title=\"Traditional / Folk Music\">trad.</abbr>"
+    end
 
-      assert PieceView.epoch_tag(piece) |> safe_to_string ==
-               "<abbr title=\"Baroque\">b</abbr>"
+    test "returns epoch information for a non-traditional piece" do
+      assert PieceView.epoch_info("b") |> safe_to_string ==
+               "Epoch <abbr title=\"Baroque\">b</abbr>"
     end
   end
 end

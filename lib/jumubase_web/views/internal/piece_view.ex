@@ -21,15 +21,25 @@ defmodule JumubaseWeb.Internal.PieceView do
   end
 
   @doc """
-  Returns a textual tag describing the piece's epoch.
+  Returns HTML element(s) describing the piece's epoch.
   """
-  def epoch_tag(%Piece{epoch: epoch}) do
-    content_tag(:abbr, epoch, title: JumuParams.epoch_description(epoch))
+  def epoch_info("trad" = epoch), do: epoch_tag(epoch)
+
+  def epoch_info(epoch) do
+    "#{gettext("Epoch")} #{safe_to_string(epoch_tag(epoch))}" |> raw
   end
 
   # Private helpers
 
   defp pad_seconds(sec) do
     sec |> Integer.to_string() |> String.pad_leading(2, "0")
+  end
+
+  defp epoch_tag("trad" = epoch) do
+    content_tag(:abbr, "trad.", title: JumuParams.epoch_description(epoch))
+  end
+
+  defp epoch_tag(epoch) do
+    content_tag(:abbr, epoch, title: JumuParams.epoch_description(epoch))
   end
 end

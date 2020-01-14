@@ -133,8 +133,9 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   defp epoch_options do
-    Enum.map(JumuParams.epochs(), fn epoch ->
-      %{id: epoch, label: "#{epoch}) #{JumuParams.epoch_description(epoch)}"}
-    end)
+    Enum.map(JumuParams.epochs(), &%{id: &1, label: epoch_label(&1)})
   end
+
+  defp epoch_label("trad" = epoch), do: JumuParams.epoch_description(epoch)
+  defp epoch_label(epoch), do: "#{epoch}) " <> JumuParams.epoch_description(epoch)
 end

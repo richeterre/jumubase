@@ -78,7 +78,7 @@ defmodule Jumubase.JumuParams do
   Returns all possible piece epochs.
   """
   def epochs do
-    ~w(a b c d e f)
+    ~w(trad a b c d e f)
   end
 
   @doc """
@@ -86,6 +86,7 @@ defmodule Jumubase.JumuParams do
   """
   def epoch_description(epoch) do
     case epoch do
+      "trad" -> dgettext("epochs", "Traditional / Folk Music")
       "a" -> dgettext("epochs", "Renaissance, Early Baroque")
       "b" -> dgettext("epochs", "Baroque")
       "c" -> dgettext("epochs", "Early Classical, Classical")

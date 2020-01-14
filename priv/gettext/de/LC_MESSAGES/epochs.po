@@ -40,3 +40,8 @@ msgstr "Renaissance, Frühbarock"
 #: lib/jumubase/jumu_params.ex:92
 msgid "Romantic, Impressionist"
 msgstr "Romantik, Impressionismus"
+
+#, elixir-format
+#: lib/jumubase/jumu_params.ex:95
+msgid "Traditional / Folk Music"
+msgstr "trad. / Volksmusik"

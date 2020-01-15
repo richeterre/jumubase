@@ -31,11 +31,15 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
-  def list_predecessor_hosts(%Contest{season: season, round: 2, grouping: grouping}) do
+  @doc """
+  Returns the predecessor hosts of the contest's performances.
+  """
+  def list_performance_predecessor_hosts(%Contest{id: c_id, round: 2}) do
     query =
       from h in Host,
-        join: c in assoc(h, :contests),
-        where: c.season == ^season and c.round == 1 and c.grouping == ^grouping,
+        join: p in assoc(h, :successor_performances),
+        join: cc in assoc(p, :contest_category),
+        where: cc.contest_id == ^c_id,
         order_by: h.name,
         distinct: true
 

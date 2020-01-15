@@ -171,7 +171,10 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   Returns various field options suitable for a filter form.
   """
   def filter_options(%Contest{round: 2} = c) do
-    host_options = c |> Foundation.list_predecessor_hosts() |> Enum.map(&{&1.name, &1.id})
+    host_options =
+      Foundation.list_performance_predecessor_hosts(c)
+      |> Enum.map(&{&1.name, &1.id})
+
     c |> base_filter_options |> Map.put(:predecessor_host_options, host_options)
   end
 

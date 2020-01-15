@@ -4,6 +4,7 @@ defmodule Jumubase.Foundation.Host do
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Contest, Host, Stage}
+  alias Jumubase.Showtime.Performance
 
   schema "hosts" do
     field :name, :string
@@ -16,6 +17,7 @@ defmodule Jumubase.Foundation.Host do
     field :longitude, :float
 
     has_many :contests, Contest
+    has_many :successor_performances, Performance, foreign_key: :predecessor_host_id
     has_many :stages, Stage
     many_to_many :users, User, join_through: "hosts_users"
 

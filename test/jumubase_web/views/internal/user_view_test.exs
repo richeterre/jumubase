@@ -7,11 +7,11 @@ defmodule JumubaseWeb.Internal.UserViewTest do
     assert UserView.full_name(user) == "Given Family"
   end
 
-  test "returns the flags of a user's associated hosts" do
-    h1 = build(:host, country_code: "FI")
-    h2 = build(:host, country_code: "SE")
+  test "returns the names and flags of a user's associated hosts" do
+    h1 = build(:host, name: "Helsinki", country_code: "FI")
+    h2 = build(:host, name: "Stockholm", country_code: "SE")
     user = build(:user, hosts: [h1, h2])
-    assert UserView.host_flags(user) == ["🇫🇮", "🇸🇪"]
+    assert UserView.host_flags(user) == ["🇫🇮 Helsinki", "🇸🇪 Stockholm"]
   end
 
   test "returns the names of a user's associated hosts" do

@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Internal.UserView do
   use JumubaseWeb, :view
+  import JumubaseWeb.Internal.HostView, only: [name_with_flag: 1]
   alias Jumubase.JumuParams
 
   @doc """
@@ -13,8 +14,7 @@ defmodule JumubaseWeb.Internal.UserView do
   Returns the user's associated hosts as Emoji flags.
   """
   def host_flags(user) do
-    user.hosts
-    |> Enum.map(fn host -> emoji_flag(host.country_code) end)
+    user.hosts |> Enum.map(&name_with_flag/1)
   end
 
   @doc """

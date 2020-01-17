@@ -24,15 +24,30 @@ defmodule JumubaseWeb.Internal.PermitTest do
       )
     end
 
-    for role <- roles_except("local-organizer") do
+    @tag role: "global-organizer"
+    test "returns only contests within own hosts' groupings to global organizers", %{user: u} do
+      insert(:host, current_grouping: "1", users: [u])
+      insert(:host, current_grouping: "2", users: [u, build(:user)])
+
+      c1 = insert(:contest, grouping: "1")
+      c2 = insert(:contest, grouping: "2")
+      insert(:contest, grouping: "3")
+
+      assert_ids_match_unordered(
+        Permit.scope_contests(Contest, u) |> Repo.all(),
+        [c1, c2]
+      )
+    end
+
+    for role <- roles_except(["local-organizer", "global-organizer"]) do
       @tag role: role
       test "returns all contests to #{role} users", %{user: u} do
-        own_host_1 = build(:host, users: [u])
-        own_host_2 = build(:host, users: [u, build(:user)])
+        own_host_1 = build(:host, current_grouping: "1", users: [u])
+        own_host_2 = build(:host, current_grouping: "2", users: [u, build(:user)])
 
-        c1 = insert(:contest, host: own_host_1)
-        c2 = insert(:contest, host: own_host_2)
-        c3 = insert(:contest)
+        c1 = insert(:contest, grouping: "1", host: own_host_1)
+        c2 = insert(:contest, grouping: "2", host: own_host_2)
+        c3 = insert(:contest, grouping: "3")
 
         assert_ids_match_unordered(
           Permit.scope_contests(Contest, u) |> Repo.all(),
@@ -57,15 +72,29 @@ defmodule JumubaseWeb.Internal.PermitTest do
       refute Permit.authorized?(u, c3)
     end
 
-    for role <- roles_except("local-organizer") do
+    @tag role: "global-organizer"
+    test "checks whether contest is in own hosts' groupings for global organizers", %{user: u} do
+      insert(:host, current_grouping: "1", users: [u])
+      insert(:host, current_grouping: "2", users: [u, build(:user)])
+
+      c1 = insert(:contest, grouping: "1")
+      c2 = insert(:contest, grouping: "2")
+      c3 = insert(:contest, grouping: "3")
+
+      assert Permit.authorized?(u, c1)
+      assert Permit.authorized?(u, c2)
+      refute Permit.authorized?(u, c3)
+    end
+
+    for role <- roles_except(["local-organizer", "global-organizer"]) do
       @tag role: role
       test "gives access to any contest to #{role} users", %{user: u} do
-        own_host_1 = build(:host, users: [u])
-        own_host_2 = build(:host, users: [u, build(:user)])
+        own_host_1 = build(:host, current_grouping: "1", users: [u])
+        own_host_2 = build(:host, current_grouping: "2", users: [u, build(:user)])
 
-        c1 = insert(:contest, host: own_host_1)
-        c2 = insert(:contest, host: own_host_2)
-        c3 = insert(:contest)
+        c1 = insert(:contest, grouping: "1", host: own_host_1)
+        c2 = insert(:contest, grouping: "2", host: own_host_2)
+        c3 = insert(:contest, grouping: "3")
 
         assert Permit.authorized?(u, c1)
         assert Permit.authorized?(u, c2)

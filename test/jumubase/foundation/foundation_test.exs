@@ -32,6 +32,18 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_hosts_for_user/1" do
+    test "returns the user's associated hosts" do
+      hosts = insert_list(2, :host)
+      u = insert(:user, hosts: hosts)
+
+      # Non-matching data
+      insert(:user, hosts: build_list(1, :host))
+
+      assert_ids_match_unordered(Foundation.list_hosts_for_user(u), hosts)
+    end
+  end
+
   describe "list_performance_predecessor_hosts/1" do
     setup do
       [lw: insert(:contest, season: 56, round: 2)]

@@ -31,6 +31,15 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
+  def list_hosts_for_user(%User{id: u_id}) do
+    query =
+      from h in Host,
+        join: u in assoc(h, :users),
+        where: u.id == ^u_id
+
+    Repo.all(query)
+  end
+
   @doc """
   Returns the predecessor hosts of the contest's performances.
   """

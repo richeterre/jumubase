@@ -16,6 +16,12 @@ defmodule Jumubase.PieceTest do
       refute changeset.valid?
     end
 
+    test "is invalid with a too long title" do
+      attrs = params_for(:piece, title: String.duplicate("x", 256))
+      changeset = Piece.changeset(%Piece{}, attrs)
+      refute changeset.valid?
+    end
+
     test "is invalid without either a composer or artist" do
       attrs = params_for(:piece, composer: nil, artist: nil)
       changeset = Piece.changeset(%Piece{}, attrs)

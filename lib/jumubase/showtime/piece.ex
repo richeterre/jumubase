@@ -7,6 +7,7 @@ defmodule Jumubase.Showtime.Piece do
   alias Jumubase.Showtime.{Performance, Piece}
 
   schema "pieces" do
+    field :title, :string
     field :composer_born, :string
     field :composer_died, :string
     field :composer, :string
@@ -14,7 +15,6 @@ defmodule Jumubase.Showtime.Piece do
     field :epoch, :string
     field :minutes, :integer
     field :seconds, :integer
-    field :title, :string
 
     belongs_to :performance, Performance
 
@@ -30,6 +30,7 @@ defmodule Jumubase.Showtime.Piece do
     piece
     |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
+    |> validate_length(:title, max: 255)
     |> validate_person
     |> validate_inclusion(:epoch, JumuParams.epochs())
     |> validate_inclusion(:minutes, 0..59)

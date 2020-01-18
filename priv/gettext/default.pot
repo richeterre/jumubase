@@ -1850,3 +1850,8 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/host_controller.ex:56
 msgid "The host \"%{name}\" was updated."
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:63
+msgid "Notes"
+msgstr ""

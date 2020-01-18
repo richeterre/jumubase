@@ -11,12 +11,13 @@ defmodule Jumubase.Foundation.Category do
     field :type, :string
     field :group, :string
     field :bw_code, :string
+    field :notes, :string
 
     timestamps()
   end
 
   @required_attrs [:name, :short_name, :genre, :type, :group]
-  @optional_attrs [:bw_code]
+  @optional_attrs [:bw_code, :notes]
 
   @doc false
   def changeset(%Category{} = category, attrs) do

@@ -24,6 +24,12 @@ defmodule JumubaseWeb.Internal.CategoryView do
     content_tag(:span, group_name(group), class: "label label-default")
   end
 
+  def bw_code_tag(%Category{bw_code: nil}), do: nil
+
+  def bw_code_tag(%Category{bw_code: bw_code}) do
+    content_tag(:code, bw_code)
+  end
+
   @doc """
   Returns a list of possible `genre` values suitable for forms.
   """

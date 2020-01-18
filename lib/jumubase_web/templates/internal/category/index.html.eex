@@ -12,6 +12,7 @@
         <th><%= gettext("Type") %></th>
         <th><%= gettext("Group") %></th>
         <th><%= gettext("BW Code") %></th>
+        <th><%= gettext("Notes") %></th>
         <th></th>
       </tr>
     </thead>
@@ -23,7 +24,8 @@
         <td><%= genre_tag(category) %></td>
         <td><%= type_tag(category) %></td>
         <td><%= group_tag(category) %></td>
-        <td><code><%= category.bw_code %></code></td>
+        <td><%= bw_code_tag(category) %></td>
+        <td class="text-muted"><%= category.notes %></td>
         <td class="text-right">
           <%= edit_icon_link(
             Routes.internal_category_path(@conn, :edit, category)

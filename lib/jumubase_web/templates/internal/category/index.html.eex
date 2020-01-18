@@ -6,10 +6,10 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= gettext("Name") %></th>
+        <th class="col-md-4"><%= gettext("Name") %></th>
         <th><%= gettext("Short name") %></th>
-        <th><%= gettext("Genre") %></th>
         <th><%= gettext("Type") %></th>
+        <th><%= gettext("Genre") %></th>
         <th><%= gettext("Group") %></th>
         <th><%= gettext("BW Code") %></th>
         <th><%= gettext("Notes") %></th>
@@ -21,8 +21,8 @@
       <tr>
         <td><%= category.name %></td>
         <td><%= category.short_name %></td>
-        <td><%= genre_tag(category) %></td>
         <td><%= type_tag(category) %></td>
+        <td><%= genre_tag(category) %></td>
         <td><%= group_tag(category) %></td>
         <td><%= bw_code_tag(category) %></td>
         <td class="text-muted"><%= category.notes %></td>

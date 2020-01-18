@@ -246,7 +246,11 @@ defmodule Jumubase.Foundation do
   ## Categories
 
   def list_categories do
-    Repo.all(Category)
+    Category
+    |> order_by(desc: :type)
+    |> order_by(:genre)
+    |> order_by(:name)
+    |> Repo.all()
   end
 
   def get_category!(id) do

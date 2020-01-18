@@ -666,11 +666,25 @@ defmodule Jumubase.FoundationTest do
 
   describe "list_categories/0" do
     test "returns all categories, ordered by type, genre and name" do
-      cg1 = insert(:category, type: "ensemble")
-      cg2 = insert(:category, type: "solo_or_ensemble")
-      cg3 = insert(:category, type: "solo")
+      cg1 = insert(:category, type: "ensemble", genre: "popular")
+      cg2 = insert(:category, type: "ensemble", genre: "kimu")
+      cg3 = insert(:category, type: "ensemble", genre: "classical", name: "B")
+      cg4 = insert(:category, type: "ensemble", genre: "classical", name: "A")
 
-      assert_ids_match_ordered(Foundation.list_categories(), [cg2, cg3, cg1])
+      cg5 = insert(:category, type: "solo_or_ensemble", genre: "popular")
+      cg6 = insert(:category, type: "solo_or_ensemble", genre: "kimu")
+      cg7 = insert(:category, type: "solo_or_ensemble", genre: "classical", name: "B")
+      cg8 = insert(:category, type: "solo_or_ensemble", genre: "classical", name: "A")
+
+      cg9 = insert(:category, type: "solo", genre: "popular")
+      cg10 = insert(:category, type: "solo", genre: "kimu")
+      cg11 = insert(:category, type: "solo", genre: "classical", name: "B")
+      cg12 = insert(:category, type: "solo", genre: "classical", name: "A")
+
+      assert_ids_match_ordered(
+        Foundation.list_categories(),
+        [cg8, cg7, cg6, cg5, cg12, cg11, cg10, cg9, cg4, cg3, cg2, cg1]
+      )
     end
   end
 

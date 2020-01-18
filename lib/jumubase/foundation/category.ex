@@ -7,8 +7,8 @@ defmodule Jumubase.Foundation.Category do
   schema "categories" do
     field :name, :string
     field :short_name, :string
-    field :genre, :string
     field :type, :string
+    field :genre, :string
     field :group, :string
     field :bw_code, :string
     field :notes, :string
@@ -16,7 +16,7 @@ defmodule Jumubase.Foundation.Category do
     timestamps()
   end
 
-  @required_attrs [:name, :short_name, :genre, :type, :group]
+  @required_attrs [:name, :short_name, :type, :genre, :group]
   @optional_attrs [:bw_code, :notes]
 
   @doc false
@@ -24,8 +24,8 @@ defmodule Jumubase.Foundation.Category do
     category
     |> cast(attrs, @required_attrs ++ @optional_attrs)
     |> validate_required(@required_attrs)
-    |> validate_inclusion(:genre, JumuParams.genres())
     |> validate_inclusion(:type, JumuParams.category_types())
+    |> validate_inclusion(:genre, JumuParams.genres())
     |> validate_inclusion(:group, JumuParams.category_groups())
   end
 end

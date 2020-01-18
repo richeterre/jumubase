@@ -19,23 +19,23 @@
 
   <div class="row">
     <div class="form-group col-md-3">
-      <%= label f, :genre, gettext("Genre"), class: "control-label" %>
-      <%= select f, :genre, form_genres(),
-        prompt: gettext("Please choose"),
-        class: "form-control"
-        %>
-      <%= error_tag f, :genre %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group col-md-3">
       <%= label f, :type, gettext("Type"), class: "control-label" %>
       <%= select f, :type, form_types(),
         prompt: gettext("Please choose"),
         class: "form-control"
         %>
       <%= error_tag f, :type %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-3">
+      <%= label f, :genre, gettext("Genre"), class: "control-label" %>
+      <%= select f, :genre, form_genres(),
+        prompt: gettext("Please choose"),
+        class: "form-control"
+        %>
+      <%= error_tag f, :genre %>
     </div>
   </div>
 

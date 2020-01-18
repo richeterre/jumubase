@@ -53,7 +53,7 @@ Many schemas / data structs in this app are inextricably linked with the "Jugend
 A user of the software, [identified](#authentication) by their email and password.
 
 **Host**<br />
-An institution, typically a school, that can host contests.
+An institution, typically a school, that can host contests. Each host belongs to a grouping, whose local contests lead to a single 2nd-round contest. Hosts can change grouping between seasons, in which case their historical contests stay with the original grouping.
 
 **Stage**<br />
 A location where performances take place. Every host has at least one, but often several stages.
@@ -87,7 +87,12 @@ Some Jumu-related data (such as rounds, roles, genres, and category types) is un
 
 [Phauxth][phauxth] is used for user authentication. Users can be associated with one or several hosts, typically for the reason of being employed there and acting as local organizers. They can only manipulate resources "belonging" to those hosts.
 
-Apart from **local organizers** with their host-based access rights, there are **global organizers** who organize the 2nd round hosted somewhere abroad in round-robin fashion, **inspectors** who may access certain data for statistical purposes, and **admin** users with full privileges.
+Each user has a role assigned to them:
+
+- **Local organizers** may access only contests of their associated hosts
+- **Global organizers** may access contests in their associated hosts' current groupings
+- **Inspectors** get read-only access to data for statistical purposes
+- **Admin** users have full privileges
 
 [phauxth]: https://github.com/riverrun/phauxth
 

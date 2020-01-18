@@ -8,31 +8,26 @@ defmodule JumubaseWeb.Internal.ContestCategoryControllerTest do
   end
 
   describe "index/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lists a contest's categories to #{role} users", %{conn: conn, contest: c} do
+      test "lists a contest's categories to authorized #{role} users", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn = get(conn, Routes.internal_contest_contest_category_path(conn, :index, c))
         assert html_response(conn, 200) =~ "Categories"
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lists an own contest's categories to local organizers", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u)
-      conn = get(conn, Routes.internal_contest_contest_category_path(conn, :index, own_c))
-      assert html_response(conn, 200) =~ "Categories"
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to list a contest's categories",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn = get(conn, Routes.internal_contest_contest_category_path(conn, :index, c))
+        assert_unauthorized_user(conn)
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's categories", %{
-      conn: conn,
-      contest: c
-    } do
-      conn = get(conn, Routes.internal_contest_contest_category_path(conn, :index, c))
-      assert_unauthorized_user(conn)
-    end
-
-    test "redirects guests when trying to list a contest's categories", %{conn: conn, contest: c} do
+    test "redirects guests trying to list a contest's categories", %{conn: conn, contest: c} do
       conn = get(conn, Routes.internal_contest_contest_category_path(conn, :index, c))
       assert_unauthorized_guest(conn)
     end

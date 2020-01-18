@@ -7,11 +7,11 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
   end
 
   describe "index/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lists all contests to #{role} users", %{conn: conn, user: u} do
-        c1 = insert(:contest, host: build(:host, users: [u]))
-        c2 = insert(:contest)
+      test "lists all authorized contests to #{role} users", %{conn: conn, user: u} do
+        c1 = insert_authorized_contest(u)
+        c2 = insert_authorized_contest(u)
         conn = get(conn, Routes.internal_contest_path(conn, :index))
         assert html_response(conn, 200) =~ "Contests"
         assert html_response(conn, 200) =~ name(c1)
@@ -19,47 +19,43 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lists own contest to local organizers", %{conn: conn, user: u} do
-      c1 = insert(:contest, host: build(:host, users: [u]))
-      c2 = insert(:contest)
-      conn = get(conn, Routes.internal_contest_path(conn, :index))
-      assert html_response(conn, 200) =~ "Contests"
-      assert html_response(conn, 200) =~ name(c1)
-      refute html_response(conn, 200) =~ name(c2)
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "doesn't list unauthorized contests to #{role} users", %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn = get(conn, Routes.internal_contest_path(conn, :index))
+        assert html_response(conn, 200) =~ "Contests"
+        refute html_response(conn, 200) =~ name(c)
+      end
     end
 
-    test "redirects guests when trying to list all contests", %{conn: conn} do
+    test "redirects guests trying to list all contests", %{conn: conn} do
       conn = get(conn, Routes.internal_contest_path(conn, :index))
       assert_unauthorized_guest(conn)
     end
   end
 
   describe "show/2" do
-    @tag login_as: "local-organizer"
-    test "shows an own contest to local organizers", %{conn: conn, user: u} do
-      contest = insert(:contest, host: build(:host, users: [u]))
-      conn = get(conn, Routes.internal_contest_path(conn, :show, contest))
-      assert html_response(conn, 200) =~ name(contest)
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to view a foreign contest", %{conn: conn} do
-      contest = insert(:contest)
-      conn = get(conn, Routes.internal_contest_path(conn, :show, contest))
-      assert_unauthorized_user(conn)
-    end
-
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "shows a single contest to #{role} users", %{conn: conn} do
-        contest = insert(:contest)
+      test "shows a single authorized contest to #{role} users", %{conn: conn, user: u} do
+        contest = insert_authorized_contest(u)
         conn = get(conn, Routes.internal_contest_path(conn, :show, contest))
         assert html_response(conn, 200) =~ name(contest)
       end
     end
 
-    test "redirects guests when trying to view a contest", %{conn: conn} do
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects #{role} users trying to view an unauthorized contest",
+           %{conn: conn, user: u} do
+        contest = insert_unauthorized_contest(u)
+        conn = get(conn, Routes.internal_contest_path(conn, :show, contest))
+        assert_unauthorized_user(conn)
+      end
+    end
+
+    test "redirects guests trying to view a contest", %{conn: conn} do
       contest = insert(:contest)
       conn = get(conn, Routes.internal_contest_path(conn, :show, contest))
       assert_unauthorized_guest(conn)
@@ -80,7 +76,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to edit a contest", %{conn: conn, contest: c} do
+      test "redirects #{role} users trying to edit a contest", %{conn: conn, contest: c} do
         conn = get(conn, Routes.internal_contest_path(conn, :edit, c))
         assert_unauthorized_user(conn)
       end
@@ -114,7 +110,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to update a contest", %{
+      test "redirects #{role} users trying to update a contest", %{
         conn: conn,
         contest: c,
         params: params

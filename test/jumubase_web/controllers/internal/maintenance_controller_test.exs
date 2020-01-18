@@ -13,12 +13,12 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to view data maintenance info", %{conn: conn} do
+      test "redirects #{role} users trying to view data maintenance info", %{conn: conn} do
         conn |> attempt_index |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to view data maintenance info", %{conn: conn} do
+    test "redirects guests trying to view data maintenance info", %{conn: conn} do
       conn |> attempt_index |> assert_unauthorized_guest
     end
   end
@@ -31,12 +31,12 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to delete orphaned participants", %{conn: conn} do
+      test "redirects #{role} users trying to delete orphaned participants", %{conn: conn} do
         conn |> attempt_delete_orphaned_participants |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to delete orphaned participants", %{conn: conn} do
+    test "redirects guests trying to delete orphaned participants", %{conn: conn} do
       conn |> attempt_delete_orphaned_participants |> assert_unauthorized_guest
     end
   end
@@ -49,12 +49,12 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to compare two participants", %{conn: conn} do
+      test "redirects #{role} users trying to compare two participants", %{conn: conn} do
         conn |> attempt_compare_participants |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to compare two participants", %{conn: conn} do
+    test "redirects guests trying to compare two participants", %{conn: conn} do
       conn |> attempt_compare_participants |> assert_unauthorized_guest
     end
   end
@@ -67,12 +67,12 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to merge two participants", %{conn: conn} do
+      test "redirects #{role} users trying to merge two participants", %{conn: conn} do
         conn |> attempt_merge_participants |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to merge two participants", %{conn: conn} do
+    test "redirects guests trying to merge two participants", %{conn: conn} do
       conn |> attempt_merge_participants |> assert_unauthorized_guest
     end
   end

@@ -358,7 +358,7 @@ defmodule Jumubase.FoundationTest do
     end
 
     @tag role: "local-organizer"
-    test "does not return any foreign contests to local organizers", %{user: u} do
+    test "returns no foreign contests to local organizers", %{user: u} do
       insert(:contest, round: 0)
       insert(:contest, round: 1)
       insert(:contest, round: 2)

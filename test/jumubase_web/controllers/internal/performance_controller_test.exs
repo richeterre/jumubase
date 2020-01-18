@@ -11,68 +11,54 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "index/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lists a contest's performances to #{role} users", %{conn: conn, contest: c} do
+      test "lists contest performances to authorized #{role} users", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
         assert html_response(conn, 200) =~ "Performances"
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lists an own contest's performances to local organizers", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u)
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :index, own_c))
-      assert html_response(conn, 200) =~ "Performances"
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to list contest performances",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
+        assert_unauthorized_user(conn)
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's performances", %{
-      conn: conn,
-      contest: c
-    } do
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
-      assert_unauthorized_user(conn)
-    end
-
-    test "redirects guests when trying to list a contest's performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "redirects guests trying to list contest performances", %{conn: conn, contest: c} do
       conn = get(conn, Routes.internal_contest_performance_path(conn, :index, c))
       assert_unauthorized_guest(conn)
     end
   end
 
   describe "show/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "shows a single performance to #{role} users", %{conn: conn, contest: c} do
+      test "shows a single performance to authorized #{role} users", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         p = insert_performance(c)
         conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
         assert html_response(conn, 200) =~ p.edit_code
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "shows a performance from an own contest to local organizers", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u)
-      p = insert_performance(own_c)
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :show, own_c, p))
-      assert html_response(conn, 200) =~ p.edit_code
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to view a performance",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        p = insert_performance(c)
+        conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
+        assert_unauthorized_user(conn)
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to view a performance from a foreign contest", %{
-      conn: conn,
-      contest: c
-    } do
-      p = insert_performance(c)
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
-      assert_unauthorized_user(conn)
-    end
-
-    test "redirects guests when trying to view a performance", %{conn: conn, contest: c} do
+    test "redirects guests trying to view a performance", %{conn: conn, contest: c} do
       p = insert_performance(c)
       conn = get(conn, Routes.internal_contest_performance_path(conn, :show, c, p))
       assert_unauthorized_guest(conn)
@@ -80,124 +66,104 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "new/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users fill in a new performance", %{conn: conn, contest: c} do
+      test "lets authorized #{role} users fill in a new performance", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn = conn |> attempt_new(c)
         assert html_response(conn, 200) =~ "New Performance"
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers fill in a new performance for an own contest", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn = conn |> attempt_new(own_c)
-      assert html_response(conn, 200) =~ "New Performance"
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to fill in a new performance",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_new(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to fill in a new performance for a foreign contest",
-         %{conn: conn, contest: c} do
-      conn |> attempt_new(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to fill in a new performance", %{conn: conn, contest: c} do
+    test "redirects guests trying to fill in a new performance", %{conn: conn, contest: c} do
       conn |> attempt_new(c) |> assert_unauthorized_guest
     end
   end
 
   describe "create/2" do
-    setup %{contest: c} do
-      [contest: c |> with_contest_categories]
-    end
-
-    for role <- ["admin", "global-organizer"] do
+    for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users create a performance", %{conn: conn, contest: c} do
+      test "lets authorized #{role} users create a performance", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u) |> with_contest_categories
+
         conn
         |> attempt_create(c)
         |> assert_create_success(c, Repo.one(Performance))
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers create a performance from an own contest", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u) |> with_contest_categories
-
-      conn
-      |> attempt_create(own_c)
-      |> assert_create_success(own_c, Repo.one(Performance))
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to create a performance from a foreign contest",
-         %{conn: conn, contest: c} do
-      conn |> attempt_create(c) |> assert_unauthorized_user
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to create a performance",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u) |> with_contest_categories
+        conn |> attempt_create(c) |> assert_unauthorized_user
+      end
     end
 
     @tag login_as: "observer"
-    test "redirects observers when trying to create a performance", %{conn: conn, contest: c} do
+    test "redirects observers trying to create a performance", %{conn: conn, contest: c} do
+      c = c |> with_contest_categories
       conn |> attempt_create(c) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to create a performance", %{conn: conn, contest: c} do
+    test "redirects guests trying to create a performance", %{conn: conn, contest: c} do
+      c = c |> with_contest_categories
       conn |> attempt_create(c) |> assert_unauthorized_guest
     end
   end
 
   describe "edit/2" do
-    setup %{contest: c} do
-      [performance: insert_performance(c)]
-    end
-
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users edit a performance", %{conn: conn, contest: c, performance: p} do
+      test "lets authorized #{role} users edit a performance", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
+        p = insert_performance(c)
         conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
         assert html_response(conn, 200) =~ "Edit performance"
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers edit a performance from an own contest", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u)
-      p = insert_performance(own_c)
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, own_c, p))
-      assert html_response(conn, 200) =~ "Edit performance"
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} organizers trying to edit a performance",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        p = insert_performance(c)
+        conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
+        assert_unauthorized_user(conn)
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to edit a performance from a foreign contest", %{
-      conn: conn,
-      contest: c,
-      performance: p
-    } do
-      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
-      assert_unauthorized_user(conn)
-    end
-
-    test "redirects guests when trying to edit a performance", %{
-      conn: conn,
-      contest: c,
-      performance: p
-    } do
+    test "redirects guests trying to edit a performance", %{conn: conn, contest: c} do
+      p = insert_performance(c)
       conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
       assert_unauthorized_guest(conn)
     end
 
-    @tag login_as: "admin"
-    test "redirects users if the performance has results", %{conn: conn, contest: c} do
-      p = insert_performance(c, appearances: [build(:appearance, points: 1)])
+    for role <- all_roles() do
+      @tag login_as: role
+      test "redirects authorized #{role} users if the performance has results",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
+        p = insert_performance(c, appearances: [build(:appearance, points: 1)])
 
-      conn
-      |> get(Routes.internal_contest_performance_path(conn, :edit, c, p))
-      |> assert_flash_redirect(
-        Routes.internal_contest_performance_path(conn, :index, c),
-        "This performance already has results. To edit it, please clear them first."
-      )
+        conn
+        |> get(Routes.internal_contest_performance_path(conn, :edit, c, p))
+        |> assert_flash_redirect(
+          Routes.internal_contest_performance_path(conn, :index, c),
+          "This performance already has results. To edit it, please clear them first."
+        )
+      end
     end
   end
 
@@ -208,30 +174,41 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       [contest: c, performance: insert_performance(cc1)]
     end
 
-    for role <- ["admin", "global-organizer"] do
+    for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users update a performance", %{conn: conn, contest: c, performance: p} do
+      test "lets authorized #{role} users update a performance", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u) |> with_contest_categories()
+        p = insert_performance(c)
         conn |> attempt_update(c, p) |> assert_update_success(c, p)
+      end
+
+      @tag login_as: role
+      test "redirects authorized #{role} users if the performance has results",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u) |> with_contest_categories()
+        p = insert_performance(c, appearances: [build(:appearance, points: 1)])
+
+        conn
+        |> attempt_update(c, p)
+        |> assert_flash_redirect(
+          Routes.internal_contest_performance_path(conn, :index, c),
+          "This performance already has results. To edit it, please clear them first."
+        )
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers update a performance from an own contest", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u) |> with_contest_categories
-      [cc1, _] = own_c.contest_categories
-      p = insert_performance(cc1)
-
-      conn |> attempt_update(own_c, p) |> assert_update_success(own_c, p)
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to update a performance from a foreign contest",
-         %{conn: conn, contest: c, performance: p} do
-      conn |> attempt_update(c, p) |> assert_unauthorized_user
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to update a performance",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u) |> with_contest_categories()
+        p = insert_performance(c)
+        conn |> attempt_update(c, p) |> assert_unauthorized_user
+      end
     end
 
     @tag login_as: "observer"
-    test "redirects observers when trying to update a performance", %{
+    test "redirects observers trying to update a performance", %{
       conn: conn,
       contest: c,
       performance: p
@@ -239,86 +216,67 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       conn |> attempt_update(c, p) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to update a performance", %{
+    test "redirects guests trying to update a performance", %{
       conn: conn,
       contest: c,
       performance: p
     } do
       conn |> attempt_update(c, p) |> assert_unauthorized_guest
     end
-
-    @tag login_as: "admin"
-    test "redirects users if the performance has results", %{conn: conn, contest: c} do
-      p = insert_performance(c, appearances: [build(:appearance, points: 1)])
-
-      conn
-      |> attempt_update(c, p)
-      |> assert_flash_redirect(
-        Routes.internal_contest_performance_path(conn, :index, c),
-        "This performance already has results. To edit it, please clear them first."
-      )
-    end
   end
 
   describe "delete/2" do
-    for role <- ["admin", "global-organizer"] do
+    for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users delete a performance", %{conn: conn, contest: c} do
+      test "lets authorized #{role} users delete a performance", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_delete(c) |> assert_deletion_success(c)
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers delete a performance from an own contest", %{conn: conn, user: u} do
-      own_c = insert_own_contest(u)
-      conn |> attempt_delete(own_c) |> assert_deletion_success(own_c)
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to delete a performance from a foreign contest",
-         %{conn: conn, contest: c} do
-      conn |> attempt_delete(c) |> assert_unauthorized_user
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to delete a performance",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_delete(c) |> assert_unauthorized_user
+      end
     end
 
     @tag login_as: "observer"
-    test "redirects observers when trying to delete a performance", %{conn: conn, contest: c} do
+    test "redirects observers trying to delete a performance", %{conn: conn, contest: c} do
       conn |> attempt_delete(c) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to delete a performance", %{conn: conn, contest: c} do
+    test "redirects guests trying to delete a performance", %{conn: conn, contest: c} do
       conn |> attempt_delete(c) |> assert_unauthorized_guest
     end
   end
 
   describe "reschedule/2" do
-    for role <- ["admin", "global-organizer"] do
+    for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users reschedule performances", %{conn: conn, contest: c} do
+      test "lets authorized #{role} users reschedule performances", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         test_reschedule_success(conn, c)
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers reschedule performances from an own contest", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      test_reschedule_success(conn, own_c)
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to reschedule performances from a foreign contest",
-         %{conn: conn, contest: c} do
-      conn |> attempt_reschedule(c) |> assert_unauthorized_user
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to reschedule performances",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_reschedule(c) |> assert_unauthorized_user
+      end
     end
 
     @tag login_as: "observer"
-    test "redirects observers when trying to reschedule performances", %{conn: conn, contest: c} do
+    test "redirects observers trying to reschedule performances", %{conn: conn, contest: c} do
       conn |> attempt_reschedule(c) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to reschedule performances", %{conn: conn, contest: c} do
+    test "redirects guests trying to reschedule performances", %{conn: conn, contest: c} do
       conn |> attempt_reschedule(c) |> assert_unauthorized_guest
     end
 
@@ -346,64 +304,50 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "jury_material/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users list a contest's performances to create jury material", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users list a contest's performances to create jury material",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_jury_material(c) |> assert_jury_material_success
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers list an own contest's performances to create jury material", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_jury_material(own_c) |> assert_jury_material_success
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to list a contest's performances to create jury material",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_jury_material(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's performances to create jury material",
-         %{conn: conn, contest: c} do
-      conn |> attempt_jury_material(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to list a contest's performances to create jury material",
+    test "redirects guests trying to list a contest's performances to create jury material",
          %{conn: conn, contest: c} do
       conn |> attempt_jury_material(c) |> assert_unauthorized_guest
     end
   end
 
   describe "print_jury_sheets/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users print jury sheets for a contest's performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users print jury sheets",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_print_jury_sheets(c) |> assert_pdf_response
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers print jury sheets for an own contest's performances", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_print_jury_sheets(own_c) |> assert_pdf_response
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to print jury sheets",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_print_jury_sheets(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to print jury sheets for a foreign contest's performances",
-         %{conn: conn, contest: c} do
-      conn |> attempt_print_jury_sheets(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to print jury sheets for a contest's performances", %{
+    test "redirects guests trying to print jury sheets", %{
       conn: conn,
       contest: c
     } do
@@ -412,32 +356,25 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "print_jury_table/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users print a jury table for a contest's performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users print a jury table",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_print_jury_table(c) |> assert_pdf_response
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers print a jury table for an own contest's performances", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_print_jury_table(own_c) |> assert_pdf_response
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to print a jury table",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_print_jury_table(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to print a jury table for a foreign contest's performances",
-         %{conn: conn, contest: c} do
-      conn |> attempt_print_jury_table(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to print a jury table for a contest's performances", %{
+    test "redirects guests trying to print a jury table", %{
       conn: conn,
       contest: c
     } do
@@ -446,77 +383,50 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "edit_results/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users edit results for a contest's performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users edit results", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_edit_results(c) |> assert_results_success
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers edit results for an own contest's performances", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_edit_results(own_c) |> assert_results_success
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to edit results", %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_edit_results(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to edit results for a foreign contest's performances",
-         %{conn: conn, contest: c} do
-      conn |> attempt_edit_results(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to edit results for a contest's performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "redirects guests trying to edit results", %{conn: conn, contest: c} do
       conn |> attempt_edit_results(c) |> assert_unauthorized_guest
     end
   end
 
   describe "update_results/2" do
-    for role <- ["admin", "global-organizer"] do
+    for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users update results for a contest's performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users update results", %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_update_results(c) |> assert_update_results_success(c)
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers update results for an own contest's performances", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_update_results(own_c) |> assert_update_results_success(own_c)
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to update results for a foreign contest's performances",
-         %{conn: conn, contest: c} do
-      conn |> attempt_update_results(c) |> assert_unauthorized_user
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to update results", %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_update_results(c) |> assert_unauthorized_user
+      end
     end
 
     @tag login_as: "observer"
-    test "redirects observers when trying to update results for a contest's performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "redirects observers trying to update results", %{conn: conn, contest: c} do
       conn |> attempt_update_results(c) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to update results for a contest's performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "redirects guests trying to update results", %{conn: conn, contest: c} do
       conn |> attempt_update_results(c) |> assert_unauthorized_guest
     end
 
@@ -528,69 +438,56 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "publish_results/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users list a contest's performances for result publishing", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users list a contest's performances for result publishing",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_publish_results(c) |> assert_publish_results_success
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers list an own contest's performances for result publishing", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_publish_results(own_c) |> assert_publish_results_success
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to list a contest's performances for result publishing",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_publish_results(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's performances for result publishing",
+    test "redirects guests trying to list a contest's performances for result publishing",
          %{conn: conn, contest: c} do
-      conn |> attempt_publish_results(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to list a contest's performances for result publishing", %{
-      conn: conn,
-      contest: c
-    } do
       conn |> attempt_publish_results(c) |> assert_unauthorized_guest
     end
   end
 
   describe "update_results_public/2" do
-    for role <- ["admin", "global-organizer"] do
+    for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users publish a contest's performance results", %{conn: conn, contest: c} do
+      test "lets authorized #{role} users publish a contest's performance results",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_update_results_public(c) |> assert_update_results_public_success(c)
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers publish an own contest's performance results", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_update_results_public(own_c) |> assert_update_results_public_success(own_c)
-    end
-
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to publish a foreign contest's performance results",
-         %{conn: conn, contest: c} do
-      conn |> attempt_update_results_public(c) |> assert_unauthorized_user
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to publish a contest's performance results",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_update_results_public(c) |> assert_unauthorized_user
+      end
     end
 
     @tag login_as: "observer"
-    test "redirects observers when trying to publish a contest's performance results",
+    test "redirects observers trying to publish a contest's performance results",
          %{conn: conn, contest: c} do
       conn |> attempt_update_results_public(c) |> assert_unauthorized_user
     end
 
-    test "redirects guests when trying to publish a contest's performance results", %{
+    test "redirects guests trying to publish a contest's performance results", %{
       conn: conn,
       contest: c
     } do
@@ -599,98 +496,74 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "certificates/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users list a contest's performances to create certificates", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users list a contest's performances to create certificates",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_certificates(c) |> assert_certificates_success
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers list an own contest's performances to create certificates", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_certificates(own_c) |> assert_certificates_success
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to list a contest's performances to create certificates",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_certificates(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's performances to create certificates",
-         %{conn: conn, contest: c} do
-      conn |> attempt_certificates(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to list a contest's performances to create certificates",
+    test "redirects guests trying to list a contest's performances to create certificates",
          %{conn: conn, contest: c} do
       conn |> attempt_certificates(c) |> assert_unauthorized_guest
     end
   end
 
   describe "print_certificates/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users print certificates for a contest's performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users print certificates",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_print_certificates(c) |> assert_pdf_response
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers print certificates for an own contest's performances", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_print_certificates(own_c) |> assert_pdf_response
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to print certificates",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_print_certificates(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to print certificates for a foreign contest's performances",
-         %{conn: conn, contest: c} do
-      conn |> attempt_print_certificates(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to print certificates for a contest's performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "redirects guests trying to print certificates", %{conn: conn, contest: c} do
       conn |> attempt_print_certificates(c) |> assert_unauthorized_guest
     end
   end
 
   describe "advancing/2" do
-    for role <- roles_except("local-organizer") do
+    for role <- all_roles() do
       @tag login_as: role
-      test "lets #{role} users list a contest's advancing performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "lets authorized #{role} users list a contest's advancing performances",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
         conn |> attempt_advancing(c) |> assert_advancing_success
       end
     end
 
-    @tag login_as: "local-organizer"
-    test "lets local organizers list an own contest's advancing performances", %{
-      conn: conn,
-      user: u
-    } do
-      own_c = insert_own_contest(u)
-      conn |> attempt_advancing(own_c) |> assert_advancing_success
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to list a contest's advancing performances",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn |> attempt_advancing(c) |> assert_unauthorized_user
+      end
     end
 
-    @tag login_as: "local-organizer"
-    test "redirects local organizers when trying to list a foreign contest's advancing performances",
-         %{conn: conn, contest: c} do
-      conn |> attempt_advancing(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests when trying to list a contest's advancing performances",
+    test "redirects guests trying to list a contest's advancing performances",
          %{conn: conn, contest: c} do
       conn |> attempt_advancing(c) |> assert_unauthorized_guest
     end
@@ -698,27 +571,19 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
   describe "migrate_advancing/2" do
     @tag login_as: "admin"
-    test "lets admins migrate advancing performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "lets admins migrate advancing performances", %{conn: conn, contest: c} do
       conn |> attempt_migrate_advancing(c) |> assert_migrate_advancing_success(c)
     end
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to migrate advancing performances", %{
-        conn: conn,
-        contest: c
-      } do
+      test "redirects #{role} users trying to migrate advancing performances",
+           %{conn: conn, contest: c} do
         conn |> attempt_migrate_advancing(c) |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to migrate advancing performances", %{
-      conn: conn,
-      contest: c
-    } do
+    test "redirects guests trying to migrate advancing performances", %{conn: conn, contest: c} do
       conn |> attempt_migrate_advancing(c) |> assert_unauthorized_guest
     end
   end

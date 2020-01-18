@@ -14,12 +14,12 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to list all categories", %{conn: conn} do
+      test "redirects #{role} users trying to list all categories", %{conn: conn} do
         conn |> attempt_index |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to list all categories", %{conn: conn} do
+    test "redirects guests trying to list all categories", %{conn: conn} do
       conn |> attempt_index |> assert_unauthorized_guest
     end
   end
@@ -33,12 +33,12 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to fill in a new category", %{conn: conn} do
+      test "redirects #{role} users trying to fill in a new category", %{conn: conn} do
         conn |> attempt_new |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to fill in a new category", %{conn: conn} do
+    test "redirects guests trying to fill in a new category", %{conn: conn} do
       conn |> attempt_new |> assert_unauthorized_guest
     end
   end
@@ -54,12 +54,12 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to create a new category", %{conn: conn} do
+      test "redirects #{role} users trying to create a new category", %{conn: conn} do
         conn |> attempt_create |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to create a new category", %{conn: conn} do
+    test "redirects guests trying to create a new category", %{conn: conn} do
       conn |> attempt_create |> assert_unauthorized_guest
     end
   end
@@ -73,12 +73,12 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to edit a category", %{conn: conn} do
+      test "redirects #{role} users trying to edit a category", %{conn: conn} do
         conn |> attempt_edit |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to edit a category", %{conn: conn} do
+    test "redirects guests trying to edit a category", %{conn: conn} do
       conn |> attempt_edit |> assert_unauthorized_guest
     end
   end
@@ -94,12 +94,12 @@ defmodule JumubaseWeb.Internal.CategoryControllerTest do
 
     for role <- roles_except("admin") do
       @tag login_as: role
-      test "redirects #{role} users when trying to update a new category", %{conn: conn} do
+      test "redirects #{role} users trying to update a new category", %{conn: conn} do
         conn |> attempt_update |> assert_unauthorized_user
       end
     end
 
-    test "redirects guests when trying to update a new category", %{conn: conn} do
+    test "redirects guests trying to update a new category", %{conn: conn} do
       conn |> attempt_update |> assert_unauthorized_guest
     end
   end

@@ -138,8 +138,25 @@ defmodule Jumubase.Factory do
 
   # Insertion helpers
 
-  def insert_own_contest(%User{} = user) do
+  def insert_authorized_contest(%User{role: "local-organizer"} = user) do
     insert(:contest, host: insert(:host, users: [user]))
+  end
+
+  def insert_authorized_contest(%User{role: "global-organizer"} = user) do
+    host = insert(:host, users: [user])
+    insert(:contest, grouping: host.current_grouping)
+  end
+
+  def insert_authorized_contest(%User{}) do
+    insert(:contest)
+  end
+
+  def insert_unauthorized_contest(%User{role: "local-organizer"}) do
+    insert(:contest, host: insert(:host, users: []))
+  end
+
+  def insert_unauthorized_contest(%User{role: "global-organizer"}) do
+    insert(:contest, grouping: "4")
   end
 
   def insert_contest_category(%Contest{} = contest) do

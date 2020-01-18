@@ -356,9 +356,9 @@ msgid "Edit code"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
+#: lib/jumubase_web/views/internal/piece_view.ex:26 lib/jumubase_web/views/internal/piece_view.ex:26
+#: lib/jumubase_web/views/internal/piece_view.ex:36 lib/jumubase_web/views/internal/piece_view.ex:36
 msgid "Epoch"
 msgstr ""
 
@@ -913,14 +913,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:255
+#: lib/jumubase_web/views/internal/performance_view.ex:258
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:261
+#: lib/jumubase_web/views/internal/performance_view.ex:264
 msgid "Filter active"
 msgstr ""
 
@@ -1464,17 +1464,17 @@ msgid "Print certificates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:205
+#: lib/jumubase_web/views/internal/performance_view.ex:208
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:211
+#: lib/jumubase_web/views/internal/performance_view.ex:214
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:213
+#: lib/jumubase_web/views/internal/performance_view.ex:216
 msgid "here"
 msgstr ""
 
@@ -1577,11 +1577,6 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/maintenance_controller.ex:9
 #: lib/jumubase_web/templates/internal/maintenance/index.html.eex:1 lib/jumubase_web/templates/internal/page/home.html.eex:30
 msgid "Data maintenance"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:10
-msgid "All schools"
 msgstr ""
 
 #, elixir-format
@@ -1740,11 +1735,6 @@ msgid "Edit Host"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/host_controller.ex:56
-msgid "The host %{name} was updated."
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase_web/controllers/internal/page_controller.ex:27
 #: lib/jumubase_web/templates/internal/page/home.html.eex:69
 msgid "Jury work"
@@ -1850,4 +1840,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:38
 msgid "Qanun"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:10
+msgid "All RWs"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/host_controller.ex:56
+msgid "The host \"%{name}\" was updated."
 msgstr ""

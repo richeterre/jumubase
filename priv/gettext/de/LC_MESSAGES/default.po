@@ -122,7 +122,7 @@ msgstr "Benutzer"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:38
 msgid "Add Host"
-msgstr "Neue Schule hinzufügen"
+msgstr "Neuen Ausrichter hinzufügen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/password_reset/new.html.eex:17
@@ -153,7 +153,7 @@ msgstr "Ländercode"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:8
 msgid "Create Host"
-msgstr "Schule erstellen"
+msgstr "Ausrichter erstellen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/session/new.html.eex:19
@@ -170,7 +170,7 @@ msgstr "Orgteam Landesebene"
 #: lib/jumubase_web/templates/internal/host/index.html.eex:1 lib/jumubase_web/templates/internal/page/home.html.eex:21
 #: lib/jumubase_web/templates/internal/user/form.html.eex:51 lib/jumubase_web/templates/internal/user/index.html.eex:11
 msgid "Hosts"
-msgstr "Schulen"
+msgstr "Ausrichter"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/user_view.ex:56
@@ -180,7 +180,7 @@ msgstr "Orgteam Regionalebene"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/new.html.eex:1
 msgid "New Host"
-msgstr "Neue Schule"
+msgstr "Neuer Ausrichter"
 
 #, elixir-format
 #: lib/jumubase_web/templates/error/form_errors.html.eex:4
@@ -191,7 +191,7 @@ msgstr "Bitte behebe die untenstehenden Fehler und versuche es erneut!"
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:33
 msgid "The host \"%{name}\" was created."
-msgstr "Die Schule \"%{name}\" wurde erstellt."
+msgstr "Der Ausrichter \"%{name}\" wurde erstellt."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/index.html.eex:13
@@ -356,9 +356,9 @@ msgid "Edit code"
 msgstr "Änderungscode"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_pieces.html.eex:9
-#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:175
+#: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
+#: lib/jumubase_web/views/internal/piece_view.ex:26 lib/jumubase_web/views/internal/piece_view.ex:26
+#: lib/jumubase_web/views/internal/piece_view.ex:36 lib/jumubase_web/views/internal/piece_view.ex:36
 msgid "Epoch"
 msgstr "Epoche"
 
@@ -824,7 +824,7 @@ msgstr "Ende"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:30
 msgid "Host"
-msgstr "Schule"
+msgstr "Ausrichter"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:22
@@ -913,14 +913,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:255
+#: lib/jumubase_web/views/internal/performance_view.ex:258
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:261
+#: lib/jumubase_web/views/internal/performance_view.ex:264
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1464,17 +1464,17 @@ msgid "Print certificates"
 msgstr "Urkunden ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:205
+#: lib/jumubase_web/views/internal/performance_view.ex:208
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem Logo bedruckte Papier erneut ein."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:211
+#: lib/jumubase_web/views/internal/performance_view.ex:214
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:213
+#: lib/jumubase_web/views/internal/performance_view.ex:216
 msgid "here"
 msgstr "hier"
 
@@ -1578,11 +1578,6 @@ msgstr "Bitte Teilnahmeberechtigung zur nächsten Runde prüfen"
 #: lib/jumubase_web/templates/internal/maintenance/index.html.eex:1 lib/jumubase_web/templates/internal/page/home.html.eex:30
 msgid "Data maintenance"
 msgstr "Datenpflege"
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:10
-msgid "All schools"
-msgstr "Alle Schulen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/maintenance/index.html.eex:5
@@ -1737,12 +1732,7 @@ msgstr "Mit diesem Formular erreichst du den Landesausschuss des Verbunds 2."
 #, elixir-format
 #: lib/jumubase_web/templates/internal/host/edit.html.eex:1
 msgid "Edit Host"
-msgstr "Schule bearbeiten"
-
-#, elixir-format
-#: lib/jumubase_web/controllers/internal/host_controller.ex:56
-msgid "The host %{name} was updated."
-msgstr "Die Schule %{name} wurde aktualisiert."
+msgstr "Ausrichter bearbeiten"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/page_controller.ex:27
@@ -1851,3 +1841,13 @@ msgstr "einzeln"
 #: lib/jumubase/showtime/instruments.ex:38
 msgid "Qanun"
 msgstr "Qanoun"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/performance/_filter_form.html.eex:10
+msgid "All RWs"
+msgstr "Alle RWs"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/host_controller.ex:56
+msgid "The host \"%{name}\" was updated."
+msgstr "Der Ausrichter \"%{name}\" wurde aktualisiert."

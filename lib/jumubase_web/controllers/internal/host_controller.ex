@@ -53,7 +53,7 @@ defmodule JumubaseWeb.Internal.HostController do
     case Foundation.update_host(host, params) do
       {:ok, host} ->
         conn
-        |> put_flash(:info, gettext("The host %{name} was updated.", name: host.name))
+        |> put_flash(:info, gettext("The host \"%{name}\" was updated.", name: host.name))
         |> redirect(to: Routes.internal_host_path(conn, :index))
 
       {:error, %Changeset{} = changeset} ->

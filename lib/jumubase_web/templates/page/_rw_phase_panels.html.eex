@@ -11,7 +11,7 @@
 
       <p>
         Vorspielpläne und Ergebnisse erhältst du bei deiner
-        <%= link "Jumu-Kontaktperson", to: Routes.page_path(@conn, :contact) <> "#member-schools" %>
+        <%= link "Jumu-Kontaktperson", to: Routes.page_path(@conn, :contact) <> "#regional-hosts" %>
         sowie für viele Schulen auch über die Jumu-App:
       </p>
       <%= app_link :ios %> <%= app_link :android %>

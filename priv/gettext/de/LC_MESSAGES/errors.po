@@ -11,7 +11,7 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2\n"
 
-#: lib/jumubase/showtime/piece.ex:58 lib/jumubase/showtime/piece.ex:59
+#: lib/jumubase/showtime/piece.ex:59 lib/jumubase/showtime/piece.ex:60
 msgid "can't be blank"
 msgstr "muss ausgefüllt werden"
 
@@ -114,7 +114,7 @@ msgid "must be unique"
 msgstr "muss eindeutig sein"
 
 #, elixir-format
-#: lib/jumubase/showtime/piece.ex:65
+#: lib/jumubase/showtime/piece.ex:66
 msgid "can only have either a composer or an artist"
 msgstr "darf entweder einen Komponisten oder einen Interpreten haben"
 

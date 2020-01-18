@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <h3 id="member-schools">
+    <h3 id="regional-hosts">
       <%= gettext("Regional-level hosts") %>
       <small>(<%= gettext("currently grouping 2 only") %>)</small>
     </h3>

@@ -118,17 +118,17 @@ defmodule Jumubase.FoundationTest do
     end
 
     test "orders contests by season, round, and host name" do
-      h1 = build(:host, name: "A")
-      h2 = build(:host, name: "B")
-      c1 = insert(:contest, season: 56, round: 0, host: h2)
-      c2 = insert(:contest, season: 57, round: 0, host: h2)
-      c3 = insert(:contest, season: 56, round: 0, host: h1)
-      c4 = insert(:contest, season: 56, round: 1, host: h2)
-      c5 = insert(:contest, season: 57, round: 1, host: h2)
-      c6 = insert(:contest, season: 56, round: 1, host: h1)
-      c7 = insert(:contest, season: 56, round: 2, host: h2)
-      c8 = insert(:contest, season: 57, round: 2, host: h2)
-      c9 = insert(:contest, season: 56, round: 2, host: h1)
+      h1 = build(:host, current_grouping: "1", name: "A")
+      h2 = build(:host, current_grouping: "2", name: "B")
+      c1 = insert(:contest, season: 56, round: 0, grouping: "2", host: h2)
+      c2 = insert(:contest, season: 57, round: 0, grouping: "2", host: h2)
+      c3 = insert(:contest, season: 56, round: 0, grouping: "1", host: h1)
+      c4 = insert(:contest, season: 56, round: 1, grouping: "2", host: h2)
+      c5 = insert(:contest, season: 57, round: 1, grouping: "2", host: h2)
+      c6 = insert(:contest, season: 56, round: 1, grouping: "1", host: h1)
+      c7 = insert(:contest, season: 56, round: 2, grouping: "2", host: h2)
+      c8 = insert(:contest, season: 57, round: 2, grouping: "2", host: h2)
+      c9 = insert(:contest, season: 56, round: 2, grouping: "1", host: h1)
       assert_ids_match_ordered(Foundation.list_contests(), [c8, c5, c2, c9, c7, c6, c4, c3, c1])
     end
 
@@ -181,9 +181,13 @@ defmodule Jumubase.FoundationTest do
       today = Timex.today()
       tomorrow = Timex.today() |> Timex.shift(days: 1)
 
-      c1 = insert(:contest, round: 2, host: build(:host, name: "B"), deadline: today)
-      c2 = insert(:contest, round: 2, host: build(:host, name: "A"), deadline: tomorrow)
-      c3 = insert(:contest, round: 2, host: build(:host, name: "C"), deadline: tomorrow)
+      h1 = build(:host, current_grouping: "1", name: "B")
+      h2 = build(:host, current_grouping: "2", name: "A")
+      h3 = build(:host, current_grouping: "3", name: "C")
+
+      c1 = insert(:contest, round: 2, grouping: "1", host: h1, deadline: today)
+      c2 = insert(:contest, round: 2, grouping: "2", host: h2, deadline: tomorrow)
+      c3 = insert(:contest, round: 2, grouping: "3", host: h3, deadline: tomorrow)
 
       assert Foundation.list_open_contests(2) == [c2, c1, c3]
     end
@@ -369,17 +373,17 @@ defmodule Jumubase.FoundationTest do
     for role <- roles_except("local-organizer") do
       @tag role: role
       test "returns latest own contests and foreign LW contests to #{role} users", %{user: u} do
-        own_host = build(:host, users: [u])
-        c1 = insert(:contest, season: 57, round: 0, host: own_host)
-        c2 = insert(:contest, season: 57, round: 1, host: own_host)
-        c3 = insert(:contest, season: 57, round: 2, host: own_host)
-        c4 = insert(:contest, season: 57, round: 2)
+        own_host = build(:host, current_grouping: "1", users: [u])
+        c1 = insert(:contest, season: 57, round: 0, grouping: "1", host: own_host)
+        c2 = insert(:contest, season: 57, round: 1, grouping: "1", host: own_host)
+        c3 = insert(:contest, season: 57, round: 2, grouping: "1", host: own_host)
+        c4 = insert(:contest, season: 57, round: 2, grouping: "2")
 
         # Earlier contests that should not be returned
-        insert(:contest, season: 56, round: 0, host: own_host)
-        insert(:contest, season: 56, round: 1, host: own_host)
-        insert(:contest, season: 56, round: 2, host: own_host)
-        insert(:contest, season: 56, round: 2)
+        insert(:contest, season: 56, round: 0, grouping: "1", host: own_host)
+        insert(:contest, season: 56, round: 1, grouping: "1", host: own_host)
+        insert(:contest, season: 56, round: 2, grouping: "1", host: own_host)
+        insert(:contest, season: 56, round: 2, grouping: "2")
 
         assert_ids_match_unordered(
           Foundation.list_latest_relevant_contests(Contest, u),
@@ -417,15 +421,15 @@ defmodule Jumubase.FoundationTest do
 
     @tag role: "local-organizer"
     test "orders contests by round and host name", %{user: u} do
-      h1 = insert(:host, name: "A", users: [u])
-      h2 = insert(:host, name: "B", users: [u])
+      h1 = insert(:host, current_grouping: "1", name: "A", users: [u])
+      h2 = insert(:host, current_grouping: "2", name: "B", users: [u])
 
-      c1 = insert(:contest, round: 0, host: h2)
-      c2 = insert(:contest, round: 0, host: h1)
-      c3 = insert(:contest, round: 1, host: h2)
-      c4 = insert(:contest, round: 1, host: h1)
-      c5 = insert(:contest, round: 2, host: h2)
-      c6 = insert(:contest, round: 2, host: h1)
+      c1 = insert(:contest, round: 0, grouping: "2", host: h2)
+      c2 = insert(:contest, round: 0, grouping: "1", host: h1)
+      c3 = insert(:contest, round: 1, grouping: "2", host: h2)
+      c4 = insert(:contest, round: 1, grouping: "1", host: h1)
+      c5 = insert(:contest, round: 2, grouping: "2", host: h2)
+      c6 = insert(:contest, round: 2, grouping: "1", host: h1)
 
       assert_ids_match_ordered(
         Foundation.list_latest_relevant_contests(Contest, u),
@@ -580,14 +584,6 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.get_successor(c1) == nil
       assert Foundation.get_successor(c2) == nil
     end
-
-    test "raises an error if there are multiple results" do
-      c = insert(:contest, season: 56, round: 1)
-      insert(:contest, season: 56, round: 2)
-      insert(:contest, season: 56, round: 2)
-
-      assert_raise Ecto.MultipleResultsError, fn -> Foundation.get_successor(c) end
-    end
   end
 
   describe "get_latest_official_contest/1" do
@@ -669,9 +665,12 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_categories/0" do
-    test "returns all categories" do
-      categories = insert_list(2, :category)
-      assert Foundation.list_categories() == categories
+    test "returns all categories, ordered by type, genre and name" do
+      cg1 = insert(:category, type: "ensemble")
+      cg2 = insert(:category, type: "solo_or_ensemble")
+      cg3 = insert(:category, type: "solo")
+
+      assert_ids_match_ordered(Foundation.list_categories(), [cg2, cg3, cg1])
     end
   end
 

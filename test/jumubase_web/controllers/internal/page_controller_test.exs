@@ -6,7 +6,7 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
     login_if_needed(config)
   end
 
-  describe "home page" do
+  describe "home/2" do
     for role <- all_roles() do
       @tag login_as: role
       test "greets #{role} users on the welcome page", %{conn: conn, user: user} do
@@ -16,36 +16,50 @@ defmodule JumubaseWeb.Internal.PageControllerTest do
     end
 
     @tag login_as: "local-organizer"
-    test "shows own contests to a local organizer", %{conn: conn, user: u} do
-      own_host = build(:host, users: [u])
-      own_kimu = insert(:contest, round: 0, host: own_host)
-      own_rw = insert(:contest, round: 1, host: own_host)
-      own_lw = insert(:contest, round: 2, host: own_host)
-      other_kimu = insert(:contest, round: 0)
-      other_rw = insert(:contest, round: 1)
-      other_lw = insert(:contest, round: 2)
+    test "shows all authorized contests to a local organizer", %{conn: conn, user: u} do
+      h1 = build(:host, current_grouping: "1", users: [u])
+      h2 = build(:host, current_grouping: "2", users: [u])
+
+      # Matching contests
+      c1 = insert(:contest, round: 0, grouping: "1", host: h1)
+      c2 = insert(:contest, round: 1, grouping: "1", host: h1)
+      c3 = insert(:contest, round: 2, grouping: "1", host: h1)
+      c4 = insert(:contest, round: 0, grouping: "2", host: h2)
+      c5 = insert(:contest, round: 1, grouping: "3", host: h2)
+
+      # Non-matching contests
+      c6 = insert(:contest, grouping: "1", round: 0)
+      c7 = insert(:contest, grouping: "1", round: 1)
+      c8 = insert(:contest, grouping: "2", round: 2)
+      c9 = insert(:contest, grouping: "3", round: 2)
 
       conn = get(conn, Routes.internal_page_path(conn, :home))
 
-      assert_contests_listed(conn, [own_kimu, own_rw, own_lw])
-      refute_contests_listed(conn, [other_kimu, other_rw, other_lw])
+      assert_contests_listed(conn, [c1, c2, c3, c4, c5])
+      refute_contests_listed(conn, [c6, c7, c8, c9])
     end
 
     for role <- roles_except("local-organizer") do
       @tag login_as: role
       test "shows relevant contests to a #{role} user", %{conn: conn, user: u} do
-        own_host = build(:host, users: [u])
-        own_kimu = insert(:contest, round: 0, host: own_host)
-        own_rw = insert(:contest, round: 1, host: own_host)
-        own_lw = insert(:contest, round: 2, host: own_host)
-        other_kimu = insert(:contest, round: 0)
-        other_rw = insert(:contest, round: 1)
-        other_lw = insert(:contest, round: 2)
+        h1 = build(:host, current_grouping: "1", users: [u])
+        h2 = build(:host, current_grouping: "2", users: [u])
+
+        # Matching contests
+        c1 = insert(:contest, round: 0, grouping: "1", host: h1)
+        c2 = insert(:contest, round: 1, grouping: "1", host: h1)
+        c3 = insert(:contest, round: 2, grouping: "1", host: h1)
+        c4 = insert(:contest, round: 1, grouping: "2", host: h2)
+        c5 = insert(:contest, round: 2, grouping: "2")
+
+        # Non-matching contests (not relevant enough)
+        c6 = insert(:contest, round: 0, grouping: "1")
+        c7 = insert(:contest, round: 1, grouping: "1")
 
         conn = get(conn, Routes.internal_page_path(conn, :home))
 
-        assert_contests_listed(conn, [own_kimu, own_rw, own_lw, other_lw])
-        refute_contests_listed(conn, [other_kimu, other_rw])
+        assert_contests_listed(conn, [c1, c2, c3, c4, c5])
+        refute_contests_listed(conn, [c6, c7])
       end
     end
 

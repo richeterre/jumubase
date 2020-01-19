@@ -8,15 +8,34 @@
 
 <div class="row">
   <div class="col-md-8 col-lg-7">
+    <h3>Allgemeines</h3>
+
+    <dl>
+      <dt>Zu welchem Verbund gehört meine Schule?</dt>
+      <dd>
+        <p>Die neuen Verbunde der Auslandsschulen gehen aus den bisherigen Regionen hervor:</p>
+        <p>
+          “Spanien/Portugal” → Verbund 1<br>
+          “Nord- und Osteuropa” → Verbund 2<br>
+          “Östlicher Mittelmeerraum” → Verbund 3
+        </p>
+        <p>Eine Übersichtskarte findest du auf der <%= link "Startseite", to: Routes.page_path(@conn, :home) %>.</p>
+      </dd>
+    </dl>
+
     <h3>Anmeldung</h3>
 
     <dl>
       <dt>Ab wann kann ich mich anmelden?</dt>
-      <dd>Die Anmeldung für ein Wettbewerbsjahr beginnt im Oktober des Vorjahres.</dd>
+      <dd>
+        Im Verbund 2 (siehe oben) kannst du dich ab Oktober des Vorjahres
+        <%= link "hier", to: Routes.page_path(@conn, :registration) %> zum Regionalwettbewerb anmelden.
+        Nimmst du in einem anderen Verbund teil, findet die RW-Anmeldung über deine Schule statt.
+      </dd>
 
       <dt>Wann ist Anmeldeschluss?</dt>
       <dd>
-        Das hängt von der Schule ab &ndash; das jeweilige Datum findest du auf der
+        Das hängt vom Wettbewerb ab &ndash; das jeweilige Datum findest du auf der
         <%= link "Anmeldeseite", to: Routes.page_path(@conn, :registration) %>.
       </dd>
 
@@ -29,8 +48,12 @@
 
       <dt>Muss ich mich für den Landeswettbewerb erneut anmelden?</dt>
       <dd>
-        Nein! Bei einer Weiterleitung zum LW wird deine Anmeldung automatisch übernommen.
-        Du bekommst dann eine E-Mail mit einem neuen Änderungscode, mit dem du dein Vorspielprogramm ändern kannst.
+        <p>Im Verbund 2 wird deine Anmeldung automatisch zum LW übernommen. Du bekommst
+        dann eine E-Mail mit einem neuen Änderungscode, mit dem du dein Vorspielprogramm
+        ändern kannst.</p>
+
+        <p>In Verbund 1 und 3 musst du dich für den Landeswettbewerb
+        gesondert <%= link "anmelden", to: Routes.page_path(@conn, :registration) %>.</p>
       </dd>
 
       <dt>Muss ich mich für den Bundeswettbewerb erneut anmelden?</dt>
@@ -52,7 +75,7 @@
       </dd>
 
       <dt>Brauchen Begleitpartner eine Weiterleitung für die nächste Runde?</dt>
-      <dd>Im Allgemeinen dürfen Begleitpartner von Runde zu Runde frei gewechselt werden und brauchen somit keine Weiterleitung. Nur Pop-Begleitgruppen müssen beim Regionalwettbewerb mindestens 23 Punkte erreicht haben, um am Landeswettbewerb teilnehmen zu dürfen.</dd>
+      <dd>Im Allgemeinen dürfen Begleitpartner von Runde zu Runde frei gewechselt werden und brauchen somit keine Weiterleitung. Ausnahme: Pop-Begleitgruppen im Verbund 2 müssen beim RW mindestens 23 Punkte erreicht haben, um am LW teilnehmen zu dürfen.</dd>
 
       <dt>Darf ich mich in den Klassik-Kategorien per Playback begleiten lassen?</dt>
       <dd>Nein, in der Klassik ist eine Begleitung per Playback nicht möglich.</dd>

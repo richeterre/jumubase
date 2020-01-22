@@ -38,7 +38,9 @@ defmodule JumubaseWeb.IconHelpers do
   @doc """
   Returns an Emoji flag character for the given country code.
   """
-  def emoji_flag(country_code) when country_code in ~w(IL PS), do: nil
+  def emoji_flag(country_code) when country_code == "IL/PS" do
+    emoji_flag("IL") <> emoji_flag("PS")
+  end
 
   def emoji_flag(country_code) do
     country_code

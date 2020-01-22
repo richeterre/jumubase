@@ -13,7 +13,9 @@
 
   <div class="main-content">
     <div class="category-info">
-      <%= performance_info(@performance) %>
+      <%= shorthand_category_info(@performance) %>
+      <br>
+      <small class="text-muted"><%= predecessor_host_info(@performance) %></small>
     </div>
 
     <div class="text-muted">

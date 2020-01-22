@@ -2,33 +2,45 @@ defmodule JumubaseWeb.Internal.StageViewTest do
   use JumubaseWeb.ConnCase, async: true
   alias JumubaseWeb.Internal.StageView
 
-  describe "performance_info/1" do
-    test "returns the category short name and age group for a non-LW performance" do
+  describe "shorthand_category_info/1" do
+    test "returns the category short name and age group for a performance" do
       p =
         build(:performance,
           contest_category:
             build(:contest_category,
               category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
             ),
-          age_group: "III",
-          predecessor_host: nil
+          age_group: "III"
         )
 
-      assert StageView.performance_info(p) == "PopGesang III"
+      assert StageView.shorthand_category_info(p) == "PopGesang III"
+    end
+  end
+
+  describe "predecessor_host_info/1" do
+    test "returns nil for a performance without a predecessor host" do
+      p = build(:performance, pieces: [build(:piece, minutes: 10)], predecessor_host: nil)
+      assert StageView.predecessor_host_info(p) == nil
     end
 
-    test "returns the category short name, age group and predecessor flag for an LW performance" do
+    test "returns nil for a short performance with a predecessor host" do
       p =
         build(:performance,
-          contest_category:
-            build(:contest_category,
-              category: build(:category, name: "Gesang (Pop) solo", short_name: "PopGesang")
-            ),
-          age_group: "III",
-          predecessor_host: build(:host, country_code: "FI")
+          pieces: [build(:piece, minutes: 5, seconds: 30)],
+          predecessor_host: build(:host, name: "Helsinki")
         )
 
-      assert StageView.performance_info(p) == "PopGesang III 🇫🇮"
+      assert StageView.predecessor_host_info(p) == nil
+    end
+
+    test "returns the predecessor host name of a longer performance" do
+      p =
+        build(:performance,
+          pieces: [build(:piece, minutes: 5, seconds: 31)],
+          predecessor_host: build(:host, name: "Helsinki")
+        )
+
+      assert StageView.predecessor_host_info(p) == "Helsinki"
     end
   end
 

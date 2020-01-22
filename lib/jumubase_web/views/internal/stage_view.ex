@@ -9,7 +9,6 @@ defmodule JumubaseWeb.Internal.StageView do
       category_name: 1,
       cc_filter_options: 1,
       formatted_duration: 1,
-      predecessor_info: 2,
       sorted_appearances: 1,
       stage_date_filter_options: 1,
       stage_time: 1
@@ -18,7 +17,10 @@ defmodule JumubaseWeb.Internal.StageView do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
 
-  # for mapping duration to item height
+  # Define a "minute grid" that durations get rounded to
+  @grid_step 5
+
+  # Map performance duration to item height
   @pixels_per_minute 4
 
   def render("scripts.schedule.html", %{conn: conn, contest: c, stage: s}) do
@@ -76,13 +78,23 @@ defmodule JumubaseWeb.Internal.StageView do
   def start_time_options(_), do: time_options(nil)
 
   @doc """
-  Returns shorthand category, age group and predecessor information.
+  Returns shorthand category and age group information.
   """
-  def performance_info(%Performance{contest_category: cc} = p) do
-    case predecessor_info(p, :short) do
-      nil -> "#{cc.category.short_name} #{p.age_group}"
-      pre_info -> "#{cc.category.short_name} #{p.age_group} #{pre_info}"
-    end
+  def shorthand_category_info(%Performance{contest_category: cc} = p) do
+    "#{cc.category.short_name} #{p.age_group}"
+  end
+
+  @doc """
+  Returns information about the performance's predecesser host,
+  or nil if the performance has no predecessor host or is too short
+  (less or equal to one grid step) for the info to be shown in the scheduler.
+  """
+  def predecessor_host_info(%Performance{predecessor_host: nil}), do: nil
+
+  def predecessor_host_info(%Performance{predecessor_host: pre_h} = p) do
+    grid_minutes = total_minutes(p) |> round_to_grid
+    # Only return text if the performance is long enough for it to fit
+    if grid_minutes > @grid_step, do: pre_h.name, else: nil
   end
 
   @doc """
@@ -171,9 +183,8 @@ defmodule JumubaseWeb.Internal.StageView do
   defp round_to_grid(minutes) do
     # Configure tolerance and grid size in minutes
     tolerance = 0.5
-    grid_step = 5
 
-    (Float.ceil((minutes - tolerance) / grid_step) * grid_step + tolerance / grid_step)
+    (Float.ceil((minutes - tolerance) / @grid_step) * @grid_step + tolerance / @grid_step)
     # Return number as integer
     |> trunc
   end

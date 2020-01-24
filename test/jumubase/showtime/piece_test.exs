@@ -1,6 +1,7 @@
 defmodule Jumubase.PieceTest do
   use Jumubase.DataCase
   import Ecto.Changeset
+  alias Jumubase.JumuParams
   alias Jumubase.Showtime.Piece
 
   describe "changeset/2" do
@@ -22,10 +23,18 @@ defmodule Jumubase.PieceTest do
       refute changeset.valid?
     end
 
-    test "is invalid without either a composer or artist" do
-      attrs = params_for(:piece, composer: nil, artist: nil)
+    test "is valid in epoch 'trad' without either acomposer or artist" do
+      attrs = params_for(:piece, composer: nil, artist: nil, epoch: "trad")
       changeset = Piece.changeset(%Piece{}, attrs)
-      refute changeset.valid?
+      assert changeset.valid?
+    end
+
+    test "is invalid in other epochs without either a composer or artist" do
+      for epoch <- JumuParams.epochs() -- ["trad"] do
+        attrs = params_for(:piece, composer: nil, artist: nil, epoch: epoch)
+        changeset = Piece.changeset(%Piece{}, attrs)
+        refute changeset.valid?
+      end
     end
 
     test "is invalid with both a composer and artist" do
@@ -82,6 +91,24 @@ defmodule Jumubase.PieceTest do
       attrs = %{composer: "Y"}
       changeset = Piece.changeset(old_piece, attrs)
       assert changeset.changes == %{artist: nil, composer: "Y"}
+    end
+
+    test "clears all composer and artist data when setting a 'trad' epoch" do
+      pc1 = %Piece{composer: "X", composer_born: "1", composer_died: "2", epoch: "a"}
+      pc2 = %Piece{artist: "X", epoch: "e"}
+      attrs = %{epoch: "trad"}
+
+      cs1 = Piece.changeset(pc1, attrs)
+      cs2 = Piece.changeset(pc2, attrs)
+
+      assert cs1.changes == %{
+               composer: nil,
+               composer_born: nil,
+               composer_died: nil,
+               epoch: "trad"
+             }
+
+      assert cs2.changes == %{artist: nil, epoch: "trad"}
     end
 
     test "is invalid without an epoch" do

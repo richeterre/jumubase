@@ -50,10 +50,14 @@ defmodule Jumubase.Showtime.Piece do
 
   # Validates the changeset's person (composer or artist) data.
   defp validate_person(%Changeset{} = changeset) do
+    epoch = get_field(changeset, :epoch)
     composer = get_field(changeset, :composer)
     artist = get_field(changeset, :artist)
 
     cond do
+      epoch == "trad" ->
+        changeset
+
       !composer and !artist ->
         changeset
         |> add_error(:artist, dgettext("errors", "can't be blank"))
@@ -90,19 +94,33 @@ defmodule Jumubase.Showtime.Piece do
     end)
   end
 
-  # Removes composer data when setting artist, and vice versa.
+  # Clears obsolete composer/artist fields depending on incoming changes.
+  defp clean_up_person_fields(%Changeset{changes: %{epoch: "trad"}} = changeset) do
+    changeset
+    |> clear_composer_fields()
+    |> clear_artist_fields()
+  end
+
   defp clean_up_person_fields(%Changeset{changes: %{artist: artist}} = changeset)
        when not is_nil(artist) do
+    clear_composer_fields(changeset)
+  end
+
+  defp clean_up_person_fields(%Changeset{changes: %{composer: composer}} = changeset)
+       when not is_nil(composer) do
+    clear_artist_fields(changeset)
+  end
+
+  defp clean_up_person_fields(changeset), do: changeset
+
+  defp clear_composer_fields(%Changeset{} = changeset) do
     changeset
     |> put_change(:composer, nil)
     |> put_change(:composer_born, nil)
     |> put_change(:composer_died, nil)
   end
 
-  defp clean_up_person_fields(%Changeset{changes: %{composer: composer}} = changeset)
-       when not is_nil(composer) do
+  defp clear_artist_fields(%Changeset{} = changeset) do
     put_change(changeset, :artist, nil)
   end
-
-  defp clean_up_person_fields(changeset), do: changeset
 end

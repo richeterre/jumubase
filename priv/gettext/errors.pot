@@ -8,7 +8,7 @@
 ## date. Leave `msgstr`s empty as changing them here as no
 ## effect: edit them in PO (`.po`) files instead.
 ## From Ecto.Changeset.cast/4
-#: lib/jumubase/showtime/piece.ex:59 lib/jumubase/showtime/piece.ex:60
+#: lib/jumubase/showtime/piece.ex:63 lib/jumubase/showtime/piece.ex:64
 msgid "can't be blank"
 msgstr ""
 
@@ -121,7 +121,7 @@ msgid "must be unique"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/showtime/piece.ex:66
+#: lib/jumubase/showtime/piece.ex:70
 msgid "can only have either a composer or an artist"
 msgstr ""
 

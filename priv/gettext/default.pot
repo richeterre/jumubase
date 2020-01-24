@@ -356,8 +356,8 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
-#: lib/jumubase_web/views/internal/piece_view.ex:26 lib/jumubase_web/views/internal/piece_view.ex:26
-#: lib/jumubase_web/views/internal/piece_view.ex:36 lib/jumubase_web/views/internal/piece_view.ex:36
+#: lib/jumubase_web/views/internal/piece_view.ex:28 lib/jumubase_web/views/internal/piece_view.ex:28
+#: lib/jumubase_web/views/internal/piece_view.ex:38 lib/jumubase_web/views/internal/piece_view.ex:38
 msgid "Epoch"
 msgstr ""
 
@@ -531,7 +531,7 @@ msgid "Stay logged in"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/index.html.eex:38
+#: lib/jumubase_web/templates/internal/category/index.html.eex:40
 msgid "Add Category"
 msgstr ""
 
@@ -552,30 +552,30 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:12
-#: lib/jumubase_web/views/internal/category_view.ex:53
+#: lib/jumubase_web/views/internal/category_view.ex:59
 msgid "Classical"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:65
+#: lib/jumubase_web/views/internal/category_view.ex:71
 msgid "Ensemble"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/_form.html.eex:22
-#: lib/jumubase_web/templates/internal/category/index.html.eex:11
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:33
+#: lib/jumubase_web/templates/internal/category/index.html.eex:12
 msgid "Genre"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/registration.html.eex:28
-#: lib/jumubase_web/views/internal/category_view.ex:55 lib/jumubase_web/views/internal/category_view.ex:85
+#: lib/jumubase_web/views/internal/category_view.ex:61 lib/jumubase_web/views/internal/category_view.ex:91
 msgid "Kimu"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:13
-#: lib/jumubase_web/views/internal/category_view.ex:54
+#: lib/jumubase_web/views/internal/category_view.ex:60
 msgid "Popular"
 msgstr ""
 
@@ -586,18 +586,18 @@ msgid "Short name"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:64
+#: lib/jumubase_web/views/internal/category_view.ex:70
 msgid "Solo"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:66
+#: lib/jumubase_web/views/internal/category_view.ex:72
 msgid "Solo/Ensemble"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/_form.html.eex:33
-#: lib/jumubase_web/templates/internal/category/index.html.eex:12
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:22
+#: lib/jumubase_web/templates/internal/category/index.html.eex:11
 msgid "Type"
 msgstr ""
 
@@ -1035,7 +1035,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.eex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:29
+#: lib/jumubase_web/views/internal/stage_view.ex:31
 msgid "Intermission"
 msgstr ""
 
@@ -1072,7 +1072,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:9
-#: lib/jumubase_web/views/internal/category_view.ex:78
+#: lib/jumubase_web/views/internal/category_view.ex:84
 msgid "Accordion"
 msgstr ""
 
@@ -1092,7 +1092,7 @@ msgid "Clarinet"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:77
+#: lib/jumubase_web/views/internal/category_view.ex:83
 msgid "Classical Vocals"
 msgstr ""
 
@@ -1149,7 +1149,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:24
-#: lib/jumubase_web/views/internal/category_view.ex:79
+#: lib/jumubase_web/views/internal/category_view.ex:85
 msgid "Harp"
 msgstr ""
 
@@ -1190,34 +1190,34 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:34
-#: lib/jumubase_web/views/internal/category_view.ex:80
+#: lib/jumubase_web/views/internal/category_view.ex:86
 msgid "Organ"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:36
-#: lib/jumubase_web/views/internal/category_view.ex:81
+#: lib/jumubase_web/views/internal/category_view.ex:87
 msgid "Percussion"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:37
-#: lib/jumubase_web/views/internal/category_view.ex:73
+#: lib/jumubase_web/views/internal/category_view.ex:79
 msgid "Piano"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:76
+#: lib/jumubase_web/views/internal/category_view.ex:82
 msgid "Plucked Instruments"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:84
+#: lib/jumubase_web/views/internal/category_view.ex:90
 msgid "Pop Instrumental"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:83
+#: lib/jumubase_web/views/internal/category_view.ex:89
 msgid "Pop Vocals"
 msgstr ""
 
@@ -1232,7 +1232,7 @@ msgid "Saxophone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:82
+#: lib/jumubase_web/views/internal/category_view.ex:88
 msgid "Special Lineups"
 msgstr ""
 
@@ -1282,12 +1282,12 @@ msgid "Vocals"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:75
+#: lib/jumubase_web/views/internal/category_view.ex:81
 msgid "Wind Instruments"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:74
+#: lib/jumubase_web/views/internal/category_view.ex:80
 msgid "String Instruments"
 msgstr ""
 
@@ -1853,5 +1853,11 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:63
+#: lib/jumubase_web/templates/internal/category/index.html.eex:15
 msgid "Notes"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/piece_view.ex:9
+msgid "Trad."
 msgstr ""

@@ -6,6 +6,8 @@ defmodule JumubaseWeb.Internal.PieceView do
   @doc """
   Returns the piece's composer or artist info.
   """
+  def person_info(%Piece{composer: nil, artist: nil}), do: gettext("Trad.")
+
   def person_info(%Piece{composer: nil, artist: artist}), do: artist
 
   def person_info(%Piece{composer: composer, artist: nil} = pc) do

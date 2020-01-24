@@ -18,6 +18,11 @@ defmodule JumubaseWeb.Internal.PieceViewTest do
       piece = build(:popular_piece, artist: "Johnny Cash")
       assert PieceView.person_info(piece) == "Johnny Cash"
     end
+
+    test "returns special text for a traditional piece with no artist or composer" do
+      piece = build(:piece, composer: nil, artist: nil, epoch: "trad")
+      assert PieceView.person_info(piece) == "Trad."
+    end
   end
 
   describe "duration/1" do

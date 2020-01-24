@@ -25,10 +25,10 @@ Vue.component('piece-panel', {
       return isEmpty(this.errors) ? 'panel-default' : 'panel-danger'
     },
     hasComposerFields() {
-      return isClassicalOrKimu(this.genre)
+      return isClassicalOrKimu(this.genre) && !isTraditional(this.piece)
     },
     hasArtistField() {
-      return isPopular(this.genre)
+      return isPopular(this.genre) && !isTraditional(this.piece)
     },
   },
 
@@ -54,13 +54,16 @@ Vue.component('piece-panel', {
 })
 
 function getPanelTitle(props) {
-  const { genre, index, piece: { artist, composer, title }, piece_term } = props
+  const { genre, index, piece, piece_term } = props
+  const { artist, composer, title } = piece
 
   const titleText = title.trim() || `${piece_term} ${index + 1}`
   const composerText = composer.trim()
   const artistText = artist.trim()
 
-  if (isClassicalOrKimu(genre) && composerText) {
+  if (isTraditional(piece)) {
+    return `${titleText} (trad.)`
+  } else if (isClassicalOrKimu(genre) && composerText) {
     return `${composerText}: ${titleText}`
   } else if (isPopular(genre) && artistText) {
     return `${titleText} (${artistText})`
@@ -75,4 +78,8 @@ function isClassicalOrKimu(genre) {
 
 function isPopular(genre) {
   return genre === "popular"
+}
+
+function isTraditional(piece) {
+  return piece.epoch === "trad"
 }

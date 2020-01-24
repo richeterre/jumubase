@@ -27,27 +27,18 @@ defmodule JumubaseWeb.Internal.PieceViewTest do
     end
   end
 
-  describe "epoch_text/1" do
-    test "returns an epoch text for a traditional piece" do
-      piece = build(:piece, epoch: "trad")
-      assert PieceView.epoch_text(piece) == "trad."
+  describe "duration_and_epoch_info/1" do
+    test "returns duration and epoch information for a traditional piece" do
+      piece = build(:piece, epoch: "trad", minutes: 4, seconds: 3)
+
+      assert PieceView.duration_and_epoch_info(piece) == "4'03"
     end
 
-    test "returns an epoch text for a non-traditional piece" do
-      piece = build(:piece, epoch: "b")
-      assert PieceView.epoch_text(piece) == "Epoch b"
-    end
-  end
+    test "returns duration and epoch information for a non-traditional piece" do
+      piece = build(:piece, epoch: "b", minutes: 4, seconds: 3)
 
-  describe "epoch_info/1" do
-    test "returns epoch information for a traditional piece" do
-      assert PieceView.epoch_info("trad") |> safe_to_string ==
-               "<abbr title=\"Traditional / Folk Music\">trad.</abbr>"
-    end
-
-    test "returns epoch information for a non-traditional piece" do
-      assert PieceView.epoch_info("b") |> safe_to_string ==
-               "Epoch <abbr title=\"Baroque\">b</abbr>"
+      assert PieceView.duration_and_epoch_info(piece) |> html_escape() |> safe_to_string ==
+               "4&#39;03 / Epoch <abbr title=\"Baroque\">b</abbr>"
     end
   end
 end

@@ -4,6 +4,6 @@
     <br>
     <%= piece.title %>
     <br>
-    <span class="text-muted"><%= duration(piece) %> / <%= epoch_info(piece.epoch) %></span>
+    <span class="text-muted"><%= duration_and_epoch_info(piece) %></span>
   </p>
 <% end %>

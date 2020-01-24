@@ -20,30 +20,21 @@ defmodule JumubaseWeb.Internal.PieceView do
     "#{min}'#{pad_seconds(sec)}"
   end
 
-  def epoch_text(%Piece{} = pc) do
-    case pc.epoch do
-      "trad" -> "trad."
-      epoch -> "#{gettext("Epoch")} #{epoch}"
-    end
+  @doc """
+  Returns HTML element(s) describing the piece's duration and epoch.
+  """
+  def duration_and_epoch_info(%Piece{epoch: "trad"} = pc) do
+    duration(pc)
   end
 
-  @doc """
-  Returns HTML element(s) describing the piece's epoch.
-  """
-  def epoch_info("trad" = epoch), do: epoch_tag(epoch)
-
-  def epoch_info(epoch) do
-    "#{gettext("Epoch")} #{safe_to_string(epoch_tag(epoch))}" |> raw
+  def duration_and_epoch_info(%Piece{epoch: epoch} = pc) do
+    [duration(pc), " / #{gettext("Epoch")} ", epoch_tag(epoch)]
   end
 
   # Private helpers
 
   defp pad_seconds(sec) do
     sec |> Integer.to_string() |> String.pad_leading(2, "0")
-  end
-
-  defp epoch_tag("trad" = epoch) do
-    content_tag(:abbr, "trad.", title: JumuParams.epoch_description(epoch))
   end
 
   defp epoch_tag(epoch) do

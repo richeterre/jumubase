@@ -147,6 +147,7 @@ defmodule JumubaseWeb.Router do
       post "/performances/migrate-advancing", PerformanceController, :migrate_advancing,
         as: :performances
 
+      get "/participants/export-csv", ParticipantController, :export_csv
       post "/participants/send-welcome-emails", ParticipantController, :send_welcome_emails
 
       resources "/contest_categories", ContestCategoryController, only: [:index]

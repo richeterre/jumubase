@@ -43,6 +43,7 @@ defmodule Jumubase.Mixfile do
       {:ex_machina, "~> 2.2"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.1"},
+      {:nimble_csv, "~> 0.6"},
       {:pdf_generator, "~> 0.4"},
       {:phauxth, "~> 1.2"},
       {:phoenix, "~> 1.4.0"},

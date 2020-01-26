@@ -57,13 +57,13 @@ msgid "Observer"
 msgstr "Beobachter"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:35
+#: lib/jumubase_web/templates/layout/nav.html.eex:36
 #: lib/jumubase_web/templates/session/new.html.eex:1
 msgid "Internal Pages"
 msgstr "Interne Seiten"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:12
+#: lib/jumubase_web/views/layout_view.ex:16
 msgid "Jumu logo"
 msgstr "Jumu-Logo"
 
@@ -210,7 +210,7 @@ msgid "Accompanist"
 msgstr "Begleiter"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:30
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:37
 #: lib/jumubase_web/templates/internal/participant/show.html.eex:8 lib/jumubase_web/templates/performance/_appearance_panels.html.eex:75
 msgid "Birthdate"
 msgstr "Geburtsdatum"
@@ -220,7 +220,7 @@ msgstr "Geburtsdatum"
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:36 lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:27 lib/jumubase_web/templates/internal/performance/jury_material.html.eex:45
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51 lib/jumubase_web/templates/internal/stage/timetable.html.eex:31
-#: lib/jumubase_web/templates/performance/_form.html.eex:20 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:222
+#: lib/jumubase_web/templates/performance/_form.html.eex:20 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:232
 msgid "Category"
 msgstr "Kategorie"
 
@@ -231,7 +231,7 @@ msgid "Ensemblist"
 msgstr "Ensemblepartner"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:29
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:36
 #: lib/jumubase_web/templates/internal/user/form.html.eex:6 lib/jumubase_web/templates/performance/_appearance_panels.html.eex:47
 msgid "First name"
 msgstr "Vorname"
@@ -242,7 +242,7 @@ msgid "Instrument"
 msgstr "Instrument"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:28
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:35
 #: lib/jumubase_web/templates/internal/user/form.html.eex:14 lib/jumubase_web/templates/performance/_appearance_panels.html.eex:61
 msgid "Last name"
 msgstr "Nachname"
@@ -254,7 +254,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:37 lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:33 lib/jumubase_web/templates/internal/performance/jury_material.html.eex:46
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52 lib/jumubase_web/templates/internal/performance/show.html.eex:19
-#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:32 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:224
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:32 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:234
 msgid "Participants"
 msgstr "Teilnehmer"
 
@@ -357,8 +357,8 @@ msgstr "Änderungscode"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/_piece_panels.html.eex:113
-#: lib/jumubase_web/views/internal/piece_view.ex:28 lib/jumubase_web/views/internal/piece_view.ex:28
-#: lib/jumubase_web/views/internal/piece_view.ex:38 lib/jumubase_web/views/internal/piece_view.ex:38
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:189 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:189
+#: lib/jumubase_web/views/internal/piece_view.ex:33 lib/jumubase_web/views/internal/piece_view.ex:33
 msgid "Epoch"
 msgstr "Epoche"
 
@@ -433,7 +433,7 @@ msgid "welcome to your personal Jumu portal!"
 msgstr "willkommen auf deinem persönlichen Jumu-Portal!"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:32
+#: lib/jumubase_web/templates/layout/nav.html.eex:33
 msgid "Log out"
 msgstr "Ausloggen"
 
@@ -858,7 +858,7 @@ msgstr "Weitere anzeigen…"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:7
-#: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.eex:7 lib/jumubase_web/templates/internal/participant/index.html.eex:31
+#: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.eex:7 lib/jumubase_web/templates/internal/participant/index.html.eex:38
 msgid "Appearances"
 msgstr "Auftritte"
 
@@ -1314,7 +1314,7 @@ msgid "Create jury material"
 msgstr "Jurymaterial erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:230
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:240
 msgid "Result"
 msgstr "Ergebnis"
 
@@ -1326,13 +1326,13 @@ msgstr "Jurytabelle ausgeben"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/advancing.html.eex:49
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:38 lib/jumubase_web/templates/internal/performance/edit_results.html.eex:24
-#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:223
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:233
 msgid "AG"
 msgstr "AG"
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:206
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:216
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:216
 msgid "points"
 msgstr "Punkte"
 
@@ -1597,12 +1597,12 @@ msgstr[0] "Der verwaiste Teilnehmer wurde gelöscht."
 msgstr[1] "Es wurden %{count} verwaiste Teilnehmer gelöscht."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:19
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:26
 msgid "Do you really want to send the welcome emails?"
 msgstr "Möchtest du die Willkommensmails wirklich senden?"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/participant/index.html.eex:16
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:23
 msgid "Send welcome emails"
 msgstr "Willkommensmails senden"
 
@@ -1862,3 +1862,8 @@ msgstr "Anmerkungen"
 #: lib/jumubase_web/views/internal/piece_view.ex:9
 msgid "Trad."
 msgstr "Trad."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/participant/index.html.eex:15
+msgid "Export as CSV"
+msgstr "Als CSV exportieren"

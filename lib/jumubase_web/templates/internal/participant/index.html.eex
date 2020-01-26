@@ -12,6 +12,11 @@
     class: "btn btn-default"
     %>
   &#32;
+  <%= icon_link "export", gettext("Export as CSV"),
+    Routes.internal_contest_participant_path(@conn, :export_csv, @contest),
+    class: "btn btn-default"
+    %>
+  &#32;
   <%= if admin?(@current_user), do:
     icon_link "bullhorn", gettext("Send welcome emails"),
     Routes.internal_contest_participant_path(@conn, :send_welcome_emails, @contest),

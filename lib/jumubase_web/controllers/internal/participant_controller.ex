@@ -37,7 +37,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     conn
     |> send_download({:binary, csv_data},
       content_type: "application/csv",
-      filename: "teilnehmer.csv"
+      filename: "Teilnehmer.csv"
     )
   end
 

@@ -5,11 +5,11 @@ defmodule JumubaseWeb.CSVEncoder do
   A tool to export registration data as comma-separated values.
   """
 
-  import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1]
+  import JumubaseWeb.Internal.PerformanceView, only: [category_name: 1, predecessor_host_name: 1]
   alias Jumubase.Showtime.{Participant, Performance}
 
-  def encode(participants) do
-    data = column_headers() ++ Enum.map(participants, &map_participant/1)
+  def encode(participants, round) do
+    data = [column_headers(round)] ++ Enum.map(participants, &map_participant(&1, round))
 
     data
     |> CSVParser.dump_to_iodata()
@@ -18,11 +18,25 @@ defmodule JumubaseWeb.CSVEncoder do
 
   # Private helpers
 
-  defp column_headers do
-    [~w(Nachname Vorname Geburtsdatum Telefon E-Mail Auftritte)]
+  defp column_headers(_round = 2) do
+    column_headers(1) ++ ["RW"]
   end
 
-  defp map_participant(%Participant{} = pt) do
+  defp column_headers(_round) do
+    ~w(Nachname Vorname Geburtsdatum Telefon E-Mail Auftritte)
+  end
+
+  defp map_participant(%Participant{} = pt, _round = 2) do
+    predecessor_host_names =
+      pt.performances
+      |> Enum.map(&predecessor_host_name/1)
+      |> Enum.uniq()
+      |> Enum.join(", ")
+
+    map_participant(pt, 1) ++ [predecessor_host_names]
+  end
+
+  defp map_participant(%Participant{} = pt, _round) do
     [
       pt.family_name,
       pt.given_name,

@@ -32,7 +32,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
 
   def export_csv(conn, _params, contest) do
     participants = Showtime.list_participants(contest)
-    csv_data = JumubaseWeb.CSVEncoder.encode(participants)
+    csv_data = JumubaseWeb.CSVEncoder.encode(participants, contest.round)
 
     conn
     |> send_download({:binary, csv_data},

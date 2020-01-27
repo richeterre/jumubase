@@ -10,7 +10,10 @@ defmodule JumubaseWeb.CSVEncoder do
 
   def encode(participants) do
     data = column_headers() ++ Enum.map(participants, &map_participant/1)
-    CSVParser.dump_to_iodata(data)
+
+    data
+    |> CSVParser.dump_to_iodata()
+    |> make_ms_excel_compatible
   end
 
   # Private helpers
@@ -32,5 +35,13 @@ defmodule JumubaseWeb.CSVEncoder do
 
   defp format_performance(%Performance{} = p) do
     "#{category_name(p)} #{p.age_group}"
+  end
+
+  defp make_ms_excel_compatible(data) do
+    # See https://underthehood.meltwater.com/blog/2018/08/08/excel-friendly-csv-exports-with-elixir/ for details
+    encoding = {:utf16, :little}
+    bom = :unicode.encoding_to_bom(encoding)
+    converted_data = :unicode.characters_to_binary(data, :utf8, encoding)
+    [bom, converted_data]
   end
 end

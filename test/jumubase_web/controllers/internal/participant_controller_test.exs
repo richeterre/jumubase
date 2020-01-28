@@ -62,6 +62,34 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
     end
   end
 
+  describe "export_csv/2" do
+    for role <- all_roles() do
+      @tag login_as: role
+      test "lets authorized #{role} users download a CSV of the contest's participants",
+           %{conn: conn, user: u} do
+        c = insert_authorized_contest(u)
+        conn = get(conn, Routes.internal_contest_participant_path(conn, :export_csv, c))
+        assert_csv_file_response(conn, "Teilnehmer.csv")
+      end
+    end
+
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects unauthorized #{role} users trying to download a CSV of the contest's participants",
+           %{conn: conn, user: u} do
+        c = insert_unauthorized_contest(u)
+        conn = get(conn, Routes.internal_contest_participant_path(conn, :export_csv, c))
+        assert_unauthorized_user(conn)
+      end
+    end
+
+    test "redirects guests trying to download a CSV of the contest's participants", %{conn: conn} do
+      c = insert(:contest, round: 1)
+      conn = get(conn, Routes.internal_contest_participant_path(conn, :export_csv, c))
+      assert_unauthorized_guest(conn)
+    end
+  end
+
   describe "send_welcome_emails/2" do
     setup config do
       Map.put(config, :contest, insert(:contest, round: 2))
@@ -88,6 +116,15 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
 
   defp attempt_send_welcome_emails(conn, contest) do
     post(conn, Routes.internal_contest_participant_path(conn, :send_welcome_emails, contest))
+  end
+
+  defp assert_csv_file_response(conn, filename) do
+    assert conn.status == 200
+    assert get_resp_header(conn, "content-type") == ["application/csv"]
+
+    assert get_resp_header(conn, "content-disposition") == [
+             "attachment; filename=\"#{filename}\""
+           ]
   end
 
   defp assert_send_welcome_emails_success(conn, contest) do

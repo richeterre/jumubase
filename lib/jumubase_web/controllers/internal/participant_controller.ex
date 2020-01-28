@@ -30,17 +30,6 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     |> render("index.html")
   end
 
-  def export_csv(conn, _params, contest) do
-    participants = Showtime.list_participants(contest)
-    csv_data = JumubaseWeb.CSVEncoder.encode(participants, contest.round)
-
-    conn
-    |> send_download({:binary, csv_data},
-      content_type: "application/csv",
-      filename: "Teilnehmer.csv"
-    )
-  end
-
   def show(conn, %{"id" => id}, contest) do
     participant = Showtime.get_participant!(contest, id)
 
@@ -51,6 +40,17 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     |> add_participants_breadcrumb(contest)
     |> add_participant_breadcrumb(contest, participant)
     |> render("show.html")
+  end
+
+  def export_csv(conn, _params, contest) do
+    participants = Showtime.list_participants(contest)
+    csv_data = JumubaseWeb.CSVEncoder.encode(participants, contest.round)
+
+    conn
+    |> send_download({:binary, csv_data},
+      content_type: "application/csv",
+      filename: "Teilnehmer.csv"
+    )
   end
 
   def send_welcome_emails(conn, _params, contest) do

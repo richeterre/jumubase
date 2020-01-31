@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       <%= link to: Routes.page_path(@conn, :home), class: "navbar-brand" do %>
-        <%= img_tag "/images/jumuball.png", alt: gettext("Jumu logo") %>
+        <%= nav_brand_element() %>
       <% end %>
     </div>
 

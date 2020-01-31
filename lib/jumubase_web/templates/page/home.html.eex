@@ -1,4 +1,4 @@
-<h1><%= title() %></h1>
+<h1><%= home_title() %></h1>
 
 <p class="lead">
   <%= gettext("The website for “Jugend musiziert” at German schools abroad") %>

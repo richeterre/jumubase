@@ -112,8 +112,9 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     end
 
     test "shows the edit form for a valid edit code", %{conn: conn, contest: c, performance: p} do
-      conn = get(conn, Routes.performance_path(conn, :edit, c, p, edit_code: p.edit_code))
-      assert html_response(conn, 200) =~ "Edit registration"
+      conn
+      |> get(Routes.performance_path(conn, :edit, c, p, edit_code: p.edit_code))
+      |> assert_edit_success
     end
 
     test "returns an error when the contest doesn't match", %{conn: conn, performance: p} do
@@ -147,13 +148,14 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     end
 
     @tag allows_registration: false
-    test "shows an error if the contest allows no registration", %{
+    test "shows the edit form even if the contest allows no registration", %{
       conn: conn,
       contest: c,
       performance: p
     } do
-      conn = get(conn, Routes.performance_path(conn, :edit, c, p, edit_code: p.edit_code))
-      assert_allows_no_registration_error(conn)
+      conn
+      |> get(Routes.performance_path(conn, :edit, c, p, edit_code: p.edit_code))
+      |> assert_edit_success()
     end
   end
 
@@ -171,11 +173,9 @@ defmodule JumubaseWeb.PerformanceControllerTest do
       [_cc1, cc2] = c.contest_categories
       params = valid_performance_params(cc2)
 
-      conn =
-        put(conn, Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
-
-      assert get_flash(conn, :success) == "Your changes to the registration were saved."
-      assert redirected_to(conn) == Routes.page_path(conn, :home)
+      conn
+      |> put(Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
+      |> assert_update_success()
     end
 
     test "returns an error when the contest doesn't match", %{
@@ -229,7 +229,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
     end
 
     @tag allows_registration: false
-    test "shows an error if the contest allows no registration", %{
+    test "updates a performance even if the contest allows no registration", %{
       conn: conn,
       contest: c,
       performance: p
@@ -239,7 +239,7 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
       conn
       |> put(Routes.performance_path(conn, :update, c, p, edit_code: p.edit_code), params)
-      |> assert_allows_no_registration_error
+      |> assert_update_success()
     end
 
     test "shows an error if the performance already has results", %{conn: conn, contest: c} do
@@ -257,6 +257,15 @@ defmodule JumubaseWeb.PerformanceControllerTest do
 
   defp get_inserted_performance do
     Repo.one(Performance) |> Repo.preload(appearances: :participant)
+  end
+
+  defp assert_edit_success(conn) do
+    assert html_response(conn, 200) =~ "Edit registration"
+  end
+
+  defp assert_update_success(conn) do
+    assert get_flash(conn, :success) == "Your changes to the registration were saved."
+    assert redirected_to(conn) == Routes.page_path(conn, :home)
   end
 
   defp assert_deadline_error(conn) do

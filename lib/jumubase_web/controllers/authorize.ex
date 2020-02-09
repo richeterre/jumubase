@@ -150,14 +150,14 @@ defmodule JumubaseWeb.Authorize do
           failure_path
         )
 
-      !contest.allows_registration ->
-        error(
-          conn,
-          gettext(
-            "This contest is not open for registration. Please contact us if you need assistance."
-          ),
-          failure_path
-        )
+      # !contest.allows_registration ->
+      #   error(
+      #     conn,
+      #     gettext(
+      #       "This contest is not open for registration. Please contact us if you need assistance."
+      #     ),
+      #     failure_path
+      #   )
 
       true ->
         success_fun.({:ok, contest})

@@ -10,7 +10,12 @@ defmodule JumubaseWeb.Schema do
   query do
     field :contests, non_null(list_of(non_null(:contest))) do
       description "The contests with public timetables."
-      resolve &FoundationResolver.public_contests/3
+      resolve &FoundationResolver.contests/3
+    end
+
+    field :featured_contests, non_null(list_of(non_null(:contest))) do
+      description "The public contests that are currently featured."
+      resolve &FoundationResolver.featured_contests/3
     end
 
     field :contest_categories, list_of(non_null(:contest_category)) do

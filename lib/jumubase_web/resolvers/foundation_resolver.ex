@@ -3,8 +3,12 @@ defmodule JumubaseWeb.FoundationResolver do
   alias Jumubase.Foundation.{Contest, ContestCategory, Host}
   alias JumubaseWeb.Internal.ContestView
 
-  def public_contests(_, _, _) do
+  def contests(_, _, _) do
     {:ok, Foundation.list_public_contests()}
+  end
+
+  def featured_contests(_, _, _) do
+    {:ok, Foundation.list_featured_contests()}
   end
 
   def contest_categories(_, %{contest_id: c_id}, _) do

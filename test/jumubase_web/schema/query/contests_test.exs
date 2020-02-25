@@ -108,4 +108,21 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
              }
            }
   end
+
+  test "returns all featured contests", %{conn: conn} do
+    %{stages: [s]} = h = insert(:host, stages: build_list(1, :stage))
+
+    d0 = Timex.today()
+    dp1 = Timex.shift(d0, days: 1)
+
+    c1 = insert(:contest, host: h, start_date: d0, end_date: dp1, timetables_public: true)
+    c2 = insert(:contest, host: h, start_date: dp1, end_date: dp1, timetables_public: true)
+    insert_performance(c1, stage: s)
+    insert_performance(c2, stage: s)
+
+    query = "query { contests: featuredContests { id } }"
+    conn = get(conn, "/graphql", query: query)
+
+    assert json_response(conn, 200) == %{"data" => %{"contests" => [%{"id" => "#{c1.id}"}]}}
+  end
 end

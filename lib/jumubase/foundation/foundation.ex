@@ -130,6 +130,15 @@ defmodule Jumubase.Foundation do
     |> exclude_stageless_contests
   end
 
+  def list_featured_contests do
+    today = Timex.today()
+
+    public_contests_query()
+    |> where([contests: c], c.start_date <= ^today and c.end_date >= ^today)
+    |> preloaded_with_stages
+    |> Repo.all()
+  end
+
   @doc """
   Returns the latest contests relevant to the given user,
   i.e. own contests and, for non-local users, LW contests.

@@ -352,6 +352,30 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "list_featured_contests/0" do
+    test "returns all public contests that are currently ongoing" do
+      %{stages: [s]} = h = insert(:host, stages: build_list(1, :stage))
+
+      d0 = Timex.today()
+      dm1 = Timex.shift(d0, days: -1)
+      dp1 = Timex.shift(d0, days: 1)
+
+      # Matching contests
+      c1 = insert(:contest, host: h, start_date: d0, end_date: dp1, timetables_public: true)
+      insert_performance(c1, stage: s)
+      c2 = insert(:contest, host: h, start_date: dm1, end_date: d0, timetables_public: true)
+      insert_performance(c2, stage: s)
+
+      # Not ongoing
+      c3 = insert(:contest, host: h, start_date: dm1, end_date: dm1, timetables_public: true)
+      insert_performance(c3, stage: s)
+      c4 = insert(:contest, host: h, start_date: dp1, end_date: dp1, timetables_public: true)
+      insert_performance(c4, stage: s)
+
+      assert_ids_match_unordered(Foundation.list_featured_contests(), [c1, c2])
+    end
+  end
+
   describe "list_latest_relevant_contests/2" do
     setup %{role: role} do
       [user: insert(:user, role: role)]

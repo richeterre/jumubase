@@ -251,23 +251,26 @@ defmodule Jumubase.FoundationTest do
       assert_ids_match_unordered(Foundation.list_public_contests(), [c1])
     end
 
-    test "orders the contest by season, round, and host name" do
+    test "orders the contest by date, round, and host name" do
       %{stages: [s1]} = h1 = insert(:host, name: "B", stages: build_list(1, :stage))
       %{stages: [s2]} = h2 = insert(:host, name: "A", stages: build_list(1, :stage))
 
-      c1 = insert(:contest, host: h1, season: 56, round: 1, timetables_public: true)
+      today = Timex.today()
+      tomorrow = Timex.shift(today, days: 1)
+
+      c1 = insert(:contest, host: h1, start_date: tomorrow, round: 1, timetables_public: true)
       insert_performance(c1, stage: s1)
-      c2 = insert(:contest, host: h1, season: 56, round: 0, timetables_public: true)
+      c2 = insert(:contest, host: h1, start_date: tomorrow, round: 0, timetables_public: true)
       insert_performance(c2, stage: s1)
-      c3 = insert(:contest, host: h2, season: 56, round: 0, timetables_public: true)
+      c3 = insert(:contest, host: h2, start_date: tomorrow, round: 0, timetables_public: true)
       insert_performance(c3, stage: s2)
-      c4 = insert(:contest, host: h2, season: 56, round: 1, timetables_public: true)
+      c4 = insert(:contest, host: h2, start_date: tomorrow, round: 1, timetables_public: true)
       insert_performance(c4, stage: s2)
-      c5 = insert(:contest, host: h1, season: 55, round: 1, timetables_public: true)
+      c5 = insert(:contest, host: h1, start_date: today, round: 1, timetables_public: true)
       insert_performance(c5, stage: s1)
-      c6 = insert(:contest, host: h1, season: 55, round: 0, timetables_public: true)
+      c6 = insert(:contest, host: h1, start_date: today, round: 0, timetables_public: true)
       insert_performance(c6, stage: s1)
-      c7 = insert(:contest, host: h2, season: 55, round: 0, timetables_public: true)
+      c7 = insert(:contest, host: h2, start_date: today, round: 0, timetables_public: true)
       insert_performance(c7, stage: s2)
 
       assert_ids_match_ordered(Foundation.list_public_contests(), [c4, c1, c3, c2, c5, c7, c6])

@@ -61,8 +61,8 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
 
   describe "predecessor_host_name/1" do
     test "returns the predecessor contest's host name" do
-      p = build(:performance, predecessor_host: build(:host, name: "DS Helsinki"))
-      assert PerformanceView.predecessor_host_name(p) == "DS Helsinki"
+      p = build(:performance, predecessor_host: build(:host, name: "Helsinki"))
+      assert PerformanceView.predecessor_host_name(p) == "Helsinki"
     end
 
     test "returns nil if the performance has no predecessor host" do
@@ -90,7 +90,9 @@ defmodule JumubaseWeb.Internal.PerformanceViewTest do
     end
 
     test "returns the predecessor host's name and flag as a long value" do
-      p = build(:performance, predecessor_host: build(:host, name: "Helsinki", country_code: "FI"))
+      p =
+        build(:performance, predecessor_host: build(:host, name: "Helsinki", country_code: "FI"))
+
       assert PerformanceView.predecessor_info(p, :long) == "🇫🇮 Helsinki"
     end
 

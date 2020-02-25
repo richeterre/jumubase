@@ -5,7 +5,7 @@ Repo.transaction(fn ->
   # Create hosts
 
   insert(:host,
-    name: "DS Barcelona",
+    name: "Barcelona",
     current_grouping: "1",
     city: "Barcelona",
     country_code: "ES",
@@ -15,7 +15,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Bilbao",
+    name: "Bilbao",
     current_grouping: "1",
     city: "Bilbao",
     country_code: "ES",
@@ -25,7 +25,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Gran Canaria",
+    name: "Gran Canaria",
     current_grouping: "1",
     city: "Las Palmas de Gran Canaria",
     country_code: "ES",
@@ -35,7 +35,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Lissabon",
+    name: "Lissabon",
     current_grouping: "1",
     city: "Lissabon",
     country_code: "PT",
@@ -45,7 +45,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Madrid",
+    name: "Madrid",
     current_grouping: "1",
     city: "Madrid",
     country_code: "ES",
@@ -55,7 +55,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Málaga",
+    name: "Málaga",
     current_grouping: "1",
     city: "Ojén (Málaga)",
     country_code: "ES",
@@ -65,7 +65,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Porto",
+    name: "Porto",
     current_grouping: "1",
     city: "Porto",
     country_code: "PT",
@@ -75,7 +75,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS San Sebastián",
+    name: "San Sebastián",
     current_grouping: "1",
     city: "Donostia-San Sebastián",
     country_code: "ES",
@@ -85,7 +85,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Sevilla",
+    name: "Sevilla",
     current_grouping: "1",
     city: "Sevilla",
     country_code: "ES",
@@ -95,7 +95,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Teneriffa",
+    name: "Teneriffa",
     current_grouping: "1",
     city: "Tabaiba",
     country_code: "ES",
@@ -105,7 +105,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Valencia",
+    name: "Valencia",
     current_grouping: "1",
     city: "Valencia",
     country_code: "ES",
@@ -115,7 +115,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Bratislava",
+    name: "Bratislava",
     current_grouping: "2",
     address:
       "c/o [Marianna Gazdíková & Astrid Rajter](mailto:jumu@deutscheschule.sk)<br>Palisády 51<br>811 06 Bratislava<br>Slowakei",
@@ -127,7 +127,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Brüssel",
+    name: "Brüssel",
     current_grouping: "2",
     address: "c/o Konstanze Rommel<br>Lange Eikstraat 71<br>1970 Wezembeek-Oppem<br>Belgien",
     city: "Brüssel",
@@ -138,7 +138,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Budapest",
+    name: "Budapest",
     current_grouping: "2",
     address:
       "c/o [Peter Bachmaier](mailto:pbachmaier@deutscheschule.hu)<br>Cinege ut 8/c<br>1121 Budapest<br>Ungarn",
@@ -150,7 +150,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Dublin",
+    name: "Dublin",
     current_grouping: "2",
     address:
       "c/o [Noelle Brennan](mailto:noelle.brennan@kilians.com)<br>Roebuck Road<br>Clonskeagh, Dublin 14<br>Irland",
@@ -162,7 +162,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Genf",
+    name: "Genf",
     current_grouping: "2",
     address: "c/o Elinor Ziellenbach<br>6, Chemin de Champ-Claude<br>1214 Vernier<br>Schweiz",
     city: "Genf",
@@ -173,7 +173,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Helsinki",
+    name: "Helsinki",
     current_grouping: "2",
     address:
       "c/o [Robert Bär](mailto:robert.bar@dsh.fi)<br>Malminkatu 14<br>00100 Helsinki<br>Finnland",
@@ -185,7 +185,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Kopenhagen",
+    name: "Kopenhagen",
     current_grouping: "2",
     address:
       "c/o [Angelika Bowes](mailto:ak@adm.sanktpetriskole.dk)<br>Larslejsstræde 5-7<br>1451 København K<br>Dänemark",
@@ -197,7 +197,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS London",
+    name: "London",
     current_grouping: "2",
     address:
       "c/o [Evelyn Meyer](mailto:evelyn.meyer@dslondon.org.uk)<br>Douglas House, Petersham Road<br>Richmond/Surrey TW 10 7 AH<br>Vereinigtes Königreich",
@@ -209,7 +209,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Moskau",
+    name: "Moskau",
     current_grouping: "2",
     address:
       "c/o [Christiane Beiküfner](mailto:bei@dsmoskau.ru)<br>Prospekt Wernadskogo 103/5<br>119526 Moskau<br>Russland",
@@ -221,7 +221,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Oslo",
+    name: "Oslo",
     current_grouping: "2",
     address:
       "c/o [Katja Maiwald](mailto:katja.maiwald@deutsche-schule.no)<br>Sporveisgata 20<br>0354 Oslo<br>Norwegen",
@@ -233,7 +233,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Paris",
+    name: "Paris",
     current_grouping: "2",
     address:
       "c/o [Martina Freund](mailto:martina.freund-krueger@idsp.fr)<br>Rue Pasteur 18<br>92 210 Saint Cloud<br>Frankreich",
@@ -245,7 +245,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Prag",
+    name: "Prag",
     current_grouping: "2",
     address: "c/o Aleš Kudela<br>Schwarzenberská 1/700<br>15800 Praha 5<br>Tschechische Republik",
     city: "Prag",
@@ -256,7 +256,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Sofia",
+    name: "Sofia",
     current_grouping: "2",
     address: "c/o Tiko Barz<br>ul. Joliot Curie 25<br>1113 Sofia<br>Bulgarien",
     city: "Sofia",
@@ -267,7 +267,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Stockholm",
+    name: "Stockholm",
     current_grouping: "2",
     address:
       "c/o [Irene Rieck](mailto:irene.rieck@tyskaskolan.se)<br>Karlavägen 25<br>11431 Stockholm<br>Schweden",
@@ -279,7 +279,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Warschau",
+    name: "Warschau",
     current_grouping: "2",
     address:
       "c/o [Marcin Lemiszewski](mailto:m.lemiszewski@wbs.pl)<br>ul. Sw. Urszuli Ledóchowskiej 3<br>02-972 Warszawa (Wilanów)<br>Polen",
@@ -291,7 +291,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Alexandria",
+    name: "Alexandria",
     current_grouping: "3",
     city: "Alexandria",
     country_code: "EG",
@@ -301,7 +301,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Athen",
+    name: "Athen",
     current_grouping: "3",
     city: "Athen",
     country_code: "GR",
@@ -311,7 +311,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Istanbul",
+    name: "Istanbul",
     current_grouping: "3",
     city: "Istanbul",
     country_code: "TR",
@@ -321,7 +321,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Kairo-Ost",
+    name: "Kairo-Ost",
     current_grouping: "3",
     city: "Kairo",
     country_code: "EG",
@@ -331,7 +331,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Mailand",
+    name: "Mailand",
     current_grouping: "3",
     city: "Mailand",
     country_code: "IT",
@@ -341,7 +341,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Rom",
+    name: "Rom",
     current_grouping: "3",
     city: "Rom",
     country_code: "IT",
@@ -351,7 +351,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Thessaloniki",
+    name: "Thessaloniki",
     current_grouping: "3",
     city: "Thessaloniki",
     country_code: "GR",
@@ -361,7 +361,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Kairo-West",
+    name: "Kairo-West",
     current_grouping: "3",
     city: "Kairo",
     country_code: "EG",
@@ -371,7 +371,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Jerusalem",
+    name: "Jerusalem",
     current_grouping: "3",
     city: "Jerusalem",
     country_code: "PS",

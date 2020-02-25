@@ -16,7 +16,7 @@ Repo.transaction(fn ->
   # Create demo hosts
 
   insert(:host,
-    name: "DS Valencia",
+    name: "Valencia",
     current_grouping: "1",
     city: "Valencia",
     country_code: "ES",
@@ -26,7 +26,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Bratislava",
+    name: "Bratislava",
     current_grouping: "2",
     city: "Bratislava",
     country_code: "SK",
@@ -36,7 +36,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Brüssel",
+    name: "Brüssel",
     current_grouping: "2",
     city: "Brüssel",
     country_code: "BE",
@@ -46,7 +46,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Budapest",
+    name: "Budapest",
     current_grouping: "2",
     city: "Budapest",
     country_code: "HU",
@@ -57,7 +57,7 @@ Repo.transaction(fn ->
 
   host3 =
     insert(:host,
-      name: "DS Dublin",
+      name: "Dublin",
       current_grouping: "2",
       city: "Dublin",
       country_code: "IE",
@@ -67,7 +67,7 @@ Repo.transaction(fn ->
     )
 
   insert(:host,
-    name: "DS Doha",
+    name: "Doha",
     current_grouping: "2",
     city: "Doha",
     country_code: "QA",
@@ -77,7 +77,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Genf",
+    name: "Genf",
     current_grouping: "2",
     city: "Genf",
     country_code: "CH",
@@ -88,7 +88,7 @@ Repo.transaction(fn ->
 
   host1 =
     insert(:host,
-      name: "DS Helsinki",
+      name: "Helsinki",
       current_grouping: "2",
       city: "Helsinki",
       country_code: "FI",
@@ -98,7 +98,7 @@ Repo.transaction(fn ->
     )
 
   insert(:host,
-    name: "DS Kopenhagen",
+    name: "Kopenhagen",
     current_grouping: "2",
     city: "Kopenhagen",
     country_code: "DK",
@@ -108,7 +108,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS London",
+    name: "London",
     current_grouping: "2",
     city: "London",
     country_code: "GB",
@@ -118,7 +118,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Moskau",
+    name: "Moskau",
     current_grouping: "2",
     city: "Moskau",
     country_code: "RU",
@@ -128,7 +128,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Oslo",
+    name: "Oslo",
     current_grouping: "2",
     city: "Oslo",
     country_code: "NO",
@@ -138,7 +138,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Paris",
+    name: "Paris",
     current_grouping: "2",
     city: "Paris",
     country_code: "FR",
@@ -148,7 +148,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Prag",
+    name: "Prag",
     current_grouping: "2",
     city: "Prag",
     country_code: "CZ",
@@ -158,7 +158,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Sofia",
+    name: "Sofia",
     current_grouping: "2",
     city: "Sofia",
     country_code: "BG",
@@ -169,7 +169,7 @@ Repo.transaction(fn ->
 
   host2 =
     insert(:host,
-      name: "DS Stockholm",
+      name: "Stockholm",
       current_grouping: "2",
       city: "Stockholm",
       country_code: "SE",
@@ -179,7 +179,7 @@ Repo.transaction(fn ->
     )
 
   insert(:host,
-    name: "DS Warschau",
+    name: "Warschau",
     current_grouping: "2",
     city: "Warschau",
     country_code: "PL",
@@ -189,7 +189,7 @@ Repo.transaction(fn ->
   )
 
   insert(:host,
-    name: "DS Rom",
+    name: "Rom",
     current_grouping: "3",
     city: "Rom",
     country_code: "IT",

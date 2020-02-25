@@ -15,10 +15,10 @@ defmodule JumubaseWeb.Internal.UserViewTest do
   end
 
   test "returns the names of a user's associated hosts" do
-    h1 = build(:host, name: "DS Helsinki")
-    h2 = build(:host, name: "DS Stockholm")
+    h1 = build(:host, name: "Helsinki")
+    h2 = build(:host, name: "Stockholm")
     user = build(:user, hosts: [h1, h2])
-    assert UserView.host_names(user) == "DS Helsinki, DS Stockholm"
+    assert UserView.host_names(user) == "Helsinki, Stockholm"
   end
 
   describe "role_tag/1" do

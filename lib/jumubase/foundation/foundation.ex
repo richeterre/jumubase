@@ -130,13 +130,19 @@ defmodule Jumubase.Foundation do
     |> exclude_stageless_contests
   end
 
-  def list_featured_contests do
+  def list_featured_contests(limit) do
     today = Timex.today()
+    earliest_end = Timex.shift(today, days: -1)
+    latest_start = Timex.shift(today, days: 14)
 
     public_contests_query()
-    |> where([contests: c], c.start_date <= ^today and c.end_date >= ^today)
+    |> where([contests: c], c.start_date <= ^latest_start and c.end_date >= ^earliest_end)
     |> preloaded_with_stages
+    |> order_by([contests: c], [c.start_date, c.end_date])
     |> Repo.all()
+    |> exclude_unused_stages
+    |> exclude_stageless_contests
+    |> Enum.take(limit)
   end
 
   @doc """

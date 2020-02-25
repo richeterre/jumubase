@@ -7,8 +7,8 @@ defmodule JumubaseWeb.FoundationResolver do
     {:ok, Foundation.list_public_contests()}
   end
 
-  def featured_contests(_, _, _) do
-    {:ok, Foundation.list_featured_contests()}
+  def featured_contests(_, %{limit: limit}, _) do
+    {:ok, Foundation.list_featured_contests(limit)}
   end
 
   def contest_categories(_, %{contest_id: c_id}, _) do

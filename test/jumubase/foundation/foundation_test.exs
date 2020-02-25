@@ -352,27 +352,42 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "list_featured_contests/0" do
-    test "returns all public contests that are currently ongoing" do
+  describe "list_featured_contests/1" do
+    test "returns at most N featured contests in ascending date order" do
       %{stages: [s]} = h = insert(:host, stages: build_list(1, :stage))
 
       d0 = Timex.today()
+      dm2 = Timex.shift(d0, days: -2)
       dm1 = Timex.shift(d0, days: -1)
       dp1 = Timex.shift(d0, days: 1)
+      dp14 = Timex.shift(d0, days: 14)
+      dp15 = Timex.shift(d0, days: 15)
+      dp16 = Timex.shift(d0, days: 16)
 
-      # Matching contests
-      c1 = insert(:contest, host: h, start_date: d0, end_date: dp1, timetables_public: true)
+      # Earliest matching contest
+      c1 = insert(:contest, host: h, start_date: dm2, end_date: dm1, timetables_public: true)
+
+      # With these we test sorting by start *and* end date
+      c2 = insert(:contest, host: h, start_date: d0, end_date: dp1, timetables_public: true)
+      c3 = insert(:contest, host: h, start_date: d0, end_date: d0, timetables_public: true)
+
+      # Latest matching contests
+      c4 = insert(:contest, host: h, start_date: dp14, end_date: dp15, timetables_public: true)
+      c5 = insert(:contest, host: h, start_date: dp14, end_date: dp16, timetables_public: true)
+
       insert_performance(c1, stage: s)
-      c2 = insert(:contest, host: h, start_date: dm1, end_date: d0, timetables_public: true)
       insert_performance(c2, stage: s)
-
-      # Not ongoing
-      c3 = insert(:contest, host: h, start_date: dm1, end_date: dm1, timetables_public: true)
       insert_performance(c3, stage: s)
-      c4 = insert(:contest, host: h, start_date: dp1, end_date: dp1, timetables_public: true)
       insert_performance(c4, stage: s)
+      insert_performance(c5, stage: s)
 
-      assert_ids_match_unordered(Foundation.list_featured_contests(), [c1, c2])
+      # Not matching
+      c6 = insert(:contest, host: h, start_date: dm2, end_date: dm2, timetables_public: true)
+      c7 = insert(:contest, host: h, start_date: dp15, end_date: dp15, timetables_public: true)
+      insert_performance(c6, stage: s)
+      insert_performance(c7, stage: s)
+
+      assert_ids_match_ordered(Foundation.list_featured_contests(4), [c1, c3, c2, c4])
     end
   end
 

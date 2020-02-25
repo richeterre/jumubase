@@ -15,6 +15,7 @@ defmodule JumubaseWeb.Schema do
 
     field :featured_contests, non_null(list_of(non_null(:contest))) do
       description "The public contests that are currently featured."
+      arg :limit, non_null(:integer)
       resolve &FoundationResolver.featured_contests/3
     end
 

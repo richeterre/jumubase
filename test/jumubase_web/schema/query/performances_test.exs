@@ -102,7 +102,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
     end
 
     test "returns predecessor host fields if available, or else nil", %{conn: conn} do
-      rw_host = insert(:host, name: "DS Helsinki", country_code: "FI")
+      rw_host = insert(:host, name: "Helsinki", country_code: "FI")
       lw = insert(:contest, round: 2, timetables_public: true)
 
       p1 = insert_scheduled_performance(lw, predecessor_host: rw_host)
@@ -110,7 +110,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
 
       query = """
       query Performances($contestId: ID!) {
-        performances(contestId: $contestId) { id predecessorHost { name countryCode } }
+        performances(contestId: $contestId) { id predecessorHost { name countryCodes } }
       }
       """
 
@@ -121,7 +121,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
                  "performances" => [
                    %{
                      "id" => "#{p1.id}",
-                     "predecessorHost" => %{"name" => "DS Helsinki", "countryCode" => "FI"}
+                     "predecessorHost" => %{"name" => "Helsinki", "countryCodes" => ["FI"]}
                    },
                    %{
                      "id" => "#{p2.id}",
@@ -212,13 +212,13 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
     end
 
     test "returns predecessor host fields when available", %{conn: conn} do
-      rw_host = build(:host, name: "DS Helsinki", country_code: "FI")
+      rw_host = build(:host, name: "Israel/Palästina", country_code: "IL/PS")
       lw = insert(:contest, round: 2, timetables_public: true)
       p = insert_scheduled_performance(lw, predecessor_host: rw_host)
 
       query = """
       query Performance($id: ID!) {
-        performance(id: $id) { predecessorHost { name countryCode } }
+        performance(id: $id) { predecessorHost { name countryCodes } }
       }
       """
 
@@ -227,7 +227,10 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
       assert json_response(conn, 200) == %{
                "data" => %{
                  "performance" => %{
-                   "predecessorHost" => %{"name" => "DS Helsinki", "countryCode" => "FI"}
+                   "predecessorHost" => %{
+                     "name" => "Israel/Palästina",
+                     "countryCodes" => ["IL", "PS"]
+                   }
                  }
                }
              }
@@ -239,7 +242,7 @@ defmodule JumubaseWeb.Schema.Query.PerformancesTest do
 
       query = """
       query Performance($id: ID!) {
-        performance(id: $id) { predecessorHost { name countryCode } }
+        performance(id: $id) { predecessorHost { name countryCodes } }
       }
       """
 

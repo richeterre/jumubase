@@ -41,13 +41,12 @@ defmodule JumubaseWeb.Schema.Objects do
     field :id, non_null(:id)
 
     field :name, non_null(:string) do
-      description "The contest’s name containing the round, year and host."
+      description "The contest's name containing the round, year and host."
       resolve &FoundationResolver.name/3
     end
 
-    field :country_code, non_null(:string) do
-      description "The country code of the contest's host."
-      resolve &FoundationResolver.country_code/3
+    field :host, non_null(:host) do
+      description "The host of the contest."
     end
 
     field :dates, non_null(list_of(non_null(:date))) do
@@ -85,8 +84,9 @@ defmodule JumubaseWeb.Schema.Objects do
       description "The name of the host."
     end
 
-    field :country_code, non_null(:string) do
-      description "The country code of the host."
+    field :country_codes, non_null(list_of(non_null(:string))) do
+      description "The country code(s) associated with the host."
+      resolve &FoundationResolver.country_codes/3
     end
   end
 

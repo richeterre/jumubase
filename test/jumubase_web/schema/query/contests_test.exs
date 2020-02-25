@@ -48,7 +48,13 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
 
     query = """
     query {
-      contests { id name countryCode dates stages { id name } }
+      contests {
+        id
+        name
+        host { id countryCodes }
+        dates
+        stages { id name }
+      }
     }
     """
 
@@ -60,7 +66,7 @@ defmodule JumubaseWeb.Schema.Query.ContestsTest do
                  %{
                    "id" => "#{c.id}",
                    "name" => "RW Helsinki 2019",
-                   "countryCode" => "FI",
+                   "host" => %{"id" => "#{h.id}", "countryCodes" => ["FI"]},
                    "dates" => ["2019-01-01", "2019-01-02", "2019-01-03"],
                    "stages" => [
                      %{"id" => "#{s.id}", "name" => "Aula"}

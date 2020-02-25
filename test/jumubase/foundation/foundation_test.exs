@@ -111,6 +111,18 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "country_codes/1" do
+    test "returns an array with country codes for Israel/Palestine" do
+      host = insert(:host, country_code: "IL/PS")
+      assert Foundation.country_codes(host) == ~w(IL PS)
+    end
+
+    test "returns an array with a single country code otherwise" do
+      host = insert(:host, country_code: "FI")
+      assert Foundation.country_codes(host) == ~w(FI)
+    end
+  end
+
   describe "list_contests/0" do
     test "returns all contests" do
       contests = insert_list(2, :contest)

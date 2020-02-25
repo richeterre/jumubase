@@ -73,6 +73,9 @@ defmodule Jumubase.Foundation do
     Host.changeset(host, %{})
   end
 
+  def country_codes(%Host{country_code: "IL/PS"}), do: ["IL", "PS"]
+  def country_codes(%Host{} = h), do: [h.country_code]
+
   ## Contests
 
   @doc """

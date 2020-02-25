@@ -113,19 +113,10 @@ defmodule Jumubase.Foundation do
   """
   def list_public_contests(opts \\ []) do
     query =
-      from c in Contest,
-        where: c.timetables_public,
-        join: h in assoc(c, :host),
-        join: cc in assoc(c, :contest_categories),
-        join: p in assoc(cc, :performances),
-        order_by: [
-          {:desc, c.start_date},
-          {:desc, c.end_date},
-          {:desc, c.round},
-          h.name,
-          cc.inserted_at
-        ],
-        preload: [host: {h, [stages: ^stages_query()]}, contest_categories: {cc, :category}]
+      public_contests_query()
+      |> preloaded_with_stages
+      |> order_by([contests: c], desc: c.start_date, desc: c.end_date, desc: c.round)
+      |> order_by([hosts: h, contest_categories: cc], [h.name, cc.inserted_at])
 
     query =
       if opts[:current_only] do
@@ -168,11 +159,11 @@ defmodule Jumubase.Foundation do
   end
 
   def get_public_contest(id) do
-    public_contests_query() |> Repo.get(id)
+    public_contests_query() |> preload(:host) |> Repo.get(id)
   end
 
   def get_public_contest!(id) do
-    public_contests_query() |> Repo.get!(id)
+    public_contests_query() |> preload(:host) |> Repo.get!(id)
   end
 
   @doc """
@@ -351,9 +342,9 @@ defmodule Jumubase.Foundation do
 
   # Build a query for fetching public contests.
   defp public_contests_query do
-    Contest
-    |> where(timetables_public: true)
-    |> preload(:host)
+    from c in Contest,
+      as: :contests,
+      where: c.timetables_public
   end
 
   # Build a query for fetching stages in display order.
@@ -401,5 +392,15 @@ defmodule Jumubase.Foundation do
       join: h in assoc(c, :host),
       left_join: u in assoc(h, :users),
       as: :users
+  end
+
+  defp preloaded_with_stages(contest_query) do
+    from [contests: c] in contest_query,
+      join: h in assoc(c, :host),
+      as: :hosts,
+      join: cc in assoc(c, :contest_categories),
+      as: :contest_categories,
+      join: p in assoc(cc, :performances),
+      preload: [host: {h, [stages: ^stages_query()]}, contest_categories: {cc, :category}]
   end
 end

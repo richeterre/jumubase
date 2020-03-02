@@ -40,7 +40,11 @@ defmodule JumubaseWeb.Router do
     end
   end
 
-  forward "/graphql", Absinthe.Plug, schema: JumubaseWeb.Schema
+  scope "/graphql" do
+    pipe_through :api
+
+    forward "/", Absinthe.Plug, schema: JumubaseWeb.Schema
+  end
 
   scope "/", JumubaseWeb do
     pipe_through [:browser, :html_only]

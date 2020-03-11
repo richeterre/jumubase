@@ -71,6 +71,13 @@ defmodule JumubaseWeb.XMLEncoder do
   defp map_role("ensemblist"), do: "gruppe"
   defp map_role("accompanist"), do: "begleiter"
 
+  defp map_person(%Piece{artist: nil, composer: nil}) do
+    [
+      {:komponist_nachname, nil, "Trad."},
+      {:komponist_vorname1, nil, ""}
+    ]
+  end
+
   defp map_person(%Piece{artist: nil, composer: composer}) do
     {first_names, [last_name]} = String.split(composer) |> Enum.split(-1)
 

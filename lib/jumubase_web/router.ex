@@ -12,7 +12,7 @@ defmodule JumubaseWeb.Router do
     plug Phauxth.Remember
   end
 
-  pipeline :api do
+  pipeline :api_auth do
     plug JumubaseWeb.Api.Auth
   end
 
@@ -33,7 +33,7 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/api/v1", JumubaseWeb.Api do
-    pipe_through [:api, :json_only]
+    pipe_through [:api_auth, :json_only]
 
     resources "/contests", ContestController, only: [:index] do
       resources "/performances", PerformanceController, only: [:index]
@@ -41,7 +41,9 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/graphql" do
-    pipe_through :api
+    if Mix.env() == :prod do
+      pipe_through :api_auth
+    end
 
     forward "/", Absinthe.Plug, schema: JumubaseWeb.Schema
   end

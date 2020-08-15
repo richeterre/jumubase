@@ -138,6 +138,11 @@ defmodule Jumubase.Factory do
 
   # Insertion helpers
 
+  def insert_public_contest(attrs \\ []) do
+    attrs = Keyword.put_new(attrs, :timetables_public, true)
+    insert(:contest, attrs)
+  end
+
   def insert_authorized_contest(%User{role: "local-organizer"} = user) do
     insert(:contest, host: insert(:host, users: [user]))
   end

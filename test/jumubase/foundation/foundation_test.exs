@@ -234,15 +234,15 @@ defmodule Jumubase.FoundationTest do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
       # Matching contest
-      c1 = insert(:contest, host: host_with_stage, timetables_public: true)
+      c1 = insert_public_contest(host: host_with_stage)
       insert_performance(c1, stage: s)
 
       # No stages
-      insert(:contest, host: build(:host, stages: []), timetables_public: true)
+      insert_public_contest(host: build(:host, stages: []))
       |> insert_performance
 
       # No performances
-      insert(:contest, host: host_with_stage, timetables_public: true)
+      insert_public_contest(host: host_with_stage)
 
       # No public timetables
       insert(:contest, host: host_with_stage, timetables_public: false)
@@ -251,36 +251,39 @@ defmodule Jumubase.FoundationTest do
       assert_ids_match_unordered(Foundation.list_public_contests(), [c1])
     end
 
-    test "orders the contest by date, round, and host name" do
+    test "orders the contest by start date, end date, round, and host name" do
       %{stages: [s1]} = h1 = insert(:host, name: "B", stages: build_list(1, :stage))
       %{stages: [s2]} = h2 = insert(:host, name: "A", stages: build_list(1, :stage))
 
-      today = Timex.today()
-      tomorrow = Timex.shift(today, days: 1)
+      day0 = Timex.today()
+      day1 = Timex.shift(day0, days: 1)
+      day2 = Timex.shift(day0, days: 2)
 
-      c1 = insert(:contest, host: h1, start_date: tomorrow, round: 1, timetables_public: true)
+      c1 = insert_public_contest(host: h1, start_date: day1, end_date: day1, round: 1)
       insert_performance(c1, stage: s1)
-      c2 = insert(:contest, host: h1, start_date: tomorrow, round: 0, timetables_public: true)
+      c2 = insert_public_contest(host: h1, start_date: day1, end_date: day1, round: 0)
       insert_performance(c2, stage: s1)
-      c3 = insert(:contest, host: h2, start_date: tomorrow, round: 0, timetables_public: true)
+      c3 = insert_public_contest(host: h2, start_date: day1, end_date: day1, round: 0)
       insert_performance(c3, stage: s2)
-      c4 = insert(:contest, host: h2, start_date: tomorrow, round: 1, timetables_public: true)
+      c4 = insert_public_contest(host: h2, start_date: day1, end_date: day1, round: 1)
       insert_performance(c4, stage: s2)
-      c5 = insert(:contest, host: h1, start_date: today, round: 1, timetables_public: true)
+      c5 = insert_public_contest(host: h1, start_date: day0, end_date: day1, round: 1)
       insert_performance(c5, stage: s1)
-      c6 = insert(:contest, host: h1, start_date: today, round: 0, timetables_public: true)
+      c6 = insert_public_contest(host: h1, start_date: day0, end_date: day2, round: 1)
       insert_performance(c6, stage: s1)
-      c7 = insert(:contest, host: h2, start_date: today, round: 0, timetables_public: true)
-      insert_performance(c7, stage: s2)
+      c7 = insert_public_contest(host: h1, start_date: day0, end_date: day1, round: 0)
+      insert_performance(c7, stage: s1)
+      c8 = insert_public_contest(host: h2, start_date: day0, end_date: day1, round: 0)
+      insert_performance(c8, stage: s2)
 
-      assert_ids_match_ordered(Foundation.list_public_contests(), [c4, c1, c3, c2, c5, c7, c6])
+      assert_ids_match_ordered(Foundation.list_public_contests(), [c4, c1, c3, c2, c6, c5, c8, c7])
     end
 
     test "preloads the contests' hosts with used stages, as well as non-empty contest categories" do
       [s1, s2, _s3] = stages = insert_list(3, :stage)
       host = insert(:host, stages: stages)
-      c1 = insert(:contest, host: host, contest_categories: [], timetables_public: true)
-      c2 = insert(:contest, host: host, contest_categories: [], timetables_public: true)
+      c1 = insert_public_contest(host: host, contest_categories: [])
+      c2 = insert_public_contest(host: host, contest_categories: [])
       cc1 = insert_contest_category(c1)
       insert_contest_category(c1)
       cc2 = insert_contest_category(c2)
@@ -310,7 +313,7 @@ defmodule Jumubase.FoundationTest do
     test "orders preloaded host stages by insertion date" do
       now = Timex.now()
       h = insert(:host)
-      c = insert(:contest, host: h, timetables_public: true)
+      c = insert_public_contest(host: h)
       s1 = insert(:stage, host: h, inserted_at: now)
       s2 = insert(:stage, host: h, inserted_at: now |> Timex.shift(seconds: 1))
       s3 = insert(:stage, host: h, inserted_at: now |> Timex.shift(seconds: -1))
@@ -325,7 +328,7 @@ defmodule Jumubase.FoundationTest do
     test "orders preloaded contest categories by insertion date" do
       now = Timex.now()
       s = insert(:stage, host: build(:host))
-      c = insert(:contest, host: s.host, timetables_public: true)
+      c = insert_public_contest(host: s.host)
       cc1 = insert(:contest_category, contest: c, inserted_at: now)
       cc2 = insert(:contest_category, contest: c, inserted_at: now |> Timex.shift(seconds: 1))
       cc3 = insert(:contest_category, contest: c, inserted_at: now |> Timex.shift(seconds: -1))
@@ -342,8 +345,8 @@ defmodule Jumubase.FoundationTest do
     test "accepts an option for restricting contests to those in the latest season" do
       %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
 
-      c1 = insert(:contest, host: host_with_stage, season: 56, timetables_public: true)
-      c2 = insert(:contest, host: host_with_stage, season: 57, timetables_public: true)
+      c1 = insert_public_contest(host: host_with_stage, season: 56)
+      c2 = insert_public_contest(host: host_with_stage, season: 57)
       insert_performance(c1, stage: s)
       insert_performance(c2, stage: s)
 
@@ -365,15 +368,15 @@ defmodule Jumubase.FoundationTest do
       dp16 = Timex.shift(d0, days: 16)
 
       # Earliest matching contest
-      c1 = insert(:contest, host: h, start_date: dm2, end_date: dm1, timetables_public: true)
+      c1 = insert_public_contest(host: h, start_date: dm2, end_date: dm1)
 
       # With these we test sorting by start *and* end date
-      c2 = insert(:contest, host: h, start_date: d0, end_date: dp1, timetables_public: true)
-      c3 = insert(:contest, host: h, start_date: d0, end_date: d0, timetables_public: true)
+      c2 = insert_public_contest(host: h, start_date: d0, end_date: dp1)
+      c3 = insert_public_contest(host: h, start_date: d0, end_date: d0)
 
       # Latest matching contests
-      c4 = insert(:contest, host: h, start_date: dp14, end_date: dp15, timetables_public: true)
-      c5 = insert(:contest, host: h, start_date: dp14, end_date: dp16, timetables_public: true)
+      c4 = insert_public_contest(host: h, start_date: dp14, end_date: dp15)
+      c5 = insert_public_contest(host: h, start_date: dp14, end_date: dp16)
 
       insert_performance(c1, stage: s)
       insert_performance(c2, stage: s)
@@ -382,8 +385,8 @@ defmodule Jumubase.FoundationTest do
       insert_performance(c5, stage: s)
 
       # Not matching
-      c6 = insert(:contest, host: h, start_date: dm2, end_date: dm2, timetables_public: true)
-      c7 = insert(:contest, host: h, start_date: dp15, end_date: dp15, timetables_public: true)
+      c6 = insert_public_contest(host: h, start_date: dm2, end_date: dm2)
+      c7 = insert_public_contest(host: h, start_date: dp15, end_date: dp15)
       insert_performance(c6, stage: s)
       insert_performance(c7, stage: s)
 
@@ -527,13 +530,13 @@ defmodule Jumubase.FoundationTest do
 
   describe "get_public_contest/1" do
     test "returns a contest with public timetables" do
-      %{id: id} = insert(:contest, timetables_public: true)
+      %{id: id} = insert_public_contest()
       result = Foundation.get_public_contest(id)
       assert result.id == id
     end
 
     test "preloads the contest's host" do
-      %{id: id} = insert(:contest, timetables_public: true)
+      %{id: id} = insert_public_contest()
       assert %Contest{host: %Host{}} = Foundation.get_public_contest(id)
     end
 
@@ -549,13 +552,13 @@ defmodule Jumubase.FoundationTest do
 
   describe "get_public_contest!/1" do
     test "returns a contest with public timetables" do
-      %{id: id} = insert(:contest, timetables_public: true)
+      %{id: id} = insert_public_contest()
       result = Foundation.get_public_contest!(id)
       assert result.id == id
     end
 
     test "preloads the contest's host" do
-      %{id: id} = insert(:contest, timetables_public: true)
+      %{id: id} = insert_public_contest()
       assert %Contest{host: %Host{}} = Foundation.get_public_contest!(id)
     end
 

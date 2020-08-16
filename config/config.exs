@@ -31,7 +31,8 @@ config :jumubase, JumubaseWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "CItDuu3F0bThL/GnGj6lG4CNhFF/JPz/LHyWFVkLRdht2gpHfuFftGiO1paelppz",
   render_errors: [view: JumubaseWeb.ErrorView, accepts: ~w(html json)],
-  pubsub_server: Jumubase.PubSub
+  pubsub_server: Jumubase.PubSub,
+  live_view: [signing_salt: "4+PLR3SMvBIBZG4im48JLB2wWM+2prRB"]
 
 # Keep microsecond precision in timestamps
 config :jumubase, Jumubase.Repo, migration_timestamps: [type: :naive_datetime_usec]

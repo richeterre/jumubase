@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <%= render "head.html", conn: @conn %>
+<header class="header">
+  <%= render "nav.html", conn: @conn, current_user: assigns[:current_user] %>
+</header>
 
-  <body>
-    <header class="header">
-      <%= render "nav.html", conn: @conn, current_user: assigns[:current_user] %>
-    </header>
+<main role="main" class="container">
+  <h2><%= @heading %></h2>
 
-    <main role="main" class="container">
-      <h2><%= @heading %></h2>
-
-      <p class="lead">
-        <%= @message %>
-      </p>
-    </main>
-
-    <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-  </body>
-</html>
+  <p class="lead">
+    <%= @message %>
+  </p>
+</main>

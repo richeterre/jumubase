@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-  <%= render "head.html", conn: @conn %>
+<header class="header">
+  <%= render "nav.html", conn: @conn, current_user: @current_user %>
+</header>
 
-  <body>
-    <header class="header">
-      <%= render "nav.html", conn: @conn, current_user: @current_user %>
-    </header>
+<main role="main" class="container">
+  <%= if assigns[:breadcrumbs] do %>
+    <%= render "breadcrumbs.html", conn: @conn, breadcrumbs: @breadcrumbs %>
+  <% end %>
 
-    <main role="main" class="container">
-      <%= if assigns[:breadcrumbs] do %>
-        <%= render "breadcrumbs.html", conn: @conn, breadcrumbs: @breadcrumbs %>
-      <% end %>
+  <%= render "flash.html", conn: @conn %>
 
-      <%= render "flash.html", conn: @conn %>
+  <%= @inner_content %>
+</main>
 
-      <%= @inner_content %>
-    </main>
-
-    <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-    <%= render_existing @view_module, "scripts." <> @view_template, assigns %>
-  </body>
-</html>
+<%= render_existing @view_module, "scripts." <> @view_template, assigns %>

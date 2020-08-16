@@ -50,6 +50,8 @@ defmodule Jumubase.Mixfile do
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
+      {:phoenix_live_view, "~> 0.14.4"},
+      {:floki, ">= 0.0.0", only: :test},
       {:phoenix_pubsub, "~> 2.0"},
       {:plug_cowboy, "~> 2.1"},
       {:postgrex, ">= 0.0.0"},

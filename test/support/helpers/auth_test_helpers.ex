@@ -1,5 +1,5 @@
 defmodule JumubaseWeb.AuthTestHelpers do
-  use Phoenix.ConnTest
+  import Phoenix.ConnTest
   import ExUnit.Assertions
   import Ecto.Changeset
   import Jumubase.Factory

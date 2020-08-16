@@ -24,10 +24,11 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
 
         changeset
         |> Changeset.put_change(:age_group, performance_age_group)
-        |> Changeset.update_change(
-          :appearances,
-          &put_appearance_age_groups(&1, season, group_accompanists)
-        )
+        |> Changeset.update_change(:appearances, fn changesets ->
+          changesets
+          |> exclude_obsolete()
+          |> put_appearance_age_groups(season, group_accompanists)
+        end)
     end
   end
 

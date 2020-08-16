@@ -1,5 +1,7 @@
 # Jumubase
 
+![CI](https://github.com/richeterre/jumubase/workflows/CI/badge.svg)
+
 Jumubase is a tool for organizers of Germany's largest youth music competition – [Jugend musiziert][jugend-musiziert], or "Jumu" in short. The software powers [jumu-weltweit.org][jumu-weltweit], a competition hub for German schools across Europe.
 
 The application serves two main audiences:

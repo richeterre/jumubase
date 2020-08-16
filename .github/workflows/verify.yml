@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        otp: [22.2.1]
-        elixir: [1.9.4]
+        otp: [23.0.3]
+        elixir: [1.10.4]
 
     services:
       db:
@@ -53,6 +53,6 @@ jobs:
 
       - name: Check formatting
         run: mix format --check-formatted
-      
+
       - name: Run tests
         run: mix test

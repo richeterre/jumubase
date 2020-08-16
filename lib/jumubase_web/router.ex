@@ -2,6 +2,7 @@ defmodule JumubaseWeb.Router do
   use JumubaseWeb, :router
   use Plug.ErrorHandler
   use Sentry.Plug
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :fetch_session
@@ -172,6 +173,11 @@ defmodule JumubaseWeb.Router do
   end
 
   if Mix.env() == :dev do
+    scope "/dev" do
+      pipe_through :browser
+      live_dashboard "/dashboard"
+    end
+
     scope "/dev" do
       forward "/sent_emails", Bamboo.SentEmailViewerPlug
 

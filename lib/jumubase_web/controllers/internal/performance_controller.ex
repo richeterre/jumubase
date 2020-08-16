@@ -9,6 +9,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias Jumubase.Showtime.PerformanceFilter
+  alias JumubaseWeb.XMLEncoder
 
   plug :add_home_breadcrumb
 
@@ -270,7 +271,16 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     |> assign(:target_contest, target_contest)
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(name: gettext("Advancing performances"), path: current_path(conn))
-    |> render(:advancing)
+    |> render("advancing.html")
+  end
+
+  def advancing_xml(conn, _params, contest) do
+    performances = contest |> Showtime.advancing_performances() |> Showtime.load_successors()
+
+    send_download(conn, {:binary, XMLEncoder.encode(performances)},
+      content_type: "application/xml",
+      filename: "Weiterleitungen.xml"
+    )
   end
 
   def migrate_advancing(conn, %{"performance_ids" => p_ids}, contest) do

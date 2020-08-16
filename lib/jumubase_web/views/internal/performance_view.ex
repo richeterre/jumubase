@@ -25,7 +25,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Showtime.Performance
   alias JumubaseWeb.Internal.Permit
   alias JumubaseWeb.Internal.HostView
-  alias JumubaseWeb.{PDFGenerator, XMLEncoder}
+  alias JumubaseWeb.PDFGenerator
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
 
@@ -37,10 +37,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   def render("scripts.edit.html", assigns) do
     # Load same script as in public registration form
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
-  end
-
-  def render("advancing.xml", %{performances: performances}) do
-    XMLEncoder.encode(performances)
   end
 
   def render("reschedule_success.json", %{stage_times: stage_times}) do

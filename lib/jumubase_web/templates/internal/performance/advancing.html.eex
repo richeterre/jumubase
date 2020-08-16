@@ -32,9 +32,7 @@
 
   <%= if can_export? do %>
     <%= icon_link "export", gettext("Export for JMDaten"),
-      Routes.internal_contest_performances_path(
-        @conn, :advancing, @contest, Map.put(@conn.params, :_format, "xml")
-      ),
+      Routes.internal_contest_performances_path(@conn, :advancing_xml, @contest),
       class: "btn btn-default"
       %>
   <% end %>

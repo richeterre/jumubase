@@ -48,7 +48,7 @@ defmodule Jumubase.Mixfile do
       {:phauxth, "~> 1.2"},
       {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_html, "~> 2.10"},
+      {:phoenix_html, "~> 2.14"},
       {:phoenix_live_dashboard, "~> 0.1"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_live_view, "~> 0.14.4"},

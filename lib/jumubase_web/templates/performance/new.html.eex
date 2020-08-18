@@ -6,7 +6,9 @@
 
 <hr>
 
-<%= render "_form.html",
+<%= live_render(@conn, JumubaseWeb.PerformanceLive.New, session: %{"contest_id" => @contest.id}) %>
+
+<%# render "_form.html",
   conn: @conn,
   path: Routes.performance_path(@conn, :create, @contest),
   kimu_path: registration_path(@conn, @kimu_contest),

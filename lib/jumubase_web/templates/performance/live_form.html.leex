@@ -1,0 +1,34 @@
+<div class="row">
+  <div id="registration-form" class="col-lg-9">
+    <%= f = form_for @changeset, "#", [phx_change: :change] %>
+      <div class="row">
+        <div class="form-group col-md-5">
+          <%= label f, :contest_category_id, gettext("Category") %>
+          <%= select f, :contest_category_id, @contest_category_options, prompt: gettext("Please choose") %>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <%= inputs_for f, :appearances, fn a -> %>
+          <div class="row">
+            <%= inputs_for a, :participant, fn pt -> %>
+              <%= text_input pt, :first_name, placeholder: gettext("First name") %>
+              <%= text_input pt, :last_name, placeholder: gettext("Last name") %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <button type="button" class="btn btn-default" phx-click="add-appearance">
+        <%= icon_tag("plus") %> <%= gettext("Add participant") %>
+      </button>
+
+      <hr>
+
+      <div class="form-group">
+        <%= submit class: "btn btn-primary" do %>
+          <%= "Submit" %>
+        <% end %>
+      </div>
+  </div>
+</div>

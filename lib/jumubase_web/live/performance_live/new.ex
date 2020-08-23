@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.PerformanceLive.New do
   use Phoenix.LiveView
   alias Jumubase.Foundation
+  alias Jumubase.Foundation.{Contest, ContestCategory}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Performance}
 
@@ -24,12 +25,13 @@ defmodule JumubaseWeb.PerformanceLive.New do
      )}
   end
 
-  def handle_event("change", %{"performance" => attrs}, socket) do
+  def handle_event("change", %{"performance" => attrs, "_target" => target}, socket) do
     contest = socket.assigns.contest
 
     changeset =
       Performance.changeset(%Performance{}, attrs, contest.round)
       |> Map.put(:action, :insert)
+      |> populate_appearances(target, contest)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
@@ -39,12 +41,36 @@ defmodule JumubaseWeb.PerformanceLive.New do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
+  defp populate_appearances(
+         %Ecto.Changeset{changes: %{contest_category_id: cc_id}} = changeset,
+         ["performance", "contest_category_id"],
+         %Contest{contest_categories: contest_categories}
+       ) do
+    case changeset |> Ecto.Changeset.get_field(:appearances, []) |> length do
+      0 ->
+        case Enum.find(contest_categories, &(&1.id == cc_id)) do
+          %ContestCategory{category: %{type: "ensemble"}} -> append_appearances(changeset, 2)
+          %ContestCategory{category: %{type: _}} -> append_appearance(changeset)
+          _ -> changeset
+        end
+
+      _ ->
+        changeset
+    end
+  end
+
+  defp populate_appearances(changeset, _, _), do: changeset
+
   defp append_appearance(changeset) do
+    append_appearances(changeset, 1)
+  end
+
+  defp append_appearances(changeset, count) do
     existing_appearances = Map.get(changeset.changes, :appearances, [])
 
     appearances =
       existing_appearances
-      |> Enum.concat([%Appearance{}])
+      |> Enum.concat(List.duplicate(%Appearance{}, count))
 
     changeset
     |> Ecto.Changeset.put_assoc(:appearances, appearances)

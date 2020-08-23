@@ -2,9 +2,11 @@ defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
   import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  alias Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest}
+  alias Jumubase.Showtime.Appearance
 
   @doc """
   Renders JS that powers the registration form.
@@ -45,6 +47,19 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   def predecessor_host_options(%Contest{}), do: []
+
+  @doc """
+  Returns a title for the registration form appearance panel at the given index,
+  based on the available appearance and participant data.
+  """
+  def appearance_panel_title(%Changeset{} = cs, index) do
+    fallback_title = gettext("Participant") <> " #{index + 1}"
+
+    case Changeset.get_field(cs, :appearances, []) |> Enum.at(index) do
+      %Appearance{role: role} when not is_nil(role) -> "#{fallback_title} (#{role})"
+      _ -> fallback_title
+    end
+  end
 
   # Private helpers
 
@@ -115,6 +130,12 @@ defmodule JumubaseWeb.PerformanceView do
   defp role_options do
     Enum.map(JumuParams.participant_roles(), fn
       role -> %{id: role, label: role_name(role)}
+    end)
+  end
+
+  defp live_role_options do
+    Enum.map(JumuParams.participant_roles(), fn
+      role -> {role_name(role), role}
     end)
   end
 

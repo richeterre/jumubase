@@ -11,9 +11,11 @@
       <div class="col-lg-12">
         <%= inputs_for f, :appearances, fn a -> %>
           <div class="row">
+            <p><%= appearance_panel_title(@changeset, a.index) %></p>
             <%= inputs_for a, :participant, fn pt -> %>
-              <%= text_input pt, :first_name, placeholder: gettext("First name") %>
-              <%= text_input pt, :last_name, placeholder: gettext("Last name") %>
+              <%= select a, :role, live_role_options(), prompt: gettext("Please choose") %>
+              <%= text_input pt, :given_name, placeholder: gettext("First name") %>
+              <%= text_input pt, :family_name, placeholder: gettext("Last name") %>
             <% end %>
           </div>
         <% end %>

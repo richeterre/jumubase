@@ -33,7 +33,12 @@
       <h3><%= gettext("Pieces") %></h3>
 
       <div class="panel-group" id="piece-accordion" role="tablist">
-        <%= render "_live_piece_panels.html", expanded_index: @expanded_piece_index, f: f %>
+        <%= render "_live_piece_panels.html",
+          changeset: @changeset,
+          contest: @contest,
+          expanded_index: @expanded_piece_index,
+          f: f
+          %>
       </div>
 
       <button type="button" class="btn btn-default" phx-click="add-piece">

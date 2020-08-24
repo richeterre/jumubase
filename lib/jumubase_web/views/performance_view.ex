@@ -61,7 +61,24 @@ defmodule JumubaseWeb.PerformanceView do
     end
   end
 
+  def has_composer_fields?(performance_cs, contest, piece_cs) do
+    get_field(piece_cs, :epoch) != "trad" and get_genre(performance_cs, contest) != "popular"
+  end
+
+  def has_artist_field?(performance_cs, contest, piece_cs) do
+    get_field(piece_cs, :epoch) != "trad" and get_genre(performance_cs, contest) == "popular"
+  end
+
   # Private helpers
+
+  defp get_genre(performance_cs, contest) do
+    cc_id = get_field(performance_cs, :contest_category_id)
+
+    case Enum.find(contest.contest_categories, &(&1.id == cc_id)) do
+      nil -> nil
+      cc -> cc.category.genre
+    end
+  end
 
   defp render_registration_script(assigns) do
     %{

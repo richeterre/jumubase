@@ -31,10 +31,64 @@
             <%= error_tag pc, :title %>
           </div>
 
-          <div class="form-group col-md-4">
-            <%= label pc, :composer, gettext("Composer") %>
-            <%= text_input pc, :composer, class: "form-control" %>
-            <%= error_tag pc, :composer %>
+          <%= if has_composer_fields?(@changeset, @contest, pc.source) do %>
+            <div class="form-group col-md-4">
+              <%= label pc, :composer, gettext("Composer") %>
+              <%= text_input pc, :composer, class: "form-control" %>
+              <%= error_tag pc, :composer %>
+            </div>
+
+            <div class="col-md-3">
+              <div class="row">
+                <div class="form-group col-xs-6">
+                  <%= label pc, :composer_born, gettext("Born") %>
+                  <%= text_input pc, :composer_born, class: "form-control" %>
+                  <%= error_tag pc, :composer_born %>
+                </div>
+
+                <div class="form-group col-xs-6">
+                  <%= label pc, :composer_died, "(#{gettext("Died")})" %>
+                  <%= text_input pc, :composer_died, class: "form-control" %>
+                  <%= error_tag pc, :composer_died %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <%= if has_artist_field?(@changeset, @contest, pc.source) do %>
+            <div class="form-group col-md-4">
+              <%= label pc, :artist, gettext("Artist") %>
+              <%= text_input pc, :artist, class: "form-control" %>
+              <%= error_tag pc, :artist %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-5">
+            <%= label pc, :epoch, gettext("Epoch") %>
+            <%= select pc, :epoch, live_epoch_options(), prompt: gettext("Please choose"), class: "form-control" %>
+            <%= error_tag pc, :epoch %>
+          </div>
+
+          <div class="form-group col-md-5">
+            <%= label pc, :minutes, gettext("Duration") %>
+            <div class="row">
+              <div class="form-group col-xs-6 col-sm-5">
+                <div class="input-group">
+                  <%= number_input pc, :minutes, min: 0, max: 59, class: "form-control" %>
+                  <span class="input-group-addon"><%= gettext("min") %></span>
+                </div>
+                <%= error_tag pc, :minutes %>
+              </div>
+              <div class="form-group col-xs-6 col-sm-5">
+                <div class="input-group">
+                  <%= number_input pc, :seconds, min: 0, max: 59, class: "form-control" %>
+                  <span class="input-group-addon"><%= gettext("sec") %></span>
+                </div>
+                <%= error_tag pc, :seconds %>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -55,9 +55,26 @@ defmodule JumubaseWeb.PerformanceView do
   def appearance_panel_title(%Changeset{} = cs, index) do
     fallback_title = gettext("Participant") <> " #{index + 1}"
 
-    case Changeset.get_field(cs, :appearances, []) |> Enum.at(index) do
+    case get_field(cs, :appearances, []) |> Enum.at(index) do
       %Appearance{role: role} when not is_nil(role) -> "#{fallback_title} (#{role})"
       _ -> fallback_title
+    end
+  end
+
+  def piece_panel_title(%Changeset{} = cs, index) do
+    fallback_title = gettext("Piece") <> " #{index + 1}"
+
+    case get_field(cs, :title) do
+      nil ->
+        fallback_title
+
+      title ->
+        case {get_field(cs, :epoch), get_field(cs, :composer), get_field(cs, :artist)} do
+          {"trad", _, _} -> "#{title} (trad.)"
+          {_, nil, nil} -> title
+          {_, nil, artist} -> "#{title} (#{artist})"
+          {_, composer, nil} -> "#{title} (#{composer})"
+        end
     end
   end
 

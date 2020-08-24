@@ -8,7 +8,7 @@
           data-parent="#piece-accordion"
           href="#piece-panel-<%= pc.index %>"
           >
-          <%= "Piece #{pc.index + 1}" %>
+          <%= piece_panel_title(pc.source, pc.index) %>
         </a>
       </h4>
       <button

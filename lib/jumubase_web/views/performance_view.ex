@@ -11,10 +11,6 @@ defmodule JumubaseWeb.PerformanceView do
   @doc """
   Renders JS that powers the registration form.
   """
-  def render("scripts.new.html", assigns) do
-    render_registration_script(assigns)
-  end
-
   def render("scripts.edit.html", assigns) do
     render_registration_script(assigns)
   end

@@ -17,13 +17,8 @@ defmodule JumubaseWeb.PerformanceController do
   end
 
   def new(conn, _params, contest) do
-    changeset =
-      Showtime.build_performance(contest)
-      |> Showtime.change_performance()
-
     conn
-    |> prepare_for_form(contest, changeset)
-    |> assign_matching_kimu_contest(contest)
+    |> assign(:contest, contest)
     |> render("new.html")
   end
 

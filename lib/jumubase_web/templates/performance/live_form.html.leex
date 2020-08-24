@@ -1,6 +1,6 @@
 <div class="row">
   <div id="registration-form" class="col-lg-9">
-    <%= f = form_for @changeset, "#", [phx_change: :change] %>
+    <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
       <div class="row">
         <div class="form-group col-md-5">
           <%= label f, :contest_category_id, gettext("Category") %>
@@ -52,5 +52,6 @@
           <%= "Submit" %>
         <% end %>
       </div>
+    </form>
   </div>
 </div>

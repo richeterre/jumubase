@@ -1,8 +1,11 @@
 defmodule JumubaseWeb.PerformanceLive.New do
   use Phoenix.LiveView
+  import Jumubase.Gettext
+  alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Performance, Piece}
+  alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
     Phoenix.View.render(JumubaseWeb.PerformanceView, "live_form.html", assigns)
@@ -70,6 +73,21 @@ defmodule JumubaseWeb.PerformanceLive.New do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
+  def handle_event("submit", %{"performance" => attrs}, socket) do
+    contest = socket.assigns.contest
+
+    case Showtime.create_performance(contest, attrs) do
+      {:ok, %Performance{edit_code: edit_code}} ->
+        {:noreply,
+         socket
+         |> put_flash(:success, registration_success_message(edit_code))
+         |> redirect(to: Routes.page_path(socket, :home))}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
+  end
+
   # Private helpers
 
   defp append_appearance(changeset) do
@@ -78,30 +96,36 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
   defp append_appearances(changeset, count) do
     existing_appearances = Map.get(changeset.changes, :appearances, [])
-
-    appearances =
-      existing_appearances
-      |> Enum.concat(List.duplicate(%Appearance{}, count))
-
-    changeset
-    |> Ecto.Changeset.put_assoc(:appearances, appearances)
+    appearances = existing_appearances ++ List.duplicate(%Appearance{}, count)
+    changeset |> Changeset.put_assoc(:appearances, appearances)
   end
 
   defp remove_appearance(changeset, index) do
     existing_appearances = Map.get(changeset.changes, :appearances, [])
     appearances = existing_appearances |> List.delete_at(index)
-    changeset |> Ecto.Changeset.put_assoc(:appearances, appearances)
+    changeset |> Changeset.put_assoc(:appearances, appearances)
   end
 
   defp append_piece(changeset) do
     existing_pieces = Map.get(changeset.changes, :pieces, [])
-    pieces = existing_pieces |> Enum.concat([%Piece{}])
-    changeset |> Ecto.Changeset.put_assoc(:pieces, pieces)
+    pieces = existing_pieces ++ [%Piece{}]
+    changeset |> Changeset.put_assoc(:pieces, pieces)
   end
 
   defp remove_piece(changeset, index) do
     existing_pieces = Map.get(changeset.changes, :pieces, [])
     pieces = existing_pieces |> List.delete_at(index)
-    changeset |> Ecto.Changeset.put_assoc(:pieces, pieces)
+    changeset |> Changeset.put_assoc(:pieces, pieces)
+  end
+
+  defp registration_success_message(edit_code) do
+    success_msg = gettext("We received your registration!")
+
+    edit_msg =
+      gettext("You can still change it later using the edit code %{edit_code}.",
+        edit_code: edit_code
+      )
+
+    "#{success_msg} #{edit_msg}"
   end
 end

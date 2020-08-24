@@ -21,7 +21,9 @@ defmodule JumubaseWeb.PerformanceLive.New do
        changeset: changeset,
        contest: contest,
        contest_category_options:
-         contest.contest_categories |> Enum.map(&{&1.category.name, &1.id})
+         contest.contest_categories |> Enum.map(&{&1.category.name, &1.id}),
+       expanded_appearance_index: nil,
+       expanded_piece_index: nil
      )}
   end
 
@@ -33,7 +35,19 @@ defmodule JumubaseWeb.PerformanceLive.New do
       |> Map.put(:action, :insert)
       |> populate_appearances(target, contest)
 
-    {:noreply, assign(socket, changeset: changeset)}
+    # Keep appearance or piece panel open while user is editing its data
+    case target do
+      ["performance", "appearances", a_index | _] ->
+        a_index = String.to_integer(a_index)
+        {:noreply, assign(socket, changeset: changeset, expanded_appearance_index: a_index)}
+
+      ["performance", "pieces", pc_index | _] ->
+        pc_index = String.to_integer(pc_index)
+        {:noreply, assign(socket, changeset: changeset, expanded_piece_index: pc_index)}
+
+      _ ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 
   def handle_event("add-appearance", _, socket) do

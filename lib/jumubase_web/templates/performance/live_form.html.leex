@@ -18,7 +18,8 @@
       </p>
 
       <div class="panel-group" id="appearance-accordion" role="tablist">
-        <%= render "_live_appearance_panels.html", changeset: @changeset, f: f %>
+        <%= render "_live_appearance_panels.html",
+          changeset: @changeset, expanded_index: @expanded_appearance_index, f: f %>
       </div>
 
       <button type="button" class="btn btn-default" phx-click="add-appearance">
@@ -28,7 +29,7 @@
       <h3><%= gettext("Pieces") %></h3>
 
       <div class="panel-group" id="piece-accordion" role="tablist">
-        <%= render "_live_piece_panels.html", f: f %>
+        <%= render "_live_piece_panels.html", expanded_index: @expanded_piece_index, f: f %>
       </div>
 
       <button type="button" class="btn btn-default" phx-click="add-piece">

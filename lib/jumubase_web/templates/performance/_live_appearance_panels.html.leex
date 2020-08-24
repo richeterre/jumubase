@@ -19,7 +19,10 @@
         <span class="glyphicon glyphicon-trash" />
       </button>
     </div>
-    <div id="appearance-panel-<%= a.index %>" class="panel-collapse collapse">
+    <div
+      id="appearance-panel-<%= a.index %>"
+      class="panel-collapse collapse <%= if a.index == @expanded_index, do: "in" %>"
+      >
       <div class="panel-body">
         <%= inputs_for a, :participant, fn pt -> %>
           <div class="row">

@@ -8,7 +8,7 @@
           data-parent="#piece-accordion"
           href="#piece-panel-<%= pc.index %>"
           >
-          <%= "Piece #{pc.index}" %>
+          <%= "Piece #{pc.index + 1}" %>
         </a>
       </h4>
       <button
@@ -19,7 +19,10 @@
         <span class="glyphicon glyphicon-trash" />
       </button>
     </div>
-    <div id="piece-panel-<%= pc.index %>" class="panel-collapse collapse">
+    <div
+      id="piece-panel-<%= pc.index %>"
+      class="panel-collapse collapse <%= if pc.index == @expanded_index, do: "in" %>"
+      >
       <div class="panel-body">
         <div class="row">
           <div class="form-group col-md-5">

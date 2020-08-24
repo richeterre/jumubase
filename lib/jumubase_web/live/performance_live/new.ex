@@ -3,7 +3,7 @@ defmodule JumubaseWeb.PerformanceLive.New do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Contest, ContestCategory}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Performance}
+  alias Jumubase.Showtime.{Appearance, Performance, Piece}
 
   def render(assigns) do
     Phoenix.View.render(JumubaseWeb.PerformanceView, "live_form.html", assigns)
@@ -41,6 +41,23 @@ defmodule JumubaseWeb.PerformanceLive.New do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
+  def handle_event("remove-appearance", %{"index" => index}, socket) do
+    changeset = socket.assigns.changeset |> remove_appearance(String.to_integer(index))
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("add-piece", _, socket) do
+    changeset = socket.assigns.changeset |> append_piece()
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("remove-piece", %{"index" => index}, socket) do
+    changeset = socket.assigns.changeset |> remove_piece(String.to_integer(index))
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  # Private helpers
+
   defp populate_appearances(
          %Ecto.Changeset{changes: %{contest_category_id: cc_id}} = changeset,
          ["performance", "contest_category_id"],
@@ -74,5 +91,23 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
     changeset
     |> Ecto.Changeset.put_assoc(:appearances, appearances)
+  end
+
+  defp remove_appearance(changeset, index) do
+    existing_appearances = Map.get(changeset.changes, :appearances, [])
+    appearances = existing_appearances |> List.delete_at(index)
+    changeset |> Ecto.Changeset.put_assoc(:appearances, appearances)
+  end
+
+  defp append_piece(changeset) do
+    existing_pieces = Map.get(changeset.changes, :pieces, [])
+    pieces = existing_pieces |> Enum.concat([%Piece{}])
+    changeset |> Ecto.Changeset.put_assoc(:pieces, pieces)
+  end
+
+  defp remove_piece(changeset, index) do
+    existing_pieces = Map.get(changeset.changes, :pieces, [])
+    pieces = existing_pieces |> List.delete_at(index)
+    changeset |> Ecto.Changeset.put_assoc(:pieces, pieces)
   end
 end

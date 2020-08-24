@@ -1,0 +1,63 @@
+<%= inputs_for @f, :appearances, fn a -> %>
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <h4 class="panel-title pull-left">
+        <a
+          role="button"
+          data-toggle="collapse"
+          data-parent="#appearance-accordion"
+          href="#appearance-panel-<%= a.index %>"
+          >
+          <%= appearance_panel_title(@changeset, a.index) %>
+        </a>
+      </h4>
+      <button
+        type="button"
+        phx-click="remove-appearance"
+        phx-value-index="<%= a.index %>"
+        class="btn btn-xs btn-danger pull-right">
+        <span class="glyphicon glyphicon-trash" />
+      </button>
+    </div>
+    <div id="appearance-panel-<%= a.index %>" class="panel-collapse collapse">
+      <div class="panel-body">
+        <%= inputs_for a, :participant, fn pt -> %>
+          <div class="row">
+            <div class="form-group col-md-3">
+              <%= label pt, :given_name, gettext("First name") %>
+              <%= text_input pt, :given_name, class: "form-control" %>
+              <%= error_tag pt, :given_name %>
+            </div>
+
+            <div class="form-group col-md-3">
+              <%= label pt, :family_name, gettext("Last name") %>
+              <%= text_input pt, :family_name, class: "form-control" %>
+              <%= error_tag pt, :family_name %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-4">
+              <%= label a, :role, gettext("Role") %>
+              <%= select a, :role, live_role_options(),
+                prompt: gettext("Please choose"), class: "form-control" %>
+              <%= error_tag a, :role %>
+            </div>
+
+            <div class="form-group col-md-5">
+              <%= label a, :instrument do %>
+                <%= gettext("Instrument") %>
+                <small class="text-muted">
+                  (<%= gettext("choose “Vocals” for singers") %>)
+                </small>
+              <% end %>
+              <%= select a, :instrument, live_instrument_options(),
+                prompt: gettext("Please choose"), class: "form-control" %>
+              <%= error_tag a, :instrument %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -153,8 +153,18 @@ defmodule JumubaseWeb.PerformanceView do
     |> Enum.map(fn {value, label} -> %{value: value, label: label} end)
   end
 
+  defp live_instrument_options do
+    Jumubase.Showtime.Instruments.all()
+    |> Enum.sort_by(fn {_value, label} -> label end)
+    |> Enum.map(fn {value, label} -> {label, value} end)
+  end
+
   defp epoch_options do
     Enum.map(JumuParams.epochs(), &%{id: &1, label: epoch_label(&1)})
+  end
+
+  defp live_epoch_options do
+    Enum.map(JumuParams.epochs(), &{epoch_label(&1), &1})
   end
 
   defp epoch_label("trad" = epoch), do: JumuParams.epoch_description(epoch)

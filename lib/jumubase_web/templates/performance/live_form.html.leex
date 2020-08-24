@@ -4,25 +4,35 @@
       <div class="row">
         <div class="form-group col-md-5">
           <%= label f, :contest_category_id, gettext("Category") %>
-          <%= select f, :contest_category_id, @contest_category_options, prompt: gettext("Please choose") %>
+          <%= select f, :contest_category_id, @contest_category_options,
+            prompt: gettext("Please choose"), class: "form-control" %>
+          <%= error_tag f, :contest_category_id %>
         </div>
       </div>
 
-      <div class="col-lg-12">
-        <%= inputs_for f, :appearances, fn a -> %>
-          <div class="row">
-            <p><%= appearance_panel_title(@changeset, a.index) %></p>
-            <%= inputs_for a, :participant, fn pt -> %>
-              <%= select a, :role, live_role_options(), prompt: gettext("Please choose") %>
-              <%= text_input pt, :given_name, placeholder: gettext("First name") %>
-              <%= text_input pt, :family_name, placeholder: gettext("Last name") %>
-            <% end %>
-          </div>
-        <% end %>
+      <h3><%= gettext("Who takes part?") %></h3>
+
+      <p class="text-muted">
+        <%= icon_tag "info-sign" %>
+        <%= gettext("Non-competing accompanists don’t need to register.") %>
+      </p>
+
+      <div class="panel-group" id="appearance-accordion" role="tablist">
+        <%= render "_live_appearance_panels.html", changeset: @changeset, f: f %>
       </div>
 
       <button type="button" class="btn btn-default" phx-click="add-appearance">
         <%= icon_tag("plus") %> <%= gettext("Add participant") %>
+      </button>
+
+      <h3><%= gettext("Pieces") %></h3>
+
+      <div class="panel-group" id="piece-accordion" role="tablist">
+        <%= render "_live_piece_panels.html", f: f %>
+      </div>
+
+      <button type="button" class="btn btn-default" phx-click="add-piece">
+        <%= icon_tag("plus") %> <%= gettext("Add piece") %>
       </button>
 
       <hr>

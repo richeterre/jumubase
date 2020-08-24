@@ -37,6 +37,16 @@
               <%= text_input pt, :family_name, class: "form-control" %>
               <%= error_tag pt, :family_name %>
             </div>
+
+            <div class="form-group col-md-6">
+              <%= label pt, :birthdate, gettext("Birthdate") %>
+              <%= inline_date_select pt, :birthdate,
+                day: [prompt: gettext("Day")],
+                month: [options: live_birthdate_month_options(), prompt: gettext("Month")],
+                year: [options: birthdate_year_options(@contest.season), prompt: gettext("Year")],
+                class: "form-control" %>
+              <%= error_tag pt, :birthdate %>
+            </div>
           </div>
 
           <div class="row">
@@ -57,6 +67,20 @@
               <%= select a, :instrument, live_instrument_options(),
                 prompt: gettext("Please choose"), class: "form-control" %>
               <%= error_tag a, :instrument %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-4">
+              <%= label pt, :phone, gettext("Phone") %>
+              <%= text_input pt, :phone, class: "form-control" %>
+              <%= error_tag pt, :phone %>
+            </div>
+
+            <div class="form-group col-md-4">
+              <%= label pt, :email, gettext("Email") %>
+              <%= text_input pt, :email, class: "form-control" %>
+              <%= error_tag pt, :email %>
             </div>
           </div>
         <% end %>

@@ -19,7 +19,11 @@
 
       <div class="panel-group" id="appearance-accordion" role="tablist">
         <%= render "_live_appearance_panels.html",
-          changeset: @changeset, expanded_index: @expanded_appearance_index, f: f %>
+          changeset: @changeset,
+          contest: @contest,
+          expanded_index: @expanded_appearance_index,
+          f: f
+          %>
       </div>
 
       <button type="button" class="btn btn-default" phx-click="add-appearance">

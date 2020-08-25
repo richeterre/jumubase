@@ -24,8 +24,6 @@ defmodule JumubaseWeb.PerformanceLive.New do
      assign(socket,
        changeset: changeset,
        contest: contest,
-       contest_category_options:
-         contest.contest_categories |> Enum.map(&{&1.category.name, &1.id}),
        expanded_appearance_index: nil,
        expanded_piece_index: nil
      )}

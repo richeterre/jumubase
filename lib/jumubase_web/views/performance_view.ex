@@ -44,6 +44,10 @@ defmodule JumubaseWeb.PerformanceView do
 
   def predecessor_host_options(%Contest{}), do: []
 
+  def contest_category_options(%Contest{contest_categories: contest_categories}) do
+    contest_categories |> Enum.map(&{&1.category.name, &1.id})
+  end
+
   @doc """
   Returns a title for the registration form appearance panel at the given index,
   based on the available appearance and participant data.

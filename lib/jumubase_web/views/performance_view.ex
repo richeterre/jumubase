@@ -157,12 +157,6 @@ defmodule JumubaseWeb.PerformanceView do
     end)
   end
 
-  defp live_birthdate_month_options() do
-    Enum.map(localized_months(), fn {ordinal, name} ->
-      {name, ordinal}
-    end)
-  end
-
   defp role_options do
     Enum.map(JumuParams.participant_roles(), fn
       role -> %{id: role, label: role_name(role)}

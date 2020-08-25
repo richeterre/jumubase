@@ -8,12 +8,17 @@ defmodule JumubaseWeb.ErrorHelpers do
 
   @doc """
   Generates tag for inlined form input errors.
+  The feedback_field value can be used to override which form element is targeted by the
+  LiveView feedback logic (e.g. for a :date_select field that has multiple form elements).
   """
-  def error_tag(form, field) do
+  def error_tag(form, field, feedback_field \\ nil) do
     form.errors
     |> Keyword.get_values(field)
     |> Enum.map(fn error ->
-      content_tag(:small, translate_error(error), class: "help-block")
+      content_tag(:small, translate_error(error),
+        class: "help-block",
+        phx_feedback_for: input_id(form, feedback_field || field)
+      )
     end)
   end
 

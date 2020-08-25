@@ -150,3 +150,8 @@ dt:not(:first-child) {
 #modal-result-form #results_points {
   margin-left: 1em;
 }
+
+/* Hide errors in LiveView form fields not yet touched by user */
+.phx-no-feedback.help-block, .phx-no-feedback .help-block {
+  display: none;
+}

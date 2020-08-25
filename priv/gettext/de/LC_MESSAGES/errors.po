@@ -13,7 +13,7 @@ msgstr ""
 
 #: lib/jumubase/showtime/piece.ex:63 lib/jumubase/showtime/piece.ex:64
 msgid "can't be blank"
-msgstr "muss ausgefüllt werden"
+msgstr "fehlt noch"
 
 msgid "has already been taken"
 msgstr "ist bereits vergeben"

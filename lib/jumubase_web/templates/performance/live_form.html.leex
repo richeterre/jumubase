@@ -18,7 +18,7 @@
       </p>
 
       <div class="panel-group" id="appearance-accordion" role="tablist">
-        <%= inputs_for f, :appearances, fn a -> %>
+        <%= for a <- inputs_for f, :appearances do %>
           <div class="panel panel-default">
             <div class="panel-heading clearfix">
               <h4 class="panel-title pull-left">
@@ -44,6 +44,7 @@
               class="panel-collapse collapse <%= if a.index == @expanded_appearance_index, do: "in" %>"
               >
               <div class="panel-body">
+                <%= hidden_inputs_for(a) %>
                 <%= inputs_for a, :participant, fn pt -> %>
                   <div class="row">
                     <div class="form-group col-md-3">
@@ -117,7 +118,7 @@
       <h3><%= gettext("Pieces") %></h3>
 
       <div class="panel-group" id="piece-accordion" role="tablist">
-        <%= inputs_for f, :pieces, fn pc -> %>
+        <%= for pc <- inputs_for f, :pieces do %>
           <div class="panel panel-default">
             <div class="panel-heading clearfix">
               <h4 class="panel-title pull-left">
@@ -143,6 +144,7 @@
               class="panel-collapse collapse <%= if pc.index == @expanded_piece_index, do: "in" %>"
               >
               <div class="panel-body">
+                <%= hidden_inputs_for(pc) %>
                 <div class="row">
                   <div class="form-group col-md-5">
                     <%= label pc, :title, gettext("Title") %>

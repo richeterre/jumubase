@@ -52,22 +52,20 @@ defmodule JumubaseWeb.PerformanceLive.New do
   end
 
   def handle_event("add-appearance", _, socket) do
-    changeset = socket.assigns.changeset |> append_appearance()
-    {:noreply, assign(socket, changeset: changeset)}
+    {:noreply, assign(socket, changeset: append_appearance(socket.assigns.changeset))}
   end
 
   def handle_event("remove-appearance", %{"index" => index}, socket) do
-    changeset = socket.assigns.changeset |> remove_appearance(String.to_integer(index))
+    changeset = remove_appearance(socket.assigns.changeset, String.to_integer(index))
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("add-piece", _, socket) do
-    changeset = socket.assigns.changeset |> append_piece()
-    {:noreply, assign(socket, changeset: changeset)}
+    {:noreply, assign(socket, changeset: append_piece(socket.assigns.changeset))}
   end
 
   def handle_event("remove-piece", %{"index" => index}, socket) do
-    changeset = socket.assigns.changeset |> remove_piece(String.to_integer(index))
+    changeset = remove_piece(socket.assigns.changeset, String.to_integer(index))
     {:noreply, assign(socket, changeset: changeset)}
   end
 
@@ -88,32 +86,24 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
   # Private helpers
 
-  defp append_appearance(changeset) do
-    append_appearances(changeset, 1)
+  defp append_appearance(changeset), do: append_item(changeset, :appearances, %Appearance{})
+  defp remove_appearance(changeset, index), do: remove_item(changeset, :appearances, index)
+
+  defp append_piece(changeset), do: append_item(changeset, :pieces, %Piece{})
+  defp remove_piece(changeset, index), do: remove_item(changeset, :pieces, index)
+
+  defp append_item(changeset, field, item) do
+    items = get_existing_items(changeset, field) ++ [item]
+    changeset |> Changeset.put_assoc(field, items)
   end
 
-  defp append_appearances(changeset, count) do
-    existing_appearances = Map.get(changeset.changes, :appearances, [])
-    appearances = existing_appearances ++ List.duplicate(%Appearance{}, count)
-    changeset |> Changeset.put_assoc(:appearances, appearances)
+  defp remove_item(changeset, field, index) do
+    items = get_existing_items(changeset, field) |> List.delete_at(index)
+    changeset |> Changeset.put_assoc(field, items)
   end
 
-  defp remove_appearance(changeset, index) do
-    existing_appearances = Map.get(changeset.changes, :appearances, [])
-    appearances = existing_appearances |> List.delete_at(index)
-    changeset |> Changeset.put_assoc(:appearances, appearances)
-  end
-
-  defp append_piece(changeset) do
-    existing_pieces = Map.get(changeset.changes, :pieces, [])
-    pieces = existing_pieces ++ [%Piece{}]
-    changeset |> Changeset.put_assoc(:pieces, pieces)
-  end
-
-  defp remove_piece(changeset, index) do
-    existing_pieces = Map.get(changeset.changes, :pieces, [])
-    pieces = existing_pieces |> List.delete_at(index)
-    changeset |> Changeset.put_assoc(:pieces, pieces)
+  defp get_existing_items(changeset, field) do
+    Map.get(changeset.changes, field, [])
   end
 
   defp registration_success_message(edit_code) do

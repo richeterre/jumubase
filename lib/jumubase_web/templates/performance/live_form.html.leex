@@ -1,6 +1,8 @@
 <div class="row">
   <div id="registration-form" class="col-lg-9">
     <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
+      <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+
       <div class="row">
         <div class="form-group col-md-5">
           <%= label f, :contest_category_id, gettext("Category") %>

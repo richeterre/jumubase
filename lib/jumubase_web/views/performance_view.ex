@@ -56,7 +56,7 @@ defmodule JumubaseWeb.PerformanceView do
     fallback_title = gettext("Participant") <> " #{index + 1}"
 
     case get_field(cs, :appearances, []) |> Enum.at(index) do
-      %Appearance{role: role} when not is_nil(role) -> "#{fallback_title} (#{role})"
+      %Appearance{role: role} when not is_nil(role) -> "#{fallback_title} (#{role_title(role)})"
       _ -> fallback_title
     end
   end
@@ -133,6 +133,10 @@ defmodule JumubaseWeb.PerformanceView do
       <script>registrationForm(<%= raw(json) %>)</script>
     }
   end
+
+  defp role_title("soloist"), do: gettext("Soloist")
+  defp role_title("ensemblist"), do: gettext("Ensemblist")
+  defp role_title("accompanist"), do: gettext("Accompanist")
 
   # Excludes nested association changesets bound for deletion or replacement.
   defp remove_obsolete_associations(changeset) do

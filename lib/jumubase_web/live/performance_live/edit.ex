@@ -5,7 +5,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Performance}
+  alias Jumubase.Showtime.{Appearance, Performance, Piece}
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
@@ -50,46 +50,23 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   end
 
   def handle_event("add-appearance", _, socket) do
-    changeset = socket.assigns.changeset
-
-    existing_appearances =
-      case Map.get(changeset.changes, :appearances) do
-        nil ->
-          Map.get(changeset.data, :appearances, [])
-
-        appearances ->
-          appearances |> Enum.filter(&(&1.action != :replace))
-      end
-
-    items = existing_appearances ++ [%Appearance{}]
-    {:noreply, assign(socket, changeset: Changeset.put_assoc(changeset, :appearances, items))}
+    changeset = add_item(socket.assigns.changeset, :appearances, %Appearance{})
+    {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("remove-appearance", %{"index" => index}, socket) do
-    changeset = socket.assigns.changeset
-    index = String.to_integer(index)
-
-    remaining_appearances =
-      case Map.get(changeset.changes, :appearances) do
-        nil ->
-          Map.get(changeset.data, :appearances, []) |> List.delete_at(index)
-
-        changesets ->
-          changesets
-          |> Enum.filter(&(&1.action != :replace))
-          |> List.delete_at(index)
-      end
-
-    {:noreply,
-     assign(socket, changeset: Changeset.put_assoc(changeset, :appearances, remaining_appearances))}
+    changeset = remove_item(socket.assigns.changeset, :appearances, String.to_integer(index))
+    {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("add-piece", _, socket) do
-    {:noreply, socket}
+    changeset = add_item(socket.assigns.changeset, :pieces, %Piece{})
+    {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("remove-piece", %{"index" => _index}, socket) do
-    {:noreply, socket}
+  def handle_event("remove-piece", %{"index" => index}, socket) do
+    changeset = remove_item(socket.assigns.changeset, :pieces, String.to_integer(index))
+    {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("submit", %{"performance" => params}, socket) do
@@ -108,5 +85,34 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
+  end
+
+  # Private helpers
+
+  defp add_item(changeset, field_name, item) do
+    existing =
+      changeset
+      |> Changeset.get_field(field_name, [])
+      |> exclude_obsolete()
+
+    changeset |> Changeset.put_assoc(field_name, existing ++ [item])
+  end
+
+  defp remove_item(changeset, field_name, index) do
+    remaining =
+      changeset
+      |> Changeset.get_field(field_name, [])
+      |> exclude_obsolete()
+      |> List.delete_at(index)
+
+    Changeset.put_assoc(changeset, field_name, remaining)
+  end
+
+  defp exclude_obsolete(records_or_changesets) do
+    records_or_changesets
+    |> Enum.filter(fn
+      %Changeset{action: action} -> action in [:insert, :update]
+      _ -> true
+    end)
   end
 end

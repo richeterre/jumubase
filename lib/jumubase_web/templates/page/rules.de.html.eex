@@ -11,15 +11,16 @@
     <p>Bitte lies dir zunächst die aktuelle Ausschreibung durch. Dort findest du unter anderem die Altersgruppen, Teilnahmebedingungen sowie alle offiziellen Kategorien:</p>
 
     <p class="text-prominent">
-      <%= rule_booklet_link "Ausschreibung 2020", 2020, class: "btn btn-info" %>
+      <%= rule_booklet_link "Ausschreibung 2021", 2021, class: "btn btn-info" %>
     </p>
 
     <p>Zusätzlich gibt es die nachfolgenden, regional begrenzten Sonderregelungen.</p>
 
     <p class="text-prominent">
-      <%= document_link("Verbund 1 (bisher “Spanien/Portugal”)",
+      <%# document_link("Verbund 1 (bisher “Spanien/Portugal”)",
         Routes.static_path(@conn, "/resources/special_rules/Regionale Kategorien Verbund 1.pdf"))
         %>
+        <em>Verbund 1 (bisher “Spanien/Portugal” – Info folgt noch</em>
     </p>
 
     <p class="text-prominent">
@@ -47,7 +48,7 @@
     <p>Für die Begleitgruppe wird eine gemeinsame Altersgruppe errechnet, die zwischen III und VI liegen muss.</p>
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-      <%= render "_pop_vocal_ensemble_panel.html" %>
+      <%# render "_pop_vocal_ensemble_panel.html" %>
       <%= render "_pop_instrumental_panel.html" %>
     </div>
 

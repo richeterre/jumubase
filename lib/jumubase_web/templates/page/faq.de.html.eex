@@ -30,7 +30,7 @@
       <dd>
         Im Verbund 2 (siehe oben) kannst du dich ab Oktober des Vorjahres
         <%= link "hier", to: Routes.page_path(@conn, :registration) %> zum Regionalwettbewerb anmelden.
-        Nimmst du in einem anderen Verbund teil, findet die RW-Anmeldung über deine Schule statt.
+        Auch im Verbund 1 oder 3 kannst du eventuell dieses Anmeldeformular nutzen. Frage hierzu bitte die Jumu-Kontaktperson deiner Schule!
       </dd>
 
       <dt>Wann ist Anmeldeschluss?</dt>
@@ -48,12 +48,12 @@
 
       <dt>Muss ich mich für den Landeswettbewerb erneut anmelden?</dt>
       <dd>
-        <p>Im Verbund 2 wird deine Anmeldung automatisch zum LW übernommen. Du bekommst
-        dann eine E-Mail mit einem neuen Änderungscode, mit dem du dein Vorspielprogramm
-        ändern kannst.</p>
+        <p>Falls du dich hier auf "Jumu weltweit" zum RW angemeldet hattest, wird deine Anmeldung
+        automatisch zum LW übernommen. Du bekommst dann eine E-Mail mit einem neuen Änderungscode,
+        mit dem du dein Vorspielprogramm ändern kannst.</p>
 
-        <p>In Verbund 1 und 3 musst du dich für den Landeswettbewerb
-        gesondert <%= link "anmelden", to: Routes.page_path(@conn, :registration) %>.</p>
+        <p>Falls du im Verbund 1 oder 3 teilnimmst und deine Schule noch nicht diese Website nutzt, musst du dich
+        für den Landeswettbewerb gesondert <%= link "anmelden", to: Routes.page_path(@conn, :registration) %>.</p>
       </dd>
 
       <dt>Muss ich mich für den Bundeswettbewerb erneut anmelden?</dt>

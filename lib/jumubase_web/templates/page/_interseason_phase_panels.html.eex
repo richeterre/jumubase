@@ -15,20 +15,11 @@
     <div class="panel-heading">
       <h3 class="panel-title">
       <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
-      Aus “Jumu Nordost” wird “Jumu weltweit”</h3>
+      “Jumu Nordost” heißt jetzt “Jumu weltweit”</h3>
     </div>
     <div class="panel-body">
-      <p>Du findest uns nun unter der neuen Adresse <%= link "jumu-weltweit.org", to: "https://www.jumu-weltweit.org" %>,
-      denn ab 2020 begrüßen wir auch die Landeswettbewerbe der Verbunde 1 und 3 auf dieser Website!</p>
-
-      <p>Die neue Namensgebung lautet wie folgt:</p>
-
-        <ul class="list-unstyled">
-          <li>“Spanien/Portugal” wird zu <strong>Verbund 1</strong> (blau)</li>
-          <li>“Nord- und Osteuropa” wird zu <strong>Verbund 2</strong> (grün)</li>
-          <li>”Östliches Mittelmeer” wird zu <strong>Verbund 3</strong> (gelb)</li>
-        </ul>
-      </p>
+      <p>Seit 2020 findest uns unter der neuen Adresse <%= link "jumu-weltweit.org", to: "https://www.jumu-weltweit.org" %>,
+      denn neben dem bisherigen Verbund 2 (grün) sind mittlerweile auch einige Schulen der Verbunde 1 (blau) und 3 (gelb) mit an Bord. Herzlich willkommen!</p>
     </div>
   </div>
 </div>

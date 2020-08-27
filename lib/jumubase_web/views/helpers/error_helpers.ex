@@ -15,10 +15,11 @@ defmodule JumubaseWeb.ErrorHelpers do
     form.errors
     |> Keyword.get_values(field)
     |> Enum.map(fn error ->
-      content_tag(:small, translate_error(error),
-        class: "help-block",
-        phx_feedback_for: input_id(form, feedback_field || field)
-      )
+      input_id = input_id(form, feedback_field || field)
+
+      content_tag(:div, class: "has-error", phx_feedback_for: input_id) do
+        content_tag(:small, translate_error(error), class: "help-block")
+      end
     end)
   end
 

@@ -94,8 +94,12 @@ dt:not(:first-child) {
 }
 
 /* Use pointer cursor for collapsible panel headings */
-.panel-heading[data-toggle="collapse"] {
+.panel-heading.collapsible {
   cursor: pointer;
+
+  .panel-title:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Tweak height of panel titles to match right-floating buttons */

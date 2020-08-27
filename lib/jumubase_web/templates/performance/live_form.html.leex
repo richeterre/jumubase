@@ -22,16 +22,13 @@
       <div class="panel-group" id="appearance-accordion" role="tablist">
         <%= for a <- inputs_for f, :appearances do %>
           <div class="panel panel-default">
-            <div class="panel-heading clearfix">
+            <div
+              phx-click="toggle-appearance-panel"
+              phx-value-index="<%= a.index %>"
+              class="panel-heading clearfix collapsible"
+            >
               <h4 class="panel-title pull-left">
-                <a
-                  role="button"
-                  data-toggle="collapse"
-                  data-parent="#appearance-accordion"
-                  href="#appearance-panel-<%= a.index %>"
-                  >
-                  <%= appearance_panel_title(@changeset, a.index) %>
-                </a>
+                <%= appearance_panel_title(@changeset, a.index) %>
               </h4>
               <button
                 type="button"
@@ -122,16 +119,13 @@
       <div class="panel-group" id="piece-accordion" role="tablist">
         <%= for pc <- inputs_for f, :pieces do %>
           <div class="panel panel-default">
-            <div class="panel-heading clearfix">
+            <div
+              phx-click="toggle-piece-panel"
+              phx-value-index="<%= pc.index %>"
+              class="panel-heading clearfix collapsible"
+            >
               <h4 class="panel-title pull-left">
-                <a
-                  role="button"
-                  data-toggle="collapse"
-                  data-parent="#piece-accordion"
-                  href="#piece-panel-<%= pc.index %>"
-                  >
-                  <%= piece_panel_title(pc.source, pc.index) %>
-                </a>
+                <%= piece_panel_title(pc.source, pc.index) %>
               </h4>
               <button
                 type="button"

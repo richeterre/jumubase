@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.PerformanceLive.Helpers do
-  use Phoenix.LiveView
+  import Phoenix.LiveView, only: [assign: 2]
+  alias Ecto.Changeset
 
   def toggle_appearance_panel(socket, index) do
     new_index = if socket.assigns.expanded_appearance_index == index, do: nil, else: index
@@ -37,6 +38,6 @@ defmodule JumubaseWeb.PerformanceLive.Helpers do
   defp first_error_index(changeset, relation_name) do
     changeset
     |> Changeset.get_change(relation_name, [])
-    |> Enum.find_index(&(!&1.is_valid?))
+    |> Enum.find_index(fn cs -> not cs.valid? end)
   end
 end

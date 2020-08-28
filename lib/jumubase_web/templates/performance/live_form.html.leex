@@ -21,30 +21,32 @@
 
       <div class="panel-group" id="appearance-accordion" role="tablist">
         <%= for a <- inputs_for f, :appearances do %>
-          <div class="panel panel-default">
-            <div
-              phx-click="toggle-appearance-panel"
-              phx-value-index="<%= a.index %>"
-              class="panel-heading clearfix collapsible"
-            >
-              <h4 class="panel-title pull-left">
-                <%= appearance_panel_title(@changeset, a.index) %>
-              </h4>
-              <button
-                type="button"
-                phx-click="remove-appearance"
+          <%= for pt <- inputs_for a, :participant do %>
+            <div class="panel panel-default">
+              <div
+                phx-click="toggle-appearance-panel"
                 phx-value-index="<%= a.index %>"
-                class="btn btn-xs btn-danger pull-right">
-                <span class="glyphicon glyphicon-trash" />
-              </button>
-            </div>
-            <div
-              id="appearance-panel-<%= a.index %>"
-              class="panel-collapse collapse <%= if a.index == @expanded_appearance_index, do: "in" %>"
+                class="panel-heading clearfix collapsible"
               >
-              <div class="panel-body">
-                <%= hidden_inputs_for(a) %>
-                <%= inputs_for a, :participant, fn pt -> %>
+                <h4 class="panel-title pull-left">
+                  <%= appearance_panel_title(@changeset, a.index) %>
+                </h4>
+                <button
+                  type="button"
+                  phx-click="remove-appearance"
+                  phx-value-index="<%= a.index %>"
+                  class="btn btn-xs btn-danger pull-right">
+                  <span class="glyphicon glyphicon-trash" />
+                </button>
+              </div>
+              <div
+                id="appearance-panel-<%= a.index %>"
+                class="panel-collapse collapse <%= if a.index == @expanded_appearance_index, do: "in" %>"
+                >
+                <div class="panel-body">
+                  <%= hidden_inputs_for(a) %>
+                  <%= hidden_inputs_for(pt) %>
+
                   <div class="row">
                     <div class="form-group col-md-3">
                       <%= label pt, :given_name, gettext("First name") %>
@@ -103,10 +105,10 @@
                       <%= error_tag pt, :email %>
                     </div>
                   </div>
-                <% end %>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
       </div>
 

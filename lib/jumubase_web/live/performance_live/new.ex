@@ -41,7 +41,14 @@ defmodule JumubaseWeb.PerformanceLive.New do
   end
 
   def handle_event("add-appearance", _, socket) do
-    {:noreply, assign(socket, changeset: append_appearance(socket.assigns.changeset))}
+    changeset = socket.assigns.changeset
+    index = get_appearance_count(changeset)
+
+    {:noreply,
+     assign(socket,
+       changeset: append_appearance(changeset),
+       expanded_appearance_index: socket.assigns.expanded_appearance_index || index
+     )}
   end
 
   def handle_event("remove-appearance", %{"index" => index}, socket) do
@@ -54,7 +61,14 @@ defmodule JumubaseWeb.PerformanceLive.New do
   end
 
   def handle_event("add-piece", _, socket) do
-    {:noreply, assign(socket, changeset: append_piece(socket.assigns.changeset))}
+    changeset = socket.assigns.changeset
+    index = get_piece_count(changeset)
+
+    {:noreply,
+     assign(socket,
+       changeset: append_piece(changeset),
+       expanded_piece_index: socket.assigns.expanded_piece_index || index
+     )}
   end
 
   def handle_event("remove-piece", %{"index" => index}, socket) do
@@ -83,24 +97,26 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
   # Private helpers
 
-  defp append_appearance(changeset), do: append_item(changeset, :appearances, %Appearance{})
-  defp remove_appearance(changeset, index), do: remove_item(changeset, :appearances, index)
+  defp get_appearance_count(cs), do: get_existing_items(cs, :appearances) |> length()
+  defp append_appearance(cs), do: append_item(cs, :appearances, %Appearance{})
+  defp remove_appearance(cs, index), do: remove_item(cs, :appearances, index)
 
-  defp append_piece(changeset), do: append_item(changeset, :pieces, %Piece{})
-  defp remove_piece(changeset, index), do: remove_item(changeset, :pieces, index)
+  defp get_piece_count(cs), do: get_existing_items(cs, :pieces) |> length()
+  defp append_piece(cs), do: append_item(cs, :pieces, %Piece{})
+  defp remove_piece(cs, index), do: remove_item(cs, :pieces, index)
 
-  defp append_item(changeset, field, item) do
-    items = get_existing_items(changeset, field) ++ [item]
-    changeset |> Changeset.put_assoc(field, items)
+  defp append_item(cs, field, item) do
+    items = get_existing_items(cs, field) ++ [item]
+    Changeset.put_assoc(cs, field, items)
   end
 
-  defp remove_item(changeset, field, index) do
-    items = get_existing_items(changeset, field) |> List.delete_at(index)
-    changeset |> Changeset.put_assoc(field, items)
+  defp remove_item(cs, field, index) do
+    items = get_existing_items(cs, field) |> List.delete_at(index)
+    Changeset.put_assoc(cs, field, items)
   end
 
-  defp get_existing_items(changeset, field) do
-    Map.get(changeset.changes, field, [])
+  defp get_existing_items(cs, field) do
+    Map.get(cs.changes, field, [])
   end
 
   defp registration_success_message(edit_code) do

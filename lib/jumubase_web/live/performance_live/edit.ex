@@ -27,7 +27,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
      )}
   end
 
-  def handle_event("change", %{"performance" => params, "_target" => target}, socket) do
+  def handle_event("change", %{"performance" => params}, socket) do
     contest = socket.assigns.contest
     performance = socket.assigns.performance
 
@@ -35,19 +35,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
       Performance.changeset(performance, params, contest.round)
       |> Map.put(:action, :update)
 
-    # Keep appearance or piece panel open while user is editing its data
-    case target do
-      ["performance", "appearances", a_index | _] ->
-        a_index = String.to_integer(a_index)
-        {:noreply, assign(socket, changeset: changeset, expanded_appearance_index: a_index)}
-
-      ["performance", "pieces", pc_index | _] ->
-        pc_index = String.to_integer(pc_index)
-        {:noreply, assign(socket, changeset: changeset, expanded_piece_index: pc_index)}
-
-      _ ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("add-appearance", _, socket) do

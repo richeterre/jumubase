@@ -2,6 +2,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   use Phoenix.LiveView
   import Jumubase.Gettext
   import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
+  import JumubaseWeb.PerformanceLive.Helpers
   alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Showtime
@@ -59,6 +60,13 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
     {:noreply, assign(socket, changeset: changeset)}
   end
 
+  def handle_event("toggle-appearance-panel", %{"index" => index}, socket) do
+    index = String.to_integer(index)
+
+    new_index = if socket.assigns.expanded_appearance_index == index, do: nil, else: index
+    {:noreply, assign(socket, expanded_appearance_index: new_index)}
+  end
+
   def handle_event("add-piece", _, socket) do
     changeset = add_item(socket.assigns.changeset, :pieces, %Piece{})
     {:noreply, assign(socket, changeset: changeset)}
@@ -67,6 +75,13 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   def handle_event("remove-piece", %{"index" => index}, socket) do
     changeset = remove_item(socket.assigns.changeset, :pieces, String.to_integer(index))
     {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("toggle-piece-panel", %{"index" => index}, socket) do
+    index = String.to_integer(index)
+
+    new_index = if socket.assigns.expanded_piece_index == index, do: nil, else: index
+    {:noreply, assign(socket, expanded_piece_index: new_index)}
   end
 
   def handle_event("submit", %{"performance" => params}, socket) do
@@ -83,7 +98,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
          |> redirect(to: Routes.page_path(socket, :home))}
 
       {:error, changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+        {:noreply, handle_failed_submit(socket, changeset)}
     end
   end
 

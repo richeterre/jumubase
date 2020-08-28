@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.PerformanceLive.New do
   use Phoenix.LiveView
   import Jumubase.Gettext
+  import JumubaseWeb.PerformanceLive.Helpers
   alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Showtime
@@ -94,7 +95,7 @@ defmodule JumubaseWeb.PerformanceLive.New do
          |> redirect(to: Routes.page_path(socket, :home))}
 
       {:error, changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+        {:noreply, handle_failed_submit(socket, changeset)}
     end
   end
 

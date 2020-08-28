@@ -1,6 +1,16 @@
 defmodule JumubaseWeb.PerformanceLive.Helpers do
   use Phoenix.LiveView
 
+  def toggle_appearance_panel(socket, index) do
+    new_index = if socket.assigns.expanded_appearance_index == index, do: nil, else: index
+    assign(socket, expanded_appearance_index: new_index)
+  end
+
+  def toggle_piece_panel(socket, index) do
+    new_index = if socket.assigns.expanded_piece_index == index, do: nil, else: index
+    assign(socket, expanded_piece_index: new_index)
+  end
+
   def handle_failed_submit(socket, changeset) do
     socket
     |> assign(changeset: changeset)

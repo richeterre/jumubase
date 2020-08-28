@@ -49,10 +49,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   end
 
   def handle_event("toggle-appearance-panel", %{"index" => index}, socket) do
-    index = String.to_integer(index)
-
-    new_index = if socket.assigns.expanded_appearance_index == index, do: nil, else: index
-    {:noreply, assign(socket, expanded_appearance_index: new_index)}
+    {:noreply, toggle_appearance_panel(socket, String.to_integer(index))}
   end
 
   def handle_event("add-piece", _, socket) do
@@ -66,10 +63,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   end
 
   def handle_event("toggle-piece-panel", %{"index" => index}, socket) do
-    index = String.to_integer(index)
-
-    new_index = if socket.assigns.expanded_piece_index == index, do: nil, else: index
-    {:noreply, assign(socket, expanded_piece_index: new_index)}
+    {:noreply, toggle_piece_panel(socket, String.to_integer(index))}
   end
 
   def handle_event("submit", %{"performance" => params}, socket) do

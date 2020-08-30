@@ -2,11 +2,12 @@ defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
   import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   alias Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest}
-  alias Jumubase.Showtime.Appearance
+  alias Jumubase.Showtime.Participant
 
   @doc """
   Renders JS that powers the registration form.
@@ -49,17 +50,28 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   @doc """
-  Returns a title for the registration form appearance panel at the given index,
-  based on the available appearance and participant data.
+  Returns a title for the registration form appearance panel,
+  based on data found in the given appearance form.
   """
-  def appearance_panel_title(%Changeset{} = cs, index) do
+  def appearance_panel_title(%Phoenix.HTML.Form{index: index, source: changeset}) do
     fallback_title = gettext("Participant") <> " #{index + 1}"
 
-    case get_field(cs, :appearances, []) |> Enum.at(index) do
-      %Appearance{role: role} when not is_nil(role) -> "#{fallback_title} (#{role_title(role)})"
-      _ -> fallback_title
+    participant_name =
+      case get_field(changeset, :participant) do
+        %Participant{} = pt -> get_name(pt) || fallback_title
+        _ -> fallback_title
+      end
+
+    case get_field(changeset, :role) do
+      nil -> participant_name
+      role -> participant_name <> " (#{role_title(role)})"
     end
   end
+
+  defp get_name(%Participant{given_name: nil, family_name: nil}), do: nil
+  defp get_name(%Participant{given_name: given_name, family_name: nil}), do: given_name
+  defp get_name(%Participant{given_name: nil, family_name: family_name}), do: family_name
+  defp get_name(%Participant{} = pt), do: full_name(pt)
 
   def piece_panel_title(%Changeset{} = cs, index) do
     fallback_title = gettext("Piece") <> " #{index + 1}"

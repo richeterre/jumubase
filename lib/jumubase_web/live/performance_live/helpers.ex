@@ -2,6 +2,10 @@ defmodule JumubaseWeb.PerformanceLive.Helpers do
   import Phoenix.LiveView, only: [assign: 2]
   alias Ecto.Changeset
 
+  def parse_id(id) when is_binary(id) do
+    String.to_integer(id)
+  end
+
   def toggle_appearance_panel(socket, index) do
     new_index = if socket.assigns.expanded_appearance_index == index, do: nil, else: index
     assign(socket, expanded_appearance_index: new_index)

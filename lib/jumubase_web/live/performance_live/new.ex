@@ -52,12 +52,12 @@ defmodule JumubaseWeb.PerformanceLive.New do
   end
 
   def handle_event("remove-appearance", %{"index" => index}, socket) do
-    changeset = remove_appearance(socket.assigns.changeset, String.to_integer(index))
+    changeset = remove_appearance(socket.assigns.changeset, parse_id(index))
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("toggle-appearance-panel", %{"index" => index}, socket) do
-    {:noreply, toggle_appearance_panel(socket, String.to_integer(index))}
+    {:noreply, toggle_appearance_panel(socket, parse_id(index))}
   end
 
   def handle_event("add-piece", _, socket) do
@@ -72,12 +72,12 @@ defmodule JumubaseWeb.PerformanceLive.New do
   end
 
   def handle_event("remove-piece", %{"index" => index}, socket) do
-    changeset = remove_piece(socket.assigns.changeset, String.to_integer(index))
+    changeset = remove_piece(socket.assigns.changeset, parse_id(index))
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("toggle-piece-panel", %{"index" => index}, socket) do
-    {:noreply, toggle_piece_panel(socket, String.to_integer(index))}
+    {:noreply, toggle_piece_panel(socket, parse_id(index))}
   end
 
   def handle_event("submit", %{"performance" => attrs}, socket) do

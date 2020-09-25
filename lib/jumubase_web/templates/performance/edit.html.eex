@@ -6,9 +6,11 @@
 
 <hr>
 
-<%= live_render(@conn, JumubaseWeb.PerformanceLive.Edit,
-  session: %{"contest_id" => @contest.id, "performance_id" => @performance.id})
-  %>
+<%= live_render(@conn, JumubaseWeb.PerformanceLive.Edit, session: %{
+  "contest_id" => @contest.id,
+  "performance_id" => @performance.id,
+  "submit_title" => gettext("Save Changes")
+  }) %>
 
 <%# render "_form.html",
   conn: @conn,

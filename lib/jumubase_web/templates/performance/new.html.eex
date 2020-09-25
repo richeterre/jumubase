@@ -6,7 +6,10 @@
 
 <hr>
 
-<%= live_render(@conn, JumubaseWeb.PerformanceLive.New, session: %{"contest_id" => @contest.id}) %>
+<%= live_render(@conn, JumubaseWeb.PerformanceLive.New, session: %{
+    "contest_id" => @contest.id,
+    "submit_title" => [gettext("Submit registration"), " ", icon_tag("send")]
+  }) %>
 
 <%# render "_form.html",
   conn: @conn,

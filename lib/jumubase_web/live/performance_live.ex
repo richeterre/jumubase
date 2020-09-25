@@ -12,7 +12,7 @@ defmodule JumubaseWeb.PerformanceLive do
         JumubaseWeb.PerformanceView.render("live_form.html", assigns)
       end
 
-      def mount(_params, %{"contest_id" => c_id}, socket) do
+      def mount(_params, %{"contest_id" => c_id, "submit_title" => submit_title}, socket) do
         contest = Foundation.get_contest!(c_id) |> Foundation.load_contest_categories()
 
         changeset =
@@ -26,7 +26,8 @@ defmodule JumubaseWeb.PerformanceLive do
            changeset: changeset,
            contest: contest,
            expanded_appearance_index: nil,
-           expanded_piece_index: nil
+           expanded_piece_index: nil,
+           submit_title: submit_title
          )}
       end
 

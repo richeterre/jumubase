@@ -13,7 +13,11 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
     JumubaseWeb.PerformanceView.render("live_form.html", assigns)
   end
 
-  def mount(_params, %{"contest_id" => c_id, "performance_id" => p_id}, socket) do
+  def mount(
+        _params,
+        %{"contest_id" => c_id, "performance_id" => p_id, "submit_title" => submit_title},
+        socket
+      ) do
     contest = Foundation.get_contest!(c_id) |> Foundation.load_contest_categories()
     performance = Showtime.get_performance!(contest, p_id)
 
@@ -23,7 +27,8 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
        contest: contest,
        performance: performance,
        expanded_appearance_index: nil,
-       expanded_piece_index: nil
+       expanded_piece_index: nil,
+       submit_title: submit_title
      )}
   end
 

@@ -1,9 +1,7 @@
 defmodule JumubaseWeb.Internal.PerformanceController do
   use JumubaseWeb, :controller
   import Jumubase.Utils, only: [parse_bool: 1, parse_ids: 1]
-  import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
   import JumubaseWeb.ErrorHelpers, only: [get_translated_errors: 1]
-  alias Ecto.Changeset
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
@@ -21,7 +19,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   plug :admin_check when action in [:migrate_advancing]
 
   plug :non_observer_check
-       when action in [:update, :delete, :reschedule, :update_results, :update_results_public]
+       when action in [:delete, :reschedule, :update_results, :update_results_public]
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -45,9 +43,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   def new(conn, _params, contest) do
     conn
-    |> assign(:contest, contest)
-    |> add_breadcrumbs(contest)
-    |> add_breadcrumb(icon: "plus", path: current_path(conn))
+    |> prepare_for_form(contest)
     |> render("new.html")
   end
 
@@ -58,31 +54,8 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       handle_has_results_error(conn, contest)
     else
       conn
-      |> prepare_for_form(contest, performance, Showtime.change_performance(performance))
+      |> prepare_for_form(contest, performance)
       |> render("edit.html")
-    end
-  end
-
-  def update(conn, %{"id" => id, "performance" => params}, contest) do
-    params = normalize_params(params)
-
-    performance = Showtime.get_performance!(contest, id)
-
-    case Showtime.update_performance(contest, performance, params) do
-      {:ok, performance} ->
-        conn
-        |> put_flash(:success, gettext("The performance was updated."))
-        |> redirect(
-          to: Routes.internal_contest_performance_path(conn, :show, contest, performance)
-        )
-
-      {:error, %Changeset{} = changeset} ->
-        conn
-        |> prepare_for_form(contest, performance, changeset)
-        |> render("edit.html")
-
-      {:error, :has_results} ->
-        handle_has_results_error(conn, contest)
     end
   end
 
@@ -308,11 +281,17 @@ defmodule JumubaseWeb.Internal.PerformanceController do
     Showtime.list_performances(c, filter)
   end
 
-  defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p, %Changeset{} = cs) do
+  defp prepare_for_form(conn, %Contest{} = c) do
+    conn
+    |> assign(:contest, c)
+    |> add_breadcrumbs(c)
+    |> add_breadcrumb(icon: "plus", path: current_path(conn))
+  end
+
+  defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p) do
     conn
     |> assign(:contest, c)
     |> assign(:performance, p)
-    |> assign(:changeset, cs)
     |> add_breadcrumbs(c, p)
     |> add_breadcrumb(icon: "pencil", path: current_path(conn))
   end

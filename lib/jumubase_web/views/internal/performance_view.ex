@@ -13,7 +13,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       prize: 2
     ]
 
-  import JumubaseWeb.PerformanceView, only: [predecessor_host_options: 1]
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
@@ -28,11 +27,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias JumubaseWeb.PDFGenerator
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
-
-  def render("scripts.edit.html", assigns) do
-    # Load same script as in public registration form
-    JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)
-  end
 
   def render("reschedule_success.json", %{stage_times: stage_times}) do
     stage_times

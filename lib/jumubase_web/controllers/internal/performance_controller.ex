@@ -21,14 +21,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   plug :admin_check when action in [:migrate_advancing]
 
   plug :non_observer_check
-       when action in [
-              :create,
-              :update,
-              :delete,
-              :reschedule,
-              :update_results,
-              :update_results_public
-            ]
+       when action in [:update, :delete, :reschedule, :update_results, :update_results_public]
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -51,31 +44,11 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   end
 
   def new(conn, _params, contest) do
-    changeset =
-      Showtime.build_performance(contest)
-      |> Showtime.change_performance()
-
     conn
-    |> prepare_for_form(contest, changeset)
+    |> assign(:contest, contest)
+    |> add_breadcrumbs(contest)
+    |> add_breadcrumb(icon: "plus", path: current_path(conn))
     |> render("new.html")
-  end
-
-  def create(conn, params, contest) do
-    performance_params = params["performance"] || %{}
-
-    case Showtime.create_performance(contest, performance_params) do
-      {:ok, performance} ->
-        conn
-        |> put_flash(:success, gettext("The performance was created."))
-        |> redirect(
-          to: Routes.internal_contest_performance_path(conn, :show, contest, performance)
-        )
-
-      {:error, changeset} ->
-        conn
-        |> prepare_for_form(contest, changeset)
-        |> render("new.html")
-    end
   end
 
   def edit(conn, %{"id" => id}, contest) do
@@ -333,14 +306,6 @@ defmodule JumubaseWeb.Internal.PerformanceController do
 
   defp load_performances(%Contest{} = c, filter) do
     Showtime.list_performances(c, filter)
-  end
-
-  defp prepare_for_form(conn, %Contest{} = c, %Changeset{} = cs) do
-    conn
-    |> assign(:contest, c)
-    |> assign(:changeset, cs)
-    |> add_breadcrumbs(c)
-    |> add_breadcrumb(icon: "plus", path: current_path(conn))
   end
 
   defp prepare_for_form(conn, %Contest{} = c, %Performance{} = p, %Changeset{} = cs) do

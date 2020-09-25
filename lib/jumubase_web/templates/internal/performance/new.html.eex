@@ -6,7 +6,11 @@
 
 <hr>
 
-<%= render JumubaseWeb.PerformanceView, "_form.html",
+<%= live_render(@conn, JumubaseWeb.Internal.PerformanceLive.New, session: %{
+  "contest_id" => @contest.id,
+  }) %>
+
+<%# render JumubaseWeb.PerformanceView, "_form.html",
   conn: @conn,
   path: Routes.internal_contest_performance_path(@conn, :create, @contest),
   changeset: @changeset,

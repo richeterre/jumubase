@@ -29,11 +29,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   def render("scripts.index.html", _assigns), do: render_performance_filter()
 
-  def render("scripts.new.html", assigns) do
-    # Load same script as in public registration form
-    JumubaseWeb.PerformanceView.render("scripts.new.html", assigns)
-  end
-
   def render("scripts.edit.html", assigns) do
     # Load same script as in public registration form
     JumubaseWeb.PerformanceView.render("scripts.edit.html", assigns)

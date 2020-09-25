@@ -1,11 +1,8 @@
 defmodule JumubaseWeb.PerformanceController do
   use JumubaseWeb, :controller
   alias Ecto.Changeset
-  alias Jumubase.Mailer
-  alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
-  alias JumubaseWeb.Email
 
   # Authorize nested contest, then pass it to all actions
   def action(conn, _) do
@@ -20,25 +17,6 @@ defmodule JumubaseWeb.PerformanceController do
     conn
     |> assign(:contest, contest)
     |> render("new.html")
-  end
-
-  def create(conn, params, contest) do
-    performance_params = params["performance"] || %{}
-
-    case Showtime.create_performance(contest, performance_params) do
-      {:ok, %{edit_code: edit_code} = performance} ->
-        Email.registration_success(performance) |> Mailer.deliver_later()
-
-        conn
-        |> put_flash(:success, registration_success_message(edit_code))
-        |> redirect(to: Routes.page_path(conn, :home))
-
-      {:error, changeset} ->
-        conn
-        |> prepare_for_form(contest, changeset)
-        |> assign_matching_kimu_contest(contest)
-        |> render("new.html")
-    end
   end
 
   def edit(conn, %{"edit_code" => edit_code}, contest) do
@@ -94,21 +72,5 @@ defmodule JumubaseWeb.PerformanceController do
     conn
     |> assign(:contest, contest)
     |> assign(:changeset, changeset)
-  end
-
-  defp assign_matching_kimu_contest(conn, %Contest{} = c) do
-    conn
-    |> assign(:kimu_contest, Foundation.get_matching_kimu_contest(c))
-  end
-
-  defp registration_success_message(edit_code) do
-    success_msg = gettext("We received your registration!")
-
-    edit_msg =
-      gettext("You can still change it later using the edit code %{edit_code}.",
-        edit_code: edit_code
-      )
-
-    "#{success_msg} #{edit_msg}"
   end
 end

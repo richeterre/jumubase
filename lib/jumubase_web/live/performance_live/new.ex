@@ -3,15 +3,18 @@ defmodule JumubaseWeb.PerformanceLive.New do
   use JumubaseWeb.PerformanceLive, :new
   import Jumubase.Gettext
   import JumubaseWeb.PerformanceLive.Helpers
+  alias Jumubase.Mailer
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.Performance
+  alias JumubaseWeb.Email
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def handle_event("submit", %{"performance" => attrs}, socket) do
     contest = socket.assigns.contest
 
     case Showtime.create_performance(contest, attrs) do
-      {:ok, %Performance{edit_code: edit_code}} ->
+      {:ok, %{edit_code: edit_code} = performance} ->
+        Email.registration_success(performance) |> Mailer.deliver_later()
+
         {:noreply,
          socket
          |> put_flash(:success, registration_success_message(edit_code))

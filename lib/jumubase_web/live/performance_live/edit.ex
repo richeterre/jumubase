@@ -10,7 +10,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
-    Phoenix.View.render(JumubaseWeb.PerformanceView, "live_form.html", assigns)
+    JumubaseWeb.PerformanceView.render("live_form.html", assigns)
   end
 
   def mount(_params, %{"contest_id" => c_id, "performance_id" => p_id}, socket) do

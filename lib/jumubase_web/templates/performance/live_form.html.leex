@@ -5,7 +5,15 @@
 
       <div class="row">
         <div class="form-group col-md-5">
-          <%= label f, :contest_category_id, gettext("Category") %>
+          <%= label f, :contest_category_id do %>
+            <%= gettext("Category") %>
+            <%= if kimu_contest = assigns[:kimu_contest] do %>
+              <small class="text-muted">
+                (<%= kimu_link(@socket, kimu_contest) %>)
+              </small>
+            <% end %>
+          <% end %>
+
           <%= select f, :contest_category_id, contest_category_options(@contest),
             prompt: gettext("Please choose"), class: "form-control" %>
           <%= error_tag f, :contest_category_id %>

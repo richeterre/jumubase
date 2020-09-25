@@ -18,9 +18,9 @@
         <div class="form-group col-md-5">
           <label for="performance_contest_category_id">
             <%= gettext("Category") %>
-            <%= if kimu_path = assigns[:kimu_path] do %>
+            <%= if _kimu_path = assigns[:kimu_path] do %>
               <small class="text-muted">
-                (<%= kimu_link(kimu_path) %>)
+                (<%# kimu_link(kimu_path) %>)
               </small>
             <% end %>
           </label>

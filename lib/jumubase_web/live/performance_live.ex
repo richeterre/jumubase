@@ -13,6 +13,7 @@ defmodule JumubaseWeb.PerformanceLive do
 
       def mount(_params, %{"contest_id" => c_id, "submit_title" => submit_title}, socket) do
         contest = Foundation.get_contest!(c_id) |> Foundation.load_contest_categories()
+        kimu_contest = Foundation.get_matching_kimu_contest(contest)
 
         changeset =
           %Performance{}
@@ -24,6 +25,7 @@ defmodule JumubaseWeb.PerformanceLive do
          assign(socket,
            changeset: changeset,
            contest: contest,
+           kimu_contest: kimu_contest,
            expanded_appearance_index: nil,
            expanded_piece_index: nil,
            submit_title: submit_title

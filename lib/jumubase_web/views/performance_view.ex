@@ -17,18 +17,11 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   @doc """
-  Returns the path to the contest's registration form, or nil if no contest is given.
-  """
-  def registration_path(conn, %Contest{} = c) do
-    Routes.performance_path(conn, :new, c)
-  end
-
-  def registration_path(_conn, nil), do: nil
-
-  @doc """
   Returns text that guides the user to a Kimu registration form with the given path.
   """
-  def kimu_link(path) do
+  def kimu_link(conn_or_socket, %Contest{} = c) do
+    path = Routes.performance_path(conn_or_socket, :new, c)
+
     gettext("for Kimu, there’s a %{form_link}",
       form_link: safe_to_string(link(gettext("separate form"), to: path))
     )

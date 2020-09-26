@@ -2,19 +2,30 @@ defmodule JumubaseWeb.Internal.PerformanceLive.New do
   use Phoenix.LiveView
   import Jumubase.Gettext
   import JumubaseWeb.PerformanceLive.Helpers
+
+  import JumubaseWeb.PerformanceLive.New,
+    only: [
+      prepare: 2,
+      change: 2,
+      add_appearance: 1,
+      remove_appearance: 2,
+      add_piece: 1,
+      remove_piece: 2
+    ]
+
   alias Jumubase.Showtime
   alias JumubaseWeb.Router.Helpers, as: Routes
-
-  def mount(_params, assigns, socket) do
-    prepare_new(assigns, socket)
-  end
 
   def render(assigns) do
     JumubaseWeb.PerformanceView.render("live_form.html", assigns)
   end
 
+  def mount(_params, assigns, socket) do
+    {:ok, prepare(socket, assigns)}
+  end
+
   def handle_event("change", %{"performance" => attrs}, socket) do
-    {:noreply, change_new(socket, attrs)}
+    {:noreply, change(socket, attrs)}
   end
 
   def handle_event("add-appearance", _, socket) do

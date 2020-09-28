@@ -122,11 +122,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   # Private helpers
 
   defp add_item(changeset, field_name, item) do
-    existing =
-      changeset
-      |> Changeset.get_field(field_name, [])
-      |> exclude_obsolete()
-
+    existing = get_assoc(changeset, field_name)
     changeset = changeset |> Changeset.put_assoc(field_name, existing ++ [item])
     {changeset, length(existing)}
   end
@@ -134,11 +130,21 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   defp remove_item(changeset, field_name, index) do
     remaining =
       changeset
-      |> Changeset.get_field(field_name, [])
-      |> exclude_obsolete()
+      |> get_assoc(field_name)
       |> List.delete_at(index)
 
     Changeset.put_assoc(changeset, field_name, remaining)
+  end
+
+  defp get_assoc(changeset, field_name) do
+    # This is used as a fallback if the changeset has no changes yet (e.g. right
+    # after loading the edit form). Using `get_field` instead of `get_change` won't
+    # work here, because it drops the user's "invalid" form edits that we want to keep.
+    assoc_from_data = Map.get(changeset.data, field_name, [])
+
+    changeset
+    |> Changeset.get_change(field_name, assoc_from_data)
+    |> exclude_obsolete()
   end
 
   defp exclude_obsolete(records_or_changesets) do

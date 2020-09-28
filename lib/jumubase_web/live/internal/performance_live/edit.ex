@@ -1,7 +1,6 @@
 defmodule JumubaseWeb.Internal.PerformanceLive.Edit do
   use Phoenix.LiveView
   import Jumubase.Gettext
-  import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
   import JumubaseWeb.PerformanceLive.Helpers
 
   import JumubaseWeb.PerformanceLive.Edit,
@@ -11,7 +10,8 @@ defmodule JumubaseWeb.Internal.PerformanceLive.Edit do
       add_appearance: 1,
       remove_appearance: 2,
       add_piece: 1,
-      remove_piece: 2
+      remove_piece: 2,
+      normalize_params: 1
     ]
 
   alias Ecto.Changeset

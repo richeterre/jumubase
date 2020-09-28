@@ -1,7 +1,6 @@
 defmodule JumubaseWeb.PerformanceLive.Edit do
   use Phoenix.LiveView
   import Jumubase.Gettext
-  import JumubaseWeb.PerformanceController, only: [normalize_params: 1]
   import JumubaseWeb.PerformanceLive.Helpers
   alias Ecto.Changeset
   alias Jumubase.Foundation
@@ -58,8 +57,17 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
          |> put_flash(:success, gettext("Your changes to the registration were saved."))
          |> redirect(to: Routes.page_path(socket, :home))}
 
-      {:error, changeset} ->
+      {:error, %Changeset{} = changeset} ->
         {:noreply, handle_failed_submit(socket, changeset)}
+
+      {:error, :has_results} ->
+        {:noreply,
+         socket
+         |> put_flash(
+           :error,
+           gettext("Your changes could not be saved. Please contact us if you need assistance.")
+         )
+         |> redirect(to: Routes.page_path(socket, :edit_registration))}
     end
   end
 
@@ -117,6 +125,17 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   def remove_piece(socket, index) do
     changeset = remove_item(socket.assigns.changeset, :pieces, index)
     assign(socket, changeset: changeset)
+  end
+
+  @doc """
+  Fills in empty performance associations if missing. This prevents such changes
+  from being ignored and enforces correct error handling of missing associations,
+  such as when removing all appearances while editing a performance.
+  """
+  def normalize_params(params) do
+    params
+    |> Map.put_new("appearances", [])
+    |> Map.put_new("pieces", [])
   end
 
   # Private helpers

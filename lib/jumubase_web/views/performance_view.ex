@@ -10,13 +10,6 @@ defmodule JumubaseWeb.PerformanceView do
   alias Jumubase.Showtime.Participant
 
   @doc """
-  Renders JS that powers the registration form.
-  """
-  def render("scripts.edit.html", assigns) do
-    render_registration_script(assigns)
-  end
-
-  @doc """
   Returns text that guides the user to a Kimu registration form with the given path.
   """
   def kimu_link(conn_or_socket, %Contest{} = c) do

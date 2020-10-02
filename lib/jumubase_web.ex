@@ -49,7 +49,6 @@ defmodule JumubaseWeb do
       import JumubaseWeb.ErrorHelpers
       import JumubaseWeb.FormHelpers
       import JumubaseWeb.IconHelpers
-      import JumubaseWeb.JsonHelpers
       alias JumubaseWeb.Router.Helpers, as: Routes
     end
   end

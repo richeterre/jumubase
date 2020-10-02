@@ -1,5 +1,5 @@
 <div class="row">
-  <div id="registration-form" class="col-lg-9">
+  <div class="col-lg-9">
     <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
       <%= render JumubaseWeb.ErrorView, "live_form_errors.html", errors: Keyword.get_values(f.errors, :base) %>
 
@@ -38,7 +38,7 @@
         <%= gettext("Non-competing accompanists don’t need to register.") %>
       </p>
 
-      <div class="panel-group" id="appearance-accordion" role="tablist">
+      <div class="panel-group" role="tablist">
         <%= for a <- inputs_for f, :appearances do %>
           <%= for pt <- inputs_for a, :participant do %>
             <div class="panel panel-default">
@@ -58,10 +58,7 @@
                   <span class="glyphicon glyphicon-trash" />
                 </button>
               </div>
-              <div
-                id="appearance-panel-<%= a.index %>"
-                class="panel-collapse collapse <%= if a.index == @expanded_appearance_index, do: "in" %>"
-                >
+              <div class="panel-collapse collapse <%= if a.index == @expanded_appearance_index, do: "in" %>">
                 <div class="panel-body">
                   <%= hidden_inputs_for(a) %>
                   <%= hidden_inputs_for(pt) %>
@@ -93,7 +90,7 @@
                   <div class="row">
                     <div class="form-group col-md-4">
                       <%= label a, :role, gettext("Role") %>
-                      <%= select a, :role, live_role_options(),
+                      <%= select a, :role, role_options(),
                         prompt: gettext("Please choose"), class: "form-control" %>
                       <%= error_tag a, :role %>
                     </div>
@@ -105,7 +102,7 @@
                           (<%= gettext("choose “Vocals” for singers") %>)
                         </small>
                       <% end %>
-                      <%= select a, :instrument, live_instrument_options(),
+                      <%= select a, :instrument, instrument_options(),
                         prompt: gettext("Please choose"), class: "form-control" %>
                       <%= error_tag a, :instrument %>
                     </div>
@@ -137,7 +134,7 @@
 
       <h3><%= gettext("Pieces") %></h3>
 
-      <div class="panel-group" id="piece-accordion" role="tablist">
+      <div class="panel-group" role="tablist">
         <%= for pc <- inputs_for f, :pieces do %>
           <div class="panel panel-default">
             <div
@@ -156,10 +153,7 @@
                 <span class="glyphicon glyphicon-trash" />
               </button>
             </div>
-            <div
-              id="piece-panel-<%= pc.index %>"
-              class="panel-collapse collapse <%= if pc.index == @expanded_piece_index, do: "in" %>"
-              >
+            <div class="panel-collapse collapse <%= if pc.index == @expanded_piece_index, do: "in" %>">
               <div class="panel-body">
                 <%= hidden_inputs_for(pc) %>
                 <div class="row">
@@ -205,7 +199,7 @@
                 <div class="row">
                   <div class="form-group col-md-5">
                     <%= label pc, :epoch, gettext("Epoch") %>
-                    <%= select pc, :epoch, live_epoch_options(), prompt: gettext("Please choose"), class: "form-control" %>
+                    <%= select pc, :epoch, epoch_options(), prompt: gettext("Please choose"), class: "form-control" %>
                     <%= error_tag pc, :epoch %>
                   </div>
 

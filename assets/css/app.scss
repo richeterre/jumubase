@@ -140,11 +140,6 @@ dt:not(:first-child) {
   margin-bottom: $line-height-computed;
 }
 
-/* Enable Vue.js cloaking (hiding element before Vue is loaded) */
-[v-cloak] {
-  display: none;
-}
-
 /* Hide certain form fields to fool and detect spambots */
 #trap {
   display: none;

@@ -1,7 +1,7 @@
 <div class="row">
   <div id="registration-form" class="col-lg-9">
     <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
-      <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+      <%= render JumubaseWeb.ErrorView, "live_form_errors.html", errors: Keyword.get_values(f.errors, :base) %>
 
       <%= if !Enum.empty?(@predecessor_host_options) do %>
         <div class="row">

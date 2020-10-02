@@ -43,11 +43,6 @@ defmodule JumubaseWeb.PerformanceView do
     end
   end
 
-  defp get_name(%Participant{given_name: nil, family_name: nil}), do: nil
-  defp get_name(%Participant{given_name: given_name, family_name: nil}), do: given_name
-  defp get_name(%Participant{given_name: nil, family_name: family_name}), do: family_name
-  defp get_name(%Participant{} = pt), do: full_name(pt)
-
   def piece_panel_title(%Changeset{} = cs, index) do
     fallback_title = gettext("Piece") <> " #{index + 1}"
 
@@ -74,6 +69,11 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   # Private helpers
+
+  defp get_name(%Participant{given_name: nil, family_name: nil}), do: nil
+  defp get_name(%Participant{given_name: given_name, family_name: nil}), do: given_name
+  defp get_name(%Participant{given_name: nil, family_name: family_name}), do: family_name
+  defp get_name(%Participant{} = pt), do: full_name(pt)
 
   defp get_genre(performance_cs, contest) do
     cc_id = get_field(performance_cs, :contest_category_id)

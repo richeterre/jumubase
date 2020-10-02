@@ -1,7 +1,18 @@
 defmodule JumubaseWeb.PerformanceLive.Helpers do
   import Phoenix.LiveView, only: [assign: 2]
   alias Ecto.Changeset
-  alias Jumubase.Showtime.Performance
+  alias Jumubase.Foundation
+  alias Jumubase.Foundation.Contest
+
+  @doc """
+  Returns predecessor host options based on the contest, suitable for form use.
+  """
+  def predecessor_host_options(%Contest{round: 2, grouping: grouping}) do
+    Foundation.list_hosts_by_grouping(grouping)
+    |> Enum.map(&{&1.name, &1.id})
+  end
+
+  def predecessor_host_options(%Contest{}), do: []
 
   def parse_id(id) when is_binary(id) do
     String.to_integer(id)

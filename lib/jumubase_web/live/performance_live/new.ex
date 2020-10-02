@@ -81,6 +81,7 @@ defmodule JumubaseWeb.PerformanceLive.New do
       changeset: changeset,
       contest: contest,
       kimu_contest: kimu_contest,
+      predecessor_host_options: predecessor_host_options(contest),
       expanded_appearance_index: nil,
       expanded_piece_index: nil,
       submit_title: submit_title

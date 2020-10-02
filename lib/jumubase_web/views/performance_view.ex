@@ -21,16 +21,6 @@ defmodule JumubaseWeb.PerformanceView do
     |> raw
   end
 
-  @doc """
-  Returns predecessor host options based on the contest, suitable for a performance form.
-  """
-  def predecessor_host_options(%Contest{round: 2, grouping: grouping}) do
-    Foundation.list_hosts_by_grouping(grouping)
-    |> Enum.map(&{&1.name, &1.id})
-  end
-
-  def predecessor_host_options(%Contest{}), do: []
-
   def contest_category_options(%Contest{contest_categories: contest_categories}) do
     contest_categories |> Enum.map(&{&1.category.name, &1.id})
   end

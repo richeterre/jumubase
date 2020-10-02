@@ -3,6 +3,17 @@
     <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
       <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
+      <%= if !Enum.empty?(@predecessor_host_options) do %>
+        <div class="row">
+          <div class="form-group col-md-5">
+            <%= label f, :predecessor_host_id, gettext("First round"), class: "control-label" %>
+            <%= select f, :predecessor_host_id, @predecessor_host_options,
+              prompt: gettext("Please choose"), class: "form-control" %>
+            <%= error_tag f, :predecessor_host_id %>
+          </div>
+        </div>
+      <% end %>
+
       <div class="row">
         <div class="form-group col-md-5">
           <%= label f, :contest_category_id do %>

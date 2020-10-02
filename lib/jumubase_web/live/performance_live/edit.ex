@@ -82,6 +82,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
       changeset: Showtime.change_performance(performance),
       contest: contest,
       performance: performance,
+      predecessor_host_options: predecessor_host_options(contest),
       expanded_appearance_index: nil,
       expanded_piece_index: nil,
       submit_title: submit_title

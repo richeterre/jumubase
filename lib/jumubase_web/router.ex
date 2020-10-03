@@ -63,8 +63,7 @@ defmodule JumubaseWeb.Router do
     get "/anmeldung-bearbeiten", PageController, :edit_registration
     post "/lookup-registration", PageController, :lookup_registration
 
-    resources "/contests/:contest_id/performances", PerformanceController,
-      only: [:new, :create, :edit, :update]
+    resources "/contests/:contest_id/performances", PerformanceController, only: [:new, :edit]
 
     # Auth
     get "/login", SessionController, :new
@@ -150,7 +149,9 @@ defmodule JumubaseWeb.Router do
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
       resources "/participants", ParticipantController, only: [:index, :show]
-      resources "/performances", PerformanceController
+
+      resources "/performances", PerformanceController,
+        only: [:index, :show, :new, :edit, :delete]
 
       resources "/stages", StageController, only: [:index] do
         get "/schedule", StageController, :schedule, as: :schedule

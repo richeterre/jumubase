@@ -4,7 +4,7 @@ defmodule JumubaseWeb.PerformanceController do
 
   # Authorize nested contest, then pass it to all actions
   def action(conn, _) do
-    if action_name(conn) in [:edit, :update] do
+    if action_name(conn) == :edit do
       contest_deadline_check_action(conn, __MODULE__)
     else
       contest_openness_check_action(conn, __MODULE__)

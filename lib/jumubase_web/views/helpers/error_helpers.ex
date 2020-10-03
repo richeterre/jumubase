@@ -4,6 +4,7 @@ defmodule JumubaseWeb.ErrorHelpers do
   """
 
   use Phoenix.HTML
+  import JumubaseWeb.IconHelpers
   alias Ecto.Changeset
 
   @doc """
@@ -18,7 +19,9 @@ defmodule JumubaseWeb.ErrorHelpers do
       input_id = input_id(form, feedback_field || field)
 
       content_tag(:div, class: "has-error", phx_feedback_for: input_id) do
-        content_tag(:small, translate_error(error), class: "help-block")
+        content_tag(:small, [icon_tag("exclamation-sign"), translate_error(error)],
+          class: "help-block"
+        )
       end
     end)
   end

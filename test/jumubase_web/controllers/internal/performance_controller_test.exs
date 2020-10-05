@@ -64,7 +64,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "new/2" do
-    for role <- all_roles() do
+    for role <- roles_except("observer") do
       @tag login_as: role
       test "lets authorized #{role} users fill in a new performance", %{conn: conn, user: u} do
         c = insert_authorized_contest(u)
@@ -82,13 +82,18 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       end
     end
 
+    @tag login_as: "observer"
+    test "redirects observers trying to fill in a new performance", %{conn: conn, contest: c} do
+      conn |> attempt_new(c) |> assert_unauthorized_user
+    end
+
     test "redirects guests trying to fill in a new performance", %{conn: conn, contest: c} do
       conn |> attempt_new(c) |> assert_unauthorized_guest
     end
   end
 
   describe "edit/2" do
-    for role <- all_roles() do
+    for role <- roles_except("observer") do
       @tag login_as: role
       test "lets authorized #{role} users edit a performance", %{conn: conn, user: u} do
         c = insert_authorized_contest(u)
@@ -109,13 +114,20 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       end
     end
 
+    @tag login_as: "observer"
+    test "redirects observers trying to edit a performance", %{conn: conn, contest: c} do
+      p = insert_performance(c)
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
+      assert_unauthorized_user(conn)
+    end
+
     test "redirects guests trying to edit a performance", %{conn: conn, contest: c} do
       p = insert_performance(c)
       conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
       assert_unauthorized_guest(conn)
     end
 
-    for role <- all_roles() do
+    for role <- roles_except("observer") do
       @tag login_as: role
       test "redirects authorized #{role} users if the performance has results",
            %{conn: conn, user: u} do

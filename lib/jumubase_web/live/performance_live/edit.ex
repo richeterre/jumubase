@@ -101,12 +101,8 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   end
 
   def add_appearance(socket) do
-    {changeset, index} = add_item(socket.assigns.changeset, :appearances, %Appearance{})
-
-    assign(socket,
-      changeset: changeset,
-      expanded_appearance_index: socket.assigns.expanded_appearance_index || index
-    )
+    changeset = socket.assigns.changeset
+    assign(socket, changeset: add_item(changeset, :appearances, %Appearance{}))
   end
 
   def remove_appearance(socket, index) do
@@ -115,12 +111,8 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
   end
 
   def add_piece(socket) do
-    {changeset, index} = add_item(socket.assigns.changeset, :pieces, %Piece{})
-
-    assign(socket,
-      changeset: changeset,
-      expanded_piece_index: socket.assigns.expanded_piece_index || index
-    )
+    changeset = socket.assigns.changeset
+    assign(socket, changeset: add_item(changeset, :pieces, %Piece{}))
   end
 
   def remove_piece(socket, index) do
@@ -143,8 +135,7 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
 
   defp add_item(changeset, field_name, item) do
     existing = get_assoc(changeset, field_name)
-    changeset = changeset |> Changeset.put_assoc(field_name, existing ++ [item])
-    {changeset, length(existing)}
+    Changeset.put_assoc(changeset, field_name, existing ++ [item])
   end
 
   defp remove_item(changeset, field_name, index) do

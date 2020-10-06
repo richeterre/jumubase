@@ -100,12 +100,7 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
   def add_appearance(socket) do
     changeset = socket.assigns.changeset
-    index = get_appearance_count(changeset)
-
-    assign(socket,
-      changeset: append_appearance(changeset),
-      expanded_appearance_index: socket.assigns.expanded_appearance_index || index
-    )
+    assign(socket, changeset: append_appearance(changeset))
   end
 
   def remove_appearance(socket, index) do
@@ -115,12 +110,7 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
   def add_piece(socket) do
     changeset = socket.assigns.changeset
-    index = get_piece_count(changeset)
-
-    assign(socket,
-      changeset: append_piece(changeset),
-      expanded_piece_index: socket.assigns.expanded_piece_index || index
-    )
+    assign(socket, changeset: append_piece(changeset))
   end
 
   def remove_piece(socket, index) do
@@ -130,10 +120,8 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
   # Private helpers
 
-  defp get_appearance_count(cs), do: get_existing_items(cs, :appearances) |> length()
   defp append_appearance(cs), do: append_item(cs, :appearances, %Appearance{})
 
-  defp get_piece_count(cs), do: get_existing_items(cs, :pieces) |> length()
   defp append_piece(cs), do: append_item(cs, :pieces, %Piece{})
 
   defp get_existing_items(cs, field) do

@@ -26,6 +26,16 @@ defmodule JumubaseWeb.ErrorHelpers do
     end)
   end
 
+  def error_banner_tags(form, field) do
+    form.errors
+    |> Keyword.get_values(field)
+    |> Enum.map(fn error ->
+      content_tag(:div, class: "alert alert-warning") do
+        [icon_tag("exclamation-sign"), translate_error(error)]
+      end
+    end)
+  end
+
   def error_list_tag(errors) do
     content_tag :ul do
       for error <- errors do

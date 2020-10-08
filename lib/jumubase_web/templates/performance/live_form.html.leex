@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-lg-9">
     <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
-      <%= render JumubaseWeb.ErrorView, "live_form_errors.html", errors: Keyword.get_values(f.errors, :base) %>
 
       <%= if !Enum.empty?(@predecessor_host_options) do %>
         <div class="row">
@@ -128,6 +127,8 @@
         <% end %>
       </div>
 
+      <%= error_banner_tags f, :appearances %>
+
       <button type="button" class="btn btn-default" phx-click="add-appearance">
         <%= icon_tag("plus") %> <%= gettext("Add participant") %>
       </button>
@@ -228,6 +229,8 @@
           </div>
         <% end %>
       </div>
+
+      <%= error_banner_tags f, :pieces %>
 
       <button type="button" class="btn btn-default" phx-click="add-piece">
         <%= icon_tag("plus") %> <%= gettext("Add piece") %>

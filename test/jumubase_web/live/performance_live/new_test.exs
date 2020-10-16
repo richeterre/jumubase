@@ -18,11 +18,39 @@ defmodule JumubaseWeb.PerformanceLive.EditTest do
     assert html =~ "Submit registration"
   end
 
+  test "lets the user add appearances", %{conn: conn, contest: c} do
+    {view, _} = live_new(conn, c)
+
+    refute render(view) =~ "Participant 2"
+    assert render_click(view, "add-appearance") =~ "Participant 2"
+  end
+
+  test "lets the user remove appearances", %{conn: conn, contest: c} do
+    {view, _} = live_new(conn, c)
+
+    assert render(view) =~ "Participant 1"
+    refute render_click(view, "remove-appearance", %{"index" => "0"}) =~ "Participant 1"
+  end
+
+  test "lets the user add pieces", %{conn: conn, contest: c} do
+    {view, _} = live_new(conn, c)
+
+    refute render(view) =~ "Piece 2"
+    assert render_click(view, "add-piece") =~ "Piece 2"
+  end
+
+  test "lets the user remove pieces", %{conn: conn, contest: c} do
+    {view, _} = live_new(conn, c)
+
+    assert render(view) =~ "Piece 1"
+    refute render_click(view, "remove-piece", %{"index" => "0"}) =~ "Piece 1"
+  end
+
   test "lets the user register a new performance", %{conn: conn, contest: c} do
     [cc, _] = c.contest_categories
     {view, _} = live_new(conn, c)
 
-    render_submit(view, :submit, valid_performance_params(cc))
+    render_submit(view, "submit", valid_performance_params(cc))
     %Performance{edit_code: edit_code} = get_inserted_performance()
 
     flash = assert_redirect(view, "/")
@@ -37,10 +65,22 @@ defmodule JumubaseWeb.PerformanceLive.EditTest do
     [cc, _] = c.contest_categories
     {view, _} = live_new(conn, c)
 
-    render_submit(view, :submit, valid_performance_params(cc))
+    render_submit(view, "submit", valid_performance_params(cc))
     performance = get_inserted_performance()
 
     assert_delivered_email(JumubaseWeb.Email.registration_success(performance))
+  end
+
+  test "shows form errors when user submits invalid data", %{conn: conn, contest: c} do
+    [cc, _] = c.contest_categories
+    {view, _} = live_new(conn, c)
+
+    invalid_params = %{"performance" => %{"contest_category_id" => cc.id}}
+
+    assert render_submit(view, "submit", invalid_params) =~
+             "The performance must have at least one participant."
+
+    assert get_inserted_performance() == nil
   end
 
   # Private helpers

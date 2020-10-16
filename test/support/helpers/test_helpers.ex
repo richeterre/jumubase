@@ -2,6 +2,7 @@ defmodule Jumubase.TestHelpers do
   import ExUnit.Assertions
   import Jumubase.Utils, only: [get_ids: 1]
   alias Jumubase.JumuParams
+  alias Jumubase.Foundation.ContestCategory
 
   @doc """
   Returns whether the ids of the lists' elements match in that order.
@@ -41,6 +42,41 @@ defmodule Jumubase.TestHelpers do
   """
   def roles_except(roles) when is_list(roles) do
     all_roles() -- roles
+  end
+
+  @doc """
+  Returns valid form parameters for a performance,
+  using the given contest category.
+  """
+  def valid_performance_params(%ContestCategory{} = cc) do
+    %{
+      "performance" => %{
+        "contest_category_id" => cc.id,
+        "appearances" => %{
+          "0" => %{
+            "role" => "soloist",
+            "instrument" => "piano",
+            "participant" => %{
+              "given_name" => "A",
+              "family_name" => "A",
+              "birthdate" => "2004-01-01",
+              "email" => "ab@cd.ef",
+              "phone" => "1234567"
+            }
+          }
+        },
+        "pieces" => %{
+          "0" => %{
+            "title" => "Title",
+            "composer" => "Composer",
+            "composer_born" => "1900",
+            "epoch" => "e",
+            "minutes" => 1,
+            "seconds" => 23
+          }
+        }
+      }
+    }
   end
 
   # Private helpers

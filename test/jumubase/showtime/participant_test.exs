@@ -87,34 +87,25 @@ defmodule Jumubase.ParticipantTest do
     end
   end
 
-  describe "preserve_identity/1" do
-    test "adds an error if the participant's name was changed" do
+  describe "has_identity_changes?/1" do
+    test "returns true if the participant's name was changed" do
       for field <- [:given_name, :family_name] do
-        changeset =
-          build(:participant)
-          |> Changeset.change([{field, "X"}])
-          |> Participant.preserve_identity()
-
-        assert changeset.errors[field] == {"can't be changed", []}
+        changeset = build(:participant) |> Changeset.change([{field, "X"}])
+        assert Participant.has_identity_changes?(changeset)
       end
     end
 
-    test "adds an error if the participant's birthdate was changed" do
-      changeset =
-        build(:participant)
-        |> Changeset.change(birthdate: ~D[2001-02-03])
-        |> Participant.preserve_identity()
-
-      assert changeset.errors[:birthdate] == {"can't be changed", []}
+    test "returns true if the participant's birthdate was changed" do
+      changeset = build(:participant) |> Changeset.change(birthdate: ~D[2001-02-03])
+      assert Participant.has_identity_changes?(changeset)
     end
 
-    test "adds no error if only non-identity fields are changed" do
+    test "returns false if only non-identity fields are changed" do
       changeset =
         build(:participant, phone: "123", email: "old@example.org")
         |> Changeset.change(phone: "456", email: "new@example.org")
-        |> Participant.preserve_identity()
 
-      assert changeset.valid?
+      refute Participant.has_identity_changes?(changeset)
     end
   end
 end

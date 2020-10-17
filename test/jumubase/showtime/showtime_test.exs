@@ -669,15 +669,11 @@ defmodule Jumubase.ShowtimeTest do
 
       assert [
                %Changeset{
-                 changes: %{
-                   participant: %{
-                     errors: [
-                       birthdate: {"can't be changed", []},
-                       family_name: {"can't be changed", []},
-                       given_name: {"can't be changed", []}
-                     ]
-                   }
-                 }
+                 errors: [
+                   participant:
+                     {"To change the name or birthdate, please remove and add back this person.",
+                      ''}
+                 ]
                }
              ] = changeset.changes[:appearances]
     end

@@ -62,5 +62,11 @@ defmodule Jumubase.CategoryTest do
         refute changeset.valid?
       end
     end
+
+    test "without an epoch usage flag" do
+      params = params_for(:category, uses_epochs: nil)
+      changeset = Category.changeset(%Category{}, params)
+      refute changeset.valid?
+    end
   end
 end

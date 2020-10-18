@@ -387,7 +387,8 @@ Repo.transaction(fn ->
     short_name: "Kimu",
     genre: "kimu",
     type: "solo_or_ensemble",
-    group: "kimu"
+    group: "kimu",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -395,7 +396,8 @@ Repo.transaction(fn ->
     short_name: "Akkordeon",
     genre: "classical",
     type: "solo",
-    group: "accordion"
+    group: "accordion",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -403,7 +405,8 @@ Repo.transaction(fn ->
     short_name: "Blockflöte",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -411,7 +414,8 @@ Repo.transaction(fn ->
     short_name: "Fagott",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -419,7 +423,8 @@ Repo.transaction(fn ->
     short_name: "Gesang",
     genre: "classical",
     type: "solo",
-    group: "classical_vocals"
+    group: "classical_vocals",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -427,7 +432,8 @@ Repo.transaction(fn ->
     short_name: "Gitarre",
     genre: "classical",
     type: "solo",
-    group: "plucked"
+    group: "plucked",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -435,7 +441,8 @@ Repo.transaction(fn ->
     short_name: "Harfe",
     genre: "classical",
     type: "solo",
-    group: "harp"
+    group: "harp",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -443,7 +450,8 @@ Repo.transaction(fn ->
     short_name: "Horn",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -451,7 +459,8 @@ Repo.transaction(fn ->
     short_name: "Kantele",
     genre: "classical",
     type: "solo",
-    group: "plucked"
+    group: "plucked",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -459,7 +468,8 @@ Repo.transaction(fn ->
     short_name: "Klarinette",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -467,7 +477,8 @@ Repo.transaction(fn ->
     short_name: "Klavier",
     genre: "classical",
     type: "solo",
-    group: "piano"
+    group: "piano",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -475,7 +486,8 @@ Repo.transaction(fn ->
     short_name: "Kontrabass",
     genre: "classical",
     type: "solo",
-    group: "strings"
+    group: "strings",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -483,7 +495,8 @@ Repo.transaction(fn ->
     short_name: "Mallets",
     genre: "classical",
     type: "solo",
-    group: "percussion"
+    group: "percussion",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -491,7 +504,8 @@ Repo.transaction(fn ->
     short_name: "Mandoline",
     genre: "classical",
     type: "solo",
-    group: "plucked"
+    group: "plucked",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -499,7 +513,8 @@ Repo.transaction(fn ->
     short_name: "Oboe",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -507,7 +522,8 @@ Repo.transaction(fn ->
     short_name: "Orgel",
     genre: "classical",
     type: "solo",
-    group: "organ"
+    group: "organ",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -515,7 +531,8 @@ Repo.transaction(fn ->
     short_name: "Percussion",
     genre: "classical",
     type: "solo",
-    group: "percussion"
+    group: "percussion",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -523,7 +540,8 @@ Repo.transaction(fn ->
     short_name: "Posaune",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -531,7 +549,8 @@ Repo.transaction(fn ->
     short_name: "Querflöte",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -539,7 +558,8 @@ Repo.transaction(fn ->
     short_name: "Saxophon",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -547,7 +567,8 @@ Repo.transaction(fn ->
     short_name: "ThBarEuph",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -555,7 +576,8 @@ Repo.transaction(fn ->
     short_name: "Trompete",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -563,7 +585,8 @@ Repo.transaction(fn ->
     short_name: "Tuba",
     genre: "classical",
     type: "solo",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -571,7 +594,8 @@ Repo.transaction(fn ->
     short_name: "Viola",
     genre: "classical",
     type: "solo",
-    group: "strings"
+    group: "strings",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -579,7 +603,8 @@ Repo.transaction(fn ->
     short_name: "Violine",
     genre: "classical",
     type: "solo",
-    group: "strings"
+    group: "strings",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -587,7 +612,8 @@ Repo.transaction(fn ->
     short_name: "Cello",
     genre: "classical",
     type: "solo",
-    group: "strings"
+    group: "strings",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -595,7 +621,8 @@ Repo.transaction(fn ->
     short_name: "Zither",
     genre: "classical",
     type: "solo",
-    group: "plucked"
+    group: "plucked",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -603,7 +630,8 @@ Repo.transaction(fn ->
     short_name: "AkkKammer",
     genre: "classical",
     type: "ensemble",
-    group: "accordion"
+    group: "accordion",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -611,7 +639,8 @@ Repo.transaction(fn ->
     short_name: "BesEnsAlteMusik",
     genre: "classical",
     type: "ensemble",
-    group: "special_lineups"
+    group: "special_lineups",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -619,7 +648,8 @@ Repo.transaction(fn ->
     short_name: "BesEnsKlassik",
     genre: "classical",
     type: "ensemble",
-    group: "special_lineups"
+    group: "special_lineups",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -627,7 +657,8 @@ Repo.transaction(fn ->
     short_name: "BläserEns",
     genre: "classical",
     type: "ensemble",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -635,7 +666,8 @@ Repo.transaction(fn ->
     short_name: "Klavier+Bläser",
     genre: "classical",
     type: "ensemble",
-    group: "wind"
+    group: "wind",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -643,7 +675,8 @@ Repo.transaction(fn ->
     short_name: "Klavier+Streicher",
     genre: "classical",
     type: "ensemble",
-    group: "strings"
+    group: "strings",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -651,7 +684,8 @@ Repo.transaction(fn ->
     short_name: "Kunstlied",
     genre: "classical",
     type: "ensemble",
-    group: "classical_vocals"
+    group: "classical_vocals",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -659,7 +693,8 @@ Repo.transaction(fn ->
     short_name: "HarfenEns",
     genre: "classical",
     type: "ensemble",
-    group: "harp"
+    group: "harp",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -667,7 +702,8 @@ Repo.transaction(fn ->
     short_name: "KlavierKammer",
     genre: "classical",
     type: "ensemble",
-    group: "piano"
+    group: "piano",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -675,7 +711,8 @@ Repo.transaction(fn ->
     short_name: "Klavier4H",
     genre: "classical",
     type: "ensemble",
-    group: "piano"
+    group: "piano",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -683,7 +720,8 @@ Repo.transaction(fn ->
     short_name: "NeueMusik",
     genre: "classical",
     type: "ensemble",
-    group: "special_lineups"
+    group: "special_lineups",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -691,7 +729,8 @@ Repo.transaction(fn ->
     short_name: "SchlagzEns",
     genre: "classical",
     type: "ensemble",
-    group: "percussion"
+    group: "percussion",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -699,7 +738,8 @@ Repo.transaction(fn ->
     short_name: "StreicherEns",
     genre: "classical",
     type: "ensemble",
-    group: "strings"
+    group: "strings",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -707,7 +747,8 @@ Repo.transaction(fn ->
     short_name: "VokalEns",
     genre: "classical",
     type: "ensemble",
-    group: "classical_vocals"
+    group: "classical_vocals",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -715,7 +756,8 @@ Repo.transaction(fn ->
     short_name: "ZupfEns",
     genre: "classical",
     type: "ensemble",
-    group: "plucked"
+    group: "plucked",
+    uses_epochs: true
   )
 
   insert(:category,
@@ -723,7 +765,8 @@ Repo.transaction(fn ->
     short_name: "PopDrums",
     genre: "popular",
     type: "solo",
-    group: "pop_instrumental"
+    group: "pop_instrumental",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -731,7 +774,8 @@ Repo.transaction(fn ->
     short_name: "PopBass",
     genre: "popular",
     type: "solo",
-    group: "pop_instrumental"
+    group: "pop_instrumental",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -739,7 +783,8 @@ Repo.transaction(fn ->
     short_name: "PopGesang",
     genre: "popular",
     type: "solo",
-    group: "pop_vocals"
+    group: "pop_vocals",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -747,7 +792,8 @@ Repo.transaction(fn ->
     short_name: "PopGitarre",
     genre: "popular",
     type: "solo",
-    group: "pop_instrumental"
+    group: "pop_instrumental",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -755,7 +801,8 @@ Repo.transaction(fn ->
     short_name: "PopInstr",
     genre: "popular",
     type: "solo",
-    group: "pop_instrumental"
+    group: "pop_instrumental",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -763,7 +810,8 @@ Repo.transaction(fn ->
     short_name: "Musical",
     genre: "popular",
     type: "solo",
-    group: "pop_vocals"
+    group: "pop_vocals",
+    uses_epochs: false
   )
 
   insert(:category,
@@ -771,6 +819,7 @@ Repo.transaction(fn ->
     short_name: "PopVokalEns",
     genre: "popular",
     type: "ensemble",
-    group: "pop_vocals"
+    group: "pop_vocals",
+    uses_epochs: false
   )
 end)

@@ -24,6 +24,17 @@ defmodule JumubaseWeb.Internal.CategoryView do
     content_tag(:span, group_name(group), class: "label label-default")
   end
 
+  @doc """
+  Returns a text describing whether the category uses epochs.
+  """
+  def uses_epochs_text(%Category{uses_epochs: true}) do
+    content_tag(:span, gettext("Yes"))
+  end
+
+  def uses_epochs_text(%Category{uses_epochs: false}) do
+    content_tag(:span, gettext("No"))
+  end
+
   def bw_code_tag(%Category{bw_code: nil}), do: nil
 
   def bw_code_tag(%Category{bw_code: bw_code}) do

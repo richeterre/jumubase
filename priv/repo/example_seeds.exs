@@ -281,7 +281,8 @@ Repo.transaction(fn ->
       short_name: "Kimu",
       genre: "kimu",
       type: "solo_or_ensemble",
-      group: "kimu"
+      group: "kimu",
+      uses_epochs: false
     )
 
   vocal =
@@ -290,7 +291,8 @@ Repo.transaction(fn ->
       short_name: "Gesang",
       genre: "classical",
       type: "solo",
-      group: "classical_vocals"
+      group: "classical_vocals",
+      uses_epochs: true
     )
 
   wind_ens =
@@ -299,7 +301,8 @@ Repo.transaction(fn ->
       short_name: "BläserEns",
       genre: "classical",
       type: "ensemble",
-      group: "wind"
+      group: "wind",
+      uses_epochs: true
     )
 
   pop_drums =
@@ -308,7 +311,8 @@ Repo.transaction(fn ->
       short_name: "PopDrums",
       genre: "popular",
       type: "solo",
-      group: "pop_instrumental"
+      group: "pop_instrumental",
+      uses_epochs: false
     )
 
   pop_vocal_ens =
@@ -317,7 +321,8 @@ Repo.transaction(fn ->
       short_name: "PopVokalEns",
       genre: "popular",
       type: "ensemble",
-      group: "pop_vocals"
+      group: "pop_vocals",
+      uses_epochs: false
     )
 
   # Add contest categories and demo performances to contests

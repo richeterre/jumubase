@@ -86,7 +86,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:35 lib/jumubase_web/templates/internal/category/_form.html.eex:46
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42 lib/jumubase_web/templates/performance/live_form.html.leex:10
 #: lib/jumubase_web/templates/performance/live_form.html.leex:28 lib/jumubase_web/templates/performance/live_form.html.leex:95
-#: lib/jumubase_web/templates/performance/live_form.html.leex:107 lib/jumubase_web/templates/performance/live_form.html.leex:205
+#: lib/jumubase_web/templates/performance/live_form.html.leex:107 lib/jumubase_web/templates/performance/live_form.html.leex:206
 msgid "Please choose"
 msgstr ""
 
@@ -203,8 +203,8 @@ msgid "Time zone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:89
-#: lib/jumubase_web/views/performance_view.ex:104
+#: lib/jumubase_web/views/performance_view.ex:93
+#: lib/jumubase_web/views/performance_view.ex:108
 msgid "Accompanist"
 msgstr ""
 
@@ -219,13 +219,13 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:36 lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:27 lib/jumubase_web/templates/internal/performance/jury_material.html.eex:45
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51 lib/jumubase_web/templates/internal/stage/timetable.html.eex:31
-#: lib/jumubase_web/templates/performance/live_form.html.leex:19 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:232
+#: lib/jumubase_web/templates/performance/live_form.html.leex:19 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:233
 msgid "Category"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:88
-#: lib/jumubase_web/views/performance_view.ex:105
+#: lib/jumubase_web/views/performance_view.ex:92
+#: lib/jumubase_web/views/performance_view.ex:109
 msgid "Ensemblist"
 msgstr ""
 
@@ -253,7 +253,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:37 lib/jumubase_web/templates/internal/performance/edit_results.html.eex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.eex:33 lib/jumubase_web/templates/internal/performance/jury_material.html.eex:46
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:52 lib/jumubase_web/templates/internal/performance/show.html.eex:19
-#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:32 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:234
+#: lib/jumubase_web/templates/internal/stage/timetable.html.eex:32 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:235
 msgid "Participants"
 msgstr ""
 
@@ -286,8 +286,8 @@ msgid "Role"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/performance_view.ex:87
-#: lib/jumubase_web/views/performance_view.ex:103
+#: lib/jumubase_web/views/performance_view.ex:91
+#: lib/jumubase_web/views/performance_view.ex:107
 msgid "Soloist"
 msgstr ""
 
@@ -297,7 +297,7 @@ msgid "Add participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/live_form.html.leex:238
+#: lib/jumubase_web/templates/performance/live_form.html.leex:240
 msgid "Add piece"
 msgstr ""
 
@@ -343,7 +343,7 @@ msgid "Died"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/live_form.html.leex:210
+#: lib/jumubase_web/templates/performance/live_form.html.leex:212
 msgid "Duration"
 msgstr ""
 
@@ -354,8 +354,8 @@ msgid "Edit code"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/live_form.html.leex:204
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:189 lib/jumubase_web/views/internal/piece_view.ex:33
+#: lib/jumubase_web/templates/performance/live_form.html.leex:205
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:190 lib/jumubase_web/views/internal/piece_view.ex:32
 msgid "Epoch"
 msgstr ""
 
@@ -415,12 +415,12 @@ msgid "accompanied by"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/live_form.html.leex:215
+#: lib/jumubase_web/templates/performance/live_form.html.leex:217
 msgid "min"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/live_form.html.leex:222
+#: lib/jumubase_web/templates/performance/live_form.html.leex:224
 msgid "sec"
 msgstr ""
 
@@ -529,7 +529,7 @@ msgid "Stay logged in"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/index.html.eex:40
+#: lib/jumubase_web/templates/internal/category/index.html.eex:42
 msgid "Add Category"
 msgstr ""
 
@@ -550,12 +550,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:12
-#: lib/jumubase_web/views/internal/category_view.ex:59
+#: lib/jumubase_web/views/internal/category_view.ex:70
 msgid "Classical"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:71
+#: lib/jumubase_web/views/internal/category_view.ex:82
 msgid "Ensemble"
 msgstr ""
 
@@ -567,13 +567,13 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/registration.html.eex:28
-#: lib/jumubase_web/views/internal/category_view.ex:61 lib/jumubase_web/views/internal/category_view.ex:91
+#: lib/jumubase_web/views/internal/category_view.ex:72 lib/jumubase_web/views/internal/category_view.ex:102
 msgid "Kimu"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.eex:13
-#: lib/jumubase_web/views/internal/category_view.ex:60
+#: lib/jumubase_web/views/internal/category_view.ex:71
 msgid "Popular"
 msgstr ""
 
@@ -584,12 +584,12 @@ msgid "Short name"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:70
+#: lib/jumubase_web/views/internal/category_view.ex:81
 msgid "Solo"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:72
+#: lib/jumubase_web/views/internal/category_view.ex:83
 msgid "Solo/Ensemble"
 msgstr ""
 
@@ -747,12 +747,12 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/page/contact.html.eex:87
-#: lib/jumubase_web/templates/performance/live_form.html.leex:246
+#: lib/jumubase_web/templates/performance/live_form.html.leex:248
 msgid "privacy policy"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/performance/live_form.html.leex:245
+#: lib/jumubase_web/templates/performance/live_form.html.leex:247
 msgid "The data you enter will be handled as described in the"
 msgstr ""
 
@@ -1062,7 +1062,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:9
-#: lib/jumubase_web/views/internal/category_view.ex:84
+#: lib/jumubase_web/views/internal/category_view.ex:95
 msgid "Accordion"
 msgstr ""
 
@@ -1082,7 +1082,7 @@ msgid "Clarinet"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:83
+#: lib/jumubase_web/views/internal/category_view.ex:94
 msgid "Classical Vocals"
 msgstr ""
 
@@ -1139,7 +1139,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:24
-#: lib/jumubase_web/views/internal/category_view.ex:85
+#: lib/jumubase_web/views/internal/category_view.ex:96
 msgid "Harp"
 msgstr ""
 
@@ -1180,34 +1180,34 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:34
-#: lib/jumubase_web/views/internal/category_view.ex:86
+#: lib/jumubase_web/views/internal/category_view.ex:97
 msgid "Organ"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:36
-#: lib/jumubase_web/views/internal/category_view.ex:87
+#: lib/jumubase_web/views/internal/category_view.ex:98
 msgid "Percussion"
 msgstr ""
 
 #, elixir-format
 #: lib/jumubase/showtime/instruments.ex:37
-#: lib/jumubase_web/views/internal/category_view.ex:79
+#: lib/jumubase_web/views/internal/category_view.ex:90
 msgid "Piano"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:82
+#: lib/jumubase_web/views/internal/category_view.ex:93
 msgid "Plucked Instruments"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:90
+#: lib/jumubase_web/views/internal/category_view.ex:101
 msgid "Pop Instrumental"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:89
+#: lib/jumubase_web/views/internal/category_view.ex:100
 msgid "Pop Vocals"
 msgstr ""
 
@@ -1222,7 +1222,7 @@ msgid "Saxophone"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:88
+#: lib/jumubase_web/views/internal/category_view.ex:99
 msgid "Special Lineups"
 msgstr ""
 
@@ -1272,12 +1272,12 @@ msgid "Vocals"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:81
+#: lib/jumubase_web/views/internal/category_view.ex:92
 msgid "Wind Instruments"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/category_view.ex:80
+#: lib/jumubase_web/views/internal/category_view.ex:91
 msgid "String Instruments"
 msgstr ""
 
@@ -1303,7 +1303,7 @@ msgid "Create jury material"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:240
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:241
 msgid "Result"
 msgstr ""
 
@@ -1315,12 +1315,12 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/performance/advancing.html.eex:47
 #: lib/jumubase_web/templates/internal/performance/certificates.html.eex:38 lib/jumubase_web/templates/internal/performance/edit_results.html.eex:24
-#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:233
+#: lib/jumubase_web/templates/internal/performance/publish_results.html.eex:53 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:234
 msgid "AG"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:216
+#: lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:217
 msgid "points"
 msgstr ""
 
@@ -1383,14 +1383,14 @@ msgid "Publish results"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:102
-#: lib/jumubase_web/views/internal/performance_view.ex:152
+#: lib/jumubase_web/views/internal/category_view.ex:35
+#: lib/jumubase_web/views/internal/performance_view.ex:102 lib/jumubase_web/views/internal/performance_view.ex:152
 msgid "No"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:105
-#: lib/jumubase_web/views/internal/performance_view.ex:148
+#: lib/jumubase_web/views/internal/category_view.ex:31
+#: lib/jumubase_web/views/internal/performance_view.ex:105 lib/jumubase_web/views/internal/performance_view.ex:148
 msgid "Yes"
 msgstr ""
 
@@ -1691,8 +1691,8 @@ msgid "Export for JMDaten"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/_form.html.eex:55
-#: lib/jumubase_web/templates/internal/category/index.html.eex:14
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:61
+#: lib/jumubase_web/templates/internal/category/index.html.eex:15
 msgid "BW Code"
 msgstr ""
 
@@ -1842,8 +1842,8 @@ msgid "The host \"%{name}\" was updated."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/category/_form.html.eex:63
-#: lib/jumubase_web/templates/internal/category/index.html.eex:15
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:69
+#: lib/jumubase_web/templates/internal/category/index.html.eex:16
 msgid "Notes"
 msgstr ""
 
@@ -1855,4 +1855,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/index.html.eex:15
 msgid "Export as CSV"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/_form.html.eex:55
+msgid "Uses epochs"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/category/index.html.eex:14
+msgid "Epochs?"
 msgstr ""

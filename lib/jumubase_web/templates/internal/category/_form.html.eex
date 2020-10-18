@@ -50,6 +50,12 @@
     </div>
   </div>
 
+  <div class="checkbox">
+    <%= label f, :uses_epochs do %>
+      <%= checkbox f, :uses_epochs %> <%= gettext("Uses epochs") %>
+    <% end %>
+  </div>
+
   <div class="row">
     <div class="form-group col-md-3">
       <%= label f, :bw_code, gettext("BW Code"), class: "control-label" %>

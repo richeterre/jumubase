@@ -6,11 +6,12 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="col-md-4"><%= gettext("Name") %></th>
+        <th class="col-md-3"><%= gettext("Name") %></th>
         <th><%= gettext("Short name") %></th>
         <th><%= gettext("Type") %></th>
         <th><%= gettext("Genre") %></th>
         <th><%= gettext("Group") %></th>
+        <th><%= gettext("Epochs?") %></th>
         <th><%= gettext("BW Code") %></th>
         <th><%= gettext("Notes") %></th>
         <th></th>
@@ -24,6 +25,7 @@
         <td><%= type_tag(category) %></td>
         <td><%= genre_tag(category) %></td>
         <td><%= group_tag(category) %></td>
+        <td><%= uses_epochs_text(category) %></td>
         <td><%= bw_code_tag(category) %></td>
         <td class="text-muted"><%= category.notes %></td>
         <td class="text-right">

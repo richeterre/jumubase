@@ -203,14 +203,14 @@
                   <div class="form-group col-md-5">
                     <%= label pc, :minutes, gettext("Duration") %>
                     <div class="row">
-                      <div class="form-group col-xs-6 col-sm-5">
+                      <div class="form-group col-xs-6">
                         <div class="input-group">
                           <%= number_input pc, :minutes, min: 0, max: 59, class: "form-control" %>
                           <span class="input-group-addon"><%= gettext("min") %></span>
                         </div>
                         <%= error_tag pc, :minutes %>
                       </div>
-                      <div class="form-group col-xs-6 col-sm-5">
+                      <div class="form-group col-xs-6">
                         <div class="input-group">
                           <%= number_input pc, :seconds, min: 0, max: 59, class: "form-control" %>
                           <span class="input-group-addon"><%= gettext("sec") %></span>

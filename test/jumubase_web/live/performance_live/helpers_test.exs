@@ -20,4 +20,10 @@ defmodule JumubaseWeb.PerformanceLive.HelpersTest do
       assert Helpers.predecessor_host_options(c) == []
     end
   end
+
+  describe "parse_id/1" do
+    test "returns an integer for a valid string" do
+      assert Helpers.parse_id("123") == 123
+    end
+  end
 end

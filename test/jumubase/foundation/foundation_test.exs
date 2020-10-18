@@ -129,7 +129,7 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.list_contests() == contests
     end
 
-    test "orders contests by season, round, and host name" do
+    test "orders contests by season, round, grouping, and host name" do
       h1 = build(:host, current_grouping: "1", name: "A")
       h2 = build(:host, current_grouping: "2", name: "B")
       c1 = insert(:contest, season: 56, round: 0, grouping: "2", host: h2)
@@ -140,8 +140,21 @@ defmodule Jumubase.FoundationTest do
       c6 = insert(:contest, season: 56, round: 1, grouping: "1", host: h1)
       c7 = insert(:contest, season: 56, round: 2, grouping: "2", host: h2)
       c8 = insert(:contest, season: 57, round: 2, grouping: "2", host: h2)
-      c9 = insert(:contest, season: 56, round: 2, grouping: "1", host: h1)
-      assert_ids_match_ordered(Foundation.list_contests(), [c8, c5, c2, c9, c7, c6, c4, c3, c1])
+      c9 = insert(:contest, season: 57, round: 2, grouping: "1", host: h1)
+      c10 = insert(:contest, season: 56, round: 2, grouping: "1", host: h1)
+
+      assert_ids_match_ordered(Foundation.list_contests(), [
+        c9,
+        c8,
+        c5,
+        c2,
+        c10,
+        c7,
+        c6,
+        c4,
+        c3,
+        c1
+      ])
     end
 
     test "preloads the contests' hosts" do

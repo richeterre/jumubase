@@ -6,7 +6,9 @@
           to: Routes.performance_path(@conn, :new, contest)
           %>
         <br>
-        <%= deadline_info(contest, @general_deadline) %>
+        <span class="text-muted">
+          <%= gettext("Deadline") %>: <%= format_date(contest.deadline, :medium) %>
+        </span>
       </li>
     <% end %>
   </ul>

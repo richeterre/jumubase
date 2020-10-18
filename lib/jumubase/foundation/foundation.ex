@@ -7,7 +7,6 @@ defmodule Jumubase.Foundation do
   import Ecto.Query
   import Jumubase.Utils, only: [get_ids: 1]
   alias Jumubase.Repo
-  alias Jumubase.Utils
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
 
@@ -241,21 +240,6 @@ defmodule Jumubase.Foundation do
   """
   def date_range(%Contest{start_date: start_date, end_date: end_date}) do
     Date.range(start_date, end_date)
-  end
-
-  @doc """
-  Returns the most common deadline within the given contests.
-  """
-  def general_deadline(contests) do
-    most_common_deadlines =
-      contests
-      |> Enum.map(& &1.deadline)
-      |> Utils.mode()
-
-    case most_common_deadlines do
-      [deadline] -> deadline
-      _ -> nil
-    end
   end
 
   ## Categories

@@ -12,20 +12,6 @@ defmodule Jumubase.UtilsTest do
     end
   end
 
-  describe "mode/1" do
-    test "returns a list with the single most common element" do
-      assert Utils.mode([1, "a", 2, "b", 2]) == [2]
-    end
-
-    test "returns a list with all most common elements" do
-      assert Utils.mode([1, "a", 2, "b", 2, "b"]) == [2, "b"]
-    end
-
-    test "returns an empty list if no elements are given" do
-      assert Utils.mode([]) == []
-    end
-  end
-
   describe "parse_bool/1" do
     test "converts a boolean string into a boolean" do
       assert Utils.parse_bool("true") == true

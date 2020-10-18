@@ -8,28 +8,19 @@
 
 <div class="row">
   <div class="col-md-8 col-lg-7">
-    <%= if @general_deadline do %>
-      <p>
-        <%= gettext("Unless otherwise mentioned, the registration deadline is") %>
-        <strong><%= format_date(@general_deadline) %>.</strong>
-      </p>
-    <% end %>
-
     <div class="row">
       <div class="col-md-6">
         <h3><%= gettext("Jumu") %></h3>
         <%= render "_contest_list.html",
           conn: @conn,
-          contests: @jumu_contests,
-          general_deadline: @general_deadline
+          contests: @jumu_contests
           %>
       </div>
       <div class="col-md-6">
         <h3><%= gettext("Kimu") %></h3>
         <%= render "_contest_list.html",
           conn: @conn,
-          contests: @kimu_contests,
-          general_deadline: @general_deadline
+          contests: @kimu_contests
           %>
       </div>
     </div>

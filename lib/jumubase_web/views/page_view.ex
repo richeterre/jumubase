@@ -1,8 +1,7 @@
 defmodule JumubaseWeb.PageView do
   use JumubaseWeb, :view
 
-  import JumubaseWeb.Internal.ContestView,
-    only: [deadline_info: 2, name_with_flag: 1, year: 1]
+  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1, year: 1]
 
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Contest, Host}

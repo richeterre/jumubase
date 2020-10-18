@@ -30,28 +30,6 @@ defmodule JumubaseWeb.Internal.ContestView do
   def city(%Contest{host: host}), do: host.city
 
   @doc """
-  Returns the deadline in full-length format.
-  """
-  def deadline(%Contest{deadline: deadline}) do
-    format_date(deadline, :full)
-  end
-
-  @doc """
-  Returns formatted deadline info in case the contest's deadline
-  doesn't match the general deadline.
-  """
-  def deadline_info(%Contest{deadline: deadline}, general_deadline) do
-    case deadline do
-      ^general_deadline ->
-        nil
-
-      _ ->
-        deadline_tag = content_tag(:strong, format_date(deadline, :medium))
-        "(#{gettext("Deadline")}: #{safe_to_string(deadline_tag)})" |> raw
-    end
-  end
-
-  @doc """
   Returns the given contest's date(s) in a formatted way.
   """
   def dates(%Contest{start_date: sd, end_date: ed}) do

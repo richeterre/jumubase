@@ -689,38 +689,6 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "general_deadline/1" do
-    test "returns the single most common deadline of given contests" do
-      [d1, d2, d3] = [~D[2018-12-01], ~D[2018-12-21], ~D[2018-12-15]]
-
-      contests = [
-        build(:contest, deadline: d1),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d1),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d2),
-        build(:contest, deadline: d3)
-      ]
-
-      assert Foundation.general_deadline(contests) == d3
-    end
-
-    test "returns nil if several deadlines are most common" do
-      [d1, d2, d3] = [~D[2018-12-15], ~D[2018-12-01], ~D[2018-12-21]]
-
-      contests = [
-        build(:contest, deadline: d1),
-        build(:contest, deadline: d2),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d3),
-        build(:contest, deadline: d2),
-        build(:contest, deadline: d1)
-      ]
-
-      assert Foundation.general_deadline(contests) == nil
-    end
-  end
-
   describe "list_categories/0" do
     test "returns all categories, ordered by type, genre and name" do
       cg1 = insert(:category, type: "ensemble", genre: "popular")

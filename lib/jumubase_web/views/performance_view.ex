@@ -68,6 +68,10 @@ defmodule JumubaseWeb.PerformanceView do
     get_field(piece_cs, :epoch) != "trad" and get_genre(performance_cs, contest) == "popular"
   end
 
+  def has_epoch_field?(performance_cs, contest) do
+    needs_epochs?(performance_cs, contest)
+  end
+
   # Private helpers
 
   defp get_name(%Participant{given_name: nil, family_name: nil}), do: nil
@@ -81,6 +85,15 @@ defmodule JumubaseWeb.PerformanceView do
     case Enum.find(contest.contest_categories, &(&1.id == cc_id)) do
       nil -> nil
       cc -> cc.category.genre
+    end
+  end
+
+  defp needs_epochs?(performance_cs, contest) do
+    cc_id = get_field(performance_cs, :contest_category_id)
+
+    case Enum.find(contest.contest_categories, &(&1.id == cc_id)) do
+      nil -> true
+      cc -> cc.category.uses_epochs
     end
   end
 

@@ -111,14 +111,14 @@ defmodule Jumubase.PieceTest do
       assert cs2.changes == %{artist: nil, epoch: "trad"}
     end
 
-    test "is invalid without an epoch" do
+    test "is valid without an epoch" do
       attrs = params_for(:piece, epoch: nil)
       changeset = Piece.changeset(%Piece{}, attrs)
-      refute changeset.valid?
+      assert changeset.valid?
     end
 
     test "is invalid with an invalid epoch" do
-      for invalid_epoch <- ["", "g", "1"] do
+      for invalid_epoch <- ["g", "1"] do
         attrs = params_for(:piece, epoch: invalid_epoch)
         changeset = Piece.changeset(%Piece{}, attrs)
         refute changeset.valid?

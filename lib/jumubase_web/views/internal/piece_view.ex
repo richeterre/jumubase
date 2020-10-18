@@ -25,9 +25,8 @@ defmodule JumubaseWeb.Internal.PieceView do
   @doc """
   Returns HTML element(s) describing the piece's duration and epoch.
   """
-  def duration_and_epoch_info(%Piece{epoch: "trad"} = pc) do
-    duration(pc)
-  end
+  def duration_and_epoch_info(%Piece{epoch: nil} = pc), do: duration(pc)
+  def duration_and_epoch_info(%Piece{epoch: "trad"} = pc), do: duration(pc)
 
   def duration_and_epoch_info(%Piece{epoch: epoch} = pc) do
     [duration(pc), " / #{gettext("Epoch")} ", epoch_tag(epoch)]

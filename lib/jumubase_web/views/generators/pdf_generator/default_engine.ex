@@ -179,6 +179,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
     ]
   end
 
+  defp duration_and_epoch_text(%Piece{epoch: nil} = pc), do: duration(pc)
   defp duration_and_epoch_text(%Piece{epoch: "trad"} = pc), do: duration(pc)
 
   defp duration_and_epoch_text(%Piece{} = pc) do

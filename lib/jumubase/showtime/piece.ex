@@ -21,9 +21,9 @@ defmodule Jumubase.Showtime.Piece do
     timestamps()
   end
 
-  @required_attrs [:title, :epoch, :minutes, :seconds]
+  @required_attrs [:title, :minutes, :seconds]
 
-  @optional_attrs [:composer, :composer_born, :composer_died, :artist]
+  @optional_attrs [:composer, :composer_born, :composer_died, :artist, :epoch]
 
   @doc false
   def changeset(%Piece{} = piece, attrs) do

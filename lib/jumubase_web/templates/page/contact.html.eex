@@ -51,7 +51,6 @@
         <ul>
           <li>Robert Bär (<%= gettext("chair") %>)</li>
           <li>Irene Rieck (<%= gettext("deputy chair") %>)</li>
-          <li>Joonas Ruppel</li>
           <li>Martin Richter</li>
         </ul>
       </div>

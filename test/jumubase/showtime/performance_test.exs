@@ -32,7 +32,7 @@ defmodule Jumubase.PerformanceTest do
         changeset = Performance.changeset(%Performance{}, params, round)
         refute changeset.valid?
 
-        assert changeset.errors[:base] ==
+        assert changeset.errors[:appearances] ==
                  {"The performance must have at least one participant.", []}
       end
 
@@ -51,7 +51,7 @@ defmodule Jumubase.PerformanceTest do
         changeset = Performance.changeset(%Performance{}, params, round)
         refute changeset.valid?
 
-        assert changeset.errors[:base] ==
+        assert changeset.errors[:appearances] ==
                  {"The performance can't have both soloists and ensemblists.", []}
       end
 
@@ -68,7 +68,7 @@ defmodule Jumubase.PerformanceTest do
         changeset = Performance.changeset(%Performance{}, params, round)
         refute changeset.valid?
 
-        assert changeset.errors[:base] ==
+        assert changeset.errors[:appearances] ==
                  {"The performance can't have more than one soloist.", []}
       end
 
@@ -84,7 +84,9 @@ defmodule Jumubase.PerformanceTest do
 
         changeset = Performance.changeset(%Performance{}, params, round)
         refute changeset.valid?
-        assert changeset.errors[:base] == {"The performance can't have only one ensemblist.", []}
+
+        assert changeset.errors[:appearances] ==
+                 {"The performance can't have only one ensemblist.", []}
       end
 
       @tag round: round
@@ -99,7 +101,9 @@ defmodule Jumubase.PerformanceTest do
 
         changeset = Performance.changeset(%Performance{}, params, round)
         refute changeset.valid?
-        assert changeset.errors[:base] == {"The performance can't have only accompanists.", []}
+
+        assert changeset.errors[:appearances] ==
+                 {"The performance can't have only accompanists.", []}
       end
 
       @tag round: round
@@ -108,7 +112,7 @@ defmodule Jumubase.PerformanceTest do
         params = Map.put(valid_attrs, :pieces, [])
         changeset = Performance.changeset(%Performance{}, params, round)
         refute changeset.valid?
-        assert changeset.errors[:base] == {"The performance must have at least one piece.", []}
+        assert changeset.errors[:pieces] == {"The performance must have at least one piece.", []}
       end
     end
 

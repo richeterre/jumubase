@@ -1,6 +1,6 @@
-defmodule JumubaseWeb.PerformanceViewTest do
+defmodule JumubaseWeb.PerformanceLive.HelpersTest do
   use JumubaseWeb.ConnCase, async: true
-  alias JumubaseWeb.PerformanceView
+  alias JumubaseWeb.PerformanceLive.Helpers
 
   describe "predecessor_host_options/1" do
     test "returns formatted host options for a given LW contest, ordered by name" do
@@ -12,12 +12,12 @@ defmodule JumubaseWeb.PerformanceViewTest do
       insert(:host, current_grouping: "2")
 
       c = insert(:contest, host: h1, round: 2)
-      assert PerformanceView.predecessor_host_options(c) == [{h2.name, h2.id}, {h1.name, h1.id}]
+      assert Helpers.predecessor_host_options(c) == [{h2.name, h2.id}, {h1.name, h1.id}]
     end
 
     test "returns an empty list for a given RW contest" do
       c = insert(:contest, round: 1)
-      assert PerformanceView.predecessor_host_options(c) == []
+      assert Helpers.predecessor_host_options(c) == []
     end
   end
 end

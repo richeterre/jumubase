@@ -27,7 +27,7 @@ defmodule Jumubase.Showtime.Appearance do
     |> validate_required(@required_attrs)
     |> validate_inclusion(:role, JumuParams.participant_roles())
     |> cast_assoc(:participant, required: true)
-    |> preserve_participant_identity
+    |> preserve_participant_identity()
     |> unique_constraint(:participant,
       name: :no_multiple_appearances,
       message: dgettext("errors", "can only appear once in a performance")
@@ -64,10 +64,17 @@ defmodule Jumubase.Showtime.Appearance do
 
   # Preserves the participant's identity when updating a nested participant.
   defp preserve_participant_identity(%Changeset{} = changeset) do
-    case changeset do
-      %Changeset{changes: %{participant: %{action: :update} = pt_cs}} ->
-        put_change(changeset, :participant, Participant.preserve_identity(pt_cs))
-
+    with %Changeset{changes: %{participant: %{action: :update} = pt_cs}} <- changeset,
+         true <- Participant.has_identity_changes?(pt_cs) do
+      add_error(
+        changeset,
+        :participant,
+        dgettext(
+          "errors",
+          "To change the name or birthdate, please remove and add back this person."
+        )
+      )
+    else
       _ ->
         changeset
     end

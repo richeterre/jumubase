@@ -149,7 +149,7 @@ defmodule Jumubase.Showtime.Performance do
       [] ->
         add_error(
           changeset,
-          :base,
+          :appearances,
           dgettext("errors", "The performance must have at least one participant.")
         )
 
@@ -158,28 +158,28 @@ defmodule Jumubase.Showtime.Performance do
           has_soloists_and_ensemblists?(appearances) ->
             add_error(
               changeset,
-              :base,
+              :appearances,
               dgettext("errors", "The performance can't have both soloists and ensemblists.")
             )
 
           has_many_soloists?(appearances) ->
             add_error(
               changeset,
-              :base,
+              :appearances,
               dgettext("errors", "The performance can't have more than one soloist.")
             )
 
           has_single_ensemblist?(appearances) ->
             add_error(
               changeset,
-              :base,
+              :appearances,
               dgettext("errors", "The performance can't have only one ensemblist.")
             )
 
           has_only_accompanists?(appearances) ->
             add_error(
               changeset,
-              :base,
+              :appearances,
               dgettext("errors", "The performance can't have only accompanists.")
             )
 
@@ -194,7 +194,7 @@ defmodule Jumubase.Showtime.Performance do
       [] ->
         add_error(
           changeset,
-          :base,
+          :pieces,
           dgettext("errors", "The performance must have at least one piece.")
         )
 

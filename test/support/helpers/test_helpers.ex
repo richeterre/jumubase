@@ -52,8 +52,8 @@ defmodule Jumubase.TestHelpers do
     %{
       "performance" => %{
         "contest_category_id" => cc.id,
-        "appearances" => [
-          %{
+        "appearances" => %{
+          "0" => %{
             "role" => "soloist",
             "instrument" => "piano",
             "participant" => %{
@@ -64,9 +64,9 @@ defmodule Jumubase.TestHelpers do
               "phone" => "1234567"
             }
           }
-        ],
-        "pieces" => [
-          %{
+        },
+        "pieces" => %{
+          "0" => %{
             "title" => "Title",
             "composer" => "Composer",
             "composer_born" => "1900",
@@ -74,7 +74,7 @@ defmodule Jumubase.TestHelpers do
             "minutes" => 1,
             "seconds" => 23
           }
-        ]
+        }
       }
     }
   end

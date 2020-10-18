@@ -4,14 +4,35 @@ defmodule JumubaseWeb.ErrorHelpers do
   """
 
   use Phoenix.HTML
+  import JumubaseWeb.IconHelpers
   alias Ecto.Changeset
 
   @doc """
   Generates tag for inlined form input errors.
+  The feedback_field value can be used to override which form element is targeted by the
+  LiveView feedback logic (e.g. for a :date_select field that has multiple form elements).
   """
-  def error_tag(form, field) do
-    Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: "help-block")
+  def error_tag(form, field, feedback_field \\ nil) do
+    form.errors
+    |> Keyword.get_values(field)
+    |> Enum.map(fn error ->
+      input_id = input_id(form, feedback_field || field)
+
+      content_tag(:div, class: "has-error", phx_feedback_for: input_id) do
+        content_tag(:small, [icon_tag("exclamation-sign"), translate_error(error)],
+          class: "help-block"
+        )
+      end
+    end)
+  end
+
+  def error_banner_tags(form, field) do
+    form.errors
+    |> Keyword.get_values(field)
+    |> Enum.map(fn error ->
+      content_tag(:div, class: "alert alert-warning") do
+        [icon_tag("exclamation-sign"), translate_error(error)]
+      end
     end)
   end
 

@@ -1,7 +1,6 @@
 defmodule Jumubase.Showtime.Participant do
   use Jumubase.Schema
   import Ecto.Changeset
-  import Jumubase.Gettext
   alias Ecto.Changeset
   alias Jumubase.Utils
   alias Jumubase.Showtime.{Appearance, Participant}
@@ -32,19 +31,14 @@ defmodule Jumubase.Showtime.Participant do
   end
 
   @doc """
-  Invalidates the changeset if the changes affect the participant's identity.
+  Returns whether the changeset has any changes to fields that
+  might alter the participant's identity, such as name or birthdate.
   """
-  def preserve_identity(%Changeset{changes: changes} = changeset) do
-    case Enum.filter(@identity_attrs, &Map.has_key?(changes, &1)) do
-      [] ->
-        changeset
-
-      changed_fields ->
-        Enum.reduce(changed_fields, changeset, fn field, cs ->
-          add_error(cs, field, dgettext("errors", "can't be changed"))
-        end)
-    end
+  def has_identity_changes?(%Changeset{changes: changes}) do
+    Enum.any?(@identity_attrs, &Map.has_key?(changes, &1))
   end
+
+  def has_identity_changes?(_), do: false
 
   # Private helpers
 

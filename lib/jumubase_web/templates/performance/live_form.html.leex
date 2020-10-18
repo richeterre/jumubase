@@ -1,0 +1,257 @@
+<div class="row">
+  <div class="col-lg-9">
+    <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
+
+      <%= if !Enum.empty?(@predecessor_host_options) do %>
+        <div class="row">
+          <div class="form-group col-md-5">
+            <%= label f, :predecessor_host_id, gettext("First round"), class: "control-label" %>
+            <%= select f, :predecessor_host_id, @predecessor_host_options,
+              prompt: gettext("Please choose"), class: "form-control" %>
+            <%= error_tag f, :predecessor_host_id %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="form-group col-md-5">
+          <%= label f, :contest_category_id do %>
+            <%= gettext("Category") %>
+            <%= if kimu_contest = assigns[:kimu_contest] do %>
+              <small class="text-muted">
+                (<%= kimu_link(@socket, kimu_contest) %>)
+              </small>
+            <% end %>
+          <% end %>
+
+          <%= select f, :contest_category_id, contest_category_options(@contest),
+            prompt: gettext("Please choose"), class: "form-control" %>
+          <%= error_tag f, :contest_category_id %>
+        </div>
+      </div>
+
+      <h3><%= gettext("Who takes part?") %></h3>
+
+      <p class="text-muted">
+        <%= icon_tag "info-sign" %>
+        <%= gettext("Non-competing accompanists don’t need to register.") %>
+      </p>
+
+      <div class="panel-group" role="tablist">
+        <%= for a <- inputs_for f, :appearances do %>
+          <%= for pt <- inputs_for a, :participant do %>
+            <div class="panel panel-default">
+              <div
+                phx-click="toggle-appearance-panel"
+                phx-value-index="<%= a.index %>"
+                class="panel-heading clearfix collapsible"
+              >
+                <h4 class="panel-title pull-left">
+                  <%= appearance_panel_title(a) %>
+                </h4>
+                <button
+                  type="button"
+                  phx-click="remove-appearance"
+                  phx-value-index="<%= a.index %>"
+                  class="btn btn-xs btn-danger pull-right">
+                  <span class="glyphicon glyphicon-trash" />
+                </button>
+              </div>
+              <div class="panel-collapse collapse <%= if a.index == @expanded_appearance_index, do: "in" %>">
+                <div class="panel-body">
+                  <%= hidden_inputs_for(a) %>
+                  <%= hidden_inputs_for(pt) %>
+
+                  <div class="row">
+                    <div class="form-group col-md-3">
+                      <%= label pt, :given_name, gettext("First name") %>
+                      <%= text_input pt, :given_name, class: "form-control" %>
+                      <%= error_tag pt, :given_name %>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                      <%= label pt, :family_name, gettext("Last name") %>
+                      <%= text_input pt, :family_name, class: "form-control" %>
+                      <%= error_tag pt, :family_name %>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <%= label pt, :birthdate_day, gettext("Birthdate") %>
+                      <%= inline_date_select pt, :birthdate,
+                        day: [prompt: gettext("Day")],
+                        month: [prompt: gettext("Month")],
+                        year: [options: birthdate_year_options(@contest.season), prompt: gettext("Year")]
+                        %>
+                      <%= error_tag pt, :birthdate, :birthdate_year %>
+                    </div>
+                  </div>
+
+                  <%= error_tag a, :participant %>
+
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <%= label a, :role, gettext("Role") %>
+                      <%= select a, :role, role_options(),
+                        prompt: gettext("Please choose"), class: "form-control" %>
+                      <%= error_tag a, :role %>
+                    </div>
+
+                    <div class="form-group col-md-5">
+                      <%= label a, :instrument do %>
+                        <%= gettext("Instrument") %>
+                        <small class="text-muted">
+                          (<%= gettext("choose “Vocals” for singers") %>)
+                        </small>
+                      <% end %>
+                      <%= select a, :instrument, instrument_options(),
+                        prompt: gettext("Please choose"), class: "form-control" %>
+                      <%= error_tag a, :instrument %>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="form-group col-md-4">
+                      <%= label pt, :phone, gettext("Phone") %>
+                      <%= text_input pt, :phone, class: "form-control" %>
+                      <%= error_tag pt, :phone %>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <%= label pt, :email, gettext("Email") %>
+                      <%= text_input pt, :email, class: "form-control" %>
+                      <%= error_tag pt, :email %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= error_banner_tags f, :appearances %>
+
+      <button type="button" class="btn btn-default" phx-click="add-appearance">
+        <%= icon_tag("plus") %> <%= gettext("Add participant") %>
+      </button>
+
+      <h3><%= gettext("Pieces") %></h3>
+
+      <div class="panel-group" role="tablist">
+        <%= for pc <- inputs_for f, :pieces do %>
+          <div class="panel panel-default">
+            <div
+              phx-click="toggle-piece-panel"
+              phx-value-index="<%= pc.index %>"
+              class="panel-heading clearfix collapsible"
+            >
+              <h4 class="panel-title pull-left">
+                <%= piece_panel_title(pc.source, pc.index) %>
+              </h4>
+              <button
+                type="button"
+                phx-click="remove-piece"
+                phx-value-index="<%= pc.index %>"
+                class="btn btn-xs btn-danger pull-right">
+                <span class="glyphicon glyphicon-trash" />
+              </button>
+            </div>
+            <div class="panel-collapse collapse <%= if pc.index == @expanded_piece_index, do: "in" %>">
+              <div class="panel-body">
+                <%= hidden_inputs_for(pc) %>
+                <div class="row">
+                  <div class="form-group col-md-5">
+                    <%= label pc, :title, gettext("Title") %>
+                    <%= text_input pc, :title, class: "form-control" %>
+                    <%= error_tag pc, :title %>
+                  </div>
+
+                  <%= if has_composer_fields?(@changeset, @contest, pc.source) do %>
+                    <div class="form-group col-md-4">
+                      <%= label pc, :composer, gettext("Composer") %>
+                      <%= text_input pc, :composer, class: "form-control" %>
+                      <%= error_tag pc, :composer %>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="row">
+                        <div class="form-group col-xs-6">
+                          <%= label pc, :composer_born, gettext("Born") %>
+                          <%= text_input pc, :composer_born, class: "form-control" %>
+                          <%= error_tag pc, :composer_born %>
+                        </div>
+
+                        <div class="form-group col-xs-6">
+                          <%= label pc, :composer_died, "(#{gettext("Died")})" %>
+                          <%= text_input pc, :composer_died, class: "form-control" %>
+                          <%= error_tag pc, :composer_died %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+
+                  <%= if has_artist_field?(@changeset, @contest, pc.source) do %>
+                    <div class="form-group col-md-4">
+                      <%= label pc, :artist, gettext("Artist") %>
+                      <%= text_input pc, :artist, class: "form-control" %>
+                      <%= error_tag pc, :artist %>
+                    </div>
+                  <% end %>
+                </div>
+
+                <div class="row">
+                  <div class="form-group col-md-5">
+                    <%= label pc, :epoch, gettext("Epoch") %>
+                    <%= select pc, :epoch, epoch_options(), prompt: gettext("Please choose"), class: "form-control" %>
+                    <%= error_tag pc, :epoch %>
+                  </div>
+
+                  <div class="form-group col-md-5">
+                    <%= label pc, :minutes, gettext("Duration") %>
+                    <div class="row">
+                      <div class="form-group col-xs-6 col-sm-5">
+                        <div class="input-group">
+                          <%= number_input pc, :minutes, min: 0, max: 59, class: "form-control" %>
+                          <span class="input-group-addon"><%= gettext("min") %></span>
+                        </div>
+                        <%= error_tag pc, :minutes %>
+                      </div>
+                      <div class="form-group col-xs-6 col-sm-5">
+                        <div class="input-group">
+                          <%= number_input pc, :seconds, min: 0, max: 59, class: "form-control" %>
+                          <span class="input-group-addon"><%= gettext("sec") %></span>
+                        </div>
+                        <%= error_tag pc, :seconds %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <%= error_banner_tags f, :pieces %>
+
+      <button type="button" class="btn btn-default" phx-click="add-piece">
+        <%= icon_tag("plus") %> <%= gettext("Add piece") %>
+      </button>
+
+      <hr>
+
+      <div class="form-group text-muted">
+        <small>
+          <%= gettext("The data you enter will be handled as described in the") %>
+          <%= link gettext("privacy policy"), to: Routes.page_path(@socket, :privacy) %>.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <%= submit class: "btn btn-primary" do %>
+          <%= @submit_title %>
+        <% end %>
+      </div>
+    </form>
+  </div>
+</div>

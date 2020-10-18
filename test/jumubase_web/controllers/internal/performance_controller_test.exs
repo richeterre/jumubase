@@ -1,8 +1,6 @@
 defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   use JumubaseWeb.ConnCase
-  alias Jumubase.Repo
   alias Jumubase.Foundation.Contest
-  alias Jumubase.Showtime.Performance
 
   setup config do
     config
@@ -66,7 +64,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   describe "new/2" do
-    for role <- all_roles() do
+    for role <- roles_except("observer") do
       @tag login_as: role
       test "lets authorized #{role} users fill in a new performance", %{conn: conn, user: u} do
         c = insert_authorized_contest(u)
@@ -84,46 +82,18 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       end
     end
 
+    @tag login_as: "observer"
+    test "redirects observers trying to fill in a new performance", %{conn: conn, contest: c} do
+      conn |> attempt_new(c) |> assert_unauthorized_user
+    end
+
     test "redirects guests trying to fill in a new performance", %{conn: conn, contest: c} do
       conn |> attempt_new(c) |> assert_unauthorized_guest
     end
   end
 
-  describe "create/2" do
-    for role <- roles_except("observer") do
-      @tag login_as: role
-      test "lets authorized #{role} users create a performance", %{conn: conn, user: u} do
-        c = insert_authorized_contest(u) |> with_contest_categories
-
-        conn
-        |> attempt_create(c)
-        |> assert_create_success(c, Repo.one(Performance))
-      end
-    end
-
-    for role <- ["local-organizer", "global-organizer"] do
-      @tag login_as: role
-      test "redirects unauthorized #{role} users trying to create a performance",
-           %{conn: conn, user: u} do
-        c = insert_unauthorized_contest(u) |> with_contest_categories
-        conn |> attempt_create(c) |> assert_unauthorized_user
-      end
-    end
-
-    @tag login_as: "observer"
-    test "redirects observers trying to create a performance", %{conn: conn, contest: c} do
-      c = c |> with_contest_categories
-      conn |> attempt_create(c) |> assert_unauthorized_user
-    end
-
-    test "redirects guests trying to create a performance", %{conn: conn, contest: c} do
-      c = c |> with_contest_categories
-      conn |> attempt_create(c) |> assert_unauthorized_guest
-    end
-  end
-
   describe "edit/2" do
-    for role <- all_roles() do
+    for role <- roles_except("observer") do
       @tag login_as: role
       test "lets authorized #{role} users edit a performance", %{conn: conn, user: u} do
         c = insert_authorized_contest(u)
@@ -144,13 +114,20 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       end
     end
 
+    @tag login_as: "observer"
+    test "redirects observers trying to edit a performance", %{conn: conn, contest: c} do
+      p = insert_performance(c)
+      conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
+      assert_unauthorized_user(conn)
+    end
+
     test "redirects guests trying to edit a performance", %{conn: conn, contest: c} do
       p = insert_performance(c)
       conn = get(conn, Routes.internal_contest_performance_path(conn, :edit, c, p))
       assert_unauthorized_guest(conn)
     end
 
-    for role <- all_roles() do
+    for role <- roles_except("observer") do
       @tag login_as: role
       test "redirects authorized #{role} users if the performance has results",
            %{conn: conn, user: u} do
@@ -164,64 +141,6 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
           "This performance already has results. To edit it, please clear them first."
         )
       end
-    end
-  end
-
-  describe "update/2" do
-    setup %{contest: c} do
-      c = c |> with_contest_categories
-      [cc1, _cc2] = c.contest_categories
-      [contest: c, performance: insert_performance(cc1)]
-    end
-
-    for role <- roles_except("observer") do
-      @tag login_as: role
-      test "lets authorized #{role} users update a performance", %{conn: conn, user: u} do
-        c = insert_authorized_contest(u) |> with_contest_categories()
-        p = insert_performance(c)
-        conn |> attempt_update(c, p) |> assert_update_success(c, p)
-      end
-
-      @tag login_as: role
-      test "redirects authorized #{role} users if the performance has results",
-           %{conn: conn, user: u} do
-        c = insert_authorized_contest(u) |> with_contest_categories()
-        p = insert_performance(c, appearances: [build(:appearance, points: 1)])
-
-        conn
-        |> attempt_update(c, p)
-        |> assert_flash_redirect(
-          Routes.internal_contest_performance_path(conn, :index, c),
-          "This performance already has results. To edit it, please clear them first."
-        )
-      end
-    end
-
-    for role <- ["local-organizer", "global-organizer"] do
-      @tag login_as: role
-      test "redirects unauthorized #{role} users trying to update a performance",
-           %{conn: conn, user: u} do
-        c = insert_unauthorized_contest(u) |> with_contest_categories()
-        p = insert_performance(c)
-        conn |> attempt_update(c, p) |> assert_unauthorized_user
-      end
-    end
-
-    @tag login_as: "observer"
-    test "redirects observers trying to update a performance", %{
-      conn: conn,
-      contest: c,
-      performance: p
-    } do
-      conn |> attempt_update(c, p) |> assert_unauthorized_user
-    end
-
-    test "redirects guests trying to update a performance", %{
-      conn: conn,
-      contest: c,
-      performance: p
-    } do
-      conn |> attempt_update(c, p) |> assert_unauthorized_guest
     end
   end
 
@@ -594,18 +513,6 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
     get(conn, Routes.internal_contest_performance_path(conn, :new, contest))
   end
 
-  defp attempt_create(conn, contest) do
-    [cc, _] = contest.contest_categories
-    params = valid_performance_params(cc)
-    post(conn, Routes.internal_contest_performance_path(conn, :create, contest), params)
-  end
-
-  defp attempt_update(conn, c, p) do
-    [_cc1, cc2] = c.contest_categories
-    params = valid_performance_params(cc2)
-    put(conn, Routes.internal_contest_performance_path(conn, :update, c, p), params)
-  end
-
   defp attempt_delete(conn, c) do
     p = insert_performance(c)
     delete(conn, Routes.internal_contest_performance_path(conn, :delete, c, p))
@@ -703,22 +610,6 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
       Routes.internal_contest_performances_path(conn, :migrate_advancing, rw,
         performance_ids: [p1.id, p2.id]
       )
-    )
-  end
-
-  defp assert_create_success(conn, contest, performance) do
-    assert_flash_redirect(
-      conn,
-      Routes.internal_contest_performance_path(conn, :show, contest, performance),
-      "The performance was created."
-    )
-  end
-
-  defp assert_update_success(conn, contest, performance) do
-    assert_flash_redirect(
-      conn,
-      Routes.internal_contest_performance_path(conn, :show, contest, performance),
-      "The performance was updated."
     )
   end
 

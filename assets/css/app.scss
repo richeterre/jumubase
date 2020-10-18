@@ -94,8 +94,12 @@ dt:not(:first-child) {
 }
 
 /* Use pointer cursor for collapsible panel headings */
-.panel-heading[data-toggle="collapse"] {
+.panel-heading.collapsible {
   cursor: pointer;
+
+  .panel-title:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Tweak height of panel titles to match right-floating buttons */
@@ -136,11 +140,6 @@ dt:not(:first-child) {
   margin-bottom: $line-height-computed;
 }
 
-/* Enable Vue.js cloaking (hiding element before Vue is loaded) */
-[v-cloak] {
-  display: none;
-}
-
 /* Hide certain form fields to fool and detect spambots */
 #trap {
   display: none;
@@ -149,4 +148,9 @@ dt:not(:first-child) {
 /* Add some spacing to points field in modal result form */
 #modal-result-form #results_points {
   margin-left: 1em;
+}
+
+/* Hide errors in LiveView form fields not yet touched by user */
+.phx-no-feedback.help-block, .phx-no-feedback .help-block {
+  display: none;
 }

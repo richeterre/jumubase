@@ -13,7 +13,7 @@ msgstr ""
 
 #: lib/jumubase/showtime/piece.ex:63 lib/jumubase/showtime/piece.ex:64
 msgid "can't be blank"
-msgstr "muss ausgefüllt werden"
+msgstr "fehlt noch"
 
 msgid "has already been taken"
 msgstr "ist bereits vergeben"
@@ -98,7 +98,6 @@ msgid "must be before the start date"
 msgstr "muss vor dem Beginn liegen"
 
 #, elixir-format
-#: lib/jumubase/showtime/participant.ex:44
 #: lib/jumubase/showtime/performance.ex:140
 msgid "can't be changed"
 msgstr "kann nicht geändert werden"
@@ -182,3 +181,8 @@ msgstr "kann nicht vor dem Ende liegen"
 #: lib/jumubase/showtime/performance.ex:215
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase/showtime/appearance.ex:72
+msgid "To change the name or birthdate, please remove and add back this person."
+msgstr "Um Name oder Geburtsdatum zu ändern, musst du die Person entfernen und neu hinzufügen."

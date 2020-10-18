@@ -6,10 +6,8 @@
 
 <hr>
 
-<%= render JumubaseWeb.PerformanceView, "_form.html",
-  conn: @conn,
-  path: Routes.internal_contest_performance_path(@conn, :update, @contest, @performance),
-  changeset: @changeset,
-  predecessor_host_options: predecessor_host_options(@contest),
-  submit_title: gettext("Save Changes")
-  %>
+<%= live_render(@conn, JumubaseWeb.Internal.PerformanceLive.Edit, session: %{
+  "contest_id" => @contest.id,
+  "performance_id" => @performance.id,
+  "submit_title" => gettext("Save Changes")
+  }) %>

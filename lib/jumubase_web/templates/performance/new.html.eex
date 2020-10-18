@@ -6,11 +6,7 @@
 
 <hr>
 
-<%= render "_form.html",
-  conn: @conn,
-  path: Routes.performance_path(@conn, :create, @contest),
-  kimu_path: registration_path(@conn, @kimu_contest),
-  changeset: @changeset,
-  predecessor_host_options: predecessor_host_options(@contest),
-  submit_title: [gettext("Submit registration"), " ", icon_tag("send")]
-  %>
+<%= live_render(@conn, JumubaseWeb.PerformanceLive.New, session: %{
+    "contest_id" => @contest.id,
+    "submit_title" => [gettext("Submit registration"), " ", icon_tag("send")]
+  }) %>

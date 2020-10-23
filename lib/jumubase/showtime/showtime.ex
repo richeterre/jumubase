@@ -435,6 +435,16 @@ defmodule Jumubase.Showtime do
     |> Repo.get!(id)
   end
 
+  def change_participant(%Participant{} = participant) do
+    Participant.changeset(participant, %{})
+  end
+
+  def update_participant(%Participant{} = participant, attrs) do
+    participant
+    |> Participant.changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Replaces the other participant in all their appearances by the base participant,
   merging the given fields' values into the base participant in the process.

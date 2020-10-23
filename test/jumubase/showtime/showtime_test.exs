@@ -1385,6 +1385,28 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "change_participant/1" do
+    test "returns a participant changeset", %{contest: c} do
+      participant = insert_participant(c)
+      assert %Changeset{} = Showtime.change_participant(participant)
+    end
+  end
+
+  describe "update_participant/1" do
+    test "updates a participant with valid data" do
+      participant = insert(:participant, given_name: "A")
+      assert {:ok, result} = Showtime.update_participant(participant, %{given_name: "B"})
+      assert result.given_name == "B"
+    end
+
+    test "returns an error changeset for invalid data" do
+      participant = insert(:participant)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Showtime.update_participant(participant, %{given_name: nil})
+    end
+  end
+
   describe "merge_participants/3" do
     test "replaces the second by the first participant across contests", %{contest: c} do
       other_c = insert(:contest, round: 2)

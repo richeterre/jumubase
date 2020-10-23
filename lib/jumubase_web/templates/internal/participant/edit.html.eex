@@ -1,0 +1,61 @@
+<h2>
+  <%= gettext("Edit Participant") %>
+  <br>
+  <small><%= full_name(@participant) %></small>
+</h2>
+
+<hr>
+
+<%= form_for @changeset, Routes.internal_contest_participant_path(@conn, :update, @contest, @participant), fn f -> %>
+  <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :given_name, gettext("First name"), class: "control-label" %>
+      <%= text_input f, :given_name, class: "form-control" %>
+      <%= error_tag f, :given_name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :family_name, gettext("Last name"), class: "control-label" %>
+      <%= text_input f, :family_name, class: "form-control" %>
+      <%= error_tag f, :family_name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :birthdate, gettext("Birthdate"), class: "control-label" %>
+      <%= inline_date_select f, :birthdate,
+        day: [prompt: gettext("Day")],
+        month: [prompt: gettext("Month")],
+        year: [options: birthdate_year_options(@contest.season), prompt: gettext("Year")]
+        %>
+      <%= error_tag f, :birthdate, :birthdate_year %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :phone, gettext("Phone"), class: "control-label" %>
+      <%= text_input f, :phone, class: "form-control" %>
+      <%= error_tag f, :phone %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-sm-5">
+      <%= label f, :email, gettext("Email"), class: "control-label" %>
+      <%= text_input f, :email, class: "form-control" %>
+      <%= error_tag f, :email %>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="form-group">
+    <%= submit gettext("Save Changes"), class: "btn btn-primary" %>
+  </div>
+<% end %>

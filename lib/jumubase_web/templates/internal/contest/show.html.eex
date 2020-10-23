@@ -19,7 +19,7 @@
             %>
         </li>
         <li class="list-group-item">
-          <%= icon_link "user", gettext("Show participants"),
+          <%= icon_link "user", gettext("Manage participants"),
             Routes.internal_contest_participant_path(@conn, :index, @contest)
             %>
         </li>

@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.ParticipantController do
   use JumubaseWeb, :controller
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
+  alias Ecto.Changeset
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Participant
@@ -36,10 +37,31 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     conn
     |> assign(:contest, contest)
     |> assign(:participant, participant)
-    |> add_contest_breadcrumb(contest)
-    |> add_participants_breadcrumb(contest)
-    |> add_participant_breadcrumb(contest, participant)
+    |> add_breadcrumbs(contest, participant)
     |> render("show.html")
+  end
+
+  def edit(conn, %{"id" => id}, contest) do
+    participant = Showtime.get_participant!(contest, id)
+    changeset = Showtime.change_participant(participant)
+
+    render_edit_form(conn, contest, participant, changeset)
+  end
+
+  def update(conn, %{"id" => id, "participant" => participant_params}, contest) do
+    participant = Showtime.get_participant!(contest, id)
+
+    case Showtime.update_participant(participant, participant_params) do
+      {:ok, participant} ->
+        name = full_name(participant)
+
+        conn
+        |> put_flash(:info, gettext("The participant %{name} was updated.", name: name))
+        |> redirect(to: Routes.internal_contest_participant_path(conn, :index, contest))
+
+      {:error, %Changeset{} = changeset} ->
+        render_edit_form(conn, contest, participant, changeset)
+    end
   end
 
   def export_csv(conn, _params, contest) do
@@ -64,6 +86,30 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   end
 
   # Private helpers
+
+  defp render_edit_form(
+         conn,
+         %Contest{} = contest,
+         %Participant{} = participant,
+         %Changeset{} = changeset
+       ) do
+    edit_path = Routes.internal_contest_path(conn, :edit, contest)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:participant, participant)
+    |> assign(:changeset, changeset)
+    |> add_breadcrumbs(contest, participant)
+    |> add_breadcrumb(icon: "pencil", path: edit_path)
+    |> render("edit.html")
+  end
+
+  defp add_breadcrumbs(conn, %Contest{} = contest, %Participant{} = participant) do
+    conn
+    |> add_contest_breadcrumb(contest)
+    |> add_participants_breadcrumb(contest)
+    |> add_participant_breadcrumb(contest, participant)
+  end
 
   defp add_participant_breadcrumb(conn, %Contest{} = contest, %Participant{} = participant) do
     add_breadcrumb(conn,

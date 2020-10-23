@@ -34,6 +34,7 @@
         <th><%= gettext("First name") %></th>
         <th><%= gettext("Birthdate") %></th>
         <th><%= gettext("Appearances") %></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -57,6 +58,9 @@
               %>
             <br>
           <% end %>
+        </td>
+        <td class="text-right">
+          <%= edit_icon_link(Routes.internal_contest_participant_path(@conn, :edit, @contest, participant)) %>
         </td>
       </tr>
       <% end %>

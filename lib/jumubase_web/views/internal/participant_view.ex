@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.ParticipantView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  alias Jumubase.Foundation.AgeGroups
   alias Jumubase.Showtime.{Participant, Performance}
   alias JumubaseWeb.Internal.PerformanceView
 
@@ -9,6 +10,13 @@ defmodule JumubaseWeb.Internal.ParticipantView do
   """
   def full_name(%Participant{given_name: given_name, family_name: family_name}) do
     "#{given_name} #{family_name}"
+  end
+
+  @doc """
+  Returns all years to be shown in birthdate pickers for the given season.
+  """
+  def birthdate_year_options(season) do
+    AgeGroups.birthyear_range(season)
   end
 
   @doc """

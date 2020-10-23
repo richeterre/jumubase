@@ -2,10 +2,10 @@ defmodule JumubaseWeb.PerformanceView do
   use JumubaseWeb, :view
   import Ecto.Changeset
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
-  import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
+  import JumubaseWeb.Internal.ParticipantView, only: [birthdate_year_options: 1, full_name: 1]
   alias Ecto.Changeset
   alias Jumubase.JumuParams
-  alias Jumubase.Foundation.{AgeGroups, Contest}
+  alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime.Participant
 
   @doc """
@@ -100,10 +100,6 @@ defmodule JumubaseWeb.PerformanceView do
   defp role_title("soloist"), do: gettext("Soloist")
   defp role_title("ensemblist"), do: gettext("Ensemblist")
   defp role_title("accompanist"), do: gettext("Accompanist")
-
-  defp birthdate_year_options(season) do
-    AgeGroups.birthyear_range(season)
-  end
 
   defp role_options do
     Enum.map(JumuParams.participant_roles(), fn

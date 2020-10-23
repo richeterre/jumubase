@@ -148,7 +148,7 @@ defmodule JumubaseWeb.Router do
       post "/participants/send-welcome-emails", ParticipantController, :send_welcome_emails
 
       resources "/contest_categories", ContestCategoryController, only: [:index]
-      resources "/participants", ParticipantController, only: [:index, :show]
+      resources "/participants", ParticipantController, only: [:index, :show, :edit, :update]
 
       resources "/performances", PerformanceController,
         only: [:index, :show, :new, :edit, :delete]

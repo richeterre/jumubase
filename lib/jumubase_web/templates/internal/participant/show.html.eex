@@ -5,6 +5,16 @@
 <hr>
 
 <p>
+  <strong><%= gettext("First name") %>:</strong>
+  <%= @participant.given_name %>
+</p>
+
+<p>
+  <strong><%= gettext("Last name") %>:</strong>
+  <%= @participant.family_name %>
+</p>
+
+<p>
   <strong><%= gettext("Birthdate") %>:</strong>
   <%= format_date(@participant.birthdate) %>
 </p>

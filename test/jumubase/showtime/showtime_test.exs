@@ -6,7 +6,7 @@ defmodule Jumubase.ShowtimeTest do
   alias Jumubase.Showtime.{Appearance, Participant, Performance, Piece}
   alias Jumubase.Showtime.PerformanceFilter
 
-  # important for age group matching in tests
+  # Season used e.g. for age group tests
   @season 56
 
   setup do
@@ -1465,6 +1465,32 @@ defmodule Jumubase.ShowtimeTest do
       assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:given_name, :unknown])
       pt1 = Repo.get!(Participant, pt1.id)
       assert pt1.given_name == pt2.given_name
+    end
+
+    test "recalculates affected age groups during merge", %{contest: c} do
+      pt1 = insert(:participant, birthdate: ~D[2006-12-31])
+      pt2 = insert(:participant, birthdate: ~D[2007-01-01])
+
+      p1 =
+        insert_performance(c,
+          age_group: "III",
+          appearances: [build(:appearance, age_group: "III", participant: pt1)]
+        )
+
+      p2 =
+        insert_performance(c,
+          age_group: "II",
+          appearances: [build(:appearance, age_group: "II", participant: pt2)]
+        )
+
+      assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:birthdate])
+
+      %{appearances: [a1]} = p1 = Repo.get!(Performance, p1.id) |> Repo.preload(:appearances)
+      %{appearances: [a2]} = p2 = Repo.get!(Performance, p2.id) |> Repo.preload(:appearances)
+      assert p1.age_group == "II"
+      assert a1.age_group == "II"
+      assert p2.age_group == "II"
+      assert a2.age_group == "II"
     end
   end
 

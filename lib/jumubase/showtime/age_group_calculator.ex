@@ -1,6 +1,29 @@
 defmodule Jumubase.Showtime.AgeGroupCalculator do
   alias Ecto.Changeset
   alias Jumubase.Foundation.AgeGroups
+  alias Jumubase.Showtime.Performance
+
+  @non_acc_roles ["soloist", "ensemblist"]
+
+  def fix_age_groups(%Performance{} = performance, season, group_accompanists) do
+    appearances = performance.appearances
+
+    performance_age_group =
+      appearances
+      |> Enum.filter(&(&1.role in @non_acc_roles))
+      |> Enum.map(& &1.participant.birthdate)
+      |> AgeGroups.calculate_age_group(season)
+
+    performance
+    |> Changeset.change()
+    |> Changeset.put_change(:age_group, performance_age_group)
+    |> Changeset.put_change(
+      :appearances,
+      appearances
+      |> Enum.map(&Changeset.change/1)
+      |> put_appearance_age_groups(season, group_accompanists)
+    )
+  end
 
   @doc """
   Sets age groups for appearances inside the `changeset`.
@@ -12,14 +35,13 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
         changeset
 
       appearances ->
-        # TODO: Avoid this calculation by grabbing age group from soloist or ensemblist
         performance_age_group =
           appearances
-          # Grab all non-accompanist appearances from nested changeset
-          |> exclude_obsolete
-          |> filter_roles(["soloist", "ensemblist"])
+          # Grab relevant non-accompanist appearances from nested changeset
+          |> exclude_obsolete()
+          |> filter_roles(@non_acc_roles)
           # Calculate joint age group for them
-          |> get_birthdates
+          |> get_birthdates()
           |> AgeGroups.calculate_age_group(season)
 
         changeset
@@ -83,13 +105,12 @@ defmodule Jumubase.Showtime.AgeGroupCalculator do
 
   # Grabs participant birthdates for the given role from the given appearance changesets.
   defp get_birthdates(changesets, role) do
-    changesets |> filter_roles([role]) |> get_birthdates
+    changesets |> filter_roles([role]) |> get_birthdates()
   end
 
   # Grabs all participant birthdates from the given appearance changesets.
-  # Note that obsolete changesets won't be taken into account.
   defp get_birthdates(changesets) do
-    changesets |> exclude_obsolete |> Enum.map(&get_birthdate/1)
+    changesets |> Enum.map(&get_birthdate/1)
   end
 
   # Grabs the participant birthdate from the given appearance changeset.

@@ -440,9 +440,20 @@ defmodule Jumubase.Showtime do
   end
 
   def update_participant(%Participant{} = participant, attrs) do
-    participant
-    |> Participant.changeset(attrs)
-    |> Repo.update()
+    multi =
+      Multi.new()
+      |> Multi.update(:update_participant, Participant.changeset(participant, attrs))
+      |> Multi.run(:fix_age_groups, fn repo, _ ->
+        fix_age_groups(participant, repo)
+      end)
+
+    case Repo.transaction(multi) do
+      {:ok, %{update_participant: participant}} ->
+        {:ok, participant}
+
+      {:error, :update_participant, changeset, _} ->
+        {:error, changeset}
+    end
   end
 
   @doc """
@@ -462,6 +473,9 @@ defmodule Jumubase.Showtime do
       |> Multi.update(:update_base, base_changeset)
       |> Multi.update_all(:update_appearances, appearances, set: [participant_id: base_id])
       |> Multi.delete(:delete_other, other_pt)
+      |> Multi.run(:fix_age_groups, fn repo, _ ->
+        fix_age_groups(base_pt, repo)
+      end)
 
     case Repo.transaction(multi) do
       {:ok, _} -> :ok
@@ -592,6 +606,21 @@ defmodule Jumubase.Showtime do
       other_result ->
         other_result
     end
+  end
+
+  # Recalculates all age groups affected by the participant's birthdate and persists them in a single transaction.
+  defp fix_age_groups(%Participant{} = pt, repo) do
+    query =
+      from Ecto.assoc(pt, :performances),
+        preload: [appearances: :participant, contest_category: :contest]
+
+    repo.all(query)
+    |> Enum.reduce(Multi.new(), fn performance, multi ->
+      %{contest_category: %{contest: c} = cc} = performance
+      changeset = AgeGroupCalculator.fix_age_groups(performance, c.season, cc.groups_accompanists)
+      Multi.update(multi, {:update_performance, performance.id}, changeset)
+    end)
+    |> repo.transaction()
   end
 
   defp on_date(query, date) do

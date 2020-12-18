@@ -1,3 +1,7 @@
+<p class="alert alert-warning">
+  <%= gettext("Heads up: Your changes will affect all appearances of this person, past and present. Please check your input carefully!") %>
+</p>
+
 <h2>
   <%= gettext("Edit Participant") %>
   <br>

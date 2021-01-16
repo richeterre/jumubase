@@ -330,7 +330,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   defp contest_text(%Contest{} = c, _group_size), do: "haben am #{contest_name(c)}"
 
   defp contest_name(%Contest{host: h} = c) do
-    "#{round_text(c.round)} in #{h.city} #{year(c)}"
+    "#{round_text(c.round)} #{h.name} #{year(c)}"
   end
 
   defp round_text(0), do: "Wettbewerb „Kinder musizieren“"

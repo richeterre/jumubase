@@ -180,7 +180,9 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     contest
     |> Foundation.load_contest_categories()
     |> Map.get(:contest_categories)
-    |> Enum.map(&{&1.category.name, &1.id})
+    |> Enum.map(fn cc ->
+      {truncate(cc.category.name, 41), cc.id}
+    end)
   end
 
   def filter_status(count, true) do
@@ -235,6 +237,12 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       end
 
     Enum.map(genres, &{genre_name(&1), &1})
+  end
+
+  defp truncate(text, max_length) do
+    if String.length(text) < max_length,
+      do: text,
+      else: "#{String.slice(text, 0, max_length - 1)}…"
   end
 
   defp count_tag(count) do

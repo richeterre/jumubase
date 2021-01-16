@@ -1805,21 +1805,6 @@ msgid "currently grouping 2 only"
 msgstr "derzeit nur Verbund 2"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:24
-msgid "Rating of accompanists"
-msgstr "Bewertung der Begleiter"
-
-#, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:12
-msgid "as group"
-msgstr "als Gruppe"
-
-#, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:13
-msgid "separately"
-msgstr "einzeln"
-
-#, elixir-format
 #: lib/jumubase/showtime/instruments.ex:38
 msgid "Qanun"
 msgstr "Qanoun"
@@ -1836,7 +1821,7 @@ msgstr "Der Ausrichter \"%{name}\" wurde aktualisiert."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:69
-#: lib/jumubase_web/templates/internal/category/index.html.eex:16
+#: lib/jumubase_web/templates/internal/category/index.html.eex:16 lib/jumubase_web/templates/internal/contest_category/index.html.eex:24
 msgid "Notes"
 msgstr "Anmerkungen"
 
@@ -1879,3 +1864,13 @@ msgstr "Der Teilnehmer %{name} wurde aktualisiert."
 #: lib/jumubase_web/templates/internal/participant/edit.html.eex:2
 msgid "Heads up: Your changes will affect all appearances of this person, past and present. Please check your input carefully!"
 msgstr "Aufgepasst: Deine Änderungen wirken sich auf sämtliche (auch frühere) Auftritte dieser Person aus. Bitte daher die Daten sorgfältig prüfen!"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_category_view.ex:21
+msgid "Accompanists rated as group"
+msgstr "Begleiter als Gruppe bewertet"
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_category_view.ex:15
+msgid "Allows WESPE nominations"
+msgstr "WESPE-Nominierungen möglich"

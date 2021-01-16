@@ -1804,21 +1804,6 @@ msgid "currently grouping 2 only"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest_category/index.html.eex:24
-msgid "Rating of accompanists"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:12
-msgid "as group"
-msgstr ""
-
-#, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:13
-msgid "separately"
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase/showtime/instruments.ex:38
 msgid "Qanun"
 msgstr ""
@@ -1835,7 +1820,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:69
-#: lib/jumubase_web/templates/internal/category/index.html.eex:16
+#: lib/jumubase_web/templates/internal/category/index.html.eex:16 lib/jumubase_web/templates/internal/contest_category/index.html.eex:24
 msgid "Notes"
 msgstr ""
 
@@ -1877,4 +1862,14 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.eex:2
 msgid "Heads up: Your changes will affect all appearances of this person, past and present. Please check your input carefully!"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_category_view.ex:21
+msgid "Accompanists rated as group"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_category_view.ex:15
+msgid "Allows WESPE nominations"
 msgstr ""

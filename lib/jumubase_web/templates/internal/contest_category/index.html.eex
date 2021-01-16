@@ -21,7 +21,7 @@
         <th><%= gettext("AG max") %></th>
         <th><%= gettext("AG min") %></th>
         <th><%= gettext("AG max") %></th>
-        <th><%= gettext("Rating of accompanists") %></th>
+        <th><%= gettext("Notes") %></th>
       </tr>
     </thead>
     <tbody>
@@ -32,7 +32,7 @@
           <td><%= badge(cc.max_age_group) %></td>
           <td><%= badge(cc.min_advancing_age_group) %></td>
           <td><%= badge(cc.max_advancing_age_group) %></td>
-          <td><%= accompanist_rating_info(cc) %></td>
+          <td><%= notes(cc) %></td>
         </tr>
       <% end %>
     </tbody>

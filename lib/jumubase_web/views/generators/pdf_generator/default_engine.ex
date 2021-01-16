@@ -382,8 +382,15 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   end
 
   defp advancement_text(%Appearance{} = a, %Performance{} = p, round) do
-    if Results.advances?(a, p) do
-      "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
+    cond do
+      Results.advances?(a, p) ->
+        "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
+
+      Results.gets_wespe_nomination?(a, p) ->
+        "mit Nominierung zur Teilnahme am Wochenende der Sonderpreise (WESPE)."
+
+      true ->
+        nil
     end
   end
 

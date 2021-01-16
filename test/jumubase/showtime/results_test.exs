@@ -71,11 +71,9 @@ defmodule Jumubase.ResultsTest do
 
   describe "advances?/1" do
     setup do
-      c = build(:contest)
-
       cc =
         insert(:contest_category,
-          contest: c,
+          contest: build(:contest),
           min_advancing_age_group: "III",
           max_advancing_age_group: "IV"
         )
@@ -115,7 +113,7 @@ defmodule Jumubase.ResultsTest do
       assert Results.advances?(p)
     end
 
-    test "always returns false for appearances, no matter the soloist result", %{
+    test "always returns false for accompanist appearances, no matter the soloist result", %{
       contest_category: cc
     } do
       %{appearances: [sol1, acc1]} =
@@ -137,6 +135,43 @@ defmodule Jumubase.ResultsTest do
       %{appearances: [a]} = insert_performance(cc)
       p = insert_performance(cc)
       assert_raise FunctionClauseError, fn -> Results.advances?(a, p) end
+    end
+  end
+
+  describe "gets_wespe_nomination?/1" do
+    setup do
+      cc =
+        insert(:contest_category,
+          contest: build(:contest),
+          allows_wespe_nominations: true
+        )
+
+      [contest_category: cc]
+    end
+
+    test "returns false for an appearance in a non-nominatable contest category" do
+      cc = insert(:contest_category, contest: build(:contest), allows_wespe_nominations: false)
+      %{appearances: [a]} = p = insert_performance(cc, "III", [{"soloist", 23}])
+      refute Results.gets_wespe_nomination?(a, p)
+    end
+
+    test "returns false for an appearance with insufficient points", %{contest_category: cc} do
+      %{appearances: [a]} = p = insert_performance(cc, "III", [{"soloist", 22}])
+      refute Results.gets_wespe_nomination?(a, p)
+    end
+
+    test "returns true for an appearance with sufficient points in a nominatable contest category",
+         %{contest_category: cc} do
+      %{appearances: [a]} = p = insert_performance(cc, "III", [{"soloist", 23}])
+      assert Results.gets_wespe_nomination?(a, p)
+    end
+
+    test "returns an error when the given appearance and performance don't match", %{
+      contest_category: cc
+    } do
+      %{appearances: [a]} = insert_performance(cc)
+      p = insert_performance(cc)
+      assert_raise FunctionClauseError, fn -> Results.gets_wespe_nomination?(a, p) end
     end
   end
 

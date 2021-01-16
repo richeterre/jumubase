@@ -100,4 +100,14 @@ defmodule Jumubase.JumuParams do
   Returns the range of possible point values.
   """
   def points, do: 0..25
+
+  @doc """
+  Returns the range of points required to advance to the next round.
+  """
+  def advancing_point_range, do: 23..25
+
+  @doc """
+  Returns the range of points required for a WESPE nomination.
+  """
+  def wespe_nomination_point_range, do: 23..25
 end

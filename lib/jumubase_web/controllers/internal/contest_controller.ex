@@ -17,7 +17,7 @@ defmodule JumubaseWeb.Internal.ContestController do
 
   plug :user_check when action in [:index]
   plug :contest_user_check when action in [:show]
-  plug :admin_check when action in [:edit, :update]
+  plug :admin_check when action in [:new, :edit, :update]
 
   def index(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
     contests =
@@ -45,6 +45,12 @@ defmodule JumubaseWeb.Internal.ContestController do
     |> assign(:result_completions, result_completions)
     |> add_contest_breadcrumb(contest)
     |> render("show.html")
+  end
+
+  def new(conn, _params) do
+    conn
+    |> add_breadcrumb(icon: "plus", path: Routes.internal_contest_path(conn, :new))
+    |> render("new.html")
   end
 
   def edit(conn, %{"id" => id}) do

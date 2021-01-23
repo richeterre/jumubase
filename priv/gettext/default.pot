@@ -839,7 +839,7 @@ msgid "Edit Contest"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:62
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:68
 msgid "The contest %{name} was updated."
 msgstr ""
 
@@ -895,14 +895,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:243
+#: lib/jumubase_web/views/internal/performance_view.ex:251
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:249
+#: lib/jumubase_web/views/internal/performance_view.ex:257
 msgid "Filter active"
 msgstr ""
 
@@ -1444,17 +1444,17 @@ msgid "Print certificates"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:193
+#: lib/jumubase_web/views/internal/performance_view.ex:195
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:199
+#: lib/jumubase_web/views/internal/performance_view.ex:201
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:201
+#: lib/jumubase_web/views/internal/performance_view.ex:203
 msgid "here"
 msgstr ""
 
@@ -1865,11 +1865,26 @@ msgid "Heads up: Your changes will affect all appearances of this person, past a
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:21
+#: lib/jumubase_web/views/internal/contest_category_view.ex:26
 msgid "Accompanists rated as group"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:15
+#: lib/jumubase_web/views/internal/contest_category_view.ex:20
 msgid "Allows WESPE nominations"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:39
+msgid "Add Contest"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:13
+msgid "Create Contest"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/new.html.eex:2
+msgid "New Contest"
 msgstr ""

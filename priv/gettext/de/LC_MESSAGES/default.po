@@ -840,7 +840,7 @@ msgid "Edit Contest"
 msgstr "Wettbewerb bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:62
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:68
 msgid "The contest %{name} was updated."
 msgstr "Der Wettbewerb %{name} wurde aktualisiert."
 
@@ -896,14 +896,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:243
+#: lib/jumubase_web/views/internal/performance_view.ex:251
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:249
+#: lib/jumubase_web/views/internal/performance_view.ex:257
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1445,17 +1445,17 @@ msgid "Print certificates"
 msgstr "Urkunden ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:193
+#: lib/jumubase_web/views/internal/performance_view.ex:195
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem Logo bedruckte Papier erneut ein."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:199
+#: lib/jumubase_web/views/internal/performance_view.ex:201
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:201
+#: lib/jumubase_web/views/internal/performance_view.ex:203
 msgid "here"
 msgstr "hier"
 
@@ -1866,11 +1866,26 @@ msgid "Heads up: Your changes will affect all appearances of this person, past a
 msgstr "Aufgepasst: Deine Änderungen wirken sich auf sämtliche (auch frühere) Auftritte dieser Person aus. Bitte daher die Daten sorgfältig prüfen!"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:21
+#: lib/jumubase_web/views/internal/contest_category_view.ex:26
 msgid "Accompanists rated as group"
 msgstr "Begleiter als Gruppe bewertet"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_category_view.ex:15
+#: lib/jumubase_web/views/internal/contest_category_view.ex:20
 msgid "Allows WESPE nominations"
 msgstr "WESPE-Nominierungen möglich"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:39
+msgid "Add Contest"
+msgstr "Neuen Wettbewerb hinzufügen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:13
+msgid "Create Contest"
+msgstr "Wettbewerb erstellen"
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/new.html.eex:2
+msgid "New Contest"
+msgstr "Neuer Wettbewerb"

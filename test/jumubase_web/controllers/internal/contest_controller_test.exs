@@ -62,6 +62,22 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
     end
   end
 
+  describe "new/2" do
+    @tag login_as: "admin"
+    test "lets admins fill in a new contest", %{conn: conn} do
+      conn = get(conn, Routes.internal_contest_path(conn, :new))
+      assert html_response(conn, 200) =~ "New Contest"
+    end
+
+    for role <- roles_except("admin") do
+      @tag login_as: role
+      test "redirects #{role} users trying to fill in a new contest", %{conn: conn} do
+        conn = get(conn, Routes.internal_contest_path(conn, :new))
+        assert_unauthorized_user(conn)
+      end
+    end
+  end
+
   describe "edit/2" do
     setup do
       [contest: insert(:contest)]

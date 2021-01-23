@@ -35,3 +35,5 @@
     </tbody>
   </table>
 </div>
+
+<%= link gettext("Add Contest"), to: Routes.internal_contest_path(@conn, :new), class: "btn btn-primary" %>

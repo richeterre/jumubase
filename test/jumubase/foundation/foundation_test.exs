@@ -673,6 +673,19 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "create_contest/1" do
+    test "creates a contest with valid data" do
+      params = params_with_assocs(:contest, season: 99)
+      assert {:ok, result} = Foundation.create_contest(params)
+      assert %Contest{season: 99} = result
+    end
+
+    test "returns an error changeset for invalid data" do
+      params = params_with_assocs(:contest, season: nil)
+      assert {:error, %Changeset{}} = Foundation.create_contest(params)
+    end
+  end
+
   describe "update_contest/1" do
     test "updates a contest with valid data" do
       contest = insert(:contest, season: 56)

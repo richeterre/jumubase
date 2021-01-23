@@ -3,3 +3,5 @@
 </h2>
 
 <hr>
+
+<%= live_render(@conn, JumubaseWeb.Internal.ContestLive.New) %>

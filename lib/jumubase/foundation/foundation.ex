@@ -225,6 +225,10 @@ defmodule Jumubase.Foundation do
     |> Repo.one()
   end
 
+  def create_contest(attrs) do
+    Contest.changeset(%Contest{}, attrs) |> Repo.insert()
+  end
+
   def update_contest(%Contest{} = contest, attrs) do
     contest
     |> Contest.changeset(attrs)

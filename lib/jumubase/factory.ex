@@ -58,7 +58,9 @@ defmodule Jumubase.Factory do
       min_age_group: "Ia",
       max_age_group: "VI",
       min_advancing_age_group: "II",
-      max_advancing_age_group: "VI"
+      max_advancing_age_group: "VI",
+      allows_wespe_nominations: false,
+      groups_accompanists: false
     }
   end
 

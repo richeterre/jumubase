@@ -1,5 +1,5 @@
 <h2>
-  <%= gettext("New Contest") %>
+  <%= gettext("New Contests") %>
 </h2>
 
 <hr>

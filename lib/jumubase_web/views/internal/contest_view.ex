@@ -2,6 +2,7 @@ defmodule JumubaseWeb.Internal.ContestView do
   use JumubaseWeb, :view
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.Contest
+  alias Jumubase.Foundation.AgeGroups
   alias Jumubase.Showtime
 
   @doc """

@@ -6,9 +6,11 @@ defmodule Jumubase.Foundation do
 
   import Ecto.Query
   import Jumubase.Utils, only: [get_ids: 1]
+  alias Ecto.Multi
   alias Jumubase.Repo
+  alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, ContestSeed, Host, Stage}
 
   ## Hosts
 
@@ -225,8 +227,33 @@ defmodule Jumubase.Foundation do
     |> Repo.one()
   end
 
-  def create_contest(attrs) do
-    Contest.changeset(%Contest{}, attrs) |> Repo.insert()
+  def create_contests(%ContestSeed{season: season, round: round, contest_categories: ccs}, hosts) do
+    # Generate default dates
+    year = JumuParams.year(season)
+    {:ok, start_date} = Date.new(year, 1, 1)
+    {:ok, deadline} = Date.new(year - 1, 12, 15)
+
+    multi =
+      Enum.reduce(hosts, Multi.new(), fn host, acc ->
+        contest_cs =
+          %Contest{}
+          |> Contest.changeset(%{
+            season: season,
+            round: round,
+            grouping: host.current_grouping,
+            host_id: host.id,
+            start_date: start_date,
+            end_date: start_date,
+            deadline: deadline,
+            allows_registration: round < 2,
+            timetables_public: false
+          })
+          |> Ecto.Changeset.put_assoc(:contest_categories, ccs)
+
+        Multi.insert(acc, host.id, contest_cs)
+      end)
+
+    Repo.transaction(multi)
   end
 
   def update_contest(%Contest{} = contest, attrs) do

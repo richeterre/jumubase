@@ -3,7 +3,7 @@ defmodule Jumubase.FoundationTest do
   alias Ecto.Changeset
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Category, Contest, ContestCategory, Host, Stage}
+  alias Jumubase.Foundation.{Category, Contest, ContestCategory, ContestSeed, Host, Stage}
 
   describe "list_hosts/0 " do
     test "returns all hosts ordered by current grouping and name" do
@@ -673,16 +673,48 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "create_contest/1" do
-    test "creates a contest with valid data" do
-      params = params_with_assocs(:contest, season: 99)
-      assert {:ok, result} = Foundation.create_contest(params)
-      assert %Contest{season: 99} = result
+  describe "create_contests/2" do
+    test "creates one contest per host for valid seed data" do
+      seed = %ContestSeed{
+        season: 56,
+        round: 1,
+        contest_categories: [
+          build(:contest_category, category: build(:category, name: "Violine solo"))
+        ]
+      }
+
+      [h1, h2] = [insert(:host, name: "A"), insert(:host, name: "B")]
+
+      assert {:ok, result} = Foundation.create_contests(seed, [h1, h2])
+
+      assert %Contest{season: 56, round: 1, contest_categories: [cc1]} = result[h1.id]
+      assert %ContestCategory{category: %{name: "Violine solo"}} = cc1
+
+      assert %Contest{season: 56, round: 1, contest_categories: [cc2]} = result[h2.id]
+      assert %ContestCategory{category: %{name: "Violine solo"}} = cc2
     end
 
-    test "returns an error changeset for invalid data" do
-      params = params_with_assocs(:contest, season: nil)
-      assert {:error, %Changeset{}} = Foundation.create_contest(params)
+    test "opens registration for newly created contests with round < 2 by default" do
+      kimu_seed = %ContestSeed{season: 56, round: 0}
+      rw_seed = %ContestSeed{season: 56, round: 1}
+      lw_seed = %ContestSeed{season: 56, round: 2}
+
+      h = insert(:host)
+
+      {:ok, kimu_contests} = Foundation.create_contests(kimu_seed, [h])
+      {:ok, rw_contests} = Foundation.create_contests(rw_seed, [h])
+      {:ok, lw_contests} = Foundation.create_contests(lw_seed, [h])
+
+      assert %Contest{allows_registration: true} = kimu_contests[h.id]
+      assert %Contest{allows_registration: true} = rw_contests[h.id]
+      assert %Contest{allows_registration: false} = lw_contests[h.id]
+    end
+
+    test "returns an error changeset for invalid seed data" do
+      seed = %ContestSeed{season: -1, round: 1}
+      %{id: h_id} = h = insert(:host)
+
+      assert {:error, ^h_id, %Changeset{}, %{}} = Foundation.create_contests(seed, [h])
     end
   end
 

@@ -1,6 +1,7 @@
 defmodule Jumubase.TestHelpers do
   import ExUnit.Assertions
   import Jumubase.Utils, only: [get_ids: 1]
+  import Jumubase.Factory
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.ContestCategory
 
@@ -77,6 +78,11 @@ defmodule Jumubase.TestHelpers do
         }
       }
     }
+  end
+
+  def valid_contest_category_params do
+    cg = insert(:category)
+    params_for(:contest_category) |> Map.put(:category_id, cg.id)
   end
 
   # Private helpers

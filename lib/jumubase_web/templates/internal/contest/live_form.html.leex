@@ -15,72 +15,73 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="form-group col-sm-4">
-          <%= label f, :grouping, gettext("Grouping"), class: "control-label" %>
-          <%= select f, :grouping, @grouping_options, prompt: gettext("Please choose"), class: "form-control" %>
-          <%= error_tag f, :grouping %>
-        </div>
+      <h4><%= gettext("Contest categories") %></h4>
 
-        <div class="form-group col-sm-4">
-          <%= label f, :host_id, gettext("Host"), class: "control-label" %>
-          <%= select f, :host_id, @host_options, prompt: gettext("Please choose"), class: "form-control" %>
-          <%= error_tag f, :host_id %>
-        </div>
-      </div>
+      <%= error_tag f, :contest_categories %>
 
-      <div class="row">
-        <div class="form-group col-sm-4">
-          <%= label f, :start_date, gettext("Start date"), class: "control-label" %>
-          <%= inline_date_select f, :start_date,
-            year: [prompt: gettext("Year")],
-            month: [prompt: gettext("Month")],
-            day: [prompt: gettext("Day")]
-            %>
-          <%= error_tag f, :start_date %>
-        </div>
+      <%= for cc <- inputs_for f, :contest_categories do %>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="form-group col-md-5">
+                <%= label cc, :category_id, gettext("Category"), class: "control-label" %>
+                <%= select cc, :category_id, @category_options, prompt: gettext("Please choose"), class: "form-control" %>
+                <%= error_tag cc, :category_id %>
+              </div>
 
-        <div class="form-group col-sm-4">
-          <%= label f, :end_date, gettext("End date"), class: "control-label" %>
-          <%= inline_date_select f, :end_date,
-            year: [prompt: gettext("Year")],
-            month: [prompt: gettext("Month")],
-            day: [prompt: gettext("Day")]
-            %>
-          <%= error_tag f, :end_date %>
-        </div>
-      </div>
+              <div class="form-group col-md-3 col-md-offset-1">
+                <%= label cc, :min_age_group, gettext("Participation"), class: "control-label" %>
+                <div class="form-inline">
+                  AG
+                  <%= select cc, :min_age_group, AgeGroups.all(), prompt: "", class: "form-control" %>
+                  bis
+                  <%= select cc, :max_age_group, AgeGroups.all(), prompt: "", class: "form-control" %>
+                </div>
+                <%= error_tag cc, :min_age_group %>
+                <%= error_tag cc, :max_age_group %>
+              </div>
 
-      <div class="row">
-        <div class="form-group col-sm-4">
-          <%= label f, :deadline, gettext("Deadline"), class: "control-label" %>
-          <%= inline_date_select f, :deadline,
-            year: [prompt: gettext("Year")],
-            month: [prompt: gettext("Month")],
-            day: [prompt: gettext("Day")]
-            %>
-          <%= error_tag f, :deadline %>
-        </div>
+              <div class="form-group col-md-3">
+                <%= label cc, :min_advancing_age_group, gettext("Advancement (if any)"), class: "control-label" %>
+                <div class="form-inline">
+                  AG
+                  <%= select cc, :min_advancing_age_group, AgeGroups.all(), prompt: "", class: "form-control" %>
+                  bis
+                  <%= select cc, :max_advancing_age_group, AgeGroups.all(), prompt: "", class: "form-control" %>
+                </div>
+                <%= error_tag cc, :min_advancing_age_group %>
+                <%= error_tag cc, :max_advancing_age_group %>
+              </div>
+            </div>
 
-        <div class="form-group col-sm-4">
-          <%= label f, :certificate_date, gettext("Certificate date"), class: "control-label" %>
-          <%= inline_date_select f, :certificate_date,
-            year: [prompt: gettext("Year")],
-            month: [prompt: gettext("Month")],
-            day: [prompt: gettext("Day")]
-            %>
-          <%= error_tag f, :certificate_date %>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <%= label cc, :allows_wespe_nominations do %>
+                    <%= checkbox cc, :allows_wespe_nominations %> <%= gettext("Allows WESPE nominations") %>
+                  <% end %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="checkbox">
+                  <%= label cc, :groups_accompanists do %>
+                    <%= checkbox cc, :groups_accompanists %> <%= gettext("Accompanists rated as group") %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      <% end %>
 
-      <div class="checkbox">
-        <%= label f, :allows_registration do %>
-          <%= checkbox f, :allows_registration %> <%= gettext("Allows registration") %>
-        <% end %>
-      </div>
+      <button type="button" phx-click="add-contest-category" class="btn btn-default">
+        <%= icon_tag("plus") %> <%= gettext("Add contest category") %>
+      </button>
+
+      <hr>
 
       <div class="form-group">
-        <%= submit gettext("Create Contest"), class: "btn btn-primary" %>
+        <%= submit gettext("Create Contests"), class: "btn btn-primary" %>
       </div>
     </form>
   </div>

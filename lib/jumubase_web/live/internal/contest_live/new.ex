@@ -1,10 +1,10 @@
 defmodule JumubaseWeb.Internal.ContestLive.New do
   use Phoenix.LiveView
   import Jumubase.Gettext
-  import JumubaseWeb.Internal.ContestView, only: [name: 1, round_options: 0]
-  import JumubaseWeb.Internal.HostView, only: [grouping_options: 0]
+  import JumubaseWeb.Internal.ContestView, only: [round_options: 0]
+  alias Ecto.Changeset
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.Contest
+  alias Jumubase.Foundation.{ContestCategory, ContestSeed}
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
@@ -15,50 +15,82 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
     {:ok, prepare(socket)}
   end
 
-  def handle_event("change", %{"contest" => attrs}, socket) do
+  def handle_event("change", %{"contest_seed" => attrs}, socket) do
     {:noreply, change(socket, attrs)}
   end
 
-  def handle_event("submit", %{"contest" => attrs}, socket) do
-    case Foundation.create_contest(attrs) do
-      {:ok, %Contest{id: id}} ->
-        contest = Foundation.get_contest!(id)
-        message = gettext("The contest %{name} was created.", name: name(contest))
+  def handle_event("add-contest-category", _params, socket) do
+    changeset =
+      socket.assigns.changeset
+      |> append_contest_category()
 
-        {:noreply,
-         socket
-         |> put_flash(:success, message)
-         |> redirect(to: Routes.internal_contest_path(socket, :index))}
+    {:noreply, assign(socket, changeset: changeset)}
+  end
 
-      {:error, changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
+  def handle_event("submit", %{"contest_seed" => attrs}, socket) do
+    changeset = ContestSeed.changeset(%ContestSeed{}, attrs)
+
+    if changeset.valid? do
+      seed = Changeset.apply_changes(changeset)
+
+      # TODO
+      hosts = [
+        Jumubase.Repo.get(Jumubase.Foundation.Host, 1)
+      ]
+
+      case Foundation.create_contests(seed, hosts) do
+        {:ok, result} ->
+          message =
+            ngettext(
+              "CONTEST_CREATION_SUCCESS_ONE",
+              "CONTEST_CREATION_SUCCESS_MANY",
+              map_size(result)
+            )
+
+          {:noreply,
+           socket
+           |> put_flash(:success, message)
+           |> redirect(to: Routes.internal_contest_path(socket, :index))}
+
+        {:error, _, _, _} ->
+          {:noreply, socket}
+      end
+    else
+      changeset = %{changeset | action: :validate}
+      {:noreply, assign(socket, changeset: changeset)}
     end
   end
 
   # Private helpers
 
   defp prepare(socket) do
+    changeset =
+      Changeset.change(%ContestSeed{})
+      |> append_contest_category()
+
     assign(socket,
-      changeset: Foundation.change_contest(%Contest{}),
+      changeset: changeset,
       round_options: round_options(),
-      host_options: [],
-      grouping_options: grouping_options()
+      category_options: category_options()
     )
   end
 
   defp change(socket, attrs) do
     changeset =
-      Contest.changeset(%Contest{}, attrs)
+      %ContestSeed{}
+      |> ContestSeed.changeset(attrs)
       |> Map.put(:action, :insert)
 
-    host_options = host_options(attrs["grouping"])
-
-    assign(socket, changeset: changeset, host_options: host_options)
+    assign(socket, changeset: changeset)
   end
 
-  defp host_options(nil), do: []
+  defp category_options do
+    Foundation.list_categories() |> Enum.map(&{&1.name, &1.id})
+  end
 
-  defp host_options(grouping) do
-    Foundation.list_hosts_by_grouping(grouping) |> Enum.map(&{&1.name, &1.id})
+  defp append_contest_category(changeset) do
+    new_cs = Changeset.change(%ContestCategory{})
+    existing = Changeset.get_change(changeset, :contest_categories, [])
+    Changeset.put_embed(changeset, :contest_categories, existing ++ [new_cs])
   end
 end

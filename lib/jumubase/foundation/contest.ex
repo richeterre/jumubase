@@ -34,7 +34,8 @@ defmodule Jumubase.Foundation.Contest do
     |> validate_number(:season, greater_than: 0)
     |> validate_inclusion(:round, JumuParams.rounds())
     |> validate_inclusion(:grouping, JumuParams.groupings())
-    |> validate_dates
+    |> validate_dates()
+    |> handle_lw_uniqueness()
   end
 
   @doc """
@@ -72,5 +73,12 @@ defmodule Jumubase.Foundation.Contest do
       true ->
         changeset
     end
+  end
+
+  defp handle_lw_uniqueness(%Changeset{} = changeset) do
+    unique_constraint(changeset, :contest,
+      name: :one_lw_per_season_and_grouping,
+      message: dgettext("errors", "has a round that's already taken for this year and grouping")
+    )
   end
 end

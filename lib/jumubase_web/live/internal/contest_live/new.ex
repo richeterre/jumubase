@@ -3,6 +3,7 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   import Jumubase.Gettext
   import JumubaseWeb.Internal.ContestView, only: [round_options: 0]
   alias Ecto.Changeset
+  alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{ContestCategory, ContestSeed}
   alias JumubaseWeb.Router.Helpers, as: Routes
@@ -61,8 +62,10 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   # Private helpers
 
   defp prepare(socket) do
+    current_season = JumuParams.season(Timex.today().year)
+
     changeset =
-      Changeset.change(%ContestSeed{})
+      Changeset.change(%ContestSeed{}, %{season: current_season})
       |> append_contest_category()
 
     assign(socket,

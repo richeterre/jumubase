@@ -13,6 +13,13 @@ defmodule Jumubase.JumuParams do
   end
 
   @doc """
+  Returns the season for a given year.
+  """
+  def season(year) do
+    year - year(0)
+  end
+
+  @doc """
   Returns the available competition rounds.
   """
   def rounds do

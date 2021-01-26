@@ -2,13 +2,20 @@
   <div class="col-lg-9">
     <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
       <div class="row">
-        <div class="form-group col-sm-2">
+        <div class="form-group col-sm-3">
           <%= label f, :season, gettext("Season"), class: "control-label" %>
-          <%= number_input f, :season, class: "form-control" %>
+
+          <div class="input-group">
+            <%= number_input f, :season, class: "form-control" %>
+            <div class="input-group-addon">
+              <%= year_for_season(@changeset) %>
+            </div>
+          </div>
+
           <%= error_tag f, :season %>
         </div>
 
-        <div class="form-group col-sm-4 col-sm-offset-2">
+        <div class="form-group col-sm-4">
           <%= label f, :round, gettext("Round"), class: "control-label" %>
           <%= select f, :round, @round_options, prompt: gettext("Please choose"), class: "form-control" %>
           <%= error_tag f, :round %>

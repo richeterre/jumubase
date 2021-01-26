@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Internal.ContestView do
   use JumubaseWeb, :view
+  alias Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Foundation.Contest
   alias Jumubase.Foundation.AgeGroups
@@ -110,6 +111,17 @@ defmodule JumubaseWeb.Internal.ContestView do
   """
   def round_options do
     Enum.map(JumuParams.rounds(), &{round_name(&1), &1})
+  end
+
+  @doc """
+  Returns the year for a valid season found in the changeset, or nil.
+  """
+  def year_for_season(%Changeset{} = changeset) do
+    season = Changeset.get_field(changeset, :season)
+
+    if !changeset.errors[:season] and season,
+      do: "#{JumuParams.year(season)}",
+      else: "––––"
   end
 
   # Private helpers

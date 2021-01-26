@@ -74,9 +74,19 @@
         </div>
       <% end %>
 
-      <button type="button" phx-click="add-contest-category" class="btn btn-default">
-        <%= icon_tag("plus") %> <%= gettext("Add contest category") %>
-      </button>
+      <div class="form-group">
+        <button type="button" phx-click="add-contest-category" class="btn btn-default">
+          <%= icon_tag("plus") %> <%= gettext("Add contest category") %>
+        </button>
+      </div>
+
+      <h4><%= gettext("Hosts") %></h4>
+
+      <div class="row">
+        <div class="col-md-5">
+          <%= multiple_select f, :host_ids, @host_options, class: "form-control", size: 8 %>
+        </div>
+      </div>
 
       <hr>
 

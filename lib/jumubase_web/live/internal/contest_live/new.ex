@@ -29,14 +29,11 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
 
   def handle_event("submit", %{"contest_seed" => attrs}, socket) do
     changeset = ContestSeed.changeset(%ContestSeed{}, attrs)
+    host_ids = attrs["host_ids"]
 
-    if changeset.valid? do
+    if changeset.valid? and host_ids do
       seed = Changeset.apply_changes(changeset)
-
-      # TODO
-      hosts = [
-        Jumubase.Repo.get(Jumubase.Foundation.Host, 1)
-      ]
+      hosts = Foundation.list_hosts(host_ids)
 
       case Foundation.create_contests(seed, hosts) do
         {:ok, result} ->
@@ -71,7 +68,8 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
     assign(socket,
       changeset: changeset,
       round_options: round_options(),
-      category_options: category_options()
+      category_options: category_options(),
+      host_options: host_options()
     )
   end
 
@@ -86,6 +84,10 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
 
   defp category_options do
     Foundation.list_categories() |> Enum.map(&{&1.name, &1.id})
+  end
+
+  defp host_options do
+    Foundation.list_hosts() |> Enum.map(&{&1.name, &1.id})
   end
 
   defp append_contest_category(changeset) do

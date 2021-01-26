@@ -67,6 +67,7 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
 
     assign(socket,
       changeset: changeset,
+      host_count: 0,
       round_options: round_options(),
       category_options: category_options(),
       host_options: host_options()
@@ -79,7 +80,9 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
       |> ContestSeed.changeset(attrs)
       |> Map.put(:action, :insert)
 
-    assign(socket, changeset: changeset)
+    host_count = Enum.count(attrs["host_ids"] || [])
+
+    assign(socket, changeset: changeset, host_count: host_count)
   end
 
   defp category_options do

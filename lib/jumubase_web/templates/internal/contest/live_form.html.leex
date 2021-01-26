@@ -91,7 +91,10 @@
       <hr>
 
       <div class="form-group">
-        <%= submit gettext("Create Contests"), class: "btn btn-primary" %>
+        <%= submit ngettext("Create %{count} contest", "Create %{count} contests", @host_count),
+          disabled: @host_count == 0,
+          class: "btn btn-primary"
+          %>
       </div>
     </form>
   </div>

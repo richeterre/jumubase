@@ -168,8 +168,9 @@ msgstr "Orgteam Landesebene"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:10
-#: lib/jumubase_web/templates/internal/host/index.html.eex:1 lib/jumubase_web/templates/internal/page/home.html.eex:21
-#: lib/jumubase_web/templates/internal/user/form.html.eex:51 lib/jumubase_web/templates/internal/user/index.html.eex:11
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:83 lib/jumubase_web/templates/internal/host/index.html.eex:1
+#: lib/jumubase_web/templates/internal/page/home.html.eex:21 lib/jumubase_web/templates/internal/user/form.html.eex:51
+#: lib/jumubase_web/templates/internal/user/index.html.eex:11
 msgid "Hosts"
 msgstr "Ausrichter"
 
@@ -1888,14 +1889,9 @@ msgid "Add Contests"
 msgstr "Neue Wettbewerbe hinzufügen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:78
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:79
 msgid "Add contest category"
 msgstr "Wettbewerbskategorie hinzufügen"
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:84
-msgid "Create Contests"
-msgstr "Wettbewerbe erstellen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/new.html.eex:2
@@ -1913,8 +1909,15 @@ msgid "Advancement (if any)"
 msgstr "ggf. Weiterleitung"
 
 #, elixir-format
-#: lib/jumubase_web/live/internal/contest_live/new.ex:45
+#: lib/jumubase_web/live/internal/contest_live/new.ex:41
 msgid "CONTEST_CREATION_SUCCESS_ONE"
 msgid_plural "CONTEST_CREATION_SUCCESS_MANY"
 msgstr[0] "Der Wettbewerb wurde erstellt."
 msgstr[1] "Die Wettbewerbe wurden erstellt."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:94
+msgid "Create %{count} contest"
+msgid_plural "Create %{count} contests"
+msgstr[0] "1 Wettbewerb erstellen"
+msgstr[1] "%{count} Wettbewerbe erstellen"

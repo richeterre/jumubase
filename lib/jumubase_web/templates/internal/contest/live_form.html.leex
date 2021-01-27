@@ -30,13 +30,23 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
-              <div class="form-group col-md-5">
+              <div class="col-md-1 col-md-push-11 clearfix">
+                <button
+                  type="button"
+                  phx-click="remove-contest-category"
+                  phx-value-index="<%= cc.index %>"
+                  class="btn btn-xs btn-danger pull-right">
+                  <span class="glyphicon glyphicon-trash" />
+                </button>
+              </div>
+
+              <div class="form-group col-md-5 col-md-pull-1">
                 <%= label cc, :category_id, gettext("Category"), class: "control-label" %>
                 <%= select cc, :category_id, @category_options, prompt: gettext("Please choose"), class: "form-control" %>
                 <%= error_tag cc, :category_id %>
               </div>
 
-              <div class="form-group col-md-3 col-md-offset-1">
+              <div class="form-group col-md-3 col-md-pull-1">
                 <%= label cc, :min_age_group, gettext("Participation"), class: "control-label" %>
                 <div class="form-inline">
                   AG
@@ -48,7 +58,7 @@
                 <%= error_tag cc, :max_age_group %>
               </div>
 
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-3 col-md-pull-1">
                 <%= label cc, :min_advancing_age_group, gettext("Advancement (if any)"), class: "control-label" %>
                 <div class="form-inline">
                   AG

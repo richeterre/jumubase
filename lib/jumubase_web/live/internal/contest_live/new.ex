@@ -2,6 +2,7 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   use Phoenix.LiveView
   import Jumubase.Gettext
   import JumubaseWeb.Internal.ContestView, only: [round_options: 0]
+  import JumubaseWeb.PerformanceLive.Helpers, only: [parse_id: 1]
   alias Ecto.Changeset
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
@@ -24,6 +25,14 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
     changeset =
       socket.assigns.changeset
       |> append_contest_category()
+
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("remove-contest-category", %{"index" => index}, socket) do
+    changeset =
+      socket.assigns.changeset
+      |> remove_contest_category(parse_id(index))
 
     {:noreply, assign(socket, changeset: changeset)}
   end
@@ -98,7 +107,16 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
 
   defp append_contest_category(changeset) do
     new_cs = Changeset.change(%ContestCategory{})
-    existing = Changeset.get_change(changeset, :contest_categories, [])
-    Changeset.put_embed(changeset, :contest_categories, existing ++ [new_cs])
+    contest_categories = get_existing_contest_categories(changeset) ++ [new_cs]
+    Changeset.put_embed(changeset, :contest_categories, contest_categories)
+  end
+
+  defp remove_contest_category(changeset, index) do
+    contest_categories = get_existing_contest_categories(changeset) |> List.delete_at(index)
+    Changeset.put_embed(changeset, :contest_categories, contest_categories)
+  end
+
+  defp get_existing_contest_categories(changeset) do
+    Changeset.get_change(changeset, :contest_categories, [])
   end
 end

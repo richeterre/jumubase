@@ -84,7 +84,7 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:24
 #: lib/jumubase_web/templates/internal/category/_form.html.eex:35 lib/jumubase_web/templates/internal/category/_form.html.eex:46
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:13 lib/jumubase_web/templates/internal/contest/live_form.html.leex:28
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:20 lib/jumubase_web/templates/internal/contest/live_form.html.leex:45
 #: lib/jumubase_web/templates/internal/user/form.html.eex:42 lib/jumubase_web/templates/performance/live_form.html.leex:10
 #: lib/jumubase_web/templates/performance/live_form.html.leex:28 lib/jumubase_web/templates/performance/live_form.html.leex:95
 #: lib/jumubase_web/templates/performance/live_form.html.leex:107 lib/jumubase_web/templates/performance/live_form.html.leex:226
@@ -168,7 +168,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/host_controller.ex:10
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:83 lib/jumubase_web/templates/internal/host/index.html.eex:1
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:100 lib/jumubase_web/templates/internal/host/index.html.eex:1
 #: lib/jumubase_web/templates/internal/page/home.html.eex:21 lib/jumubase_web/templates/internal/user/form.html.eex:51
 #: lib/jumubase_web/templates/internal/user/index.html.eex:11
 msgid "Hosts"
@@ -218,7 +218,7 @@ msgid "Birthdate"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:27
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:44
 #: lib/jumubase_web/templates/internal/performance/advancing.html.eex:45 lib/jumubase_web/templates/internal/performance/certificates.html.eex:36
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.eex:22 lib/jumubase_web/templates/internal/performance/index.html.eex:27
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.eex:45 lib/jumubase_web/templates/internal/performance/publish_results.html.eex:51
@@ -623,7 +623,7 @@ msgid "Advancement"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:33
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:50
 #: lib/jumubase_web/templates/internal/contest_category/index.html.eex:14
 msgid "Participation"
 msgstr ""
@@ -825,7 +825,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:22
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:12
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:19
 msgid "Round"
 msgstr ""
 
@@ -1498,22 +1498,22 @@ msgid "Total"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:83
+#: lib/jumubase_web/views/internal/contest_view.ex:84
 msgid "%{completed} of %{total} entered so far"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:93
+#: lib/jumubase_web/views/internal/contest_view.ex:94
 msgid "%{completed} of %{total} published so far"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:82
+#: lib/jumubase_web/views/internal/contest_view.ex:83
 msgid "All %{total} entered"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:90
+#: lib/jumubase_web/views/internal/contest_view.ex:91
 msgid "All %{total} published"
 msgstr ""
 
@@ -1872,13 +1872,13 @@ msgid "Heads up: Your changes will affect all appearances of this person, past a
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:68
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:85
 #: lib/jumubase_web/views/internal/contest_category_view.ex:26
 msgid "Accompanists rated as group"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:61
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:78
 #: lib/jumubase_web/views/internal/contest_category_view.ex:20
 msgid "Allows WESPE nominations"
 msgstr ""
@@ -1889,7 +1889,7 @@ msgid "Add Contests"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:79
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:96
 msgid "Add contest category"
 msgstr ""
 
@@ -1899,25 +1899,25 @@ msgid "New Contests"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:18
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:25
 msgid "Contest categories"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:45
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:62
 msgid "Advancement (if any)"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/live/internal/contest_live/new.ex:41
-msgid "CONTEST_CREATION_SUCCESS_ONE"
-msgid_plural "CONTEST_CREATION_SUCCESS_MANY"
-msgstr[0] "The contest was created."
-msgstr[1] "The contests were created."
-
-#, elixir-format
-#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:94
+#: lib/jumubase_web/templates/internal/contest/live_form.html.leex:111
 msgid "Create %{count} contest"
 msgid_plural "Create %{count} contests"
+msgstr[0] ""
+msgstr[1] ""
+
+#, elixir-format
+#: lib/jumubase_web/live/internal/contest_live/new.ex:51
+msgid "The contest was created."
+msgid_plural "The contests were created."
 msgstr[0] ""
 msgstr[1] ""

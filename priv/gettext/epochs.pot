@@ -11,36 +11,36 @@ msgid ""
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:91
+#: lib/jumubase/jumu_params.ex:98
 msgid "Baroque"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:92
+#: lib/jumubase/jumu_params.ex:99
 msgid "Early Classical, Classical"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:94
+#: lib/jumubase/jumu_params.ex:101
 msgid "Modern Classical, Jazz, Pop"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:95
+#: lib/jumubase/jumu_params.ex:102
 msgid "Neue Musik"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:90
+#: lib/jumubase/jumu_params.ex:97
 msgid "Renaissance, Early Baroque"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:93
+#: lib/jumubase/jumu_params.ex:100
 msgid "Romantic, Impressionist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/jumu_params.ex:89
+#: lib/jumubase/jumu_params.ex:96
 msgid "Traditional / Folk Music"
 msgstr ""

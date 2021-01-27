@@ -49,8 +49,8 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
         {:ok, result} ->
           message =
             ngettext(
-              "CONTEST_CREATION_SUCCESS_ONE",
-              "CONTEST_CREATION_SUCCESS_MANY",
+              "The contest was created.",
+              "The contests were created.",
               map_size(result)
             )
 

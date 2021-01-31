@@ -1923,11 +1923,11 @@ msgstr[0] "Der Wettbewerb wurde erstellt."
 msgstr[1] "Die Wettbewerbe wurden erstellt."
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.eex:34
-msgid "Do you really want to delete this contest?"
-msgstr "Möchtest du diesen Wettbewerb wirklich löschen?"
-
-#, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_controller.ex:81
 msgid "The contest %{name} was deleted."
 msgstr "Der Wettbewerb %{name} wurde gelöscht."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:34
+msgid "Do you really want to delete the contest %{name}?"
+msgstr "Möchtest du den Wettbewerb %{name} wirklich löschen?"

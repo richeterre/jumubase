@@ -1923,11 +1923,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.eex:34
-msgid "Do you really want to delete this contest?"
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:81
+msgid "The contest %{name} was deleted."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:81
-msgid "The contest %{name} was deleted."
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:34
+msgid "Do you really want to delete the contest %{name}?"
 msgstr ""

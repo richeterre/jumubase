@@ -31,7 +31,7 @@
             &#32;
             <%= delete_icon_link(
               Routes.internal_contest_path(@conn, :delete, contest),
-              gettext("Do you really want to delete this contest?")
+              gettext("Do you really want to delete the contest %{name}?", name: name(contest))
               ) %>
           <% end %>
         </td>

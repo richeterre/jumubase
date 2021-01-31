@@ -738,6 +738,23 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "delete_contest!/1" do
+    test "deletes a contest" do
+      contest = insert(:contest)
+      assert contest = Foundation.delete_contest!(contest)
+      refute Repo.get(Contest, contest.id)
+    end
+
+    test "raises an error if the contest no longer exists" do
+      contest = insert(:contest)
+      Repo.delete(contest)
+
+      assert_raise Ecto.StaleEntryError, fn ->
+        Foundation.delete_contest!(contest)
+      end
+    end
+  end
+
   describe "date_range/1" do
     test "returns the date range on which the contest takes place" do
       start_date = ~D[2019-01-01]

@@ -266,6 +266,10 @@ defmodule Jumubase.Foundation do
     Contest.changeset(contest, %{})
   end
 
+  def delete_contest!(%Contest{} = contest) do
+    Repo.delete!(contest)
+  end
+
   @doc """
   Returns the date range on which the contest takes place.
   """

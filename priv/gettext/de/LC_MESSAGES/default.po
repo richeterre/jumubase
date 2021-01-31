@@ -1884,7 +1884,7 @@ msgid "Allows WESPE nominations"
 msgstr "WESPE-Nominierungen möglich"
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.eex:39
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:44
 msgid "Add Contests"
 msgstr "Neue Wettbewerbe hinzufügen"
 
@@ -1921,3 +1921,13 @@ msgid "The contest was created."
 msgid_plural "The contests were created."
 msgstr[0] "Der Wettbewerb wurde erstellt."
 msgstr[1] "Die Wettbewerbe wurden erstellt."
+
+#, elixir-format
+#: lib/jumubase_web/templates/internal/contest/index.html.eex:34
+msgid "Do you really want to delete this contest?"
+msgstr "Möchtest du diesen Wettbewerb wirklich löschen?"
+
+#, elixir-format
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:81
+msgid "The contest %{name} was deleted."
+msgstr "Der Wettbewerb %{name} wurde gelöscht."

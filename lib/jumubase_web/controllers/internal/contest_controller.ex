@@ -73,6 +73,15 @@ defmodule JumubaseWeb.Internal.ContestController do
     end
   end
 
+  def delete(conn, %{"id" => id}) do
+    contest = Foundation.get_contest!(id)
+    Foundation.delete_contest!(contest)
+
+    conn
+    |> put_flash(:success, gettext("The contest %{name} was deleted.", name: name(contest)))
+    |> redirect(to: Routes.internal_contest_path(conn, :index))
+  end
+
   # Private helpers
 
   defp render_edit_form(conn, %Contest{} = contest, %Changeset{} = changeset) do

@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.EmailView do
   use JumubaseWeb, :view
-  import JumubaseWeb.Internal.ContestView, only: [city: 1, round_name_and_year: 1]
+  import JumubaseWeb.Internal.ContestView, only: [round_name_and_year: 1]
   alias Jumubase.Showtime.Participant
 
   @doc """

@@ -24,7 +24,7 @@
     <thead>
       <tr>
         <th><%= gettext("Stage time") %></th>
-        <th><%= gettext("Category") %></th>
+        <th class="col-md-3 col-sm-2"><%= gettext("Category") %></th>
 
         <%= if show_predecessor_info? do %>
         <th><%= gettext("RW") %></th>

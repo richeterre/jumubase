@@ -4,8 +4,11 @@
       <h3 class="panel-title">Landeswettbewerbe 2021</h3>
     </div>
     <div class="panel-body">
-      <p>Die Landeswettbewerbe finden dieses Jahr in <strong>San Sebastián</strong>, in <strong>Kopenhagen (digital)</strong> und in <strong>Rom (digital)</strong> statt.</p>
-      <p>Genauere Infos zum Hochladen der Vorspiele zu den digitalen Wettbewerben folgen in den nächsten Wochen.</p>
+      <p>Die Landeswettbewerbe werden dieses Jahr digital von den Deutschen Schulen in <strong>San Sebastián</strong>, <strong>Kopenhagen</strong> und <strong>Rom</strong> ausgerichtet.</p>
+
+      <p>
+       In Nord- und Osteuropa jährt sich der Landeswettbewerb zum 25. Mal. Alle Vorspiele könnt ihr auf dem <%= link "YouTube-Kanal des LW Kopenhagen", to: "https://www.youtube.com/channel/UCHyE0dEyWcoy982_JquySjw" %> live mitverfolgen. Viel Spaß dabei!
+      </p>
     </div>
   </div>
 </div>

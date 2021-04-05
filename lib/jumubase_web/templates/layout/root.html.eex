@@ -12,7 +12,6 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
 
     <%= render "favicons.html" %>
-    <%= render "analytics.html" %>
   </head>
   <body>
     <%= @inner_content %>

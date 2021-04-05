@@ -6,7 +6,6 @@ module.exports = {
   entry: {
     app: ["./js/app.js", "./css/app.scss"],
     performanceFilter: "./js/views/performanceFilter.js",
-    privacy: "./js/views/privacy.js",
     resultForm: "./js/views/resultForm.js",
     scheduler: "./js/views/scheduler.js"
   },

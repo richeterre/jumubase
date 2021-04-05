@@ -27,16 +27,6 @@ defmodule JumubaseWeb.LayoutView do
     breadcrumb == List.last(conn.assigns.breadcrumbs)
   end
 
-  def countly_app_key do
-    Application.get_env(:jumubase, :analytics)[:countly_app_key]
-  end
-
-  def countly_server_url do
-    Application.get_env(:jumubase, :analytics)[:countly_server_url]
-  end
-
-  def countly_sdk_url, do: "#{countly_server_url()}/sdk/web/countly.min.js"
-
   # Private helpers
 
   defp title("production"), do: home_title()

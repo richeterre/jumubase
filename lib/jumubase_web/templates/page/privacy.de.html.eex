@@ -39,10 +39,6 @@
 
     <p>Bei der Nutzung dieser Website werden bestimmte Informationen wie z.B. URL, Browserversion und IP-Adresse in die Logdateien des Serves eingetragen. Diese Daten werden nur als Nachweis bei möglichem Missbrauch sowie zur Fehlerbehebung erhoben. Sie werden weder zu anderen Zwecken genutzt noch mit Dritten geteilt.</p>
 
-    <h4>Analytics</h4>
-
-    <p>Damit wir diese Website stetig verbessern können, erheben wir <i>anonymisierte</i> Daten (z.B. Land, Betriebssystem, besuchte Seiten). Diese lassen keine Rückschlüsse auf die Identität einzelner Besucher zu, werden auf einem eigenen Server mittels der Open-Source-Software <%= link "Countly", to: "https://count.ly/community-edition" %> gehostet und niemals an Dritte übertragen. Falls du dies dennoch nicht möchtest, kannst du Analytics für diese Website hier <%= link "dauerhaft deaktivieren", to: "#", id: "no-analytics-link" %>.</p>
-
     <h4>E-Mailversand</h4
 
     <p>Beim Abschicken des Kontaktformulars sowie nach Anmeldung oder Weiterleitung zu einem Wettbewerb wird eine E-Mail an die angegebenen Adressen versandt. Dies geschieht über den Dienst <%= link "SendGrid", to: "https://www.sendgrid.com" %>, betrieben von Sendgrid, Inc., 1801 California Street, Suite 500, Denver, CO 80202. Mehr Informationen darüber, wie die E-Mailadressen von SendGrid verarbeitet werden, findest du <%= link "hier", to: "https://sendgrid.com/policies/privacy/services-privacy-policy/" %> und <%= link "hier", to: "https://sendgrid.com/policies/email/" %>.</p>

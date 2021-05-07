@@ -17,7 +17,7 @@
     "core-js": "^3.6.5",
     "formdata-polyfill": "^3.0.20",
     "jquery-ui": "^1.12.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "luxon": "^1.8.2",
     "mdn-polyfills": "^5.20.0",
     "phoenix": "file:../deps/phoenix",

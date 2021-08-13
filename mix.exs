@@ -33,12 +33,12 @@ defmodule Jumubase.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:absinthe, "1.5.2"},
-      {:absinthe_plug, "1.5.0"},
+      {:absinthe, "~> 1.5"},
+      {:absinthe_plug, "~> 1.5"},
       {:bamboo, "~> 1.1"},
       {:bcrypt_elixir, "~> 1.0"},
-      {:dataloader, "1.0.6"},
-      {:earmark, "~> 1.2"},
+      {:dataloader, "~> 1.0"},
+      {:earmark, "1.4.3"},
       {:ecto_sql, "~> 3.6"},
       {:ex_machina, "~> 2.2"},
       {:gettext, "~> 0.11"},
@@ -50,8 +50,8 @@ defmodule Jumubase.Mixfile do
       {:phauxth, "~> 1.2"},
       {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.0"},
-      {:phoenix_html, "~> 2.14"},
-      {:phoenix_live_dashboard, "~> 0.1"},
+      {:phoenix_live_dashboard, "~> 0.2.0"},
+      {:phoenix_html, "~> 2.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_live_view, "~> 0.14.7"},
       {:floki, ">= 0.27.0", only: :test},
@@ -59,9 +59,9 @@ defmodule Jumubase.Mixfile do
       {:plug_cowboy, "~> 2.1"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 7.0"},
-      {:sneeze, "~> 1.1"},
+      {:sneeze, "~> 1.2"},
       {:timex, "~> 3.0"},
-      {:xml_builder, "~> 2.1.0"}
+      {:xml_builder, "~> 2.1"}
     ]
   end
 

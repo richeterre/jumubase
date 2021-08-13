@@ -39,7 +39,7 @@ defmodule Jumubase.Mixfile do
       {:bcrypt_elixir, "~> 1.0"},
       {:dataloader, "1.0.6"},
       {:earmark, "~> 1.2"},
-      {:ecto_sql, "3.4.5"},
+      {:ecto_sql, "~> 3.6"},
       {:ex_machina, "~> 2.2"},
       {:gettext, "~> 0.11"},
       # Override needed for :sneeze dependency which requires 0.4.0:

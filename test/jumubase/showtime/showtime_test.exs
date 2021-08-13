@@ -1374,7 +1374,7 @@ defmodule Jumubase.ShowtimeTest do
       %{id: id} = pt = insert_participant(c)
       insert_performance(c, appearances: [build(:appearance, participant: pt)])
 
-      assert %Participant{id: id} = Showtime.get_participant!(c, id)
+      assert %Participant{id: ^id} = Showtime.get_participant!(c, id)
     end
 
     test "raises an error if the participant isn't found in the given contest", %{contest: c} do

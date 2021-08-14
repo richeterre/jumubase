@@ -18,16 +18,13 @@ defmodule Jumubase.Foundation.AgeGroups do
   def all, do: ["Ia", "Ib", "II", "III", "IV", "V", "VI", "VII"]
 
   @doc """
-  Returns the age group for the birthdate in the given season.
+  Returns the age group for the birthdate(s) in the given season.
+  If multiple birthdates are given, it uses the year that the "mean birthdate" falls into.
   """
   def calculate_age_group(%Date{} = birthdate, season) do
     lookup_age_group(birthdate, season)
   end
 
-  @doc """
-  Returns the joint age group for the birthdates in the given season,
-  by using the year that the "mean birthdate" falls into.
-  """
   def calculate_age_group(birthdates, season) when is_list(birthdates) do
     birthdates |> average_date |> lookup_age_group(season)
   end

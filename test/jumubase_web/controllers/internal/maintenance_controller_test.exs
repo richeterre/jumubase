@@ -41,42 +41,6 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
     end
   end
 
-  describe "compare_participants/2" do
-    @tag login_as: "admin"
-    test "lets admins compare two participants", %{conn: conn} do
-      conn |> attempt_compare_participants |> assert_compare_participants_success
-    end
-
-    for role <- roles_except("admin") do
-      @tag login_as: role
-      test "redirects #{role} users trying to compare two participants", %{conn: conn} do
-        conn |> attempt_compare_participants |> assert_unauthorized_user
-      end
-    end
-
-    test "redirects guests trying to compare two participants", %{conn: conn} do
-      conn |> attempt_compare_participants |> assert_unauthorized_guest
-    end
-  end
-
-  describe "merge_participants/2" do
-    @tag login_as: "admin"
-    test "lets admins merge two participants", %{conn: conn} do
-      conn |> attempt_merge_participants |> assert_merge_participants_success
-    end
-
-    for role <- roles_except("admin") do
-      @tag login_as: role
-      test "redirects #{role} users trying to merge two participants", %{conn: conn} do
-        conn |> attempt_merge_participants |> assert_unauthorized_user
-      end
-    end
-
-    test "redirects guests trying to merge two participants", %{conn: conn} do
-      conn |> attempt_merge_participants |> assert_unauthorized_guest
-    end
-  end
-
   # Private helpers
 
   defp attempt_index(conn) do
@@ -100,45 +64,10 @@ defmodule JumubaseWeb.Internal.MaintenanceControllerTest do
     )
   end
 
-  defp attempt_compare_participants(conn) do
-    {pt1, pt2} = insert_participant_pair()
-    get(conn, Routes.internal_maintenance_path(conn, :compare_participants, pt1.id, pt2.id))
-  end
-
-  defp assert_compare_participants_success(conn) do
-    assert html_response(conn, 200) =~ "Compare participants"
-  end
-
-  defp attempt_merge_participants(conn) do
-    {pt1, pt2} = insert_participant_pair()
-
-    patch(
-      conn,
-      Routes.internal_maintenance_path(conn, :merge_participants, pt1.id, pt2.id,
-        merge_fields: %{
-          given_name: true
-        }
-      )
-    )
-  end
-
-  defp assert_merge_participants_success(conn) do
-    assert_flash_redirect(
-      conn,
-      Routes.internal_maintenance_path(conn, :index),
-      "The participants were merged."
-    )
-  end
-
   defp assert_flash_redirect(conn, redirect_path, message) do
     assert redirected_to(conn) == redirect_path
     # Follow redirection
     conn = get(recycle(conn), redirect_path)
     assert html_response(conn, 200) =~ message
-  end
-
-  defp insert_participant_pair do
-    c = insert(:contest)
-    {insert_participant(c), insert_participant(c)}
   end
 end

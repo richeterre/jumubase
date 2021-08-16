@@ -114,14 +114,6 @@ defmodule JumubaseWeb.Router do
 
     get "/maintenance", MaintenanceController, :index
 
-    get "/maintenance/participants/compare/:base_id/:other_id",
-        MaintenanceController,
-        :compare_participants
-
-    patch "/maintenance/participants/merge/:base_id/:other_id",
-          MaintenanceController,
-          :merge_participants
-
     delete "/maintenance/participants/orphaned",
            MaintenanceController,
            :delete_orphaned_participants
@@ -143,6 +135,10 @@ defmodule JumubaseWeb.Router do
 
       post "/performances/migrate-advancing", PerformanceController, :migrate_advancing,
         as: :performances
+
+      get "/participants/duplicates", ParticipantController, :duplicates
+      get "/participants/compare/:source_id/:target_id", ParticipantController, :compare
+      patch "/participants/merge/:source_id/:target_id", ParticipantController, :merge
 
       get "/participants/export-csv", ParticipantController, :export_csv
       post "/participants/send-welcome-emails", ParticipantController, :send_welcome_emails

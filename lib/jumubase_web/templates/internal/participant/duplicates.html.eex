@@ -1,0 +1,39 @@
+<h2>
+  <%= gettext("Duplicate Participants") %>
+  <br>
+  <small><%= name_with_flag(@contest) %></small>
+</h2>
+
+<hr>
+
+<%= if Enum.empty?(@pairs) do %>
+  <p class="text-muted"><%= gettext("No duplicate participants were found.") %></p>
+<% else %>
+  <table class="table table-striped">
+    <thead>
+      <th><%= gettext("In this contest") %></th>
+      <th></th>
+      <th><%= gettext("Already existing") %></th>
+    </thead>
+    <tbody>
+      <%= for {contest_pt, earlier_pt} <- @pairs do %>
+      <tr>
+        <td>
+          <%= full_name(contest_pt) %>
+          <span class="text-muted">(* <%= format_date(contest_pt.birthdate) %>)</span>
+        </td>
+        <td>
+          <%= icon_link "transfer", nil,
+            Routes.internal_contest_participant_path(@conn, :compare, @contest, contest_pt.id, earlier_pt.id),
+            class: "btn btn-default btn-xs"
+            %>
+        </td>
+        <td>
+          <%= full_name(earlier_pt) %>
+          <span class="text-muted">(* <%= format_date(earlier_pt.birthdate) %>)</span>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

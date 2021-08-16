@@ -1,0 +1,84 @@
+<h2><%= gettext("Compare participants") %></h2>
+
+<hr>
+
+<%= form_for @conn,
+  Routes.internal_contest_participant_path(@conn, :merge, @contest, @source.id, @target.id),
+  [as: :merge_fields, method: :patch],
+  fn f -> %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= gettext("In this contest") %>
+          </h3>
+          <small class="text-muted"><%= gettext("Choose the fields to keep when merging.") %></small>
+        </div>
+        <div class="panel-body">
+          <code><%= @source.id %></code>
+          <div class="checkbox">
+            <%= label f, :given_name do %>
+              <%= checkbox f, :given_name %> <%= @source.given_name %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :family_name do %>
+              <%= checkbox f, :family_name %> <%= @source.family_name %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :birthdate do %>
+              <%= checkbox f, :birthdate %> <%= format_date(@source.birthdate) %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :phone do %>
+              <%= checkbox f, :phone %> <%= @source.phone %>
+            <% end %>
+          </div>
+          <div class="checkbox">
+            <%= label f, :email do %>
+              <%= checkbox f, :email %> <%= @source.email %>
+            <% end %>
+          </div>
+
+          <hr>
+
+          <%= render "_performances_info.html", conn: @conn, participant: @source %>
+        </div>
+        <div class="panel-footer text-muted">
+          <%= format_datetime(@source.updated_at) %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <%= gettext("Already existing") %>
+          </h3>
+          <small class="text-muted"><%= gettext("The checked fields will be overwritten here.") %></small>
+        </div>
+        <div class="panel-body">
+          <code><%= @target.id %></code>
+          <div class="checkbox"><%= @target.given_name %></div>
+          <div class="checkbox"><%= @target.family_name %></div>
+          <div class="checkbox">* <%= format_date(@target.birthdate) %></div>
+          <div class="checkbox"><%= @target.phone %></div>
+          <div class="checkbox"><%= @target.email %></div>
+
+          <hr>
+
+          <%= render "_performances_info.html", conn: @conn, participant: @target %>
+        </div>
+        <div class="panel-footer text-muted">
+          <%= format_datetime(@target.updated_at) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%= submit gettext("Merge participants") <> " →", class: "btn btn-primary" %>
+<% end %>

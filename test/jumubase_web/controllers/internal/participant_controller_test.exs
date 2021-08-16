@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.Internal.ParticipantControllerTest do
   use JumubaseWeb.ConnCase
+  alias Jumubase.Foundation.Contest
 
   setup config do
     login_if_needed(config)
@@ -62,6 +63,46 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
     end
   end
 
+  describe "compare/2" do
+    @tag login_as: "admin"
+    test "lets admins compare two participants", %{conn: conn} do
+      conn |> attempt_compare |> assert_compare_success
+    end
+
+    for role <- roles_except("admin") do
+      @tag login_as: role
+      test "redirects #{role} users trying to compare two participants", %{conn: conn} do
+        conn |> attempt_compare |> assert_unauthorized_user
+      end
+    end
+
+    test "redirects guests trying to compare two participants", %{conn: conn} do
+      conn |> attempt_compare |> assert_unauthorized_guest
+    end
+  end
+
+  describe "merge/2" do
+    setup config do
+      Map.put(config, :contest, insert(:contest))
+    end
+
+    @tag login_as: "admin"
+    test "lets admins merge two participants", %{conn: conn, contest: c} do
+      conn |> attempt_merge(c) |> assert_merge_success(c)
+    end
+
+    for role <- roles_except("admin") do
+      @tag login_as: role
+      test "redirects #{role} users trying to merge two participants", %{conn: conn, contest: c} do
+        conn |> attempt_merge(c) |> assert_unauthorized_user()
+      end
+    end
+
+    test "redirects guests trying to merge two participants", %{conn: conn, contest: c} do
+      conn |> attempt_merge(c) |> assert_unauthorized_guest()
+    end
+  end
+
   describe "export_csv/2" do
     for role <- all_roles() do
       @tag login_as: role
@@ -114,6 +155,35 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
 
   # Private helpers
 
+  defp attempt_compare(conn) do
+    c = insert(:contest)
+    {pt1, pt2} = insert_participant_pair(c)
+    get(conn, Routes.internal_contest_participant_path(conn, :compare, c, pt1.id, pt2.id))
+  end
+
+  defp assert_compare_success(conn) do
+    assert html_response(conn, 200) =~ "Compare participants"
+  end
+
+  defp attempt_merge(conn, contest) do
+    {pt1, pt2} = insert_participant_pair(contest)
+
+    patch(
+      conn,
+      Routes.internal_contest_participant_path(conn, :merge, contest, pt1.id, pt2.id,
+        merge_fields: %{given_name: true}
+      )
+    )
+  end
+
+  defp assert_merge_success(conn, contest) do
+    assert_flash_redirect(
+      conn,
+      Routes.internal_contest_participant_path(conn, :duplicates, contest),
+      "The participants were merged."
+    )
+  end
+
   defp attempt_send_welcome_emails(conn, contest) do
     post(conn, Routes.internal_contest_participant_path(conn, :send_welcome_emails, contest))
   end
@@ -140,5 +210,9 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
     # Follow redirection
     conn = get(recycle(conn), redirect_path)
     assert html_response(conn, 200) =~ message
+  end
+
+  defp insert_participant_pair(%Contest{} = c) do
+    {insert_participant(c), insert_participant(c)}
   end
 end

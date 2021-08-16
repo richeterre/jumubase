@@ -1258,49 +1258,72 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
-  describe "list_duplicate_participants/0" do
-    test "returns participant pairs with the same name" do
+  describe "list_duplicate_participants/1" do
+    test "only finds duplicates for participants of the given contest", %{contest: c} do
+      pt1 = insert(:participant, given_name: "A", family_name: "B")
+      pt2 = insert_participant(c, given_name: "A", family_name: "B")
+      insert(:participant, given_name: "C", family_name: "D")
+      insert(:participant, given_name: "C", family_name: "D")
+
+      assert_tuple_ids_match_ordered(
+        Showtime.list_duplicate_participants(c),
+        [{pt2, pt1}]
+      )
+    end
+
+    test "only finds duplicates that were created before the participant", %{contest: c} do
+      pt1 = insert(:participant, given_name: "A", family_name: "B")
+      pt2 = insert_participant(c, given_name: "A", family_name: "B")
+      insert(:participant, given_name: "A", family_name: "B")
+
+      assert_tuple_ids_match_ordered(
+        Showtime.list_duplicate_participants(c),
+        [{pt2, pt1}]
+      )
+    end
+
+    test "returns participant pairs with the same name", %{contest: c} do
       pt1 = insert(:participant, given_name: "X", family_name: "Y")
-      pt2 = insert(:participant, given_name: "X", family_name: "Y")
+      pt2 = insert_participant(c, given_name: "X", family_name: "Y")
 
       assert_tuple_ids_match_ordered(
-        Showtime.list_duplicate_participants(),
-        [{pt1, pt2}]
+        Showtime.list_duplicate_participants(c),
+        [{pt2, pt1}]
       )
     end
 
-    test "returns participant pairs whose names differ only by diacritics" do
+    test "returns participant pairs whose names differ only by diacritics", %{contest: c} do
       pt1 = insert(:participant, given_name: "Frøya", family_name: "Åsnæs")
-      pt2 = insert(:participant, given_name: "Froya", family_name: "Asnaes")
+      pt2 = insert_participant(c, given_name: "Froya", family_name: "Asnaes")
       pt3 = insert(:participant, given_name: "Jánoš", family_name: "Bečvář")
-      pt4 = insert(:participant, given_name: "Janos", family_name: "Becvar")
+      pt4 = insert_participant(c, given_name: "Janos", family_name: "Becvar")
 
       assert_tuple_ids_match_ordered(
-        Showtime.list_duplicate_participants(),
-        [{pt1, pt2}, {pt3, pt4}]
+        Showtime.list_duplicate_participants(c),
+        [{pt2, pt1}, {pt4, pt3}]
       )
     end
 
-    test "returns participant pairs with similar given and family names" do
-      pt1 = insert(:participant, given_name: "Anna", family_name: "Cho")
-      pt2 = insert(:participant, given_name: "Anna Belle", family_name: "Dyson-Cho")
-      pt3 = insert(:participant, given_name: "Marianna", family_name: "Cho Dyson")
+    test "returns participant pairs with similar given and family names", %{contest: c} do
+      pt1 = insert(:participant, given_name: "Anna Belle", family_name: "Dyson-Cho")
+      pt2 = insert(:participant, given_name: "Marianna", family_name: "Cho Dyson")
+      pt3 = insert_participant(c, given_name: "Anna", family_name: "Cho")
 
       assert_tuple_ids_match_ordered(
-        Showtime.list_duplicate_participants(),
-        [{pt1, pt2}, {pt1, pt3}]
+        Showtime.list_duplicate_participants(c),
+        [{pt3, pt1}, {pt3, pt2}]
       )
     end
 
-    test "orders the pairs by the first participant's given name" do
-      pt1 = insert(:participant, given_name: "C", family_name: "A")
-      pt2 = insert(:participant, given_name: "A", family_name: "B")
-      pt3 = insert(:participant, given_name: "B", family_name: "C")
-      pt4 = insert(:participant, given_name: "ABC", family_name: "BAC")
+    test "orders the pairs by the first participant's given name", %{contest: c} do
+      pt1 = insert(:participant, given_name: "ABC", family_name: "BAC")
+      pt2 = insert_participant(c, given_name: "C", family_name: "A")
+      pt3 = insert_participant(c, given_name: "A", family_name: "B")
+      pt4 = insert_participant(c, given_name: "B", family_name: "C")
 
       assert_tuple_ids_match_ordered(
-        Showtime.list_duplicate_participants(),
-        [{pt2, pt4}, {pt3, pt4}, {pt1, pt4}]
+        Showtime.list_duplicate_participants(c),
+        [{pt3, pt1}, {pt4, pt1}, {pt2, pt1}]
       )
     end
   end
@@ -1408,7 +1431,7 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "merge_participants/3" do
-    test "replaces the second by the first participant across contests", %{contest: c} do
+    test "replaces the first by the second participant across contests", %{contest: c} do
       other_c = insert(:contest, round: 2)
 
       %{participant: pt1} = pt1_a1 = insert_appearance(c)
@@ -1420,15 +1443,15 @@ defmodule Jumubase.ShowtimeTest do
       pt2_a3 = insert_appearance(other_c, participant: pt2)
 
       assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [])
-      assert_raise Ecto.NoResultsError, fn -> Repo.get!(Participant, pt2.id) end
+      assert_raise Ecto.NoResultsError, fn -> Repo.get!(Participant, pt1.id) end
 
       for a <- [pt1_a1, pt1_a2, pt1_a3, pt2_a1, pt2_a2, pt2_a3] do
         a = Repo.get!(Appearance, a.id) |> Repo.preload(:participant)
-        assert a.participant.id == pt1.id
+        assert a.participant.id == pt2.id
       end
     end
 
-    test "merges the given fields' values into the base participant", %{contest: c} do
+    test "merges the given fields' values into the target participant", %{contest: c} do
       pt1 =
         insert_participant(c,
           given_name: "G1",
@@ -1448,14 +1471,14 @@ defmodule Jumubase.ShowtimeTest do
         )
 
       assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:given_name, :birthdate, :email])
-      pt1 = Repo.get!(Participant, pt1.id)
+      pt2 = Repo.get!(Participant, pt2.id)
       # Check that listed fields were replaced
-      assert pt1.given_name == pt2.given_name
-      assert pt1.birthdate == pt2.birthdate
-      assert pt1.email == pt2.email
+      assert pt2.given_name == pt1.given_name
+      assert pt2.birthdate == pt1.birthdate
+      assert pt2.email == pt1.email
       # Check that non-listed fields were not replaced
-      assert pt1.family_name == pt1.family_name
-      assert pt1.phone == pt1.phone
+      assert pt2.family_name == pt2.family_name
+      assert pt2.phone == pt2.phone
     end
 
     test "ignores invalid field names", %{contest: c} do
@@ -1463,8 +1486,8 @@ defmodule Jumubase.ShowtimeTest do
       pt2 = insert_participant(c, given_name: "G2")
 
       assert :ok = Showtime.merge_participants(pt1.id, pt2.id, [:given_name, :unknown])
-      pt1 = Repo.get!(Participant, pt1.id)
-      assert pt1.given_name == pt2.given_name
+      pt2 = Repo.get!(Participant, pt2.id)
+      assert pt2.given_name == pt1.given_name
     end
 
     test "recalculates affected age groups during merge", %{contest: c} do
@@ -1487,10 +1510,10 @@ defmodule Jumubase.ShowtimeTest do
 
       %{appearances: [a1]} = p1 = Repo.get!(Performance, p1.id) |> Repo.preload(:appearances)
       %{appearances: [a2]} = p2 = Repo.get!(Performance, p2.id) |> Repo.preload(:appearances)
-      assert p1.age_group == "II"
-      assert a1.age_group == "II"
-      assert p2.age_group == "II"
-      assert a2.age_group == "II"
+      assert p1.age_group == "III"
+      assert a1.age_group == "III"
+      assert p2.age_group == "III"
+      assert a2.age_group == "III"
     end
   end
 

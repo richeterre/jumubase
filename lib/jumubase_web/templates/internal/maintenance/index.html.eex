@@ -2,16 +2,8 @@
 
 <hr>
 
-<h3><%= gettext("Duplicate participants") %></h3>
-
 <div class="row">
   <div class="col-md-8">
-    <%= if !Enum.empty?(@duplicate_pairs) do %>
-      <%= render "_duplicate_participants.html", conn: @conn, pairs: @duplicate_pairs %>
-    <% else %>
-      <p class="text-muted"><%= gettext("No duplicate participants were found.") %></p>
-    <% end %>
-
     <h3><%= gettext("Orphaned participants") %></h3>
 
     <%= if !Enum.empty?(@orphaned_participants) do %>

@@ -404,17 +404,24 @@ defmodule Jumubase.Showtime do
     orphaned_participants_query() |> Repo.delete_all()
   end
 
-  def list_duplicate_participants do
-    from(base_pt in Participant,
-      join: other_pt in Participant,
-      on:
-        base_pt.id < other_pt.id and
-          similar(base_pt.given_name, other_pt.given_name) and
-          similar(base_pt.family_name, other_pt.family_name),
-      order_by: base_pt.given_name,
-      select: {base_pt, other_pt}
-    )
-    |> Repo.all()
+  @doc """
+  Returns duplicate pairs for the contest's participants.
+  Each pair consists of a participant from the contest, followed by a possible duplicate.
+  """
+  def list_duplicate_participants(%Contest{id: contest_id}) do
+    contest_participants = Participant |> from_contest(contest_id)
+
+    query =
+      from contest_pt in contest_participants,
+        join: earlier_pt in Participant,
+        on:
+          contest_pt.inserted_at > earlier_pt.inserted_at and
+            similar(contest_pt.given_name, earlier_pt.given_name) and
+            similar(contest_pt.family_name, earlier_pt.family_name),
+        order_by: contest_pt.given_name,
+        select: {contest_pt, earlier_pt}
+
+    Repo.all(query)
   end
 
   def get_participant!(id) do
@@ -457,24 +464,24 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
-  Replaces the other participant in all their appearances by the base participant,
-  merging the given fields' values into the base participant in the process.
+  Replaces the source participant in all their appearances by the target participant,
+  merging the given fields' values into the target participant in the process.
   """
-  def merge_participants(base_id, other_id, fields_to_merge) do
-    other_pt = get_participant!(other_id)
-    appearances = Ecto.assoc(other_pt, :appearances)
-    merge_map = other_pt |> Map.take(fields_to_merge)
+  def merge_participants(source_id, target_id, fields_to_merge) do
+    source_pt = get_participant!(source_id)
+    appearances = Ecto.assoc(source_pt, :appearances)
+    merge_map = source_pt |> Map.take(fields_to_merge)
 
-    base_pt = get_participant!(base_id)
-    base_changeset = base_pt |> change(merge_map)
+    target_pt = get_participant!(target_id)
+    target_changeset = target_pt |> change(merge_map)
 
     multi =
       Multi.new()
-      |> Multi.update(:update_base, base_changeset)
-      |> Multi.update_all(:update_appearances, appearances, set: [participant_id: base_id])
-      |> Multi.delete(:delete_other, other_pt)
+      |> Multi.update(:update_target, target_changeset)
+      |> Multi.update_all(:update_appearances, appearances, set: [participant_id: target_id])
+      |> Multi.delete(:delete_source, source_pt)
       |> Multi.run(:fix_age_groups, fn repo, _ ->
-        fix_age_groups(base_pt, repo)
+        fix_age_groups(target_pt, repo)
       end)
 
     case Repo.transaction(multi) do

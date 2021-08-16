@@ -6,6 +6,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Participant
   alias Jumubase.Mailer
+  alias Jumubase.Utils
   alias JumubaseWeb.Email
 
   plug :add_home_breadcrumb
@@ -15,7 +16,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
     path_fun: &Routes.internal_contest_path/2,
     action: :index
 
-  plug :admin_check when action in [:send_welcome_emails]
+  plug :admin_check when action in [:compare, :merge, :send_welcome_emails]
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
@@ -62,6 +63,52 @@ defmodule JumubaseWeb.Internal.ParticipantController do
       {:error, %Changeset{} = changeset} ->
         render_edit_form(conn, contest, participant, changeset)
     end
+  end
+
+  def duplicates(conn, _params, contest) do
+    duplicate_pairs = Showtime.list_duplicate_participants(contest)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:pairs, duplicate_pairs)
+    |> add_contest_breadcrumb(contest)
+    |> add_participants_breadcrumb(contest)
+    |> add_breadcrumb(name: gettext("Duplicates"), path: current_path(conn))
+    |> render("duplicates.html")
+  end
+
+  def compare(conn, %{"source_id" => source_id, "target_id" => target_id}, contest) do
+    source_pt = Showtime.get_participant!(source_id)
+    target_pt = Showtime.get_participant!(target_id)
+
+    conn
+    |> assign(:contest, contest)
+    |> assign(:source, source_pt)
+    |> assign(:target, target_pt)
+    |> add_contest_breadcrumb(contest)
+    |> add_participants_breadcrumb(contest)
+    |> add_breadcrumb(
+      name: gettext("Duplicates"),
+      path: Routes.internal_contest_participant_path(conn, :duplicates, contest)
+    )
+    |> add_breadcrumb(name: full_name(source_pt), path: current_path(conn))
+    |> render("compare.html")
+  end
+
+  def merge(conn, params, contest) do
+    %{"source_id" => source_id, "target_id" => target_id, "merge_fields" => merge_fields} = params
+    fields_to_merge = extract_merge_field_atoms(merge_fields)
+
+    conn =
+      case Showtime.merge_participants(source_id, target_id, fields_to_merge) do
+        :ok ->
+          put_flash(conn, :success, gettext("The participants were merged."))
+
+        :error ->
+          put_flash(conn, :error, gettext("The participants could not be merged."))
+      end
+
+    redirect(conn, to: Routes.internal_contest_participant_path(conn, :duplicates, contest))
   end
 
   def export_csv(conn, _params, contest) do
@@ -116,5 +163,11 @@ defmodule JumubaseWeb.Internal.ParticipantController do
       name: full_name(participant),
       path: Routes.internal_contest_participant_path(conn, :show, contest, participant)
     )
+  end
+
+  defp extract_merge_field_atoms(field_map) do
+    field_map
+    |> Enum.filter(fn {_, value} -> Utils.parse_bool(value) end)
+    |> Enum.map(fn {key, _} -> String.to_existing_atom(key) end)
   end
 end

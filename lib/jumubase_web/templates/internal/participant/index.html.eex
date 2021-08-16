@@ -17,13 +17,19 @@
     class: "btn btn-default"
     %>
   &#32;
-  <%= if admin?(@current_user), do:
-    icon_link "bullhorn", gettext("Send welcome emails"),
-    Routes.internal_contest_participant_path(@conn, :send_welcome_emails, @contest),
-    method: :post,
-    data: [confirm: gettext("Do you really want to send the welcome emails?")],
-    class: "btn btn-warning"
-   %>
+  <%= if admin?(@current_user) do %>
+    <%= icon_link "duplicate", gettext("Show duplicates"),
+      Routes.internal_contest_participant_path(@conn, :duplicates, @contest),
+      class: "btn btn-default"
+      %>
+    &#32;
+    <%= icon_link "bullhorn", gettext("Send welcome emails"),
+      Routes.internal_contest_participant_path(@conn, :send_welcome_emails, @contest),
+      method: :post,
+      data: [confirm: gettext("Do you really want to send the welcome emails?")],
+      class: "btn btn-warning"
+    %>
+  <% end %>
 </div>
 
 <div class="table-responsive">

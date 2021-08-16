@@ -42,7 +42,8 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
-  Returns all performances from the contest matching the given filter.
+  Returns all performances from the contest matching the given constraints,
+  such as a filter or list of ids.
   """
   def list_performances(%Contest{id: id}, %PerformanceFilter{} = filter) do
     performances_query(id)
@@ -51,9 +52,6 @@ defmodule Jumubase.Showtime do
     |> Repo.all()
   end
 
-  @doc """
-  Returns the performances with the given ids.
-  """
   def list_performances(%Contest{id: contest_id}, ids) when is_list(ids) do
     performances_query(contest_id)
     |> preload(:stage)

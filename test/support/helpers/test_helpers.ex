@@ -32,17 +32,10 @@ defmodule Jumubase.TestHelpers do
   def all_roles, do: JumuParams.user_roles()
 
   @doc """
-  Returns all roles except the given one.
+  Returns all roles except the given one(s).
   """
   def roles_except(role) when is_binary(role) do
     roles_except([role])
-  end
-
-  @doc """
-  Returns all roles except the given ones.
-  """
-  def roles_except(roles) when is_list(roles) do
-    all_roles() -- roles
   end
 
   @doc """

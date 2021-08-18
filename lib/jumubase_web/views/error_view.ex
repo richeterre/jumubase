@@ -1,5 +1,6 @@
 defmodule JumubaseWeb.ErrorView do
   use JumubaseWeb, :view
+  alias JumubaseWeb.LayoutView
 
   def render("404.html", assigns) do
     render_error_layout(
@@ -27,9 +28,10 @@ defmodule JumubaseWeb.ErrorView do
 
   defp render_error_layout(assigns, heading, message) do
     render(
-      JumubaseWeb.LayoutView,
+      LayoutView,
       "error.html",
       assigns
+      |> Map.put(:layout, {LayoutView, "root.html"})
       |> Map.put(:heading, heading)
       |> Map.put(:message, message)
     )

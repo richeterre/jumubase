@@ -38,6 +38,10 @@ defmodule Jumubase.TestHelpers do
     roles_except([role])
   end
 
+  def roles_except(roles) when is_list(roles) do
+    all_roles() -- roles
+  end
+
   @doc """
   Returns valid form parameters for a performance,
   using the given contest category.

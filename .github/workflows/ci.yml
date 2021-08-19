@@ -9,6 +9,16 @@ jobs:
   verify:
     runs-on: ubuntu-latest
 
+    services:
+      db:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: jumubase_test
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
       - uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24

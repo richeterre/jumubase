@@ -25,6 +25,15 @@ defmodule JumubaseWeb.PerformanceView do
   end
 
   @doc """
+  Returns the HTML class for a collapsible panel,
+  based on its own index and that of the currently expanded panel.
+  """
+  def collapsible_panel_class(index, expanded_index) do
+    base_class = "panel-collapse collapse"
+    if index == expanded_index, do: "#{base_class} in", else: base_class
+  end
+
+  @doc """
   Returns a title for the registration form appearance panel,
   based on data found in the given appearance form.
   """

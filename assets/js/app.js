@@ -21,8 +21,8 @@ import "@webcomponents/template"
 import "shim-keyboard-event-key"
 import "core-js/features/set"
 
-import LiveSocket from "phoenix_live_view"
 import { Socket } from "phoenix"
+import { LiveSocket } from "phoenix_live_view"
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-lg-9">
-    <%= f = form_for @changeset, "#", [phx_change: :change, phx_submit: :submit] %>
+    <.form let={f} for={@changeset} url="#" phx_change="change" phx_submit="submit">
       <div class="row">
         <div class="form-group col-sm-3">
           <%= label f, :season, gettext("Season"), class: "control-label" %>
@@ -34,7 +34,7 @@
                 <button
                   type="button"
                   phx-click="remove-contest-category"
-                  phx-value-index="<%= cc.index %>"
+                  phx-value-index={cc.index}
                   class="btn btn-xs btn-danger pull-right">
                   <span class="glyphicon glyphicon-trash" />
                 </button>
@@ -113,6 +113,6 @@
           class: "btn btn-primary"
           %>
       </div>
-    </form>
+    </.form>
   </div>
 </div>

@@ -45,7 +45,7 @@ defmodule Jumubase.Mixfile do
       # Override needed for :sneeze dependency which requires 0.4.0:
       {:html_entities, "~> 0.5", override: true},
       {:jason, "~> 1.1"},
-      {:nimble_csv, "~> 0.6"},
+      {:nimble_csv, "~> 1.0"},
       {:pdf_generator, "~> 0.4"},
       {:phauxth, "~> 1.2"},
       {:phoenix, "~> 1.5.0"},

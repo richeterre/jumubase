@@ -1,5 +1,5 @@
-import $ from 'jquery'
+import $ from "jquery"
 
-$(".filter-form select").change(function() {
+$(".filter-form select").change(function () {
   this.form.submit()
 })

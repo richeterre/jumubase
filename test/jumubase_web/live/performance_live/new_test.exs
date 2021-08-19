@@ -56,9 +56,7 @@ defmodule JumubaseWeb.PerformanceLive.EditTest do
     flash = assert_redirect(view, "/")
 
     assert flash["success"] =~
-             "We received your registration! You can still change it later using the edit code #{
-               edit_code
-             }."
+             "We received your registration! You can still change it later using the edit code #{edit_code}."
   end
 
   test "sends a confirmation email upon registration", %{conn: conn, contest: c} do

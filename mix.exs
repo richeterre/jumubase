@@ -41,7 +41,9 @@ defmodule Jumubase.Mixfile do
       {:earmark, "1.4.3"},
       {:ecto_sql, "~> 3.6"},
       {:ex_machina, "~> 2.2"},
+      {:floki, ">= 0.27.0", only: :test},
       {:gettext, "~> 0.11"},
+      {:hackney, "~> 1.8"},
       # Override needed for :sneeze dependency which requires 0.4.0:
       {:html_entities, "~> 0.5", override: true},
       {:jason, "~> 1.1"},
@@ -54,11 +56,10 @@ defmodule Jumubase.Mixfile do
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_live_view, "~> 0.16.0"},
-      {:floki, ">= 0.27.0", only: :test},
       {:phoenix_pubsub, "~> 2.0"},
-      {:plug_cowboy, "~> 2.1"},
+      {:plug_cowboy, "~> 2.3"},
       {:postgrex, ">= 0.0.0"},
-      {:sentry, "~> 7.0"},
+      {:sentry, "~> 8.0"},
       {:sneeze, "~> 1.2"},
       {:timex, "~> 3.0"},
       {:xml_builder, "~> 2.1"}

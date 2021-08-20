@@ -6,6 +6,9 @@ defmodule Jumubase.SentryEventFilter do
 
   @behaviour Sentry.EventFilter
 
+  # Ignore Phoenix "route not found" exception
+  def exclude_exception?(%x{}, :plug) when x in [Phoenix.Router.NoRouteError], do: true
+
   def exclude_exception?(%Ecto.NoResultsError{}, :plug), do: true
   def exclude_exception?(%Ecto.NoResultsError{}, :endpoint), do: true
   def exclude_exception?(_exception, _source), do: false

@@ -1,7 +1,5 @@
 defmodule JumubaseWeb.Router do
   use JumubaseWeb, :router
-  use Plug.ErrorHandler
-  use Sentry.Plug
   import Phoenix.LiveDashboard.Router
 
   pipeline :browser do

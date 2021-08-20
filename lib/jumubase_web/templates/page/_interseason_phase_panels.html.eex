@@ -10,16 +10,17 @@
   </div>
 </div>
 
+<!--
 <div class="col-md-6">
   <div class="panel panel-info">
     <div class="panel-heading">
       <h3 class="panel-title">
-      <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
-      “Jumu Nordost” heißt jetzt “Jumu weltweit”</h3>
+        Info panel title
+      </h3>
     </div>
     <div class="panel-body">
-      <p>Seit 2020 findest uns unter der neuen Adresse <%= link "jumu-weltweit.org", to: "https://www.jumu-weltweit.org" %>,
-      denn neben dem bisherigen Verbund 2 (grün) sind mittlerweile auch einige Schulen der Verbunde 1 (blau) und 3 (gelb) mit an Bord. Herzlich willkommen!</p>
+      <p>Info panel content</p>
     </div>
   </div>
 </div>
+-->

@@ -35,7 +35,8 @@ defmodule Jumubase.Mixfile do
     [
       {:absinthe, "~> 1.5"},
       {:absinthe_plug, "~> 1.5"},
-      {:bamboo, "~> 1.1"},
+      {:bamboo, "~> 2.0"},
+      {:bamboo_phoenix, "~> 1.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:dataloader, "~> 1.0"},
       {:earmark, "1.4.3"},

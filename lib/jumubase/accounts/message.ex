@@ -20,7 +20,7 @@ defmodule Jumubase.Accounts.Message do
         "You tried to reset your password, but no user was found for the email you provided."
       )
     )
-    |> Mailer.deliver_now()
+    |> Mailer.deliver_now!()
   end
 
   def reset_request(address, key) do
@@ -31,7 +31,7 @@ defmodule Jumubase.Accounts.Message do
     |> text_body(
       dgettext("auth", "Open this link now to choose a new password: %{url}", url: url)
     )
-    |> Mailer.deliver_now()
+    |> Mailer.deliver_now!()
   end
 
   defp prep_mail(address) do

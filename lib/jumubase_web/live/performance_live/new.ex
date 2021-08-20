@@ -51,7 +51,7 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
     case Showtime.create_performance(contest, attrs) do
       {:ok, %{edit_code: edit_code} = performance} ->
-        Email.registration_success(performance) |> Mailer.deliver_later()
+        Email.registration_success(performance) |> Mailer.deliver_later!()
 
         {:noreply,
          socket

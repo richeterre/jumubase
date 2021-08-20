@@ -24,7 +24,7 @@ defmodule JumubaseWeb.ContactController do
       true ->
         changeset.changes
         |> Email.contact_message()
-        |> Mailer.deliver_now()
+        |> Mailer.deliver_now!()
 
         conn
         |> put_flash(:success, gettext("Your message has been sent!"))

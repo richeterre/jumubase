@@ -1,0 +1,27 @@
+<h2>Datenschutzerklärung für App “Jumu weltweit”</h2>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <p>Dieses Dokument legt offen, welche Daten von der Jumu-App für <%= link "Android", to: app_url(:android) %> und <%= link "iOS", to: app_url(:ios) %> erhoben und verarbeitet werden. Sie richtet sich nach der <%= link "Europäischen Datenschutz-Grundverordnung (DSGVO)", to: "https://dsgvo-gesetz.de" %>.</p>
+
+    <h3>1. Verantwortliche</h3>
+
+    Verantwortlich im Sinne des <%= link "Art. 4 Abs. 7", to: "https://dsgvo-gesetz.de/art-4-dsgvo/" %> der DSGVO ist der Landesausschuss “Jugend musiziert” des DSA-Verbunds&nbsp;2. Ein Formular zur Kontaktaufnahme findest du auf der Seite <%= link "\"Kontakt\"", to: Routes.page_path(@conn, :contact) %>.
+
+    <h3>2. Welche Daten werden erhoben?</h3>
+
+    Die Jumu-App zeigt lediglich öffentlich zugängliche Wettbewerbsdaten wie Zeitpläne und Ergebnislisten an. Diese wurden bereits zu einem früheren Zeitpunkt über die Website “Jumu weltweit” erhoben und unterliegen somit einer gesonderten <%= link "Datenschutzerklärung", to: Routes.page_path(@conn, :privacy) %>. Von der App selbst werden keinerlei persönliche Daten erhoben.
+
+    <h4>Logdateien</h4>
+
+    <p>Beim Laden der Wettbewerbsdaten durch die App werden bestimmte Informationen wie z.B. URL und IP-Adresse in die Logdateien des Website-Servers eingetragen. Diese Daten werden nur als Nachweis bei möglichem Missbrauch sowie zur Fehlerbehebung erhoben. Sie werden weder zu anderen Zwecken genutzt noch mit Dritten geteilt.</p>
+
+    <h3>3. Änderungen</h3>
+
+    <p>Sollten wir Änderungen an dieser Datenschutzerklärung vornehmen, die eine Verarbeitung deiner Daten außerhalb obengenannter Zwecke vorsieht, so werden wir dich hierüber informieren und deine Einwilligung einholen, falls dies rechtlich erforderlich ist.</p>
+
+    <p><strong>Stand: 28. September 2021</strong></p>
+  </div>
+</div>

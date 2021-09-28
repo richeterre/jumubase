@@ -1,0 +1,8 @@
+<h2>Privacy Policy</h2>
+
+<p class="lead">
+  The privacy policy is not available in English yet.
+  <br>
+  For now, please refer to the German version of this website or
+  <%= link "contact us", to: Routes.page_path(@conn, :contact) %>.
+</p>

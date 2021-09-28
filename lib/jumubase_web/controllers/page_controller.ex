@@ -54,6 +54,11 @@ defmodule JumubaseWeb.PageController do
     |> render("privacy.html")
   end
 
+  def app_privacy(conn, _params) do
+    conn
+    |> render("app_privacy.html")
+  end
+
   # Private helpers
 
   defp show_error(conn, message) do

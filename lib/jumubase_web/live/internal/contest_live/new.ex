@@ -71,10 +71,8 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   # Private helpers
 
   defp prepare(socket) do
-    current_season = JumuParams.season(Timex.today().year)
-
     changeset =
-      Changeset.change(%ContestSeed{}, %{season: current_season})
+      Changeset.change(%ContestSeed{}, %{season: current_season()})
       |> append_contest_category()
 
     assign(socket,
@@ -118,5 +116,15 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
 
   defp get_existing_contest_categories(changeset) do
     Changeset.get_change(changeset, :contest_categories, [])
+  end
+
+  defp current_season do
+    today = Timex.today()
+
+    if today.month > 6 do
+      JumuParams.season(today.year + 1)
+    else
+      JumuParams.season(today.year)
+    end
   end
 end

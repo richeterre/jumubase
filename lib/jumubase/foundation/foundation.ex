@@ -167,10 +167,9 @@ defmodule Jumubase.Foundation do
   Returns contests that can act as a "category template" when
   creating new contests with a similar selection of categories.
   """
-  def list_template_contests(season, round, grouping) do
+  def list_template_contests(season, round) do
     Contest
-    |> where(round: ^round, grouping: ^grouping)
-    |> where([c], c.season >= ^season - 3)
+    |> where(round: ^round, season: ^season - 3)
     |> list_contests()
   end
 

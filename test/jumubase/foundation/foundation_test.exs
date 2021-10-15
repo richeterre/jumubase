@@ -516,17 +516,17 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_template_contests/3" do
-    test "returns contests for the same round and grouping, at most 3 seasons back" do
-      [c1, c2] = insert_list(2, :contest, season: 60, round: 1, grouping: "2")
-      c3 = insert(:contest, season: 59, round: 1, grouping: "2")
-      c4 = insert(:contest, season: 58, round: 1, grouping: "2")
+    test "returns contests for the same round, 3 seasons back" do
+      c1 = insert(:contest, season: 57, round: 1, grouping: "1")
+      c2 = insert(:contest, season: 57, round: 1, grouping: "2")
 
-      # Wrong round, grouping or too long ago
-      insert(:contest, season: 53, round: 1, grouping: "2")
-      insert(:contest, season: 59, round: 2, grouping: "2")
-      insert(:contest, season: 57, round: 1, grouping: "1")
+      # Wrong round or not 3 seasons ago
+      insert(:contest, season: 59, round: 1, grouping: "1")
+      insert(:contest, season: 58, round: 1, grouping: "1")
+      insert(:contest, season: 57, round: 2, grouping: "1")
+      insert(:contest, season: 56, round: 1, grouping: "1")
 
-      assert_ids_match_unordered(Foundation.list_template_contests(60, 1, "2"), [c1, c2, c3, c4])
+      assert_ids_match_unordered(Foundation.list_template_contests(60, 1), [c1, c2])
     end
   end
 

@@ -125,7 +125,7 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
       changeset: changeset,
       host_count: host_count,
       host_options: host_options(grouping),
-      template_contest_options: template_contest_options(season, round, grouping),
+      template_contest_options: template_contest_options(season, round),
       template_contest_id: template_contest_id
     )
   end
@@ -134,15 +134,14 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
     Foundation.list_categories() |> Enum.map(&{&1.name, &1.id})
   end
 
-  defp template_contest_options(nil, _, _), do: []
-  defp template_contest_options(_, nil, _), do: []
-  defp template_contest_options(_, _, nil), do: []
+  defp template_contest_options(nil, _), do: []
+  defp template_contest_options(_, nil), do: []
 
-  defp template_contest_options(season, round, grouping) do
+  defp template_contest_options(season, round) do
     season = String.to_integer(season)
     round = String.to_integer(round)
 
-    Foundation.list_template_contests(season, round, grouping)
+    Foundation.list_template_contests(season, round)
     |> Enum.map(&{name(&1), &1.id})
   end
 

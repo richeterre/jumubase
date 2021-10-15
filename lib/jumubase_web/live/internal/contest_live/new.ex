@@ -1,7 +1,8 @@
 defmodule JumubaseWeb.Internal.ContestLive.New do
   use Phoenix.LiveView
   import Jumubase.Gettext
-  import JumubaseWeb.Internal.ContestView, only: [round_options: 0]
+  import JumubaseWeb.Internal.ContestView, only: [name: 1, round_options: 0, grouping_options: 0]
+  import JumubaseWeb.Internal.ContestLive.Helpers, only: [scrub_param: 1]
   import JumubaseWeb.PerformanceLive.Helpers, only: [parse_id: 1]
   alias Ecto.Changeset
   alias Jumubase.JumuParams
@@ -41,6 +42,18 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   def handle_event("move-contest-category-down", %{"index" => index}, socket) do
     index = parse_id(index)
     changeset = socket.assigns.changeset |> swap_contest_categories(index, index + 1)
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("apply-template-contest", _params, socket) do
+    template_c =
+      Foundation.get_contest!(socket.assigns.template_contest_id)
+      |> Foundation.load_contest_categories()
+
+    changeset =
+      socket.assigns.changeset
+      |> replace_contest_categories(template_c.contest_categories)
+
     {:noreply, assign(socket, changeset: changeset)}
   end
 
@@ -86,8 +99,11 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
       changeset: changeset,
       host_count: 0,
       round_options: round_options(),
+      grouping_options: grouping_options(),
       category_options: category_options(),
-      host_options: host_options()
+      host_options: [],
+      template_contest_options: [],
+      template_contest_id: nil
     )
   end
 
@@ -97,17 +113,43 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
       |> ContestSeed.changeset(attrs)
       |> Map.put(:action, :insert)
 
-    host_count = Enum.count(attrs["host_ids"] || [])
+    scrubbed_attrs = scrub_param(attrs)
 
-    assign(socket, changeset: changeset, host_count: host_count)
+    host_count = Enum.count(scrubbed_attrs["host_ids"] || [])
+    season = scrubbed_attrs["season"]
+    round = scrubbed_attrs["round"]
+    grouping = scrubbed_attrs["grouping"]
+    template_contest_id = scrubbed_attrs["template_contest_id"]
+
+    assign(socket,
+      changeset: changeset,
+      host_count: host_count,
+      host_options: host_options(grouping),
+      template_contest_options: template_contest_options(season, round, grouping),
+      template_contest_id: template_contest_id
+    )
   end
 
   defp category_options do
     Foundation.list_categories() |> Enum.map(&{&1.name, &1.id})
   end
 
-  defp host_options do
-    Foundation.list_hosts() |> Enum.map(&{&1.name, &1.id})
+  defp template_contest_options(nil, _, _), do: []
+  defp template_contest_options(_, nil, _), do: []
+  defp template_contest_options(_, _, nil), do: []
+
+  defp template_contest_options(season, round, grouping) do
+    season = String.to_integer(season)
+    round = String.to_integer(round)
+
+    Foundation.list_template_contests(season, round, grouping)
+    |> Enum.map(&{name(&1), &1.id})
+  end
+
+  defp host_options(nil), do: []
+
+  defp host_options(grouping) do
+    Foundation.list_hosts_by_grouping(grouping) |> Enum.map(&{&1.name, &1.id})
   end
 
   defp append_contest_category(changeset) do
@@ -137,6 +179,10 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
 
       Changeset.put_embed(changeset, :contest_categories, contest_categories)
     end
+  end
+
+  defp replace_contest_categories(changeset, contest_categories) do
+    Changeset.put_embed(changeset, :contest_categories, contest_categories)
   end
 
   defp get_existing_contest_categories(changeset) do

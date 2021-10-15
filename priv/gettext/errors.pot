@@ -160,22 +160,22 @@ msgid "The performance can't have only one ensemblist."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/error_view.ex:16
+#: lib/jumubase_web/views/error_view.ex:17
 msgid "Something went wrong on the server. We’re on it!"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/error_view.ex:8
+#: lib/jumubase_web/views/error_view.ex:9
 msgid "Maybe try one of the links above?"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/error_view.ex:7
+#: lib/jumubase_web/views/error_view.ex:8
 msgid "The page was not found."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/error_view.ex:15
+#: lib/jumubase_web/views/error_view.ex:16
 msgid "Oh no…"
 msgstr ""
 

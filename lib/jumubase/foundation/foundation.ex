@@ -164,6 +164,17 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
+  Returns contests that can act as a "category template" when
+  creating new contests with a similar selection of categories.
+  """
+  def list_template_contests(season, round, grouping) do
+    Contest
+    |> where(round: ^round, grouping: ^grouping)
+    |> where([c], c.season >= ^season - 3)
+    |> list_contests()
+  end
+
+  @doc """
   Returns the number of contests as returned by the query.
   """
   def count_contests(query) do

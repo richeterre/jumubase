@@ -114,6 +114,13 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
 
   @doc """
+  Returns a list of possible `grouping` values suitable for forms.
+  """
+  def grouping_options do
+    JumuParams.groupings()
+  end
+
+  @doc """
   Returns the year for a valid season found in the changeset, or nil.
   """
   def year_for_season(%Changeset{} = changeset) do

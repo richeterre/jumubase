@@ -17,13 +17,19 @@
     <p>Zusätzlich gibt es die nachfolgenden, regional begrenzten Sonderregelungen.</p>
 
     <p class="text-prominent">
-      <%= document_link("Verbund 1 (bisher “Spanien/Portugal”)",
+      <%= document_link("Verbund 1 (“Spanien/Portugal”)",
         Routes.static_path(@conn, "/resources/special_rules/Regionale Kategorien Verbund 1.pdf"))
         %>
     </p>
 
     <p class="text-prominent">
-      Im <strong>Verbund 2</strong> (bisher “Nord- und Osteuropa”) bestehen folgende Sonderregelungen:
+      <%= document_link("Verbund 3 (“Östlicher Mittelmeerraum”)",
+        Routes.static_path(@conn, "/resources/special_rules/Regionale Kategorien Verbund 3.pdf"))
+        %>
+    </p>
+
+    <p class="text-prominent">
+      Im <strong>Verbund 2</strong> (“Nord- und Osteuropa”) bestehen folgende Sonderregelungen:
     </p>
 
     <h3>Populäre Musik</h3>

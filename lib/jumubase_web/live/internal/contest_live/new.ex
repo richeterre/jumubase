@@ -22,18 +22,25 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   end
 
   def handle_event("add-contest-category", _params, socket) do
-    changeset =
-      socket.assigns.changeset
-      |> append_contest_category()
-
+    changeset = socket.assigns.changeset |> append_contest_category()
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("remove-contest-category", %{"index" => index}, socket) do
-    changeset =
-      socket.assigns.changeset
-      |> remove_contest_category(parse_id(index))
+    index = parse_id(index)
+    changeset = socket.assigns.changeset |> remove_contest_category(index)
+    {:noreply, assign(socket, changeset: changeset)}
+  end
 
+  def handle_event("move-contest-category-up", %{"index" => index}, socket) do
+    index = parse_id(index)
+    changeset = socket.assigns.changeset |> swap_contest_categories(index, index - 1)
+    {:noreply, assign(socket, changeset: changeset)}
+  end
+
+  def handle_event("move-contest-category-down", %{"index" => index}, socket) do
+    index = parse_id(index)
+    changeset = socket.assigns.changeset |> swap_contest_categories(index, index + 1)
     {:noreply, assign(socket, changeset: changeset)}
   end
 
@@ -112,6 +119,24 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   defp remove_contest_category(changeset, index) do
     contest_categories = get_existing_contest_categories(changeset) |> List.delete_at(index)
     Changeset.put_embed(changeset, :contest_categories, contest_categories)
+  end
+
+  defp swap_contest_categories(changeset, idx1, idx2) do
+    contest_categories = get_existing_contest_categories(changeset)
+
+    if min(idx1, idx2) < 0 or max(idx1, idx2) > length(contest_categories) - 1 do
+      changeset
+    else
+      item1 = Enum.at(contest_categories, idx1)
+      item2 = Enum.at(contest_categories, idx2)
+
+      contest_categories =
+        contest_categories
+        |> List.replace_at(idx1, item2)
+        |> List.replace_at(idx2, item1)
+
+      Changeset.put_embed(changeset, :contest_categories, contest_categories)
+    end
   end
 
   defp get_existing_contest_categories(changeset) do

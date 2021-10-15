@@ -124,6 +124,13 @@ defmodule JumubaseWeb.Internal.ContestView do
       else: "––––"
   end
 
+  @doc """
+  Returns the number of contest categories in the changeset.
+  """
+  def contest_category_count(%Changeset{} = changeset) do
+    changeset |> Changeset.get_field(:contest_categories) |> Enum.count()
+  end
+
   # Private helpers
 
   defp short_round_name(round) do

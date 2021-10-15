@@ -30,23 +30,41 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-1 col-md-push-11 clearfix">
-                <button
-                  type="button"
-                  phx-click="remove-contest-category"
-                  phx-value-index={cc.index}
-                  class="btn btn-xs btn-danger pull-right">
-                  <span class="glyphicon glyphicon-trash" />
-                </button>
+              <div class="col-md-2 col-md-push-10 clearfix">
+                <div class="btn-group pull-right" role="group">
+                  <button
+                    type="button"
+                    disabled={cc.index == 0}
+                    phx-click="move-contest-category-up"
+                    phx-value-index={cc.index}
+                    class="btn btn-xs btn-default">
+                    <span class="glyphicon glyphicon-arrow-up" />
+                  </button>
+                  <button
+                    type="button"
+                    disabled={cc.index == contest_category_count(@changeset) - 1}
+                    phx-click="move-contest-category-down"
+                    phx-value-index={cc.index}
+                    class="btn btn-xs btn-default">
+                    <span class="glyphicon glyphicon-arrow-down" />
+                  </button>
+                  <button
+                    type="button"
+                    phx-click="remove-contest-category"
+                    phx-value-index={cc.index}
+                    class="btn btn-xs btn-danger pull-right">
+                    <span class="glyphicon glyphicon-trash" />
+                  </button>
+                </div>
               </div>
 
-              <div class="form-group col-md-5 col-md-pull-1">
+              <div class="form-group col-md-4 col-md-pull-2">
                 <%= label cc, :category_id, gettext("Category"), class: "control-label" %>
                 <%= select cc, :category_id, @category_options, prompt: gettext("Please choose"), class: "form-control" %>
                 <%= error_tag cc, :category_id %>
               </div>
 
-              <div class="form-group col-md-3 col-md-pull-1">
+              <div class="form-group col-md-3 col-md-pull-2">
                 <%= label cc, :min_age_group, gettext("Participation"), class: "control-label" %>
                 <div class="form-inline">
                   AG
@@ -58,7 +76,7 @@
                 <%= error_tag cc, :max_age_group %>
               </div>
 
-              <div class="form-group col-md-3 col-md-pull-1">
+              <div class="form-group col-md-3 col-md-pull-2">
                 <%= label cc, :min_advancing_age_group, gettext("Advancement (if any)"), class: "control-label" %>
                 <div class="form-inline">
                   AG

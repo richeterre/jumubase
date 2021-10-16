@@ -2,43 +2,6 @@
 
 <hr>
 
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th><%= gettext("Name") %></th>
-        <th><%= gettext("Grouping") %></th>
-        <th><%= gettext("Dates") %></th>
-        <th><%= gettext("Deadline") %></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= for contest <- @contests do %>
-      <tr>
-        <td>
-          <%= link name_with_flag(contest),
-            to: Routes.internal_contest_path(@conn, :show, contest)
-            %>
-        </td>
-        <td><%= contest.grouping %></td>
-        <td><%= dates(contest) %></td>
-        <td><%= format_date(contest.deadline) %></td>
-        <td class="text-right">
-          <%= if admin?(@current_user) do %>
-            <%= icon_link("pencil", nil, Routes.internal_contest_path(@conn, :edit, contest),
-              class: "btn btn-default btn-xs") %>
-            &#32;
-            <%= delete_icon_link(
-              Routes.internal_contest_path(@conn, :delete, contest),
-              gettext("Do you really want to delete the contest %{name}?", name: name(contest))
-              ) %>
-          <% end %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<%= link gettext("Add Contests"), to: Routes.internal_contest_path(@conn, :new), class: "btn btn-primary" %>
+<%= live_render(@conn, JumubaseWeb.Internal.ContestLive.Index, session: %{
+  "user_id" => @current_user.id
+  }) %>

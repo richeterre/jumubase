@@ -255,7 +255,7 @@ defmodule Jumubase.Foundation do
             start_date: start_date,
             end_date: start_date,
             deadline: deadline,
-            allows_registration: round < 2,
+            allows_registration: false,
             timetables_public: false
           })
           |> Ecto.Changeset.put_assoc(:contest_categories, ccs)

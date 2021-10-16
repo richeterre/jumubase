@@ -709,7 +709,7 @@ defmodule Jumubase.FoundationTest do
       assert %ContestCategory{category: %{name: "Violine solo"}} = cc2
     end
 
-    test "opens registration for newly created contests with round < 2 by default" do
+    test "keeps registration closed for newly created contests by default" do
       kimu_seed = %ContestSeed{season: 56, round: 0}
       rw_seed = %ContestSeed{season: 56, round: 1}
       lw_seed = %ContestSeed{season: 56, round: 2}
@@ -720,8 +720,8 @@ defmodule Jumubase.FoundationTest do
       {:ok, rw_contests} = Foundation.create_contests(rw_seed, [h])
       {:ok, lw_contests} = Foundation.create_contests(lw_seed, [h])
 
-      assert %Contest{allows_registration: true} = kimu_contests[h.id]
-      assert %Contest{allows_registration: true} = rw_contests[h.id]
+      assert %Contest{allows_registration: false} = kimu_contests[h.id]
+      assert %Contest{allows_registration: false} = rw_contests[h.id]
       assert %Contest{allows_registration: false} = lw_contests[h.id]
     end
 

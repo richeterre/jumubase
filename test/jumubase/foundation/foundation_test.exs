@@ -129,28 +129,33 @@ defmodule Jumubase.FoundationTest do
       assert Foundation.list_contests() == contests
     end
 
-    test "orders contests by season, round, grouping, and host name" do
+    test "orders contests by season, round, grouping, host name, and start date" do
       h1 = build(:host, current_grouping: "1", name: "A")
       h2 = build(:host, current_grouping: "2", name: "B")
+      d1 = Timex.today()
+      d2 = Timex.shift(d1, days: 1)
+
       c1 = insert(:contest, season: 56, round: 0, grouping: "2", host: h2)
       c2 = insert(:contest, season: 57, round: 0, grouping: "2", host: h2)
       c3 = insert(:contest, season: 56, round: 0, grouping: "1", host: h1)
-      c4 = insert(:contest, season: 56, round: 1, grouping: "2", host: h2)
-      c5 = insert(:contest, season: 57, round: 1, grouping: "2", host: h2)
-      c6 = insert(:contest, season: 56, round: 1, grouping: "1", host: h1)
-      c7 = insert(:contest, season: 56, round: 2, grouping: "2", host: h2)
-      c8 = insert(:contest, season: 57, round: 2, grouping: "2", host: h2)
-      c9 = insert(:contest, season: 57, round: 2, grouping: "1", host: h1)
-      c10 = insert(:contest, season: 56, round: 2, grouping: "1", host: h1)
+      c4 = insert(:contest, season: 56, round: 1, grouping: "2", host: h2, start_date: d2)
+      c5 = insert(:contest, season: 56, round: 1, grouping: "2", host: h2, start_date: d1)
+      c6 = insert(:contest, season: 57, round: 1, grouping: "2", host: h2)
+      c7 = insert(:contest, season: 56, round: 1, grouping: "1", host: h1)
+      c8 = insert(:contest, season: 56, round: 2, grouping: "2", host: h2)
+      c9 = insert(:contest, season: 57, round: 2, grouping: "2", host: h2)
+      c10 = insert(:contest, season: 57, round: 2, grouping: "1", host: h1)
+      c11 = insert(:contest, season: 56, round: 2, grouping: "1", host: h1)
 
       assert_ids_match_ordered(Foundation.list_contests(), [
-        c9,
-        c8,
-        c5,
-        c2,
         c10,
-        c7,
+        c9,
         c6,
+        c2,
+        c11,
+        c8,
+        c7,
+        c5,
         c4,
         c3,
         c1

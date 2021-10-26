@@ -86,7 +86,7 @@ defmodule Jumubase.Foundation do
     query =
       from c in query,
         join: h in assoc(c, :host),
-        order_by: [{:desc, c.season}, {:desc, c.round}, c.grouping, h.name],
+        order_by: [{:desc, c.season}, {:desc, c.round}, c.grouping, h.name, c.start_date],
         preload: [host: h]
 
     Repo.all(query)

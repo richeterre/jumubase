@@ -19,6 +19,11 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
       contest = build(:contest, season: 55, round: 2, host: @host)
       assert ContestView.name(contest) == "LW Helsinki 2018"
     end
+
+    test "appends the name suffix, if present" do
+      contest = build(:contest, season: 55, round: 2, host: @host, name_suffix: "(Pop)")
+      assert ContestView.name(contest) == "LW Helsinki 2018 (Pop)"
+    end
   end
 
   describe "flag/1" do

@@ -11,7 +11,9 @@ defmodule JumubaseWeb.Internal.ContestView do
   """
   def name(%Contest{} = contest) do
     round_name = short_round_name(contest.round)
-    "#{round_name} #{contest.host.name} #{year(contest)}"
+
+    "#{round_name} #{contest.host.name} #{year(contest)} #{contest.name_suffix}"
+    |> String.trim()
   end
 
   @doc """

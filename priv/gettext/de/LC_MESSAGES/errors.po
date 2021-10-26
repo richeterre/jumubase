@@ -88,12 +88,12 @@ msgid "must be equal to %{number}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:61
+#: lib/jumubase/foundation/contest.ex:63
 msgid "can't be before the start date"
 msgstr "kann nicht vor dem Beginn liegen"
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:64
+#: lib/jumubase/foundation/contest.ex:66
 msgid "must be before the start date"
 msgstr "muss vor dem Beginn liegen"
 
@@ -173,7 +173,7 @@ msgid "Oh no…"
 msgstr "Oh je…"
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:70
+#: lib/jumubase/foundation/contest.ex:72
 msgid "can't be before the end date"
 msgstr "kann nicht vor dem Ende liegen"
 
@@ -188,6 +188,6 @@ msgid "To change the name or birthdate, please remove and add back this person."
 msgstr "Um Name oder Geburtsdatum zu ändern, musst du die Person entfernen und neu hinzufügen."
 
 #, elixir-format
-#: lib/jumubase/foundation/contest.ex:81
+#: lib/jumubase/foundation/contest.ex:83
 msgid "has a round that's already taken for this year and grouping"
 msgstr ""

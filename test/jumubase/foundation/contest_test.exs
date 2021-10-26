@@ -86,6 +86,18 @@ defmodule Jumubase.ContestTest do
       refute changeset.valid?
     end
 
+    test "is valid without a name suffix" do
+      params = params_with_assocs(:contest, name_suffix: nil)
+      changeset = Contest.changeset(%Contest{}, params)
+      assert changeset.valid?
+    end
+
+    test "removes whitespace around the name suffix" do
+      params = params_with_assocs(:contest, name_suffix: " (Teil 1)  ")
+      changeset = Contest.changeset(%Contest{}, params)
+      assert get_change(changeset, :name_suffix) == "(Teil 1)"
+    end
+
     test "is invalid without a deadline" do
       params = params_with_assocs(:contest, deadline: nil)
       changeset = Contest.changeset(%Contest{}, params)

@@ -41,6 +41,14 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="form-group col-sm-2">
+      <%= label f, :name_suffix, gettext("Name suffix"), class: "control-label" %>
+      <%= text_input f, :name_suffix, class: "form-control" %>
+      <%= error_tag f, :name_suffix %>
+    </div>
+  </div>
+
   <div class="form-group">
     <%= label f, :deadline, gettext("Deadline"), class: "control-label" %>
     <%= inline_date_select f, :deadline %>

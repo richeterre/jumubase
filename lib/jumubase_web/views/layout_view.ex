@@ -1,7 +1,6 @@
 defmodule JumubaseWeb.LayoutView do
   use JumubaseWeb, :view
   import JumubaseWeb.BreadcrumbHelpers
-  import JumubaseWeb.PageView, only: [home_title: 0]
 
   @doc """
   Returns the page title.
@@ -29,7 +28,7 @@ defmodule JumubaseWeb.LayoutView do
 
   # Private helpers
 
-  defp title("production"), do: home_title()
+  defp title("production"), do: "Jumu weltweit"
   defp title("staging"), do: "Jumu STAGING"
   defp title(_), do: "Jumu DEV"
 

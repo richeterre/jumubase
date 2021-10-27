@@ -8,8 +8,6 @@ defmodule JumubaseWeb.PageView do
   alias JumubaseWeb.Endpoint
   alias JumubaseWeb.MapHelpers
 
-  def home_title, do: "Jumu ♫ weltweit"
-
   def host_map_image do
     img_tag(MapHelpers.host_map_url(), class: "img-responsive map-image")
   end

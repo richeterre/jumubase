@@ -103,7 +103,7 @@ defmodule Jumubase.Foundation do
         # We don't currently consider host time zone in deadline check:
         where: c.deadline >= ^Timex.today(),
         join: h in assoc(c, :host),
-        order_by: h.name,
+        order_by: [h.name, c.start_date],
         preload: [host: h]
 
     Repo.all(query)

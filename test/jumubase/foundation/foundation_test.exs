@@ -185,39 +185,41 @@ defmodule Jumubase.FoundationTest do
   end
 
   describe "list_open_contests/1" do
-    test "returns open RW contests, ordered by host name" do
-      today = Timex.today()
-      tomorrow = Timex.today() |> Timex.shift(days: 1)
+    test "returns open RW contests, ordered by host name and start date" do
+      d0 = Timex.today()
+      d1 = Timex.shift(d0, days: 1)
+      d2 = Timex.shift(d0, days: 2)
 
-      c1 = insert(:contest, round: 1, host: build(:host, name: "B"), deadline: today)
-      c2 = insert(:contest, round: 1, host: build(:host, name: "A"), deadline: tomorrow)
-      c3 = insert(:contest, round: 1, host: build(:host, name: "C"), deadline: tomorrow)
+      c1 = insert(:contest, round: 1, host: build(:host, name: "B"), deadline: d0)
+      c2 = insert(:contest, round: 1, host: build(:host, name: "A"), deadline: d1)
+      c3 = insert(:contest, round: 1, host: build(:host, name: "C"), deadline: d0, start_date: d2)
+      c4 = insert(:contest, round: 1, host: build(:host, name: "C"), deadline: d0, start_date: d1)
 
-      assert Foundation.list_open_contests(1) == [c2, c1, c3]
+      assert Foundation.list_open_contests(1) == [c2, c1, c4, c3]
     end
 
     test "returns open Kimu contests, ordered by host name" do
-      today = Timex.today()
-      tomorrow = Timex.today() |> Timex.shift(days: 1)
+      d0 = Timex.today()
+      d1 = Timex.shift(d0, days: 1)
 
-      c1 = insert(:contest, round: 0, host: build(:host, name: "B"), deadline: today)
-      c2 = insert(:contest, round: 0, host: build(:host, name: "A"), deadline: tomorrow)
-      c3 = insert(:contest, round: 0, host: build(:host, name: "C"), deadline: tomorrow)
+      c1 = insert(:contest, round: 0, host: build(:host, name: "B"), deadline: d0)
+      c2 = insert(:contest, round: 0, host: build(:host, name: "A"), deadline: d1)
+      c3 = insert(:contest, round: 0, host: build(:host, name: "C"), deadline: d1)
 
       assert Foundation.list_open_contests(0) == [c2, c1, c3]
     end
 
     test "returns open LW contests, ordered by host name" do
-      today = Timex.today()
-      tomorrow = Timex.today() |> Timex.shift(days: 1)
+      d0 = Timex.today()
+      d1 = Timex.shift(d0, days: 1)
 
       h1 = build(:host, current_grouping: "1", name: "B")
       h2 = build(:host, current_grouping: "2", name: "A")
       h3 = build(:host, current_grouping: "3", name: "C")
 
-      c1 = insert(:contest, round: 2, grouping: "1", host: h1, deadline: today)
-      c2 = insert(:contest, round: 2, grouping: "2", host: h2, deadline: tomorrow)
-      c3 = insert(:contest, round: 2, grouping: "3", host: h3, deadline: tomorrow)
+      c1 = insert(:contest, round: 2, grouping: "1", host: h1, deadline: d0)
+      c2 = insert(:contest, round: 2, grouping: "2", host: h2, deadline: d1)
+      c3 = insert(:contest, round: 2, grouping: "3", host: h3, deadline: d1)
 
       assert Foundation.list_open_contests(2) == [c2, c1, c3]
     end

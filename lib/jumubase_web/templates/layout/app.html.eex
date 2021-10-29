@@ -12,4 +12,4 @@
   <%= @inner_content %>
 </main>
 
-<%= render_existing @view_module, "scripts." <> @view_template, assigns %>
+<%= render_existing view_module(@conn), "scripts." <> view_template(@conn), assigns %>

@@ -12,7 +12,7 @@ config :jumubase,
 # API keys
 config :jumubase, JumubaseWeb.MapHelpers, google_api_key: System.get_env("GOOGLE_API_KEY")
 
-config :jumubase, JumubaseWeb.Api.Auth, api_key: System.get_env("JUMU_API_KEY")
+config :jumubase, JumubaseWeb.ApiAuth, api_key: System.get_env("JUMU_API_KEY")
 
 # Companion app IDs
 

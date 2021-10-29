@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.Api.Auth do
+defmodule JumubaseWeb.ApiAuth do
   @moduledoc """
   A plug to restrict API access for mobile apps and other clients.
   """

@@ -91,9 +91,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   def predecessor_host_name(%Performance{predecessor_host: nil}), do: nil
   def predecessor_host_name(%Performance{predecessor_host: h}), do: h.name
 
-  def predecessor_host_country(%Performance{predecessor_host: nil}), do: nil
-  def predecessor_host_country(%Performance{predecessor_host: h}), do: h.country_code
-
   def predecessor_info(%Performance{predecessor_host: nil}, _), do: nil
   def predecessor_info(%Performance{predecessor_host: h}, :long), do: HostView.name_with_flag(h)
   def predecessor_info(%Performance{predecessor_host: h}, :short), do: HostView.flag(h)

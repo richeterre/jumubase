@@ -361,20 +361,6 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "list_public_contests/1" do
-    test "accepts an option for restricting contests to those in the latest season" do
-      %{stages: [s]} = host_with_stage = insert(:host, stages: build_list(1, :stage))
-
-      c1 = insert_public_contest(host: host_with_stage, season: 56)
-      c2 = insert_public_contest(host: host_with_stage, season: 57)
-      insert_performance(c1, stage: s)
-      insert_performance(c2, stage: s)
-
-      assert_ids_match_unordered(Foundation.list_public_contests(current_only: false), [c1, c2])
-      assert_ids_match_unordered(Foundation.list_public_contests(current_only: true), [c2])
-    end
-  end
-
   describe "list_featured_contests/1" do
     test "returns at most N featured contests in ascending date order" do
       %{stages: [s]} = h = insert(:host, stages: build_list(1, :stage))

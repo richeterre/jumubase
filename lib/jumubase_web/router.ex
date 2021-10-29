@@ -12,7 +12,7 @@ defmodule JumubaseWeb.Router do
   end
 
   pipeline :api_auth do
-    plug JumubaseWeb.Api.Auth
+    plug JumubaseWeb.ApiAuth
   end
 
   pipeline :html_only do
@@ -26,14 +26,6 @@ defmodule JumubaseWeb.Router do
 
   pipeline :pdf_only do
     plug :accepts, ["pdf"]
-  end
-
-  scope "/api/v1", JumubaseWeb.Api do
-    pipe_through [:api_auth, :json_only]
-
-    resources "/contests", ContestController, only: [:index] do
-      resources "/performances", PerformanceController, only: [:index]
-    end
   end
 
   scope "/graphql" do

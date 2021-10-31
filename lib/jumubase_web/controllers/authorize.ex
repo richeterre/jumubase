@@ -8,19 +8,6 @@ defmodule JumubaseWeb.Authorize do
   alias JumubaseWeb.Router.Helpers, as: Routes
   alias JumubaseWeb.Internal.Permit
 
-  # Useful for customizing the `action` function in the controller,
-  # so that only authenticated users can access each route.
-  def auth_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
-    need_login(conn)
-  end
-
-  def auth_action(
-        %Conn{assigns: %{current_user: current_user}, params: params} = conn,
-        module
-      ) do
-    apply(module, action_name(conn), [conn, params, current_user])
-  end
-
   # Plug to only allow authenticated users to access the resource.
   def user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
     need_login(conn)

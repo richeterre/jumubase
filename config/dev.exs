@@ -22,10 +22,6 @@ config :jumubase, JumubaseWeb.Endpoint,
     ]
   ]
 
-# Set Phauxth token salt
-config :phauxth,
-  token_salt: System.get_env("PHAUXTH_TOKEN_SALT") || "xxxxxxxx"
-
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
@@ -67,7 +63,3 @@ config :jumubase, Jumubase.Repo,
   database: "jumubase_dev",
   hostname: "localhost",
   pool_size: 10
-
-# Configure Phauxth authentication
-config :phauxth,
-  token_salt: String.duplicate("x", 8)

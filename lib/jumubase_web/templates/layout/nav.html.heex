@@ -29,10 +29,10 @@
               <%= icon_tag("home") %> <%= @current_user.given_name %>
             <% end %>
           </li>
-          <li><%= link gettext("Log out"), to: Routes.session_path(@conn, :delete, @current_user), method: :delete %></li>
+          <li><%= link gettext("Log out"), to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
         <% else %>
           <li>
-            <%= link gettext("Internal Pages"), to: Routes.session_path(@conn, :new) %>
+            <%= link gettext("Internal Pages"), to: Routes.user_session_path(@conn, :new) %>
           </li>
         <% end %>
       </ul>

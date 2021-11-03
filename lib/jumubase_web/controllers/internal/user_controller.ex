@@ -38,13 +38,13 @@ defmodule JumubaseWeb.Internal.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Accounts.get!(id) |> Accounts.load_hosts()
+    user = Accounts.get_user!(id) |> Accounts.load_hosts()
     changeset = Accounts.change_user(user)
     render_edit_form(conn, user, changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get!(id) |> Accounts.load_hosts()
+    user = Accounts.get_user!(id) |> Accounts.load_hosts()
 
     case Accounts.update_user(user, user_params) do
       {:ok, user} ->
@@ -58,7 +58,7 @@ defmodule JumubaseWeb.Internal.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Accounts.get!(id)
+    user = Accounts.get_user!(id)
     {:ok, _user} = Accounts.delete_user(user)
 
     conn

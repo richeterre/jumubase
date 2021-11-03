@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.UserControllerTest do
   use JumubaseWeb.ConnCase
-  alias Jumubase.Accounts
+  alias Jumubase.Repo
+  alias Jumubase.Accounts.User
 
   @update_attrs %{
     email: "xyz@de.fi",
@@ -67,7 +68,7 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
 
       conn = delete(conn, Routes.internal_user_path(conn, :delete, user))
       assert redirected_to(conn) == Routes.internal_user_path(conn, :index)
-      refute Accounts.get(user.id)
+      refute Repo.get(User, user.id)
 
       assert_error_sent(404, fn ->
         get(conn, Routes.internal_user_path(conn, :edit, user))

@@ -37,11 +37,6 @@ config :jumubase, JumubaseWeb.Endpoint,
 # Keep microsecond precision in timestamps
 config :jumubase, Jumubase.Repo, migration_timestamps: [type: :naive_datetime_usec]
 
-# Configure Phauxth authentication
-config :phauxth,
-  endpoint: JumubaseWeb.Endpoint,
-  user_messages: Jumubase.Accounts.UserMessages
-
 # Configure mailer
 config :jumubase, Jumubase.Mailer, adapter: Bamboo.LocalAdapter
 

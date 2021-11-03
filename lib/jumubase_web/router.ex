@@ -1,5 +1,7 @@
 defmodule JumubaseWeb.Router do
   use JumubaseWeb, :router
+
+  import JumubaseWeb.UserAuth
   import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
@@ -7,8 +9,7 @@ defmodule JumubaseWeb.Router do
     plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Phauxth.Authenticate
-    plug Phauxth.Remember
+    plug :fetch_current_user
   end
 
   pipeline :api_auth do
@@ -56,28 +57,40 @@ defmodule JumubaseWeb.Router do
 
     resources "/contests/:contest_id/performances", PerformanceController, only: [:new, :edit]
 
-    # Auth
-    get "/login", SessionController, :new
-    resources "/sessions", SessionController, only: [:create, :delete]
-    resources "/password-resets", PasswordResetController, only: [:new, :create]
-    get "/password-resets/edit", PasswordResetController, :edit
-    put "/password-resets/update", PasswordResetController, :update
-
     # Redirections for legacy paths
     get "/vorspiel-bearbeiten", Redirector, to: "/anmeldung-bearbeiten"
     get "/anmelden", Redirector, to: "/login"
     get "/jmd", Redirector, to: "/internal"
   end
 
+  # Authentication routes
+
+  scope "/", JumubaseWeb do
+    pipe_through [:browser, :html_only, :redirect_if_user_is_authenticated]
+
+    get "/login", UserSessionController, :new
+    post "/login", UserSessionController, :create
+    get "/reset-password", UserResetPasswordController, :new
+    post "/reset-password", UserResetPasswordController, :create
+    get "/reset-password/:token", UserResetPasswordController, :edit
+    put "/reset-password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/", JumubaseWeb do
+    pipe_through [:browser, :html_only]
+
+    delete "/logout", UserSessionController, :delete
+  end
+
   scope "/internal", JumubaseWeb.Internal, as: :internal do
-    pipe_through [:browser, :json_only]
+    pipe_through [:browser, :json_only, :require_authenticated_user]
 
     patch "/contests/:contest_id/performances/reschedule", PerformanceController, :reschedule,
       as: :contest_performance
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
-    pipe_through [:browser, :pdf_only]
+    pipe_through [:browser, :pdf_only, :require_authenticated_user]
 
     get "/contests/:contest_id/performances/print-jury-sheets",
         PerformanceController,
@@ -96,7 +109,7 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
-    pipe_through [:browser, :html_only]
+    pipe_through [:browser, :html_only, :require_authenticated_user]
 
     get "/", PageController, :home
     get "/jury-work", PageController, :jury_work

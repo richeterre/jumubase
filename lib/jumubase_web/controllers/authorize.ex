@@ -8,35 +8,6 @@ defmodule JumubaseWeb.Authorize do
   alias JumubaseWeb.Router.Helpers, as: Routes
   alias JumubaseWeb.Internal.Permit
 
-  # Plug to only allow authenticated users to access the resource.
-  def user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
-    need_login(conn)
-  end
-
-  def user_check(conn, _opts), do: conn
-
-  # Plug to only allow unauthenticated users to access the resource.
-  def guest_check(%Conn{assigns: %{current_user: nil}} = conn, _opts), do: conn
-
-  def guest_check(%Conn{assigns: %{current_user: _current_user}} = conn, _opts) do
-    conn
-    |> redirect(to: Routes.page_path(conn, :home))
-    |> halt
-  end
-
-  # Plug to only allow authenticated users with the correct id to access the resource.
-  def id_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
-    need_login(conn)
-  end
-
-  def id_check(
-        %Conn{params: %{"id" => id}, assigns: %{current_user: current_user}} = conn,
-        _opts
-      ) do
-    (id == to_string(current_user.id) and conn) ||
-      unauthorized(conn, Routes.page_path(conn, :home))
-  end
-
   # Plug to allow only admins to access the resource.
   def admin_check(%Conn{} = conn, opts) do
     role_check(conn, opts ++ [roles: ["admin"]])
@@ -48,10 +19,6 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Plug to authorize access to a contest route.
-  def contest_user_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
-    need_login(conn)
-  end
-
   def contest_user_check(
         %Conn{assigns: %{current_user: user}, params: %{"id" => id}} = conn,
         _opts
@@ -80,10 +47,6 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Action override to authorize contest access before passing it to all actions
-  def contest_user_check_action(%Conn{assigns: %{current_user: nil}} = conn, _) do
-    need_login(conn)
-  end
-
   def contest_user_check_action(
         %Conn{assigns: %{current_user: user}, params: %{"contest_id" => id} = params} = conn,
         module
@@ -93,40 +56,9 @@ defmodule JumubaseWeb.Authorize do
     end)
   end
 
-  def success(conn, message, path) do
-    conn
-    |> put_flash(:info, message)
-    |> redirect(to: path)
-  end
-
-  def error(conn, message, path) do
-    conn
-    |> put_flash(:error, message)
-    |> redirect(to: path)
-    |> halt
-  end
-
-  def login_success(conn, path) do
-    path = get_session(conn, :request_path) || path
-
-    delete_session(conn, :request_path)
-    |> success(
-      dgettext("auth", "You are now logged in."),
-      get_session(conn, :request_path) || path
-    )
-  end
-
-  def unauthorized(conn, path) do
-    error(conn, dgettext("auth", "You are not authorized to view this page."), path)
-  end
-
   # Private helpers
 
   # Checks whether the user has one of the roles given in opts.
-  defp role_check(%Conn{assigns: %{current_user: nil}} = conn, _opts) do
-    need_login(conn)
-  end
-
   defp role_check(%Conn{assigns: %{current_user: current_user}} = conn, opts) do
     if opts[:roles] && current_user.role in opts[:roles],
       do: conn,
@@ -170,15 +102,6 @@ defmodule JumubaseWeb.Authorize do
     end
   end
 
-  defp need_login(conn) do
-    conn
-    |> put_session(:request_path, current_path(conn))
-    |> error(
-      dgettext("auth", "You need to log in to view this page."),
-      Routes.session_path(conn, :new)
-    )
-  end
-
   defp contest_error(conn, reason) do
     failure_path = Routes.page_path(conn, :registration)
 
@@ -201,5 +124,16 @@ defmodule JumubaseWeb.Authorize do
           failure_path
         )
     end
+  end
+
+  defp unauthorized(conn, path) do
+    error(conn, dgettext("auth", "You are not authorized to view this page."), path)
+  end
+
+  defp error(conn, message, path) do
+    conn
+    |> put_flash(:error, message)
+    |> redirect(to: path)
+    |> halt
   end
 end

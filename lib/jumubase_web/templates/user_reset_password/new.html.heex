@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-sm-6">
-    <%= form_for @conn, Routes.password_reset_path(@conn, :create), [as: :password_reset], fn f -> %>
+    <.form let={f} for={:user} action={Routes.user_reset_password_path(@conn, :create)}>
       <div class="form-group">
         <%= label f, :email, gettext("Email"), class: "control-label" %>
         <%= email_input f, :email, autofocus: true, class: "form-control" %>
@@ -12,8 +12,8 @@
       <div class="form-group">
         <%= submit gettext("Send instructions"), class: "btn btn-primary" %>
       </div>
-    <% end %>
+    </.form>
 
-    <span><%= link gettext("Back"), to: Routes.session_path(@conn, :new) %></span>
+    <span><%= link gettext("Log in"), to: Routes.user_session_path(@conn, :new) %></span>
   </div>
 </div>

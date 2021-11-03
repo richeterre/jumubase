@@ -1,13 +1,10 @@
 defmodule JumubaseWeb.Internal.PageController do
   use JumubaseWeb, :controller
-  import JumubaseWeb.Authorize
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias JumubaseWeb.Internal.Permit
 
   plug :add_home_breadcrumb
-
-  plug :user_check
 
   def home(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
     permitted = Permit.scope_contests(Contest, user)

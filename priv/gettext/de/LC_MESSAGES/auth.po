@@ -12,56 +12,46 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:16 lib/jumubase/accounts/message.ex:30
+#: lib/jumubase/accounts/user_notifier.ex:12
 msgid "Reset your password"
 msgstr "Neues Passwort einrichten"
 
 #, elixir-format
-#: lib/jumubase/accounts/user_messages.ex:6
+#: lib/jumubase_web/controllers/user_session_controller.ex:19
 msgid "Unfortunately, the email or password was incorrect."
 msgstr "Leider stimmte die E-Mail oder das Passwort nicht."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:133
+#: lib/jumubase_web/controllers/authorize.ex:130
 msgid "You are not authorized to view this page."
 msgstr "Du bist nicht berechtigt, diese Seite zu besuchen."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:127
-msgid "You are now logged in."
-msgstr "Du bist jetzt eingeloggt."
-
-#, elixir-format
-#: lib/jumubase_web/controllers/session_controller.ex:36
+#: lib/jumubase_web/controllers/user_session_controller.ex:27
 msgid "You are now logged out."
 msgstr "Du bist jetzt ausgeloggt."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:190
-msgid "You need to log in to view this page."
-msgstr "Du musst dich einloggen, um diese Seite zu besuchen."
-
-#, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:51
+#: lib/jumubase_web/controllers/user_reset_password_controller.ex:40
 msgid "Your password has been reset."
 msgstr "Dein neues Passwort wurde eingerichtet."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:18
-msgid "Check your inbox for instructions on how to reset your password"
-msgstr "Du hast eine E-Mail mit Anweisungen zur Einrichtung eines neuen Passworts bekommen."
+#: lib/jumubase_web/controllers/user_reset_password_controller.ex:22
+msgid "If your email is registered, you will receive password reset instructions shortly."
+msgstr "Wenn deine E-Mail registriert ist, erhältst du in Kürze Anweisungen zur Einrichtung eines neuen Passworts."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/password_reset_controller.ex:25
-msgid "Please enter an email address"
-msgstr "Bitte gib eine E-Mailadresse ein."
+#: lib/jumubase/accounts/user_notifier.ex:13
+msgid "Open this link now to choose a new password:\n\n%{url}\n\nIf you didn’t request this, please ignore this message."
+msgstr "Öffne nun diesen Link, um ein neues Passwort einzurichten:\n\n%{url}\n\nFalls du dies nicht veranlasst hast, ignoriere bitte diese Nachricht."
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:32
-msgid "Open this link now to choose a new password: %{url}"
-msgstr "Öffne nun diesen Link, um ein neues Passwort einzurichten: %{url}"
+#: lib/jumubase_web/controllers/user_reset_password_controller.ex:59
+msgid "The password reset link is invalid or it has expired."
+msgstr "Der Link zum Einrichten eines neuen Passworts ist ungültig oder abgelaufen."
 
 #, elixir-format
-#: lib/jumubase/accounts/message.ex:18
-msgid "You tried to reset your password, but no user was found for the email you provided."
-msgstr "Du hast versucht, ein neues Passwort einzurichten, aber es wurde kein Benutzer unter der angegebenen E-Mail gefunden."
+#: lib/jumubase_web/controllers/user_auth.ex:135
+msgid "You need to log in to access this page."
+msgstr "Du musst dich einloggen, um diese Seite zu besuchen."

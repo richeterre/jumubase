@@ -22,44 +22,35 @@ defmodule JumubaseWeb.ConnCase do
       import Phoenix.ConnTest
       import Jumubase.Factory
       import Jumubase.TestHelpers
-      import JumubaseWeb.AuthTestHelpers
+      import Jumubase.AuthTestHelpers
       import JumubaseWeb.DateHelpers
       alias JumubaseWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint JumubaseWeb.Endpoint
 
-      def login_if_needed(%{conn: conn} = config) do
-        conn =
-          conn
-          |> bypass_through(JumubaseWeb.Router, [:browser])
-          |> get("/")
-
-        # Add user session if role given in config
-        case config[:login_as] do
+      def login_if_needed(%{conn: conn} = context) do
+        # Add user session if role is given in context
+        case context[:login_as] do
           nil ->
-            {:ok, config}
+            {:ok, context}
 
           user_role ->
-            {:ok, Map.merge(config, login_user(conn, user_role))}
+            {:ok, Map.merge(context, create_and_log_in_user(context, user_role))}
         end
       end
 
-      def add_phauxth_session(conn, user) do
-        session_id = Phauxth.Login.gen_session_id("F")
-        Jumubase.Accounts.add_session(user, session_id, System.system_time(:second))
-        Phauxth.Login.add_session(conn, session_id, user.id)
+      defp create_and_log_in_user(%{conn: conn}, role) do
+        user = insert(:user, role: role)
+        %{conn: log_in_user(conn, user), user: user}
       end
 
-      defp login_user(conn, role) do
-        user = add_user(role: role)
+      defp log_in_user(conn, user) do
+        token = Jumubase.Accounts.generate_user_session_token(user)
 
-        conn =
-          conn
-          |> add_phauxth_session(user)
-          |> send_resp(:ok, "/")
-
-        %{conn: conn, user: user}
+        conn
+        |> init_test_session(%{})
+        |> put_session(:user_token, token)
       end
     end
   end

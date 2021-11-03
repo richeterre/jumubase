@@ -20,10 +20,6 @@ config :jumubase, JumubaseWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
-# Set Phauxth token salt
-config :phauxth,
-  token_salt: System.get_env("PHAUXTH_TOKEN_SALT")
-
 # Configure mailer
 config :jumubase, Jumubase.Mailer,
   adapter: Bamboo.SendGridAdapter,

@@ -1,4 +1,4 @@
-defmodule Jumubase.AuthTestHelpers do
+defmodule JumubaseWeb.AuthTestHelpers do
   import Phoenix.ConnTest
   import ExUnit.Assertions
   alias JumubaseWeb.Router.Helpers, as: Routes

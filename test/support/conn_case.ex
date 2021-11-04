@@ -22,7 +22,7 @@ defmodule JumubaseWeb.ConnCase do
       import Phoenix.ConnTest
       import Jumubase.Factory
       import Jumubase.TestHelpers
-      import Jumubase.AuthTestHelpers
+      import JumubaseWeb.AuthTestHelpers
       import JumubaseWeb.DateHelpers
       alias JumubaseWeb.Router.Helpers, as: Routes
 

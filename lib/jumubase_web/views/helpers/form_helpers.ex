@@ -1,11 +1,13 @@
 defmodule JumubaseWeb.FormHelpers do
-  import Phoenix.HTML
   import Phoenix.HTML.Form
+  import Phoenix.LiveView.Helpers
   import JumubaseWeb.DateHelpers, only: [localized_months: 0]
 
   def inline_date_select(form, field, opts \\ []) do
     builder = fn b ->
-      ~e"""
+      assigns = %{}
+
+      ~H"""
       <div class="form-inline">
         <%= b.(:day, class: "form-control") %>
         <%= b.(:month, class: "form-control") %>

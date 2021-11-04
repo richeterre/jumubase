@@ -23,7 +23,7 @@ defmodule JumubaseWeb.Internal.StageView do
   # Map performance duration to item height
   @pixels_per_minute 4
 
-  def render("scripts.schedule.html", %{conn: conn, contest: c, stage: s}) do
+  def render("scripts.schedule.html", %{conn: conn, contest: c, stage: s} = assigns) do
     options =
       Jason.encode!(%{
         csrfToken: Plug.CSRFProtection.get_csrf_token(),
@@ -35,14 +35,14 @@ defmodule JumubaseWeb.Internal.StageView do
         submitPath: Routes.internal_contest_performance_path(conn, :reschedule, c)
       })
 
-    ~E{
+    ~H{
       <script src="/js/scheduler.js"></script>
       <script>scheduler(<%= raw(options) %>)</script>
     }
   end
 
-  def render("scripts.timetable.html", _assigns) do
-    ~E{<script src="/js/performanceFilter.js"></script>}
+  def render("scripts.timetable.html", assigns) do
+    ~H{<script src="/js/performanceFilter.js"></script>}
   end
 
   @doc """

@@ -26,7 +26,9 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias JumubaseWeb.Internal.HostView
   alias JumubaseWeb.PDFGenerator
 
-  def render("scripts.index.html", _assigns), do: render_performance_filter()
+  def render("scripts.index.html", assigns) do
+    render_performance_filter(assigns)
+  end
 
   def render("reschedule_success.json", %{stage_times: stage_times}) do
     stage_times
@@ -43,7 +45,9 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     }
   end
 
-  def render("scripts.jury_material.html", _assigns), do: render_performance_filter()
+  def render("scripts.jury_material.html", assigns) do
+    render_performance_filter(assigns)
+  end
 
   def render("jury_sheets.pdf", %{performances: performances, round: round}) do
     PDFGenerator.jury_sheets(performances, round)
@@ -53,16 +57,20 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     PDFGenerator.jury_table(performances)
   end
 
-  def render("scripts.edit_results.html", _assigns) do
-    ~E(
+  def render("scripts.edit_results.html", assigns) do
+    ~H(
       <script src="/js/performanceFilter.js"></script>
       <script src="/js/resultForm.js"></script>
     )
   end
 
-  def render("scripts.publish_results.html", _assigns), do: render_performance_filter()
+  def render("scripts.publish_results.html", assigns) do
+    render_performance_filter(assigns)
+  end
 
-  def render("scripts.certificates.html", _assigns), do: render_performance_filter()
+  def render("scripts.certificates.html", assigns) do
+    render_performance_filter(assigns)
+  end
 
   def render("certificates.pdf", %{performances: performances, contest: contest}) do
     PDFGenerator.certificates(performances, contest)
@@ -204,8 +212,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   # Private helpers
 
-  defp render_performance_filter do
-    ~E(<script src="/js/performanceFilter.js"></script>)
+  defp render_performance_filter(assigns) do
+    ~H(<script src="/js/performanceFilter.js"></script>)
   end
 
   defp base_filter_options(%Contest{} = contest) do

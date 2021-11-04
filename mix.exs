@@ -39,7 +39,7 @@ defmodule Jumubase.Mixfile do
       {:bamboo_phoenix, "~> 1.0"},
       {:bcrypt_elixir, "~> 2.0"},
       {:dataloader, "~> 1.0"},
-      {:earmark, "1.4.3"},
+      {:earmark, "~> 1.4"},
       {:ecto_sql, "~> 3.6"},
       {:ex_machina, "~> 2.2"},
       {:floki, ">= 0.27.0", only: :test},

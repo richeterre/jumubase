@@ -101,7 +101,7 @@ defmodule JumubaseWeb.PageView do
   defp render_markdown(nil), do: nil
 
   defp render_markdown(markdown) do
-    case Earmark.as_html(markdown) do
+    case Earmark.as_html(markdown, escape: false) do
       {:ok, result, _} -> raw(result)
       {:error, _, _} -> nil
     end

@@ -15,7 +15,6 @@ defmodule JumubaseWeb.Internal.ContestController do
     path_fun: &Routes.internal_contest_path/2,
     action: :index
 
-  plug :user_check when action in [:index]
   plug :contest_user_check when action in [:show]
   plug :admin_check when action in [:new, :edit, :update]
 

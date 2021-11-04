@@ -10,13 +10,10 @@ defmodule Jumubase.Accounts.User do
   schema "users" do
     field :given_name, :string
     field :family_name, :string
-    field :role, :string
     field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
-    field :confirmed_at, :utc_datetime_usec
-    field :reset_sent_at, :utc_datetime_usec
-    field :sessions, {:map, :integer}, default: %{}
+    field :password, :string, virtual: true, redact: true
+    field :hashed_password, :string, redact: true
+    field :role, :string
 
     many_to_many :hosts, Host, join_through: "hosts_users", on_replace: :delete
 
@@ -29,47 +26,87 @@ defmodule Jumubase.Accounts.User do
     user
     |> cast(attrs, @base_attrs)
     |> validate_required(@base_attrs)
-    |> validate_format(:email, Utils.email_format())
     |> validate_inclusion(:role, JumuParams.user_roles())
-    |> unique_email
+    |> validate_format(:email, Utils.email_format())
+    |> unique_email()
   end
 
+  @doc """
+  A user changeset for creating a new user.
+  """
   def create_changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, @base_attrs ++ [:password])
     |> validate_required(@base_attrs)
-    |> validate_required(:password)
     |> validate_inclusion(:role, JumuParams.user_roles())
-    |> unique_email
-    |> validate_password(:password)
-    |> put_pass_hash
+    |> validate_format(:email, Utils.email_format())
+    |> unique_email()
+    |> validate_password(hash_password: true)
   end
 
+  @doc """
+  A user changeset for changing the password.
+
+  ## Options
+
+    * `:hash_password` - Hashes the password so it can be stored securely
+      in the database and ensures the password field is cleared to prevent
+      leaks in the logs. If password hashing is not needed and clearing the
+      password field is not desired (like when using this changeset for
+      validations on a LiveView form), this option can be set to `false`.
+      Defaults to `true`.
+  """
+  def password_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:password])
+    |> validate_confirmation(:password, message: dgettext("errors", "does not match password"))
+    |> validate_password(opts)
+  end
+
+  @doc """
+  Verifies the password.
+
+  If there is no user or the user doesn't have a password, we call
+  `Bcrypt.no_user_verify/0` to avoid timing attacks.
+  """
+  def valid_password?(%User{hashed_password: hashed_password}, password)
+      when is_binary(hashed_password) and byte_size(password) > 0 do
+    Bcrypt.verify_pass(password, hashed_password)
+  end
+
+  def valid_password?(_, _) do
+    Bcrypt.no_user_verify()
+    false
+  end
+
+  # Private helpers
+
   defp unique_email(changeset) do
-    validate_format(changeset, :email, ~r/@/)
-    |> validate_length(:email, max: 254)
+    validate_format(changeset, :email, ~r/^[^\s]+@[^\s]+$/)
+    |> validate_length(:email, max: 160)
+    |> unsafe_validate_unique(:email, Jumubase.Repo)
     |> unique_constraint(:email)
   end
 
-  # Also check out NotQwerty123.PasswordStrength.strong_password?
-  defp validate_password(changeset, field, options \\ []) do
-    validate_change(changeset, field, fn _, password ->
-      case strong_password?(password) do
-        {:ok, _} -> []
-        {:error, msg} -> [{field, options[:message] || msg}]
-      end
-    end)
+  defp validate_password(changeset, opts) do
+    changeset
+    |> validate_required(:password)
+    |> validate_length(:password, min: 8, max: 72)
+    |> maybe_hash_password(opts)
   end
 
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, Comeonin.Bcrypt.add_hash(password))
+  defp maybe_hash_password(changeset, opts) do
+    hash_password? = Keyword.get(opts, :hash_password, true)
+    password = get_change(changeset, :password)
+
+    if hash_password? && password && changeset.valid? do
+      changeset
+      # If using Bcrypt, then further validate it is at most 72 bytes long
+      |> validate_length(:password, max: 72, count: :bytes)
+      |> put_change(:hashed_password, Bcrypt.hash_pwd_salt(password))
+      |> delete_change(:password)
+    else
+      changeset
+    end
   end
-
-  defp put_pass_hash(changeset), do: changeset
-
-  defp strong_password?(password) when byte_size(password) > 7 do
-    {:ok, password}
-  end
-
-  defp strong_password?(_), do: {:error, dgettext("errors", "The password is too short.")}
 end

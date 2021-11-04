@@ -128,11 +128,6 @@ msgid "can only have either a composer or an artist"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase/accounts/user.ex:74
-msgid "The password is too short."
-msgstr ""
-
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:153
 msgid "The performance must have at least one participant."
 msgstr ""
@@ -200,4 +195,9 @@ msgstr ""
 #, elixir-format
 #: lib/jumubase/foundation/contest.ex:83
 msgid "has a round that's already taken for this year and grouping"
+msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/user.ex:62
+msgid "does not match password"
 msgstr ""

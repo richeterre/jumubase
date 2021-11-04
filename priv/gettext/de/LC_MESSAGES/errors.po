@@ -54,8 +54,8 @@ msgstr[1] ""
 
 msgid "should be at least %{count} character(s)"
 msgid_plural "should be at least %{count} character(s)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "muss mindestens %{count} Zeichen lang sein"
+msgstr[1] "muss mindestens %{count} Zeichen lang sein"
 
 msgid "should have at least %{count} item(s)"
 msgid_plural "should have at least %{count} item(s)"
@@ -116,11 +116,6 @@ msgstr "muss eindeutig sein"
 #: lib/jumubase/showtime/piece.ex:70
 msgid "can only have either a composer or an artist"
 msgstr "darf entweder einen Komponisten oder einen Interpreten haben"
-
-#, elixir-format
-#: lib/jumubase/accounts/user.ex:74
-msgid "The password is too short."
-msgstr "Das Passwort ist zu kurz"
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:153
@@ -191,3 +186,8 @@ msgstr "Um Name oder Geburtsdatum zu ändern, musst du die Person entfernen und 
 #: lib/jumubase/foundation/contest.ex:83
 msgid "has a round that's already taken for this year and grouping"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase/accounts/user.ex:62
+msgid "does not match password"
+msgstr "stimmt nicht mit dem Passwort überein"

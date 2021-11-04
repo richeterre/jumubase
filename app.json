@@ -14,9 +14,6 @@
     "JUMU_CONTACT_EMAIL": {
       "required": true
     },
-    "PHAUXTH_TOKEN_SALT": {
-      "required": true
-    },
     "POOL_SIZE": {
       "required": true
     },
@@ -36,9 +33,7 @@
       "quantity": 1
     }
   },
-  "addons": [
-    "heroku-postgresql"
-  ],
+  "addons": ["heroku-postgresql"],
   "stack": "heroku-18",
   "buildpacks": [
     {

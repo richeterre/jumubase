@@ -41,13 +41,13 @@ msgstr "Benutzer bearbeiten"
 #: lib/jumubase_web/templates/internal/participant/edit.html.eex:54
 #: lib/jumubase_web/templates/internal/participant/show.html.eex:28 lib/jumubase_web/templates/internal/user/form.html.eex:22
 #: lib/jumubase_web/templates/internal/user/index.html.eex:10 lib/jumubase_web/templates/page/_contact_form.html.eex:12
-#: lib/jumubase_web/templates/page/_contact_form.html.eex:19 lib/jumubase_web/templates/password_reset/new.html.eex:7
-#: lib/jumubase_web/templates/performance/live_form.html.heex:120 lib/jumubase_web/templates/session/new.html.eex:12
+#: lib/jumubase_web/templates/page/_contact_form.html.eex:19 lib/jumubase_web/templates/performance/live_form.html.heex:120
+#: lib/jumubase_web/templates/user_reset_password/new.html.heex:7 lib/jumubase_web/templates/user_session/new.html.heex:11
 msgid "Email"
 msgstr "E-Mail"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:19
+#: lib/jumubase_web/templates/layout/nav.html.heex:19
 msgid "Home"
 msgstr "Startseite"
 
@@ -57,13 +57,13 @@ msgid "Observer"
 msgstr "Beobachter"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:35
-#: lib/jumubase_web/templates/session/new.html.eex:1
+#: lib/jumubase_web/templates/layout/nav.html.heex:35
+#: lib/jumubase_web/templates/user_session/new.html.heex:1
 msgid "Internal Pages"
 msgstr "Interne Seiten"
 
 #, elixir-format
-#: lib/jumubase_web/views/layout_view.ex:18
+#: lib/jumubase_web/views/layout_view.ex:17
 msgid "Jumu logo"
 msgstr "Jumu-Logo"
 
@@ -127,12 +127,7 @@ msgid "Add Host"
 msgstr "Neuen Ausrichter hinzufügen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/new.html.eex:17
-msgid "Back"
-msgstr "Zurück"
-
-#, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:1
+#: lib/jumubase_web/templates/user_reset_password/edit.html.heex:1
 msgid "Choose Password"
 msgstr "Passwort wählen"
 
@@ -158,7 +153,7 @@ msgid "Create Host"
 msgstr "Ausrichter erstellen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:19
+#: lib/jumubase_web/templates/user_session/new.html.heex:17
 msgid "Forgot password?"
 msgstr "Passwort vergessen?"
 
@@ -281,7 +276,7 @@ msgid "Register"
 msgstr "Anmeldeformular"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:20
+#: lib/jumubase_web/templates/layout/nav.html.heex:20
 #: lib/jumubase_web/templates/page/registration.html.eex:1
 msgid "Registration"
 msgstr "Anmeldung"
@@ -437,22 +432,23 @@ msgid "welcome to your personal Jumu portal!"
 msgstr "willkommen auf deinem persönlichen Jumu-Portal!"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:32
+#: lib/jumubase_web/templates/layout/nav.html.heex:32
 msgid "Log out"
 msgstr "Ausloggen"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/new.html.eex:1
+#: lib/jumubase_web/templates/user_reset_password/new.html.heex:1
 msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/new.html.eex:13
+#: lib/jumubase_web/templates/user_reset_password/new.html.heex:13
 msgid "Send instructions"
 msgstr "Anweisungen schicken"
 
 #, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:34
+#: lib/jumubase_web/templates/user_reset_password/new.html.heex:17
+#: lib/jumubase_web/templates/user_session/new.html.heex:31
 msgid "Log in"
 msgstr "Einloggen"
 
@@ -465,7 +461,7 @@ msgstr "Kategorien"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/user/form.html.eex:31
-#: lib/jumubase_web/templates/session/new.html.eex:18
+#: lib/jumubase_web/templates/user_session/new.html.heex:16
 msgid "Password"
 msgstr "Passwort"
 
@@ -526,12 +522,12 @@ msgid "Artist"
 msgstr "Interpret"
 
 #, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:4
+#: lib/jumubase_web/templates/user_session/new.html.heex:4
 msgid "Here you can log in as a Jumu organizer."
 msgstr "Hier können sich Jumu-Organisatoren einloggen."
 
 #, elixir-format
-#: lib/jumubase_web/templates/session/new.html.eex:28
+#: lib/jumubase_web/templates/user_session/new.html.heex:25
 msgid "Stay logged in"
 msgstr "Eingeloggt bleiben"
 
@@ -630,7 +626,7 @@ msgid "Participation"
 msgstr "Teilnahme"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:21
+#: lib/jumubase_web/templates/layout/nav.html.heex:21
 msgid "Rules"
 msgstr "Regeln"
 
@@ -650,17 +646,17 @@ msgid "Location"
 msgstr "Standort"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:19
+#: lib/jumubase_web/templates/user_reset_password/edit.html.heex:23
 msgid "Cancel (keep old password)"
 msgstr "Abbrechen (altes Passwort behalten)"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:7
+#: lib/jumubase_web/templates/user_reset_password/edit.html.heex:7
 msgid "New password"
 msgstr "Neues Passwort"
 
 #, elixir-format
-#: lib/jumubase_web/templates/password_reset/edit.html.eex:15
+#: lib/jumubase_web/templates/user_reset_password/edit.html.heex:19
 msgid "Set password"
 msgstr "Passwort setzen"
 
@@ -688,7 +684,7 @@ msgstr[0] "Deine Kimu-Anmeldung"
 msgstr[1] "Eure Kimu-Anmeldung"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:23
+#: lib/jumubase_web/templates/layout/nav.html.heex:23
 #: lib/jumubase_web/templates/page/contact.html.eex:1
 msgid "Contact"
 msgstr "Kontakt"
@@ -775,7 +771,7 @@ msgid "responsible for this website"
 msgstr "verantwortlich für diese Website"
 
 #, elixir-format
-#: lib/jumubase_web/templates/layout/nav.html.eex:22
+#: lib/jumubase_web/templates/layout/nav.html.heex:22
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -847,7 +843,7 @@ msgid "Edit Contest"
 msgstr "Wettbewerb bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:68
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:67
 msgid "The contest %{name} was updated."
 msgstr "Der Wettbewerb %{name} wurde aktualisiert."
 
@@ -883,7 +879,7 @@ msgid "The edit deadline for this contest has passed. Please contact us if you n
 msgstr "Der Änderungsschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:202
+#: lib/jumubase_web/controllers/authorize.ex:112
 msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
@@ -903,14 +899,14 @@ msgid "Please fill in only fields that are visible in the form."
 msgstr "Bitte fülle nur sichtbare Felder im Kontaktformular aus."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:251
+#: lib/jumubase_web/views/internal/performance_view.ex:248
 msgid "%{count} performance"
 msgid_plural "%{count} performances"
 msgstr[0] "%{count} Vorspiel"
 msgstr[1] "%{count} Vorspiele"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:257
+#: lib/jumubase_web/views/internal/performance_view.ex:254
 msgid "Filter active"
 msgstr "Filter aktiv"
 
@@ -1384,13 +1380,13 @@ msgstr "Ergebnisse freigeben"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/category_view.ex:35
-#: lib/jumubase_web/views/internal/performance_view.ex:102 lib/jumubase_web/views/internal/performance_view.ex:152
+#: lib/jumubase_web/views/internal/performance_view.ex:99 lib/jumubase_web/views/internal/performance_view.ex:149
 msgid "No"
 msgstr "Nein"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/category_view.ex:31
-#: lib/jumubase_web/views/internal/performance_view.ex:105 lib/jumubase_web/views/internal/performance_view.ex:148
+#: lib/jumubase_web/views/internal/performance_view.ex:102 lib/jumubase_web/views/internal/performance_view.ex:145
 msgid "Yes"
 msgstr "Ja"
 
@@ -1452,17 +1448,17 @@ msgid "Print certificates"
 msgstr "Urkunden ausgeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:195
+#: lib/jumubase_web/views/internal/performance_view.ex:192
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem Logo bedruckte Papier erneut ein."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:201
+#: lib/jumubase_web/views/internal/performance_view.ex:198
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/performance_view.ex:203
+#: lib/jumubase_web/views/internal/performance_view.ex:200
 msgid "here"
 msgstr "hier"
 
@@ -1499,22 +1495,22 @@ msgid "Total"
 msgstr "Gesamt"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:84
+#: lib/jumubase_web/views/internal/contest_view.ex:86
 msgid "%{completed} of %{total} entered so far"
 msgstr "Bisher %{completed} von %{total} eingetragen"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:94
+#: lib/jumubase_web/views/internal/contest_view.ex:96
 msgid "%{completed} of %{total} published so far"
 msgstr "Bisher %{completed} von %{total} freigegeben"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:83
+#: lib/jumubase_web/views/internal/contest_view.ex:85
 msgid "All %{total} entered"
 msgstr "Alle %{total} eingetragen"
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:91
+#: lib/jumubase_web/views/internal/contest_view.ex:93
 msgid "All %{total} published"
 msgstr "Alle %{total} freigegeben"
 
@@ -1703,7 +1699,7 @@ msgid "Edit Host"
 msgstr "Ausrichter bearbeiten"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/page_controller.ex:27
+#: lib/jumubase_web/controllers/internal/page_controller.ex:24
 #: lib/jumubase_web/templates/internal/page/home.html.eex:69
 msgid "Jury work"
 msgstr "Juryarbeit"
@@ -1714,13 +1710,13 @@ msgid "Materials"
 msgstr "Materialien"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/page_controller.ex:36
+#: lib/jumubase_web/controllers/internal/page_controller.ex:33
 #: lib/jumubase_web/templates/internal/page/home.html.eex:75
 msgid "Literature guidance"
 msgstr "Literaturberatung"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/page_controller.ex:45
+#: lib/jumubase_web/controllers/internal/page_controller.ex:42
 #: lib/jumubase_web/templates/internal/page/home.html.eex:81
 msgid "Meeting minutes"
 msgstr "Sitzungsprotokolle"
@@ -1766,7 +1762,7 @@ msgid "First round"
 msgstr "Regionalwettbewerb"
 
 #, elixir-format
-#: lib/jumubase_web/controllers/authorize.ex:211
+#: lib/jumubase_web/controllers/authorize.ex:121
 msgid "This contest is not open for registration. Please contact us if you need assistance."
 msgstr "Für diesen Wettbewerb ist die Anmeldung nicht möglich. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
@@ -1903,7 +1899,7 @@ msgstr[0] "Der Wettbewerb wurde erstellt."
 msgstr[1] "Die Wettbewerbe wurden erstellt."
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:81
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:80
 msgid "The contest %{name} was deleted."
 msgstr "Der Wettbewerb %{name} wurde gelöscht."
 
@@ -1964,3 +1960,8 @@ msgstr "Vorlage wählen"
 #: lib/jumubase_web/templates/internal/contest/edit.html.eex:46
 msgid "Name suffix"
 msgstr "Namenszusatz"
+
+#, elixir-format
+#: lib/jumubase_web/templates/user_reset_password/edit.html.heex:13
+msgid "Confirm new password"
+msgstr "Neues Passwort bestätigen"

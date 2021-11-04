@@ -44,7 +44,6 @@ Ensure the following environment variables are made available to the app:
 - `DATABASE_URL` – Set automatically e.g. on Heroku when provisioning a database.
 - `POOL_SIZE` – Depends on how many database connections are allowed by the plan. Leave some room for occasional one-off `mix` tasks such as migrations.
 - `SECRET_KEY_BASE` – Can be generated using `mix phx.gen.secret`.
-- `PHAUXTH_TOKEN_SALT` – Can be generated in IEx using `Phauxth.Config.gen_token_salt`.
 
 ## Documentation
 
@@ -88,7 +87,7 @@ Some Jumu-related data (such as rounds, roles, genres, and category types) is un
 
 ### Authentication
 
-[Phauxth][phauxth] is used for user authentication. Users can be associated with one or several hosts, typically for the reason of being employed there and acting as local organizers. They can only manipulate resources "belonging" to those hosts.
+[`phx.gen.auth`][phx.gen.auth] is used for user authentication. Users can be associated with one or several hosts, typically for the reason of being employed there and acting as local organizers. They can only manipulate resources "belonging" to those hosts.
 
 Each user has a role assigned to them:
 
@@ -97,7 +96,7 @@ Each user has a role assigned to them:
 - **Inspectors** get read-only access to data for statistical purposes
 - **Admin** users have full privileges
 
-[phauxth]: https://github.com/riverrun/phauxth
+[phx.gen.auth]: https://hexdocs.pm/phx_gen_auth
 
 ## License
 

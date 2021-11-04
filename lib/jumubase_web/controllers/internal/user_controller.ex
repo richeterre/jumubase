@@ -5,6 +5,7 @@ defmodule JumubaseWeb.Internal.UserController do
   alias Jumubase.Accounts
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
+  alias JumubaseWeb.UserAuth
 
   plug :add_home_breadcrumb
 
@@ -64,6 +65,11 @@ defmodule JumubaseWeb.Internal.UserController do
     conn
     |> put_flash(:info, gettext("The user %{name} was deleted.", name: full_name(user)))
     |> redirect(to: Routes.internal_user_path(conn, :index))
+  end
+
+  def impersonate(conn, %{"user_id" => id}) do
+    user = Accounts.get_user!(id)
+    UserAuth.log_in_user(conn, user)
   end
 
   # Private helpers

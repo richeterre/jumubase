@@ -160,7 +160,10 @@ defmodule JumubaseWeb.Router do
     end
 
     resources "/hosts", HostController, except: [:show, :delete]
-    resources "/users", UserController, except: [:show]
+
+    resources "/users", UserController, except: [:show] do
+      get "/impersonate", UserController, :impersonate, as: :impersonate
+    end
   end
 
   if Mix.env() == :dev do

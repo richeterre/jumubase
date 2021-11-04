@@ -19,6 +19,9 @@
         <td><%= user.email %></td>
         <td><%= content_tag :span, host_flags(user), title: host_names(user) %></td>
         <td class="text-right">
+          <%= icon_link("user", nil, Routes.internal_user_impersonate_path(@conn, :impersonate, user),
+            class: "btn btn-default btn-xs") %>
+          &#32;
           <%= edit_icon_link(Routes.internal_user_path(@conn, :edit, user)) %>
           &#32;
           <%= delete_icon_link(

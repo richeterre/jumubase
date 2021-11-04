@@ -74,6 +74,20 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
         get(conn, Routes.internal_user_path(conn, :edit, user))
       end)
     end
+
+    test "impersonates another user", %{conn: conn, user: original_user} do
+      other_user = insert(:user)
+
+      conn = get(conn, Routes.internal_user_impersonate_path(conn, :impersonate, other_user))
+
+      # At this point the original user is still logged in
+      assert conn.assigns.current_user == original_user
+      assert redirected_to(conn) == Routes.internal_page_path(conn, :home)
+
+      # Do another request to check if other user was logged in
+      conn = get(conn, "/")
+      assert conn.assigns.current_user == other_user
+    end
   end
 
   describe "for a non-admin" do
@@ -103,7 +117,8 @@ defmodule JumubaseWeb.Internal.UserControllerTest do
         post(conn, Routes.internal_user_path(conn, :create), %{user: %{}}),
         get(conn, Routes.internal_user_path(conn, :edit, user.id)),
         put(conn, Routes.internal_user_path(conn, :update, user.id, %{user: %{"email" => ""}})),
-        delete(conn, Routes.internal_user_path(conn, :delete, user.id))
+        delete(conn, Routes.internal_user_path(conn, :delete, user.id)),
+        get(conn, Routes.internal_user_impersonate_path(conn, :impersonate, user.id))
       ],
       fn conn ->
         assertion_fun.(conn)

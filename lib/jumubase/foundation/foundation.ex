@@ -11,6 +11,7 @@ defmodule Jumubase.Foundation do
   alias Jumubase.JumuParams
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, ContestSeed, Host, Stage}
+  alias Jumubase.Foundation.ContestFilter
 
   ## Hosts
 
@@ -90,6 +91,19 @@ defmodule Jumubase.Foundation do
         preload: [host: h]
 
     Repo.all(query)
+  end
+
+  def list_contests(query, %ContestFilter{} = filter) do
+    query =
+      from c in query,
+        join: h in assoc(c, :host),
+        as: :hosts,
+        order_by: [{:desc, c.season}, {:desc, c.round}, c.grouping, h.name],
+        preload: [host: h]
+
+    query
+    |> apply_filter(filter)
+    |> Repo.all()
   end
 
   @doc """
@@ -222,12 +236,15 @@ defmodule Jumubase.Foundation do
     |> Repo.one()
   end
 
-  def get_latest_season do
+  @doc """
+  Returns all seasons for which at least one contest exists.
+  """
+  def list_seasons do
     Contest
-    |> order_by(desc: :season)
-    |> limit(1)
     |> select([c], c.season)
-    |> Repo.one()
+    |> order_by(desc: :season)
+    |> distinct(true)
+    |> Repo.all()
   end
 
   def create_contests(%ContestSeed{season: season, round: round, contest_categories: ccs}, hosts) do
@@ -377,6 +394,36 @@ defmodule Jumubase.Foundation do
 
   # Private helpers
 
+  # Returns the latest season for which a contest exists.
+  defp get_latest_season do
+    Contest
+    |> order_by(desc: :season)
+    |> limit(1)
+    |> select([c], c.season)
+    |> Repo.one()
+  end
+
+  defp apply_filter(query, %ContestFilter{} = filter) do
+    filter_map = ContestFilter.to_filter_map(filter)
+
+    Enum.reduce(filter_map, query, fn
+      {:season, season}, query ->
+        in_season(query, season)
+
+      {:round, round}, query ->
+        in_round(query, round)
+
+      {:grouping, grouping}, query ->
+        with_grouping(query, grouping)
+
+      {:search_text, search_text}, query ->
+        matching_search_text(query, search_text)
+
+      _, query ->
+        query
+    end)
+  end
+
   # Build a query for fetching public contests.
   defp public_contests_query do
     from c in Contest,
@@ -429,6 +476,22 @@ defmodule Jumubase.Foundation do
       join: h in assoc(c, :host),
       left_join: u in assoc(h, :users),
       as: :users
+  end
+
+  defp in_season(contest_query, season) do
+    from c in contest_query, where: c.season == ^season
+  end
+
+  defp in_round(contest_query, round) do
+    from c in contest_query, where: c.round == ^round
+  end
+
+  defp with_grouping(contest_query, grouping) do
+    from c in contest_query, where: c.grouping == ^grouping
+  end
+
+  defp matching_search_text(contest_query, text) do
+    from [c, hosts: h] in contest_query, where: ilike(h.name, ^"%#{text}%")
   end
 
   defp preloaded_with_stages(contest_query) do

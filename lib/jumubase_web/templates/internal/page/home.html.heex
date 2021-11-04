@@ -21,7 +21,7 @@
             <%= icon_link("globe", gettext("Hosts"), Routes.internal_host_path(@conn, :index)) %>
           </li>
           <li class="list-group-item">
-            <%= icon_link("music", gettext("Contests"), Routes.internal_contest_path(@conn, :index)) %>
+            <%= icon_link("music", gettext("Contests"), Routes.internal_live_path(@conn, ContestLive.Index)) %>
           </li>
           <li class="list-group-item">
             <%= icon_link("list-alt", gettext("Categories"), Routes.internal_category_path(@conn, :index)) %>
@@ -50,7 +50,7 @@
         <%= if @has_more do %>
           <li class="list-group-item">
             <%= link gettext("Show more…"),
-              to: Routes.internal_contest_path(@conn, :index)
+              to: Routes.internal_live_path(@conn, ContestLive.Index)
               %>
           </li>
         <% end %>

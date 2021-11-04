@@ -7,14 +7,15 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
   alias Jumubase.Showtime.PerformanceFilter
+  alias JumubaseWeb.Internal.ContestLive
   alias JumubaseWeb.XMLEncoder
 
   plug :add_home_breadcrumb
 
   plug :add_breadcrumb,
     name: gettext("Contests"),
-    path_fun: &Routes.internal_contest_path/2,
-    action: :index
+    path_fun: &Routes.internal_live_path/2,
+    action: ContestLive.Index
 
   plug :admin_check when action in [:migrate_advancing]
 

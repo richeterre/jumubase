@@ -7,14 +7,15 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   alias Jumubase.Showtime.Participant
   alias Jumubase.Mailer
   alias Jumubase.Utils
+  alias JumubaseWeb.Internal.ContestLive
   alias JumubaseWeb.Email
 
   plug :add_home_breadcrumb
 
   plug :add_breadcrumb,
     name: gettext("Contests"),
-    path_fun: &Routes.internal_contest_path/2,
-    action: :index
+    path_fun: &Routes.internal_live_path/2,
+    action: ContestLive.Index
 
   plug :admin_check when action in [:compare, :merge, :send_welcome_emails]
 

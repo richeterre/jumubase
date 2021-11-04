@@ -1,6 +1,7 @@
 defmodule JumubaseWeb.Internal.ContestControllerTest do
   use JumubaseWeb.ConnCase
   import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
+  alias JumubaseWeb.Internal.ContestLive
 
   setup config do
     login_if_needed(config)
@@ -12,7 +13,19 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       test "lists all authorized contests to #{role} users", %{conn: conn, user: u} do
         c1 = insert_authorized_contest(u)
         c2 = insert_authorized_contest(u)
-        conn = get(conn, Routes.internal_contest_path(conn, :index))
+        conn = get(conn, Routes.internal_live_path(conn, ContestLive.Index))
+
+        # Check that default filter is applied
+        latest_season = max(c1.season, c2.season)
+
+        redirect_path =
+          Routes.internal_live_path(conn, ContestLive.Index, filter: %{season: latest_season})
+
+        assert redirected_to(conn) == redirect_path
+
+        # Follow redirection
+        conn = get(recycle(conn), redirect_path)
+
         assert html_response(conn, 200) =~ "Contests"
         assert html_response(conn, 200) =~ name(c1)
         assert html_response(conn, 200) =~ name(c2)
@@ -23,14 +36,24 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       @tag login_as: role
       test "doesn't list unauthorized contests to #{role} users", %{conn: conn, user: u} do
         c = insert_unauthorized_contest(u)
-        conn = get(conn, Routes.internal_contest_path(conn, :index))
+        conn = get(conn, Routes.internal_live_path(conn, ContestLive.Index))
+
+        # Check that default filter is applied
+        redirect_path =
+          Routes.internal_live_path(conn, ContestLive.Index, filter: %{season: c.season})
+
+        assert redirected_to(conn) == redirect_path
+
+        # Follow redirection
+        conn = get(recycle(conn), redirect_path)
+
         assert html_response(conn, 200) =~ "Contests"
         refute html_response(conn, 200) =~ name(c)
       end
     end
 
     test "redirects guests trying to list all contests", %{conn: conn} do
-      conn = get(conn, Routes.internal_contest_path(conn, :index))
+      conn = get(conn, Routes.internal_live_path(conn, ContestLive.Index))
       assert_unauthorized_guest(conn)
     end
   end
@@ -109,11 +132,22 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
     @tag login_as: "admin"
     test "lets admins updates a contest", %{conn: conn, contest: c, params: params} do
       conn = put(conn, Routes.internal_contest_path(conn, :update, c, params))
-      redirect_path = Routes.internal_contest_path(conn, :index)
+
+      redirect_path = Routes.internal_live_path(conn, ContestLive.Index)
+      assert redirected_to(conn) == redirect_path
+
+      # Follow first redirection
+      conn = get(recycle(conn), redirect_path)
+
+      # Check that default filter is applied
+      redirect_path =
+        Routes.internal_live_path(conn, ContestLive.Index, filter: %{season: c.season})
 
       assert redirected_to(conn) == redirect_path
-      # Follow redirection
+
+      # Follow second redirection
       conn = get(recycle(conn), redirect_path)
+
       assert html_response(conn, 200) =~ "The contest #{name(c)} was updated."
     end
 

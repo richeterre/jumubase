@@ -3,18 +3,20 @@ defmodule JumubaseWeb.Breadcrumbs do
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   alias JumubaseWeb.Router.Helpers, as: Routes
   alias Jumubase.Foundation.Contest
+  alias Plug.Conn
+  alias Phoenix.LiveView
 
   @doc """
   Adds a breadcrumb to the navigation hierarchy.
   """
-  def add_breadcrumb(conn, opts) do
-    # We might need to assemble the path here, as generating it already
-    # at the callsite does not always compile (e.g. in controller-level plugs)
-    path = opts[:path] || opts[:path_fun].(JumubaseWeb.Endpoint, opts[:action])
+  def add_breadcrumb(%Conn{} = conn, opts) do
+    breadcrumbs = Map.get(conn.assigns, :breadcrumbs, []) ++ [build_breadcrumb(opts)]
+    conn |> Conn.assign(:breadcrumbs, breadcrumbs)
+  end
 
-    breadcrumb = [name: opts[:name], icon: opts[:icon], path: path]
-    breadcrumbs = Map.get(conn.assigns, :breadcrumbs, []) ++ [breadcrumb]
-    conn |> Plug.Conn.assign(:breadcrumbs, breadcrumbs)
+  def add_breadcrumb(%LiveView.Socket{} = socket, opts) do
+    breadcrumbs = Map.get(socket.assigns, :breadcrumbs, []) ++ [build_breadcrumb(opts)]
+    socket |> LiveView.assign(:breadcrumbs, breadcrumbs)
   end
 
   @doc """
@@ -62,5 +64,14 @@ defmodule JumubaseWeb.Breadcrumbs do
       name: gettext("Categories"),
       path: Routes.internal_contest_contest_category_path(conn, :index, contest)
     )
+  end
+
+  # Private helpers
+
+  defp build_breadcrumb(opts) do
+    # We sometimes to assemble the path here via a function, as generating it
+    # at the callsite does not always compile (e.g. in controller-level plugs)
+    path = opts[:path] || opts[:path_fun].(JumubaseWeb.Endpoint, opts[:action])
+    [name: opts[:name], icon: opts[:icon], path: path]
   end
 end

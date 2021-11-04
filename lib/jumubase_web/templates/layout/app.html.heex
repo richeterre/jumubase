@@ -4,7 +4,7 @@
 
 <main role="main" class="container">
   <%= if assigns[:breadcrumbs] do %>
-    <%= render "breadcrumbs.html", conn: @conn, breadcrumbs: @breadcrumbs %>
+    <%= render "breadcrumbs.html", assigns: @conn.assigns, breadcrumbs: @breadcrumbs %>
   <% end %>
 
   <%= render "flash.html", conn: @conn %>

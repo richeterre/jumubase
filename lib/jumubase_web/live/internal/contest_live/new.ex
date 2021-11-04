@@ -8,6 +8,7 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{ContestCategory, ContestSeed}
+  alias JumubaseWeb.Internal.ContestLive
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
@@ -77,7 +78,7 @@ defmodule JumubaseWeb.Internal.ContestLive.New do
           {:noreply,
            socket
            |> put_flash(:success, message)
-           |> redirect(to: Routes.internal_contest_path(socket, :index))}
+           |> redirect(to: Routes.internal_live_path(socket, ContestLive.Index))}
 
         {:error, _, _, _} ->
           {:noreply, socket}

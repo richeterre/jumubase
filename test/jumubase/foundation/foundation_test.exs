@@ -4,6 +4,7 @@ defmodule Jumubase.FoundationTest do
   alias Jumubase.Accounts.User
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{Category, Contest, ContestCategory, ContestSeed, Host, Stage}
+  alias Jumubase.Foundation.ContestFilter
 
   describe "list_hosts/0 " do
     test "returns all hosts ordered by current grouping and name" do
@@ -180,6 +181,36 @@ defmodule Jumubase.FoundationTest do
       insert(:contest)
       query = from c in Contest, limit: 1
       [result] = Foundation.list_contests(query)
+      assert %Host{} = result.host
+    end
+  end
+
+  describe "list_contests/2" do
+    test "returns all contests matching the query and filter" do
+      h1 = insert(:host, name: "A")
+      h2 = insert(:host, name: "B")
+      d1 = Timex.today()
+      d2 = Timex.shift(d1, days: 1)
+
+      filter = %ContestFilter{season: 56, round: 1, grouping: "2", search_text: "A"}
+      query = from c in Contest, order_by: [desc: :deadline]
+
+      # Matching contests
+      c1 = insert(:contest, host: h1, season: 56, round: 1, grouping: "2", deadline: d1)
+      c2 = insert(:contest, host: h1, season: 56, round: 1, grouping: "2", deadline: d2)
+
+      # Contests not matching filter
+      insert(:contest, host: h2, season: 56, round: 1, grouping: "2")
+      insert(:contest, host: h1, season: 57, round: 1, grouping: "2")
+      insert(:contest, host: h1, season: 56, round: 2, grouping: "2")
+      insert(:contest, host: h1, season: 56, round: 1, grouping: "3")
+
+      assert_ids_match_ordered([c2, c1], Foundation.list_contests(query, filter))
+    end
+
+    test "preloads the contests' hosts" do
+      insert(:contest)
+      [result] = Foundation.list_contests(Contest, %ContestFilter{})
       assert %Host{} = result.host
     end
   end
@@ -678,6 +709,16 @@ defmodule Jumubase.FoundationTest do
     test "preloads the contest host" do
       insert(:contest)
       assert %Contest{host: %Host{}} = Foundation.get_latest_official_contest()
+    end
+  end
+
+  describe "list_seasons/0" do
+    test "lists all seasons for which at least one contest exists, in descending order" do
+      for season <- [1, 2, 4, 1] do
+        insert(:contest, season: season)
+      end
+
+      assert [4, 2, 1] == Foundation.list_seasons()
     end
   end
 

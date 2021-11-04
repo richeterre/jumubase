@@ -124,7 +124,9 @@ defmodule JumubaseWeb.Router do
 
     resources "/categories", CategoryController, except: [:show, :delete]
 
-    resources "/contests", ContestController, except: [:create] do
+    live "/contests", ContestLive.Index
+
+    resources "/contests", ContestController, except: [:index, :create] do
       get "/performances/jury-material", PerformanceController, :jury_material, as: :performances
       get "/performances/edit-results", PerformanceController, :edit_results, as: :results
       patch "/performances/update-results", PerformanceController, :update_results, as: :results

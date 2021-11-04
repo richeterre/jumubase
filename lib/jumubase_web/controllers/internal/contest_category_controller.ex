@@ -1,13 +1,14 @@
 defmodule JumubaseWeb.Internal.ContestCategoryController do
   use JumubaseWeb, :controller
   alias Jumubase.Foundation
+  alias JumubaseWeb.Internal.ContestLive
 
   plug :add_home_breadcrumb
 
   plug :add_breadcrumb,
     name: gettext("Contests"),
-    path_fun: &Routes.internal_contest_path/2,
-    action: :index
+    path_fun: &Routes.internal_live_path/2,
+    action: ContestLive.Index
 
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)

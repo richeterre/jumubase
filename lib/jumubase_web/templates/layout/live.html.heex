@@ -1,0 +1,13 @@
+<header class="header">
+  <%= render "nav.html", conn: @socket, current_user: @current_user %>
+</header>
+
+<main role="main" class="container">
+  <%= if assigns[:breadcrumbs] do %>
+    <%= render "breadcrumbs.html", assigns: @socket.assigns, breadcrumbs: @breadcrumbs %>
+  <% end %>
+
+  <%= render "live_flash.html", flash: @flash %>
+
+  <%= @inner_content %>
+</main>

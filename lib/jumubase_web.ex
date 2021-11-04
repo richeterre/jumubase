@@ -53,6 +53,17 @@ defmodule JumubaseWeb do
     end
   end
 
+  def live_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {JumubaseWeb.LayoutView, "live.html"}
+
+      import Jumubase.Gettext
+      import JumubaseWeb.Breadcrumbs
+      alias JumubaseWeb.Router.Helpers, as: Routes
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router

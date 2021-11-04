@@ -6,22 +6,17 @@ defmodule JumubaseWeb.Internal.ContestController do
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
+  alias JumubaseWeb.Internal.ContestLive
 
   plug :add_home_breadcrumb
 
   plug :add_breadcrumb,
     name: gettext("Contests"),
-    path_fun: &Routes.internal_contest_path/2,
-    action: :index
+    path_fun: &Routes.internal_live_path/2,
+    action: ContestLive.Index
 
   plug :contest_user_check when action in [:show]
   plug :admin_check when action in [:new, :edit, :update]
-
-  def index(%Plug.Conn{assigns: %{current_user: user}} = conn, _params) do
-    conn
-    |> assign(:current_user, user)
-    |> render("index.html")
-  end
 
   def show(conn, %{"id" => id}) do
     contest =
@@ -59,7 +54,7 @@ defmodule JumubaseWeb.Internal.ContestController do
       {:ok, contest} ->
         conn
         |> put_flash(:info, gettext("The contest %{name} was updated.", name: name(contest)))
-        |> redirect(to: Routes.internal_contest_path(conn, :index))
+        |> redirect(to: Routes.internal_live_path(conn, ContestLive.Index))
 
       {:error, %Changeset{} = changeset} ->
         render_edit_form(conn, contest, changeset)
@@ -72,7 +67,7 @@ defmodule JumubaseWeb.Internal.ContestController do
 
     conn
     |> put_flash(:success, gettext("The contest %{name} was deleted.", name: name(contest)))
-    |> redirect(to: Routes.internal_contest_path(conn, :index))
+    |> redirect(to: Routes.internal_live_path(conn, ContestLive.Index))
   end
 
   # Private helpers

@@ -22,8 +22,8 @@ defmodule JumubaseWeb.LayoutView do
   @doc """
   Tells whether the given breadcrumb is active.
   """
-  def breadcrumb_active(conn, breadcrumb) do
-    breadcrumb == List.last(conn.assigns.breadcrumbs)
+  def breadcrumb_active(assigns, breadcrumb) do
+    breadcrumb == List.last(assigns.breadcrumbs)
   end
 
   # Private helpers

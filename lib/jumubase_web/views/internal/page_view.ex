@@ -4,6 +4,7 @@ defmodule JumubaseWeb.Internal.PageView do
   import JumubaseWeb.PageView, only: [document_link: 2]
   alias JumubaseWeb.Endpoint
   alias JumubaseWeb.Email
+  alias JumubaseWeb.Internal.ContestLive
 
   def admin_email do
     config = Application.get_env(:jumubase, Email)

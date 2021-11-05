@@ -28,7 +28,7 @@
   </p>
 <% end %>
 
-<p class='<%= if has_stages, do: "text-muted" %>'>
+<p class={if has_stages, do: "text-muted"}>
   <%= gettext("To add a new stage, please contact the") %>
   <%= link gettext("admin"), to: "mailto:#{admin_email()}?subject=#{gettext("Add stage")}" %>.
 </p>

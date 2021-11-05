@@ -47,7 +47,7 @@
         <%= for {appearance, index} <- appearances |> Enum.with_index do %>
           <tr>
             <%= if index == 0 do %>
-              <td rowspan="<%= length(appearances) %>">
+              <td rowspan={length(appearances)}>
                 <%= link category_name(performance),
                   to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
                   %>

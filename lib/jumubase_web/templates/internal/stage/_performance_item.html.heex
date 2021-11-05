@@ -1,10 +1,10 @@
 <div
   class="schedule-item"
-  title="<%= appearances_info(@performance) %>"
-  data-cc-id="<%= @performance.contest_category.id %>"
-  data-id="<%= @performance.id %>"
-  data-minutes="<%= scheduled_minutes(@performance) %>"
-  style="height: <%= item_height(@performance) %>; background-color: <%= item_color(@performance) %>"
+  title={appearances_info(@performance)}
+  data-cc-id={@performance.contest_category.id}
+  data-id={@performance.id}
+  data-minutes={scheduled_minutes(@performance)}
+  style={"height: #{item_height(@performance)}; background-color: #{item_color(@performance)}"}
   >
 
   <div class="stage-time">
@@ -25,7 +25,7 @@
 
   <div
     class="playtime-bar"
-    style="height: <%= playtime_percentage(@performance) %>; background-color: <%= item_color(@performance) %>"
+    style={"height: #{playtime_percentage(@performance)}; background-color: #{item_color(@performance)}"}
     >
   </div>
 </div>

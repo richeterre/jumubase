@@ -35,7 +35,7 @@
           <% [first_a | _] = group %>
           <tr>
             <%= if index == 0 do %>
-              <td rowspan="<%= length(groups) %>">
+              <td rowspan={length(groups)}>
                 <%= link category_name(performance),
                   to: Routes.internal_contest_performance_path(@conn, :show, @contest, performance)
                   %>

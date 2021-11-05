@@ -11,7 +11,7 @@
   <%= gettext("Edit code") %>: <code><%= @performance.edit_code %></code>
   <br>
   <%= gettext("Last edited") %>:
-  <span title="<%= format_datetime(@performance.updated_at) %>">
+  <span title={format_datetime(@performance.updated_at)}>
     <%= Timex.from_now(@performance.updated_at) %>
   </span>
 </p>

@@ -20,7 +20,7 @@
     <select id="cc-select" class="form-control input-sm">
       <option value=""><%= gettext("All categories") %></option>
       <%= for {name, id} <- cc_filter_options(@contest) do %>
-      <option value="<%= id %>"><%= name %></option>
+      <option value={id}><%= name %></option>
       <% end %>
     </select>
 
@@ -47,14 +47,14 @@
       <small class="text-muted"><%= gettext("Start at") %></small>
       <select
         class="start-time-select form-control input-sm"
-        data-target-date="<%= date %>"
+        data-target-date={date}
         >
         <%= start_time_options(performances) %>
       </select>
       <small class="text-muted"><%= gettext("o’clock") %></small>
     </div>
 
-    <div class="schedule-column" data-date="<%= date %>">
+    <div class="schedule-column" data-date={date}>
       <%= for p <- performances do %>
         <%= render("_performance_item.html", performance: p, round: @contest.round) %>
         <%= if (minutes = spacer_map[p.id]) > 0 do %>
@@ -65,7 +65,7 @@
 
     <button
       class="add-spacer-button btn btn-link btn-sm"
-      data-target-date="<%= date %>"
+      data-target-date={date}
       >
       <%= gettext("Insert break") %>
     </button>

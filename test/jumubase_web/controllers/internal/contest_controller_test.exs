@@ -85,16 +85,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       redirect_path = Routes.internal_live_path(conn, ContestLive.Index)
       assert redirected_to(conn) == redirect_path
 
-      # Follow first redirection
-      conn = get(recycle(conn), redirect_path)
-
-      # Check that default filter is applied
-      redirect_path =
-        Routes.internal_live_path(conn, ContestLive.Index, filter: %{season: c.season})
-
-      assert redirected_to(conn) == redirect_path
-
-      # Follow second redirection
+      # Follow redirection
       conn = get(recycle(conn), redirect_path)
 
       assert html_response(conn, 200) =~ "The contest #{name(c)} was updated."

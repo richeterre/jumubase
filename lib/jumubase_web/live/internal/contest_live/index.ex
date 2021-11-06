@@ -17,7 +17,8 @@ defmodule JumubaseWeb.Internal.ContestLive.Index do
     {:ok, prepare(socket, assigns)}
   end
 
-  def handle_params(%{"filter" => filter_params}, _url, socket) do
+  def handle_params(params, _url, socket) do
+    filter_params = Map.get(params, "filter", %{})
     filter = ContestFilter.from_params(filter_params)
     filter_cs = ContestFilter.changeset(filter_params)
 
@@ -27,24 +28,6 @@ defmodule JumubaseWeb.Internal.ContestLive.Index do
       |> Foundation.list_contests(filter)
 
     {:noreply, assign(socket, contests: contests, filter_changeset: filter_cs)}
-  end
-
-  def handle_params(_params, _url, socket) do
-    # Since no filter was passed, we apply the default filter
-    # (if possible) and update the URL accordingly using `push_patch`
-
-    case Foundation.list_seasons() |> List.first() do
-      nil ->
-        {:noreply, socket}
-
-      latest_season ->
-        filter_map = %ContestFilter{season: latest_season} |> ContestFilter.to_filter_map()
-
-        {:noreply,
-         push_patch(socket,
-           to: Routes.internal_live_path(socket, ContestLive.Index, filter: filter_map)
-         )}
-    end
   end
 
   def handle_event("filter", %{"contest_filter" => filter_params}, socket) do
@@ -67,8 +50,6 @@ defmodule JumubaseWeb.Internal.ContestLive.Index do
     )
     |> assign(
       current_user: user,
-      contests: [],
-      filter_changeset: ContestFilter.changeset(%{}),
       season_options: season_options(),
       round_options: round_options(),
       grouping_options: grouping_options()

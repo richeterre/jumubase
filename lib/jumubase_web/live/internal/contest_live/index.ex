@@ -26,19 +26,25 @@ defmodule JumubaseWeb.Internal.ContestLive.Index do
       |> Permit.scope_contests(socket.assigns.current_user)
       |> Foundation.list_contests(filter)
 
-    socket = assign(socket, contests: contests, filter_changeset: filter_cs)
-    {:noreply, socket}
+    {:noreply, assign(socket, contests: contests, filter_changeset: filter_cs)}
   end
 
   def handle_params(_params, _url, socket) do
-    # Apply default filter, and update the URL accordingly using `push_patch`
-    [latest_season | _] = Foundation.list_seasons()
-    filter = %ContestFilter{season: latest_season} |> ContestFilter.to_filter_map()
+    # Since no filter was passed, we apply the default filter
+    # (if possible) and update the URL accordingly using `push_patch`
 
-    {:noreply,
-     push_patch(socket,
-       to: Routes.internal_live_path(socket, ContestLive.Index, filter: filter)
-     )}
+    case Foundation.list_seasons() |> List.first() do
+      nil ->
+        {:noreply, socket}
+
+      latest_season ->
+        filter_map = %ContestFilter{season: latest_season} |> ContestFilter.to_filter_map()
+
+        {:noreply,
+         push_patch(socket,
+           to: Routes.internal_live_path(socket, ContestLive.Index, filter: filter_map)
+         )}
+    end
   end
 
   def handle_event("filter", %{"contest_filter" => filter_params}, socket) do
@@ -61,6 +67,8 @@ defmodule JumubaseWeb.Internal.ContestLive.Index do
     )
     |> assign(
       current_user: user,
+      contests: [],
+      filter_changeset: ContestFilter.changeset(%{}),
       season_options: season_options(),
       round_options: round_options(),
       grouping_options: grouping_options()

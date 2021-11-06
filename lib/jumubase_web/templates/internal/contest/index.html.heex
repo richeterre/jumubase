@@ -3,7 +3,7 @@
 <hr>
 
 <.form let={f} for={@filter_changeset} phx-change="filter" class="form-inline filter-form">
-  <%= text_input f, :search_text, placeholder: gettext("Search"), class: "form-control" %>
+  <%= text_input f, :search_text, autofocus: true, placeholder: gettext("Search"), class: "form-control" %>
   <%= select f, :season, @season_options, prompt: gettext("All years"), class: "form-control" %>
   <%= select f, :round, @round_options, prompt: gettext("All rounds"), class: "form-control" %>
   <%= select f, :grouping, @grouping_options, prompt: gettext("All groupings"), class: "form-control" %>

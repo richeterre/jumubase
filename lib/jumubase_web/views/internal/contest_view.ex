@@ -5,6 +5,7 @@ defmodule JumubaseWeb.Internal.ContestView do
   alias Jumubase.Foundation.Contest
   alias Jumubase.Foundation.AgeGroups
   alias Jumubase.Showtime
+  alias JumubaseWeb.Internal.ContestLive
 
   @doc """
   Returns a display name for the contest.
@@ -140,6 +141,12 @@ defmodule JumubaseWeb.Internal.ContestView do
     changeset |> Changeset.get_field(:contest_categories) |> Enum.count()
   end
 
+  def filter_status(count, true) do
+    [count_tag(count), " ", active_filter_label()]
+  end
+
+  def filter_status(count, false), do: count_tag(count)
+
   # Private helpers
 
   defp short_round_name(round) do
@@ -149,5 +156,17 @@ defmodule JumubaseWeb.Internal.ContestView do
       2 -> "LW"
       3 -> "BW"
     end
+  end
+
+  defp count_tag(count) do
+    content_tag(
+      :span,
+      ngettext("%{count} contest", "%{count} contests", count),
+      class: "text-muted"
+    )
+  end
+
+  defp active_filter_label do
+    content_tag(:span, gettext("Filter active"), class: "label label-warning")
   end
 end

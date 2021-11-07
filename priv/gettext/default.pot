@@ -68,7 +68,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/_form.html.heex:6
-#: lib/jumubase_web/templates/internal/category/index.html.heex:9 lib/jumubase_web/templates/internal/contest/index.html.heex:16
+#: lib/jumubase_web/templates/internal/category/index.html.heex:9 lib/jumubase_web/templates/internal/contest/index.html.heex:26
 #: lib/jumubase_web/templates/internal/contest_category/index.html.heex:19 lib/jumubase_web/templates/internal/host/_form.html.heex:6
 #: lib/jumubase_web/templates/internal/host/index.html.heex:9 lib/jumubase_web/templates/internal/user/index.html.heex:9
 #: lib/jumubase_web/templates/page/_contact_form.html.heex:6
@@ -313,16 +313,16 @@ msgid "Composer"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_category_controller.ex:8
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:13 lib/jumubase_web/controllers/internal/participant_controller.ex:15
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:15 lib/jumubase_web/controllers/internal/stage_controller.ex:11
-#: lib/jumubase_web/live/internal/contest_live/index.ex:58 lib/jumubase_web/templates/internal/contest/index.html.heex:1
+#: lib/jumubase_web/controllers/internal/contest_category_controller.ex:9
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:14 lib/jumubase_web/controllers/internal/participant_controller.ex:16
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:16 lib/jumubase_web/controllers/internal/stage_controller.ex:12
+#: lib/jumubase_web/live/internal/contest_live/index.ex:55 lib/jumubase_web/templates/internal/contest/index.html.heex:1
 #: lib/jumubase_web/templates/internal/page/home.html.heex:24 lib/jumubase_web/templates/internal/page/home.html.heex:40
 msgid "Contests"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:18
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:28
 msgid "Dates"
 msgstr ""
 
@@ -334,7 +334,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.heex:53
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:19 lib/jumubase_web/templates/page/_contest_list.html.heex:10
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:29 lib/jumubase_web/templates/page/_contest_list.html.heex:10
 msgid "Deadline"
 msgstr ""
 
@@ -506,7 +506,7 @@ msgid "Please enter an edit code."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:6
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:7
 #: lib/jumubase_web/templates/page/edit_registration.html.heex:20
 msgid "Search"
 msgstr ""
@@ -843,7 +843,7 @@ msgid "Edit Contest"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:61
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:56
 msgid "The contest %{name} was updated."
 msgstr ""
 
@@ -906,11 +906,13 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
+#: lib/jumubase_web/views/internal/contest_view.ex:170
 #: lib/jumubase_web/views/internal/performance_view.ex:262
 msgid "Filter active"
 msgstr ""
 
 #, elixir-format
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:17
 #: lib/jumubase_web/templates/internal/performance/_filter_form.html.heex:22
 msgid "Show all"
 msgstr ""
@@ -957,7 +959,7 @@ msgid "The performance was updated."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:66
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:67
 msgid "The performance was deleted."
 msgstr ""
 
@@ -977,7 +979,7 @@ msgid "Add Performance"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:103
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:104
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:41 lib/jumubase_web/templates/internal/stage/index.html.heex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.heex:2
 msgid "Schedule performances"
@@ -1293,7 +1295,7 @@ msgid "Print jury sheets"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:95
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:96
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:46 lib/jumubase_web/templates/internal/performance/jury_material.html.heex:2
 msgid "Create jury material"
 msgstr ""
@@ -1326,12 +1328,12 @@ msgid "Timetables public"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:115
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:116
 msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:123
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:124
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:60
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.heex:6 lib/jumubase_web/templates/internal/performance/edit_results.html.heex:2
 msgid "Enter points"
@@ -1367,12 +1369,12 @@ msgid "Save points"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:151
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:152
 msgid "The points could not be saved at this time."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:160
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:161
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:69 lib/jumubase_web/templates/internal/performance/publish_results.html.heex:2
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:25
 msgid "Publish results"
@@ -1408,21 +1410,21 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:315
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:316
 msgid "The results of this performance were published."
 msgid_plural "The results of these %{count} performances were published."
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:326
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:327
 msgid "The results of this performance were unpublished."
 msgid_plural "The results of these %{count} performances were unpublished."
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:348
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:349
 msgid "The results of some performances below have already been published. Your changes will be visible to others instantly."
 msgstr ""
 
@@ -1437,7 +1439,7 @@ msgid "missing"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:197
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:198
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:78 lib/jumubase_web/templates/internal/performance/certificates.html.heex:2
 msgid "Create certificates"
 msgstr ""
@@ -1468,7 +1470,7 @@ msgid "Time"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:107
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:108
 #: lib/jumubase_web/templates/internal/stage/timetable.html.heex:2
 msgid "Timetable"
 msgstr ""
@@ -1495,27 +1497,27 @@ msgid "Total"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:86
+#: lib/jumubase_web/views/internal/contest_view.ex:87
 msgid "%{completed} of %{total} entered so far"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:96
+#: lib/jumubase_web/views/internal/contest_view.ex:97
 msgid "%{completed} of %{total} published so far"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:85
+#: lib/jumubase_web/views/internal/contest_view.ex:86
 msgid "All %{total} entered"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/views/internal/contest_view.ex:93
+#: lib/jumubase_web/views/internal/contest_view.ex:94
 msgid "All %{total} published"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:219
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:220
 #: lib/jumubase_web/templates/internal/performance/advancing.html.heex:2
 msgid "Advancing performances"
 msgstr ""
@@ -1526,7 +1528,7 @@ msgid "Show advancing"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:241
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:242
 msgid "MIGRATE_PERFORMANCES_SUCCESS_ONE"
 msgid_plural "MIGRATE_PERFORMANCES_SUCCESS_MANY(%{count})"
 msgstr[0] ""
@@ -1538,7 +1540,7 @@ msgid "Migrate performances to %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:251
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:252
 msgid "The performances could not be migrated."
 msgstr ""
 
@@ -1586,7 +1588,7 @@ msgid "Send welcome emails"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:131
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:132
 msgid "The welcome emails were sent."
 msgstr ""
 
@@ -1630,12 +1632,12 @@ msgid "Merge participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:108
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:109
 msgid "The participants could not be merged."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:105
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:106
 msgid "The participants were merged."
 msgstr ""
 
@@ -1650,7 +1652,7 @@ msgid "No duplicate participants were found."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/performance_controller.ex:361
+#: lib/jumubase_web/controllers/internal/performance_controller.ex:362
 #: lib/jumubase_web/live/internal/performance_live/edit.ex:82
 msgid "This performance already has results. To edit it, please clear them first."
 msgstr ""
@@ -1673,7 +1675,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/edit.html.heex:38
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:17 lib/jumubase_web/templates/internal/contest/live_form.html.heex:25
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:27 lib/jumubase_web/templates/internal/contest/live_form.html.heex:25
 #: lib/jumubase_web/templates/internal/host/_form.html.heex:14 lib/jumubase_web/templates/internal/host/index.html.heex:10
 msgid "Grouping"
 msgstr ""
@@ -1838,7 +1840,7 @@ msgid "Edit Participant"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:60
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:61
 msgid "The participant %{name} was updated."
 msgstr ""
 
@@ -1860,7 +1862,7 @@ msgid "Allows WESPE nominations"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:51
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:61
 msgid "Add Contests"
 msgstr ""
 
@@ -1892,19 +1894,19 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/live/internal/contest_live/new.ex:71
+#: lib/jumubase_web/live/internal/contest_live/new.ex:72
 msgid "The contest was created."
 msgid_plural "The contests were created."
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/contest_controller.ex:74
+#: lib/jumubase_web/controllers/internal/contest_controller.ex:69
 msgid "The contest %{name} was deleted."
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:41
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:51
 msgid "Do you really want to delete the contest %{name}?"
 msgstr ""
 
@@ -1914,8 +1916,8 @@ msgid "Duplicate Participants"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:76
-#: lib/jumubase_web/controllers/internal/participant_controller.ex:91
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:77
+#: lib/jumubase_web/controllers/internal/participant_controller.ex:92
 msgid "Duplicates"
 msgstr ""
 
@@ -1957,17 +1959,17 @@ msgid "Choose template"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:9
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:10
 msgid "All groupings"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/live/internal/contest_live/index.ex:74
+#: lib/jumubase_web/live/internal/contest_live/index.ex:71
 msgid "Grouping %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:7
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:8
 msgid "All years"
 msgstr ""
 
@@ -1982,6 +1984,13 @@ msgid "Confirm new password"
 msgstr ""
 
 #, elixir-format
-#: lib/jumubase_web/templates/internal/contest/index.html.heex:8
+#: lib/jumubase_web/templates/internal/contest/index.html.heex:9
 msgid "All rounds"
 msgstr ""
+
+#, elixir-format
+#: lib/jumubase_web/views/internal/contest_view.ex:164
+msgid "%{count} contest"
+msgid_plural "%{count} contests"
+msgstr[0] ""
+msgstr[1] ""

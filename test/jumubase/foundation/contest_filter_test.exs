@@ -52,4 +52,18 @@ defmodule Jumubase.ContestFilterTest do
                }
     end
   end
+
+  describe "active?/1" do
+    test "returns true when any filter value is set" do
+      for {key, value} <- @valid_params do
+        filter = ContestFilter.from_params(Map.put(%{}, key, value))
+        assert ContestFilter.active?(filter)
+      end
+    end
+
+    test "returns false when no filter values are set" do
+      filter = ContestFilter.from_params(%{})
+      refute ContestFilter.active?(filter)
+    end
+  end
 end

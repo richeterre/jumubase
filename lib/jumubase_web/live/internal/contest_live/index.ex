@@ -27,7 +27,14 @@ defmodule JumubaseWeb.Internal.ContestLive.Index do
       |> Permit.scope_contests(socket.assigns.current_user)
       |> Foundation.list_contests(filter)
 
-    {:noreply, assign(socket, contests: contests, filter_changeset: filter_cs)}
+    socket =
+      assign(socket,
+        contests: contests,
+        filter_changeset: filter_cs,
+        filter_active: ContestFilter.active?(filter)
+      )
+
+    {:noreply, socket}
   end
 
   def handle_event("filter", %{"contest_filter" => filter_params}, socket) do

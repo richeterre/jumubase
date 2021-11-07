@@ -35,6 +35,13 @@ defmodule Jumubase.Foundation.ContestFilter do
   end
 
   @doc """
+  Returns whether the filter contains any set values.
+  """
+  def active?(%ContestFilter{} = filter) do
+    filter |> to_filter_map |> Enum.empty?() |> Kernel.not()
+  end
+
+  @doc """
   Converts the filter into a map with non-set (nil) values removed.
   """
   def to_filter_map(%ContestFilter{} = filter) do

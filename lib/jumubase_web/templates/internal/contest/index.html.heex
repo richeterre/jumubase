@@ -5,8 +5,11 @@
 <.form let={f} for={@filter_changeset} phx-change="filter" class="form-inline filter-form">
   <div class="form-section">
     <%= text_input f, :search_text, autofocus: true, placeholder: gettext("Search"), class: "form-control" %>
+    &#32;
     <%= select f, :season, @season_options, prompt: gettext("All years"), class: "form-control" %>
+    &#32;
     <%= select f, :round, @round_options, prompt: gettext("All rounds"), class: "form-control" %>
+    &#32;
     <%= select f, :grouping, @grouping_options, prompt: gettext("All groupings"), class: "form-control" %>
   </div>
 

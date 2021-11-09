@@ -460,13 +460,18 @@ defmodule Jumubase.ShowtimeTest do
       assert Changeset.get_change(changeset, :edit_code) == nil
     end
 
-    test "assigns existing participant when name and birthdate matches", %{contest: c} do
+    test "assigns the earliest existing participant when full name and birthdate matches", %{
+      contest: c
+    } do
       [cc, _] = c.contest_categories
 
       insert(:participant, given_name: "Y", family_name: "X", birthdate: ~D[2001-01-01])
       insert(:participant, given_name: "X", family_name: "Y", birthdate: ~D[2001-01-01])
       insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-02])
       pt = insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-01])
+
+      # Insert another (more recent) matching participant
+      insert(:participant, given_name: "X", family_name: "X", birthdate: ~D[2001-01-01])
 
       attrs =
         performance_params(cc, [
@@ -478,7 +483,7 @@ defmodule Jumubase.ShowtimeTest do
       sol = get_soloist(performance)
 
       assert sol.participant.id == pt.id
-      assert Repo.aggregate(Participant, :count, :id) == 5
+      assert Repo.aggregate(Participant, :count, :id) == 6
     end
 
     test "updates the existing participant during assignment", %{contest: c} do
@@ -702,11 +707,16 @@ defmodule Jumubase.ShowtimeTest do
       assert pt.email == "new@example.org"
     end
 
-    test "assigns and updates an existing participant when adding one to match", %{contest: c} do
+    test "assigns and updates the earliest existing participant when adding a matching one", %{
+      contest: c
+    } do
       [cc, _] = c.contest_categories
 
       matching_attrs = [given_name: "X", family_name: "X", birthdate: ~D[2001-01-01]]
       old_pt = insert(:participant, matching_attrs ++ [email: "old@example.org"])
+
+      # Insert another (more recent) matching participant
+      insert(:participant, matching_attrs)
 
       old_p =
         insert_shorthand_performance(cc, [

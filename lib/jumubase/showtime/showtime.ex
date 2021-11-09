@@ -576,17 +576,23 @@ defmodule Jumubase.Showtime do
 
   # Connects a to-be-inserted appearance to an existing participant,
   # if one is found for the "new" participant's identity fields.
+  # If multiple are found, we pick the "original" (= least recent) one.
   defp stitch_participant(%Changeset{action: :insert} = appearance_cs) do
     pt_cs = get_change(appearance_cs, :participant)
     given_name = get_field(pt_cs, :given_name)
     family_name = get_field(pt_cs, :family_name)
     birthdate = get_field(pt_cs, :birthdate)
 
-    case Repo.get_by(Participant,
-           given_name: given_name,
-           family_name: family_name,
-           birthdate: birthdate
-         ) do
+    earliest_match =
+      Participant
+      |> where(given_name: ^given_name)
+      |> where(family_name: ^family_name)
+      |> where(birthdate: ^birthdate)
+      |> order_by(:inserted_at)
+      |> limit(1)
+      |> Repo.one()
+
+    case earliest_match do
       nil ->
         appearance_cs
 

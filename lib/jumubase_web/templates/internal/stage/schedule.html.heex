@@ -25,11 +25,9 @@
     </select>
 
     <div class="schedule-column" data-date="">
-      <%=
-        for p <- @performances[:unscheduled] do
-          render("_performance_item.html", performance: p, round: @contest.round)
-        end
-      %>
+      <%= for p <- @performances[:unscheduled] do %>
+        <%= render("_performance_item.html", performance: p, round: @contest.round) %>
+      <% end %>
     </div>
   </div>
 

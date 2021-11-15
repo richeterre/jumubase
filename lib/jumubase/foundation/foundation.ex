@@ -84,24 +84,14 @@ defmodule Jumubase.Foundation do
   Returns all contests.
   """
   def list_contests(query \\ Contest) do
-    query =
-      from c in query,
-        join: h in assoc(c, :host),
-        order_by: [{:desc, c.season}, {:desc, c.round}, c.grouping, h.name, c.start_date],
-        preload: [host: h]
-
-    Repo.all(query)
+    query
+    |> ordered_with_hosts_preloaded()
+    |> Repo.all()
   end
 
   def list_contests(query, %ContestFilter{} = filter) do
-    query =
-      from c in query,
-        join: h in assoc(c, :host),
-        as: :hosts,
-        order_by: [{:desc, c.season}, {:desc, c.round}, c.grouping, h.name],
-        preload: [host: h]
-
     query
+    |> ordered_with_hosts_preloaded()
     |> apply_filter(filter)
     |> Repo.all()
   end
@@ -401,6 +391,14 @@ defmodule Jumubase.Foundation do
     |> limit(1)
     |> select([c], c.season)
     |> Repo.one()
+  end
+
+  defp ordered_with_hosts_preloaded(query) do
+    from c in query,
+      join: h in assoc(c, :host),
+      as: :hosts,
+      order_by: [{:desc, c.season}, {:desc, c.round}, c.grouping, h.name, c.start_date],
+      preload: [host: h]
   end
 
   defp apply_filter(query, %ContestFilter{} = filter) do

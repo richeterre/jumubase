@@ -36,8 +36,7 @@ defmodule Jumubase.Foundation.Contest do
     |> validate_inclusion(:round, JumuParams.rounds())
     |> validate_inclusion(:grouping, JumuParams.groupings())
     |> validate_dates()
-    |> handle_lw_uniqueness()
-    |> sanitize_text_input
+    |> sanitize_text_input()
   end
 
   @doc """
@@ -75,13 +74,6 @@ defmodule Jumubase.Foundation.Contest do
       true ->
         changeset
     end
-  end
-
-  defp handle_lw_uniqueness(%Changeset{} = changeset) do
-    unique_constraint(changeset, :contest,
-      name: :one_lw_per_season_and_grouping,
-      message: dgettext("errors", "has a round that's already taken for this year and grouping")
-    )
   end
 
   defp sanitize_text_input(%Changeset{} = changeset) do

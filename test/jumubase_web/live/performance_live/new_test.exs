@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.PerformanceLive.EditTest do
+defmodule JumubaseWeb.PerformanceLive.NewTest do
   use JumubaseWeb.ConnCase
   use Bamboo.Test, shared: true
   import Phoenix.LiveViewTest
@@ -50,7 +50,10 @@ defmodule JumubaseWeb.PerformanceLive.EditTest do
     [cc, _] = c.contest_categories
     {view, _} = live_new(conn, c)
 
-    render_submit(view, "submit", valid_performance_params(cc))
+    view
+    |> form("form", valid_performance_params(cc))
+    |> render_submit()
+
     %Performance{edit_code: edit_code} = get_inserted_performance()
 
     flash = assert_redirect(view, "/")
@@ -63,7 +66,10 @@ defmodule JumubaseWeb.PerformanceLive.EditTest do
     [cc, _] = c.contest_categories
     {view, _} = live_new(conn, c)
 
-    render_submit(view, "submit", valid_performance_params(cc))
+    view
+    |> form("form", valid_performance_params(cc))
+    |> render_submit()
+
     performance = get_inserted_performance()
 
     assert_delivered_email(JumubaseWeb.Email.registration_success(performance))
@@ -75,8 +81,13 @@ defmodule JumubaseWeb.PerformanceLive.EditTest do
 
     invalid_params = %{"performance" => %{"contest_category_id" => cc.id}}
 
-    assert render_submit(view, "submit", invalid_params) =~
-             "The performance must have at least one participant."
+    html =
+      view
+      |> form("form", invalid_params)
+      |> render_submit()
+
+    assert view |> element(".has-error") |> has_element?()
+    assert html =~ "can&#39;t be blank"
 
     assert get_inserted_performance() == nil
   end

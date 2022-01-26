@@ -57,7 +57,11 @@ defmodule Jumubase.TestHelpers do
             "participant" => %{
               "given_name" => "A",
               "family_name" => "A",
-              "birthdate" => "2004-01-01",
+              "birthdate" => %{
+                "year" => 2004,
+                "month" => 1,
+                "day" => 1
+              },
               "email" => "ab@cd.ef",
               "phone" => "1234567"
             }

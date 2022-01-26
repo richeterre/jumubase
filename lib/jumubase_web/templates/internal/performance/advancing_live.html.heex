@@ -1,17 +1,23 @@
 <.form let={f} for={:migration} url="#" phx_change="change" phx_submit="submit" class="form-inline filter-form">
-  <%= if @can_migrate? do %>
-    <%= select f, :target_contest_id, @target_contest_options, prompt: gettext("Please choose"), class: "form-control" %>
-    <%= submit "Migrieren",
-      disabled: !@can_submit?,
-      data: [confirm: gettext("Do you really want to migrate the performances?")],
-      class: "btn btn-primary" %>
-  <% end %>
+  <div class="form-section">
+    <%= if @can_migrate? do %>
+      <%= select f, :target_contest_id, @target_contest_options, prompt: gettext("Please choose"), class: "form-control" %>
+      <%= submit "Migrieren",
+        disabled: !@can_submit?,
+        data: [confirm: gettext("Do you really want to migrate the performances?")],
+        class: "btn btn-primary" %>
+    <% end %>
 
-  <%= if @can_export? do %>
-    <%= icon_link "export", gettext("Export for JMDaten"),
-      Routes.internal_contest_performances_path(@socket, :advancing_xml, @contest),
-      class: "btn btn-default" %>
-  <% end %>
+    <%= if @can_export? do %>
+      <%= icon_link "export", gettext("Export for JMDaten"),
+        Routes.internal_contest_performances_path(@socket, :advancing_xml, @contest),
+        class: "btn btn-default" %>
+    <% end %>
+  </div>
+
+  <div class="form-section">
+    <%= filter_status(length(@performances), !!@target_contest) %>
+  </div>
 </.form>
 
 <div class="table-responsive">

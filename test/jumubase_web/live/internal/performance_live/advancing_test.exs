@@ -86,6 +86,8 @@ defmodule JumubaseWeb.Internal.PerformanceLive.AdvancingTest do
     {view, _html} = live_advancing(conn, c)
     html = render_change(view, "change", %{"migration" => %{"target_contest_id" => target_c.id}})
 
+    assert html =~ "1 performance"
+    assert html =~ "Filter active"
     assert html =~ "Ella Eligible"
     refute html =~ "Irvin Ineligible"
     assert view |> element("button[type=submit]:not(disabled)") |> has_element?()

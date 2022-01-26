@@ -202,17 +202,16 @@ defmodule Jumubase.Foundation do
   def get_matching_kimu_contest(%Contest{}), do: nil
 
   @doc """
-  Returns the next-round contest that advancing performances go to,
-  or nil if no such contest exists.
+  Returns all next-round contests that performances of the given contest might advance to.
   """
-  def get_successor(%Contest{season: season, round: 1, grouping: grouping}) do
+  def get_successors(%Contest{season: season, round: 1, grouping: grouping}) do
     Contest
     |> where(season: ^season, round: 2, grouping: ^grouping)
     |> preload(:host)
-    |> Repo.one()
+    |> Repo.all()
   end
 
-  def get_successor(%Contest{round: _}), do: nil
+  def get_successors(%Contest{round: _}), do: []
 
   @doc """
   Returns the official (non-Kimu) contest with the latest end date.

@@ -14,7 +14,7 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     ]
 
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
-  import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
+  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration_and_epoch_info: 1, person_info: 1]
   alias Jumubase.JumuParams
@@ -22,7 +22,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
   alias Jumubase.Showtime.Performance
-  alias JumubaseWeb.Internal.Permit
   alias JumubaseWeb.Internal.HostView
   alias JumubaseWeb.PDFGenerator
 

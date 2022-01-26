@@ -660,38 +660,38 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "get_successor/1" do
-    test "returns the next-round (LW) successor for an RW contest" do
+  describe "get_successors/1" do
+    test "returns the next-round (LW) successors for an RW contest" do
       c1 = insert(:contest, season: 56, round: 1, grouping: "1")
       # Irrelevant contests
       insert(:contest, season: 57, round: 2, grouping: "1")
       insert(:contest, season: 56, round: 0, grouping: "1")
       insert(:contest, season: 56, round: 1, grouping: "1")
       insert(:contest, season: 56, round: 2, grouping: "2")
-      # Successor contest
+      # Successor contests
       c2 = insert(:contest, season: 56, round: 2, grouping: "1")
+      c3 = insert(:contest, season: 56, round: 2, grouping: "1")
 
-      result = Foundation.get_successor(c1)
-      assert result.id == c2.id
+      assert_ids_match_unordered([c2, c3], Foundation.get_successors(c1))
     end
 
     test "preloads the necessary associations" do
       c = insert(:contest, season: 56, round: 1)
       insert(:contest, season: 56, round: 2)
 
-      assert %Contest{host: %Host{}} = Foundation.get_successor(c)
+      assert [%Contest{host: %Host{}}] = Foundation.get_successors(c)
     end
 
-    test "returns nil if there is no matching LW" do
+    test "returns an empty list if there is no matching LW" do
       c = insert(:contest, season: 56, round: 1)
-      assert Foundation.get_successor(c) == nil
+      assert Foundation.get_successors(c) == []
     end
 
-    test "returns nil for non-RW contests" do
+    test "returns an empty list for non-RW contests" do
       c1 = insert(:contest, season: 56, round: 0)
       c2 = insert(:contest, season: 56, round: 2)
-      assert Foundation.get_successor(c1) == nil
-      assert Foundation.get_successor(c2) == nil
+      assert Foundation.get_successors(c1) == []
+      assert Foundation.get_successors(c2) == []
     end
   end
 

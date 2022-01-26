@@ -139,9 +139,6 @@ defmodule JumubaseWeb.Router do
       get "/performances/advancing", PerformanceController, :advancing, as: :performances
       get "/performances/advancing.xml", PerformanceController, :advancing_xml, as: :performances
 
-      post "/performances/migrate-advancing", PerformanceController, :migrate_advancing,
-        as: :performances
-
       get "/participants/duplicates", ParticipantController, :duplicates
       get "/participants/compare/:source_id/:target_id", ParticipantController, :compare
       patch "/participants/merge/:source_id/:target_id", ParticipantController, :merge

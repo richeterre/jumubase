@@ -2,6 +2,7 @@
   <div class="form-section">
     <%= if @can_migrate? do %>
       <%= select f, :target_contest_id, @target_contest_options, prompt: gettext("Please choose"), class: "form-control" %>
+      &#32;
       <%= submit "Migrieren",
         disabled: !@can_submit?,
         data: [confirm: gettext("Do you really want to migrate the performances?")],

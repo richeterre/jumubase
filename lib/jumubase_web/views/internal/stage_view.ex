@@ -201,7 +201,7 @@ defmodule JumubaseWeb.Internal.StageView do
   end
 
   defp time_options(selected) do
-    for hour <- 8..17, minute <- Enum.take_every(0..59, 5) do
+    for hour <- 7..17, minute <- Enum.take_every(0..59, 5) do
       {:ok, time} = Time.new(hour, minute, 0)
       label = Timex.format!(time, "%H:%M", :strftime)
       content_tag(:option, label, value: time, selected: time == selected)

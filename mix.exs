@@ -37,7 +37,7 @@ defmodule Jumubase.Mixfile do
       {:absinthe_plug, "~> 1.5"},
       {:bamboo, "~> 2.0"},
       {:bamboo_phoenix, "~> 1.0"},
-      {:bcrypt_elixir, "~> 2.0"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:dataloader, "~> 1.0"},
       {:earmark, "~> 1.4"},
       {:ecto_sql, "~> 3.6"},
@@ -45,8 +45,7 @@ defmodule Jumubase.Mixfile do
       {:floki, ">= 0.27.0", only: :test},
       {:gettext, "~> 0.11"},
       {:hackney, "~> 1.8"},
-      # Override needed for :sneeze dependency which requires 0.4.0:
-      {:html_entities, "~> 0.5", override: true},
+      {:html_entities, "~> 0.5"},
       {:jason, "~> 1.1"},
       {:nimble_csv, "~> 1.0"},
       {:pdf_generator, "~> 0.4"},
@@ -57,12 +56,12 @@ defmodule Jumubase.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_live_view, "~> 0.17"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:plug_cowboy, "~> 2.3"},
+      {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},
       {:sneeze, "~> 1.2"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 0.5"},
+      {:telemetry_poller, "~> 1.0"},
       {:timex, "~> 3.0"},
       {:xml_builder, "~> 2.1"}
     ]

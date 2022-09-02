@@ -1,4 +1,4 @@
-# fly.toml file generated for jumubase-production on 2022-09-01T15:29:54+02:00
+# fly.toml file generated for jumubase-production on 2022-09-02T15:12:45+02:00
 
 app = "jumubase-production"
 kill_signal = "SIGTERM"

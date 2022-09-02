@@ -22,7 +22,7 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git nodejs npm \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # prepare build dir
@@ -52,6 +52,9 @@ COPY lib lib
 
 COPY assets assets
 
+# Install Node dependencies
+RUN npm install --prefix assets
+
 # compile assets
 RUN mix assets.deploy
 
@@ -77,6 +80,10 @@ RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+
+# Install runtime dependencies
+RUN apt-get update -y && apt-get install -y wkhtmltopdf \
+    && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 WORKDIR "/app"
 RUN chown nobody /app

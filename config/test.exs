@@ -4,6 +4,7 @@ import Config
 # you can enable the server option below.
 config :jumubase, JumubaseWeb.Endpoint,
   http: [port: 4001],
+  secret_key_base: "gdmnXTTxP5GAW8ta1xHL+uHsHcE1PesiN/qJTNzWG303h/oLR3HFpfFN3JDtG4B9",
   server: false
 
 # Print only warnings and errors during test

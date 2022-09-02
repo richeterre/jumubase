@@ -22,5 +22,8 @@
     "phoenix_live_view": "file:../deps/phoenix_live_view",
     "shim-keyboard-event-key": "^1.0.3",
     "url-search-params-polyfill": "^8.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.12.24"
   }
 }

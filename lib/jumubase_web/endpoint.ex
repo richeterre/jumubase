@@ -8,10 +8,6 @@ defmodule JumubaseWeb.Endpoint do
     signing_salt: "fGn2vR2v"
   ]
 
-  socket "/socket", JumubaseWeb.UserSocket,
-    # Time out before Heroku does
-    websocket: [timeout: 45_000]
-
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
@@ -30,6 +26,7 @@ defmodule JumubaseWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :jumubase
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -37,7 +34,7 @@ defmodule JumubaseWeb.Endpoint do
     cookie_key: "request_logger"
 
   plug Plug.RequestId
-  plug Plug.Logger
+  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
@@ -48,23 +45,6 @@ defmodule JumubaseWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-
   plug Plug.Session, @session_options
-
   plug JumubaseWeb.Router
-
-  @doc """
-  Callback invoked for dynamically configuring the endpoint.
-
-  It receives the endpoint configuration and checks if
-  configuration should be loaded from the system environment.
-  """
-  def init(_key, config) do
-    if config[:load_from_system_env] do
-      port = System.get_env("PORT") || raise "expected the PORT environment variable to be set"
-      {:ok, Keyword.put(config, :http, [:inet6, port: port])}
-    else
-      {:ok, config}
-    end
-  end
 end

@@ -5,7 +5,7 @@ import Config
 #
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
-# with Webpack to recompile .js and .css sources.
+# with esbuild to bundle .js and .css sources.
 config :jumubase, JumubaseWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,

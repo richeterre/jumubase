@@ -6,17 +6,14 @@
     "> 1%",
     "not dead"
   ],
-  "scripts": {
-    "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch --stdin"
-  },
   "dependencies": {
     "@webcomponents/template": "^1.4.4",
+    "bootstrap-sass": "3.4.1",
     "child-replace-with-polyfill": "^1.0.1",
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.6.5",
     "formdata-polyfill": "^3.0.20",
-    "jquery-ui": "^1.12.1",
+    "jquery": "3.4.0",
     "lodash": "^4.17.19",
     "luxon": "^1.8.2",
     "mdn-polyfills": "^5.20.0",
@@ -25,20 +22,5 @@
     "phoenix_live_view": "file:../deps/phoenix_live_view",
     "shim-keyboard-event-key": "^1.0.3",
     "url-search-params-polyfill": "^8.1.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
-    "babel-loader": "^8.0.4",
-    "bootstrap-sass": "3.4.1",
-    "copy-webpack-plugin": "^4.6.0",
-    "css-loader": "^1.0.1",
-    "eslint": "^5.6.0",
-    "jquery": "3.4.0",
-    "mini-css-extract-plugin": "^0.4.4",
-    "node-sass": "npm:sass@^1.49.9",
-    "sass-loader": "^7.1.0",
-    "webpack": "^4.26.0",
-    "webpack-cli": "^3.1.2"
   }
 }

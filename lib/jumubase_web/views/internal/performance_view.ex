@@ -25,10 +25,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias JumubaseWeb.Internal.HostView
   alias JumubaseWeb.PDFGenerator
 
-  def render("scripts.index.html", assigns) do
-    render_performance_filter(assigns)
-  end
-
   def render("reschedule_success.json", %{stage_times: stage_times}) do
     stage_times
     |> Enum.map(fn {id, st} -> {id, %{stageTime: st}} end)
@@ -44,31 +40,12 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     }
   end
 
-  def render("scripts.jury_material.html", assigns) do
-    render_performance_filter(assigns)
-  end
-
   def render("jury_sheets.pdf", %{performances: performances, round: round}) do
     PDFGenerator.jury_sheets(performances, round)
   end
 
   def render("jury_table.pdf", %{performances: performances}) do
     PDFGenerator.jury_table(performances)
-  end
-
-  def render("scripts.edit_results.html", assigns) do
-    ~H(
-      <script src="/js/performanceFilter.js"></script>
-      <script src="/js/resultForm.js"></script>
-    )
-  end
-
-  def render("scripts.publish_results.html", assigns) do
-    render_performance_filter(assigns)
-  end
-
-  def render("scripts.certificates.html", assigns) do
-    render_performance_filter(assigns)
   end
 
   def render("certificates.pdf", %{performances: performances, contest: contest}) do
@@ -210,10 +187,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   # Private helpers
-
-  defp render_performance_filter(assigns) do
-    ~H(<script src="/js/performanceFilter.js"></script>)
-  end
 
   defp base_filter_options(%Contest{} = contest) do
     %{

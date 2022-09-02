@@ -22,7 +22,7 @@ defmodule JumubaseWeb.Endpoint do
     at: "/",
     from: :jumubase,
     gzip: false,
-    only: ~w(css fonts images js resources favicons robots.txt)
+    only: ~w(assets fonts images resources favicons robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

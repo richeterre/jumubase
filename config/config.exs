@@ -49,6 +49,23 @@ config :jumubase, JumubaseWeb.Email,
 # Configure release level
 config :jumubase, release_level: System.get_env("RELEASE_LEVEL")
 
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.14.29",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+config :dart_sass,
+  version: "1.54.8",
+  default: [
+    args: ~w(css/app.scss ../priv/static/assets/app.css),
+    cd: Path.expand("../assets", __DIR__)
+  ]
+
 # Configure Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

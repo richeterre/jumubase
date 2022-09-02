@@ -20,6 +20,24 @@ if System.get_env("PHX_SERVER") do
   config :jumubase, JumubaseWeb.Endpoint, server: true
 end
 
+# Configure release level
+config :jumubase, release_level: System.get_env("RELEASE_LEVEL")
+
+# Configure API keys
+config :jumubase, JumubaseWeb.MapHelpers, google_api_key: System.get_env("GOOGLE_API_KEY")
+config :jumubase, JumubaseWeb.ApiAuth, api_key: System.get_env("JUMU_API_KEY")
+
+# Configure companion app IDs
+config :jumubase, :app_ids,
+  android: System.get_env("JUMU_APP_ID_ANDROID"),
+  ios: System.get_env("JUMU_APP_ID_IOS")
+
+# Configure email addresses
+config :jumubase, JumubaseWeb.Email,
+  default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
+  contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
+  admin_email: System.get_env("JUMU_ADMIN_EMAIL")
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

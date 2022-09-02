@@ -9,17 +9,6 @@ import Config
 config :jumubase,
   ecto_repos: [Jumubase.Repo]
 
-# API keys
-config :jumubase, JumubaseWeb.MapHelpers, google_api_key: System.get_env("GOOGLE_API_KEY")
-
-config :jumubase, JumubaseWeb.ApiAuth, api_key: System.get_env("JUMU_API_KEY")
-
-# Companion app IDs
-
-config :jumubase, :app_ids,
-  android: System.get_env("JUMU_APP_ID_ANDROID"),
-  ios: System.get_env("JUMU_APP_ID_IOS")
-
 # Set default locale
 locale = "de"
 config :jumubase, Jumubase.Gettext, default_locale: locale
@@ -38,15 +27,6 @@ config :jumubase, Jumubase.Repo, migration_timestamps: [type: :naive_datetime_us
 
 # Configure mailer
 config :jumubase, Jumubase.Mailer, adapter: Bamboo.LocalAdapter
-
-# Configure email
-config :jumubase, JumubaseWeb.Email,
-  default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
-  contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
-  admin_email: System.get_env("JUMU_ADMIN_EMAIL")
-
-# Configure release level
-config :jumubase, release_level: System.get_env("RELEASE_LEVEL")
 
 config :dart_sass,
   version: "1.54.8",

@@ -38,6 +38,13 @@ config :jumubase, JumubaseWeb.Email,
   contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
   admin_email: System.get_env("JUMU_ADMIN_EMAIL")
 
+# Configure Sentry
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN"),
+  filter: Jumubase.SentryEventFilter,
+  included_environments: ~w(staging production),
+  environment_name: System.get_env("RELEASE_LEVEL") || "development"
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

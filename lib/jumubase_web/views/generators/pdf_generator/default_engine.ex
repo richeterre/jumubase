@@ -59,18 +59,7 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
     html =
       Sneeze.render([
         :html,
-        [
-          :head,
-          [:meta, %{charset: "UTF-8"}],
-          [
-            :link,
-            %{
-              href: 'http://fonts.googleapis.com/css?family=LatoLatin',
-              rel: 'stylesheet',
-              type: 'text/css'
-            }
-          ]
-        ],
+        [:head, [:meta, %{charset: "UTF-8"}]],
         [
           :body,
           style(%{

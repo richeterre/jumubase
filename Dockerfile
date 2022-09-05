@@ -94,6 +94,10 @@ ENV MIX_ENV="prod"
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/jumubase ./
 
+# Make custom fonts available on machine, e.g. to wkhtmltopdf
+COPY priv/static/fonts/* /usr/local/share/fonts
+RUN fc-cache -fv
+
 USER nobody
 
 CMD ["/app/bin/server"]

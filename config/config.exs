@@ -35,6 +35,8 @@ config :dart_sass,
     cd: Path.expand("../assets", __DIR__)
   ]
 
+config :jumubase, ChromicPDF, on_demand: false
+
 # Configure Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

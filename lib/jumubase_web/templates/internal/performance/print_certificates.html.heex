@@ -1,0 +1,15 @@
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Lato');
+
+  body { font-family: "Lato" }
+
+  .certificate {
+    break-before: page;
+  }
+</style>
+
+<%= for p <- @performances do %>
+  <div class="certificate">
+    <p>Performance with ID <b><%= p.id %></b></p>
+  </div>
+<% end %>

@@ -38,6 +38,7 @@ defmodule Jumubase.Mixfile do
       {:bamboo, "~> 2.0"},
       {:bamboo_phoenix, "~> 1.0"},
       {:bcrypt_elixir, "~> 3.0"},
+      {:chromic_pdf, "~> 1.2"},
       {:dart_sass, "~> 0.5", runtime: Mix.env() == :dev},
       {:dataloader, "~> 1.0"},
       {:earmark, "~> 1.4"},

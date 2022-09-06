@@ -7,6 +7,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Showtime.Performance
   alias Jumubase.Showtime.PerformanceFilter
   alias JumubaseWeb.Internal.ContestLive
+  alias JumubaseWeb.Internal.PerformanceView
   alias JumubaseWeb.XMLEncoder
 
   plug :add_home_breadcrumb
@@ -199,10 +200,31 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   def print_certificates(conn, %{"performance_ids" => p_ids}, contest) do
     performances = Showtime.list_performances(contest, p_ids)
 
+    # conn
+    # |> assign(:contest, contest)
+    # |> assign(:performances, performances)
+    # |> render("certificates.pdf")
+
+    content =
+      Phoenix.View.render_to_string(
+        PerformanceView,
+        "print_certificates.html",
+        %{contest: contest, performances: performances}
+      )
+
+    {:ok, conn} =
+      [
+        header_height: "20mm",
+        content: content
+      ]
+      |> ChromicPDF.Template.source_and_options()
+      |> ChromicPDF.print_to_pdf(
+        output: fn path ->
+          send_download(conn, {:file, path}, disposition: :inline)
+        end
+      )
+
     conn
-    |> assign(:contest, contest)
-    |> assign(:performances, performances)
-    |> render("certificates.pdf")
   end
 
   def advancing(conn, _params, contest) do

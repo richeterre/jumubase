@@ -10,9 +10,10 @@ defmodule Jumubase.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Jumubase.PubSub},
       # Start the endpoint when the application starts
-      JumubaseWeb.Endpoint
+      JumubaseWeb.Endpoint,
       # Start your own worker by calling: Jumubase.Worker.start_link(arg1, arg2, arg3)
       # worker(Jumubase.Worker, [arg1, arg2, arg3]),
+      {ChromicPDF, [no_sandbox: true]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

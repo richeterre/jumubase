@@ -213,10 +213,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       )
 
     {:ok, conn} =
-      [
-        header_height: "20mm",
-        content: content
-      ]
+      [size: :a4, content: content]
       |> ChromicPDF.Template.source_and_options()
       |> ChromicPDF.print_to_pdf(
         output: fn path ->

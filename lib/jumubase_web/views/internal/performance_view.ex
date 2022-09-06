@@ -14,14 +14,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     ]
 
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
-  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1, round_name: 1, year: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
   import JumubaseWeb.Internal.PieceView, only: [duration_and_epoch_info: 1, person_info: 1]
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.Performance
+  alias Jumubase.Showtime.{Appearance, Performance, Results}
   alias JumubaseWeb.Internal.HostView
   alias JumubaseWeb.PDFGenerator
 
@@ -186,6 +186,99 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     |> raw
   end
 
+  def certificate_appearances_text(group) do
+    group
+    |> Enum.map(&content_tag(:b, appearance_info(&1)))
+    |> Enum.intersperse(tag(:br))
+  end
+
+  def certificate_contest_text(%Contest{} = c, 1) do
+    "hat am #{certificate_contest_name(c)}"
+  end
+
+  def certificate_contest_text(%Contest{} = c, _group_size) do
+    "haben am #{certificate_contest_name(c)}"
+  end
+
+  def certificate_category_text(0, _, _), do: nil
+
+  def certificate_category_text(_round, %Appearance{role: "accompanist"}, %Performance{} = p) do
+    assigns = %{category_name: category_name(p), age_group: p.age_group}
+
+    ~H"""
+    <span>in der Wertung für <i>Instrumentalbegleitung</i></span>
+    <br>
+    <span>in der Kategorie <i><%= @category_name %>, AG <%= @age_group %></i></span>
+    """
+  end
+
+  def certificate_category_text(_round, %Appearance{}, %Performance{} = p) do
+    assigns = %{category_name: category_name(p)}
+
+    ~H"""
+    <span>in der Wertung für <i><%= @category_name %></i></span>
+    <br>
+    """
+  end
+
+  def certificate_rating_points_text(0, _, _), do: "teilgenommen."
+
+  def certificate_rating_points_text(round, points, group_size) do
+    assigns = %{
+      rating: Results.get_rating(points, round),
+      points_text: certificate_points_text(points, group_size)
+    }
+
+    ~H"""
+    <span><%= @rating || "teilgenommen" %></span>
+    <br>
+    <span><%= @points_text %></span>
+    """
+  end
+
+  def certificate_prize_text(0, %Appearance{points: points}, _performance) do
+    assigns = %{
+      rating: Results.get_rating(points, 0)
+    }
+
+    ~H"""
+    <b>Zuerkannt wurde das Prädikat: <%= @rating %></b>
+    """
+  end
+
+  def certificate_prize_text(round, %Appearance{points: points} = a, %Performance{} = p) do
+    case Results.get_prize(points, round) do
+      nil ->
+        nil
+
+      prize ->
+        assigns = %{prize: prize, advancement_text: certificate_advancement_text(a, p, round)}
+
+        ~H"""
+        <b>Zuerkannt wurde ein <%= @prize %></b>
+        <br>
+        <span><%= @advancement_text %></span>
+        """
+    end
+  end
+
+  def certificate_date_text(%Contest{host: h, end_date: end_date, certificate_date: cert_date}) do
+    "#{h.city}, den #{format_date(cert_date || end_date)}"
+  end
+
+  def certificate_signatures_text(0), do: [:p, "Für die Jury"]
+
+  def certificate_signatures_text(round) when round in 1..2 do
+    assigns = %{certificate_committee_name: certificate_committee_name(round)}
+
+    ~H"""
+    <div class="signatures-container">
+      <span>Für den <%= @certificate_committee_name %></span>
+      <span>Für die Jury</span>
+    </div>
+    """
+  end
+
   # Private helpers
 
   defp base_filter_options(%Contest{} = contest) do
@@ -237,4 +330,30 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   defp certificate_order_address do
     "mailto:jumu@musikrat.de?subject=Urkundenpapier"
   end
+
+  defp certificate_contest_name(%Contest{host: h} = c) do
+    "#{certificate_round_text(c.round)} #{h.name} #{year(c)}"
+  end
+
+  defp certificate_round_text(0), do: "Wettbewerb „Kinder musizieren“"
+  defp certificate_round_text(round), do: round_name(round)
+
+  defp certificate_points_text(points, 1), do: "und erreichte #{points} Punkte."
+  defp certificate_points_text(points, _group_size), do: "und erreichten #{points} Punkte."
+
+  defp certificate_advancement_text(%Appearance{} = a, %Performance{} = p, round) do
+    cond do
+      Results.advances?(a, p) ->
+        "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
+
+      Results.gets_wespe_nomination?(a, p) ->
+        "mit Nominierung zur Teilnahme am Wochenende der Sonderpreise (WESPE)."
+
+      true ->
+        nil
+    end
+  end
+
+  defp certificate_committee_name(1), do: "Regionalausschuss"
+  defp certificate_committee_name(2), do: "Landesausschuss"
 end

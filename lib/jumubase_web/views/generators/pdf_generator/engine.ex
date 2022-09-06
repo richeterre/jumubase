@@ -4,5 +4,4 @@ defmodule JumubaseWeb.PDFGenerator.Engine do
 
   @callback jury_sheets([performance], integer) :: binary
   @callback jury_table([performance]) :: binary
-  @callback certificates([performance], contest) :: binary
 end

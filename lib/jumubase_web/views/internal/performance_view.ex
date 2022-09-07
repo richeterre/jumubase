@@ -48,10 +48,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     PDFGenerator.jury_table(performances)
   end
 
-  def render("certificates.pdf", %{performances: performances, contest: contest}) do
-    PDFGenerator.certificates(performances, contest)
-  end
-
   def stage_time(%Performance{stage_time: stage_time}) do
     format_datetime(stage_time, :time)
   end

@@ -200,11 +200,6 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   def print_certificates(conn, %{"performance_ids" => p_ids}, contest) do
     performances = Showtime.list_performances(contest, p_ids)
 
-    # conn
-    # |> assign(:contest, contest)
-    # |> assign(:performances, performances)
-    # |> render("certificates.pdf")
-
     content =
       Phoenix.View.render_to_string(
         PerformanceView,

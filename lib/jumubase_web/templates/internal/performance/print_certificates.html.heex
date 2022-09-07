@@ -3,44 +3,43 @@
 <style>
   body {
     font-family: "LatoLatin";
-    font-size: 16;
+    font-size: 12pt;
     line-height: 1.3;
   }
 
   .certificate {
     break-before: page;
-    padding: 0 100px;
+    padding: 0 3cm;
   }
 
   .appearances-container {
-    border: 1px solid red;
-    height: 500px;
+    font-weight: bold;
+    height: 15cm;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
   }
 
   .category-result-container {
-    height: 170px;
-    margin: 50px 0 0 40px;
-    border: 1px solid blue;
+    height: 5cm;
+    margin: 1cm 0 0 1cm;
   }
 
   .prize-container {
-    border: 1px solid violet;
-    height: 120px;
+    height: 3.5cm;
   }
 
   .date-container {
-    border: 1px solid green;
-    height: 70px;
+    height: 2cm;
   }
 
   .signatures-container {
-    border: 1px solid orange;
     display: flex;
     flex-direction: row;
-    gap: 200px;
+  }
+
+  .signatures-container > span {
+    flex: 1;
   }
 </style>
 
@@ -48,11 +47,13 @@
   <%= for group <- result_groups(p) do %>
     <%= for a <- group do %>
       <% group_size = length(group) %>
+
       <div class="certificate">
-        <p class="appearances-container">
-          <%= certificate_appearances_text(group) %>
-        </p>
-        <p class="category-result-container">
+        <div class="appearances-container">
+          <%= for a <- group, do: appearance_info(a) %>
+        </div>
+
+        <div class="category-result-container">
           <%= certificate_contest_text(@contest, group_size) %>
           <br>
           für das instrumentale und vokale Musizieren der Jugend
@@ -62,16 +63,19 @@
           in der Altersgruppe <%= a.age_group %>
           <br>
           <%= certificate_rating_points_text(@contest.round, a.points, group_size) %>
-        </p>
-        <p class="prize-container">
+        </div>
+
+        <div class="prize-container">
           <%= certificate_prize_text(@contest.round, a, p) %>
-        </p>
-        <p class="date-container">
+        </div>
+
+        <div class="date-container">
           <%= certificate_date_text(@contest) %>
-        </p>
-        <p>
+        </div>
+
+        <div class="signatures-container">
           <%= certificate_signatures_text(@contest.round) %>
-        </p>
+        </div>
       </div>
     <% end %>
   <% end %>

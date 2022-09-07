@@ -13,7 +13,6 @@
   }
 
   .appearances-container {
-    font-weight: bold;
     height: 15cm;
     display: flex;
     flex-direction: column;
@@ -50,7 +49,9 @@
 
       <div class="certificate">
         <div class="appearances-container">
-          <%= for a <- group, do: appearance_info(a) %>
+          <%= for a <- group do %>
+            <b><%= appearance_info(a) %></b>
+          <% end %>
         </div>
 
         <div class="category-result-container">

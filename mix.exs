@@ -50,7 +50,6 @@ defmodule Jumubase.Mixfile do
       {:html_entities, "~> 0.5"},
       {:jason, "~> 1.1"},
       {:nimble_csv, "~> 1.0"},
-      {:pdf_generator, "~> 0.4"},
       {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_live_dashboard, "~> 0.6"},

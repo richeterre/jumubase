@@ -24,7 +24,8 @@ Jumubase is built with [Elixir][elixir] and the [Phoenix framework][phoenix-fram
 0. Clone this codebase
 1. [Install Elixir][elixir-installation]
 1. Install PostgreSQL, e.g. through [Postgres.app][postgres-app]
-1. Install dependencies with `mix deps.get`
+1. Install Chrome or Chromium for PDF generation, e.g. using `brew install chromium --no-quarantine`
+1. Install Elixir dependencies with `mix deps.get`
 1. Install JS dependencies with `cd assets && npm install`
 1. Create, migrate and seed the local database with `mix ecto.setup`
 1. Start Phoenix endpoint with `mix phx.server`

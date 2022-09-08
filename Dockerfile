@@ -82,7 +82,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Install runtime dependencies
-RUN apt-get update -y && apt-get install -y chromium wkhtmltopdf \
+RUN apt-get update -y && apt-get install -y chromium \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 WORKDIR "/app"

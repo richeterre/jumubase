@@ -26,7 +26,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   alias Jumubase.Showtime
   alias Jumubase.Showtime.{Appearance, Performance, Piece, Results}
   alias JumubaseWeb.Internal.HostView
-  alias JumubaseWeb.PDFGenerator
 
   def render("reschedule_success.json", %{stage_times: stage_times}) do
     stage_times

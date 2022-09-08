@@ -20,7 +20,7 @@
 <p class="button-row">
   <% button_class = if Enum.empty?(@performances), do: "disabled", else: "" %>
   <%= icon_link "print", gettext("Print certificates"),
-    Routes.internal_contest_performance_path(@conn,
+    Routes.internal_contest_performances_path(@conn,
       :print_certificates,
       @contest,
       performance_ids: get_ids(@performances)

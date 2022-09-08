@@ -25,10 +25,6 @@ defmodule JumubaseWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :pdf_only do
-    plug :accepts, ["pdf"]
-  end
-
   scope "/graphql" do
     if Mix.env() == :prod do
       pipe_through :api_auth
@@ -90,25 +86,6 @@ defmodule JumubaseWeb.Router do
   end
 
   scope "/internal", JumubaseWeb.Internal, as: :internal do
-    pipe_through [:browser, :pdf_only, :require_authenticated_user]
-
-    get "/contests/:contest_id/performances/print-jury-sheets",
-        PerformanceController,
-        :print_jury_sheets,
-        as: :contest_performance
-
-    get "/contests/:contest_id/performances/print-jury-table",
-        PerformanceController,
-        :print_jury_table,
-        as: :contest_performance
-
-    get "/contests/:contest_id/performances/print-certificates",
-        PerformanceController,
-        :print_certificates,
-        as: :contest_performance
-  end
-
-  scope "/internal", JumubaseWeb.Internal, as: :internal do
     pipe_through [:browser, :html_only, :require_authenticated_user]
 
     get "/", PageController, :home
@@ -128,6 +105,13 @@ defmodule JumubaseWeb.Router do
 
     resources "/contests", ContestController, except: [:index, :create] do
       get "/performances/jury-material", PerformanceController, :jury_material, as: :performances
+
+      get "/performances/print-jury-sheets", PerformanceController, :print_jury_sheets,
+        as: :performances
+
+      get "/performances/print-jury-table", PerformanceController, :print_jury_table,
+        as: :performances
+
       get "/performances/edit-results", PerformanceController, :edit_results, as: :results
       patch "/performances/update-results", PerformanceController, :update_results, as: :results
       get "/performances/publish-results", PerformanceController, :publish_results, as: :results
@@ -136,6 +120,10 @@ defmodule JumubaseWeb.Router do
         as: :results
 
       get "/performances/certificates", PerformanceController, :certificates, as: :performances
+
+      get "/performances/print-certificates", PerformanceController, :print_certificates,
+        as: :performances
+
       get "/performances/advancing", PerformanceController, :advancing, as: :performances
       get "/performances/advancing.xml", PerformanceController, :advancing_xml, as: :performances
 

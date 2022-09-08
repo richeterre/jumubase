@@ -514,7 +514,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
     get(
       conn,
-      Routes.internal_contest_performance_path(conn, :print_jury_sheets, contest,
+      Routes.internal_contest_performances_path(conn, :print_jury_sheets, contest,
         performance_ids: [p1.id, p2.id]
       )
     )
@@ -526,7 +526,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
     get(
       conn,
-      Routes.internal_contest_performance_path(conn, :print_jury_table, contest,
+      Routes.internal_contest_performances_path(conn, :print_jury_table, contest,
         performance_ids: [p1.id, p2.id]
       )
     )
@@ -566,7 +566,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
 
     get(
       conn,
-      Routes.internal_contest_performance_path(conn, :print_certificates, contest,
+      Routes.internal_contest_performances_path(conn, :print_certificates, contest,
         performance_ids: [p1.id, p2.id]
       )
     )

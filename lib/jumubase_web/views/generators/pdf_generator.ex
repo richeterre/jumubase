@@ -5,10 +5,6 @@ defmodule JumubaseWeb.PDFGenerator do
     get_engine().jury_sheets(performances, round)
   end
 
-  def jury_table(performances) do
-    get_engine().jury_table(performances)
-  end
-
   # Private helpers
 
   defp get_engine do

@@ -6,5 +6,4 @@ defmodule JumubaseWeb.PDFGenerator.TestEngine do
   @behaviour JumubaseWeb.PDFGenerator.Engine
 
   def jury_sheets(_performances, _round), do: <<>>
-  def jury_table(_performances), do: <<>>
 end

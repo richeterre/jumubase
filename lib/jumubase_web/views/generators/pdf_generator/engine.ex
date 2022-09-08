@@ -3,5 +3,4 @@ defmodule JumubaseWeb.PDFGenerator.Engine do
   @type contest :: Jumubase.Foundation.Contest.t()
 
   @callback jury_sheets([performance], integer) :: binary
-  @callback jury_table([performance]) :: binary
 end

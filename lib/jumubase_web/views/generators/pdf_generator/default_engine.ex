@@ -13,7 +13,6 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   import JumubaseWeb.Internal.PerformanceView,
     only: [
       acc: 1,
-      category_name: 1,
       category_info: 1,
       non_acc: 1,
       predecessor_host_name: 1
@@ -32,13 +31,6 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
   """
   def jury_sheets(performances, round) do
     render_performance_pages(performances, round) |> generate_pdf("portrait")
-  end
-
-  @doc """
-  Returns a PDF jury table (used for collecting points) for all given performances.
-  """
-  def jury_table(performances) do
-    render_performance_table(performances) |> generate_pdf("landscape")
   end
 
   # Private helpers
@@ -207,74 +199,8 @@ defmodule JumubaseWeb.PDFGenerator.DefaultEngine do
 
   defp to_lines(items), do: Enum.intersperse(items, [:br])
 
-  defp render_performance_table(performances) do
-    table = [
-      :table,
-      style(%{
-        "border" => "1px solid black",
-        "border-collapse" => "collapse",
-        "page-break-inside" => "auto",
-        "width" => "100%"
-      }),
-      [
-        :tr,
-        [:th, cell_style(%{"width" => "auto"}), gettext("Category")],
-        [:th, cell_style(%{"width" => "1%", "white-space" => "nowrap"}), gettext("AG")],
-        [:th, cell_style(%{"width" => "auto"}), gettext("Participants")],
-        [:th, cell_style(%{"width" => "5%"}), "J1"],
-        [:th, cell_style(%{"width" => "5%"}), "J2"],
-        [:th, cell_style(%{"width" => "5%"}), "J3"],
-        [:th, cell_style(%{"width" => "5%"}), "J4"],
-        [:th, cell_style(%{"width" => "5%"}), "J5"],
-        [:th, cell_style(%{"width" => "10%"}), gettext("Result")]
-      ]
-    ]
-
-    performance_rows = Enum.map(performances, &render_performance_row/1)
-    table ++ performance_rows
-  end
-
-  defp render_performance_row(%Performance{} = p) do
-    [
-      :tr,
-      style(%{"page-break-inside" => "avoid", "page-break-after" => "auto"}),
-      [:td, cell_style(), category_name(p)],
-      [:td, cell_style(), p.age_group],
-      [:td, cell_style(), render_list_appearances(p)],
-      [:td, cell_style()],
-      [:td, cell_style()],
-      [:td, cell_style()],
-      [:td, cell_style()],
-      [:td, cell_style()],
-      [:td, cell_style()]
-    ]
-  end
-
-  defp render_list_appearances(%Performance{age_group: p_ag} = p) do
-    non_acc = non_acc(p) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
-    acc = acc(p) |> Enum.map(&render_list_appearance(&1, p_ag)) |> to_lines
-
-    if acc != [], do: non_acc ++ [acc_heading()] ++ acc, else: non_acc
-  end
-
-  defp render_list_appearance(%Appearance{} = a, performance_ag) do
-    ag_info = age_group_info(a, performance_ag)
-    [:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}"]
-  end
-
   defp age_group_info(%Appearance{age_group: ag}, performance_ag) do
     if ag != performance_ag, do: "(AG #{ag})", else: nil
-  end
-
-  defp cell_style(style_map \\ %{}) do
-    %{
-      "border" => @border_style,
-      "padding" => "10px",
-      "text-align" => "left",
-      "vertical-align" => "top"
-    }
-    |> Map.merge(style_map)
-    |> style
   end
 
   defp style(style_map) do

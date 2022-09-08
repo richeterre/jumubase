@@ -44,10 +44,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     PDFGenerator.jury_sheets(performances, round)
   end
 
-  def render("jury_table.pdf", %{performances: performances}) do
-    PDFGenerator.jury_table(performances)
-  end
-
   def stage_time(%Performance{stage_time: stage_time}) do
     format_datetime(stage_time, :time)
   end
@@ -167,6 +163,20 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   end
 
   def filter_status(count, false), do: count_tag(count)
+
+  def jury_table_appearances(%Performance{age_group: p_ag} = p) do
+    non_acc =
+      non_acc(p)
+      |> Enum.map(&jury_table_appearance(&1, p_ag))
+      |> Enum.intersperse(tag(:br))
+
+    acc =
+      acc(p)
+      |> Enum.map(&jury_table_appearance(&1, p_ag))
+      |> Enum.intersperse(tag(:br))
+
+    if acc != [], do: non_acc ++ [accompanist_separator()] ++ acc, else: non_acc
+  end
 
   def certificate_instructions(0) do
     gettext(
@@ -318,6 +328,19 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   defp certificate_order_address do
     "mailto:jumu@musikrat.de?subject=Urkundenpapier"
+  end
+
+  defp accompanist_separator do
+    content_tag(:p, gettext("accompanied by"), class: "accompanist-separator")
+  end
+
+  defp jury_table_appearance(%Appearance{} = a, performance_ag) do
+    ag_info = age_group_info(a, performance_ag)
+    content_tag(:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}")
+  end
+
+  defp age_group_info(%Appearance{age_group: ag}, performance_ag) do
+    if ag != performance_ag, do: "(AG #{ag})", else: nil
   end
 
   defp certificate_contest_name(%Contest{host: h} = c) do

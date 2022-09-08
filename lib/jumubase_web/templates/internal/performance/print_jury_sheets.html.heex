@@ -1,0 +1,88 @@
+<%= render("_print_fonts.html") %>
+
+<style>
+  body {
+    font-family: "LatoLatin";
+    font-size: 14pt;
+    line-height: 1.3;
+  }
+
+  .performance-page {
+    break-before: page;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0 1cm;
+  }
+
+  .header {
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 0.8cm;
+    padding-bottom: 6pt;
+  }
+
+  .appearances {
+    flex: 2;
+    margin-top: 1cm;
+  }
+
+  .pieces {
+    flex: 5;
+    overflow: hidden;
+  }
+
+  .accompanist-separator {
+    color: #666;
+    margin: 4pt 0;
+  }
+
+  .duration-and-epoch {
+    color: #666;
+  }
+
+  .footer {
+    margin-bottom: 0.8cm;
+  }
+
+  .point-ranges {
+    color: #666;
+    display: flex;
+    flex-direction: row;
+    font-size: 10pt;
+  }
+
+  .point-range-group {
+    flex: 1;
+  }
+</style>
+
+<%= for p <- @performances do %>
+  <div class="performance-page">
+    <div class="header">
+      <div>
+        <%= category_info(p) %>
+        <br>
+        <%= format_datetime(p.stage_time) %>
+      </div>
+      <div>
+        <br>
+        <%= predecessor_host_name(p) %>
+      </div>
+    </div>
+
+    <div class="appearances">
+      <%= jury_sheet_appearances(p) %>
+    </div>
+
+    <div class="pieces">
+      <%= jury_sheet_pieces(p) %>
+    </div>
+
+    <div class="footer">
+      <%= jury_sheet_point_ranges(@round) %>
+    </div>
+  </div>
+<% end %>

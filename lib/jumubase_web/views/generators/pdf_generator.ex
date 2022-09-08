@@ -1,10 +1,6 @@
 defmodule JumubaseWeb.PDFGenerator do
   alias JumubaseWeb.PDFGenerator.DefaultEngine
 
-  def jury_sheets(performances, round) do
-    get_engine().jury_sheets(performances, round)
-  end
-
   # Private helpers
 
   defp get_engine do

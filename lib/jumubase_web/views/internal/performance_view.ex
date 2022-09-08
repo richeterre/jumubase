@@ -16,12 +16,15 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1, round_name: 1, year: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  import JumubaseWeb.Internal.PieceView, only: [duration_and_epoch_info: 1, person_info: 1]
+
+  import JumubaseWeb.Internal.PieceView,
+    only: [duration: 1, duration_and_epoch_info: 1, person_info: 1]
+
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.{Appearance, Performance, Results}
+  alias Jumubase.Showtime.{Appearance, Performance, Piece, Results}
   alias JumubaseWeb.Internal.HostView
   alias JumubaseWeb.PDFGenerator
 
@@ -38,10 +41,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
         errors: errors
       }
     }
-  end
-
-  def render("jury_sheets.pdf", %{performances: performances, round: round}) do
-    PDFGenerator.jury_sheets(performances, round)
   end
 
   def stage_time(%Performance{stage_time: stage_time}) do
@@ -176,6 +175,23 @@ defmodule JumubaseWeb.Internal.PerformanceView do
       |> Enum.intersperse(tag(:br))
 
     if acc != [], do: non_acc ++ [accompanist_separator()] ++ acc, else: non_acc
+  end
+
+  def jury_sheet_appearances(%Performance{age_group: ag} = p) do
+    non_acc_div = content_tag(:div, non_acc(p) |> to_appearance_lines(ag))
+
+    case acc(p) do
+      [] ->
+        non_acc_div
+
+      acc ->
+        acc_div = content_tag(:div, acc |> to_appearance_lines(ag))
+        [non_acc_div, accompanist_separator(), acc_div]
+    end
+  end
+
+  def jury_sheet_pieces(%Performance{pieces: pieces}) do
+    pieces |> Enum.map(&render_piece/1)
   end
 
   def certificate_instructions(0) do
@@ -337,6 +353,68 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   defp jury_table_appearance(%Appearance{} = a, performance_ag) do
     ag_info = age_group_info(a, performance_ag)
     content_tag(:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}")
+  end
+
+  defp to_appearance_lines(appearances, performance_ag) do
+    appearances
+    |> Enum.map(fn a ->
+      ag_info = age_group_info(a, performance_ag)
+
+      content_tag(:span, [
+        content_tag(:b, "#{full_name(a.participant)},"),
+        content_tag(:span, " #{instrument_name(a.instrument)} #{ag_info}")
+      ])
+    end)
+    |> Enum.intersperse(tag(:br))
+  end
+
+  defp render_piece(%Piece{} = pc) do
+    content_tag(
+      :p,
+      [
+        content_tag(:b, person_info(pc)),
+        pc.title,
+        content_tag(:span, duration_and_epoch_text(pc), class: "duration-and-epoch")
+      ]
+      |> Enum.intersperse(tag(:br))
+    )
+  end
+
+  defp duration_and_epoch_text(%Piece{epoch: nil} = pc), do: duration(pc)
+  defp duration_and_epoch_text(%Piece{epoch: "trad"} = pc), do: duration(pc)
+
+  defp duration_and_epoch_text(%Piece{} = pc) do
+    "#{duration(pc)} / #{epoch_text(pc)}"
+  end
+
+  defp epoch_text(%Piece{epoch: epoch}) do
+    "#{gettext("Epoch")} #{epoch}"
+  end
+
+  defp jury_sheet_point_ranges(round) do
+    {left_side, right_side} =
+      Results.prizes_for_round(round)
+      |> Map.merge(Results.ratings_for_round(round))
+      |> Enum.reverse()
+      |> Enum.split(3)
+
+    content_tag(
+      :div,
+      [format_point_range_groups(left_side), format_point_range_groups(right_side)],
+      class: "point-ranges"
+    )
+  end
+
+  defp format_point_range_groups(point_ranges) do
+    content_tag(
+      :div,
+      point_ranges |> Enum.map(&format_point_range/1) |> Enum.intersperse(tag(:br)),
+      class: "point-range-group"
+    )
+  end
+
+  defp format_point_range({first..last, text}) do
+    content_tag(:span, "#{first}–#{last} #{gettext("points")}: #{text}")
   end
 
   defp age_group_info(%Appearance{age_group: ag}, performance_ag) do

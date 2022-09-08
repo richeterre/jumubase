@@ -101,10 +101,14 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       |> Showtime.load_pieces()
       |> Showtime.load_predecessor_hosts()
 
-    conn
-    |> assign(:performances, performances)
-    |> assign(:round, contest.round)
-    |> render("jury_sheets.pdf")
+    content =
+      Phoenix.View.render_to_string(
+        PerformanceView,
+        "print_jury_sheets.html",
+        %{performances: performances, round: contest.round}
+      )
+
+    send_pdf_download(conn, size: :a4, content: content)
   end
 
   def print_jury_table(conn, %{"performance_ids" => p_ids}, contest) do

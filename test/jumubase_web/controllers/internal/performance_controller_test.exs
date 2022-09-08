@@ -589,7 +589,7 @@ defmodule JumubaseWeb.Internal.PerformanceControllerTest do
   end
 
   defp assert_pdf_response(conn) do
-    assert response_content_type(conn, :pdf) =~ "charset=utf-8"
+    assert response_content_type(conn, :pdf) =~ "application/pdf"
   end
 
   defp assert_results_success(conn) do

@@ -48,8 +48,7 @@ window.liveSocket = liveSocket
 $(function() {
   // Performance Filter
 
-  $(".filter-form select").change(function () {
-    console.log("Hello")
+  $("#performance-filter-form select, #stage-filter-form select").change(function () {
     this.form.submit()
   })
 

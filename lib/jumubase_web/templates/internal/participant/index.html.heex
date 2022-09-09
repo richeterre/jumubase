@@ -23,7 +23,7 @@
       class: "btn btn-default"
       %>
     &#32;
-    <%= icon_link "bullhorn", gettext("Send welcome emails"),
+    <%= if @contest.round == 2, do: icon_link "bullhorn", gettext("Send welcome emails"),
       Routes.internal_contest_participant_path(@conn, :send_welcome_emails, @contest),
       method: :post,
       data: [confirm: gettext("Do you really want to send the welcome emails?")],

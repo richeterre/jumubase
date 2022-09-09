@@ -160,7 +160,7 @@ defmodule JumubaseWeb.Router do
     end
 
     scope "/dev" do
-      forward "/sent_emails", Bamboo.SentEmailViewerPlug
+      forward "/mailbox", Plug.Swoosh.MailboxPreview
 
       forward "/graphql-playground", Absinthe.Plug.GraphiQL,
         schema: JumubaseWeb.Schema,

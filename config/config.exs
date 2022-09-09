@@ -25,9 +25,6 @@ config :jumubase, JumubaseWeb.Endpoint,
 # Keep microsecond precision in timestamps
 config :jumubase, Jumubase.Repo, migration_timestamps: [type: :naive_datetime_usec]
 
-# Configure mailer
-config :jumubase, Jumubase.Mailer, adapter: Bamboo.LocalAdapter
-
 config :dart_sass,
   version: "1.54.8",
   default: [

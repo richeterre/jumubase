@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.ContactControllerTest do
   use JumubaseWeb.ConnCase
-  use Bamboo.Test
+  import Swoosh.TestAssertions
 
   describe "send_message/2" do
     @valid_params %{
@@ -16,7 +16,7 @@ defmodule JumubaseWeb.ContactControllerTest do
       assert get_flash(conn, :success) =~ "Your message has been sent!"
       assert redirected_to(conn) == Routes.page_path(conn, :contact)
 
-      assert_delivered_email(
+      assert_email_sent(
         JumubaseWeb.Email.contact_message(%{name: "A", email: "a@b.c", message: "Lorem ipsum"})
       )
     end
@@ -27,7 +27,7 @@ defmodule JumubaseWeb.ContactControllerTest do
 
       assert get_flash(conn, :error) =~ "Please fill in only fields that are visible in the form."
       assert redirected_to(conn) == Routes.page_path(conn, :contact)
-      assert_no_emails_delivered()
+      assert_no_email_sent()
     end
 
     test "shows an error if the name is left empty", %{conn: conn} do
@@ -57,7 +57,7 @@ defmodule JumubaseWeb.ContactControllerTest do
 
       assert get_flash(conn, :error) =~ "Please fill in all fields and try again!"
       assert redirected_to(conn) == Routes.page_path(conn, :contact)
-      assert_no_emails_delivered()
+      assert_no_email_sent()
     end
   end
 end

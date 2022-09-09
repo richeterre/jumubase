@@ -15,11 +15,6 @@ import Config
 # which you typically run after static files are built.
 config :jumubase, JumubaseWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
-# Configure mailer
-config :jumubase, Jumubase.Mailer,
-  adapter: Bamboo.SendGridAdapter,
-  api_key: System.get_env("SENDGRID_API_KEY")
-
 # Do not print debug messages in production
 config :logger, level: :info
 

@@ -1,9 +1,9 @@
 defmodule JumubaseWeb.PerformanceLive.NewTest do
   use JumubaseWeb.ConnCase
-  use Bamboo.Test, shared: true
   import Phoenix.LiveViewTest
   alias Jumubase.Repo
   alias Jumubase.Showtime.Performance
+  import Swoosh.TestAssertions
 
   setup config do
     contest =
@@ -72,7 +72,7 @@ defmodule JumubaseWeb.PerformanceLive.NewTest do
 
     performance = get_inserted_performance()
 
-    assert_delivered_email(JumubaseWeb.Email.registration_success(performance))
+    assert_email_sent(JumubaseWeb.Email.registration_success(performance))
   end
 
   test "shows form errors when user submits invalid data", %{conn: conn, contest: c} do

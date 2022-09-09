@@ -26,7 +26,7 @@ config :jumubase, Jumubase.Repo,
 config :bcrypt_elixir, log_rounds: 1
 
 # Configure test mailer
-config :jumubase, Jumubase.Mailer, adapter: Bamboo.TestAdapter
+config :jumubase, Jumubase.Mailer, adapter: Swoosh.Adapters.Test
 
 # Configure test email
 config :jumubase, JumubaseWeb.Email,

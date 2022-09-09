@@ -1,6 +1,5 @@
 defmodule JumubaseWeb.PerformanceControllerTest do
   use JumubaseWeb.ConnCase
-  use Bamboo.Test
 
   @today Timex.today()
   @yesterday Timex.shift(@today, days: -1)

@@ -16,7 +16,7 @@
     "classlist-polyfill": "^1.2.0",
     "core-js": "^3.6.5",
     "formdata-polyfill": "^3.0.20",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "lodash": "^4.17.19",
     "luxon": "^1.8.2",
     "mdn-polyfills": "^5.20.0",

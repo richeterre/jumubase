@@ -34,6 +34,12 @@ config :dart_sass,
 
 config :jumubase, ChromicPDF, on_demand: false
 
+# Configure generic email addresses (should be overriden in runtime.exs for :prod)
+config :jumubase, JumubaseWeb.Email,
+  default_sender: {"Jumu weltweit", "no-reply@localhost"},
+  contact_email: "contact@localhost",
+  admin_email: "admin@localhost"
+
 # Configure Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

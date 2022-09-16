@@ -32,12 +32,6 @@ config :jumubase, :app_ids,
   android: System.get_env("JUMU_APP_ID_ANDROID"),
   ios: System.get_env("JUMU_APP_ID_IOS")
 
-# Configure email addresses
-config :jumubase, JumubaseWeb.Email,
-  default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
-  contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
-  admin_email: System.get_env("JUMU_ADMIN_EMAIL")
-
 # Configure Sentry
 config :sentry,
   dsn: System.get_env("SENTRY_DSN"),
@@ -91,4 +85,10 @@ if config_env() == :prod do
   config :jumubase, Jumubase.Mailer,
     adapter: Swoosh.Adapters.Sendgrid,
     api_key: System.get_env("SENDGRID_API_KEY")
+
+  # Configure email addresses for production
+  config :jumubase, JumubaseWeb.Email,
+    default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
+    contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
+    admin_email: System.get_env("JUMU_ADMIN_EMAIL")
 end

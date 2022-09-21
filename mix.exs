@@ -59,7 +59,6 @@ defmodule Jumubase.Mixfile do
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},
-      {:sneeze, "~> 1.2"},
       {:swoosh, "~> 1.7"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},

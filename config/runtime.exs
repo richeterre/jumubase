@@ -84,7 +84,7 @@ if config_env() == :prod do
 
   # Configure canonical host to redirect to (e.g. www subdomain)
   config :jumubase,
-    canonical_host: System.get_env("CANONICAL_HOST")
+    canonical_host: System.get_env("PHX_HOST")
 
   config :jumubase, Jumubase.Mailer,
     adapter: Swoosh.Adapters.MailPace,

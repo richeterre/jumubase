@@ -8,7 +8,8 @@ defmodule JumubaseWeb.EmailTest do
 
       config = Application.get_env(:jumubase, Email)
 
-      assert email.from == {"A", "a@b.c"}
+      assert email.from == {"Jumu weltweit", "no-reply@localhost"}
+      assert email.reply_to == {"A", "a@b.c"}
       assert email.to == [{"", config[:contact_email]}]
       assert email.cc == [{"", config[:admin_email]}]
       assert email.subject == "New message via jumu-weltweit.org"

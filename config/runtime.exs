@@ -83,8 +83,8 @@ if config_env() == :prod do
     secret_key_base: secret_key_base
 
   config :jumubase, Jumubase.Mailer,
-    adapter: Swoosh.Adapters.Sendgrid,
-    api_key: System.get_env("SENDGRID_API_KEY")
+    adapter: Swoosh.Adapters.MailPace,
+    api_key: System.get_env("MAILPACE_API_KEY")
 
   # Configure email addresses for production
   config :jumubase, JumubaseWeb.Email,

@@ -1,5 +1,5 @@
 defmodule Jumubase.Accounts.UserNotifier do
-  import Bamboo.Email
+  import Swoosh.Email
   import Jumubase.Gettext
   alias Jumubase.Mailer
 
@@ -25,13 +25,13 @@ defmodule Jumubase.Accounts.UserNotifier do
     sender = Application.get_env(:jumubase, JumubaseWeb.Email)[:default_sender]
 
     email =
-      new_email()
+      new()
       |> to(recipient)
       |> from(sender)
       |> subject(subject)
       |> text_body(body)
 
-    with {:ok, _metadata} <- Mailer.deliver_now(email) do
+    with {:ok, _metadata} <- Mailer.deliver(email) do
       {:ok, email}
     end
   end

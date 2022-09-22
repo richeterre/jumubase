@@ -1,4 +1,4 @@
-<%= form_for @changeset, @path, [method: :get, class: "form-inline filter-form"], fn f -> %>
+<%= form_for @changeset, @path, [method: :get, id: "performance-filter-form", class: "form-inline filter-form"], fn f -> %>
   <div class="form-section">
     <%= select f, :stage_date, @options.stage_date_options, prompt: gettext("All dates"), class: "form-control" %>
     &#32;

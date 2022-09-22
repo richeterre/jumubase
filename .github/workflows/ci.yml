@@ -37,8 +37,6 @@ jobs:
         run: |
           mix deps.get
           npm install --prefix assets
-          sudo apt-get update
-          sudo apt-get install wkhtmltopdf
 
       - name: Check formatting
         run: mix format --check-formatted

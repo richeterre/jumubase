@@ -9,17 +9,6 @@ import Config
 config :jumubase,
   ecto_repos: [Jumubase.Repo]
 
-# API keys
-config :jumubase, JumubaseWeb.MapHelpers, google_api_key: System.get_env("GOOGLE_API_KEY")
-
-config :jumubase, JumubaseWeb.ApiAuth, api_key: System.get_env("JUMU_API_KEY")
-
-# Companion app IDs
-
-config :jumubase, :app_ids,
-  android: System.get_env("JUMU_APP_ID_ANDROID"),
-  ios: System.get_env("JUMU_APP_ID_IOS")
-
 # Set default locale
 locale = "de"
 config :jumubase, Jumubase.Gettext, default_locale: locale
@@ -29,7 +18,6 @@ config :timex, Timex.Gettext, default_locale: locale
 # Configure the endpoint
 config :jumubase, JumubaseWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "CItDuu3F0bThL/GnGj6lG4CNhFF/JPz/LHyWFVkLRdht2gpHfuFftGiO1paelppz",
   render_errors: [view: JumubaseWeb.ErrorView, accepts: ~w(html json)],
   pubsub_server: Jumubase.PubSub,
   live_view: [signing_salt: "4+PLR3SMvBIBZG4im48JLB2wWM+2prRB"]
@@ -37,17 +25,20 @@ config :jumubase, JumubaseWeb.Endpoint,
 # Keep microsecond precision in timestamps
 config :jumubase, Jumubase.Repo, migration_timestamps: [type: :naive_datetime_usec]
 
-# Configure mailer
-config :jumubase, Jumubase.Mailer, adapter: Bamboo.LocalAdapter
+config :dart_sass,
+  version: "1.54.8",
+  default: [
+    args: ~w(css/app.scss ../priv/static/assets/app.css),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
-# Configure email
+config :jumubase, ChromicPDF, on_demand: false
+
+# Configure generic email addresses (should be overriden in runtime.exs for :prod)
 config :jumubase, JumubaseWeb.Email,
-  default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
-  contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
-  admin_email: System.get_env("JUMU_ADMIN_EMAIL")
-
-# Configure release level
-config :jumubase, release_level: System.get_env("RELEASE_LEVEL")
+  default_sender: {"Jumu weltweit", "no-reply@localhost"},
+  contact_email: "contact@localhost",
+  admin_email: "admin@localhost"
 
 # Configure Elixir's Logger
 config :logger, :console,
@@ -56,13 +47,6 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-# Configure Sentry
-config :sentry,
-  dsn: System.get_env("SENTRY_DSN"),
-  filter: Jumubase.SentryEventFilter,
-  included_environments: ~w(staging production),
-  environment_name: System.get_env("RELEASE_LEVEL") || "development"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

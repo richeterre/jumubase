@@ -70,3 +70,7 @@
   </div>
   <% end %>
 </div>
+
+<script>
+  scheduler(<%= scheduler_options(@conn, @contest, @stage) |> raw() %>)
+</script>

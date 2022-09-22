@@ -1,5 +1,5 @@
 defmodule JumubaseWeb.Email do
-  use Bamboo.Phoenix, view: JumubaseWeb.EmailView
+  use Phoenix.Swoosh, view: JumubaseWeb.EmailView
   import Jumubase.Gettext
   import JumubaseWeb.Internal.ContestView, only: [city: 1, round_name_and_year: 1]
   alias Jumubase.Foundation.{Category, Contest}
@@ -10,13 +10,15 @@ defmodule JumubaseWeb.Email do
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def contact_message(%{name: name, email: email, message: message}) do
+    sender = Application.get_env(:jumubase, Email)[:default_sender]
     contact_email = Application.get_env(:jumubase, Email)[:contact_email]
     admin_email = Application.get_env(:jumubase, Email)[:admin_email]
 
     email =
-      new_email()
-      |> from({name, email})
+      new()
+      |> from(sender)
       |> to(contact_email)
+      |> reply_to({name, email})
       |> subject(gettext("New message via jumu-weltweit.org"))
       |> text_body(message)
 
@@ -49,13 +51,13 @@ defmodule JumubaseWeb.Email do
         email
         |> to(participant.email)
         |> assign(:participant, participant)
-        |> render("registration_success_one.html")
+        |> render_body("registration_success_one.html")
 
       participants ->
         email
         |> to(participants |> get_unique_emails)
         |> assign(:participants, participants)
-        |> render("registration_success_many.html")
+        |> render_body("registration_success_many.html")
     end
   end
 
@@ -80,13 +82,13 @@ defmodule JumubaseWeb.Email do
           email
           |> to(participant.email)
           |> assign(:participant, participant)
-          |> render("welcome_advanced_one.html")
+          |> render_body("welcome_advanced_one.html")
 
         participants ->
           email
           |> to(participants |> get_unique_emails)
           |> assign(:participants, participants)
-          |> render("welcome_advanced_many.html")
+          |> render_body("welcome_advanced_many.html")
       end
     end)
   end
@@ -96,7 +98,7 @@ defmodule JumubaseWeb.Email do
   defp base_email do
     sender = Application.get_env(:jumubase, Email)[:default_sender]
 
-    new_email() |> from(sender)
+    new() |> from(sender)
   end
 
   defp registration_success_subject(%Category{genre: "kimu"}, participant_count) do

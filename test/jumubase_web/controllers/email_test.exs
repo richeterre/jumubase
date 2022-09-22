@@ -8,9 +8,10 @@ defmodule JumubaseWeb.EmailTest do
 
       config = Application.get_env(:jumubase, Email)
 
-      assert email.from == {"A", "a@b.c"}
-      assert email.to == config[:contact_email]
-      assert email.cc == config[:admin_email]
+      assert email.from == {"Jumu weltweit", "no-reply@localhost"}
+      assert email.reply_to == {"A", "a@b.c"}
+      assert email.to == [{"", config[:contact_email]}]
+      assert email.cc == [{"", config[:admin_email]}]
       assert email.subject == "New message via jumu-weltweit.org"
       assert email.text_body == "Lorem ipsum"
     end
@@ -33,7 +34,7 @@ defmodule JumubaseWeb.EmailTest do
 
       email = Email.registration_success(performance)
 
-      assert email.to == "pt@example.org"
+      assert email.to == [{"", "pt@example.org"}]
       assert email.subject == "Your Jumu registration for category \"#{cat_name}\""
       assert email.html_body =~ cat_name
       assert email.html_body =~ performance.edit_code
@@ -52,7 +53,7 @@ defmodule JumubaseWeb.EmailTest do
 
       email = Email.registration_success(performance)
 
-      assert email.to == ["pt1@example.org", "pt2@example.org"]
+      assert email.to == [{"", "pt1@example.org"}, {"", "pt2@example.org"}]
       assert email.subject == "Your Jumu registration for category \"#{cat_name}\""
     end
 
@@ -70,7 +71,7 @@ defmodule JumubaseWeb.EmailTest do
         )
 
       email = Email.registration_success(performance)
-      assert email.to == ["pt1@example.org", "pt2@example.org"]
+      assert email.to == [{"", "pt1@example.org"}, {"", "pt2@example.org"}]
     end
 
     test "adjusts the subject when confirming a Kimu registration", %{contest: c} do
@@ -83,7 +84,7 @@ defmodule JumubaseWeb.EmailTest do
 
       email = Email.registration_success(performance)
 
-      assert email.to == "pt@example.org"
+      assert email.to == [{"", "pt@example.org"}]
       assert email.subject == "Your Kimu registration"
       assert email.html_body =~ performance.edit_code
       assert email.html_body =~ Routes.page_url(JumubaseWeb.Endpoint, :edit_registration)
@@ -107,12 +108,12 @@ defmodule JumubaseWeb.EmailTest do
 
       [email1, email2] = Email.welcome_advanced(c)
 
-      assert email1.to == "pt1@example.org"
+      assert email1.to == [{"", "pt1@example.org"}]
       assert email1.subject == "Your participation in the Landeswettbewerb 2019 in Prag"
       assert email1.html_body =~ p1.edit_code
       assert email1.html_body =~ Routes.page_url(JumubaseWeb.Endpoint, :edit_registration)
 
-      assert email2.to == ["pt2@example.org", "pt3@example.org"]
+      assert email2.to == [{"", "pt2@example.org"}, {"", "pt3@example.org"}]
       assert email2.subject == "Your participation in the Landeswettbewerb 2019 in Prag"
       assert email2.html_body =~ p2.edit_code
       assert email2.html_body =~ Routes.page_url(JumubaseWeb.Endpoint, :edit_registration)
@@ -124,7 +125,7 @@ defmodule JumubaseWeb.EmailTest do
       )
 
       [email] = Email.welcome_advanced(c)
-      assert email.to == ["pt1@example.org", "pt2@example.org"]
+      assert email.to == [{"", "pt1@example.org"}, {"", "pt2@example.org"}]
     end
   end
 

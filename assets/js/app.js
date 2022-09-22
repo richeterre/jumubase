@@ -1,5 +1,7 @@
 import "phoenix_html"
+import "./import_jquery" // to make jQuery available on `window` before Bootstrap import
 import "bootstrap-sass"
+import "./scheduler"
 
 // Import polyfills needed for IE11 support
 // (see https://github.com/phoenixframework/phoenix_live_view#browser-support)
@@ -40,3 +42,31 @@ liveSocket.connect()
 // Call disableLatencySim() to disable:
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+// Enable jQuery-based UI functionality once document is ready:
+
+$(function() {
+  // Performance Filter
+
+  $("#performance-filter-form select, #stage-filter-form select").change(function () {
+    this.form.submit()
+  })
+
+  // Result Form
+
+  $("#modal-result-form").on("show.bs.modal", function (event) {
+    const $button = $(event.relatedTarget)
+    const participantNames = $button.data("participant-names")
+    const appearanceIds = $button.data("appearance-ids")
+    const currentPoints = $button.data("current-points")
+
+    const $modal = $(this)
+    $modal.find("#participant-names").text(participantNames)
+    $modal.find("#appearance-ids").val(appearanceIds)
+    $modal.find("#results_points").val(currentPoints)
+  })
+
+  $("#modal-result-form").on("shown.bs.modal", function () {
+    $(this).find("#results_points").focus()
+  })
+})

@@ -126,7 +126,7 @@ defmodule JumubaseWeb.Internal.ParticipantController do
   def send_welcome_emails(conn, _params, contest) do
     contest
     |> Email.welcome_advanced()
-    |> Enum.each(&Mailer.deliver_later!/1)
+    |> Enum.each(&Mailer.deliver/1)
 
     conn
     |> put_flash(:success, gettext("The welcome emails were sent."))

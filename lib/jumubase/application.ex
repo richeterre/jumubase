@@ -10,9 +10,10 @@ defmodule Jumubase.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Jumubase.PubSub},
       # Start the endpoint when the application starts
-      JumubaseWeb.Endpoint
+      JumubaseWeb.Endpoint,
       # Start your own worker by calling: Jumubase.Worker.start_link(arg1, arg2, arg3)
       # worker(Jumubase.Worker, [arg1, arg2, arg3]),
+      {ChromicPDF, chromic_pdf_opts()}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -29,5 +30,10 @@ defmodule Jumubase.Application do
   def config_change(changed, _new, removed) do
     JumubaseWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  @chromic_pdf_opts Application.compile_env!(:jumubase, ChromicPDF)
+  defp chromic_pdf_opts do
+    @chromic_pdf_opts ++ [no_sandbox: true]
   end
 end

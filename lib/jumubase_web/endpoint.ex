@@ -2,15 +2,14 @@ defmodule JumubaseWeb.Endpoint do
   use Sentry.PlugCapture
   use Phoenix.Endpoint, otp_app: :jumubase
 
+  # Redirect to canonical host if one is set (see runtime config)
+  plug :canonical_host
+
   @session_options [
     store: :cookie,
     key: "_jumubase_key",
     signing_salt: "fGn2vR2v"
   ]
-
-  socket "/socket", JumubaseWeb.UserSocket,
-    # Time out before Heroku does
-    websocket: [timeout: 45_000]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
@@ -22,7 +21,7 @@ defmodule JumubaseWeb.Endpoint do
     at: "/",
     from: :jumubase,
     gzip: false,
-    only: ~w(css fonts images js resources favicons robots.txt)
+    only: ~w(assets fonts images resources favicons robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -30,6 +29,7 @@ defmodule JumubaseWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :jumubase
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -37,7 +37,7 @@ defmodule JumubaseWeb.Endpoint do
     cookie_key: "request_logger"
 
   plug Plug.RequestId
-  plug Plug.Logger
+  plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
@@ -48,23 +48,21 @@ defmodule JumubaseWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-
   plug Plug.Session, @session_options
-
   plug JumubaseWeb.Router
 
-  @doc """
-  Callback invoked for dynamically configuring the endpoint.
+  # Private helpers
 
-  It receives the endpoint configuration and checks if
-  configuration should be loaded from the system environment.
-  """
-  def init(_key, config) do
-    if config[:load_from_system_env] do
-      port = System.get_env("PORT") || raise "expected the PORT environment variable to be set"
-      {:ok, Keyword.put(config, :http, [:inet6, port: port])}
-    else
-      {:ok, config}
+  defp canonical_host(conn, _opts) do
+    :jumubase
+    |> Application.get_env(:canonical_host)
+    |> case do
+      host when is_binary(host) ->
+        opts = PlugCanonicalHost.init(canonical_host: host)
+        PlugCanonicalHost.call(conn, opts)
+
+      _ ->
+        conn
     end
   end
 end

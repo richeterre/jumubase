@@ -1,8 +1,9 @@
-import $ from "jquery"
 import { DateTime } from "luxon"
-import "jquery-ui/ui/widgets/sortable"
-import "jquery-ui/ui/widgets/resizable"
 import { isEmpty } from "lodash"
+import "../vendor/jquery-ui" // for sortable() and resizable()
+
+// Performance Scheduler code
+// (this adds a global `scheduler()` function to the window)
 
 const scheduler = (options) => {
   const gridHeight = pixelsFromMinutes(5)
@@ -176,5 +177,4 @@ const scheduler = (options) => {
   }
 }
 
-// Make scheduler() available to global <script> tags
 window.scheduler = scheduler

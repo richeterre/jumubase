@@ -7,6 +7,7 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   alias Jumubase.Showtime.Performance
   alias Jumubase.Showtime.PerformanceFilter
   alias JumubaseWeb.Internal.ContestLive
+  alias JumubaseWeb.Internal.PerformanceView
   alias JumubaseWeb.XMLEncoder
 
   plug :add_home_breadcrumb
@@ -100,18 +101,33 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       |> Showtime.load_pieces()
       |> Showtime.load_predecessor_hosts()
 
-    conn
-    |> assign(:performances, performances)
-    |> assign(:round, contest.round)
-    |> render("jury_sheets.pdf")
+    content =
+      Phoenix.View.render_to_string(
+        PerformanceView,
+        "print_jury_sheets.html",
+        %{performances: performances, round: contest.round}
+      )
+
+    send_pdf_download(conn, size: :a4, content: content)
   end
 
   def print_jury_table(conn, %{"performance_ids" => p_ids}, contest) do
     performances = Showtime.list_performances(contest, p_ids)
 
-    conn
-    |> assign(:performances, performances)
-    |> render("jury_table.pdf")
+    content =
+      Phoenix.View.render_to_string(
+        PerformanceView,
+        "print_jury_table.html",
+        %{performances: performances}
+      )
+
+    send_pdf_download(conn,
+      size: :a4,
+      landscape: true,
+      header_height: "10mm",
+      footer_height: "10mm",
+      content: content
+    )
   end
 
   def edit_results(conn, params, contest) do
@@ -199,10 +215,14 @@ defmodule JumubaseWeb.Internal.PerformanceController do
   def print_certificates(conn, %{"performance_ids" => p_ids}, contest) do
     performances = Showtime.list_performances(contest, p_ids)
 
-    conn
-    |> assign(:contest, contest)
-    |> assign(:performances, performances)
-    |> render("certificates.pdf")
+    content =
+      Phoenix.View.render_to_string(
+        PerformanceView,
+        "print_certificates.html",
+        %{contest: contest, performances: performances}
+      )
+
+    send_pdf_download(conn, size: :a4, content: content)
   end
 
   def advancing(conn, _params, contest) do
@@ -330,5 +350,18 @@ defmodule JumubaseWeb.Internal.PerformanceController do
       gettext("This performance already has results. To edit it, please clear them first.")
     )
     |> redirect(to: Routes.internal_contest_performance_path(conn, :index, contest))
+  end
+
+  defp send_pdf_download(conn, opts) do
+    {:ok, conn} =
+      opts
+      |> ChromicPDF.Template.source_and_options()
+      |> ChromicPDF.print_to_pdf(
+        output: fn path ->
+          send_download(conn, {:file, path}, disposition: :inline)
+        end
+      )
+
+    conn
   end
 end

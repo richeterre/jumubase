@@ -4,6 +4,7 @@ import Config
 # you can enable the server option below.
 config :jumubase, JumubaseWeb.Endpoint,
   http: [port: 4001],
+  secret_key_base: "gdmnXTTxP5GAW8ta1xHL+uHsHcE1PesiN/qJTNzWG303h/oLR3HFpfFN3JDtG4B9",
   server: false
 
 # Print only warnings and errors during test
@@ -24,11 +25,8 @@ config :jumubase, Jumubase.Repo,
 # Speed up tests by making hashing faster
 config :bcrypt_elixir, log_rounds: 1
 
-# Configure test PDF generator
-config :jumubase, JumubaseWeb.PDFGenerator, engine: JumubaseWeb.PDFGenerator.TestEngine
-
 # Configure test mailer
-config :jumubase, Jumubase.Mailer, adapter: Bamboo.TestAdapter
+config :jumubase, Jumubase.Mailer, adapter: Swoosh.Adapters.Test
 
 # Configure test email
 config :jumubase, JumubaseWeb.Email,

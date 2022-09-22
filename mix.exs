@@ -35,9 +35,9 @@ defmodule Jumubase.Mixfile do
     [
       {:absinthe, "~> 1.5"},
       {:absinthe_plug, "~> 1.5"},
-      {:bamboo, "~> 2.0"},
-      {:bamboo_phoenix, "~> 1.0"},
       {:bcrypt_elixir, "~> 3.0"},
+      {:chromic_pdf, "~> 1.2"},
+      {:dart_sass, "~> 0.5", runtime: Mix.env() == :dev},
       {:dataloader, "~> 1.0"},
       {:earmark, "~> 1.4"},
       {:ecto_sql, "~> 3.6"},
@@ -48,7 +48,6 @@ defmodule Jumubase.Mixfile do
       {:html_entities, "~> 0.5"},
       {:jason, "~> 1.1"},
       {:nimble_csv, "~> 1.0"},
-      {:pdf_generator, "~> 0.4"},
       {:phoenix, "~> 1.6.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:phoenix_live_dashboard, "~> 0.6"},
@@ -56,10 +55,12 @@ defmodule Jumubase.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:phoenix_live_view, "~> 0.17"},
       {:phoenix_pubsub, "~> 2.0"},
+      {:phoenix_swoosh, "~> 1.0"},
+      {:plug_canonical_host, "~> 2.0"},
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},
-      {:sneeze, "~> 1.2"},
+      {:swoosh, "~> 1.7"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:timex, "~> 3.0"},
@@ -75,9 +76,15 @@ defmodule Jumubase.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      {:"ecto.setup", ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"]},
-      {:"ecto.reset", ["ecto.drop", "ecto.setup"]},
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      setup: ["deps.get", "ecto.setup", "cmd --cd assets npm install"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.deploy": [
+        "cmd --cd assets node esbuild.js --deploy",
+        "sass default --no-source-map --style=compressed",
+        "phx.digest"
+      ]
     ]
   end
 end

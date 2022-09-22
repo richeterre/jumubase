@@ -14,20 +14,18 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     ]
 
   import JumubaseWeb.Internal.CategoryView, only: [genre_name: 1]
-  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1, round_name: 1, year: 1]
   import JumubaseWeb.Internal.ParticipantView, only: [full_name: 1]
-  import JumubaseWeb.Internal.PieceView, only: [duration_and_epoch_info: 1, person_info: 1]
+
+  import JumubaseWeb.Internal.PieceView,
+    only: [duration: 1, duration_and_epoch_info: 1, person_info: 1]
+
   alias Jumubase.JumuParams
   alias Jumubase.Foundation
   alias Jumubase.Foundation.{AgeGroups, Contest, Stage}
   alias Jumubase.Showtime
-  alias Jumubase.Showtime.Performance
+  alias Jumubase.Showtime.{Appearance, Performance, Piece, Results}
   alias JumubaseWeb.Internal.HostView
-  alias JumubaseWeb.PDFGenerator
-
-  def render("scripts.index.html", assigns) do
-    render_performance_filter(assigns)
-  end
 
   def render("reschedule_success.json", %{stage_times: stage_times}) do
     stage_times
@@ -42,37 +40,6 @@ defmodule JumubaseWeb.Internal.PerformanceView do
         errors: errors
       }
     }
-  end
-
-  def render("scripts.jury_material.html", assigns) do
-    render_performance_filter(assigns)
-  end
-
-  def render("jury_sheets.pdf", %{performances: performances, round: round}) do
-    PDFGenerator.jury_sheets(performances, round)
-  end
-
-  def render("jury_table.pdf", %{performances: performances}) do
-    PDFGenerator.jury_table(performances)
-  end
-
-  def render("scripts.edit_results.html", assigns) do
-    ~H(
-      <script src="/js/performanceFilter.js"></script>
-      <script src="/js/resultForm.js"></script>
-    )
-  end
-
-  def render("scripts.publish_results.html", assigns) do
-    render_performance_filter(assigns)
-  end
-
-  def render("scripts.certificates.html", assigns) do
-    render_performance_filter(assigns)
-  end
-
-  def render("certificates.pdf", %{performances: performances, contest: contest}) do
-    PDFGenerator.certificates(performances, contest)
   end
 
   def stage_time(%Performance{stage_time: stage_time}) do
@@ -195,6 +162,37 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   def filter_status(count, false), do: count_tag(count)
 
+  def jury_table_appearances(%Performance{age_group: p_ag} = p) do
+    non_acc =
+      non_acc(p)
+      |> Enum.map(&jury_table_appearance(&1, p_ag))
+      |> Enum.intersperse(tag(:br))
+
+    acc =
+      acc(p)
+      |> Enum.map(&jury_table_appearance(&1, p_ag))
+      |> Enum.intersperse(tag(:br))
+
+    if acc != [], do: non_acc ++ [accompanist_separator()] ++ acc, else: non_acc
+  end
+
+  def jury_sheet_appearances(%Performance{age_group: ag} = p) do
+    non_acc_div = content_tag(:div, non_acc(p) |> to_appearance_lines(ag))
+
+    case acc(p) do
+      [] ->
+        non_acc_div
+
+      acc ->
+        acc_div = content_tag(:div, acc |> to_appearance_lines(ag))
+        [non_acc_div, accompanist_separator(), acc_div]
+    end
+  end
+
+  def jury_sheet_pieces(%Performance{pieces: pieces}) do
+    pieces |> Enum.map(&render_piece/1)
+  end
+
   def certificate_instructions(0) do
     gettext(
       "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
@@ -209,11 +207,93 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     |> raw
   end
 
-  # Private helpers
-
-  defp render_performance_filter(assigns) do
-    ~H(<script src="/js/performanceFilter.js"></script>)
+  def certificate_contest_text(%Contest{} = c, 1) do
+    "hat am #{certificate_contest_name(c)}"
   end
+
+  def certificate_contest_text(%Contest{} = c, _group_size) do
+    "haben am #{certificate_contest_name(c)}"
+  end
+
+  def certificate_category_text(0, _, _), do: nil
+
+  def certificate_category_text(_round, %Appearance{role: "accompanist"}, %Performance{} = p) do
+    assigns = %{category_name: category_name(p), age_group: p.age_group}
+
+    ~H"""
+    <span>in der Wertung für <i>Instrumentalbegleitung</i></span>
+    <br>
+    <span>in der Kategorie <i><%= @category_name %>, AG <%= @age_group %></i></span>
+    """
+  end
+
+  def certificate_category_text(_round, %Appearance{}, %Performance{} = p) do
+    assigns = %{category_name: category_name(p)}
+
+    ~H"""
+    <span>in der Wertung für <i><%= @category_name %></i></span>
+    <br>
+    """
+  end
+
+  def certificate_rating_points_text(0, _, _), do: "teilgenommen."
+
+  def certificate_rating_points_text(round, points, group_size) do
+    assigns = %{
+      rating: Results.get_rating(points, round),
+      points_text: certificate_points_text(points, group_size)
+    }
+
+    ~H"""
+    <span><%= @rating || "teilgenommen" %></span>
+    <br>
+    <span><%= @points_text %></span>
+    """
+  end
+
+  def certificate_prize_text(0, %Appearance{points: points}, _performance) do
+    assigns = %{rating: Results.get_rating(points, 0)}
+
+    ~H"""
+    <b>Zuerkannt wurde das Prädikat: <%= @rating %></b>
+    """
+  end
+
+  def certificate_prize_text(round, %Appearance{points: points} = a, %Performance{} = p) do
+    case Results.get_prize(points, round) do
+      nil ->
+        nil
+
+      prize ->
+        assigns = %{prize: prize, advancement_text: certificate_advancement_text(a, p, round)}
+
+        ~H"""
+        <b>Zuerkannt wurde ein <%= @prize %></b>
+        <br>
+        <span><%= @advancement_text %></span>
+        """
+    end
+  end
+
+  def certificate_date_text(%Contest{host: h, end_date: end_date, certificate_date: cert_date}) do
+    "#{h.city}, den #{format_date(cert_date || end_date)}"
+  end
+
+  def certificate_signatures_text(0) do
+    assigns = %{}
+    ~H"<span>Für die Jury</span>"
+  end
+
+  def certificate_signatures_text(round) when round in 1..2 do
+    assigns = %{committee_name: certificate_committee_name(round)}
+
+    ~H"""
+    <span>Für den <%= @committee_name %></span>
+    <span>Für die Jury</span>
+    """
+  end
+
+  # Private helpers
 
   defp base_filter_options(%Contest{} = contest) do
     %{
@@ -264,4 +344,105 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   defp certificate_order_address do
     "mailto:jumu@musikrat.de?subject=Urkundenpapier"
   end
+
+  defp accompanist_separator do
+    content_tag(:p, gettext("accompanied by"), class: "accompanist-separator")
+  end
+
+  defp jury_table_appearance(%Appearance{} = a, performance_ag) do
+    ag_info = age_group_info(a, performance_ag)
+    content_tag(:span, "#{full_name(a.participant)}, #{instrument_name(a.instrument)} #{ag_info}")
+  end
+
+  defp to_appearance_lines(appearances, performance_ag) do
+    appearances
+    |> Enum.map(fn a ->
+      ag_info = age_group_info(a, performance_ag)
+
+      content_tag(:span, [
+        content_tag(:b, "#{full_name(a.participant)},"),
+        content_tag(:span, " #{instrument_name(a.instrument)} #{ag_info}")
+      ])
+    end)
+    |> Enum.intersperse(tag(:br))
+  end
+
+  defp render_piece(%Piece{} = pc) do
+    content_tag(
+      :p,
+      [
+        content_tag(:b, person_info(pc)),
+        pc.title,
+        content_tag(:span, duration_and_epoch_text(pc), class: "duration-and-epoch")
+      ]
+      |> Enum.intersperse(tag(:br))
+    )
+  end
+
+  defp duration_and_epoch_text(%Piece{epoch: nil} = pc), do: duration(pc)
+  defp duration_and_epoch_text(%Piece{epoch: "trad"} = pc), do: duration(pc)
+
+  defp duration_and_epoch_text(%Piece{} = pc) do
+    "#{duration(pc)} / #{epoch_text(pc)}"
+  end
+
+  defp epoch_text(%Piece{epoch: epoch}) do
+    "#{gettext("Epoch")} #{epoch}"
+  end
+
+  defp jury_sheet_point_ranges(round) do
+    {left_side, right_side} =
+      Results.prizes_for_round(round)
+      |> Map.merge(Results.ratings_for_round(round))
+      |> Enum.reverse()
+      |> Enum.split(3)
+
+    content_tag(
+      :div,
+      [format_point_range_groups(left_side), format_point_range_groups(right_side)],
+      class: "point-ranges"
+    )
+  end
+
+  defp format_point_range_groups(point_ranges) do
+    content_tag(
+      :div,
+      point_ranges |> Enum.map(&format_point_range/1) |> Enum.intersperse(tag(:br)),
+      class: "point-range-group"
+    )
+  end
+
+  defp format_point_range({first..last, text}) do
+    content_tag(:span, "#{first}–#{last} #{gettext("points")}: #{text}")
+  end
+
+  defp age_group_info(%Appearance{age_group: ag}, performance_ag) do
+    if ag != performance_ag, do: "(AG #{ag})", else: nil
+  end
+
+  defp certificate_contest_name(%Contest{host: h} = c) do
+    "#{certificate_round_text(c.round)} #{h.name} #{year(c)}"
+  end
+
+  defp certificate_round_text(0), do: "Wettbewerb „Kinder musizieren“"
+  defp certificate_round_text(round), do: round_name(round)
+
+  defp certificate_points_text(points, 1), do: "und erreichte #{points} Punkte."
+  defp certificate_points_text(points, _group_size), do: "und erreichten #{points} Punkte."
+
+  defp certificate_advancement_text(%Appearance{} = a, %Performance{} = p, round) do
+    cond do
+      Results.advances?(a, p) ->
+        "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
+
+      Results.gets_wespe_nomination?(a, p) ->
+        "mit Nominierung zur Teilnahme am Wochenende der Sonderpreise (WESPE)."
+
+      true ->
+        nil
+    end
+  end
+
+  defp certificate_committee_name(1), do: "Regionalausschuss"
+  defp certificate_committee_name(2), do: "Landesausschuss"
 end

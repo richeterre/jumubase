@@ -1,0 +1,75 @@
+<%= render("_print_fonts.html") %>
+
+<style>
+  body {
+    font-family: "LatoLatin";
+    font-size: 18pt;
+    line-height: 1.3;
+    padding: 0 1cm;
+  }
+
+  table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+
+  th, td {
+    border: 1px solid black;
+    padding: 6pt;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .ag-cell {
+    white-space: nowrap;
+    width: 1%;
+  }
+
+  .juror-cell {
+    width: 5%;
+  }
+
+  .result-cell {
+    width: 10%;
+  }
+
+  .accompanist-separator {
+    color: #666;
+    margin: 6pt 0;
+  }
+</style>
+
+<table class="performance-table">
+  <thead>
+    <tr>
+      <th><%= gettext("Category") %></th>
+      <th class="ag-cell"><%= gettext("AG") %></th>
+      <th><%= gettext("Participants") %></th>
+      <th class="juror-cell">J1</th>
+      <th class="juror-cell">J2</th>
+      <th class="juror-cell">J3</th>
+      <th class="juror-cell">J4</th>
+      <th class="juror-cell">J5</th>
+      <th class="result-cell"><%= gettext("Result") %></th>
+    </tr>
+  </thead>
+
+  <%= for p <- @performances do %>
+    <tr>
+      <td><%= category_name(p) %></td>
+      <td><%= p.age_group %></td>
+      <td><%= jury_table_appearances(p) %></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>

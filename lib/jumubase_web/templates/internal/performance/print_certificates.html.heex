@@ -1,0 +1,83 @@
+<%= render("_print_fonts.html") %>
+
+<style>
+  body {
+    font-family: "LatoLatin";
+    font-size: 12pt;
+    line-height: 1.3;
+  }
+
+  .certificate {
+    break-before: page;
+    padding: 0 3cm;
+  }
+
+  .appearances-container {
+    height: 15cm;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .category-result-container {
+    height: 5cm;
+    margin: 1cm 0 0 1cm;
+  }
+
+  .prize-container {
+    height: 3.5cm;
+  }
+
+  .date-container {
+    height: 2cm;
+  }
+
+  .signatures-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .signatures-container > span {
+    flex: 1;
+  }
+</style>
+
+<%= for p <- @performances do %>
+  <%= for group <- result_groups(p) do %>
+    <%= for a <- group do %>
+      <% group_size = length(group) %>
+
+      <div class="certificate">
+        <div class="appearances-container">
+          <%= for a <- group do %>
+            <b><%= appearance_info(a) %></b>
+          <% end %>
+        </div>
+
+        <div class="category-result-container">
+          <%= certificate_contest_text(@contest, group_size) %>
+          <br>
+          für das instrumentale und vokale Musizieren der Jugend
+          <br>
+          <%= certificate_category_text(@contest.round, a, p) %>
+          <br>
+          in der Altersgruppe <%= a.age_group %>
+          <br>
+          <%= certificate_rating_points_text(@contest.round, a.points, group_size) %>
+        </div>
+
+        <div class="prize-container">
+          <%= certificate_prize_text(@contest.round, a, p) %>
+        </div>
+
+        <div class="date-container">
+          <%= certificate_date_text(@contest) %>
+        </div>
+
+        <div class="signatures-container">
+          <%= certificate_signatures_text(@contest.round) %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

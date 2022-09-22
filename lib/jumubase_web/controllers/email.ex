@@ -10,13 +10,15 @@ defmodule JumubaseWeb.Email do
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def contact_message(%{name: name, email: email, message: message}) do
+    sender = Application.get_env(:jumubase, Email)[:default_sender]
     contact_email = Application.get_env(:jumubase, Email)[:contact_email]
     admin_email = Application.get_env(:jumubase, Email)[:admin_email]
 
     email =
       new()
-      |> from({name, email})
+      |> from(sender)
       |> to(contact_email)
+      |> reply_to({name, email})
       |> subject(gettext("New message via jumu-weltweit.org"))
       |> text_body(message)
 

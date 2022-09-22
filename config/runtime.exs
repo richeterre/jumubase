@@ -82,6 +82,10 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  # Configure canonical host to redirect to (e.g. www subdomain)
+  config :jumubase,
+    canonical_host: System.get_env("CANONICAL_HOST")
+
   config :jumubase, Jumubase.Mailer,
     adapter: Swoosh.Adapters.MailPace,
     api_key: System.get_env("MAILPACE_API_KEY")

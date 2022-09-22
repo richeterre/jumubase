@@ -2,6 +2,9 @@ defmodule JumubaseWeb.Endpoint do
   use Sentry.PlugCapture
   use Phoenix.Endpoint, otp_app: :jumubase
 
+  # Redirect to canonical host if one is set (see runtime config)
+  plug :canonical_host
+
   @session_options [
     store: :cookie,
     key: "_jumubase_key",
@@ -47,4 +50,19 @@ defmodule JumubaseWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug JumubaseWeb.Router
+
+  # Private helpers
+
+  defp canonical_host(conn, _opts) do
+    :jumubase
+    |> Application.get_env(:canonical_host)
+    |> case do
+      host when is_binary(host) ->
+        opts = PlugCanonicalHost.init(canonical_host: host)
+        PlugCanonicalHost.call(conn, opts)
+
+      _ ->
+        conn
+    end
+  end
 end

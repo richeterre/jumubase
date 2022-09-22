@@ -56,6 +56,7 @@ defmodule Jumubase.Mixfile do
       {:phoenix_live_view, "~> 0.17"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_swoosh, "~> 1.0"},
+      {:plug_canonical_host, "~> 2.0"},
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:sentry, "~> 8.0"},

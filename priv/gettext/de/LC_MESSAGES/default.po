@@ -204,7 +204,7 @@ msgstr "Zeitzone"
 #: lib/jumubase_web/views/performance_view.ex:111
 #: lib/jumubase_web/views/performance_view.ex:122
 msgid "Accompanist"
-msgstr "Begleiter"
+msgstr "Begleiter:in"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.heex:34
@@ -227,7 +227,7 @@ msgstr "Kategorie"
 #: lib/jumubase_web/views/performance_view.ex:110
 #: lib/jumubase_web/views/performance_view.ex:123
 msgid "Ensemblist"
-msgstr "Ensemblepartner"
+msgstr "Ensemblepartner:in"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.heex:18
@@ -257,7 +257,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:52 lib/jumubase_web/templates/internal/performance/show.html.heex:19
 #: lib/jumubase_web/templates/internal/stage/timetable.html.heex:32 lib/jumubase_web/views/generators/pdf_generator/default_engine.ex:235
 msgid "Participants"
-msgstr "Teilnehmer"
+msgstr "Teilnehmende"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.heex:46
@@ -291,12 +291,12 @@ msgstr "Rolle"
 #: lib/jumubase_web/views/performance_view.ex:109
 #: lib/jumubase_web/views/performance_view.ex:121
 msgid "Soloist"
-msgstr "Solist"
+msgstr "Solist:in"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/live_form.html.heex:135
 msgid "Add participant"
-msgstr "Teilnehmer hinzufügen"
+msgstr "Teilnehmer:in hinzufügen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/live_form.html.heex:240
@@ -311,7 +311,7 @@ msgstr "Geburtsjahr"
 #, elixir-format
 #: lib/jumubase_web/templates/performance/live_form.html.heex:171
 msgid "Composer"
-msgstr "Komponist"
+msgstr "Komponist:in"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/contest_category_controller.ex:9
@@ -468,7 +468,7 @@ msgstr "Passwort"
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:41
 msgid "Participant"
-msgstr "Teilnehmer"
+msgstr "Teilnehmer:in"
 
 #, elixir-format
 #: lib/jumubase_web/views/performance_view.ex:56
@@ -520,12 +520,12 @@ msgstr "Wir konnten keine Anmeldung unter diesem Änderungscode finden."
 #, elixir-format
 #: lib/jumubase_web/templates/performance/live_form.html.heex:195
 msgid "Artist"
-msgstr "Interpret"
+msgstr "Interpret:in"
 
 #, elixir-format
 #: lib/jumubase_web/templates/user_session/new.html.heex:4
 msgid "Here you can log in as a Jumu organizer."
-msgstr "Hier können sich Jumu-Organisatoren einloggen."
+msgstr "Hier können sich Jumu-Organisator:innen einloggen."
 
 #, elixir-format
 #: lib/jumubase_web/templates/user_session/new.html.heex:25
@@ -862,7 +862,7 @@ msgstr "Auftritte"
 #, elixir-format
 #: lib/jumubase_web/templates/performance/live_form.html.heex:37
 msgid "Non-competing accompanists don’t need to register."
-msgstr "Begleiter ohne Wertung müssen nicht angemeldet werden."
+msgstr "Unbewertete Begleitende müssen nicht angemeldet werden."
 
 #, elixir-format
 #: lib/jumubase_web/templates/performance/live_form.html.heex:103
@@ -1273,12 +1273,12 @@ msgstr "Gesang"
 #, elixir-format
 #: lib/jumubase_web/views/internal/category_view.ex:92
 msgid "Wind Instruments"
-msgstr "Bläser"
+msgstr "Blasinstrumente"
 
 #, elixir-format
 #: lib/jumubase_web/views/internal/category_view.ex:91
 msgid "String Instruments"
-msgstr "Streicher"
+msgstr "Streichinstrumente"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/category/edit.html.heex:1
@@ -1564,14 +1564,14 @@ msgstr "Datenpflege"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/maintenance/index.html.heex:7
 msgid "Orphaned participants"
-msgstr "Verwaiste Teilnehmer"
+msgstr "Verwaiste Teilnehmende"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/maintenance_controller.ex:33
 msgid "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_ONE"
 msgid_plural "DELETE_ORPHANED_PARTICIPANTS_SUCCESS_MANY(%{count})"
-msgstr[0] "Der verwaiste Teilnehmer wurde gelöscht."
-msgstr[1] "Es wurden %{count} verwaiste Teilnehmer gelöscht."
+msgstr[0] "Der:die verwaiste Teilnehmende wurde gelöscht."
+msgstr[1] "Es wurden %{count} verwaiste Teilnehmende gelöscht."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/index.html.heex:29
@@ -1615,37 +1615,37 @@ msgstr "Alle löschen"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/maintenance/index.html.heex:18
 msgid "Do you really want to delete all orphaned participants?"
-msgstr "Möchtest du wirklich alle verwaisten Teilnehmer löschen?"
+msgstr "Möchtest du wirklich alle verwaisten Teilnehmenden löschen?"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/compare.html.heex:1
 msgid "Compare participants"
-msgstr "Teilnehmer vergleichen"
+msgstr "Teilnehmende vergleichen"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/compare.html.heex:83
 msgid "Merge participants"
-msgstr "Teilnehmer zusammenführen"
+msgstr "Teilnehmende zusammenführen"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:109
 msgid "The participants could not be merged."
-msgstr "Die Teilnehmer konnten nicht zusammengeführt werden."
+msgstr "Die Teilnehmenden konnten nicht zusammengeführt werden."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:106
 msgid "The participants were merged."
-msgstr "Die Teilnehmer wurden zusammengeführt."
+msgstr "Die Teilnehmenden wurden zusammengeführt."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/maintenance/index.html.heex:23
 msgid "No orphaned participants were found."
-msgstr "Es wurden keine verwaisten Teilnehmer gefunden."
+msgstr "Es wurden keine verwaisten Teilnehmenden gefunden."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/duplicates.html.heex:10
 msgid "No duplicate participants were found."
-msgstr "Es wurden keine Teilnehmer-Duplikate gefunden."
+msgstr "Es wurden keine Teilnehmenden-Duplikate gefunden."
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/performance_controller.ex:330
@@ -1823,17 +1823,17 @@ msgstr "Epochen?"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:22
 msgid "Manage participants"
-msgstr "Teilnehmer verwalten"
+msgstr "Teilnehmende verwalten"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.heex:6
 msgid "Edit Participant"
-msgstr "Teilnehmer bearbeiten"
+msgstr "Teilnehmer:in bearbeiten"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:61
 msgid "The participant %{name} was updated."
-msgstr "Der Teilnehmer %{name} wurde aktualisiert."
+msgstr "Der:die Teilnehmer:in %{name} wurde aktualisiert."
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.heex:2
@@ -1844,7 +1844,7 @@ msgstr "Aufgepasst: Deine Änderungen wirken sich auf sämtliche (auch frühere)
 #: lib/jumubase_web/templates/internal/contest/live_form.html.heex:125
 #: lib/jumubase_web/views/internal/contest_category_view.ex:26
 msgid "Accompanists rated as group"
-msgstr "Begleiter als Gruppe bewertet"
+msgstr "Begleitende als Gruppe bewertet"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/contest/live_form.html.heex:118
@@ -1904,7 +1904,7 @@ msgstr "Möchtest du den Wettbewerb %{name} wirklich löschen?"
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/duplicates.html.heex:2
 msgid "Duplicate Participants"
-msgstr "Teilnehmer-Duplikate"
+msgstr "Teilnehmenden-Duplikate"
 
 #, elixir-format
 #: lib/jumubase_web/controllers/internal/participant_controller.ex:77

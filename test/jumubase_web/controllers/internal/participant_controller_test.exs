@@ -110,7 +110,7 @@ defmodule JumubaseWeb.Internal.ParticipantControllerTest do
            %{conn: conn, user: u} do
         c = insert_authorized_contest(u)
         conn = get(conn, Routes.internal_contest_participant_path(conn, :export_csv, c))
-        assert_csv_file_response(conn, "Teilnehmer.csv")
+        assert_csv_file_response(conn, "Teilnehmende.csv")
       end
     end
 

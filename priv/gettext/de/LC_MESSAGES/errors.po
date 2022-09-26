@@ -115,12 +115,12 @@ msgstr "muss eindeutig sein"
 #, elixir-format
 #: lib/jumubase/showtime/piece.ex:70
 msgid "can only have either a composer or an artist"
-msgstr "darf entweder einen Komponisten oder einen Interpreten haben"
+msgstr "darf nur entweder Komponist:in oder Interpret:in enthalten"
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:153
 msgid "The performance must have at least one participant."
-msgstr "Das Vorspiel muss mindestens einen Teilnehmer haben."
+msgstr "Das Vorspiel muss mindestens eine:n Teilnehmer:in haben."
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:198
@@ -130,22 +130,22 @@ msgstr "Das Vorspiel muss mindestens ein Stück haben."
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:162
 msgid "The performance can't have both soloists and ensemblists."
-msgstr "Das Vorspiel darf nicht sowohl Solisten als auch Ensemblepartner haben."
+msgstr "Das Vorspiel darf nicht sowohl Solist:innen als auch Ensemblepartner:innen haben."
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:169
 msgid "The performance can't have more than one soloist."
-msgstr "Das Vorspiel darf nicht mehrere Solisten haben."
+msgstr "Das Vorspiel darf nicht mehrere Solist:innen haben."
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:183
 msgid "The performance can't have only accompanists."
-msgstr "Das Vorspiel darf nicht nur Begleiter haben."
+msgstr "Das Vorspiel darf nicht nur Begleiter:innen haben."
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:176
 msgid "The performance can't have only one ensemblist."
-msgstr "Das Vorspiel darf nicht nur einen Ensemblepartner haben."
+msgstr "Das Vorspiel darf nicht nur eine:n Ensemblepartner:in haben."
 
 #, elixir-format
 #: lib/jumubase_web/views/error_view.ex:17

@@ -227,7 +227,7 @@ msgstr "Kategorie"
 #: lib/jumubase_web/views/performance_view.ex:110
 #: lib/jumubase_web/views/performance_view.ex:123
 msgid "Ensemblist"
-msgstr "Ensemblepartner:in"
+msgstr "Ensemblemitglied"
 
 #, elixir-format
 #: lib/jumubase_web/templates/internal/participant/edit.html.heex:18

@@ -130,7 +130,7 @@ msgstr "Das Vorspiel muss mindestens ein Stück haben."
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:162
 msgid "The performance can't have both soloists and ensemblists."
-msgstr "Das Vorspiel darf nicht sowohl Solist:innen als auch Ensemblepartner:innen haben."
+msgstr "Das Vorspiel darf nicht sowohl Solist:innen als auch Ensemblemitglieder haben."
 
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:169
@@ -145,7 +145,7 @@ msgstr "Das Vorspiel darf nicht nur Begleiter:innen haben."
 #, elixir-format
 #: lib/jumubase/showtime/performance.ex:176
 msgid "The performance can't have only one ensemblist."
-msgstr "Das Vorspiel darf nicht nur eine:n Ensemblepartner:in haben."
+msgstr "Das Vorspiel darf nicht nur ein Ensemblemitglied haben."
 
 #, elixir-format
 #: lib/jumubase_web/views/error_view.ex:17

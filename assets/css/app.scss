@@ -108,9 +108,11 @@ dt:not(:first-child) {
   line-height: 1.4em;
 }
 
-/* Add bottom margin to map images for responsive stacking */
-.map-image {
+/* Style interactive map element */
+#map {
+  aspect-ratio: 1.5;
   margin-bottom: $line-height-computed;
+  width: 100%;
 }
 
 /* Space out app links */

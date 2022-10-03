@@ -6,7 +6,19 @@ defmodule JumubaseWeb.PageController do
   alias Jumubase.Showtime
 
   def home(conn, _params) do
-    render(conn, "home.html")
+    host_map_data =
+      Foundation.list_hosts()
+      |> Enum.group_by(
+        & &1.current_grouping,
+        &%{"name" => &1.name, "latitude" => &1.latitude, "longitude" => &1.longitude}
+      )
+      |> Enum.reduce([], fn {grouping, hosts}, acc ->
+        acc ++ [%{"grouping" => grouping, "hosts" => hosts}]
+      end)
+
+    conn
+    |> assign(:host_map_data, host_map_data)
+    |> render("home.html")
   end
 
   def registration(conn, _params) do

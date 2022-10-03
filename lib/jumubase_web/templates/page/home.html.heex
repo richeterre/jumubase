@@ -8,7 +8,7 @@
 
 <div class="row">
   <div class="col-md-6">
-    <%= host_map_image() %>
+    <%= render("_host_map.html", data: @host_map_data) %>
   </div>
 
   <%= render_phase_panels(@conn) %>

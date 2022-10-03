@@ -8,10 +8,6 @@ defmodule JumubaseWeb.PageView do
   alias JumubaseWeb.Endpoint
   alias JumubaseWeb.MapHelpers
 
-  def host_map_image do
-    img_tag(MapHelpers.host_map_url(), class: "img-responsive map-image")
-  end
-
   def render_phase_panels(conn) do
     c = Foundation.get_latest_official_contest()
     do_render_phase_panels(conn, c)

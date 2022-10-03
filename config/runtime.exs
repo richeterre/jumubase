@@ -23,8 +23,12 @@ end
 # Configure release level
 config :jumubase, release_level: System.get_env("RELEASE_LEVEL")
 
-# Configure API keys
-config :jumubase, JumubaseWeb.MapHelpers, google_api_key: System.get_env("GOOGLE_API_KEY")
+# Configure Mapbox
+config :jumubase, JumubaseWeb.MapHelpers,
+  mapbox_access_token: System.get_env("MAPBOX_ACCESS_TOKEN"),
+  mapbox_style_url: System.get_env("MAPBOX_STYLE_URL")
+
+# Configure GraphQL API key
 config :jumubase, JumubaseWeb.ApiAuth, api_key: System.get_env("JUMU_API_KEY")
 
 # Configure companion app IDs

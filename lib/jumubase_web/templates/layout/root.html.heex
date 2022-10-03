@@ -13,6 +13,10 @@
     <!-- We can't use `defer` here while are <script> tags in the body that rely on app.js code, such as `scheduler()` -->
     <script phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
 
+    <!-- Mapbox, used for the host map on the start page -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css' rel='stylesheet' />
+
     <!-- Privacy-friendly analytics via Plausible -->
     <script async defer data-domain="jumu-weltweit.org" src="https://plausible.io/js/plausible.js"></script>
 

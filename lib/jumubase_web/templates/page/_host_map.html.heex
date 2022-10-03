@@ -1,0 +1,47 @@
+<div id='map'></div>
+
+<script>
+  const HOST_DATA = <%= Jason.encode!(@data) |> Phoenix.HTML.raw %>;
+  const INITIAL_CENTER = [18.0, 48.0];
+  const INITIAL_ZOOM = 0.6;
+
+  // Set different target zoom level for desktop/tablet vs. mobile devices
+  const mediaQuery = window.matchMedia( "(min-width: 481px)" );
+  const TARGET_ZOOM = mediaQuery.matches ? 2.4 : 1.7;
+  const TARGET_ZOOM_DURATION_MS = 2000;
+
+  mapboxgl.accessToken = '<%= MapHelpers.get_access_token() %>'
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: '<%= MapHelpers.get_mapbox_style_url() %>',
+    center: INITIAL_CENTER,
+    zoom: INITIAL_ZOOM,
+    projection: 'globe'
+  });
+
+  const groupingColor = grouping => {
+    switch (grouping) {
+      case "1": return "CornflowerBlue";
+      case "2": return "MediumSeaGreen";
+      case "3": return "Gold";
+      default: return "Gray"
+    }
+  }
+
+  map.on('style.load', () => {
+    // Add markers
+    HOST_DATA.forEach(({ grouping, hosts }) => {
+      hosts.forEach(host => {
+        new mapboxgl.Marker({ color: groupingColor(grouping) })
+          .setLngLat([host.longitude, host.latitude])
+          .addTo(map);
+      });
+    });
+  });
+
+  map.on('load', () => {
+    // Animate to target zoom level
+    map.zoomTo(TARGET_ZOOM, { duration: TARGET_ZOOM_DURATION_MS });
+  });
+</script>

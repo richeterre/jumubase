@@ -17,8 +17,12 @@
     style: '<%= MapHelpers.get_mapbox_style_url() %>',
     center: INITIAL_CENTER,
     zoom: INITIAL_ZOOM,
-    projection: 'globe'
+    projection: 'globe',
+    logoPosition: 'top-left',
   });
+
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-right');
 
   const groupingColor = grouping => {
     switch (grouping) {

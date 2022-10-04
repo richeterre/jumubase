@@ -3,11 +3,11 @@
 <script>
   const HOST_DATA = <%= Jason.encode!(@data) |> Phoenix.HTML.raw %>;
   const INITIAL_CENTER = [18.0, 48.0];
-  const INITIAL_ZOOM = 0.6;
 
   // Set different target zoom level for desktop/tablet vs. mobile devices
   const mediaQuery = window.matchMedia( "(min-width: 481px)" );
-  const TARGET_ZOOM = mediaQuery.matches ? 2.4 : 1.7;
+  const INITIAL_ZOOM = mediaQuery.matches ? 0.7 : 0.5;
+  const TARGET_ZOOM = mediaQuery.matches ? 2.4 : 1.6;
   const TARGET_ZOOM_DURATION_MS = 2000;
 
   mapboxgl.accessToken = '<%= MapHelpers.get_access_token() %>'
@@ -17,6 +17,7 @@
     style: '<%= MapHelpers.get_mapbox_style_url() %>',
     center: INITIAL_CENTER,
     zoom: INITIAL_ZOOM,
+    minZoom: INITIAL_ZOOM,
     projection: 'globe',
     logoPosition: 'top-left',
   });

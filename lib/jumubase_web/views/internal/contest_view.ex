@@ -67,20 +67,6 @@ defmodule JumubaseWeb.Internal.ContestView do
     "#{round_name(round)} #{year(contest)}"
   end
 
-  @doc """
-  Returns a link path for scheduling performances. If the contest has only one stage,
-  we can guide the user to that stage directly, else we take them to the index page.
-  """
-  def schedule_link_path(conn, %Contest{host: host} = contest) do
-    case host.stages do
-      [stage] ->
-        Routes.internal_contest_stage_schedule_path(conn, :schedule, contest, stage)
-
-      _ ->
-        Routes.internal_contest_stage_path(conn, :index, contest)
-    end
-  end
-
   def edit_points_completion_text(%{total: total, with_points: completed}) do
     case completed do
       ^total -> gettext("All %{total} entered", total: total)

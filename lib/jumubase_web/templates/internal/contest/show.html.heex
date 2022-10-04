@@ -39,7 +39,7 @@
       <ul class="list-group">
         <li class="list-group-item">
           <%= icon_link "time", gettext("Schedule performances"),
-            schedule_link_path(@conn, @contest)
+            Routes.internal_contest_stage_path(@conn, :index, @contest)
             %>
         </li>
         <li class="list-group-item">

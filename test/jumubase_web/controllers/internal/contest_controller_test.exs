@@ -79,7 +79,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
     end
 
     @tag login_as: "admin"
-    test "lets admins updates a contest", %{conn: conn, contest: c, params: params} do
+    test "lets admins update a contest", %{conn: conn, contest: c, params: params} do
       conn = put(conn, Routes.internal_contest_path(conn, :update, c, params))
 
       redirect_path = Routes.internal_live_path(conn, ContestLive.Index)
@@ -106,6 +106,33 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
         params: params
       } do
         conn = put(conn, Routes.internal_contest_path(conn, :update, c, params))
+        assert_unauthorized_user(conn)
+      end
+    end
+  end
+
+  describe "delete/2" do
+    setup do
+      [contest: insert(:contest)]
+    end
+
+    @tag login_as: "admin"
+    test "lets admins delete a contest", %{conn: conn, contest: c} do
+      conn = delete(conn, Routes.internal_contest_path(conn, :delete, c))
+
+      redirect_path = Routes.internal_live_path(conn, ContestLive.Index)
+      assert redirected_to(conn) == redirect_path
+
+      # Follow redirection
+      conn = get(recycle(conn), redirect_path)
+
+      assert html_response(conn, 200) =~ "The contest #{name(c)} was deleted."
+    end
+
+    for role <- roles_except("admin") do
+      @tag login_as: role
+      test "redirects #{role} users trying to delete a contest", %{conn: conn, contest: c} do
+        conn = delete(conn, Routes.internal_contest_path(conn, :delete, c))
         assert_unauthorized_user(conn)
       end
     end

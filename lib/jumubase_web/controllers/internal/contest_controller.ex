@@ -16,7 +16,7 @@ defmodule JumubaseWeb.Internal.ContestController do
     action: ContestLive.Index
 
   plug :contest_user_check when action in [:show]
-  plug :admin_check when action in [:new, :edit, :update]
+  plug :admin_check when action in [:new, :edit, :update, :delete]
 
   def show(conn, %{"id" => id}) do
     contest =

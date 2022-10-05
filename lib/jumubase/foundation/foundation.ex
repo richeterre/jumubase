@@ -279,6 +279,18 @@ defmodule Jumubase.Foundation do
     Repo.delete!(contest)
   end
 
+  def publish_contest_timetables(%Contest{} = contest) do
+    contest
+    |> Ecto.Changeset.change(timetables_public: true)
+    |> Repo.update()
+  end
+
+  def unpublish_contest_timetables(%Contest{} = contest) do
+    contest
+    |> Ecto.Changeset.change(timetables_public: false)
+    |> Repo.update()
+  end
+
   @doc """
   Returns the date range on which the contest takes place.
   """

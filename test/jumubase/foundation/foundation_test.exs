@@ -804,6 +804,22 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "publish_contest_timetables/1" do
+    test "publishes a contest's timetables" do
+      contest = insert(:contest, timetables_public: false)
+      {:ok, updated_contest} = Foundation.publish_contest_timetables(contest)
+      assert updated_contest.timetables_public
+    end
+  end
+
+  describe "unpublish_contest_timetables/1" do
+    test "unpublishes a contest's timetables" do
+      contest = insert(:contest, timetables_public: true)
+      {:ok, updated_contest} = Foundation.unpublish_contest_timetables(contest)
+      refute updated_contest.timetables_public
+    end
+  end
+
   describe "date_range/1" do
     test "returns the date range on which the contest takes place" do
       start_date = ~D[2019-01-01]

@@ -21,7 +21,7 @@ msgstr ""
 msgid "Unfortunately, the email or password was incorrect."
 msgstr ""
 
-#: lib/jumubase_web/controllers/authorize.ex:130
+#: lib/jumubase_web/controllers/authorize.ex:128
 #, elixir-autogen, elixir-format
 msgid "You are not authorized to view this page."
 msgstr ""

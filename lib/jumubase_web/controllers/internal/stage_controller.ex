@@ -20,9 +20,12 @@ defmodule JumubaseWeb.Internal.StageController do
     %{host: %{stages: stages}} = Foundation.load_available_stages(contest)
     stages = stages |> Enum.sort_by(& &1.name)
 
+    unscheduled_performance_count = Showtime.unscheduled_performance_count(contest)
+
     conn
     |> assign(:contest, contest)
     |> assign(:stages, stages)
+    |> assign(:unscheduled_performance_count, unscheduled_performance_count)
     |> add_schedule_breadcrumbs(contest)
     |> render("index.html")
   end

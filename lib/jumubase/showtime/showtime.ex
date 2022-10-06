@@ -60,6 +60,15 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
+  Returns the amount of performances without a stage time in the contest.
+  """
+  def unscheduled_performance_count(%Contest{id: c_id}) do
+    performances_query(c_id)
+    |> where([p], is_nil(p.stage_time))
+    |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
   Returns all performances without a stage time from the contest.
   """
   def unscheduled_performances(%Contest{id: c_id}) do

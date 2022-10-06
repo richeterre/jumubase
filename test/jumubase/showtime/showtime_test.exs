@@ -132,6 +132,22 @@ defmodule Jumubase.ShowtimeTest do
     end
   end
 
+  describe "unscheduled_performance_count/1" do
+    test "returns the amount of performances without a stage time in the contest", %{contest: c} do
+      # Matching performances
+      [cc1, cc2] = c.contest_categories
+      insert_performance(cc1, stage_time: nil)
+      insert_performance(cc2, stage_time: nil)
+
+      # Non-matching performances
+      insert_performance(cc1, stage_time: Timex.now())
+      other_c = insert(:contest)
+      insert_performance(other_c, stage_time: nil)
+
+      assert Showtime.unscheduled_performance_count(c) == 2
+    end
+  end
+
   describe "unscheduled_performances/1" do
     test "returns all performances without a stage time from the contest", %{contest: c} do
       # Matching performances

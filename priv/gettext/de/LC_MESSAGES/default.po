@@ -930,7 +930,7 @@ msgstr "Urkundendatum"
 msgid "The edit deadline for this contest has passed. Please contact us if you need assistance."
 msgstr "Der Änderungsschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
 
-#: lib/jumubase_web/controllers/authorize.ex:112
+#: lib/jumubase_web/controllers/authorize.ex:110
 #, elixir-autogen, elixir-format
 msgid "The registration deadline for this contest has passed. Please contact us if you need assistance."
 msgstr "Der Anmeldeschluss für diesen Wettbewerb ist bereits vorbei. Bitte kontaktiere uns, falls du Hilfe brauchst."
@@ -1030,7 +1030,7 @@ msgstr "Neues Vorspiel"
 msgid "Add Performance"
 msgstr "Neues Vorspiel hinzufügen"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:104
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:107
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:41
 #: lib/jumubase_web/templates/internal/stage/index.html.heex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.heex:2
@@ -1086,17 +1086,17 @@ msgstr "Beginn um"
 msgid "o’clock"
 msgstr "Uhr"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:32
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "admin"
 msgstr "Admin"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:32
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:35
 #, elixir-autogen, elixir-format
 msgid "Add stage"
 msgstr "Bühne hinzufügen"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:31
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:34
 #, elixir-autogen, elixir-format
 msgid "To add a new stage, please contact the"
 msgstr "Um eine Bühne hinzuzufügen, kontaktiere bitte den"
@@ -1373,7 +1373,7 @@ msgstr "Punkte"
 msgid "Timetables public"
 msgstr "Vorspielplan öffentlich"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:116
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:119
 #, elixir-autogen, elixir-format
 msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr "Dieser Vorspielplan wurde bereits veröffentlicht. Deine Änderungen sind für andere sofort sichtbar."
@@ -1513,7 +1513,7 @@ msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem L
 msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:64
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:67
 #: lib/jumubase_web/views/internal/performance_view.ex:205
 #, elixir-autogen, elixir-format
 msgid "here"
@@ -1524,7 +1524,7 @@ msgstr "hier"
 msgid "Time"
 msgstr "Zeit"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:108
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:111
 #: lib/jumubase_web/templates/internal/stage/timetable.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Timetable"
@@ -1812,7 +1812,7 @@ msgstr "Neuanmeldung erlaubt"
 msgid "First round"
 msgstr "Regionalwettbewerb"
 
-#: lib/jumubase_web/controllers/authorize.ex:121
+#: lib/jumubase_web/controllers/authorize.ex:119
 #, elixir-autogen, elixir-format
 msgid "This contest is not open for registration. Please contact us if you need assistance."
 msgstr "Für diesen Wettbewerb ist die Anmeldung nicht möglich. Bitte kontaktiere uns, falls du Hilfe brauchst."
@@ -2050,57 +2050,52 @@ msgstr[1] "%{count} Wettbewerbe"
 msgid "Export for JMDaten"
 msgstr "Für JMDaten exportieren"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:47
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:50
 #, elixir-autogen, elixir-format
 msgid "Once you’re done scheduling for all stages, you can publish your timetables here."
 msgstr "Wenn du mit allen Bühnen fertig bist, kannst du den Vorspielplan hier freigeben."
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:16
-#, elixir-autogen, elixir-format
-msgid "Please start by choosing a stage to schedule performances for."
-msgstr "Wähle bitte zunächst eine Bühne aus, für die du mit der Planung beginnen möchtest."
-
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:13
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:14
 #, elixir-autogen, elixir-format
 msgid "Step 1: Schedule performances"
 msgstr "Schritt 1: Vorspielplan erstellen"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:40
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:43
 #, elixir-autogen, elixir-format
 msgid "Step 2: Publish timetables"
 msgstr "Schritt 2: Fertigen Vorspielplan veröffentlichen"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:63
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "To undo this, please click"
 msgstr "Um dies rückgängig zu machen, klicke bitte"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:27
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:30
 #, elixir-autogen, elixir-format
 msgid "You don’t have any stages set up yet."
 msgstr "Du hast noch keine Bühnen eingerichtet."
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:59
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:62
 #, elixir-autogen, elixir-format
 msgid "Your timetables are now publicly visible through the mobile app “Jumu weltweit”."
 msgstr "Dein Vorspielplan ist nun in der mobilen App “Jumu weltweit” öffentlich sichtbar."
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:55
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:58
 #, elixir-autogen, elixir-format
 msgid "Do you really want to publish all timetables for %{contest_name}?"
 msgstr "Möchtest du wirklich den gesamten Vorspielplan des %{contest_name} veröffentlichen?"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:52
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:55
 #, elixir-autogen, elixir-format
 msgid "Publish timetables"
 msgstr "Vorspielplan freigeben"
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:49
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:52
 #, elixir-autogen, elixir-format
 msgid "This will cause your contest and its timetables to appear in the mobile app “Jumu weltweit”."
 msgstr "Dadurch erscheint dein Wettbewerb mit Vorspielplan in der mobilen App “Jumu weltweit”."
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:67
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:70
 #, elixir-autogen, elixir-format
 msgid "Do you really want to remove the contest %{contest_name} from the app “Jumu weltweit”?"
 msgstr "Möchtest du den %{contest_name} wirklich wieder aus der App “Jumu weltweit” entfernen?"
@@ -2114,3 +2109,8 @@ msgstr "Der Vorspielplan konnte nicht freigegeben werden."
 #, elixir-autogen, elixir-format
 msgid "The timetables could not be unpublished."
 msgstr "Die Freigabe des Vorspielplans konnte nicht aufgehoben werden."
+
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:19
+#, elixir-autogen, elixir-format
+msgid "Please choose a stage to schedule performances for:"
+msgstr "Wähle bitte eine Bühne aus, für die du Vorspiele planen möchtest:"

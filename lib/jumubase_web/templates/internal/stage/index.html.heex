@@ -10,10 +10,13 @@
 
 <div class="row">
   <div class="col-md-8 col-lg-7">
-    <h4><%= gettext("Step 1: Schedule performances") %></h4>
+    <h4>
+      <%= gettext("Step 1: Schedule performances") %>
+      <%= if @unscheduled_performance_count == 0, do: icon_tag("ok") %>
+    </h4>
 
     <%= if has_stages do %>
-      <p><%= gettext("Please start by choosing a stage to schedule performances for.") %></p>
+      <p><%= gettext("Please choose a stage to schedule performances for:") %></p>
       <p>
         <%= for stage <- @stages do %>
           <%= link stage.name,

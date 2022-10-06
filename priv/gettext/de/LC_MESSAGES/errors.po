@@ -11,7 +11,9 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2\n"
 
-#: lib/jumubase/showtime/piece.ex:63 lib/jumubase/showtime/piece.ex:64
+#: lib/jumubase/showtime/piece.ex:63
+#: lib/jumubase/showtime/piece.ex:64
+#, elixir-autogen
 msgid "can't be blank"
 msgstr "fehlt noch"
 
@@ -87,102 +89,102 @@ msgstr ""
 msgid "must be equal to %{number}"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:62
+#, elixir-autogen, elixir-format
 msgid "can't be before the start date"
 msgstr "kann nicht vor dem Beginn liegen"
 
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:65
+#, elixir-autogen, elixir-format
 msgid "must be before the start date"
 msgstr "muss vor dem Beginn liegen"
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:140
+#, elixir-autogen, elixir-format
 msgid "can't be changed"
 msgstr "kann nicht geändert werden"
 
-#, elixir-format
 #: lib/jumubase/showtime/appearance.ex:33
+#, elixir-autogen, elixir-format
 msgid "can only appear once in a performance"
 msgstr "darf nur einen Auftritt pro Vorspiel haben"
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:49
+#, elixir-autogen, elixir-format
 msgid "must be unique"
 msgstr "muss eindeutig sein"
 
-#, elixir-format
 #: lib/jumubase/showtime/piece.ex:70
+#, elixir-autogen, elixir-format
 msgid "can only have either a composer or an artist"
 msgstr "darf nur entweder Komponist:in oder Interpret:in enthalten"
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:153
+#, elixir-autogen, elixir-format
 msgid "The performance must have at least one participant."
 msgstr "Das Vorspiel muss mindestens eine:n Teilnehmer:in haben."
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:198
+#, elixir-autogen, elixir-format
 msgid "The performance must have at least one piece."
 msgstr "Das Vorspiel muss mindestens ein Stück haben."
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:162
+#, elixir-autogen, elixir-format
 msgid "The performance can't have both soloists and ensemblists."
 msgstr "Das Vorspiel darf nicht sowohl Solist:innen als auch Ensemblemitglieder haben."
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:169
+#, elixir-autogen, elixir-format
 msgid "The performance can't have more than one soloist."
 msgstr "Das Vorspiel darf nicht mehrere Solist:innen haben."
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:183
+#, elixir-autogen, elixir-format
 msgid "The performance can't have only accompanists."
 msgstr "Das Vorspiel darf nicht nur Begleiter:innen haben."
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:176
+#, elixir-autogen, elixir-format
 msgid "The performance can't have only one ensemblist."
 msgstr "Das Vorspiel darf nicht nur ein Ensemblemitglied haben."
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:17
+#, elixir-autogen, elixir-format
 msgid "Something went wrong on the server. We’re on it!"
 msgstr "Ein Serverfehler ist aufgetreten. Wir kümmern uns darum!"
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:9
+#, elixir-autogen, elixir-format
 msgid "Maybe try one of the links above?"
 msgstr "Vielleicht helfen dir die obigen Links weiter?"
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:8
+#, elixir-autogen, elixir-format
 msgid "The page was not found."
 msgstr "Die Seite wurde nicht gefunden."
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:16
+#, elixir-autogen, elixir-format
 msgid "Oh no…"
 msgstr "Oh je…"
 
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:71
+#, elixir-autogen, elixir-format
 msgid "can't be before the end date"
 msgstr "kann nicht vor dem Ende liegen"
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:215
+#, elixir-autogen, elixir-format
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/appearance.ex:72
+#, elixir-autogen, elixir-format
 msgid "To change the name or birthdate, please remove and add back this person."
 msgstr "Um Name oder Geburtsdatum zu ändern, musst du die Person entfernen und neu hinzufügen."
 
-#, elixir-format
 #: lib/jumubase/accounts/user.ex:62
+#, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr "stimmt nicht mit dem Passwort überein"

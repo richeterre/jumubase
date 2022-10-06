@@ -3,6 +3,7 @@ defmodule JumubaseWeb.Internal.ContestController do
   import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1, round_options: 0]
   import JumubaseWeb.Internal.HostView, only: [grouping_options: 0]
   alias Ecto.Changeset
+  alias Jumubase.Utils
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
   alias Jumubase.Showtime
@@ -15,8 +16,9 @@ defmodule JumubaseWeb.Internal.ContestController do
     path_fun: &Routes.internal_live_path/2,
     action: ContestLive.Index
 
-  plug :contest_user_check when action in [:show]
   plug :admin_check when action in [:new, :edit, :update, :delete]
+  plug :non_observer_check when action in [:update_timetables_public]
+  plug :contest_user_check when action in [:show, :update_timetables_public]
 
   def show(conn, %{"id" => id}) do
     contest =
@@ -70,6 +72,18 @@ defmodule JumubaseWeb.Internal.ContestController do
     |> redirect(to: Routes.internal_live_path(conn, ContestLive.Index))
   end
 
+  def update_timetables_public(conn, %{"contest_id" => id, "public" => public}) do
+    contest = Foundation.get_contest!(id)
+
+    conn =
+      case Utils.parse_bool(public) do
+        true -> publish_timetables(conn, contest)
+        false -> unpublish_timetables(conn, contest)
+      end
+
+    redirect(conn, to: Routes.internal_contest_stage_path(conn, :index, contest))
+  end
+
   # Private helpers
 
   defp render_edit_form(conn, %Contest{} = contest, %Changeset{} = changeset) do
@@ -92,5 +106,19 @@ defmodule JumubaseWeb.Internal.ContestController do
     |> assign(:host_options, host_options)
     |> assign(:round_options, round_options())
     |> assign(:grouping_options, grouping_options())
+  end
+
+  defp publish_timetables(conn, contest) do
+    case Foundation.publish_contest_timetables(contest) do
+      {:ok, _} -> conn
+      {:error, _} -> put_flash(conn, :error, gettext("The timetables could not be published."))
+    end
+  end
+
+  defp unpublish_timetables(conn, contest) do
+    case Foundation.unpublish_contest_timetables(contest) do
+      {:ok, _} -> conn
+      {:error, _} -> put_flash(conn, :error, gettext("The timetables could not be unpublished."))
+    end
   end
 end

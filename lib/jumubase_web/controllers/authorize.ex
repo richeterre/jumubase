@@ -19,11 +19,9 @@ defmodule JumubaseWeb.Authorize do
   end
 
   # Plug to authorize access to a contest route.
-  def contest_user_check(
-        %Conn{assigns: %{current_user: user}, params: %{"id" => id}} = conn,
-        _opts
-      ) do
-    authorize_contest(conn, user, id, fn {:ok, _} -> conn end)
+  def contest_user_check(%Conn{assigns: %{current_user: user}, params: params} = conn, _opts) do
+    contest_id = params["id"] || params["contest_id"]
+    authorize_contest(conn, user, contest_id, fn {:ok, _} -> conn end)
   end
 
   # Action override to ensure contest deadline hasn't passed before passing it to action

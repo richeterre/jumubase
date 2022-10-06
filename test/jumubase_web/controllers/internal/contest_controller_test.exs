@@ -137,4 +137,97 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       end
     end
   end
+
+  describe "update_timetables_public/2" do
+    for role <- roles_except("observer") do
+      @tag login_as: role
+      test "lets #{role} users publish an authorized contest's timetables", %{conn: conn, user: u} do
+        contest = insert_authorized_contest(u)
+        conn = attempt_update_timetables_public(conn, contest, true)
+
+        redirect_path = Routes.internal_contest_stage_path(conn, :index, contest)
+        assert redirected_to(conn) == redirect_path
+
+        # Follow redirection
+        conn = get(recycle(conn), redirect_path)
+
+        assert html_response(conn, 200) =~
+                 "Your timetables are now publicly visible through the mobile app “Jumu weltweit”."
+      end
+
+      @tag login_as: role
+      test "lets #{role} users unpublish an authorized contest's timetables",
+           %{conn: conn, user: u} do
+        contest = insert_authorized_contest(u)
+        conn = attempt_update_timetables_public(conn, contest, false)
+
+        redirect_path = Routes.internal_contest_stage_path(conn, :index, contest)
+        assert redirected_to(conn) == redirect_path
+
+        # Follow redirection
+        conn = get(recycle(conn), redirect_path)
+
+        assert html_response(conn, 200) =~
+                 "Once you’re done scheduling for all stages, you can publish your timetables here."
+      end
+    end
+
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects #{role} users trying to publish an unauthorized contests' timetables",
+           %{conn: conn, user: u} do
+        contest = insert_unauthorized_contest(u)
+        conn = attempt_update_timetables_public(conn, contest, true)
+        assert_unauthorized_user(conn)
+      end
+
+      @tag login_as: role
+      test "redirects #{role} users trying to unpublish an unauthorized contests' timetables",
+           %{conn: conn, user: u} do
+        contest = insert_unauthorized_contest(u)
+        conn = attempt_update_timetables_public(conn, contest, false)
+        assert_unauthorized_user(conn)
+      end
+    end
+
+    @tag login_as: "observer"
+    test "redirects observers trying to publish timetables for a contest", %{conn: conn} do
+      contest = insert(:contest)
+      conn = attempt_update_timetables_public(conn, contest, true)
+      assert_unauthorized_user(conn)
+    end
+
+    @tag login_as: "observer"
+    test "redirects observers trying to unpublish timetables for a contest", %{conn: conn} do
+      contest = insert(:contest)
+      conn = attempt_update_timetables_public(conn, contest, false)
+      assert_unauthorized_user(conn)
+    end
+
+    test "redirects guests trying to publish timetables for a contest", %{conn: conn} do
+      contest = insert(:contest)
+      conn = attempt_update_timetables_public(conn, contest, true)
+      assert_unauthorized_guest(conn)
+    end
+
+    test "redirects guests trying to unpublish timetables for a contest", %{conn: conn} do
+      contest = insert(:contest)
+      conn = attempt_update_timetables_public(conn, contest, false)
+      assert_unauthorized_guest(conn)
+    end
+  end
+
+  # Private helpers
+
+  defp attempt_update_timetables_public(conn, contest, value) do
+    route =
+      Routes.internal_contest_update_timetables_public_path(
+        conn,
+        :update_timetables_public,
+        contest,
+        %{"public" => value}
+      )
+
+    patch(conn, route)
+  end
 end

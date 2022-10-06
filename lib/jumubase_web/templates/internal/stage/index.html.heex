@@ -8,27 +8,66 @@
 
 <% has_stages = @stages != [] %>
 
-<%= if has_stages do %>
-  <p class="lead">
-    <%= gettext("Please choose a stage") %>:
-  </p>
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <h4><%= gettext("Step 1: Schedule performances") %></h4>
 
-  <p>
-    <%= for stage <- @stages do %>
-      <%= link stage.name,
-        to: Routes.internal_contest_stage_schedule_path(@conn, :schedule, @contest, stage),
-        class: "btn btn-default"
-        %>
-      &#32;
+    <%= if has_stages do %>
+      <p><%= gettext("Please start by choosing a stage to schedule performances for.") %></p>
+      <p>
+        <%= for stage <- @stages do %>
+          <%= link stage.name,
+            to: Routes.internal_contest_stage_schedule_path(@conn, :schedule, @contest, stage),
+            class: "btn btn-default"
+            %>
+          &#32;
+        <% end %>
+      </p>
+    <% else %>
+      <p><%= gettext("You don’t have any stages set up yet.") %></p>
     <% end %>
-  </p>
-<% else %>
-  <p class="lead">
-    <%= gettext("No stage found") %>
-  </p>
-<% end %>
 
-<p class={if has_stages, do: "text-muted"}>
-  <%= gettext("To add a new stage, please contact the") %>
-  <%= link gettext("admin"), to: "mailto:#{admin_email()}?subject=#{gettext("Add stage")}" %>.
-</p>
+    <p class={if has_stages, do: "text-muted"}>
+      <%= gettext("To add a new stage, please contact the") %>
+      <%= link gettext("admin"), to: "mailto:#{admin_email()}?subject=#{gettext("Add stage")}" %>.
+    </p>
+
+    <br>
+
+    <% timetables_public? = @contest.timetables_public %>
+
+    <h4>
+      <%= gettext("Step 2: Publish timetables") %>
+      <%= if timetables_public?, do: icon_tag("ok") %>
+    </h4>
+
+    <p>
+      <%= if not timetables_public? do %>
+        <p>
+          <%= gettext("Once you’re done scheduling for all stages, you can publish your timetables here.") %>
+          <br>
+          <%= gettext("This will cause your contest and its timetables to appear in the mobile app “Jumu weltweit”.") %>
+        </p>
+
+        <%= icon_link "eye-open", gettext("Publish timetables"),
+          Routes.internal_contest_update_timetables_public_path(@conn, :update_timetables_public, @contest, [public: true]),
+          method: :patch,
+          data: [confirm: gettext("Do you really want to publish all timetables for %{contest_name}?", contest_name: name(@contest))],
+          class: "btn btn-primary" %>
+      <% else %>
+        <p>
+          <%= gettext("Your timetables are now publicly visible through the mobile app “Jumu weltweit”.") %>
+        </p>
+
+        <p class="text-muted">
+          <%= gettext("To undo this, please click") %>
+          <%= link gettext("here"),
+            to: Routes.internal_contest_update_timetables_public_path(@conn, :update_timetables_public, @contest, [public: false]),
+            method: :patch,
+            data: [confirm: gettext("Do you really want to remove the contest %{contest_name} from the app “Jumu weltweit”?", contest_name: name(@contest))]
+            %>.
+        </p>
+      <% end %>
+    </p>
+  </div>
+</div>

@@ -8,7 +8,9 @@
 ## date. Leave `msgstr`s empty as changing them here as no
 ## effect: edit them in PO (`.po`) files instead.
 ## From Ecto.Changeset.cast/4
-#: lib/jumubase/showtime/piece.ex:63 lib/jumubase/showtime/piece.ex:64
+#: lib/jumubase/showtime/piece.ex:63
+#: lib/jumubase/showtime/piece.ex:64
+#, elixir-autogen
 msgid "can't be blank"
 msgstr ""
 
@@ -94,102 +96,102 @@ msgstr ""
 msgid "must be equal to %{number}"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:62
+#, elixir-autogen, elixir-format
 msgid "can't be before the start date"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:65
+#, elixir-autogen, elixir-format
 msgid "must be before the start date"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:140
+#, elixir-autogen, elixir-format
 msgid "can't be changed"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/appearance.ex:33
+#, elixir-autogen, elixir-format
 msgid "can only appear once in a performance"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:49
+#, elixir-autogen, elixir-format
 msgid "must be unique"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/piece.ex:70
+#, elixir-autogen, elixir-format
 msgid "can only have either a composer or an artist"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:153
+#, elixir-autogen, elixir-format
 msgid "The performance must have at least one participant."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:198
+#, elixir-autogen, elixir-format
 msgid "The performance must have at least one piece."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:162
+#, elixir-autogen, elixir-format
 msgid "The performance can't have both soloists and ensemblists."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:169
+#, elixir-autogen, elixir-format
 msgid "The performance can't have more than one soloist."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:183
+#, elixir-autogen, elixir-format
 msgid "The performance can't have only accompanists."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:176
+#, elixir-autogen, elixir-format
 msgid "The performance can't have only one ensemblist."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:17
+#, elixir-autogen, elixir-format
 msgid "Something went wrong on the server. We’re on it!"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:9
+#, elixir-autogen, elixir-format
 msgid "Maybe try one of the links above?"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:8
+#, elixir-autogen, elixir-format
 msgid "The page was not found."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase_web/views/error_view.ex:16
+#, elixir-autogen, elixir-format
 msgid "Oh no…"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/foundation/contest.ex:71
+#, elixir-autogen, elixir-format
 msgid "can't be before the end date"
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/performance.ex:215
+#, elixir-autogen, elixir-format
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/showtime/appearance.ex:72
+#, elixir-autogen, elixir-format
 msgid "To change the name or birthdate, please remove and add back this person."
 msgstr ""
 
-#, elixir-format
 #: lib/jumubase/accounts/user.ex:62
+#, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr ""

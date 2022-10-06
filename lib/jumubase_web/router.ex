@@ -144,6 +144,9 @@ defmodule JumubaseWeb.Router do
         get "/schedule", StageController, :schedule, as: :schedule
         get "/timetable", StageController, :timetable, as: :timetable
       end
+
+      patch "/update-timetables-public", ContestController, :update_timetables_public,
+        as: :update_timetables_public
     end
 
     resources "/hosts", HostController, except: [:show, :delete]

@@ -1,7 +1,7 @@
 defmodule JumubaseWeb.Internal.StageView do
   use JumubaseWeb, :view
   import JumubaseWeb.Internal.AppearanceView, only: [appearance_info: 1]
-  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  import JumubaseWeb.Internal.ContestView, only: [name: 1, name_with_flag: 1]
   import JumubaseWeb.Internal.PageView, only: [admin_email: 0]
 
   import JumubaseWeb.Internal.PerformanceView,

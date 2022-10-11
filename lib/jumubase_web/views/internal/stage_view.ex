@@ -119,7 +119,7 @@ defmodule JumubaseWeb.Internal.StageView do
       "pop_instrumental" -> "#eef8e2"
       "plucked" -> "#e3f8e2"
       "kimu" -> "#e2f8f6"
-      "special_lineups" -> "#e2f8f6"
+      "mixed_lineups" -> "#e2f8f6"
       "accordion" -> "#e2eef8"
       "piano" -> "#e2e3f8"
       g when g in ["harp", "organ"] -> "#ebe2f8"

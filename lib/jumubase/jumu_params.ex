@@ -70,7 +70,7 @@ defmodule Jumubase.JumuParams do
   def category_groups do
     ~w(
       kimu piano strings wind plucked classical_vocals accordion
-      harp organ percussion special_lineups pop_vocals pop_instrumental
+      harp organ percussion mixed_lineups pop_vocals pop_instrumental
     )
   end
 

@@ -639,7 +639,7 @@ Repo.transaction(fn ->
     short_name: "BesEnsAlteMusik",
     genre: "classical",
     type: "ensemble",
-    group: "special_lineups",
+    group: "mixed_lineups",
     uses_epochs: true
   )
 
@@ -648,7 +648,7 @@ Repo.transaction(fn ->
     short_name: "BesEnsKlassik",
     genre: "classical",
     type: "ensemble",
-    group: "special_lineups",
+    group: "mixed_lineups",
     uses_epochs: true
   )
 
@@ -720,7 +720,7 @@ Repo.transaction(fn ->
     short_name: "NeueMusik",
     genre: "classical",
     type: "ensemble",
-    group: "special_lineups",
+    group: "mixed_lineups",
     uses_epochs: true
   )
 

@@ -96,7 +96,7 @@ defmodule JumubaseWeb.Internal.CategoryView do
       "harp" -> gettext("Harp")
       "organ" -> gettext("Organ")
       "percussion" -> gettext("Percussion")
-      "special_lineups" -> gettext("Special Lineups")
+      "mixed_lineups" -> gettext("Mixed Lineups")
       "pop_vocals" -> gettext("Pop Vocals")
       "pop_instrumental" -> gettext("Pop Instrumental")
       "kimu" -> gettext("Kimu")

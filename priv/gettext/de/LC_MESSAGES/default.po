@@ -1264,8 +1264,8 @@ msgstr "Saxophon"
 
 #: lib/jumubase_web/views/internal/category_view.ex:99
 #, elixir-autogen, elixir-format
-msgid "Special Lineups"
-msgstr "Besondere Besetzungen"
+msgid "Mixed Lineups"
+msgstr "Gemischte Besetzungen"
 
 #: lib/jumubase_web/controllers/internal/category_controller.ex:56
 #, elixir-autogen, elixir-format

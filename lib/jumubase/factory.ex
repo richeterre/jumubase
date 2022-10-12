@@ -146,25 +146,33 @@ defmodule Jumubase.Factory do
     insert(:contest, attrs)
   end
 
-  def insert_authorized_contest(%User{role: "local-organizer"} = user) do
-    insert(:contest, host: insert(:host, users: [user]))
+  def insert_authorized_contest(_user, attrs \\ [])
+
+  def insert_authorized_contest(%User{role: "local-organizer"} = user, attrs) do
+    attrs = Keyword.put(attrs, :host, insert(:host, users: [user]))
+    insert(:contest, attrs)
   end
 
-  def insert_authorized_contest(%User{role: "global-organizer"} = user) do
+  def insert_authorized_contest(%User{role: "global-organizer"} = user, attrs) do
     host = insert(:host, users: [user])
-    insert(:contest, grouping: host.current_grouping)
+    attrs = Keyword.put(attrs, :grouping, host.current_grouping)
+    insert(:contest, attrs)
   end
 
-  def insert_authorized_contest(%User{}) do
-    insert(:contest)
+  def insert_authorized_contest(%User{}, attrs) do
+    insert(:contest, attrs)
   end
 
-  def insert_unauthorized_contest(%User{role: "local-organizer"}) do
-    insert(:contest, host: insert(:host, users: []))
+  def insert_unauthorized_contest(_user, attrs \\ [])
+
+  def insert_unauthorized_contest(%User{role: "local-organizer"}, attrs) do
+    attrs = Keyword.put(attrs, :host, insert(:host, users: []))
+    insert(:contest, attrs)
   end
 
-  def insert_unauthorized_contest(%User{role: "global-organizer"}) do
-    insert(:contest, grouping: "4")
+  def insert_unauthorized_contest(%User{role: "global-organizer"}, attrs) do
+    attrs = Keyword.put(attrs, :grouping, "4")
+    insert(:contest, attrs)
   end
 
   def insert_contest_category(%Contest{} = contest) do

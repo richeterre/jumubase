@@ -143,7 +143,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       @tag login_as: role
       test "lets #{role} users open registration for an authorized contest",
            %{conn: conn, user: u} do
-        contest = insert_authorized_contest(u)
+        contest = insert_authorized_contest(u, dates_verified: false)
         conn = attempt_open_registration(conn, contest)
         assert html_response(conn, 200) =~ "Open Registration"
       end
@@ -153,7 +153,7 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
       @tag login_as: role
       test "redirects #{role} users trying to open registration for an unauthorized contest",
            %{conn: conn, user: u} do
-        contest = insert_unauthorized_contest(u)
+        contest = insert_unauthorized_contest(u, dates_verified: false)
         conn = attempt_open_registration(conn, contest)
         assert_unauthorized_user(conn)
       end
@@ -161,15 +161,22 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
 
     @tag login_as: "observer"
     test "redirects observers trying to open registration for a contest", %{conn: conn} do
-      contest = insert(:contest)
+      contest = insert(:contest, dates_verified: false)
       conn = attempt_open_registration(conn, contest)
       assert_unauthorized_user(conn)
     end
 
     test "redirects guests trying to open registration for a contest", %{conn: conn} do
-      contest = insert(:contest)
+      contest = insert(:contest, dates_verified: false)
       conn = attempt_open_registration(conn, contest)
       assert_unauthorized_guest(conn)
+    end
+
+    @tag login_as: "admin"
+    test "redirects to contest page if contest already has verified dates", %{conn: conn} do
+      contest = insert(:contest, dates_verified: true)
+      conn = attempt_open_registration(conn, contest)
+      assert redirected_to(conn) == Routes.internal_contest_path(conn, :show, contest)
     end
   end
 

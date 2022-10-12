@@ -75,14 +75,19 @@ defmodule JumubaseWeb.Internal.ContestController do
   def open_registration(conn, %{"contest_id" => id}) do
     contest = Foundation.get_contest!(id)
 
-    conn
-    |> assign(:contest, contest)
-    |> add_contest_breadcrumb(contest)
-    |> add_breadcrumb(
-      name: gettext("Open Registration"),
-      path: Routes.internal_contest_open_registration_path(conn, :open_registration, contest)
-    )
-    |> render("open_registration.html")
+    if not contest.dates_verified do
+      conn
+      |> assign(:contest, contest)
+      |> add_contest_breadcrumb(contest)
+      |> add_breadcrumb(
+        name: gettext("Open Registration"),
+        path: Routes.internal_contest_open_registration_path(conn, :open_registration, contest)
+      )
+      |> render("open_registration.html")
+    else
+      # Contest already has verified dates, so we show its detail page instead
+      redirect(conn, to: Routes.internal_contest_path(conn, :show, contest))
+    end
   end
 
   def update_timetables_public(conn, %{"contest_id" => id, "public" => public}) do

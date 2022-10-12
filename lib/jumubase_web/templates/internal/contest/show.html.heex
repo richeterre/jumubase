@@ -1,7 +1,15 @@
 <h2>
   <%= name(@contest) %>
   <br>
-  <small><%= dates(@contest) %></small>
+  <%= if @contest.dates_verified do %>
+    <small><%= dates(@contest) %></small>
+  <% else %>
+    <small>
+      <%= link gettext("Open registration now"),
+        to: Routes.internal_contest_prepare_path(@conn, :prepare, @contest)
+        %>
+    </small>
+  <% end %>
 </h2>
 
 <hr>

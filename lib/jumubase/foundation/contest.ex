@@ -15,6 +15,7 @@ defmodule Jumubase.Foundation.Contest do
     field :start_date, :date
     field :end_date, :date
     field :certificate_date, :date
+    field :needs_preparing, :boolean, read_after_writes: true
     field :allows_registration, :boolean, read_after_writes: true
     field :timetables_public, :boolean, read_after_writes: true
 
@@ -24,19 +25,34 @@ defmodule Jumubase.Foundation.Contest do
     timestamps()
   end
 
-  @required_attrs [:season, :round, :host_id, :grouping, :deadline, :start_date, :end_date]
-  @optional_attrs [:name_suffix, :certificate_date, :allows_registration, :timetables_public]
-
-  @doc false
+  @doc """
+  Allows changing all editable fields of a contest, e.g. via an admin interface.
+  """
   def changeset(%Contest{} = contest, attrs) do
+    required_attrs = [:season, :round, :host_id, :grouping, :deadline, :start_date, :end_date]
+    optional_attrs = [:name_suffix, :certificate_date, :allows_registration, :timetables_public]
+
     contest
-    |> cast(attrs, @required_attrs ++ @optional_attrs)
-    |> validate_required(@required_attrs)
+    |> cast(attrs, required_attrs ++ optional_attrs)
+    |> validate_required(required_attrs)
     |> validate_number(:season, greater_than: 0)
     |> validate_inclusion(:round, JumuParams.rounds())
     |> validate_inclusion(:grouping, JumuParams.groupings())
     |> validate_dates()
     |> sanitize_text_input()
+  end
+
+  @doc """
+  Allows filling/confirming crucial contest fields that initially received placeholder values.
+  """
+  def preparation_changeset(%Contest{} = contest, attrs) do
+    required_attrs = [:deadline, :start_date, :end_date]
+
+    contest
+    |> cast(attrs, required_attrs ++ [:certificate_date])
+    |> validate_required(required_attrs)
+    |> validate_dates()
+    |> maybe_mark_as_prepared()
   end
 
   @doc """
@@ -82,5 +98,13 @@ defmodule Jumubase.Foundation.Contest do
       suffix when is_binary(suffix) -> String.trim(suffix)
       suffix -> suffix
     end)
+  end
+
+  defp maybe_mark_as_prepared(%Changeset{} = changeset) do
+    if changeset.valid? do
+      put_change(changeset, :needs_preparing, false)
+    else
+      changeset
+    end
   end
 end

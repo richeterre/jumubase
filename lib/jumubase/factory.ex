@@ -44,9 +44,9 @@ defmodule Jumubase.Factory do
       round: 1,
       host: build(:host),
       grouping: grouping,
-      start_date: %{day: 1, month: 1, year: year},
-      end_date: %{day: 2, month: 1, year: year},
-      deadline: %{day: 15, month: 12, year: year - 1}
+      deadline: Date.new!(year - 1, 12, 15),
+      start_date: Date.new!(year, 1, 1),
+      end_date: Date.new!(year, 1, 2)
     }
 
     merge_attributes(contest, attrs)

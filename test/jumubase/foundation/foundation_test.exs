@@ -804,6 +804,42 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "prepare_contest_for_registration/1" do
+    test "updates a contest with the given data and allows registration" do
+      contest =
+        insert(:contest,
+          deadline: ~D[2019-12-15],
+          start_date: ~D[2020-01-01],
+          end_date: ~D[2020-01-01],
+          certificate_date: nil,
+          allows_registration: false
+        )
+
+      params = %{
+        deadline: ~D[2019-12-16],
+        start_date: ~D[2020-01-02],
+        end_date: ~D[2020-01-03],
+        certificate_date: ~D[2020-01-04]
+      }
+
+      assert {:ok, result} = Foundation.prepare_contest_for_registration(contest, params)
+
+      assert result.deadline == params.deadline
+      assert result.start_date == params.start_date
+      assert result.end_date == params.end_date
+      assert result.certificate_date == params.certificate_date
+
+      assert result.allows_registration
+    end
+
+    test "returns an error changeset for invalid data" do
+      contest = insert(:contest)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Foundation.prepare_contest_for_registration(contest, %{deadline: nil})
+    end
+  end
+
   describe "publish_contest_timetables/1" do
     test "publishes a contest's timetables" do
       contest = insert(:contest, timetables_public: false)

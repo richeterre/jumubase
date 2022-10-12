@@ -279,6 +279,17 @@ defmodule Jumubase.Foundation do
     Repo.delete!(contest)
   end
 
+  @doc """
+  Adds or confirms contest fields (e.g. start/end date) that initially contain placeholders.
+  While updating the contest, we also set the flag to allow registration.
+  """
+  def prepare_contest_for_registration(%Contest{} = contest, attrs) do
+    contest
+    |> Contest.preparation_changeset(attrs)
+    |> Ecto.Changeset.change(allows_registration: true)
+    |> Repo.update()
+  end
+
   def publish_contest_timetables(%Contest{} = contest) do
     contest
     |> Ecto.Changeset.change(timetables_public: true)

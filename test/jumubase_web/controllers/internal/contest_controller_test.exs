@@ -138,6 +138,41 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
     end
   end
 
+  describe "prepare/2" do
+    for role <- roles_except("observer") do
+      @tag login_as: role
+      test "lets #{role} users prepare an authorized contest for registration",
+           %{conn: conn, user: u} do
+        contest = insert_authorized_contest(u)
+        conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+        assert html_response(conn, 200) =~ "Open Registration"
+      end
+    end
+
+    for role <- ["local-organizer", "global-organizer"] do
+      @tag login_as: role
+      test "redirects #{role} users trying to prepare an unauthorized contest for registration",
+           %{conn: conn, user: u} do
+        contest = insert_unauthorized_contest(u)
+        conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+        assert_unauthorized_user(conn)
+      end
+    end
+
+    @tag login_as: "observer"
+    test "redirects observers trying to prepare a contest for registration", %{conn: conn} do
+      contest = insert(:contest)
+      conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+      assert_unauthorized_user(conn)
+    end
+
+    test "redirects guests trying to prepare a contest for registration", %{conn: conn} do
+      contest = insert(:contest)
+      conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+      assert_unauthorized_guest(conn)
+    end
+  end
+
   describe "update_timetables_public/2" do
     for role <- roles_except("observer") do
       @tag login_as: role

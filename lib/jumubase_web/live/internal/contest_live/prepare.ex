@@ -1,17 +1,17 @@
 defmodule JumubaseWeb.Internal.ContestLive.Prepare do
-  use JumubaseWeb, :live_view
-  import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1]
+  use Phoenix.LiveView
+  import Jumubase.Gettext
   alias Jumubase.Accounts
   alias Jumubase.Foundation
   alias Jumubase.Foundation.Contest
-  alias JumubaseWeb.Internal.ContestLive
+  alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
-    JumubaseWeb.Internal.ContestView.render("prepare.html", assigns)
+    JumubaseWeb.Internal.ContestView.render("prepare_live.html", assigns)
   end
 
-  def mount(params, assigns, socket) do
-    {:ok, prepare(socket, params, assigns)}
+  def mount(_params, assigns, socket) do
+    {:ok, prepare(socket, assigns)}
   end
 
   def handle_event("change", %{"contest" => params}, socket) do
@@ -44,31 +44,13 @@ defmodule JumubaseWeb.Internal.ContestLive.Prepare do
 
   # Private helpers
 
-  defp prepare(socket, %{"contest_id" => c_id}, %{"user_token" => token}) do
+  defp prepare(socket, %{"contest_id" => c_id, "user_token" => token}) do
     user = Accounts.get_user_by_session_token(token)
     contest = Foundation.get_contest!(c_id)
 
     socket
-    |> add_breadcrumbs(contest)
     |> assign(current_user: user)
     |> assign(contest: contest)
     |> assign(changeset: Contest.preparation_changeset(contest, %{}))
-  end
-
-  defp add_breadcrumbs(socket, contest) do
-    socket
-    |> add_breadcrumb(icon: "home", path: Routes.internal_page_path(socket, :home))
-    |> add_breadcrumb(
-      name: gettext("Contests"),
-      path: Routes.internal_live_path(socket, ContestLive.Index)
-    )
-    |> add_breadcrumb(
-      name: name_with_flag(contest),
-      path: Routes.internal_contest_path(socket, :show, contest)
-    )
-    |> add_breadcrumb(
-      name: gettext("Open Registration"),
-      path: Routes.internal_contest_live_path(socket, ContestLive.Prepare, contest)
-    )
   end
 end

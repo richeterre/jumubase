@@ -6,51 +6,6 @@
 
 <hr>
 
-<p class="lead">
-  <%= gettext("Please fill in and check your contest data.") %>
-</p>
-
-<.form let={f} for={@changeset} phx-change="change" phx-submit="submit">
-  <div class="form-group">
-    <%= label f, :deadline, gettext("Deadline"), class: "control-label" %>
-    <%= inline_date_select f, :deadline %>
-    <%= error_tag f, :deadline %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :start_date, gettext("Start date"), class: "control-label" %>
-    <%= inline_date_select f, :start_date %>
-    <%= error_tag f, :start_date %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :end_date, gettext("End date"), class: "control-label" %>
-    <%= inline_date_select f, :end_date %>
-    <%= error_tag f, :end_date %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :certificate_date, class: "control-label" do %>
-      <%= gettext("Certificate date") %>
-      <small class="text-muted">
-        (<%= gettext("only if different from end date") %>)
-      </small>
-    <% end %>
-    <%= inline_date_select f, :certificate_date,
-      year: [prompt: gettext("Year")],
-      month: [prompt: gettext("Month")],
-      day: [prompt: gettext("Day")]
-      %>
-    <%= error_tag f, :certificate_date %>
-  </div>
-
-  <hr>
-
-  <div class="form-group">
-    <p class="text-muted">
-      <%= gettext("After confirming, your contest will appear on the") %>
-      <%= link gettext("registration page"), to: Routes.page_path(@socket, :registration) %>.
-    </p>
-    <%= submit gettext("Confirm and Open Registration"), class: "btn btn-primary" %>
-  </div>
-</.form>
+<%= live_render(@conn, JumubaseWeb.Internal.ContestLive.Prepare, session: %{
+  "contest_id" => @contest.id
+  }) %>

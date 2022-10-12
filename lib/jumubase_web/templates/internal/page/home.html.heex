@@ -49,7 +49,7 @@
               <br>
               <small>
                 <%= link gettext("Open registration now"),
-                  to: Routes.internal_contest_live_path(@conn, ContestLive.Prepare, contest)
+                  to: Routes.internal_contest_prepare_path(@conn, :prepare, contest)
                   %>
               </small>
             <% else %>

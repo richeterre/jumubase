@@ -68,4 +68,11 @@ defmodule JumubaseWeb.Internal.ContestViewTest do
       assert ContestView.year(contest) == 2019
     end
   end
+
+  describe "dates_year_range/1" do
+    test "returns a year range covering the contest's season year and the year prior" do
+      contest = build(:contest, season: 56, start_date: ~D[2018-12-20], end_date: ~D[2018-12-20])
+      assert ContestView.dates_year_range(contest) == 2018..2019
+    end
+  end
 end

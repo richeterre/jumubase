@@ -110,6 +110,15 @@ defmodule JumubaseWeb.Internal.ContestView do
   end
 
   @doc """
+  Returns a range of years suitable for dates related to the contest,
+  such deadline, start or end date.
+  """
+  def dates_year_range(%Contest{season: season}) do
+    season_year = JumuParams.year(season)
+    (season_year - 1)..season_year
+  end
+
+  @doc """
   Returns the year for a valid season found in the changeset, or nil.
   """
   def year_for_season(%Changeset{} = changeset) do

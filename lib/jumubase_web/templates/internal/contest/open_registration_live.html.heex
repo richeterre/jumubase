@@ -4,22 +4,24 @@
       <%= gettext("Before registration can start, we still need some details on your contest. Please fill in and check the following dates:") %>
     </p>
 
+    <% year_options = dates_year_range(@contest) %>
+
     <.form let={f} for={@changeset} phx-change="change" phx-submit="submit">
       <div class="form-group">
         <%= label f, :deadline, gettext("Deadline"), class: "control-label" %>
-        <%= inline_date_select f, :deadline %>
+        <%= inline_date_select f, :deadline, [year: [options: year_options]] %>
         <%= error_tag f, :deadline %>
       </div>
 
       <div class="form-group">
         <%= label f, :start_date, gettext("Start date"), class: "control-label" %>
-        <%= inline_date_select f, :start_date %>
+        <%= inline_date_select f, :start_date, [year: [options: year_options]] %>
         <%= error_tag f, :start_date %>
       </div>
 
       <div class="form-group">
         <%= label f, :end_date, gettext("End date"), class: "control-label" %>
-        <%= inline_date_select f, :end_date %>
+        <%= inline_date_select f, :end_date, [year: [options: year_options]] %>
         <%= error_tag f, :end_date %>
       </div>
 
@@ -31,7 +33,7 @@
           </small>
         <% end %>
         <%= inline_date_select f, :certificate_date,
-          year: [prompt: gettext("Year")],
+          year: [prompt: gettext("Year"), options: year_options],
           month: [prompt: gettext("Month")],
           day: [prompt: gettext("Day")]
           %>

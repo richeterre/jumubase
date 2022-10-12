@@ -42,9 +42,21 @@
       <ul class="list-group">
         <%= for contest <- @contests do %>
           <li class="list-group-item">
-            <%= link name_with_flag(contest),
-              to: Routes.internal_contest_path(@conn, :show, contest)
-              %>
+            <%= if contest.needs_preparing do %>
+              <span class="text-muted">
+                <%= name_with_flag(contest) %>
+              </span>
+              <br>
+              <small>
+                <%= link gettext("Open registration now"),
+                  to: Routes.internal_contest_live_path(@conn, ContestLive.Prepare, contest)
+                  %>
+              </small>
+            <% else %>
+              <%= link name_with_flag(contest),
+                to: Routes.internal_contest_path(@conn, :show, contest)
+                %>
+            <% end %>
           </li>
         <% end %>
         <%= if @has_more do %>

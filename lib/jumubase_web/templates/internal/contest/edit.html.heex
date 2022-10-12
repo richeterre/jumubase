@@ -78,6 +78,12 @@
   </div>
 
   <div class="checkbox">
+    <%= label f, :dates_verified do %>
+      <%= checkbox f, :dates_verified %> <%= gettext("Dates verified") %>
+    <% end %>
+  </div>
+
+  <div class="checkbox">
     <%= label f, :allows_registration do %>
       <%= checkbox f, :allows_registration %> <%= gettext("Allows registration") %>
     <% end %>

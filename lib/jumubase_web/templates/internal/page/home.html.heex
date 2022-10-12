@@ -42,7 +42,7 @@
       <ul class="list-group">
         <%= for contest <- @contests do %>
           <li class="list-group-item">
-            <%= if contest.needs_preparing do %>
+            <%= if not contest.dates_verified do %>
               <span class="text-muted">
                 <%= name_with_flag(contest) %>
               </span>

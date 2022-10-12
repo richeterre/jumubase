@@ -254,6 +254,7 @@ defmodule Jumubase.Foundation do
             start_date: start_date,
             end_date: start_date,
             deadline: deadline,
+            dates_verified: false,
             allows_registration: false,
             timetables_public: false
           })

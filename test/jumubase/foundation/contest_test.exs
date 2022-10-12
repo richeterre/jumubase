@@ -138,7 +138,7 @@ defmodule Jumubase.ContestTest do
             deadline: ~D[2019-12-15],
             start_date: ~D[2020-01-01],
             end_date: ~D[2020-01-01],
-            needs_preparing: true
+            dates_verified: false
           ),
         params: %{
           start_date: ~D[2020-01-02],
@@ -195,14 +195,14 @@ defmodule Jumubase.ContestTest do
       refute changeset.valid?
     end
 
-    test "does not change the 'needs preparing' flag when invalid", %{contest: c, params: params} do
+    test "does not change the 'dates verified' flag when invalid", %{contest: c, params: params} do
       changeset = Contest.preparation_changeset(c, %{params | deadline: nil})
-      assert Changeset.get_change(changeset, :needs_preparing) == nil
+      assert Changeset.get_change(changeset, :dates_verified) == nil
     end
 
-    test "clears the 'needs preparing' flag when valid", %{contest: c, params: params} do
+    test "sets the 'dates verified' flag when valid", %{contest: c, params: params} do
       changeset = Contest.preparation_changeset(c, params)
-      assert Changeset.get_change(changeset, :needs_preparing) == false
+      assert Changeset.get_change(changeset, :dates_verified) == true
     end
   end
 

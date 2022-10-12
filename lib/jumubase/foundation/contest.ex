@@ -15,7 +15,7 @@ defmodule Jumubase.Foundation.Contest do
     field :start_date, :date
     field :end_date, :date
     field :certificate_date, :date
-    field :needs_preparing, :boolean, read_after_writes: true
+    field :dates_verified, :boolean, read_after_writes: true
     field :allows_registration, :boolean, read_after_writes: true
     field :timetables_public, :boolean, read_after_writes: true
 
@@ -30,7 +30,14 @@ defmodule Jumubase.Foundation.Contest do
   """
   def changeset(%Contest{} = contest, attrs) do
     required_attrs = [:season, :round, :host_id, :grouping, :deadline, :start_date, :end_date]
-    optional_attrs = [:name_suffix, :certificate_date, :allows_registration, :timetables_public]
+
+    optional_attrs = [
+      :name_suffix,
+      :certificate_date,
+      :dates_verified,
+      :allows_registration,
+      :timetables_public
+    ]
 
     contest
     |> cast(attrs, required_attrs ++ optional_attrs)
@@ -52,7 +59,7 @@ defmodule Jumubase.Foundation.Contest do
     |> cast(attrs, required_attrs ++ [:certificate_date])
     |> validate_required(required_attrs)
     |> validate_dates()
-    |> maybe_mark_as_prepared()
+    |> maybe_mark_dates_as_verified()
   end
 
   @doc """
@@ -100,9 +107,9 @@ defmodule Jumubase.Foundation.Contest do
     end)
   end
 
-  defp maybe_mark_as_prepared(%Changeset{} = changeset) do
+  defp maybe_mark_dates_as_verified(%Changeset{} = changeset) do
     if changeset.valid? do
-      put_change(changeset, :needs_preparing, false)
+      put_change(changeset, :dates_verified, true)
     else
       changeset
     end

@@ -97,7 +97,7 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
-  Returns all contests in a round whose deadline has't passed.
+  Returns all contests in a round that allow registration and whose deadline has't passed.
   """
   def list_open_contests(round) do
     query =

@@ -138,37 +138,37 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
     end
   end
 
-  describe "prepare/2" do
+  describe "open_registration/2" do
     for role <- roles_except("observer") do
       @tag login_as: role
-      test "lets #{role} users prepare an authorized contest for registration",
+      test "lets #{role} users open registration for an authorized contest",
            %{conn: conn, user: u} do
         contest = insert_authorized_contest(u)
-        conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+        conn = attempt_open_registration(conn, contest)
         assert html_response(conn, 200) =~ "Open Registration"
       end
     end
 
     for role <- ["local-organizer", "global-organizer"] do
       @tag login_as: role
-      test "redirects #{role} users trying to prepare an unauthorized contest for registration",
+      test "redirects #{role} users trying to open registration for an unauthorized contest",
            %{conn: conn, user: u} do
         contest = insert_unauthorized_contest(u)
-        conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+        conn = attempt_open_registration(conn, contest)
         assert_unauthorized_user(conn)
       end
     end
 
     @tag login_as: "observer"
-    test "redirects observers trying to prepare a contest for registration", %{conn: conn} do
+    test "redirects observers trying to open registration for a contest", %{conn: conn} do
       contest = insert(:contest)
-      conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+      conn = attempt_open_registration(conn, contest)
       assert_unauthorized_user(conn)
     end
 
-    test "redirects guests trying to prepare a contest for registration", %{conn: conn} do
+    test "redirects guests trying to open registration for a contest", %{conn: conn} do
       contest = insert(:contest)
-      conn = get(conn, Routes.internal_contest_prepare_path(conn, :prepare, contest))
+      conn = attempt_open_registration(conn, contest)
       assert_unauthorized_guest(conn)
     end
   end
@@ -253,6 +253,11 @@ defmodule JumubaseWeb.Internal.ContestControllerTest do
   end
 
   # Private helpers
+
+  defp attempt_open_registration(conn, contest) do
+    route = Routes.internal_contest_open_registration_path(conn, :open_registration, contest)
+    get(conn, route)
+  end
 
   defp attempt_update_timetables_public(conn, contest, value) do
     route =

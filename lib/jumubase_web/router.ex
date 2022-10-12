@@ -104,7 +104,7 @@ defmodule JumubaseWeb.Router do
     live "/contests", ContestLive.Index
 
     resources "/contests", ContestController, except: [:index, :create] do
-      get "/prepare", ContestController, :prepare, as: :prepare
+      get "/open-registration", ContestController, :open_registration, as: :open_registration
 
       get "/performances/jury-material", PerformanceController, :jury_material, as: :performances
 

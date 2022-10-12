@@ -17,8 +17,8 @@ defmodule JumubaseWeb.Internal.ContestController do
     action: ContestLive.Index
 
   plug :admin_check when action in [:new, :edit, :update, :delete]
-  plug :non_observer_check when action in [:prepare, :update_timetables_public]
-  plug :contest_user_check when action in [:show, :prepare, :update_timetables_public]
+  plug :non_observer_check when action in [:open_registration, :update_timetables_public]
+  plug :contest_user_check when action in [:show, :open_registration, :update_timetables_public]
 
   def show(conn, %{"id" => id}) do
     contest =
@@ -72,7 +72,7 @@ defmodule JumubaseWeb.Internal.ContestController do
     |> redirect(to: Routes.internal_live_path(conn, ContestLive.Index))
   end
 
-  def prepare(conn, %{"contest_id" => id}) do
+  def open_registration(conn, %{"contest_id" => id}) do
     contest = Foundation.get_contest!(id)
 
     conn
@@ -80,9 +80,9 @@ defmodule JumubaseWeb.Internal.ContestController do
     |> add_contest_breadcrumb(contest)
     |> add_breadcrumb(
       name: gettext("Open Registration"),
-      path: Routes.internal_contest_prepare_path(conn, :prepare, contest)
+      path: Routes.internal_contest_open_registration_path(conn, :open_registration, contest)
     )
-    |> render("prepare.html")
+    |> render("open_registration.html")
   end
 
   def update_timetables_public(conn, %{"contest_id" => id, "public" => public}) do

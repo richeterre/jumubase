@@ -6,6 +6,6 @@
 
 <hr>
 
-<%= live_render(@conn, JumubaseWeb.Internal.ContestLive.Prepare, session: %{
+<%= live_render(@conn, JumubaseWeb.Internal.ContestLive.OpenRegistration, session: %{
   "contest_id" => @contest.id
   }) %>

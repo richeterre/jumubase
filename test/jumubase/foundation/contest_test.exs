@@ -130,7 +130,7 @@ defmodule Jumubase.ContestTest do
     end
   end
 
-  describe "preparation changeset" do
+  describe "dates changeset" do
     setup do
       %{
         contest:
@@ -150,28 +150,28 @@ defmodule Jumubase.ContestTest do
     end
 
     test "is valid with valid attributes", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, params)
+      changeset = Contest.dates_changeset(c, params)
       assert changeset.valid?
     end
 
     test "is invalid without a start date", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, %{params | start_date: nil})
+      changeset = Contest.dates_changeset(c, %{params | start_date: nil})
       refute changeset.valid?
     end
 
     test "is invalid without an end date", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, %{params | end_date: nil})
+      changeset = Contest.dates_changeset(c, %{params | end_date: nil})
       refute changeset.valid?
     end
 
     test "is invalid with an end date before the start date", %{contest: c, params: params} do
       params = %{params | end_date: Timex.shift(params.start_date, days: -1)}
-      changeset = Contest.preparation_changeset(c, params)
+      changeset = Contest.dates_changeset(c, params)
       refute changeset.valid?
     end
 
     test "is invalid without a deadline", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, %{params | deadline: nil})
+      changeset = Contest.dates_changeset(c, %{params | deadline: nil})
       refute changeset.valid?
     end
 
@@ -179,29 +179,29 @@ defmodule Jumubase.ContestTest do
       %{start_date: start_date} = params
 
       for deadline <- [start_date, Timex.shift(start_date, days: 1)] do
-        changeset = Contest.preparation_changeset(c, %{params | deadline: deadline})
+        changeset = Contest.dates_changeset(c, %{params | deadline: deadline})
         refute changeset.valid?
       end
     end
 
     test "is valid without a certificate date", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, %{params | certificate_date: nil})
+      changeset = Contest.dates_changeset(c, %{params | certificate_date: nil})
       assert changeset.valid?
     end
 
     test "is invalid with a certificate date before the end date", %{contest: c, params: params} do
       params = %{params | certificate_date: Timex.shift(params.end_date, days: -1)}
-      changeset = Contest.preparation_changeset(c, params)
+      changeset = Contest.dates_changeset(c, params)
       refute changeset.valid?
     end
 
     test "does not change the 'dates verified' flag when invalid", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, %{params | deadline: nil})
+      changeset = Contest.dates_changeset(c, %{params | deadline: nil})
       assert Changeset.get_change(changeset, :dates_verified) == nil
     end
 
     test "sets the 'dates verified' flag when valid", %{contest: c, params: params} do
-      changeset = Contest.preparation_changeset(c, params)
+      changeset = Contest.dates_changeset(c, params)
       assert Changeset.get_change(changeset, :dates_verified) == true
     end
   end

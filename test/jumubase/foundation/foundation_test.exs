@@ -804,7 +804,7 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "prepare_contest_for_registration/1" do
+  describe "verify_dates_and_open_contest/1" do
     test "updates a contest with the given data and allows registration" do
       contest =
         insert(:contest,
@@ -822,7 +822,7 @@ defmodule Jumubase.FoundationTest do
         certificate_date: ~D[2020-01-04]
       }
 
-      assert {:ok, result} = Foundation.prepare_contest_for_registration(contest, params)
+      assert {:ok, result} = Foundation.verify_dates_and_open_contest(contest, params)
 
       assert result.deadline == params.deadline
       assert result.start_date == params.start_date
@@ -836,7 +836,7 @@ defmodule Jumubase.FoundationTest do
       contest = insert(:contest)
 
       assert {:error, %Ecto.Changeset{}} =
-               Foundation.prepare_contest_for_registration(contest, %{deadline: nil})
+               Foundation.verify_dates_and_open_contest(contest, %{deadline: nil})
     end
   end
 

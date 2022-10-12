@@ -281,12 +281,12 @@ defmodule Jumubase.Foundation do
   end
 
   @doc """
-  Adds or confirms contest fields (e.g. start/end date) that initially contain placeholders.
+  Adds and verifies contest dates (e.g. deadline) that initially got placeholder values.
   While updating the contest, we also set the flag to allow registration.
   """
-  def prepare_contest_for_registration(%Contest{} = contest, attrs) do
+  def verify_dates_and_open_contest(%Contest{} = contest, attrs) do
     contest
-    |> Contest.preparation_changeset(attrs)
+    |> Contest.dates_changeset(attrs)
     |> Ecto.Changeset.change(allows_registration: true)
     |> Repo.update()
   end

@@ -50,9 +50,9 @@ defmodule Jumubase.Foundation.Contest do
   end
 
   @doc """
-  Allows filling/confirming crucial contest fields that initially received placeholder values.
+  Allows filling in and verifying date fields that initially got placeholder values.
   """
-  def preparation_changeset(%Contest{} = contest, attrs) do
+  def dates_changeset(%Contest{} = contest, attrs) do
     required_attrs = [:deadline, :start_date, :end_date]
 
     contest

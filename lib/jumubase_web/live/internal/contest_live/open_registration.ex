@@ -1,4 +1,4 @@
-defmodule JumubaseWeb.Internal.ContestLive.Prepare do
+defmodule JumubaseWeb.Internal.ContestLive.OpenRegistration do
   use Phoenix.LiveView
   import Jumubase.Gettext
   alias Jumubase.Accounts
@@ -7,7 +7,7 @@ defmodule JumubaseWeb.Internal.ContestLive.Prepare do
   alias JumubaseWeb.Router.Helpers, as: Routes
 
   def render(assigns) do
-    JumubaseWeb.Internal.ContestView.render("prepare_live.html", assigns)
+    JumubaseWeb.Internal.ContestView.render("open_registration_live.html", assigns)
   end
 
   def mount(_params, assigns, socket) do
@@ -16,7 +16,7 @@ defmodule JumubaseWeb.Internal.ContestLive.Prepare do
 
   def handle_event("change", %{"contest" => params}, socket) do
     changeset =
-      Contest.preparation_changeset(socket.assigns.contest, params)
+      Contest.dates_changeset(socket.assigns.contest, params)
       |> Map.put(:action, :update)
 
     {:noreply, assign(socket, changeset: changeset)}
@@ -25,7 +25,7 @@ defmodule JumubaseWeb.Internal.ContestLive.Prepare do
   def handle_event("submit", %{"contest" => params}, socket) do
     contest = socket.assigns.contest
 
-    case Foundation.prepare_contest_for_registration(contest, params) do
+    case Foundation.verify_dates_and_open_contest(contest, params) do
       {:ok, contest} ->
         success_msg =
           gettext(
@@ -51,6 +51,6 @@ defmodule JumubaseWeb.Internal.ContestLive.Prepare do
     socket
     |> assign(current_user: user)
     |> assign(contest: contest)
-    |> assign(changeset: Contest.preparation_changeset(contest, %{}))
+    |> assign(changeset: Contest.dates_changeset(contest, %{}))
   end
 end

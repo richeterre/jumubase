@@ -15,7 +15,7 @@ msgstr ""
 msgid "Add User"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:34
+#: lib/jumubase_web/templates/internal/page/home.html.heex:30
 #: lib/jumubase_web/views/internal/user_view.ex:53
 #, elixir-autogen, elixir-format
 msgid "Admin"
@@ -131,7 +131,7 @@ msgid "The user %{name} was updated."
 msgstr ""
 
 #: lib/jumubase_web/controllers/internal/user_controller.ex:13
-#: lib/jumubase_web/templates/internal/page/home.html.heex:38
+#: lib/jumubase_web/templates/internal/page/home.html.heex:34
 #: lib/jumubase_web/templates/internal/user/index.html.heex:1
 #, elixir-autogen, elixir-format
 msgid "Users"
@@ -181,7 +181,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/host_controller.ex:10
 #: lib/jumubase_web/templates/internal/contest/live_form.html.heex:140
 #: lib/jumubase_web/templates/internal/host/index.html.heex:1
-#: lib/jumubase_web/templates/internal/page/home.html.heex:41
+#: lib/jumubase_web/templates/internal/page/home.html.heex:37
 #: lib/jumubase_web/templates/internal/user/form.html.heex:51
 #: lib/jumubase_web/templates/internal/user/index.html.heex:11
 #, elixir-autogen, elixir-format
@@ -354,8 +354,8 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/stage_controller.ex:12
 #: lib/jumubase_web/live/internal/contest_live/index.ex:55
 #: lib/jumubase_web/templates/internal/contest/index.html.heex:1
-#: lib/jumubase_web/templates/internal/page/home.html.heex:44
-#: lib/jumubase_web/templates/internal/page/home.html.heex:60
+#: lib/jumubase_web/templates/internal/page/home.html.heex:40
+#: lib/jumubase_web/templates/internal/page/home.html.heex:56
 #, elixir-autogen, elixir-format
 msgid "Contests"
 msgstr ""
@@ -506,7 +506,7 @@ msgstr ""
 #: lib/jumubase_web/controllers/internal/category_controller.ex:10
 #: lib/jumubase_web/templates/internal/category/index.html.heex:1
 #: lib/jumubase_web/templates/internal/contest_category/index.html.heex:2
-#: lib/jumubase_web/templates/internal/page/home.html.heex:47
+#: lib/jumubase_web/templates/internal/page/home.html.heex:43
 #, elixir-autogen, elixir-format
 msgid "Categories"
 msgstr ""
@@ -903,7 +903,7 @@ msgstr ""
 msgid "The contest %{name} was updated."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:84
+#: lib/jumubase_web/templates/internal/page/home.html.heex:80
 #, elixir-autogen, elixir-format
 msgid "Show more…"
 msgstr ""
@@ -1618,7 +1618,7 @@ msgstr ""
 
 #: lib/jumubase_web/controllers/internal/maintenance_controller.ex:8
 #: lib/jumubase_web/templates/internal/maintenance/index.html.heex:1
-#: lib/jumubase_web/templates/internal/page/home.html.heex:50
+#: lib/jumubase_web/templates/internal/page/home.html.heex:46
 #, elixir-autogen, elixir-format
 msgid "Data maintenance"
 msgstr ""
@@ -1756,24 +1756,24 @@ msgid "Edit Host"
 msgstr ""
 
 #: lib/jumubase_web/controllers/internal/page_controller.ex:24
-#: lib/jumubase_web/templates/internal/page/home.html.heex:101
+#: lib/jumubase_web/templates/internal/page/home.html.heex:97
 #, elixir-autogen, elixir-format
 msgid "Jury work"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:96
+#: lib/jumubase_web/templates/internal/page/home.html.heex:92
 #, elixir-autogen, elixir-format
 msgid "Materials"
 msgstr ""
 
 #: lib/jumubase_web/controllers/internal/page_controller.ex:33
-#: lib/jumubase_web/templates/internal/page/home.html.heex:107
+#: lib/jumubase_web/templates/internal/page/home.html.heex:103
 #, elixir-autogen, elixir-format
 msgid "Literature guidance"
 msgstr ""
 
 #: lib/jumubase_web/controllers/internal/page_controller.ex:42
-#: lib/jumubase_web/templates/internal/page/home.html.heex:113
+#: lib/jumubase_web/templates/internal/page/home.html.heex:109
 #, elixir-autogen, elixir-format
 msgid "Meeting minutes"
 msgstr ""
@@ -2128,7 +2128,7 @@ msgid "Open Registration"
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:8
-#: lib/jumubase_web/templates/internal/page/home.html.heex:71
+#: lib/jumubase_web/templates/internal/page/home.html.heex:67
 #, elixir-autogen, elixir-format
 msgid "Open registration now"
 msgstr ""
@@ -2168,27 +2168,27 @@ msgstr ""
 msgid "Before registration can start, we still need some details on your contest. Please fill in and check the following dates:"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:14
+#: lib/jumubase_web/templates/internal/page/home.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Open registration yourself"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:16
+#: lib/jumubase_web/templates/internal/page/home.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "To do this, simply click on “Open registration now” below your contest, fill in the dates and confirm."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:20
+#: lib/jumubase_web/templates/internal/page/home.html.heex:17
 #, elixir-autogen, elixir-format
 msgid "Publish timetables yourself"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:22
+#: lib/jumubase_web/templates/internal/page/home.html.heex:18
 #, elixir-autogen, elixir-format
 msgid "Through the menu entry “Schedule performances” you can publish your contest’s timetables to the Jumu app once they’re ready."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/page/home.html.heex:11
+#: lib/jumubase_web/templates/internal/page/_whats_new_item.html.heex:3
 #, elixir-autogen, elixir-format
-msgid "What’s new:"
+msgid "New"
 msgstr ""

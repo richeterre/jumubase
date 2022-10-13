@@ -8,19 +8,15 @@
   <div class="col-md-8 col-lg-7">
     <div class="panel panel-info">
       <div class="panel-body">
-        <p><%= gettext("What’s new:") %></p>
+        <%= render("_whats_new_item.html",
+          title: gettext("Open registration yourself"),
+          body: gettext("To do this, simply click on “Open registration now” below your contest, fill in the dates and confirm.")
+          ) %>
 
-        <p>
-          <strong><%= gettext("Open registration yourself") %></strong>
-          <br>
-          <%= gettext("To do this, simply click on “Open registration now” below your contest, fill in the dates and confirm.") %>
-        </p>
-
-        <p>
-          <strong><%= gettext("Publish timetables yourself") %></strong>
-          <br>
-          <%= gettext("Through the menu entry “Schedule performances” you can publish your contest’s timetables to the Jumu app once they’re ready.") %>
-        </p>
+        <%= render("_whats_new_item.html",
+          title: gettext("Publish timetables yourself"),
+          body: gettext("Through the menu entry “Schedule performances” you can publish your contest’s timetables to the Jumu app once they’re ready.")
+          ) %>
       </div>
     </div>
   </div>

@@ -13,8 +13,8 @@ defmodule JumubaseWeb.Internal.PerformanceLive.Advancing do
     JumubaseWeb.Internal.PerformanceView.render("advancing_live.html", assigns)
   end
 
-  def mount(_params, session, socket) do
-    {:ok, prepare(socket, session)}
+  def mount(_params, assigns, socket) do
+    {:ok, prepare(socket, assigns)}
   end
 
   defp prepare(socket, %{"user_token" => token, "contest_id" => c_id}) do

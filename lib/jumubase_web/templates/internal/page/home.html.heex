@@ -2,9 +2,29 @@
   <%= gettext("Hello %{name},", name: @current_user.given_name) %>
 </h2>
 
-<p><%= gettext("welcome to your personal Jumu portal!") %></p>
+<p class="lead"><%= gettext("welcome to your personal Jumu portal!") %></p>
 
-<hr>
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <div class="panel panel-info">
+      <div class="panel-body">
+        <p><%= gettext("What’s new:") %></p>
+
+        <p>
+          <strong><%= gettext("Open registration yourself") %></strong>
+          <br>
+          <%= gettext("To do this, simply click on “Open registration now” below your contest, fill in the dates and confirm.") %>
+        </p>
+
+        <p>
+          <strong><%= gettext("Publish timetables yourself") %></strong>
+          <br>
+          <%= gettext("Through the menu entry “Schedule performances” you can publish your contest’s timetables to the Jumu app once they’re ready.") %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <%= if admin?(@current_user) do %>

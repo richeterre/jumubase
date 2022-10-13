@@ -29,6 +29,20 @@
 @font-face {
   font-family: "LatoLatin";
   font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/LatoLatin-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "LatoLatin";
+  font-style: italic;
+  font-weight: 500;
+  src: url("/fonts/LatoLatin-MediumItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "LatoLatin";
+  font-style: normal;
   font-weight: 700;
   src: url("/fonts/LatoLatin-Bold.woff") format("woff");
 }

@@ -235,7 +235,7 @@ msgstr "Geburtsdatum"
 
 #: lib/jumubase_web/templates/internal/contest/live_form.html.heex:84
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:28
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:36
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:40
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.heex:27
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.heex:45
@@ -281,7 +281,7 @@ msgstr "Nachname"
 #: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.heex:5
 #: lib/jumubase_web/templates/internal/participant/index.html.heex:2
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:29
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:37
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:41
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.heex:33
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.heex:46
@@ -1362,7 +1362,7 @@ msgid "Print jury table"
 msgstr "Jurytabelle ausgeben"
 
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:30
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:38
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:42
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:24
 #: lib/jumubase_web/templates/internal/performance/print_jury_table.html.heex:51
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:53
@@ -1400,7 +1400,7 @@ msgstr "Nach der Wertung"
 
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.heex:26
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:31
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:39
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:43
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:25
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:54
 #, elixir-autogen, elixir-format
@@ -1408,7 +1408,7 @@ msgid "Points"
 msgstr "Punktzahl"
 
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:32
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:40
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:44
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:26
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:55
 #, elixir-autogen, elixir-format
@@ -1505,7 +1505,7 @@ msgstr "fehlt"
 msgid "Create certificates"
 msgstr "Urkunden erstellen"
 
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:22
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Print certificates"
 msgstr "Urkunden ausgeben"
@@ -1514,11 +1514,6 @@ msgstr "Urkunden ausgeben"
 #, elixir-autogen, elixir-format
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr "Tipp: Um ein eigenes Kimu-Logo hinzuzufügen, lege das bereits mit dem Logo bedruckte Papier erneut ein."
-
-#: lib/jumubase_web/views/internal/performance_view.ex:203
-#, elixir-autogen, elixir-format
-msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
-msgstr "Die Ausgabe passt zum offiziellen Jumu-Urkundenpapier, welches du %{link} bestellen kannst."
 
 #: lib/jumubase_web/templates/internal/stage/index.html.heex:67
 #: lib/jumubase_web/views/internal/performance_view.ex:205
@@ -2193,3 +2188,8 @@ msgstr "Unter dem Menüpunkt “Vorspiele planen” in der Wettbewerbsansicht ka
 #, elixir-autogen, elixir-format
 msgid "New"
 msgstr "Neu"
+
+#: lib/jumubase_web/views/internal/performance_view.ex:203
+#, elixir-autogen, elixir-format
+msgid "The printed output matches the official Jumu certificate template, which you can find %{link}. The template needs to be printed on the paper first, ideally at a print shop."
+msgstr "Die Ausgabe passt zur offiziellen Jumu-Urkundenvorlage, welche du %{link} findest. Die Vorlage muss zuerst auf das Papier gedruckt werden, am besten in einer Druckerei."

@@ -201,8 +201,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
 
   def certificate_instructions(_round) do
     gettext(
-      "The printed output matches the official Jumu certificate paper, which you can order %{link}.",
-      link: link(gettext("here"), to: certificate_order_address()) |> safe_to_string
+      "The printed output matches the official Jumu certificate template, which you can find %{link}. The template needs to be printed on the paper first, ideally at a print shop.",
+      link: link(gettext("here"), to: certificate_template_url()) |> safe_to_string
     )
     |> raw
   end
@@ -341,8 +341,8 @@ defmodule JumubaseWeb.Internal.PerformanceView do
     content_tag(:span, gettext("Filter active"), class: "label label-warning")
   end
 
-  defp certificate_order_address do
-    "mailto:jumu@musikrat.de?subject=Urkundenpapier"
+  defp certificate_template_url do
+    Application.get_env(:jumubase, :certificates)[:template_url]
   end
 
   defp accompanist_separator do

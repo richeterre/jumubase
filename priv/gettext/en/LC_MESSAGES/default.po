@@ -235,7 +235,7 @@ msgstr ""
 
 #: lib/jumubase_web/templates/internal/contest/live_form.html.heex:84
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:28
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:36
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:40
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:22
 #: lib/jumubase_web/templates/internal/performance/index.html.heex:27
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.heex:45
@@ -281,7 +281,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest/_kimu_stats.html.heex:5
 #: lib/jumubase_web/templates/internal/participant/index.html.heex:2
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:29
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:37
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:41
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:23
 #: lib/jumubase_web/templates/internal/performance/index.html.heex:33
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.heex:46
@@ -1362,7 +1362,7 @@ msgid "Print jury table"
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:30
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:38
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:42
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:24
 #: lib/jumubase_web/templates/internal/performance/print_jury_table.html.heex:51
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:53
@@ -1400,7 +1400,7 @@ msgstr ""
 
 #: lib/jumubase_web/templates/internal/performance/_modal_result_form.html.heex:26
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:31
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:39
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:43
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:25
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:54
 #, elixir-autogen, elixir-format
@@ -1408,7 +1408,7 @@ msgid "Points"
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/performance/advancing_live.html.heex:32
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:40
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:44
 #: lib/jumubase_web/templates/internal/performance/edit_results.html.heex:26
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:55
 #, elixir-autogen, elixir-format
@@ -1505,7 +1505,7 @@ msgstr ""
 msgid "Create certificates"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:22
+#: lib/jumubase_web/templates/internal/performance/certificates.html.heex:26
 #, elixir-autogen, elixir-format
 msgid "Print certificates"
 msgstr ""
@@ -1513,11 +1513,6 @@ msgstr ""
 #: lib/jumubase_web/views/internal/performance_view.ex:197
 #, elixir-autogen, elixir-format
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
-msgstr ""
-
-#: lib/jumubase_web/views/internal/performance_view.ex:203
-#, elixir-autogen, elixir-format
-msgid "The printed output matches the official Jumu certificate paper, which you can order %{link}."
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/stage/index.html.heex:67
@@ -2192,4 +2187,9 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/page/_whats_new_item.html.heex:3
 #, elixir-autogen, elixir-format
 msgid "New"
+msgstr ""
+
+#: lib/jumubase_web/views/internal/performance_view.ex:203
+#, elixir-autogen, elixir-format
+msgid "The printed output matches the official Jumu certificate template, which you can find %{link}. The template needs to be printed on the paper first, ideally at a print shop."
 msgstr ""

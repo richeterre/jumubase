@@ -15,7 +15,11 @@
   filter_active: @filter_active
   %>
 
-<p><%= certificate_instructions(@contest.round) %></p>
+<div class="row">
+  <div class="col-md-8 col-lg-7">
+    <p><%= certificate_instructions(@contest.round) %></p>
+  </div>
+</div>
 
 <p class="button-row">
   <% button_class = if Enum.empty?(@performances), do: "disabled", else: "" %>

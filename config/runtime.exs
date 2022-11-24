@@ -36,6 +36,9 @@ config :jumubase, :app_ids,
   android: System.get_env("JUMU_APP_ID_ANDROID"),
   ios: System.get_env("JUMU_APP_ID_IOS")
 
+# Configure certificates
+config :jumubase, :certificates, template_url: System.get_env("JUMU_CERTIFICATE_TEMPLATE_URL")
+
 # Configure Sentry
 config :sentry,
   dsn: System.get_env("SENTRY_DSN"),

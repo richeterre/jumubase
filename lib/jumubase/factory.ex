@@ -28,7 +28,8 @@ defmodule Jumubase.Factory do
       genre: "classical",
       type: "solo",
       group: "mixed_lineups",
-      uses_epochs: true
+      uses_epochs: true,
+      requires_concept_document: false
     }
   end
 

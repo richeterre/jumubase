@@ -605,12 +605,12 @@ msgid "The category \"%{name}\" was created."
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.heex:12
-#: lib/jumubase_web/views/internal/category_view.ex:70
+#: lib/jumubase_web/views/internal/category_view.ex:72
 #, elixir-autogen, elixir-format
 msgid "Classical"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:82
+#: lib/jumubase_web/views/internal/category_view.ex:84
 #, elixir-autogen, elixir-format
 msgid "Ensemble"
 msgstr ""
@@ -622,14 +622,14 @@ msgid "Genre"
 msgstr ""
 
 #: lib/jumubase_web/templates/page/registration.html.heex:20
-#: lib/jumubase_web/views/internal/category_view.ex:72
-#: lib/jumubase_web/views/internal/category_view.ex:102
+#: lib/jumubase_web/views/internal/category_view.ex:74
+#: lib/jumubase_web/views/internal/category_view.ex:104
 #, elixir-autogen, elixir-format
 msgid "Kimu"
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/contest/_jumu_stats.html.heex:13
-#: lib/jumubase_web/views/internal/category_view.ex:71
+#: lib/jumubase_web/views/internal/category_view.ex:73
 #, elixir-autogen, elixir-format
 msgid "Popular"
 msgstr ""
@@ -640,12 +640,12 @@ msgstr ""
 msgid "Short name"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:81
+#: lib/jumubase_web/views/internal/category_view.ex:83
 #, elixir-autogen, elixir-format
 msgid "Solo"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:83
+#: lib/jumubase_web/views/internal/category_view.ex:85
 #, elixir-autogen, elixir-format
 msgid "Solo/Ensemble"
 msgstr ""
@@ -1108,7 +1108,7 @@ msgid "To add a new stage, please contact the"
 msgstr ""
 
 #: lib/jumubase/showtime/instruments.ex:9
-#: lib/jumubase_web/views/internal/category_view.ex:95
+#: lib/jumubase_web/views/internal/category_view.ex:97
 #, elixir-autogen, elixir-format
 msgid "Accordion"
 msgstr ""
@@ -1128,7 +1128,7 @@ msgstr ""
 msgid "Clarinet"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:94
+#: lib/jumubase_web/views/internal/category_view.ex:96
 #, elixir-autogen, elixir-format
 msgid "Classical Vocals"
 msgstr ""
@@ -1185,7 +1185,7 @@ msgid "Guitar"
 msgstr ""
 
 #: lib/jumubase/showtime/instruments.ex:24
-#: lib/jumubase_web/views/internal/category_view.ex:96
+#: lib/jumubase_web/views/internal/category_view.ex:98
 #, elixir-autogen, elixir-format
 msgid "Harp"
 msgstr ""
@@ -1226,34 +1226,34 @@ msgid "Oboe"
 msgstr ""
 
 #: lib/jumubase/showtime/instruments.ex:34
-#: lib/jumubase_web/views/internal/category_view.ex:97
+#: lib/jumubase_web/views/internal/category_view.ex:99
 #, elixir-autogen, elixir-format
 msgid "Organ"
 msgstr ""
 
 #: lib/jumubase/showtime/instruments.ex:36
-#: lib/jumubase_web/views/internal/category_view.ex:98
+#: lib/jumubase_web/views/internal/category_view.ex:100
 #, elixir-autogen, elixir-format
 msgid "Percussion"
 msgstr ""
 
 #: lib/jumubase/showtime/instruments.ex:37
-#: lib/jumubase_web/views/internal/category_view.ex:90
+#: lib/jumubase_web/views/internal/category_view.ex:92
 #, elixir-autogen, elixir-format
 msgid "Piano"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:93
+#: lib/jumubase_web/views/internal/category_view.ex:95
 #, elixir-autogen, elixir-format
 msgid "Plucked Instruments"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:101
+#: lib/jumubase_web/views/internal/category_view.ex:103
 #, elixir-autogen, elixir-format
 msgid "Pop Instrumental"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:100
+#: lib/jumubase_web/views/internal/category_view.ex:102
 #, elixir-autogen, elixir-format
 msgid "Pop Vocals"
 msgstr ""
@@ -1268,7 +1268,7 @@ msgstr ""
 msgid "Saxophone"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:99
+#: lib/jumubase_web/views/internal/category_view.ex:101
 #, elixir-autogen, elixir-format
 msgid "Mixed Lineups"
 msgstr ""
@@ -1318,12 +1318,12 @@ msgstr ""
 msgid "Vocals"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:92
+#: lib/jumubase_web/views/internal/category_view.ex:94
 #, elixir-autogen, elixir-format
 msgid "Wind Instruments"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:91
+#: lib/jumubase_web/views/internal/category_view.ex:93
 #, elixir-autogen, elixir-format
 msgid "String Instruments"
 msgstr ""
@@ -1437,14 +1437,12 @@ msgstr ""
 msgid "Publish results"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:35
 #: lib/jumubase_web/views/internal/performance_view.ex:73
 #: lib/jumubase_web/views/internal/performance_view.ex:123
 #, elixir-autogen, elixir-format
 msgid "No"
 msgstr ""
 
-#: lib/jumubase_web/views/internal/category_view.ex:31
 #: lib/jumubase_web/views/internal/performance_view.ex:76
 #: lib/jumubase_web/views/internal/performance_view.ex:119
 #, elixir-autogen, elixir-format
@@ -1715,7 +1713,7 @@ msgstr ""
 msgid "Your changes could not be saved. Please contact us if you need assistance."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/category/_form.html.heex:61
+#: lib/jumubase_web/templates/internal/category/_form.html.heex:67
 #: lib/jumubase_web/templates/internal/category/index.html.heex:15
 #, elixir-autogen, elixir-format
 msgid "BW Code"
@@ -1853,7 +1851,7 @@ msgstr ""
 msgid "The host \"%{name}\" was updated."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/category/_form.html.heex:69
+#: lib/jumubase_web/templates/internal/category/_form.html.heex:75
 #: lib/jumubase_web/templates/internal/category/index.html.heex:16
 #: lib/jumubase_web/templates/internal/contest_category/index.html.heex:24
 #, elixir-autogen, elixir-format
@@ -1871,13 +1869,9 @@ msgid "Export as CSV"
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/category/_form.html.heex:55
+#: lib/jumubase_web/views/internal/category_view.ex:31
 #, elixir-autogen, elixir-format
 msgid "Uses epochs"
-msgstr ""
-
-#: lib/jumubase_web/templates/internal/category/index.html.heex:14
-#, elixir-autogen, elixir-format
-msgid "Epochs?"
 msgstr ""
 
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:30
@@ -2191,4 +2185,15 @@ msgstr ""
 #: lib/jumubase_web/views/internal/performance_view.ex:203
 #, elixir-autogen, elixir-format
 msgid "The printed output matches the official Jumu certificate template, which you can find %{link}. The template needs to be printed on the paper first, ideally at a print shop."
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/category/_form.html.heex:61
+#: lib/jumubase_web/views/internal/category_view.ex:35
+#, elixir-autogen, elixir-format
+msgid "Requires concept document"
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/category/index.html.heex:14
+#, elixir-autogen, elixir-format
+msgid "Flags"
 msgstr ""

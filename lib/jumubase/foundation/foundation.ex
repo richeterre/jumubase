@@ -354,6 +354,7 @@ defmodule Jumubase.Foundation do
   def get_contest_category!(%Contest{id: contest_id}, id) do
     ContestCategory
     |> where([cc], cc.contest_id == ^contest_id)
+    |> preload(:category)
     |> Repo.get!(id)
   end
 

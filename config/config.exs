@@ -40,6 +40,9 @@ config :jumubase, JumubaseWeb.Email,
   contact_email: "contact@localhost",
   admin_email: "admin@localhost"
 
+# Configure certificates (should be overriden in runtime.exs for :prod)
+config :jumubase, :certificates, template_url: "#"
+
 # Configure Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

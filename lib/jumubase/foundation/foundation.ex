@@ -214,15 +214,28 @@ defmodule Jumubase.Foundation do
   def get_successors(%Contest{round: _}), do: []
 
   @doc """
-  Returns the official (non-Kimu) contest with the latest end date.
+  Returns the latest contest that is open for regisration.
   """
-  def get_latest_official_contest do
+  def get_latest_open_contest(round) do
     Contest
-    |> where([c], c.round > 0)
+    |> where(round: ^round)
+    |> where(allows_registration: true)
+    |> where([c], c.deadline >= ^Timex.today())
     |> order_by(desc: :end_date)
     |> limit(1)
-    |> preload(:host)
     |> Repo.one()
+  end
+
+  @doc """
+  Returns whether any currently ongoing contests exist in the round.
+  """
+  def has_ongoing_contests?(round) do
+    today = Timex.today()
+
+    Contest
+    |> where(round: ^round)
+    |> where([c], c.start_date <= ^today and c.end_date >= ^today)
+    |> Repo.exists?()
   end
 
   @doc """

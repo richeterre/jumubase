@@ -1,0 +1,19 @@
+<div class="col-md-6">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">Anmeldung <%= year(@contest) %></h3>
+    </div>
+    <div class="panel-body">
+      <p>
+      Derzeit kannst du dich für das Wettbewerbsjahr <%= year(@contest) %> <%= link "anmelden", to: Routes.page_path(@conn, :registration) %>.
+      Der Anmeldeschluss variiert je nach Wettbewerb.
+      Bitte lies dir vorher die <%= link "Teilnahmeregeln", to: Routes.page_path(@conn, :rules) %> sowie unsere
+      <%= link "FAQ", to: Routes.page_path(@conn, :faq) %> gut durch!
+      </p>
+
+      <%= if @contest.round == 2 do %>
+      <p><i>Aufgepasst: Weitergeleitete, die sich bereits zum RW auf “Jumu weltweit” angemeldet haben, sind automatisch zum LW angemeldet. Sie erhalten per Mail rechtzeitig einen neuen Änderungscode.</i></p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -695,20 +695,47 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
-  describe "get_latest_official_contest/1" do
-    test "returns the latest-ending non-Kimu contest" do
+  describe "get_latest_open_contest/1" do
+    test "returns the latest-ending open contest for the given round" do
       today = Timex.today()
-      insert(:contest, round: 1, end_date: today)
-      %{id: id} = insert(:contest, round: 1, end_date: today |> Timex.shift(days: 1))
-      insert(:contest, round: 0, end_date: today |> Timex.shift(days: 2))
-      insert(:contest, round: 1, end_date: today |> Timex.shift(days: -1))
+      tomorrow = today |> Timex.shift(days: 1)
+      yesterday = today |> Timex.shift(days: -1)
 
-      assert %Contest{id: ^id} = Foundation.get_latest_official_contest()
+      insert(:contest, round: 1, allows_registration: true, deadline: today, end_date: today)
+      insert(:contest, round: 0, allows_registration: true, deadline: today, end_date: tomorrow)
+      insert(:contest, round: 2, allows_registration: true, deadline: today, end_date: tomorrow)
+      insert(:contest, round: 1, allows_registration: true, deadline: today, end_date: yesterday)
+
+      %{id: id} =
+        insert(:contest, round: 1, allows_registration: true, deadline: today, end_date: tomorrow)
+
+      assert %Contest{id: ^id} = Foundation.get_latest_open_contest(1)
     end
+  end
 
-    test "preloads the contest host" do
-      insert(:contest)
-      assert %Contest{host: %Host{}} = Foundation.get_latest_official_contest()
+  describe "has_ongoing_contests?/1" do
+    test "returns whether there are contests currently ongoing in the given round" do
+      today = Timex.today()
+      tomorrow = today |> Timex.shift(days: 1)
+      yesterday = today |> Timex.shift(days: -1)
+
+      # Wrong round
+      insert(:contest, round: 0, start_date: today, end_date: tomorrow)
+      insert(:contest, round: 2, start_date: yesterday, end_date: today)
+
+      # Wrong dates
+      insert(:contest, round: 1, start_date: yesterday, end_date: yesterday)
+      insert(:contest, round: 1, start_date: tomorrow, end_date: tomorrow)
+
+      for {start_date, end_date} <- [
+            {yesterday, today},
+            {yesterday, tomorrow},
+            {today, today},
+            {today, tomorrow}
+          ] do
+        insert(:contest, round: 1, start_date: start_date, end_date: end_date)
+        assert Foundation.has_ongoing_contests?(1)
+      end
     end
   end
 

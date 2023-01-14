@@ -11,5 +11,9 @@
     <%= render("_host_map.html", data: @host_map_data) %>
   </div>
 
-  <%= render_phase_panels(@conn) %>
+  <%= welcome_or_registration_phase_panel(@conn) %>
+
+  <%= maybe_rw_phase_panel(@conn) %>
+
+  <%= render("_lw_phase_panel.html") %>
 </div>

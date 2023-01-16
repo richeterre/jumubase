@@ -36,9 +36,6 @@ config :jumubase, :app_ids,
   android: System.get_env("JUMU_APP_ID_ANDROID"),
   ios: System.get_env("JUMU_APP_ID_IOS")
 
-# Configure certificates
-config :jumubase, :certificates, template_url: System.get_env("JUMU_CERTIFICATE_TEMPLATE_URL")
-
 # Configure Sentry
 config :sentry,
   dsn: System.get_env("SENTRY_DSN"),
@@ -102,4 +99,7 @@ if config_env() == :prod do
     default_sender: {"Jumu weltweit", "no-reply@jumu-weltweit.org"},
     contact_email: System.get_env("JUMU_CONTACT_EMAIL"),
     admin_email: System.get_env("JUMU_ADMIN_EMAIL")
+
+  # Configure certificates
+  config :jumubase, :certificates, template_url: System.get_env("JUMU_CERTIFICATE_TEMPLATE_URL")
 end

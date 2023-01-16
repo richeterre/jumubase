@@ -2,12 +2,12 @@
 
 <script>
   const HOST_DATA = <%= Jason.encode!(@data) |> Phoenix.HTML.raw %>;
-  const INITIAL_CENTER = [18.0, 48.0];
+  const INITIAL_CENTER = [12.0, 49.0];
 
   // Set different target zoom level for desktop/tablet vs. mobile devices
   const mediaQuery = window.matchMedia( "(min-width: 481px)" );
   const MIN_ZOOM = mediaQuery.matches ? 0.7 : 0.5;
-  const INITIAL_ZOOM = mediaQuery.matches ? 2.4 : 1.6;
+  const INITIAL_ZOOM = mediaQuery.matches ? 2.5 : 1.8;
 
   mapboxgl.accessToken = '<%= MapHelpers.get_access_token() %>'
 

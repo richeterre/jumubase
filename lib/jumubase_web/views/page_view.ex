@@ -4,13 +4,21 @@ defmodule JumubaseWeb.PageView do
   import JumubaseWeb.Internal.ContestView, only: [name_with_flag: 1, year: 1]
 
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Contest, Host}
+  alias Jumubase.Foundation.Host
   alias JumubaseWeb.Endpoint
   alias JumubaseWeb.MapHelpers
 
-  def render_phase_panels(conn) do
-    c = Foundation.get_latest_official_contest()
-    do_render_phase_panels(conn, c)
+  def welcome_or_registration_phase_panel(conn) do
+    case Foundation.get_latest_open_contest(1) do
+      nil -> render("_welcome_phase_panel.html")
+      c -> render("_registration_phase_panel.html", conn: conn, contest: c)
+    end
+  end
+
+  def maybe_rw_phase_panel(conn) do
+    if Foundation.has_ongoing_contests?(1) do
+      render("_rw_phase_panel.html", conn: conn)
+    end
   end
 
   def app_link(platform) do
@@ -51,31 +59,6 @@ defmodule JumubaseWeb.PageView do
   end
 
   # Private helpers
-
-  defp do_render_phase_panels(_conn, nil), do: nil
-
-  defp do_render_phase_panels(conn, %Contest{round: 1} = c) do
-    if Timex.after?(Timex.today(), c.deadline) do
-      render("_rw_phase_panels.html", conn: conn, year: year(c))
-    else
-      render("_pre_rw_phase_panels.html", conn: conn, year: year(c))
-    end
-  end
-
-  defp do_render_phase_panels(conn, %Contest{round: 2} = c) do
-    today = Timex.today()
-
-    cond do
-      Timex.after?(today, c.end_date |> Timex.shift(months: 3)) ->
-        render("_interseason_phase_panels.html", conn: conn)
-
-      Timex.after?(today, c.deadline) ->
-        render("_lw_phase_panels.html", conn: conn)
-
-      true ->
-        render("_rw_phase_panels.html", conn: conn, year: year(c))
-    end
-  end
 
   defp app_url(:android) do
     "https://play.google.com/store/apps/details?id=#{app_id(:android)}&hl=de"

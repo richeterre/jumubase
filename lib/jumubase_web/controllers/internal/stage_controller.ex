@@ -13,6 +13,8 @@ defmodule JumubaseWeb.Internal.StageController do
     path_fun: &Routes.internal_live_path/2,
     action: ContestLive.Index
 
+  plug :non_observer_check when action in [:new, :create]
+
   # Check nested contest permissions and pass to all actions
   def action(conn, _), do: contest_user_check_action(conn, __MODULE__)
 
@@ -28,6 +30,30 @@ defmodule JumubaseWeb.Internal.StageController do
     |> assign(:unscheduled_performance_count, unscheduled_performance_count)
     |> add_schedule_breadcrumbs(contest)
     |> render("index.html")
+  end
+
+  def new(conn, _params, contest) do
+    conn
+    |> assign(:contest, contest)
+    |> assign(:changeset, Stage.changeset(%Stage{}, %{}))
+    |> add_schedule_breadcrumbs(contest)
+    |> add_breadcrumb(name: gettext("New stage"), path: current_path(conn))
+    |> render("new.html")
+  end
+
+  def create(conn, %{"stage" => attrs}, contest) do
+    case Foundation.create_stage(contest.host, attrs) do
+      {:ok, stage} ->
+        conn
+        |> put_flash(:success, gettext("The stage \"%{name}\" was created.", name: stage.name))
+        |> redirect(to: Routes.internal_contest_stage_path(conn, :index, contest))
+
+      {:error, changeset} ->
+        conn
+        |> assign(:contest, contest)
+        |> assign(:changeset, changeset)
+        |> render("new.html")
+    end
   end
 
   def schedule(conn, %{"stage_id" => stage_id}, contest) do

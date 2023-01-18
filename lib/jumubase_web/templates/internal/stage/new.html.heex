@@ -1,0 +1,10 @@
+<h2><%= gettext("New Stage") %></h2>
+
+<hr>
+
+<%=
+  render "_form.html", Map.merge(assigns, %{
+    action: Routes.internal_contest_stage_path(@conn, :create, @contest),
+    submit_title: gettext("Create Stage")
+  })
+%>

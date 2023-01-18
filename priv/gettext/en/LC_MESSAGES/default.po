@@ -77,6 +77,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/contest_category/index.html.heex:19
 #: lib/jumubase_web/templates/internal/host/_form.html.heex:6
 #: lib/jumubase_web/templates/internal/host/index.html.heex:9
+#: lib/jumubase_web/templates/internal/stage/_form.html.eex:6
 #: lib/jumubase_web/templates/internal/user/index.html.heex:9
 #: lib/jumubase_web/templates/page/_contact_form.html.heex:6
 #, elixir-autogen, elixir-format
@@ -1037,7 +1038,7 @@ msgstr ""
 msgid "Add Performance"
 msgstr ""
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:107
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:131
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:49
 #: lib/jumubase_web/templates/internal/stage/index.html.heex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.heex:2
@@ -1093,19 +1094,9 @@ msgstr ""
 msgid "o’clock"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:35
-#, elixir-autogen, elixir-format
-msgid "admin"
-msgstr ""
-
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:35
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:39
 #, elixir-autogen, elixir-format
 msgid "Add stage"
-msgstr ""
-
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:34
-#, elixir-autogen, elixir-format
-msgid "To add a new stage, please contact the"
 msgstr ""
 
 #: lib/jumubase/showtime/instruments.ex:9
@@ -1380,7 +1371,7 @@ msgstr ""
 msgid "Timetables public"
 msgstr ""
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:119
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:143
 #, elixir-autogen, elixir-format
 msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr ""
@@ -1515,7 +1506,7 @@ msgstr ""
 msgid "Pro tip: To add a custom Kimu logo, print it on paper first, then re-insert the printed paper."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:67
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:75
 #: lib/jumubase_web/views/internal/performance_view.ex:205
 #, elixir-autogen, elixir-format
 msgid "here"
@@ -1526,7 +1517,7 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:111
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:135
 #: lib/jumubase_web/templates/internal/stage/timetable.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Timetable"
@@ -2047,7 +2038,7 @@ msgstr[1] ""
 msgid "Export for JMDaten"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:50
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:58
 #, elixir-autogen, elixir-format
 msgid "Once you’re done scheduling for all stages, you can publish your timetables here."
 msgstr ""
@@ -2057,42 +2048,42 @@ msgstr ""
 msgid "Step 1: Schedule performances"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:43
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:51
 #, elixir-autogen, elixir-format
 msgid "Step 2: Publish timetables"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:66
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:74
 #, elixir-autogen, elixir-format
 msgid "To undo this, please click"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:30
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:36
 #, elixir-autogen, elixir-format
 msgid "You don’t have any stages set up yet."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:62
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:70
 #, elixir-autogen, elixir-format
 msgid "Your timetables are now publicly visible through the mobile app “Jumu weltweit”."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:58
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:66
 #, elixir-autogen, elixir-format
 msgid "Do you really want to publish all timetables for %{contest_name}?"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:55
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:63
 #, elixir-autogen, elixir-format
 msgid "Publish timetables"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:52
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:60
 #, elixir-autogen, elixir-format
 msgid "This will cause your contest and its timetables to appear in the mobile app “Jumu weltweit”."
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/stage/index.html.heex:70
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:78
 #, elixir-autogen, elixir-format
 msgid "Do you really want to remove the contest %{contest_name} from the app “Jumu weltweit”?"
 msgstr ""
@@ -2215,4 +2206,29 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/category/index.html.heex:14
 #, elixir-autogen, elixir-format
 msgid "Epochs?"
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/stage/index.html.heex:31
+#, elixir-autogen, elixir-format
+msgid "Add another stage"
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/stage/new.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Create Stage"
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/stage/new.html.heex:1
+#, elixir-autogen, elixir-format
+msgid "New Stage"
+msgstr ""
+
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:46
+#, elixir-autogen, elixir-format
+msgid "The stage \"%{name}\" was created."
+msgstr ""
+
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:38
+#, elixir-autogen, elixir-format
+msgid "New stage"
 msgstr ""

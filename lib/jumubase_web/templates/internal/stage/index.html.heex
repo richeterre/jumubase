@@ -26,14 +26,22 @@
           &#32;
         <% end %>
       </p>
+
+      <p>
+        <%= link gettext("Add another stage"),
+          to: Routes.internal_contest_stage_path(@conn, :new, @contest)
+          %>
+      </p>
     <% else %>
       <p><%= gettext("You don’t have any stages set up yet.") %></p>
-    <% end %>
 
-    <p class={if has_stages, do: "text-muted"}>
-      <%= gettext("To add a new stage, please contact the") %>
-      <%= link gettext("admin"), to: "mailto:#{admin_email()}?subject=#{gettext("Add stage")}" %>.
-    </p>
+      <p>
+        <%= link gettext("Add stage"),
+          to: Routes.internal_contest_stage_path(@conn, :new, @contest),
+          class: "btn btn-primary"
+          %>
+      </p>
+    <% end %>
 
     <br>
 

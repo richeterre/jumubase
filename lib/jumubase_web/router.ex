@@ -142,7 +142,7 @@ defmodule JumubaseWeb.Router do
       resources "/performances", PerformanceController,
         only: [:index, :show, :new, :edit, :delete]
 
-      resources "/stages", StageController, only: [:index] do
+      resources "/stages", StageController, only: [:index, :new, :create] do
         get "/schedule", StageController, :schedule, as: :schedule
         get "/timetable", StageController, :timetable, as: :timetable
       end

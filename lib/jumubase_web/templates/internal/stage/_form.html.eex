@@ -1,0 +1,15 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
+
+  <div class="row">
+    <div class="form-group col-md-4">
+      <%= label f, :name, gettext("Name") %>
+      <%= text_input f, :name, class: "form-control" %>
+      <%= error_tag f, :name %>
+    </div>
+  </div>
+
+  <hr>
+
+  <%= submit @submit_title, class: "btn btn-primary" %>
+<% end %>

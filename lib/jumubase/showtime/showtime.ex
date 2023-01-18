@@ -189,7 +189,8 @@ defmodule Jumubase.Showtime do
 
   def create_performance(%Contest{} = contest, attrs \\ %{}) do
     Performance.changeset(%Performance{}, attrs, contest.round)
-    |> stitch_participants
+    |> handle_category_specific_fields(contest, attrs)
+    |> stitch_participants()
     |> put_age_groups(contest)
     |> attempt_insert(contest.round)
   end
@@ -200,7 +201,8 @@ defmodule Jumubase.Showtime do
     else
       performance
       |> Performance.changeset(attrs, contest.round)
-      |> stitch_participants
+      |> handle_category_specific_fields(contest, attrs)
+      |> stitch_participants()
       |> put_age_groups(contest)
       |> Repo.update()
     end
@@ -494,6 +496,27 @@ defmodule Jumubase.Showtime do
     case Repo.transaction(multi) do
       {:ok, _} -> :ok
       {:error, _, _, _} -> :error
+    end
+  end
+
+  @doc """
+  Casts and validates fields that only apply for certain categories, by first retrieving
+  the category (either as change or existing data) from the changeset.
+  """
+  def handle_category_specific_fields(changeset, contest, attrs) do
+    with cc_id when not is_nil(cc_id) <- get_field(changeset, :contest_category_id) do
+      %{category: c} = Foundation.get_contest_category!(contest, cc_id)
+
+      if c.requires_concept_document do
+        changeset
+        |> cast(attrs, [:concept_document_url])
+        |> validate_required(:concept_document_url)
+      else
+        changeset
+        |> put_change(:concept_document_url, nil)
+      end
+    else
+      _ -> changeset
     end
   end
 

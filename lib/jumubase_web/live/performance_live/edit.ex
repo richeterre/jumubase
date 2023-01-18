@@ -78,14 +78,17 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
     contest = Foundation.get_contest!(c_id) |> Foundation.load_contest_categories()
     performance = Showtime.get_performance!(contest, p_id)
 
+    changeset = Showtime.change_performance(performance)
+
     assign(socket,
-      changeset: Showtime.change_performance(performance),
+      changeset: changeset,
       contest: contest,
       performance: performance,
       predecessor_host_options: predecessor_host_options(contest),
       expanded_appearance_index: nil,
       expanded_piece_index: nil,
-      submit_title: submit_title
+      submit_title: submit_title,
+      has_concept_document_field: needs_concept_document_field?(changeset, contest)
     )
   end
 
@@ -95,9 +98,13 @@ defmodule JumubaseWeb.PerformanceLive.Edit do
 
     changeset =
       Performance.changeset(performance, attrs, contest.round)
+      |> Showtime.handle_category_specific_fields(contest, attrs)
       |> Map.put(:action, :update)
 
-    assign(socket, changeset: changeset)
+    assign(socket,
+      changeset: changeset,
+      has_concept_document_field: needs_concept_document_field?(changeset, contest)
+    )
   end
 
   def add_appearance(socket) do

@@ -84,7 +84,8 @@ defmodule JumubaseWeb.PerformanceLive.New do
       predecessor_host_options: predecessor_host_options(contest),
       expanded_appearance_index: nil,
       expanded_piece_index: nil,
-      submit_title: submit_title
+      submit_title: submit_title,
+      has_concept_document_field: needs_concept_document_field?(changeset, contest)
     )
   end
 
@@ -93,9 +94,13 @@ defmodule JumubaseWeb.PerformanceLive.New do
 
     changeset =
       Performance.changeset(%Performance{}, attrs, contest.round)
+      |> Showtime.handle_category_specific_fields(contest, attrs)
       |> Map.put(:action, :insert)
 
-    assign(socket, changeset: changeset)
+    assign(socket,
+      changeset: changeset,
+      has_concept_document_field: needs_concept_document_field?(changeset, contest)
+    )
   end
 
   def add_appearance(socket) do

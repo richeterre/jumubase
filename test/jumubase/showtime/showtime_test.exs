@@ -459,10 +459,7 @@ defmodule Jumubase.ShowtimeTest do
     test "creates a new performance with an edit code", %{contest: c} do
       [cc, _] = c.contest_categories
 
-      attrs =
-        performance_params(cc, [
-          {"soloist", birthdate: ~D[2007-01-01]}
-        ])
+      attrs = performance_params(cc, [{"soloist", birthdate: ~D[2007-01-01]}])
 
       assert {:ok, %Performance{edit_code: edit_code}} = Showtime.create_performance(c, attrs)
       assert Regex.match?(~r/^[0-9]{6}$/, edit_code)
@@ -474,6 +471,31 @@ defmodule Jumubase.ShowtimeTest do
       {:error, changeset} = Showtime.create_performance(c, attrs)
 
       assert Changeset.get_change(changeset, :edit_code) == nil
+    end
+
+    test "validates concept document when category requires one", %{contest: c} do
+      cg = build(:category, requires_concept_document: true)
+      cc = insert(:contest_category, contest: c, category: cg)
+
+      invalid_attrs = performance_params(cc, [{"soloist", birthdate: ~D[2007-01-01]}])
+      valid_attrs = invalid_attrs |> Map.put(:concept_document_url, "foo")
+
+      {:error, changeset} = Showtime.create_performance(c, invalid_attrs)
+
+      assert %Changeset{
+               errors: [concept_document_url: {"can't be blank", [validation: :required]}]
+             } = changeset
+
+      {:ok, _performance} = Showtime.create_performance(c, valid_attrs)
+    end
+
+    test "doesn’t validates concept document when category doesn’t require one", %{contest: c} do
+      cg = build(:category, requires_concept_document: false)
+      cc = insert(:contest_category, contest: c, category: cg)
+
+      attrs = performance_params(cc, [{"soloist", birthdate: ~D[2007-01-01]}])
+
+      {:ok, _performance} = Showtime.create_performance(c, attrs)
     end
 
     test "assigns the earliest existing participant when full name and birthdate matches", %{
@@ -1540,6 +1562,84 @@ defmodule Jumubase.ShowtimeTest do
       assert a1.age_group == "III"
       assert p2.age_group == "III"
       assert a2.age_group == "III"
+    end
+  end
+
+  describe "handle_category_specific_fields/3" do
+    test "casts and validates concept document URL if category in data requires it", %{contest: c} do
+      cg = build(:category, requires_concept_document: true)
+      cc = insert(:contest_category, contest: c, category: cg)
+
+      appearances = [{"soloist", birthdate: ~D[2001-01-02]}]
+      p = insert_shorthand_performance(cc, appearances)
+      changeset = Showtime.change_performance(p)
+
+      invalid_attrs = performance_params(cc, appearances)
+
+      assert %Changeset{
+               valid?: false,
+               errors: [concept_document_url: {"can't be blank", [validation: :required]}]
+             } = Showtime.handle_category_specific_fields(changeset, c, invalid_attrs)
+
+      valid_attrs = Map.put(invalid_attrs, :concept_document_url, "#")
+
+      assert %Changeset{valid?: true} =
+               Showtime.handle_category_specific_fields(changeset, c, valid_attrs)
+    end
+
+    test "casts and validates concept document URL if changed category requires it", %{contest: c} do
+      cg1 = build(:category, requires_concept_document: false)
+      cc1 = insert(:contest_category, contest: c, category: cg1)
+
+      appearances = [{"soloist", birthdate: ~D[2001-01-02]}]
+      p = insert_shorthand_performance(cc1, appearances)
+
+      cg2 = build(:category, requires_concept_document: true)
+      cc2 = insert(:contest_category, contest: c, category: cg2)
+
+      invalid_attrs = performance_params(cc2, appearances)
+      changeset = Performance.changeset(p, invalid_attrs, c.round)
+
+      assert %Changeset{
+               valid?: false,
+               errors: [concept_document_url: {"can't be blank", [validation: :required]}]
+             } = Showtime.handle_category_specific_fields(changeset, c, invalid_attrs)
+
+      valid_attrs = Map.put(invalid_attrs, :concept_document_url, "#")
+
+      assert %Changeset{valid?: true} =
+               Showtime.handle_category_specific_fields(changeset, c, valid_attrs)
+    end
+
+    test "clears concept document URL if category doesn’t require one", %{contest: c} do
+      cg1 = build(:category, requires_concept_document: true)
+      cc1 = insert(:contest_category, contest: c, category: cg1)
+      cg2 = build(:category, requires_concept_document: false)
+      cc2 = insert(:contest_category, contest: c, category: cg2)
+      appearances = [{"soloist", birthdate: ~D[2001-01-02]}]
+
+      initial_attrs =
+        performance_params(cc1, appearances)
+        |> Map.put(:concept_document_url, "#")
+
+      {:ok, p} = Showtime.create_performance(c, initial_attrs)
+
+      assert p.concept_document_url
+
+      updated_attrs =
+        performance_params(cc2, appearances)
+        |> Map.put(:concept_document_url, "#")
+
+      changeset = Performance.changeset(p, updated_attrs, c.round)
+
+      assert %Changeset{changes: %{concept_document_url: nil}} =
+               Showtime.handle_category_specific_fields(changeset, c, updated_attrs)
+    end
+
+    test "does nothing if no category is present in data or changes", %{contest: c} do
+      attrs = %{}
+      changeset = Performance.changeset(%Performance{}, attrs, c.round)
+      assert changeset == Showtime.handle_category_specific_fields(changeset, c, attrs)
     end
   end
 

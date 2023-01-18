@@ -11,22 +11,13 @@ defmodule Jumubase.Foundation.Category do
     field :genre, :string
     field :group, :string
     field :uses_epochs, :boolean, read_after_writes: true
-    field :requires_concept_document, :boolean, read_after_writes: true
     field :bw_code, :string
     field :notes, :string
 
     timestamps()
   end
 
-  @required_attrs [
-    :name,
-    :short_name,
-    :type,
-    :genre,
-    :group,
-    :uses_epochs,
-    :requires_concept_document
-  ]
+  @required_attrs [:name, :short_name, :type, :genre, :group, :uses_epochs]
   @optional_attrs [:bw_code, :notes]
 
   @doc false

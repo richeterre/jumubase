@@ -993,12 +993,6 @@ defmodule Jumubase.FoundationTest do
       assert %ContestCategory{id: ^id} = Foundation.get_contest_category!(c, id)
     end
 
-    test "preloads the contest category's category", %{contest: c} do
-      %{id: id} = insert_contest_category(c)
-      result = Foundation.get_contest_category!(c, id)
-      assert %Category{} = result.category
-    end
-
     test "raises an error if the contest category isn't in the given contest", %{contest: c} do
       %{id: id} = insert_contest_category(build(:contest))
       assert_raise Ecto.NoResultsError, fn -> Foundation.get_contest_category!(c, id) end

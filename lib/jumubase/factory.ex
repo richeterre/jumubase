@@ -28,8 +28,7 @@ defmodule Jumubase.Factory do
       genre: "classical",
       type: "solo",
       group: "mixed_lineups",
-      uses_epochs: true,
-      requires_concept_document: false
+      uses_epochs: true
     }
   end
 
@@ -61,7 +60,8 @@ defmodule Jumubase.Factory do
       min_advancing_age_group: "II",
       max_advancing_age_group: "VI",
       allows_wespe_nominations: false,
-      groups_accompanists: false
+      groups_accompanists: false,
+      requires_concept_document: false
     }
   end
 

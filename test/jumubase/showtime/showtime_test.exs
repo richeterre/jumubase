@@ -473,9 +473,8 @@ defmodule Jumubase.ShowtimeTest do
       assert Changeset.get_change(changeset, :edit_code) == nil
     end
 
-    test "validates concept document when category requires one", %{contest: c} do
-      cg = build(:category, requires_concept_document: true)
-      cc = insert(:contest_category, contest: c, category: cg)
+    test "validates concept document when contest category requires one", %{contest: c} do
+      cc = insert(:contest_category, contest: c, requires_concept_document: true)
 
       invalid_attrs = performance_params(cc, [{"soloist", birthdate: ~D[2007-01-01]}])
       valid_attrs = invalid_attrs |> Map.put(:concept_document_url, "foo")
@@ -489,9 +488,9 @@ defmodule Jumubase.ShowtimeTest do
       {:ok, _performance} = Showtime.create_performance(c, valid_attrs)
     end
 
-    test "doesn’t validates concept document when category doesn’t require one", %{contest: c} do
-      cg = build(:category, requires_concept_document: false)
-      cc = insert(:contest_category, contest: c, category: cg)
+    test "doesn’t validates concept document when contest category doesn’t require one",
+         %{contest: c} do
+      cc = insert(:contest_category, contest: c, requires_concept_document: false)
 
       attrs = performance_params(cc, [{"soloist", birthdate: ~D[2007-01-01]}])
 
@@ -1566,9 +1565,10 @@ defmodule Jumubase.ShowtimeTest do
   end
 
   describe "handle_category_specific_fields/3" do
-    test "casts and validates concept document URL if category in data requires it", %{contest: c} do
-      cg = build(:category, requires_concept_document: true)
-      cc = insert(:contest_category, contest: c, category: cg)
+    test "casts and validates concept document URL if contest category in data requires it", %{
+      contest: c
+    } do
+      cc = insert(:contest_category, contest: c, requires_concept_document: true)
 
       appearances = [{"soloist", birthdate: ~D[2001-01-02]}]
       p = insert_shorthand_performance(cc, appearances)
@@ -1587,15 +1587,15 @@ defmodule Jumubase.ShowtimeTest do
                Showtime.handle_category_specific_fields(changeset, c, valid_attrs)
     end
 
-    test "casts and validates concept document URL if changed category requires it", %{contest: c} do
-      cg1 = build(:category, requires_concept_document: false)
-      cc1 = insert(:contest_category, contest: c, category: cg1)
+    test "casts and validates concept document URL if contest category in changes requires it", %{
+      contest: c
+    } do
+      cc1 = insert(:contest_category, contest: c, requires_concept_document: false)
 
       appearances = [{"soloist", birthdate: ~D[2001-01-02]}]
       p = insert_shorthand_performance(cc1, appearances)
 
-      cg2 = build(:category, requires_concept_document: true)
-      cc2 = insert(:contest_category, contest: c, category: cg2)
+      cc2 = insert(:contest_category, contest: c, requires_concept_document: true)
 
       invalid_attrs = performance_params(cc2, appearances)
       changeset = Performance.changeset(p, invalid_attrs, c.round)
@@ -1611,11 +1611,9 @@ defmodule Jumubase.ShowtimeTest do
                Showtime.handle_category_specific_fields(changeset, c, valid_attrs)
     end
 
-    test "clears concept document URL if category doesn’t require one", %{contest: c} do
-      cg1 = build(:category, requires_concept_document: true)
-      cc1 = insert(:contest_category, contest: c, category: cg1)
-      cg2 = build(:category, requires_concept_document: false)
-      cc2 = insert(:contest_category, contest: c, category: cg2)
+    test "clears concept document URL if contest category doesn’t require one", %{contest: c} do
+      cc1 = insert(:contest_category, contest: c, requires_concept_document: true)
+      cc2 = insert(:contest_category, contest: c, requires_concept_document: false)
       appearances = [{"soloist", birthdate: ~D[2001-01-02]}]
 
       initial_attrs =
@@ -1636,7 +1634,7 @@ defmodule Jumubase.ShowtimeTest do
                Showtime.handle_category_specific_fields(changeset, c, updated_attrs)
     end
 
-    test "does nothing if no category is present in data or changes", %{contest: c} do
+    test "does nothing if no contest category is present in data or changes", %{contest: c} do
       attrs = %{}
       changeset = Performance.changeset(%Performance{}, attrs, c.round)
       assert changeset == Showtime.handle_category_specific_fields(changeset, c, attrs)

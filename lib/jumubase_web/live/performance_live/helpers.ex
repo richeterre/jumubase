@@ -15,13 +15,13 @@ defmodule JumubaseWeb.PerformanceLive.Helpers do
   def predecessor_host_options(%Contest{}), do: []
 
   @doc """
-  Returns whether the changeset contains a category that requires a concept document,
-  meaning that we need to display a form field for it.
+  Returns whether the changeset contains a contest category that requires
+  a concept document, meaning that we need to display a form field for it.
   """
   def needs_concept_document_field?(changeset, %Contest{} = contest) do
     with cc_id <- Ecto.Changeset.get_field(changeset, :contest_category_id),
-         cc <- Enum.find(contest.contest_categories, &(&1.id == cc_id)) do
-      cc && cc.category.requires_concept_document
+         cc when not is_nil(cc) <- Enum.find(contest.contest_categories, &(&1.id == cc_id)) do
+      cc.requires_concept_document
     else
       _ ->
         false

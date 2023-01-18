@@ -500,14 +500,14 @@ defmodule Jumubase.Showtime do
   end
 
   @doc """
-  Casts and validates fields that only apply for certain categories, by first retrieving
-  the category (either as change or existing data) from the changeset.
+  Casts and validates fields that only apply for certain contest categories, by first
+  retrieving the contest category (either as change or existing data) from the changeset.
   """
   def handle_category_specific_fields(changeset, contest, attrs) do
     with cc_id when not is_nil(cc_id) <- get_field(changeset, :contest_category_id) do
-      %{category: c} = Foundation.get_contest_category!(contest, cc_id)
+      cc = Foundation.get_contest_category!(contest, cc_id)
 
-      if c.requires_concept_document do
+      if cc.requires_concept_document do
         changeset
         |> cast(attrs, [:concept_document_url])
         |> validate_required(:concept_document_url)

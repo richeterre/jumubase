@@ -8,7 +8,7 @@ defmodule JumubaseWeb.Internal.ContestCategoryView do
   Returns a linebreak-separated list of the contest category's flags, if any.
   """
   def notes(%ContestCategory{} = cc) do
-    [wespe_nomination_text(cc), accompanist_rating_text(cc)]
+    [wespe_nomination_text(cc), accompanist_rating_text(cc), concept_document_text(cc)]
     |> Enum.reject(&is_nil/1)
     |> Enum.intersperse(Phoenix.HTML.Tag.tag(:br))
   end
@@ -24,6 +24,12 @@ defmodule JumubaseWeb.Internal.ContestCategoryView do
   defp accompanist_rating_text(%ContestCategory{} = cc) do
     if cc.groups_accompanists do
       gettext("Accompanists rated as group")
+    end
+  end
+
+  defp concept_document_text(%ContestCategory{} = cc) do
+    if cc.requires_concept_document do
+      gettext("Requires concept document")
     end
   end
 end

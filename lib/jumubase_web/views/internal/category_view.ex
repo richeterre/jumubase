@@ -27,14 +27,12 @@ defmodule JumubaseWeb.Internal.CategoryView do
   @doc """
   Returns a text describing whether the category uses epochs.
   """
-  def flags_text(%Category{} = cg) do
-    epoch_text = if cg.uses_epochs, do: content_tag(:abbr, "E", title: gettext("Uses epochs"))
+  def uses_epochs_text(%Category{uses_epochs: true}) do
+    content_tag(:span, gettext("Yes"))
+  end
 
-    concept_document_text =
-      if cg.requires_concept_document,
-        do: content_tag(:abbr, "K", title: gettext("Requires concept document"))
-
-    [epoch_text, concept_document_text] |> Enum.filter(& &1) |> Enum.intersperse(" ")
+  def uses_epochs_text(%Category{uses_epochs: false}) do
+    content_tag(:span, gettext("No"))
   end
 
   def bw_code_tag(%Category{bw_code: nil}), do: nil

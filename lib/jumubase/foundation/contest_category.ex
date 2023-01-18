@@ -12,6 +12,7 @@ defmodule Jumubase.Foundation.ContestCategory do
     field :max_advancing_age_group, :string
     field :allows_wespe_nominations, :boolean, read_after_writes: true
     field :groups_accompanists, :boolean, read_after_writes: true
+    field :requires_concept_document, :boolean, read_after_writes: true
 
     belongs_to :contest, Contest
     belongs_to :category, Category
@@ -25,7 +26,8 @@ defmodule Jumubase.Foundation.ContestCategory do
     :min_age_group,
     :max_age_group,
     :allows_wespe_nominations,
-    :groups_accompanists
+    :groups_accompanists,
+    :requires_concept_document
   ]
   @optional_attrs [:min_advancing_age_group, :max_advancing_age_group]
 

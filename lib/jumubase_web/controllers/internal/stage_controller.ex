@@ -52,6 +52,8 @@ defmodule JumubaseWeb.Internal.StageController do
         conn
         |> assign(:contest, contest)
         |> assign(:changeset, changeset)
+        |> add_schedule_breadcrumbs(contest)
+        |> add_breadcrumb(name: gettext("New stage"), path: current_path(conn))
         |> render("new.html")
     end
   end

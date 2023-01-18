@@ -2,10 +2,18 @@
   <%= render JumubaseWeb.ErrorView, "form_errors.html", errors: f.errors %>
 
   <div class="row">
-    <div class="form-group col-md-4">
-      <%= label f, :name, gettext("Name") %>
+    <div class="form-group col-md-2 col-sm-4 col-xs-6">
+      <%= label f, :name do %>
+        <%= gettext("Name") %>
+      <% end %>
       <%= text_input f, :name, class: "form-control" %>
       <%= error_tag f, :name %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <span class="help-block"><%= gettext("The name should be as short as possible (e.g. “Aula”, “Musiksaal”), so that it can be displayed in the Jumu app.") %></span>
     </div>
   </div>
 

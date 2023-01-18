@@ -77,7 +77,7 @@ msgstr "Jumu-Logo"
 #: lib/jumubase_web/templates/internal/contest_category/index.html.heex:19
 #: lib/jumubase_web/templates/internal/host/_form.html.heex:6
 #: lib/jumubase_web/templates/internal/host/index.html.heex:9
-#: lib/jumubase_web/templates/internal/stage/_form.html.eex:6
+#: lib/jumubase_web/templates/internal/stage/_form.html.eex:7
 #: lib/jumubase_web/templates/internal/user/index.html.heex:9
 #: lib/jumubase_web/templates/page/_contact_form.html.heex:6
 #, elixir-autogen, elixir-format
@@ -1038,7 +1038,7 @@ msgstr "Neues Vorspiel"
 msgid "Add Performance"
 msgstr "Neues Vorspiel hinzufügen"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:131
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:135
 #: lib/jumubase_web/templates/internal/contest/show.html.heex:49
 #: lib/jumubase_web/templates/internal/stage/index.html.heex:2
 #: lib/jumubase_web/templates/internal/stage/schedule.html.heex:2
@@ -1079,7 +1079,7 @@ msgid "Switch to stage"
 msgstr "Zu Bühne wechseln"
 
 #: lib/jumubase_web/templates/internal/stage/_spacer_item.html.heex:6
-#: lib/jumubase_web/views/internal/stage_view.ex:30
+#: lib/jumubase_web/views/internal/stage_view.ex:29
 #, elixir-autogen, elixir-format
 msgid "Intermission"
 msgstr "Pause"
@@ -1371,7 +1371,7 @@ msgstr "Punkte"
 msgid "Timetables public"
 msgstr "Vorspielplan öffentlich"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:143
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:147
 #, elixir-autogen, elixir-format
 msgid "This schedule has already been published. Your changes will be visible to others instantly."
 msgstr "Dieser Vorspielplan wurde bereits veröffentlicht. Deine Änderungen sind für andere sofort sichtbar."
@@ -1517,7 +1517,7 @@ msgstr "hier"
 msgid "Time"
 msgstr "Zeit"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:135
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:139
 #: lib/jumubase_web/templates/internal/stage/timetable.html.heex:2
 #, elixir-autogen, elixir-format
 msgid "Timetable"
@@ -2223,12 +2223,18 @@ msgstr "Bühne erstellen"
 msgid "New Stage"
 msgstr "Neue Bühne"
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:46
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:48
 #, elixir-autogen, elixir-format
 msgid "The stage \"%{name}\" was created."
 msgstr "Die Bühne \"%{name}\" wurde erstellt."
 
-#: lib/jumubase_web/controllers/internal/stage_controller.ex:38
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:40
+#: lib/jumubase_web/controllers/internal/stage_controller.ex:56
 #, elixir-autogen, elixir-format
 msgid "New stage"
 msgstr "Neue Bühne"
+
+#: lib/jumubase_web/templates/internal/stage/_form.html.eex:16
+#, elixir-autogen, elixir-format
+msgid "The name should be as short as possible (e.g. “Aula”, “Musiksaal”), so that it can be displayed in the Jumu app."
+msgstr "Der Name sollte möglichst kurz sein (z.B. “Aula”, “Musiksaal”), damit er in der Jumu-App gut dargestellt werden kann."

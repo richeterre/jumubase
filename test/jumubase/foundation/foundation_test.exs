@@ -1015,6 +1015,24 @@ defmodule Jumubase.FoundationTest do
     end
   end
 
+  describe "create_stage/2" do
+    setup do
+      [host: insert(:host)]
+    end
+
+    test "creates a stage with valid data", %{host: h} do
+      params = params_for(:stage, name: "X")
+      assert {:ok, result} = Foundation.create_stage(h, params)
+      host_id = h.id
+      assert %Stage{host_id: ^host_id, name: "X"} = result
+    end
+
+    test "returns an error changeset for invalid data", %{host: h} do
+      params = params_for(:stage, name: nil)
+      assert {:error, %Changeset{}} = Foundation.create_stage(h, params)
+    end
+  end
+
   describe "load_host_users/1" do
     test "preloads a contest's host with associated users" do
       %{id: id} =

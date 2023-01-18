@@ -382,6 +382,12 @@ defmodule Jumubase.Foundation do
     Repo.get!(query, id)
   end
 
+  def create_stage(%Host{} = host, attrs) do
+    Ecto.build_assoc(host, :stages)
+    |> Stage.changeset(attrs)
+    |> Repo.insert()
+  end
+
   ## Preloading
 
   def load_host_users(%Contest{} = contest) do

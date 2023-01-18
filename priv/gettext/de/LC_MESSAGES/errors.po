@@ -99,7 +99,7 @@ msgstr "kann nicht vor dem Beginn liegen"
 msgid "must be before the start date"
 msgstr "muss vor dem Beginn liegen"
 
-#: lib/jumubase/showtime/performance.ex:140
+#: lib/jumubase/showtime/performance.ex:141
 #, elixir-autogen, elixir-format
 msgid "can't be changed"
 msgstr "kann nicht geändert werden"
@@ -109,7 +109,7 @@ msgstr "kann nicht geändert werden"
 msgid "can only appear once in a performance"
 msgstr "darf nur einen Auftritt pro Vorspiel haben"
 
-#: lib/jumubase/showtime/performance.ex:49
+#: lib/jumubase/showtime/performance.ex:50
 #, elixir-autogen, elixir-format
 msgid "must be unique"
 msgstr "muss eindeutig sein"
@@ -119,32 +119,32 @@ msgstr "muss eindeutig sein"
 msgid "can only have either a composer or an artist"
 msgstr "darf nur entweder Komponist:in oder Interpret:in enthalten"
 
-#: lib/jumubase/showtime/performance.ex:153
+#: lib/jumubase/showtime/performance.ex:154
 #, elixir-autogen, elixir-format
 msgid "The performance must have at least one participant."
 msgstr "Das Vorspiel muss mindestens eine:n Teilnehmer:in haben."
 
-#: lib/jumubase/showtime/performance.ex:198
+#: lib/jumubase/showtime/performance.ex:199
 #, elixir-autogen, elixir-format
 msgid "The performance must have at least one piece."
 msgstr "Das Vorspiel muss mindestens ein Stück haben."
 
-#: lib/jumubase/showtime/performance.ex:162
+#: lib/jumubase/showtime/performance.ex:163
 #, elixir-autogen, elixir-format
 msgid "The performance can't have both soloists and ensemblists."
 msgstr "Das Vorspiel darf nicht sowohl Solist:innen als auch Ensemblemitglieder haben."
 
-#: lib/jumubase/showtime/performance.ex:169
+#: lib/jumubase/showtime/performance.ex:170
 #, elixir-autogen, elixir-format
 msgid "The performance can't have more than one soloist."
 msgstr "Das Vorspiel darf nicht mehrere Solist:innen haben."
 
-#: lib/jumubase/showtime/performance.ex:183
+#: lib/jumubase/showtime/performance.ex:184
 #, elixir-autogen, elixir-format
 msgid "The performance can't have only accompanists."
 msgstr "Das Vorspiel darf nicht nur Begleiter:innen haben."
 
-#: lib/jumubase/showtime/performance.ex:176
+#: lib/jumubase/showtime/performance.ex:177
 #, elixir-autogen, elixir-format
 msgid "The performance can't have only one ensemblist."
 msgstr "Das Vorspiel darf nicht nur ein Ensemblemitglied haben."
@@ -174,7 +174,7 @@ msgstr "Oh je…"
 msgid "can't be before the end date"
 msgstr "kann nicht vor dem Ende liegen"
 
-#: lib/jumubase/showtime/performance.ex:215
+#: lib/jumubase/showtime/performance.ex:216
 #, elixir-autogen, elixir-format
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""

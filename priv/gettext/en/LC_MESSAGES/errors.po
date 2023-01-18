@@ -109,7 +109,7 @@ msgstr ""
 msgid "must be before the start date"
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:140
+#: lib/jumubase/showtime/performance.ex:141
 #, elixir-autogen, elixir-format
 msgid "can't be changed"
 msgstr ""
@@ -119,7 +119,7 @@ msgstr ""
 msgid "can only appear once in a performance"
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:49
+#: lib/jumubase/showtime/performance.ex:50
 #, elixir-autogen, elixir-format
 msgid "must be unique"
 msgstr ""
@@ -129,32 +129,32 @@ msgstr ""
 msgid "can only have either a composer or an artist"
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:153
+#: lib/jumubase/showtime/performance.ex:154
 #, elixir-autogen, elixir-format
 msgid "The performance must have at least one participant."
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:198
+#: lib/jumubase/showtime/performance.ex:199
 #, elixir-autogen, elixir-format
 msgid "The performance must have at least one piece."
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:162
+#: lib/jumubase/showtime/performance.ex:163
 #, elixir-autogen, elixir-format
 msgid "The performance can't have both soloists and ensemblists."
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:169
+#: lib/jumubase/showtime/performance.ex:170
 #, elixir-autogen, elixir-format
 msgid "The performance can't have more than one soloist."
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:183
+#: lib/jumubase/showtime/performance.ex:184
 #, elixir-autogen, elixir-format
 msgid "The performance can't have only accompanists."
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:176
+#: lib/jumubase/showtime/performance.ex:177
 #, elixir-autogen, elixir-format
 msgid "The performance can't have only one ensemblist."
 msgstr ""
@@ -184,7 +184,7 @@ msgstr ""
 msgid "can't be before the end date"
 msgstr ""
 
-#: lib/jumubase/showtime/performance.ex:215
+#: lib/jumubase/showtime/performance.ex:216
 #, elixir-autogen, elixir-format
 msgid "The performance can either have both stage and stage time, or neither."
 msgstr ""

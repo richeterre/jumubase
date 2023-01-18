@@ -244,8 +244,13 @@
         <h3><%= gettext("Attachments") %></h3>
 
         <div class="row">
-          <div class="form-group col-md-8">
-            <%= label f, :concept_document_url, gettext("Concept Document URL") %>
+          <div class="form-group col-md-9">
+            <%= label f, :concept_document_url do %>
+              <%= gettext("Concept Document URL") %>
+              <small class="text-muted">
+                (<%= gettext("e.g. Google Drive, Dropbox, iCloud Drive, OneDrive…") %>)
+              </small>
+            <% end %>
             <%= text_input f, :concept_document_url, class: "form-control" %>
             <%= error_tag f, :concept_document_url %>
           </div>

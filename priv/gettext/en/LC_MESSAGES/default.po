@@ -287,7 +287,7 @@ msgstr ""
 #: lib/jumubase_web/templates/internal/performance/jury_material.html.heex:46
 #: lib/jumubase_web/templates/internal/performance/print_jury_table.html.heex:52
 #: lib/jumubase_web/templates/internal/performance/publish_results.html.heex:52
-#: lib/jumubase_web/templates/internal/performance/show.html.heex:21
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:19
 #: lib/jumubase_web/templates/internal/stage/timetable.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "Participants"
@@ -392,7 +392,7 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/performance/show.html.heex:13
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:11
 #: lib/jumubase_web/templates/page/edit_registration.html.heex:17
 #, elixir-autogen, elixir-format
 msgid "Edit code"
@@ -432,7 +432,7 @@ msgstr ""
 msgid "Performances"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/performance/show.html.heex:29
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:27
 #, elixir-autogen, elixir-format
 msgid "Programme"
 msgstr ""
@@ -447,7 +447,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: lib/jumubase_web/templates/internal/performance/show.html.heex:34
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:32
 #, elixir-autogen, elixir-format
 msgid "Total duration: %{d}"
 msgstr ""
@@ -1658,7 +1658,7 @@ msgid_plural "JUMU_WELCOME_ADVANCED_SUBJECT_MANY(%{contest}, %{city})"
 msgstr[0] "Your participation in the %{contest} in %{city}"
 msgstr[1] "Your participation in the %{contest} in %{city}"
 
-#: lib/jumubase_web/templates/internal/performance/show.html.heex:15
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Last edited"
 msgstr ""
@@ -2199,17 +2199,19 @@ msgstr ""
 msgid "Flags"
 msgstr ""
 
-#: lib/jumubase_web/templates/performance/live_form.html.heex:244
-#, elixir-autogen, elixir-format
-msgid "Attachments"
-msgstr ""
-
-#: lib/jumubase_web/templates/performance/live_form.html.heex:249
-#, elixir-autogen, elixir-format
-msgid "Concept Document URL"
-msgstr ""
-
 #: lib/jumubase_web/templates/performance/live_form.html.heex:251
 #, elixir-autogen, elixir-format
 msgid "e.g. Google Drive, Dropbox, iCloud Drive, OneDrive…"
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:36
+#: lib/jumubase_web/templates/performance/live_form.html.heex:244
+#, elixir-autogen, elixir-format
+msgid "Documents"
+msgstr ""
+
+#: lib/jumubase_web/templates/internal/performance/show.html.heex:39
+#: lib/jumubase_web/templates/performance/live_form.html.heex:249
+#, elixir-autogen, elixir-format
+msgid "Concept document URL"
 msgstr ""

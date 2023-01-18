@@ -31,3 +31,13 @@
 <p>
   <em><%= gettext("Total duration: %{d}", d: formatted_duration(@performance)) %></em>
 </p>
+
+<%= if @performance.concept_document_url do %>
+  <h3><%= gettext("Documents") %></h3>
+
+  <p>
+    <%= gettext("Concept document URL") %>:
+    <br>
+    <%= link @performance.concept_document_url, to: @performance.concept_document_url %>
+  </p>
+<% end %>

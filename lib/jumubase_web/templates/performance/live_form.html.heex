@@ -241,12 +241,12 @@
       </button>
 
       <%= if @has_concept_document_field do %>
-        <h3><%= gettext("Attachments") %></h3>
+        <h3><%= gettext("Documents") %></h3>
 
         <div class="row">
           <div class="form-group col-md-9">
             <%= label f, :concept_document_url do %>
-              <%= gettext("Concept Document URL") %>
+              <%= gettext("Concept document URL") %>
               <small class="text-muted">
                 (<%= gettext("e.g. Google Drive, Dropbox, iCloud Drive, OneDrive…") %>)
               </small>

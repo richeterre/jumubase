@@ -1,6 +1,6 @@
 defmodule JumubaseWeb.FoundationResolver do
   alias Jumubase.Foundation
-  alias Jumubase.Foundation.{Contest, ContestCategory, Host}
+  alias Jumubase.Foundation.{Contest, ContestCategory, Host, Stage}
   alias JumubaseWeb.Internal.ContestView
 
   def contests(_, _, _) do
@@ -40,5 +40,13 @@ defmodule JumubaseWeb.FoundationResolver do
 
   def public_result_count(performances, _, _) do
     {:ok, performances |> Enum.count(& &1.results_public)}
+  end
+
+  def coordinates(%Stage{latitude: nil, longitude: nil}, _, _) do
+    {:ok, nil}
+  end
+
+  def coordinates(%Stage{latitude: lat, longitude: lon}, _, _) do
+    {:ok, %{latitude: lat, longitude: lon}}
   end
 end

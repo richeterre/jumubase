@@ -188,3 +188,8 @@ msgstr "Um Name oder Geburtsdatum zu ändern, musst du die Person entfernen und 
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr "stimmt nicht mit dem Passwort überein"
+
+#: lib/jumubase/foundation/stage.ex:39
+#, elixir-autogen, elixir-format
+msgid "must have either have complete coordinates or empty ones"
+msgstr "darf nur entweder komplette oder leere Koordinaten haben"

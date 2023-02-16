@@ -77,6 +77,11 @@ defmodule JumubaseWeb.Schema.Objects do
     end
   end
 
+  object :coordinates do
+    field :longitude, non_null(:float)
+    field :latitude, non_null(:float)
+  end
+
   object :host do
     field :id, non_null(:id)
 
@@ -163,6 +168,11 @@ defmodule JumubaseWeb.Schema.Objects do
 
     field :name, non_null(:string) do
       description "The public name of the stage."
+    end
+
+    field :coordinates, :coordinates do
+      description "The geographic coordinates of the stage."
+      resolve &FoundationResolver.coordinates/3
     end
   end
 

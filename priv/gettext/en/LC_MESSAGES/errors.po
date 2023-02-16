@@ -198,3 +198,8 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr ""
+
+#: lib/jumubase/foundation/stage.ex:39
+#, elixir-autogen, elixir-format
+msgid "must have either have complete coordinates or empty ones"
+msgstr ""

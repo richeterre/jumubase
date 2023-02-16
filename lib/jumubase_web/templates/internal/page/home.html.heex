@@ -4,23 +4,25 @@
 
 <p class="lead"><%= gettext("welcome to your personal Jumu portal!") %></p>
 
-<div class="row">
-  <div class="col-md-8 col-lg-7">
-    <div class="panel panel-info">
-      <div class="panel-body">
-        <%= render("_whats_new_item.html",
-          title: gettext("Open registration yourself"),
-          body: gettext("To do this, simply click on “Open registration now” below your contest, fill in the dates and confirm.")
-          ) %>
+<%= if @current_user.role != "observer" do %>
+  <div class="row">
+    <div class="col-md-8 col-lg-7">
+      <div class="panel panel-info">
+        <div class="panel-body">
+          <%= render("_whats_new_item.html",
+            title: gettext("Open registration yourself"),
+            body: gettext("To do this, simply click on “Open registration now” below your contest, fill in the dates and confirm.")
+            ) %>
 
-        <%= render("_whats_new_item.html",
-          title: gettext("Publish timetables yourself"),
-          body: gettext("Through the menu entry “Schedule performances” you can publish your contest’s timetables to the Jumu app once they’re ready.")
-          ) %>
+          <%= render("_whats_new_item.html",
+            title: gettext("Publish timetables yourself"),
+            body: gettext("Through the menu entry “Schedule performances” you can publish your contest’s timetables to the Jumu app once they’re ready.")
+            ) %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <div class="row">
   <%= if admin?(@current_user) do %>

@@ -60,7 +60,8 @@
         <td>
           <%= for p <- participant.performances do %>
             <%= link performance_info(p),
-              to: Routes.internal_contest_performance_path(@conn, :show, @contest, p)
+              to: Routes.internal_contest_performance_path(@conn, :show, @contest, p),
+              title: format_datetime(p.stage_time)
               %>
             <br>
           <% end %>

@@ -57,6 +57,10 @@ defmodule Jumubase.Foundation do
     Repo.all(query)
   end
 
+  def remove_archived_hosts(hosts) do
+    Enum.filter(hosts, &(&1.name != "Doha"))
+  end
+
   def get_host!(id) do
     Repo.get!(Host, id)
   end

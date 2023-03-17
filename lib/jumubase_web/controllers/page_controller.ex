@@ -8,6 +8,7 @@ defmodule JumubaseWeb.PageController do
   def home(conn, _params) do
     host_map_data =
       Foundation.list_hosts()
+      |> Foundation.remove_archived_hosts()
       |> Enum.group_by(
         & &1.current_grouping,
         &%{"name" => &1.name, "latitude" => &1.latitude, "longitude" => &1.longitude}
@@ -56,8 +57,12 @@ defmodule JumubaseWeb.PageController do
   end
 
   def contact(conn, _params) do
+    hosts =
+      Foundation.list_hosts_by_grouping("2")
+      |> Foundation.remove_archived_hosts()
+
     conn
-    |> assign(:hosts, Foundation.list_hosts_by_grouping("2"))
+    |> assign(:hosts, hosts)
     |> render("contact.html")
   end
 

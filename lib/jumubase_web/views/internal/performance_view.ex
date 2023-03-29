@@ -431,15 +431,14 @@ defmodule JumubaseWeb.Internal.PerformanceView do
   defp certificate_points_text(points, _group_size), do: "und erreichten #{points} Punkte."
 
   defp certificate_advancement_text(%Appearance{} = a, %Performance{} = p, round) do
-    cond do
-      Results.advances?(a, p) ->
-        "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
-
-      Results.gets_wespe_nomination?(a, p) ->
+    if Results.advances?(a, p) do
+      if p.contest_category.allows_wespe_nominations do
         "mit Nominierung zur Teilnahme am Wochenende der Sonderpreise (WESPE)."
-
-      true ->
-        nil
+      else
+        "mit der Berechtigung zur Teilnahme am #{round_name(round + 1)}."
+      end
+    else
+      nil
     end
   end
 

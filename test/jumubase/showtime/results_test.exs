@@ -138,43 +138,6 @@ defmodule Jumubase.ResultsTest do
     end
   end
 
-  describe "gets_wespe_nomination?/1" do
-    setup do
-      cc =
-        insert(:contest_category,
-          contest: build(:contest),
-          allows_wespe_nominations: true
-        )
-
-      [contest_category: cc]
-    end
-
-    test "returns false for an appearance in a non-nominatable contest category" do
-      cc = insert(:contest_category, contest: build(:contest), allows_wespe_nominations: false)
-      %{appearances: [a]} = p = insert_performance(cc, "III", [{"soloist", 23}])
-      refute Results.gets_wespe_nomination?(a, p)
-    end
-
-    test "returns false for an appearance with insufficient points", %{contest_category: cc} do
-      %{appearances: [a]} = p = insert_performance(cc, "III", [{"soloist", 22}])
-      refute Results.gets_wespe_nomination?(a, p)
-    end
-
-    test "returns true for an appearance with sufficient points in a nominatable contest category",
-         %{contest_category: cc} do
-      %{appearances: [a]} = p = insert_performance(cc, "III", [{"soloist", 23}])
-      assert Results.gets_wespe_nomination?(a, p)
-    end
-
-    test "returns an error when the given appearance and performance don't match", %{
-      contest_category: cc
-    } do
-      %{appearances: [a]} = insert_performance(cc)
-      p = insert_performance(cc)
-      assert_raise FunctionClauseError, fn -> Results.gets_wespe_nomination?(a, p) end
-    end
-  end
-
   describe "needs_eligibility_check?/3" do
     test "checks advancing RW performance with accompanist group having <23 points" do
       c = insert(:contest, round: 1)

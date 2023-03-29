@@ -86,13 +86,6 @@ defmodule Jumubase.Showtime.Results do
     may_advance?(a) and advances?(p)
   end
 
-  def gets_wespe_nomination?(
-        %Appearance{performance_id: id} = a,
-        %Performance{id: id, contest_category: cc}
-      ) do
-    may_get_wespe_nomination?(a) and cc.allows_wespe_nominations
-  end
-
   @doc """
   Returns whether an appearance might be ineligible for the next round,
   (example: pop accompanist groups) and should be checked by a human.
@@ -115,10 +108,6 @@ defmodule Jumubase.Showtime.Results do
 
   defp may_advance?(%Appearance{points: points}) do
     points in JumuParams.advancing_point_range()
-  end
-
-  defp may_get_wespe_nomination?(%Appearance{points: points}) do
-    points in JumuParams.wespe_nomination_point_range()
   end
 
   defp lookup(point_mapping, points) do

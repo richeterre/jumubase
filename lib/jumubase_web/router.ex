@@ -47,16 +47,11 @@ defmodule JumubaseWeb.Router do
     post "/contact", ContactController, :send_message
 
     # Registration
-    get "/anmeldung", PageController, :registration
-    get "/anmeldung-bearbeiten", PageController, :edit_registration
-    post "/lookup-registration", PageController, :lookup_registration
+    # get "/anmeldung", PageController, :registration
+    # get "/anmeldung-bearbeiten", PageController, :edit_registration
+    # post "/lookup-registration", PageController, :lookup_registration
 
-    resources "/contests/:contest_id/performances", PerformanceController, only: [:new, :edit]
-
-    # Redirections for legacy paths
-    get "/vorspiel-bearbeiten", Redirector, to: "/anmeldung-bearbeiten"
-    get "/anmelden", Redirector, to: "/login"
-    get "/jmd", Redirector, to: "/internal"
+    # resources "/contests/:contest_id/performances", PerformanceController, only: [:new, :edit]
   end
 
   # Authentication routes

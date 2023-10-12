@@ -1704,7 +1704,7 @@ msgstr "Verbund"
 #: lib/jumubase_web/templates/page/home.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "The website for “Jugend musiziert” at German schools abroad"
-msgstr "Die Website für “Jugend musiziert” an Deutschen Schulen im Ausland"
+msgstr "Die ehemalige Website für “Jugend musiziert” an Deutschen Schulen im Ausland"
 
 #: lib/jumubase_web/controllers/email.ex:22
 #, elixir-autogen, elixir-format

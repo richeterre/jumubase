@@ -4,7 +4,7 @@
       <h3 class="panel-title">Neue Jumu-Website</h3>
     </div>
     <div class="panel-body">
-      Die offizielle Website von Jugend musiziert wird derzeit runderneuert! Ab Mitte Oktober 2023 findest du dort <b>auch die Wettbewerbe der Deutschen Schulen im Ausland</b>, inklusive aller Sonderkategorien und dem Anmeldeformular.
+      Die <%= link "neue Website von Jugend musiziert", to: "https://www.jugend-musiziert.org" %> ist jetzt live! Ab sofort findest du dort <b>auch die Wettbewerbe der Deutschen Schulen im Ausland</b> sowie ab dem 16. Oktober 2023 das Anmeldeformular. Auch die Anmeldung zu regional begrenzten Kategorien (inkl. Kimu) ist dort möglich.
     </div>
   </div>
 </div>
